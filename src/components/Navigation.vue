@@ -1,7 +1,7 @@
  <template>
   <nav>
 <!-- nav bar -->
-      <v-app-bar
+      <v-app-bar 
         absolute
         dark
         scroll-target="#playground-example"
@@ -10,7 +10,7 @@
 
           <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-          <v-toolbar-title>Route placeholder</v-toolbar-title>
+          <v-toolbar-title>Route placeholder </v-toolbar-title>
 
          <v-spacer></v-spacer>
 
@@ -20,9 +20,12 @@
       </v-app-bar >
 
 <!-- Navbar -->
-<v-navigation-drawer app v-model="drawer"
+<v-navigation-drawer 
+      app 
+      v-model="drawer"
       class="accent-4"
       dark
+      width="200"
       :color="color">
       <v-list>
         <v-list-item
