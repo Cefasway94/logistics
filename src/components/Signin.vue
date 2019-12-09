@@ -1,8 +1,10 @@
 <template>
     <v-app>
-        <v-card class="my-auto mx-10 pa-10"
+        <v-card 
+        elevation="20"
+        class="my-auto mx-10 pa-10"
         width="700">
-            <v-card-title>
+            <v-card-title >
                 <h2>SIGN IN</h2>
             </v-card-title>
             <v-card-text>
@@ -10,16 +12,18 @@
             </v-card-text>
             <v-form class="px-10">
                 <v-container>
-                    <v-text-field label="E-mail" 
+                    <v-text-field class="my-2" label="E-mail" 
                     v-model="email" prepend-icon="email" required> 
                     </v-text-field>
 
-                    <v-text-field label="Passowrd" 
+                    <v-text-field class="my-2" label="Passowrd" 
                     v-model="password" prepend-icon="lock" required>
                     </v-text-field>
 
                     <div class="row">
                         <v-checkbox label="remember me"> </v-checkbox>
+                        <v-spacer></v-spacer>
+                        <v-btn elevation="false" color="white" class="mt-3">Forgot password </v-btn>
                     </div>
                 
                 <div class="pa-2">
