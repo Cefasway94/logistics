@@ -1,9 +1,9 @@
 <template>
   <v-app>
-      <div >
+      <div v-if="!login">
         <Dashboard/>
       </div>
-      <div v-if="!login">
+      <div >
         <Login/>
       </div>
   </v-app>
