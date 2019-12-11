@@ -3,30 +3,10 @@
    <v-content>
     <Navigation/>
    
-<div>
-<router-view> </router-view>
-   <div class="my-10">
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus inventore, libero debitis fugiat, assumenda optio deserunt laudantium dolorem saepe quidem odio? Sapiente nulla, aperiam doloremque temporibus commodi corrupti corporis quo.
-
-   </div>
-   <div class="my-auto">
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus inventore, libero debitis fugiat, assumenda optio deserunt laudantium dolorem saepe quidem odio? Sapiente nulla, aperiam doloremque temporibus commodi corrupti corporis quo.
-
-   </div>
-   <div class="my-auto">
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus inventore, libero debitis fugiat, assumenda optio deserunt laudantium dolorem saepe quidem odio? Sapiente nulla, aperiam doloremque temporibus commodi corrupti corporis quo.
-
-   </div>
-   <div class="my-auto">
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus inventore, libero debitis fugiat, assumenda optio deserunt laudantium dolorem saepe quidem odio? Sapiente nulla, aperiam doloremque temporibus commodi corrupti corporis quo.
-
-   </div>
-   <div class="my-10">
-     Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus inventore, libero debitis fugiat, assumenda optio deserunt laudantium dolorem saepe quidem odio? Sapiente nulla, aperiam doloremque temporibus commodi corrupti corporis quo.
-   </div>
-</div>
-</v-content>
-  
+      
+        <router-view> </router-view>
+      
+  </v-content>
  </v-app>
 </template>
 

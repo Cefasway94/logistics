@@ -1,12 +1,12 @@
 <template>
 <v-content>
 
-<v-row justify="end">
-    <v-col cols="12" sm="10" md="8" lg="6" >        
+<v-row wrap justify="end" >
+    <v-flex xs-12 sm11 md8 lg5 >        
    
     <router-view></router-view>
-</v-col>
-</v-row>
+</v-flex>
+</v-row >
 
 </v-content>
 </template>

@@ -3,7 +3,7 @@
         <v-card 
         elevation="20"
         class="my-auto mx-8 pa-7"
-        width="500">
+        width="500" >
             <v-card-title >
                 <h2 class="primary--text ">SIGN IN</h2>
             </v-card-title>

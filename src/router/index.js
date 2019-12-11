@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Signin from '../components/Signin.vue';
 import Signup from '../components/Signup.vue';
+import Client from '../components/Client.vue';
 
 Vue.use(VueRouter)
 
@@ -20,6 +21,11 @@ const routes = [
     path:'/signup',
     name:'signup',
     component: Signup
+  },
+  {
+    path:'/dashboard/client',
+    name:'client',
+    component: Client
   }
 ]
 
