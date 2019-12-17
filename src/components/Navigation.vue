@@ -5,21 +5,26 @@
         absolute
         dark
         scroll-target="#playground-example"
-        :color="color"
-        elevate>
+        color="white"
+        elevate
+        >
 
-          <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon @click="drawer = !drawer" color="#394361" ></v-app-bar-nav-icon>
 
-          <v-toolbar-title>Route placeholder </v-toolbar-title>
+          <v-toolbar-title class="black--text" >
+           Dashboard
+          </v-toolbar-title>
 
          <v-spacer></v-spacer>
 
-          <v-btn icon>
-            <v-icon>mdi-magnify</v-icon>
+          <v-btn icon  color="#394361">
+            <v-icon >mdi-magnify</v-icon>
          </v-btn>
-         <v-btn icon>
+         <v-btn icon color="#394361" class="mx-2">
             <v-icon>mdi-bell</v-icon>
          </v-btn>
+         <v-sparkline color="#394361"></v-sparkline>
+         <v-btn depressed elevation="flat" class="white black--text mx-3">Log out</v-btn>
       </v-app-bar >
 
 <!-- Navbar -->
@@ -27,9 +32,10 @@
       app 
       v-model="drawer"
       class="accent-4"
+      style="background-color:#4169E1;"
       dark
-      width="200"
-      :color="color">
+      width="200">
+
       <v-list>
         <v-list-item
           v-for="item in items"
@@ -46,7 +52,7 @@
       </v-list>
 
         <div class="pa-2">
-          <v-btn color="primary" elevation="false" block>Logout</v-btn>
+          <v-btn color="#4169E1" elevation="false" block>Logout</v-btn>
         </div>
       
     </v-navigation-drawer>
@@ -74,7 +80,7 @@ export default {
   name: 'home',
   data () {
     return {
-      color: 'primary',
+      color: '#394361',
       colors: ['primary', 'accent', 'warning lighten-2', 'teal', 'orange'],
       drawer: true,
       items:[

@@ -5,7 +5,7 @@
         class="my-auto mx-8 pa-7"
         width="500" >
             <v-card-title >
-                <h2 class="primary--text ">SIGN IN</h2>
+                <h2 class="primary--text  " >SIGN IN</h2>
             </v-card-title>
             <v-card-text>
                 <span>Welcome to Ubalori</span> 
@@ -31,6 +31,13 @@
                      <span class="white--text">Login</span>
                  </v-btn>
                 </div>
+
+                 <div class="row my-5 ">
+                        <p class="text-center">Dont have an account ? 
+                        <a  class="ml-2" >Sign up </a>
+                        </p>
+                </div>
+
                 </v-container>
             </v-form>
         </v-card>
