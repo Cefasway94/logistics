@@ -8,7 +8,6 @@ export default new Vuetify({
     icons: {
         iconfont:'md',  
     },
-
     theme:{
         primary:'#4169E1',
         mainoragne:'FF8C00',

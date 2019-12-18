@@ -1,5 +1,5 @@
  <template>
- <v-app class="lblue">
+ <v-app style="background-color:#F5FAFF;">
    <v-content>
     <Navigation/>
    
@@ -19,8 +19,6 @@ export default {
   components:{Navigation},
   data () {
     return {
-      color: 'primary',
-      colors: ['primary', 'accent', 'warning lighten-2', 'teal', 'orange'],
       drawer: false,
       items:[
         {title: 'Dashboard', icon: 'dashboard'},

@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app style="background-color:#F5FAFF;">
       <div v-if="login">
         <Dashboard/>
       </div>

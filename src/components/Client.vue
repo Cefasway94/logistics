@@ -1,7 +1,7 @@
-<template>
-    <div class=" pa-auto my-" style="background-color:#F5FAFF;" >
+<template >
+    <div class=" pa-auto my-" >
 
-            <v-container  class=" mt-10 mx-auto" style="background-color:#F5FAFF;">
+            <v-container  class=" mt-10 mx-auto">
                 <h2 class="subheading grey--text my-10">Dashboard</h2>
           
           <v-card

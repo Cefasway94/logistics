@@ -3,7 +3,6 @@
 <!-- nav bar -->
       <v-app-bar 
         absolute
-        dark
         scroll-target="#playground-example"
         color="white"
         elevate
@@ -15,16 +14,22 @@
            Dashboard
           </v-toolbar-title>
 
-         <v-spacer></v-spacer>
+         
+  <v-spacer></v-spacer>
+          <v-col cols="8" sm="3" md="3" class="mt-8">
+          <v-text-field
+          color="#394361"
+            label="Search"
+            append-icon="mdi-magnify"
+          ></v-text-field>
+        </v-col>
+        <v-spacer></v-spacer>
 
-          <v-btn icon  color="#394361">
-            <v-icon >mdi-magnify</v-icon>
-         </v-btn>
-         <v-btn icon color="#394361" class="mx-2">
+         <v-btn icon color="#394361" class="mx-2 mt-2">
             <v-icon>mdi-bell</v-icon>
          </v-btn>
          <v-sparkline color="#394361"></v-sparkline>
-         <v-btn depressed elevation="flat" class="white black--text mx-3">Log out</v-btn>
+         <v-btn depressed elevation="flat" class="white black--text mx-3 mt-2 hidden-md-and-down">Log out</v-btn>
       </v-app-bar >
 
 <!-- Navbar -->
