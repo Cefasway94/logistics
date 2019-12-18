@@ -33,7 +33,7 @@
                 
                 
                 <v-flex xs12 sm12 md2  class="px-6 py-5 my-auto">
-                           <v-btn  elevation="flat"  class=" primary subtitle-2 white--text font-weight-light" block >view details</v-btn>
+                           <v-btn  elevation="flat"  class=" primary subtitle-2 white--text font-weight-regular" block >view details</v-btn>
                 </v-flex >
                 
           </v-layout >
@@ -68,7 +68,7 @@
                 
                 
                 <v-flex xs12 sm12 md2  class="px-6 py-5 my-auto">
-                           <v-btn  elevation="flat"  class="primary subtitle-2 white--text font-weight-light" block >view details</v-btn>
+                           <v-btn  elevation="flat"  class="primary subtitle-2 white--text font-weight-regular" block >view details</v-btn>
                 </v-flex >
                 
           </v-layout >
@@ -103,7 +103,7 @@
                 
                 
                 <v-flex xs12 sm12 md2  class="px-6 py-5 my-auto">
-                           <v-btn  elevation="flat"  class="primary subtitle-2 white--text font-weight-light" block >view details</v-btn>
+                           <v-btn  elevation="flat"  class="primary subtitle-2 white--text font-weight-regular" block >view details</v-btn>
                 </v-flex >
                 
           </v-layout >
@@ -138,7 +138,7 @@
                 
                 
                 <v-flex xs12 sm12 md2  class="px-6 py-5 my-auto">
-                           <v-btn  elevation="flat"  class="primary subtitle-2 white--text font-weight-light" block >view details</v-btn>
+                           <v-btn  elevation="flat"  class="primary subtitle-2 white--text font-weight-regular" block >view details</v-btn>
                 </v-flex >
                 
           </v-layout >
@@ -173,7 +173,7 @@
                 
                 
                 <v-flex xs12 sm12 md2  class="px-6 py-5 my-auto">
-                           <v-btn  elevation="flat"  class="primary subtitle-2 white--text font-weight-light" block >view details</v-btn>
+                           <v-btn  elevation="flat"  class="primary subtitle-2 white--text font-weight-regular" block >view details</v-btn>
                 </v-flex >
                 
           </v-layout >
