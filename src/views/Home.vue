@@ -3,7 +3,6 @@
    <v-content>
     <Navigation/>
    
-      
         <router-view> </router-view>
       
   </v-content>

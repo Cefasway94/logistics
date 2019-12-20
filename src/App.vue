@@ -1,7 +1,7 @@
 <template>
   <v-app style="background-color:#F5FAFF;">
       <div v-if="login">
-        <Dashboard/>
+        <Home/>
       </div>
       <div v-if="!login">
         <Login/>
@@ -12,13 +12,13 @@
 <script>
 // import HelloWorld from './components/HelloWorld';
 // import Login from './views/Login';
-import Dashboard from './views/Dashboard';
-import Login from './views/Login';
+import Home from './views/Home.vue';
+import Login from './views/Login.vue';
 
 export default {
   name: 'App',
   components: {
-         Dashboard, 
+         Home, 
          Login
   },
 

@@ -10,7 +10,7 @@
 
           <v-app-bar-nav-icon @click="drawer = !drawer" color="#394361" ></v-app-bar-nav-icon>
 
-          <v-toolbar-title class="black--text" >
+          <v-toolbar-title class="grey--text" >
            Dashboard
           </v-toolbar-title>
 
@@ -25,10 +25,12 @@
         </v-col>
         <v-spacer></v-spacer>
 
-         <v-btn icon color="#394361" class="mx-2 mt-2">
+         <v-btn icon color="grey" class="mx-2 mt-2">
             <v-icon>mdi-bell</v-icon>
          </v-btn>
-         <v-sparkline color="#394361"></v-sparkline>
+         
+         <v-divider class="mx-auto" vertical></v-divider>
+
          <v-btn depressed elevation="flat" class="white black--text mx-3 mt-2 hidden-md-and-down">Log out</v-btn>
       </v-app-bar >
 

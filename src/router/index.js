@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import Signin from '../components/Signin.vue';
 import Signup from '../components/Signup.vue';
 import Client from '../components/Client.vue';
+import Agent  from '../components/Agent.vue';
+import Tenders from '../components/Tenders.vue';
+import Biding from '../components/Biding.vue'
 
 Vue.use(VueRouter)
 
@@ -23,9 +26,24 @@ const routes = [
     component: Signup
   },
   {
-    path:'/dashboard/client',
+    path:'/client',
     name:'client',
     component: Client
+  },
+  {
+    path:'/home/agent',
+    name:'agent',
+    component: Agent
+  },
+  {
+    path:'/home/tenders',
+    name:'tenders',
+    component: Tenders
+  },
+  {
+    path:'/home/biding',
+    name:'biding',
+    component: Biding
   }
 ]
 
