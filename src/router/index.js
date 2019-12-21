@@ -31,17 +31,17 @@ const routes = [
     component: Client
   },
   {
-    path:'/home/agent',
+    path:'/agent',
     name:'agent',
     component: Agent
   },
   {
-    path:'/home/tenders',
+    path:'/tenders',
     name:'tenders',
     component: Tenders
   },
   {
-    path:'/home/biding',
+    path:'/biding',
     name:'biding',
     component: Biding
   }

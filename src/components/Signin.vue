@@ -4,8 +4,8 @@
         elevation="20"
         class="my-auto mx-8 pa-7"
         width="500" >
-            <v-card-title >
-                <h2 class="primary--text  " >SIGN IN</h2>
+            <v-card-title class=" text-center">
+                <h2 class="primary--text text-center " >SIGN IN</h2>
             </v-card-title>
             <v-card-text>
                 <span>Welcome to Ubalori</span> 

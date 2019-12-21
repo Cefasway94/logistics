@@ -22,27 +22,29 @@
      
                <v-layout sm10 md10  class=" pt-4 px-3" >       
                    <v-flex xs12 sm4 md4 lg4  class=" pl-3 pr-2">
-                        <h4 class=" subtitle-2 font-weight-regular mb-1" >CARGO DETAILS</h4>
+                        <h4 class=" subtitle-2 font-weight-regular mb-1" >Cargo details</h4>
                         <p class=" body-2 grey--text">Details tile </p>
                    </v-flex>
 
                     <v-flex xs12 sm4 md4 lg4  class=" ">
-                        <h4 class=" subtitle-2 font-weight-regular mb-1">DESTINATION</h4>
+                        <h4 class=" subtitle-2 font-weight-regular mb-1">Destination</h4>
                         <p class=" body-2 grey--text">Democratic republic of congo </p>
                    </v-flex>
 
                     <v-flex xs12 sm4 md4 lg4 class=" pl-3 pr-2">
-                        <h4 class="subtitle-2 font-weight-regular mb-1">CLIENT</h4>
+                        <h4 class="subtitle-2 font-weight-regular mb-1">Client</h4>
                         <p class="body-2 grey--text">fdsfiusdfh Lorem  dkjsnf .</p>
                    </v-flex>
                 </v-layout>
                 
-                
-                      <v-chip color="" class="light-green font-weight-light caption my-5  mx-2" >2000 usd</v-chip>
-                            
-                              
-                <v-flex xs12 sm12 md2  class="px-6 py-5 my-auto">
-                           <v-btn  elevation="flat"  class=" primary subtitle-2 white--text font-weight-regular" block >view details</v-btn>
+                <v-flex column wrap xs12 sm4 md1 lg1 class="pl-3 pr-2 pt-3" >
+                        <h4 class="text-center subtitle-2 font-weight-regular mb-1" >Price</h4>
+                      <v-chip color="light-green " small outlined class="light-green  font-weight-light caption px-2" >2000 usd</v-chip>                    
+                </v-flex>
+
+
+                <v-flex xs12 sm12 md2  class="px-4 my-auto">
+                           <v-btn  elevation="flat"  class=" primary subtitle-2 white--text font-weight-regular" block router to="/biding" >view details</v-btn>
                 </v-flex >
                 
           </v-layout >

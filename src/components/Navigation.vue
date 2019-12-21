@@ -28,7 +28,7 @@
          <v-btn icon color="grey" class="mx-2 mt-2">
             <v-icon>mdi-bell</v-icon>
          </v-btn>
-         
+
          <v-divider class="mx-auto" vertical></v-divider>
 
          <v-btn depressed elevation="flat" class="white black--text mx-3 mt-2 hidden-md-and-down">Log out</v-btn>
@@ -47,13 +47,15 @@
         <v-list-item
           v-for="item in items"
           :key="item.title"
+          router 
+          :to="item.router"
           link>
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+            <v-list-item-title >{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -91,9 +93,9 @@ export default {
       colors: ['primary', 'accent', 'warning lighten-2', 'teal', 'orange'],
       drawer: true,
       items:[
-        {title: 'Dashboard', icon: 'dashboard'},
-        {title: 'Account', icon: 'account_box'},
-        {title: 'Admin', icon: 'gavel'}
+        {title: 'Tenders', icon: 'dashboard', router:'/tenders'},
+        {title: 'Dashboard', icon: 'account_box', router:'/agent'},
+        {title: 'Payments', icon: 'gavel', router:'/pament'}
       ]
       }
       

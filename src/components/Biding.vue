@@ -15,7 +15,11 @@
 
           <v-layout column wrap  class=" px-2">
 
-              <h3 sm12 md12 class="pl-5 pt-4">Tender details</h3>
+              <v-container row class="pt-4">
+              
+                <h3  class="px-5 ">Tender details</h3>
+                <v-chip class="font-weight-light caption px-3"> Pending</v-chip>
+              </v-container>
           
           <v-layout row wrap class="px-8">
      
@@ -61,6 +65,7 @@
 
 <v-layout column wrap  class=" px-2 mt-4 ">
               
+              
               <h3 class="pl-5">Bid terms</h3>
 
      <v-layout column wrap >
@@ -87,8 +92,8 @@
                         </v-row>
 
                         <v-row class="px-8 pb-5" justify="end">
-                            <v-btn color="" class="white  mr-4" elevation="flat" > Reset Form </v-btn>
-                            <v-btn color="blue white--text"> Confirm Bid </v-btn>
+                            <v-btn color="" class="white  mr-4" elevation="flat" router to="/tenders" > Cancel </v-btn>
+                            <v-btn color="primary white--text"> Confirm Bid </v-btn>
                         </v-row>
                 </v-form>
 
