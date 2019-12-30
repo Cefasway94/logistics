@@ -1,58 +1,98 @@
 <template >
     <div class=" pa-auto" >
 
-            <v-container  class=" mt-10 mx-auto">
-                <h2 class="subheading grey--text my-10">List of all new tenders</h2>
-          
-             
+            <v-container  class=" mt-10">
+                <h3 style="color:#394361;" class="title mt-10 px-2">All new tenders</h3>
+
+    <v-container fluid class="" > 
+
+        <v-row >
+             <v-layout xs12 sm4 md4 lg4 class="py-3 px-2">
+                <v-card column width="350"  elevation="3" class="px-4 py-3">
+                    <v-row  row class="px-3 pt-1">
+                        <h4  class="">Used furniture</h4>
+                        <v-spacer></v-spacer>
+
+                        <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
+                    </v-row>
+                   
+                        <p class=" body-2 grey--text">ABC furniture</p>
+                    
+                    <v-row class="px-3">
+                        <p class="body-2  pt-1 ">Dar-es-salaam</p>
+                        
+                        <v-icon small color="#4169E1" class="px-2 pb-3">
+                            arrow_forward
+                        </v-icon>
+                        <p  class="body-2  pt-1 ">Rwanda</p>
+                    </v-row>
+
+                    <v-row row class="px-3">
+                        <h4  class=" title ">500 USD</h4>
+                        <v-spacer></v-spacer>
+                        <v-btn small color="primary white--text" class="">View Details</v-btn>
+                    </v-row>
+                </v-card>
+            </v-layout>
+
+              <v-layout xs12 sm4 md4 lg4 class="py-3 px-2">
+                <v-card column width="350"  elevation="3" class="px-4 py-3">
+                    <v-row  row class="px-3 pt-1">
+                        <h4  class="">Used furniture</h4>
+                        <v-spacer></v-spacer>
+
+                        <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
+                    </v-row>
+                   
+                        <p class=" body-2 grey--text">ABC furniture</p>
+                    
+                    <v-row class="px-3">
+                        <p class="body-2  pt-1 ">Dar-es-salaam</p>
+                        
+                        <v-icon small color="#4169E1" class="px-2 pb-3">
+                            arrow_forward
+                        </v-icon>
+                        <p  class="body-2  pt-1 ">Rwanda</p>
+                    </v-row>
+
+                    <v-row row class="px-3">
+                        <h4  class=" title ">500 USD</h4>
+                        <v-spacer></v-spacer>
+                        <v-btn small color="primary white--text" class="">View Details</v-btn>
+                    </v-row>
+                </v-card>
+            </v-layout>
+
+            <v-layout xs12 sm4 md4 lg4 class="py-3 px-2">
+                <v-card column width="350"  elevation="3" class="px-4 py-3">
+                    <v-row  row class="px-3 pt-1">
+                        <h4  class="">Used furniture</h4>
+                        <v-spacer></v-spacer>
+
+                        <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
+                    </v-row>
+                   
+                        <p class=" body-2 grey--text">ABC furniture</p>
+                    
+                    <v-row class="px-3">
+                        <p class="body-2  pt-1 ">Dar-es-salaam</p>
+                        
+                        <v-icon small color="#4169E1" class="px-2 pb-3">
+                            arrow_forward
+                        </v-icon>
+                        <p  class="body-2  pt-1 ">Rwanda</p>
+                    </v-row>
+
+                    <v-row row class="px-3">
+                        <h4  class=" title ">500 USD</h4>
+                        <v-spacer></v-spacer>
+                        <v-btn small color="primary white--text " class="">View Details</v-btn>
+                    </v-row>
+                </v-card>
+            </v-layout>                  
+        </v-row>
         
-
-
-             <v-container fluid
-             class=""
-             >
-                 
-          <v-card
-                elevation="3"
-                class="mb-4 mx-auto"
-                max-width="1050">
-
-          <v-layout row wrap  class=" px-2 ">
-              
-     
-               <v-layout sm10 md10  class=" pt-4 px-3" >       
-                   <v-flex xs12 sm4 md4 lg4  class=" pl-3 pr-2">
-                        <h4 class=" subtitle-2 font-weight-regular mb-1" >Cargo details</h4>
-                        <p class=" body-2 grey--text">Details tile </p>
-                   </v-flex>
-
-                    <v-flex xs12 sm4 md4 lg4  class=" ">
-                        <h4 class=" subtitle-2 font-weight-regular mb-1">Destination</h4>
-                        <p class=" body-2 grey--text">Democratic republic of congo </p>
-                   </v-flex>
-
-                    <v-flex xs12 sm4 md4 lg4 class=" pl-3 pr-2">
-                        <h4 class="subtitle-2 font-weight-regular mb-1">Client</h4>
-                        <p class="body-2 grey--text">fdsfiusdfh Lorem  dkjsnf .</p>
-                   </v-flex>
-                </v-layout>
-                
-                <v-flex column wrap xs12 sm4 md1 lg1 class="pl-3 pr-2 pt-3" >
-                        <h4 class="text-center subtitle-2 font-weight-regular mb-1" >Price</h4>
-                      <v-chip color="light-green " small outlined class="light-green  font-weight-light caption px-2" >2000 usd</v-chip>                    
-                </v-flex>
-
-
-                <v-flex xs12 sm12 md2  class="px-4 my-auto">
-                           <v-btn  elevation="flat"  class=" primary subtitle-2 white--text font-weight-regular" block router to="/biding" >view details</v-btn>
-                </v-flex >
-                
-          </v-layout >
-        </v-card> 
-
-             </v-container>
- 
-    
+             </v-container>    
         </v-container>
     </div>
 </template>

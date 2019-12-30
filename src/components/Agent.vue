@@ -2,65 +2,125 @@
     <div class=" pa-auto" >
 
             <v-container  class=" mt-10 mx-auto">
-                <h2 class="subheading grey--text my-10">Dashboard</h2>
+                <h3 style="color:#394361;" class="title mt-10 px-2">Dashboard</h3>
           
             <v-tabs
+            right
              background-color="transparent"
              color="#394361"
              left >
 
-             <v-tab>Landscape</v-tab>
-             <v-tab>City</v-tab>
-             <v-tab>Abstract</v-tab>   
-             </v-tabs>    
-        
-<v-tabs-items>
-    <v-divider class="mx-auto mb-4" ></v-divider>
-<v-tab-item>
+             <v-tab>Option</v-tab>
+             <v-tab>Option</v-tab>
+             <v-tab>Option</v-tab>
 
-             <v-container fluid
-             class=""
-             >
-                 
-          <v-card
-                elevation="3"
-                class="mb-4 mx-auto"
-                max-width="1050">
+             <v-tab-item >
 
-          <v-layout row wrap  class=" px-2 ">
-               <div class="pa-3 my-auto hidden-md-and-down" >
-                      <v-chip color="" class="light-green font-weight-light caption px-5 mx-2" >Pending</v-chip>
-               </div>
-     
-               <v-layout sm10 md10  class=" pt-4 px-3" >       
-                   <v-flex xs12 sm4 md4 lg4  class=" pl-3 pr-2">
-                        <h4 class=" subtitle-2 font-weight-regular mb-1" >CARGO DETAILS</h4>
-                        <p class=" body-2 grey--text">Details tile </p>
-                   </v-flex>
+                <v-divider class="mx-auto " ></v-divider>
 
-                    <v-flex xs12 sm4 md4 lg4  class=" ">
-                        <h4 class=" subtitle-2 font-weight-regular mb-1">DESTINATION</h4>
-                        <p class=" body-2 grey--text">Democratic republic of congo </p>
-                   </v-flex>
+    <v-container fluid class="" style="background-color:#F5FAFF;"> 
 
-                    <v-flex xs12 sm4 md4 lg4 class=" pl-3 pr-2">
-                        <h4 class="subtitle-2 font-weight-regular mb-1">CLIENT</h4>
-                        <p class="body-2 grey--text">fdsfiusdfh Lorem  dkjsnf .</p>
-                   </v-flex>
-                </v-layout>
-                
-                
-                <v-flex xs12 sm12 md2  class="px-6 py-5 my-auto">
-                           <v-btn  elevation="flat"  class=" primary subtitle-2 white--text font-weight-regular" block >view details</v-btn>
-                </v-flex >
-                
-          </v-layout >
-        </v-card> 
+        <v-row >
+             <v-layout xs12 sm4 md4 lg4 class="py-3 px-2">
+                <v-card column width="350"  elevation="3" class="px-4 py-3">
+                    <v-row  row class="px-3 pt-1">
+                        <h4  class="">Used furniture</h4>
+                        <v-chip 
+                        small class="light-green white--text caption font-weight-light mx-3" >
+                        Pending
+                        </v-chip>
+                        <v-spacer></v-spacer>
 
-             </v-container>
-    </v-tab-item>
-</v-tabs-items>
-    
+                        <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
+                    </v-row>
+                   
+                        <p class=" body-2 grey--text">ABC furniture</p>
+                    
+                    <v-row class="px-3">
+                        <p class="body-2  pt-1 ">Dar-es-salaam</p>
+                        
+                        <v-icon small color="#4169E1" class="px-2 pb-3">
+                            arrow_forward
+                        </v-icon>
+                        <p  class="body-2  pt-1 ">Rwanda</p>
+                    </v-row>
+
+                    <v-row row class="px-3">
+                        <h4  class=" title ">500 USD</h4>
+                        <v-spacer></v-spacer>
+                        <v-btn small color="primary white--text" class="">View Details</v-btn>
+                    </v-row>
+                </v-card>
+            </v-layout>
+
+              <v-layout xs12 sm4 md4 lg4 class="py-3 px-2">
+                <v-card column width="350"  elevation="3" class="px-4 py-3">
+                    <v-row  row class="px-3 pt-1">
+                        <h4  class="">Used furniture</h4>
+                        <v-chip 
+                        small class="light-green white--text caption font-weight-light mx-3" >
+                        Pending
+                        </v-chip>
+                        <v-spacer></v-spacer>
+
+                        <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
+                    </v-row>
+                   
+                        <p class=" body-2 grey--text">ABC furniture</p>
+                    
+                    <v-row class="px-3">
+                        <p class="body-2  pt-1 ">Dar-es-salaam</p>
+                        
+                        <v-icon small color="#4169E1" class="px-2 pb-3">
+                            arrow_forward
+                        </v-icon>
+                        <p  class="body-2  pt-1 ">Rwanda</p>
+                    </v-row>
+
+                    <v-row row class="px-3">
+                        <h4  class=" title ">500 USD</h4>
+                        <v-spacer></v-spacer>
+                        <v-btn small color="primary white--text" class="">View Details</v-btn>
+                    </v-row>
+                </v-card>
+            </v-layout>
+
+            <v-layout xs12 sm4 md4 lg4 class="py-3 px-2">
+                <v-card column width="350"  elevation="3" class="px-4 py-3">
+                    <v-row  row class="px-3 pt-1">
+                        <h4  class="">Used furniture</h4>
+                        <v-chip 
+                        small class="light-green white--text caption font-weight-light mx-3" >
+                        Pending
+                        </v-chip>
+                        <v-spacer></v-spacer>
+
+                        <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
+                    </v-row>
+                   
+                        <p class=" body-2 grey--text">ABC furniture</p>
+                    
+                    <v-row class="px-3">
+                        <p class="body-2  pt-1 ">Dar-es-salaam</p>
+                        
+                        <v-icon small color="#4169E1" class="px-2 pb-3">
+                            arrow_forward
+                        </v-icon>
+                        <p  class="body-2  pt-1 ">Rwanda</p>
+                    </v-row>
+
+                    <v-row row class="px-3">
+                        <h4  class=" title ">500 USD</h4>
+                        <v-spacer></v-spacer>
+                        <v-btn small color="primary white--text" class="">View Details</v-btn>
+                    </v-row>
+                </v-card>
+            </v-layout>
+
+        </v-row>
+             </v-container> 
+             </v-tab-item>     
+           </v-tabs>    
         </v-container>
     </div>
 </template>
