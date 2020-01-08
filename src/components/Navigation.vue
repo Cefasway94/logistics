@@ -10,17 +10,25 @@
 
           <v-app-bar-nav-icon @click="drawer = !drawer" color="#394361" ></v-app-bar-nav-icon>
 
-          <v-toolbar-title class="grey--text" >
+          <v-toolbar-title class="grey--text hidden-md-and-down" >
            Dashboard
           </v-toolbar-title>
 
          
   <v-spacer></v-spacer>
-          <v-col cols="8" sm="3" md="3" class="mt-8">
-          <v-text-field
-          color="#394361"
-            label="Search"
-            append-icon="mdi-magnify"
+          <v-col cols="8" sm="4" md="4" xl="6" class="">
+          <v-text-field class="body-1 font-weight-regular"
+          autofocus
+          flat
+          hide-details
+          solo
+          clearable
+          clear-icon="clear"
+          color="#4169E1"
+            label="Search tender"
+            prepend-inner-icon="mdi-magnify"
+            background-color="#F5FAFF"
+         
           ></v-text-field>
         </v-col>
         <v-spacer></v-spacer>
@@ -60,7 +68,7 @@
         </v-list-item>
       </v-list>
 
-        <div class="pa-2">
+        <div class="pa-2 hidden-md-and-up">
           <v-btn color="#4169E1" elevation="false" block>Logout</v-btn>
         </div>
       
@@ -95,7 +103,7 @@ export default {
       items:[
         {title: 'Tenders', icon: 'dashboard', router:'/tenders'},
         {title: 'Dashboard', icon: 'account_box', router:'/agent'},
-        {title: 'Payments', icon: 'gavel', router:'/pament'}
+        {title: 'Payments', icon: 'gavel', router:'/payment'}
       ]
       }
       

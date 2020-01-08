@@ -7,11 +7,12 @@ Vue.use(Vuetify);
 export default new Vuetify({
     icons: {
         iconfont:'md',  
+        
     },
     theme:{
         themes:{
             primary:'black',
-            mainoragne:'FF8C00',
+            mainoragne:'#FF8C00',
             text:'#394361',
             white:'#FFFFFF ',
             red:'#DC493A',
