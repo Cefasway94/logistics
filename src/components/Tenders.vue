@@ -1,9 +1,12 @@
 <template >
     <div class=" pa-auto" >
 
-            <v-container  class=" mt-10">
+            <v-container  class=" mt-12">
+                <v-card flat width="1300" class=" mx-auto mt-12" color="#F5FAFF">
                 <h3 style="color:#394361;" class="title mt-10 px-2">All new tenders</h3>
+                </v-card>
 
+    <v-card flat width="1300" class=" mx-auto" color="#F5FAFF">
     <v-container fluid class="" > 
 
         <v-row >
@@ -211,7 +214,8 @@
 
         </v-row>
         
-             </v-container>    
+             </v-container>
+    </v-card>    
         </v-container>
     </div>
 </template>

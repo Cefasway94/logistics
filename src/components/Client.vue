@@ -2,14 +2,16 @@
     <div class=" pa-auto" >
 
             <v-container  class=" mt-12 mx-auto">
+
                 <v-card flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="mt-5">
                 <h3 style="color:#394361;" class="title mt-10 px-2">Dashboard</h3>
                 <v-spacer></v-spacer>
-                <v-btn class="primary mt-5" large router to="/createtender">Add New</v-btn>
+                <v-btn class="primary mt-5" router to="/createtender">Add New</v-btn>
                 </v-flex>
                 </v-card>
           
+             <v-card flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
             <v-tabs
             right
              background-color="transparent"
@@ -251,15 +253,11 @@
                     </v-row>
                 </v-card>
             </v-flex>
-
-             
-
-                         
-
         </v-row>
              </v-container> 
              </v-tab-item>     
            </v-tabs>    
+             </v-card>
         </v-container>
     </div>
 </template>

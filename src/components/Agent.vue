@@ -2,8 +2,10 @@
     <div class=" pa-auto" >
 
             <v-container  class=" mt-10 mx-auto">
-                <h3 style="color:#394361;" class="title mt-10 px-2">Dashboard</h3>
-          
+                <v-card flat width="1300" class=" mx-auto mt-12" color="#F5FAFF">
+                <h3 style="color:#394361;" class="title px-2">Dashboard</h3>
+                </v-card>
+            <v-card flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
             <v-tabs
             right
              background-color="transparent"
@@ -253,6 +255,7 @@
              </v-container> 
              </v-tab-item>     
            </v-tabs>    
+            </v-card>
         </v-container>
     </div>
 </template>

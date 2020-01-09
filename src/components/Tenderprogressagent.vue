@@ -220,7 +220,7 @@
             <v-card flat width="1300" class=" mb-5" color="#F5FAFF">
                         <v-flex row class="">
                             <v-spacer></v-spacer>
-                            <v-btn large class="primary" rauter to="/biding">complete tender</v-btn>
+                            <v-btn large class="primary" rauter >complete tender</v-btn>
                         </v-flex>
                     </v-card>
             </v-card>
