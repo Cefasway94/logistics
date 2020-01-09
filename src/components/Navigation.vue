@@ -101,7 +101,7 @@ export default {
       colors: ['primary', 'accent', 'warning lighten-2', 'teal', 'orange'],
       drawer: true,
       items:[
-        {title: 'Tenders', icon: 'dashboard', router:'/tenders'},
+        {title: 'Tenders', icon: 'dashboard', router:'/agent/tenders'},
         {title: 'Dashboard', icon: 'account_box', router:'/agent'},
         {title: 'Payments', icon: 'gavel', router:'/payment'}
       ]

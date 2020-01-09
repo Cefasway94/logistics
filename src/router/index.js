@@ -2,20 +2,26 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Signin from '../components/Signin.vue';
 import Signup from '../components/Signup.vue';
-import Client from '../components/Client.vue';
-import Agent  from '../components/Agent.vue';
-import Tenders from '../components/Tenders.vue';
-import Biding from '../components/Biding.vue';
-import Abouttender from '../components/Abouttender.vue';
-import Createtender from '../components/Createtender.vue';
-import Clienteditprofile from '../components/Clienteditprofile.vue';
-import Tenderprogressclient from '../components/Tenderprogressclient.vue'
-import Tenderprogressagent from '../components/Tenderprogressagent.vue';
+
+//agent routes
+import Agent  from '../components/agents/Agent.vue';
+import Biding from '../components/agents/Biding.vue';
+import Abouttender from '../components/agents/Abouttender';
+import Tenderprogressagent from '../components/agents/Tenderprogressagent.vue';
+import Tenders from '../components/agents/Tenders.vue';
+import Agenteditprofile from '../components/agents/Agenteditprofile.vue';
+
+//client routs
+import Client from '../components/client/Client.vue';
+import Createtender from '../components/client/Createtender.vue';
+import Clienteditprofile from '../components/client/Clienteditprofile.vue';
+import Tenderprogressclient from '../components/client/Tenderprogressclient.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
 
+  // general routes
   {
     path: '/login',
     name: 'login',
@@ -30,38 +36,20 @@ const routes = [
     name:'signup',
     component: Signup
   },
+  
+  //---------------------------client
   {
     path:'/client',
     name:'client',
     component: Client
   },
   {
-    path:'/agent',
-    name:'agent',
-    component: Agent
-  },
-  {
-    path:'/tenders',
-    name:'tenders',
-    component: Tenders
-  },
-  {
-    path:'/biding',
-    name:'biding',
-    component: Biding
-  },
-  {
-    path:'/Abouttender',
-    name:'Abouttender',
-    component:Abouttender
-  },
-  {
-    path:'/Clienteditprofile',
+    path:'/Client/editprofile',
     name:'Clienteditprofile',
     component:Clienteditprofile
   },
   {
-    path:'/Createtender',
+    path:'/client/Createtender',
     name:'Createtender',
     component:Createtender
   },
@@ -70,11 +58,39 @@ const routes = [
     name:'Tenderprogressclient',
     component:Tenderprogressclient
   },
+
+  //-------------------- Agent routes
+  {
+    path:'/agent',
+    name:'agent',
+    component: Agent
+  },
+  {
+    path:'/agent/editprofile',
+    name:'Agentprofile',
+    component: Agenteditprofile
+  },
+  {
+    path:'/agent/tenders',
+    name:'tenders',
+    component: Tenders
+  },
+  {
+    path:'/agent/biding',
+    name:'biding',
+    component: Biding
+  },
+  {
+    path:'/agent/Abouttender',
+    name:'Abouttender',
+    component:Abouttender
+  },
   {
     path:'/agent/tenderprogress',
     name:'Tenderprogressagent',
     component:Tenderprogressagent
   },
+
 ]
 
 const router = new VueRouter({

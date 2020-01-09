@@ -92,7 +92,7 @@
                         </v-row>
 
                         <v-row class="px-8 pb-5" justify="end">
-                            <v-btn color="" class="white  mr-4" elevation="flat" router to="/tenders" > Cancel </v-btn>
+                            <v-btn color="" class="white  mr-4" elevation="flat" router to="/agent/tenders" > Cancel </v-btn>
                             <v-btn color="primary white--text"> Confirm Bid </v-btn>
                         </v-row>
                 </v-form>
