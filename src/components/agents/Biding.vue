@@ -1,127 +1,160 @@
-<template >
-    <div class=" pa-auto" >
+<template>
+    <v-container class=" mt-12 px-5">
 
-            <v-container  class=" mt-10 mx-auto">
-                <h2 class="subheading grey--text my-10">Bid on tender</h2>
-          
-             <v-container fluid
-             class=""
-             >
-                 
-          <v-card
-                elevation="3"
-                class="mb-4 mx-auto"
-                max-width="1300">
+            <v-card flat width="1300" class="mt-12 mx-auto mb-5" color="#F5FAFF">
+                <v-flex row class="px-3 ">
+                <v-flex>
+                <v-row class="pl-2 mb-1">
+                <h1 class=" font-weight-regular headline ">Used furniture</h1>
+                <v-chip color="grey" small class="white--text ml-7 mt-1">Aavilable</v-chip>
+                </v-row>
+                <p class="grey--text">1 40 feet container of used furniture</p>
+                </v-flex>
+                <v-spacer></v-spacer>
+                <h2 >$ 500.0</h2>
+                </v-flex>
+            </v-card>
 
-          <v-layout column wrap  class=" px-2">
+            <v-card flat width="1300" class="mx-auto mb-10 px-5" color="#F5FAFF">
+                <v-flex row>
+                <v-flex sm12 md9 lg9 xlg9 >
+                    <v-card width="" class="pt-6 pb-3 pl-8">
+                        <v-flex column>
+                        <v-flex row >
+                            <v-flex column class="pl-3">
+                            <p class=" body-1 mb-2" style="color:#4169E1;"> DESTINATION </p>
+                            <p class="body-1">Rwanda</p>
+                            </v-flex>
+                            <v-flex column >
+                            <p class=" body-1 mb-2" style="color:#4169E1;"> ORIGIN </p>
+                            <p class="body-1">Rwanda</p>
+                            </v-flex>
+                            <v-flex column >
+                            <p class=" body-1 mb-2" style="color:#4169E1;"> CARGO SIZE </p>
+                            <p class="body-1">40 feet</p>
+                            </v-flex>
+                        </v-flex>
 
-              <v-container row class="pt-4">
-              
-                <h3  class="px-5 ">Tender details</h3>
-                <v-chip class="font-weight-light caption px-3"> Pending</v-chip>
-              </v-container>
-          
-          <v-layout row wrap class="px-8">
-     
-               <v-layout column sm12 md6  class=" pa-5" >       
-                   <v-flex row class=" ">
-                        <h4 class="px-2 subtitle-2 font-weight-regular mb-1" >CARGO DETAILS</h4>
-                        <p class=" body-2 grey--text">Details tile </p>
-                   </v-flex>
+                        <v-flex column class="mt-7 pr-4">
+                            <p class=" body-1 mb-0" style="color:#4169E1;"> TERMS AND CONDITIIONS </p>
+                            <p class="body-1">Lorem ipsum, dolor sit amet consectetur 
+                                adipisicing elit. Doloremque, maiores. Sit repellat amet, 
+                                odit molestias adipisci, tempora voluptates quod voluptate 
+                                exercitationem blanditiis nulla quos delectus, quae ut! Neque, 
+                                recusandae perspiciatis!</p>
+                        </v-flex>
 
-                    <v-flex row class=" ">
-                        <h4 class="px-2 subtitle-2 font-weight-regular mb-1">DESTINATION</h4>
-                        <p class=" body-2 grey--text">Democratic republic of congo </p>
-                   </v-flex>
+                        <v-flex row class="mt-10 mb-4" >
+                            <v-flex column class="pl-3">
+                            <p class=" body-1 mb-2" style="color:#4169E1;"> DESTINATION </p>
+                            <v-card flat width="200" height="150" outlined>
+                            <v-image class="ma-auto">
+                                <v-icon x-large class="mx-12 mt-12">
+                                    cloud_upload
+                                </v-icon>
+                            </v-image>
+                        </v-card>
+                            </v-flex>
 
-                    <v-flex row class=" ">
-                        <h4 class="px-2 subtitle-2 font-weight-regular mb-1">CLIENT</h4>
-                        <p class="body-2 grey--text">fdsfiusdfh Lorem  dkjsnf .</p>
-                   </v-flex>
-                </v-layout>
+                            <v-flex column >
+                            <p class=" body-1 mb-2" style="color:#4169E1;"> ORIGIN </p>
+                            <v-card flat width="200" height="150" outlined>
+                            <v-image class="ma-auto">
+                                <v-icon x-large class="mx-12 mt-12">
+                                    cloud_upload
+                                </v-icon>
+                            </v-image>
+                        </v-card>
+                            </v-flex>
 
-            <v-layout column sm12 md6 class="pa-5">
-                <v-container row >
-                     <v-flex sm6 md6  class="px-6 py-5 my-auto">
-                            <v-btn  elevation="flat"  class=" primary subtitle-2 white--text font-weight-regular" block >view details</v-btn>
-                        </v-flex >
-                        <v-flex sm6 md6  class="px-6 py-5 my-auto">
-                            <v-btn  elevation="flat"  class=" primary subtitle-2 white--text font-weight-regular" block >view details</v-btn>
-                     </v-flex >
-                </v-container>
+                            <v-flex column >
+                            <p class=" body-1 mb-2" style="color:#4169E1;"> CARGO SIZE </p>
+                            <v-card flat width="200" height="150" outlined>
+                            <v-image class="ma-auto">
+                                <v-icon x-large class="mx-12 mt-12">
+                                    cloud_upload
+                                </v-icon>
+                            </v-image>
+                        </v-card>
+                            </v-flex>
+                        </v-flex>
+                        </v-flex>
+                    </v-card>
+                    
+                    <v-card width="1300" class="mt-5 mb-5 pl-8 pt-6 pb-5" >
+                        <v-flex>
+                            <p class="body-1" style="color:#4169E1;" color="#4169E1">Biding detail</p>
+                        </v-flex>
+                        <v-flex row class="pl-2 mt-10">
+                        <v-flex column class="sm3 md3 px-2">
+                            <v-text-field color="#4169E1" clearable
+                            label="Bid amount"></v-text-field>
+                        </v-flex>
+                        <v-flex column class="sm3 md3 px-2">
+                            <v-text-field color="#4169E1" clearable
+                            label="Delivery time"></v-text-field>
+                        </v-flex>
+                        <v-flex column class="sm6 md6 px-2">
+                            <v-text-field color="#4169E1" clearable
+                            label="Terms and conditions"></v-text-field>
+                        </v-flex>
+                        </v-flex>
+                        <v-flex row class="">
+                            <v-spacer></v-spacer>
+                            <v-btn  elevation="flat" color="white" class="mx-3" style="color:#4169E1;">cancel</v-btn>
+                            <v-btn color="#4169E1" class="white--text">confirm bid</v-btn>
+                        </v-flex>
+                    </v-card>
 
-                <v-container row >
-                     <v-flex sm6 md6  class="px-6 py-5 my-auto">
-                            <v-btn  elevation="flat"  class=" primary subtitle-2 white--text font-weight-regular" block >view details</v-btn>
-                        </v-flex >
-                        <v-flex sm6 md6  class="px-6 py-5 my-auto">
-                            <v-btn  elevation="flat"  class=" primary subtitle-2 white--text font-weight-regular" block >view details</v-btn>
-                     </v-flex >
-                </v-container>
-                
-            </v-layout>
-         </v-layout> 
-    </v-layout >
+                </v-flex>
 
-<v-layout column wrap  class=" px-2 mt-4 ">
-              
-              
-              <h3 class="pl-5">Bid terms</h3>
+                <v-flex sm12 md3 lg3 xlg3 class="px-3">
+                    <v-card color="#4169E1" width="" class="py-4 px-5">
+                        <v-flex row >
+                            <v-flex column class="px-3">
+                            <p class="white--text body-1 font-weight-bold"> ABC FURNITURE </p>
+                            <v-flex column>
+                            <v-flex row class="px-3 ">
+                            <v-icon class="mb-3 white--text" >mail_outline</v-icon>
+                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
+                            </v-flex>
+                            <v-flex class="pl-8">
+                            <p class="white--text ">Lorem@gamil.com</p>
+                            </v-flex>
+                            </v-flex>
 
-     <v-layout column wrap >
-                <v-form >
-                        <v-row class="px-8">
-                            <v-col cols="12" md="3">
-                                 <v-text-field label="Bid amount" required ></v-text-field>
-                            </v-col>
-                            
-                            <v-col cols="12" md="3">
-                                <v-text-field label="Delivery time" required></v-text-field>
-                            </v-col>
-                            
-                            <v-col cols="12" md="6">
-                                <v-text-field label="Payment terms" required>
-                                </v-text-field>
-                            </v-col>
-                        </v-row>
+                            <v-flex column>
+                            <v-flex row class="px-3 ">
+                            <v-icon class="mb-3 white--text"  >room</v-icon>
+                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
+                            </v-flex>
+                            <v-flex class="pl-8">
+                            <p class="white--text ">Street location, st</p>
+                            </v-flex>
+                            </v-flex>
 
-                        <v-row class="px-8">
-                            <v-col cols="12" md="12">
-                                 <v-text-field label="Terms and condition" required ></v-text-field>
-                            </v-col>
-                        </v-row>
+                            <v-flex column>
+                            <v-flex row class="px-3 ">
+                            <v-icon class="mb-3 white--text" >local_phone</v-icon>
+                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
+                            </v-flex>
+                            <v-flex class="pl-8">
+                            <p class="white--text ">Lorem@gamil.com</p>
+                            </v-flex>
+                            </v-flex>
+                            </v-flex>
 
-                        <v-row class="px-8 pb-5" justify="end">
-                            <v-btn color="" class="white  mr-4" elevation="flat" router to="/agent/tenders" > Cancel </v-btn>
-                            <v-btn color="primary white--text"> Confirm Bid </v-btn>
-                        </v-row>
-                </v-form>
+                        </v-flex>
 
-        </v-layout> 
-    </v-layout >
+                    </v-card>
 
-        </v-card> 
+                </v-flex>
+                </v-flex>
+            </v-card>
 
-             </v-container>
- 
-    
-        </v-container>
-    </div>
+            <v-card width="1300" class="mx-auto mb-10 px-5" color="#F5FAFF">
+
+            </v-card>
+
+    </v-container>
 </template>
-
-<script>
-export default {
-  
-  data () {
-      return{
-          project : [
-              {title: '', project:'', project1:'', project2:'', project3:'' },
-              {title: '', project:'', project1:'', project2:'', project3:'' },
-              {title: '', project:'', project1:'', project2:'', project3:'' },
-              {title: '', project:'', project1:'', project2:'', project3:'' }
-          ]
-      }
-  }
-    
-}
-</script>

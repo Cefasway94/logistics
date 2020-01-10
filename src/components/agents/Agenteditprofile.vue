@@ -29,7 +29,14 @@
                 <v-flex row sm6 mb6 justify-center>
                 <v-flex column sm6 mb6>
                     <p class="bondy-2 mb-0">Category</p>
-                    <v-text-field outlined color="#4169E1" clearable ></v-text-field>
+                    <v-select
+                    outlined
+                    class=""
+                    style="color:#4169E1;"
+                    :items="service_type"
+                    color="#4169E1"
+                    clearable
+                    ></v-select>
                 </v-flex>
                 <v-flex column sm6 mb6 class="px-3">
                     <p class="bondy-2 mb-0">Tin No</p>
@@ -94,7 +101,7 @@
             </v-flex>
             </v-flex>
         </v-card>
-
+    
         <v-card flat width="900" class="mt-12 mx-auto" color="#F5FAFF">
             <v-flex row class="px-3">
             <v-icon color="#4169E1" class="">attachments</v-icon>
@@ -102,15 +109,38 @@
             </v-flex>
         </v-card>
 
+    
         <v-card width="900" class="mt-5 mx-auto mb-5 pa-3">
             <v-row>
                 <v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Certificate</p>
                      <v-card flat color="#F5FAFF" width="200" height="150" outlined class="mx-3">
                          <v-flex class="" >
-                             <v-icon x-large class="mx-12 mt-12">
-                                 cloud_upload
-                              </v-icon>
+                            <v-file-input flat dropzone class="mb-0 pb-0" height="150" width="100" 
+                            outlined prepend-icon="" 
+                            ></v-file-input>
+                         </v-flex>
+                    </v-card>
+                </v-col>
+
+                <v-col>
+                    <p class="bondy-2 mb-0 ml-3 mb-0">Insurance</p>
+                     <v-card flat color="#F5FAFF" width="200" height="150" outlined class="mx-3">
+                         <v-flex class="" >
+                            <v-file-input flat dropzone class="mb-0 pb-0" height="150" width="100" 
+                            outlined prepend-icon="" 
+                            ></v-file-input>
+                         </v-flex>
+                    </v-card>
+                </v-col>
+
+                <v-col>
+                    <p class="bondy-2 mb-0 ml-3 mb-0">Other</p>
+                     <v-card flat color="#F5FAFF" width="200" height="150" outlined class="mx-3">
+                         <v-flex class="" >
+                            <v-file-input flat dropzone class="mb-0 pb-0" height="150" width="100" 
+                            outlined prepend-icon="" 
+                            ></v-file-input>
                          </v-flex>
                     </v-card>
                 </v-col>         
@@ -125,9 +155,16 @@
         </v-card>
 
         <v-card  width="900" class="mt-5 mx-auto px-3 pt-4" >
-            <v-flex column class="pa-3">
+            <v-flex column class="pa-3 mx-12">
             <p class="bondy-2 mb-0  mb-0">Payment terms</p>
-            <v-text-field outlined class="" clearable color="#4169E1"></v-text-field>
+            <v-select
+                class=""
+                style="color:#4169E1;"
+              :items="payment_terms"
+              color="#4169E1"
+              clearable
+            >
+            </v-select>
             </v-flex>
         </v-card>
 
@@ -152,7 +189,15 @@
             <v-text-field outlined class="" clearable color="#4169E1"></v-text-field>
             </v-flex>
         </v-card>
-
-
     </v-container>
 </template>
+<script>
+export default {
+   data() {
+       return{
+       payment_terms:['Full payment', 'Pay by installments (30%, 40%, 30%)'],
+       service_type:['Agent', 'Transporter', 'Both'],
+    }
+   },
+}
+</script>

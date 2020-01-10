@@ -21,21 +21,21 @@
                         <v-flex column>
                         <v-flex row >
                             <v-flex column class="pl-3">
-                            <p class="primary--text body-1 mb-2"> DESTINATION </p>
+                            <p class=" body-1 mb-2" style="color:#4169E1;"> DESTINATION </p>
                             <p class="body-1">Rwanda</p>
                             </v-flex>
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> ORIGIN </p>
+                            <p class=" body-1 mb-2" style="color:#4169E1;"> ORIGIN </p>
                             <p class="body-1">Rwanda</p>
                             </v-flex>
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
+                            <p class=" body-1 mb-2" style="color:#4169E1;"> CARGO SIZE </p>
                             <p class="body-1">40 feet</p>
                             </v-flex>
                         </v-flex>
 
                         <v-flex column class="mt-7 pr-4">
-                            <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
+                            <p class=" body-1 mb-1" style="color:#4169E1;"> TERMS AND CONDITIIONS </p>
                             <p class="body-1">Lorem ipsum, dolor sit amet consectetur 
                                 adipisicing elit. Doloremque, maiores. Sit repellat amet, 
                                 odit molestias adipisci, tempora voluptates quod voluptate 
@@ -45,7 +45,7 @@
 
                         <v-flex row class="mt-10 mb-4" >
                             <v-flex column class="pl-3">
-                            <p class="primary--text body-1 mb-2"> DESTINATION </p>
+                            <p class=" body-1 mb-2" style="color:#4169E1;"> DESTINATION </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-image class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -56,7 +56,7 @@
                             </v-flex>
 
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> ORIGIN </p>
+                            <p class=" body-1 mb-2" style="color:#4169E1;"> ORIGIN </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-image class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -67,7 +67,7 @@
                             </v-flex>
 
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
+                            <p class=" body-1 mb-2" style="color:#4169E1;"> CARGO SIZE </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-image class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -151,14 +151,14 @@
                         <v-col class="">
                         <v-card flat  width="1200" class="px-5 py-3" >
                         <v-flex column>
-                        <v-alert type="info"> 
+                        <v-alert type="info" color="#4169E1"> 
                         <p class=" title font-weight-regular mb-0"> Delivery extension required </p>
                         <p class=" font-weight-regular "> Oxo would like 3 days of extension </p>
                         </v-alert>
                         </v-flex>
                         <v-flex row justify-end>
                             <v-btn elevation="false" large class="error mx-2">Reject</v-btn>
-                            <v-btn elevation="false" large class="primary mx-2">Accept</v-btn>
+                            <v-btn elevation="false" color="#4169E1" large class="white--text mx-2">Accept</v-btn>
                         </v-flex>
                         </v-card>
                         </v-col>            
@@ -183,7 +183,7 @@
                 <v-card width="1300" class="mx-auto pa-3">
                     <v-row class="pa-3">
                         <v-col class="">
-                        <p class="primary--text body-2 text-uppercase"> oxoafrica commented</p>
+                        <p class=" body-2 text-uppercase" style="color:#4169E1;"> oxoafrica commented</p>
                         <v-card flat height="100" width="1200" class="px-5 py-3" outlined>
                             <v-text class="" outlined>
                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt praesentium laudantium quibusdam sint odit repellendus consectetur commodi si
@@ -204,7 +204,7 @@
                 <v-card width="1300" class="mx-auto pa-3">
                     <v-row class="pa-3">
                         <v-col class="">
-                        <p class="primary--text body-2 text-uppercase"> BILL OF LADING </p>
+                        <p class=" body-2 text-uppercase" style="color:#4169E1;"> BILL OF LADING </p>
                         <v-card flat width="200" height="150" outlined>
                             <v-image class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
