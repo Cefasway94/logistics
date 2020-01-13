@@ -98,14 +98,14 @@
                 </v-flex>
             </v-card>
 
-            <v-card flat width="900" class="mx-auto mt-8 pl-3" color="#F5FAFF">
+            <v-card flat width="900" class="mx-auto mt-8 " color="#F5FAFF">
                 <v-flex row align-self-center justify-center>
                 <v-btn elevation="flat" color="#F5FAFF"> 
                     <v-icon color="#4169E1">keyboard_arrow_left</v-icon>
                     <p class=" body-1 mb-0 text-upercase pt-1" style="color:#4169E1;"> go back </p>
                 </v-btn>
                 <v-spacer></v-spacer>
-                <v-btn color="#4169E1" class=""   dark> Confirm payment</v-btn>
+                <v-btn color="#4169E1" class="" dark> Confirm payment</v-btn>
                 </v-flex>
             </v-card>
 
