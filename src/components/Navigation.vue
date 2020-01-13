@@ -102,7 +102,7 @@ export default {
       drawer: true,
       items:[
         {title: 'Tenders', icon: 'dashboard', router:'/agent/tenders'},
-        {title: 'Dashboard', icon: 'account_box', router:'/agent'},
+        {title: 'Dashboard', icon: 'account_box', router:'/agents'},
         {title: 'Payments', icon: 'gavel', router:'/payment'}
       ]
       }

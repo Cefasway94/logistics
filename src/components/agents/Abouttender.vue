@@ -91,6 +91,7 @@
                 </v-flex>
 
                 <v-flex sm12 md3 lg3 xlg3 class="px-3">
+
                     <v-card color="#4169E1" width="" class="py-4 px-5">
                         <v-flex row >
                             <v-flex column class="px-3">

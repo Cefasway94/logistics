@@ -22,14 +22,14 @@
                     <v-container>
                         <v-row>
                         <v-col>
-                            <p class="primary--text body-2 text-uppercase">CARGO DETAILS</p>
+                            <p class="primary--text body-2 text-uppercase mb-0">CARGO DETAILS</p>
                             <v-text-field 
                             outlined 
                             clearable>
                             </v-text-field>
                         </v-col>
                         <v-col>
-                            <p class="primary--text body-2 text-uppercase">DESCRIPTION ON CARGO</p>
+                            <p class="primary--text body-2 text-uppercase mb-0">DESCRIPTION ON CARGO</p>
                             <v-text-field 
                             outlined 
                             clearable>
@@ -40,14 +40,14 @@
                         <v-row class="px-3">
                             <v-row >
                             <v-col>
-                                <p class="primary--text body-2 text-uppercase"> DESTINATION </p>
+                                <p class="primary--text body-2 text-uppercase mb-0"> DESTINATION </p>
                                 <v-text-field 
                                 outlined 
                                 clearable>
                                 </v-text-field>
                             </v-col>
                             <v-col>
-                                <p class="primary--text body-2 text-uppercase"> ORIGIN </p>
+                                <p class="primary--text body-2 text-uppercase mb-0"> ORIGIN </p>
                                 <v-text-field 
                                 outlined 
                                 clearable>
@@ -55,14 +55,14 @@
                             </v-col>
                             </v-row>
                             <v-col>
-                                <p class="primary--text body-2 text-uppercase"> CARGO SIZE </p>
+                                <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
                                 <v-text-field 
                                 outlined 
                                 clearable>
                                 </v-text-field>
                             </v-col>
                             <v-col>
-                                <p class="primary--text body-2 text-uppercase"> OFFER AMOUNT </p>
+                                <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
                                 <v-text-field 
                                 outlined 
                                 clearable>
@@ -72,7 +72,7 @@
 
                         <v-row>
                             <v-col>
-                            <p class="primary--text body-2 text-uppercase"> TERMS AND CONDITION </p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> TERMS AND CONDITION </p>
                             <v-text-field 
                             outlined 
                             clearable>
@@ -94,7 +94,7 @@
                 <v-card width="1300" class="mx-auto pa-3">
                     <v-row class="pa-3">
                         <v-col class="">
-                        <p class="primary--text body-2 text-uppercase"> BILL OF LADING </p>
+                        <p class="primary--text body-2 text-uppercase mb-0"> BILL OF LADING </p>
                         <v-card flat width="200" height="150" outlined>
                             <v-image class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -118,14 +118,14 @@
                     <v-container>
                         <v-row>
                         <v-col>
-                            <p class="primary--text body-2 text-uppercase"> NAME </p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> NAME </p>
                             <v-text-field 
                             outlined 
                             clearable>
                             </v-text-field>
                         </v-col>
                         <v-col>
-                            <p class="primary--text body-2 text-uppercase">LOCATION</p>
+                            <p class="primary--text body-2 text-uppercase mb-0">LOCATION</p>
                             <v-text-field 
                             outlined 
                             clearable>
@@ -136,21 +136,21 @@
                         <v-row>
                             <v-row >
                             <v-col>
-                                <p class="primary--text body-2 text-uppercase"> PHONE NUMBER </p>
+                                <p class="primary--text body-2 text-uppercase mb-0"> PHONE NUMBER </p>
                                 <v-text-field 
                                 outlined 
                                 clearable>
                                 </v-text-field>
                             </v-col>
                             <v-col>
-                                <p class="primary--text body-2 text-uppercase"> FAX </p>
+                                <p class="primary--text body-2 text-uppercase mb-0"> FAX </p>
                                 <v-text-field 
                                 outlined 
                                 clearable>
                                 </v-text-field>
                             </v-col>
                             <v-col>
-                                <p class="primary--text body-2 text-uppercase"> EMAIL  </p>
+                                <p class="primary--text body-2 text-uppercase mb-0"> EMAIL  </p>
                                 <v-text-field 
                                 outlined 
                                 clearable>
@@ -158,7 +158,7 @@
                             </v-col>
                             </v-row>
                             <v-col>
-                                <p class="primary--text body-2 text-uppercase"> P.O.BOX </p>
+                                <p class="primary--text body-2 text-uppercase mb-0"> P.O.BOX </p>
                                 <v-text-field 
                                 outlined 
                                 clearable>

@@ -16,6 +16,7 @@ import Client from '../components/client/Client.vue';
 import Createtender from '../components/client/Createtender.vue';
 import Clienteditprofile from '../components/client/Clienteditprofile.vue';
 import Tenderprogressclient from '../components/client/Tenderprogressclient.vue'
+import Payment from '../components/client/Payment.vue';
 
 Vue.use(VueRouter)
 
@@ -58,10 +59,15 @@ const routes = [
     name:'Tenderprogressclient',
     component:Tenderprogressclient
   },
+  {
+    path:'/client/payment',
+    name:'Payment',
+    component:Payment
+  },
 
   //-------------------- Agent routes
   {
-    path:'/agent',
+    path:'/agents',
     name:'agent',
     component: Agent
   },
