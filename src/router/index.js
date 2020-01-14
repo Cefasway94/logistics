@@ -17,6 +17,7 @@ import Createtender from '../components/client/Createtender.vue';
 import Clienteditprofile from '../components/client/Clienteditprofile.vue';
 import Tenderprogressclient from '../components/client/Tenderprogressclient.vue'
 import Payment from '../components/client/Payment.vue';
+import Aboutbid from '../components/client/Aboutbid.vue'
 
 Vue.use(VueRouter)
 
@@ -63,6 +64,11 @@ const routes = [
     path:'/client/payment',
     name:'Payment',
     component:Payment
+  },
+  {
+    path:'/client/Aboutbid',
+    name:'Aboutbid',
+    component:Aboutbid
   },
 
   //-------------------- Agent routes

@@ -57,7 +57,7 @@
                     <v-row row class="px-3">
                         <h4  class=" title ">500 USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small color="#4169E1" class="white--text">View Details</v-btn>
+                        <v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>
                     </v-row>
                 </v-card>
             </v-flex>
@@ -89,7 +89,7 @@
                     <v-row row class="px-3">
                         <h4  class=" title ">500 USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small color="#4169E1" class="white--text">View Details</v-btn>
+                        <v-btn small elevation="flat" color="#4169E1" class="white--text">View Details</v-btn>
                     </v-row>
                 </v-card>
             </v-flex>
@@ -121,7 +121,7 @@
                     <v-row row class="px-3">
                         <h4  class=" title ">500 USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small color="#4169E1" class="white--text">View Details</v-btn>
+                        <v-btn small elevation="flat" color="#4169E1" class="white--text">View Details</v-btn>
                     </v-row>
                 </v-card>
             </v-flex>
@@ -153,7 +153,7 @@
                     <v-row row class="px-3">
                         <h4  class=" title ">500 USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small color="#4169E1" class="white--text">View Details</v-btn>
+                        <v-btn small elevation="flat" color="#4169E1" class="white--text">View Details</v-btn>
                     </v-row>
                 </v-card>
             </v-flex>
@@ -185,7 +185,7 @@
                     <v-row row class="px-3">
                         <h4  class=" title ">500 USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small color="#4169E1" class="white--text">View Details</v-btn>
+                        <v-btn small elevation="flat" color="#4169E1" class="white--text">View Details</v-btn>
                     </v-row>
                 </v-card>
             </v-flex>
@@ -217,7 +217,7 @@
                     <v-row row class="px-3">
                         <h4  class=" title ">500 USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small color="#4169E1" class="white--text">View Details</v-btn>
+                        <v-btn small elevation="flat" color="#4169E1" class="white--text">View Details</v-btn>
                     </v-row>
                 </v-card>
             </v-flex>
@@ -249,7 +249,7 @@
                     <v-row row class="px-3">
                         <h4  class=" title ">500 USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small color="#4169E1" class="white--text">View Details</v-btn>
+                        <v-btn small elevation="flat" color="#4169E1" class="white--text">View Details</v-btn>
                     </v-row>
                 </v-card>
             </v-flex>

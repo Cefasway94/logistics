@@ -81,7 +81,7 @@
                     </v-card>
                 </v-flex>
 
-                <v-flex sm12 md3 lg3 xlg3 class="px-3">
+                <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2">
                     <v-card color="#4169E1" width="" class="py-4 px-5">
                         <v-flex row >
                             <v-flex column class="px-3">
@@ -181,8 +181,7 @@
                         <p class="primary--text body-2 text-uppercase"> oxoafrica commented </p>
                         <v-card flat height="100" width="1200" class="px-5 py-3" outlined>
                             <v-text class="" outlined>
-                               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt praesentium laudantium quibusdam sint odit repellendus consectetur commodi si
-                               t nihil minima, molestiae culpa saepe? Reiciendis soluta, voluptates obcaecati eaque provident magni!
+                               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt praesentium laudantium quibusdam s
                             </v-text>
                         </v-card>
                         </v-col>  
