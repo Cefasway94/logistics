@@ -25,17 +25,27 @@
           clearable
           clear-icon="clear"
           color="#4169E1"
-            label="Search tender"
-            prepend-inner-icon="mdi-magnify"
-            background-color="#F5FAFF"
-         
+          label="Search tender"
+          prepend-inner-icon="mdi-magnify"
+          background-color="#F5FAFF"
           ></v-text-field>
         </v-col>
         <v-spacer></v-spacer>
 
-         <v-btn icon color="grey" class="mx-2 mt-2">
-            <v-icon>mdi-bell</v-icon>
-         </v-btn>
+<!--  -->
+
+<!--  -->
+
+                
+         <v-badge class="mr-5 pt-1" :content="messages" :value="messages" color="blue" overlap>
+           <p class="caption" 
+           small
+          slot="badge"
+          >{{messages}}</p>
+         <v-icon @click="messages++" >mdi-bell</v-icon>
+         </v-badge>
+
+         
 
          <v-divider class="mx-auto" vertical></v-divider>
 
@@ -97,14 +107,16 @@ export default {
   name: 'home',
   data () {
     return {
+       messages: 0,
       color: '#394361',
       colors: ['primary', 'accent', 'warning lighten-2', 'teal', 'orange'],
       drawer: true,
       items:[
-        {title: 'Tenders', icon: 'dashboard', router:'/agent/tenders'},
-        {title: 'Dashboard', icon: 'account_box', router:'/agents'},
-        {title: 'Payments', icon: 'gavel', router:'/payment'}
-      ]
+            {title: 'Tenders', icon: 'dashboard', router:'/agent/tenders'},
+            {title: 'Dashboard', icon: 'account_box', router:'/agents'},
+            {title: 'Payments', icon: 'gavel', router:'/payment'}
+      ],
+         
       }
       
     }
