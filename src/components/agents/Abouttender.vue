@@ -36,10 +36,7 @@
                         <v-flex column class="mt-7 pr-4">
                             <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
                             <p class="body-1">Lorem ipsum, dolor sit amet consectetur 
-                                adipisicing elit. Doloremque, maiores. Sit repellat amet, 
-                                odit molestias adipisci, tempora voluptates quod voluptate 
-                                exercitationem blanditiis nulla quos delectus, quae ut! Neque, 
-                                recusandae perspiciatis!</p>
+                                adipisicing elit.</p>
                         </v-flex>
 
                         <v-flex row class="mt-10 mb-4" >

@@ -3,7 +3,7 @@
 <!-- nav bar -->
       <v-app-bar 
         absolute
-        scroll-target="#playground-example"
+        scroll-target=""
         color="white"
         elevate
         >
