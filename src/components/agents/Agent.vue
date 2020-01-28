@@ -10,26 +10,26 @@
             right
              background-color="transparent"
              color="#394361"
+             v-model="tab"
               >
 
-             <v-tab>Biding</v-tab>
-             <v-tab>Progress</v-tab>
-             <v-tab>All</v-tab>
+             <v-tab >All</v-tab>
+             <v-tab @click="tabfilter()" >Biding</v-tab>
+             <v-tab >Progress</v-tab>
 
-             <v-tab-item >
+             <v-tab-item v-for="n in 3" :key="n" >
 
                 <v-divider class="mx-auto " ></v-divider>
 
-    <v-container fluid class="" style="background-color:#F5FAFF;"> 
-
-        <v-row fluid>
+        <v-row fluid class="pt-5" style="background-color:#F5FAFF;">
+            
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-2" 
-             v-for="tender in LOAD_TENDERS" :key="tender.id">
-                <v-card column width="350"  elevation="3" class="px-4 py-3">
-                    <v-row justify="end" class="mx-0">
-                        <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
+             v-for="tender in LOAD_TENDERS" :key="tender.id" v-model="LOAD_TENDERS.completed">
+                <v-card column width="350"  elevation="3" class="px-4 pb-3">
+                    <v-row justify="end" class="py-1" @click="true">
+                        <v-icon color="#E9E9F0" class="pb-1" @click="true">clear</v-icon>
                         </v-row>
-                    <v-row  row class="px-3 pt-1">
+                    <v-row  row class="px-3 pt-1 mb-1">
                         <v-flex xs9 sm9 >
                         <h4  class="">{{tender.title}}</h4>
                         </v-flex>
@@ -41,10 +41,10 @@
                         </v-flex>
                     </v-row>
                    
-                        <p class=" body-2 grey--text">ABC furniture</p>
+                        <p class=" body-2 grey--text mb-1">ABC furniture</p>
                     
                     <v-row class="px-3">
-                        <p class="body-2  pt-1 ">Dar-es-salaam</p>
+                        <p class="body-2  pt-1 ">{{tender.completed}}</p>
                         
                         <v-icon small color="#4169E1" class="px-2 pb-3">
                             arrow_forward
@@ -52,7 +52,7 @@
                         <p  class="body-2  pt-1 ">Rwanda</p>
                     </v-row>
 
-                    <v-row row class="px-3">
+                    <v-row row class="px-3 mb-1">
                         <h4  class=" title ">500 USD</h4>
                         <v-spacer></v-spacer>
                         <v-btn small elevation="flat" color="#4169E1" class="white--text">View Details</v-btn>
@@ -61,7 +61,7 @@
             </v-flex>      
                          
         </v-row>
-             </v-container> 
+              
              </v-tab-item>     
            </v-tabs>    
             </v-card>
@@ -75,7 +75,7 @@ export default {
   
   data () {
       return{
-
+          tab: null,
       }
   },
   mounted (){
@@ -84,7 +84,13 @@ export default {
   methods:{
       ...mapActions([
           'GET_TENDERS'
-      ])
+      ]),
+      tabfilter(){
+           return this.GET_TENDERS.completed = true;
+           },
+      tabfilter1(){
+          return this.GET_TENDERS.completed = false;
+      }
   },
   computed: {
       ...mapGetters([
