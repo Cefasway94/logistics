@@ -19,7 +19,7 @@ export default {
 
     },
     actions: {
-        GET_TENDERS: async ({commit}) => {
+        GET_TENDERS: async ({commit},payload) => {
             // axios.get('http://192.168.10.219:5000/api/v1/tenders/list/open')
             // .then(data =>{
             //     console.log(data)
@@ -28,15 +28,17 @@ export default {
             // }).catch(error =>{
             //     console.log(error)
             // })
-            await axios.get('https://jsonplaceholder.typicode.com/todos').then((res)=>{
+        const url= 'https://jsonplaceholder.typicode.com/'+payload;
+            await axios.get(url).then((res)=>{
                 // eslint-disable-next-line no-console
                 console.log(res.data);
                 commit('SET_TENDERS', res.data);
             }).catch((error)=>{
                 //eslint-disable-next-line no-console
                 console.log(error);
-            });
-                      
+                const res=null;
+                commit('SET_TENDERS', res);
+            });                   
             
             
         }

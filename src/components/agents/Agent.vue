@@ -9,33 +9,33 @@
             <v-tabs
             right
              background-color="transparent"
-             color="#394361"
+             color="#4169E1"
              v-model="tab"
               >
 
-             <v-tab >All</v-tab>
-             <v-tab @click="tabfilter()" >Biding</v-tab>
-             <v-tab >Progress</v-tab>
+             <v-tab @click="GET_TENDERS('todos')" @loadeddata="GET_TENDERS('todos')" v-model="tab" act>All</v-tab>
+             <v-tab @click="GET_TENDERS('null')" @loadeddata="GET_TENDERS('null')" v-model="tab">Biding</v-tab>
+             <v-tab @click="GET_TENDERS('users')" @loadeddata="GET_TENDERS('users')" @ v-model="tab">Progress</v-tab>
 
-             <v-tab-item v-for="n in 3" :key="n" >
-
+             <v-tab-item v-for="n in 3" :key="n">
                 <v-divider class="mx-auto " ></v-divider>
 
-        <v-row fluid class="pt-5" style="background-color:#F5FAFF;">
+        <v-row fluid class="pt-5" style="background-color:#F5FAFF;"  >
             
-             <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-2" 
-             v-for="tender in LOAD_TENDERS" :key="tender.id" v-model="LOAD_TENDERS.completed">
-                <v-card column width="350"  elevation="3" class="px-4 pb-3">
+             <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
+             v-for="tender in LOAD_TENDERS" :key="tender.id" v-model="LOAD_TENDERS.completed" >
+
+                <v-card column width="350"  elevation="3" class="px-3 pb-3 mx-auto">
                     <v-row justify="end" class="py-1" @click="true">
                         <v-icon color="#E9E9F0" class="pb-1" @click="true">clear</v-icon>
                         </v-row>
                     <v-row  row class="px-3 pt-1 mb-1">
                         <v-flex xs9 sm9 >
-                        <h4  class="">{{tender.title}}</h4>
+                        <h4  class="">{{tender.id}}</h4>
                         </v-flex>
                         <v-flex xs3 sm3 justify="end" class="mx-0">
                         <v-chip 
-                        small class="light-green white--text caption font-weight-light " >
+                        small class="light-green white--text caption font-weight-light" >
                         Pending
                         </v-chip>
                         </v-flex>

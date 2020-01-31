@@ -11,7 +11,7 @@ export default new Vuetify({
     },
     theme:{
         themes:{
-            primary:'black',
+            primary:'#4169E1',
             mainoragne:'#FF8C00',
             text:'#394361',
             white:'#FFFFFF ',

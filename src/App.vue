@@ -1,9 +1,9 @@
 <template>
   <v-app style="background-color:#F5FAFF;">
-      <div v-if="login">
+      <div v-if="!login">
         <Home/>
       </div>
-      <div v-if="!login">
+      <div v-if="login">
         <Login/>
       </div>
   </v-app>

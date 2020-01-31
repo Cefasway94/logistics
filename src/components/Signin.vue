@@ -1,44 +1,51 @@
 <template>
-    <v-app>
+    <v-app style="background-color:#F5FAFF;">
         <v-card 
-        elevation="20"
-        class="my-auto mx-8 pa-7"
-        width="500" >
-            <v-card-title class=" text-center">
-                <h2 class="primary--text text-center " >SIGN IN</h2>
+        class="my-auto pa-3"
+        width="480" flat
+        color="transparent" >
+            <v-card-title  class="justify-center">
+                <h2 class="primary--text text-center " >UBALORI</h2>
             </v-card-title>
             <v-card-text>
-                <span>Welcome to Ubalori</span> 
+                <p class="text-center font-weight-regular body-2">Welcome back, please login to your account</p>
             </v-card-text>
-            <v-form class="px-7">
-                <v-container>
-                    <v-text-field class="my-2" label="E-mail" 
-                    v-model="email" prepend-icon="email" required> 
-                    </v-text-field>
-
-                    <v-text-field class="my-2" type="password" label="Passowrd" 
-                    v-model="password" prepend-icon="lock" required>
-                    </v-text-field>
-
-                    <div class="row">
-                        <v-checkbox label="remember me"> </v-checkbox>
-                        <v-spacer></v-spacer>
-                        <v-btn elevation="false" color="white" class="mt-3">Forgot password </v-btn>
-                    </div>
+            <v-form class="px-8">
                 
-                <div class="pa-2">
-                 <v-btn color="primary" height="45" block>
+                    <v-flex column>
+                    <p class="font-weight-regular body-2 grey--text mb-0" >EMAIL</p>
+                    <v-text-field solo class="mt-2" color="#4169E1" background-color="" clearable 
+                    v-model="email" required > 
+                    </v-text-field>
+                    </v-flex>
+
+                    <v-flex column>
+                    <p class="font-weight-regular body-2 grey--text mb-0" >PASSWORD</p>
+                    <v-text-field solo class="mt-2" color="#4169E1" background-color="" clearable
+                    v-model="email" required > 
+                    </v-text-field>
+                    </v-flex>
+
+                    <v-flex row class="row justify-center ">
+                        <v-checkbox color="#4169E1" label="remember me"> </v-checkbox>
+                        <v-spacer></v-spacer>
+                        <v-btn elevation="false" color="transparent" 
+                        class="mt-4 font-weight-regular body-1 text-capitalize" style="color:#4169E1;"> Forgot password
+                        </v-btn>
+                    </v-flex >
+                
+                <v-flex class="pa-2">
+                 <v-btn color="#4169E1" height="45" block>
                      <span class="white--text">Login</span>
                  </v-btn>
-                </div>
+                </v-flex>
 
-                 <div class="row my-5 ">
+                 <v-flex class="row my-5 justify-center">
                         <p class="text-center">Dont have an account ? 
-                        <a  class="ml-2" >Sign up </a>
+                        <a  class="ml-2" style="color:#4169E1;" >Sign up </a>
                         </p>
-                </div>
+                </v-flex>
 
-                </v-container>
             </v-form>
         </v-card>
     </v-app>
