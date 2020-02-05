@@ -1,5 +1,5 @@
 <template>
-    <v-app style="background-color:#F5FAFF;">
+    <v-app style="background-color:transparent; ">
         <v-card 
         class="my-auto pa-3"
         width="480" flat

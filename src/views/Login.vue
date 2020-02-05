@@ -1,10 +1,10 @@
 <template>
-<v-content>
+<v-content >
 
-<v-row wrap justify="end" >
+
+<v-row wrap justify="end" class="backgriund" style="background-color:transparent;">
     <v-flex xs-12 sm11 md8 lg5 >        
-   
-    <router-view></router-view>
+    <router-view ></router-view>
 </v-flex>
 </v-row >
 
@@ -19,3 +19,5 @@ export default {
  
 }
 </script>
+
+

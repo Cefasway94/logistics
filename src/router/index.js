@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Signin from '../components/Signin.vue';
 import Signup from '../components/Signup.vue';
+import login from '../views/Login.vue';
 
 //agent routes
 import Agent  from '../components/agents/Agent.vue';
@@ -27,6 +28,10 @@ const routes = [
   {
     path: '/login',
     name: 'login',
+    component:login,
+    children:[
+      
+    ]
   },
   {
     path:'/signin',

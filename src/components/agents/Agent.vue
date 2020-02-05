@@ -1,26 +1,33 @@
 <template >
-    <div class=" pa-auto" >
+    <v-app class=" pa-auto"  style="background-color:#F5FAFF;">
 
-            <v-container  class=" mt-10 mx-auto">
+            <v-container  class=" mt-10 mx-auto" style="background-color:#F5FAFF;">
                 <v-card flat width="1300" class=" mx-auto mt-12" color="#F5FAFF">
                 <h3 style="color:#394361;" class="title px-2">Dashboard</h3>
                 </v-card>
-            <v-card flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
-            <v-tabs
-            right
-             background-color="transparent"
-             color="#4169E1"
-             v-model="tab"
-              >
+                
+            
+            
 
-             <v-tab @click="GET_TENDERS('todos')" @loadeddata="GET_TENDERS('todos')" v-model="tab" act>All</v-tab>
-             <v-tab @click="GET_TENDERS('null')" @loadeddata="GET_TENDERS('null')" v-model="tab">Biding</v-tab>
-             <v-tab @click="GET_TENDERS('users')" @loadeddata="GET_TENDERS('users')" @ v-model="tab">Progress</v-tab>
+<!-- ----------------------------------------------------------------------------------------------
+     ---------------------------------------------------------------------------------------------- 
+-->
+    <v-card flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
+    <v-tabs
+      background-color="#F5FAFF"
+      color="deep-purple accent-4"
+      right
+    >
+      <v-tab @contextmenu="load()" @click="GET_TENDERS('todos')"  v-model="tab" class="">All</v-tab>
+             <v-tab @click.prevent="GET_TENDERS('null')"  v-model="tab">Biding</v-tab>
+             <v-tab @click.prevent="GET_TENDERS('users')" @loadeddata="GET_TENDERS('users')" @ v-model="tab">Progress</v-tab>
 
-             <v-tab-item v-for="n in 3" :key="n">
-                <v-divider class="mx-auto " ></v-divider>
 
-        <v-row fluid class="pt-5" style="background-color:#F5FAFF;"  >
+      <v-tab-item v-for="n in 3" :key="n"  style="background-color:#F5FAFF;">
+          
+      <v-divider class="mx-auto " ></v-divider>
+      
+       <v-container row fluid class="pt-5" style="background-color:#F5FAFF;" >
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
              v-for="tender in LOAD_TENDERS" :key="tender.id" v-model="LOAD_TENDERS.completed" >
@@ -55,41 +62,54 @@
                     <v-row row class="px-3 mb-1">
                         <h4  class=" title ">500 USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small elevation="flat" color="#4169E1" class="white--text">View Details</v-btn>
+                        <v-btn small elevation="flat"  @click="theid(tender.id)" color="#4169E1" class="white--text">View Details</v-btn>
                     </v-row>
                 </v-card>
-            </v-flex>      
-                         
-        </v-row>
-              
-             </v-tab-item>     
-           </v-tabs>    
-            </v-card>
+            </v-flex>               
         </v-container>
-    </div>
+      </v-tab-item>
+    </v-tabs>
+  </v-card>
+<!-- ---------------------------------------------------------------------------- 
+     -----------------------------------------------------------------------------
+-->
+        </v-container>
+    </v-app>
 </template>
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
 export default {
+        
   
   data () {
       return{
-          tab: null,
+          tab: 'todos',
       }
   },
-  mounted (){
-      this.GET_TENDERS();
+
+  created (tab){
+      tab = this.tab
+      this.GET_TENDERS(tab);
   },
   methods:{
       ...mapActions([
           'GET_TENDERS'
       ]),
       tabfilter(){
+          
            return this.GET_TENDERS.completed = true;
            },
       tabfilter1(){
           return this.GET_TENDERS.completed = false;
+      },
+      theid(id){
+          // eslint-disable-next-line no-console
+          console.log(id);
+      },
+      load(){
+          // eslint-disable-next-line no-console
+          console.log('loades');
       }
   },
   computed: {
