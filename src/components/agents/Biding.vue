@@ -48,33 +48,33 @@
                             <v-flex column class="pl-3">
                             <p class=" body-1 mb-2" style="color:#4169E1;"> DESTINATION </p>
                             <v-card flat width="200" height="150" outlined>
-                            <v-image class="ma-auto">
+                            <v-img class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                             </v-flex>
 
                             <v-flex column >
                             <p class=" body-1 mb-2" style="color:#4169E1;"> ORIGIN </p>
                             <v-card flat width="200" height="150" outlined>
-                            <v-image class="ma-auto">
+                            <v-img class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                             </v-flex>
 
                             <v-flex column >
                             <p class=" body-1 mb-2" style="color:#4169E1;"> CARGO SIZE </p>
                             <v-card flat width="200" height="150" outlined>
-                            <v-image class="ma-auto">
+                            <v-img class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                             </v-flex>
                         </v-flex>
@@ -158,3 +158,53 @@
 
     </v-container>
 </template>
+
+<script>
+import {mapGetters, mapActions} from 'vuex';
+export default {
+        
+  
+  data () {
+      return{
+          tab: 'todos',
+          
+      }
+  },
+
+  created (tab){
+             tab = this.tab
+      this.GET_TENDERS(tab);
+
+  },
+  
+  methods:{
+      ...mapActions([
+          'GET_TENDERS',
+          //'GET_BIDTENDERS'
+      ]),
+
+      
+      theid(id){
+          // eslint-disable-next-line no-console
+          console.log(id);
+      },
+      
+  },
+  computed: {
+      ...mapGetters([
+          'LOAD_TENDERS',
+          //'LOAD_DIBTENDERS'
+      ])
+  }
+
+    
+}
+</script>
+
+<style scoped>
+.pa-auto{
+    font-family :"Roboto",sans-serif !important;
+}
+
+
+</styg

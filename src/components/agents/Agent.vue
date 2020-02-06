@@ -19,8 +19,8 @@
       right
     >
       <v-tab @contextmenu="load()" @click="GET_TENDERS('todos')"  v-model="tab" class="">All</v-tab>
-             <v-tab @click.prevent="GET_TENDERS('null')"  v-model="tab">Biding</v-tab>
-             <v-tab @click.prevent="GET_TENDERS('users')" @loadeddata="GET_TENDERS('users')" @ v-model="tab">Progress</v-tab>
+             <v-tab @click="GET_TENDERS('null')"  v-model="tab">Biding</v-tab>
+             <v-tab @click="GET_TENDERS('users')" v-model="tab">Progress</v-tab>
 
 
       <v-tab-item v-for="n in 3" :key="n"  style="background-color:#F5FAFF;">
@@ -34,9 +34,9 @@
 
                 <v-card column width="350"  elevation="3" class="px-3 pb-3 mx-auto">
                     <v-row justify="end" class="py-1" @click="true">
-                        <v-icon color="#E9E9F0" class="pb-1" @click="true">clear</v-icon>
+                        <v-icon color="#E9E9F0" class="pr-1" @click="true">clear</v-icon>
                         </v-row>
-                    <v-row  row class="px-3 pt-1 mb-1">
+                    <v-row  row class="pl-3 pt-1 mb-1">
                         <v-flex xs9 sm9 >
                         <h4  class="">{{tender.id}}</h4>
                         </v-flex>
@@ -62,7 +62,7 @@
                     <v-row row class="px-3 mb-1">
                         <h4  class=" title ">500 USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small elevation="flat"  @click="theid(tender.id)" color="#4169E1" class="white--text">View Details</v-btn>
+                        <v-btn small elevation="flat"  @click="theid(tender.id)" color="#4169E1" class="white--text" to="/agent/abouttender">View Details</v-btn>
                     </v-row>
                 </v-card>
             </v-flex>               
@@ -85,36 +85,33 @@ export default {
   data () {
       return{
           tab: 'todos',
+          
       }
   },
 
   created (tab){
-      tab = this.tab
+             tab = this.tab
       this.GET_TENDERS(tab);
+
   },
+  
   methods:{
       ...mapActions([
-          'GET_TENDERS'
+          'GET_TENDERS',
+          //'GET_BIDTENDERS'
       ]),
-      tabfilter(){
-          
-           return this.GET_TENDERS.completed = true;
-           },
-      tabfilter1(){
-          return this.GET_TENDERS.completed = false;
-      },
+
+      
       theid(id){
           // eslint-disable-next-line no-console
           console.log(id);
       },
-      load(){
-          // eslint-disable-next-line no-console
-          console.log('loades');
-      }
+      
   },
   computed: {
       ...mapGetters([
-          'LOAD_TENDERS'
+          'LOAD_TENDERS',
+          //'LOAD_DIBTENDERS'
       ])
   }
 
