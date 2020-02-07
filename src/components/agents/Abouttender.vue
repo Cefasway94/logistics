@@ -80,7 +80,9 @@
                     <v-card flat width="1300" class="mt-5 mb-5" color="#F5FAFF">
                         <v-flex row class="">
                             <v-spacer></v-spacer>
-                            <v-btn color="#4169E1" large class="white--text" rauter to="/agent/biding">Bid on tender</v-btn>
+                            <!-- Removed router to and added the 'listId' function that consologs the id passed from New tenders page
+                                <v-btn color="#4169E1" @click="listId ()" large class="white--text" rauter to="/agent/biding">Bid on tender</v-btn> -->
+                            <v-btn color="#4169E1" @click="listId ()" large class="white--text" rauter >Bid on tender</v-btn>
                         </v-flex>
                     </v-card>
 
@@ -146,7 +148,7 @@ export default {
   },
 
   created (tab){
-             tab = this.tab
+             tab = this.$route.params.id;
       this.GET_TENDERS(tab);
 
   },
@@ -162,13 +164,23 @@ export default {
           // eslint-disable-next-line no-console
           console.log(id);
       },
+
+      listId (id)
+      {
+          id = this.$route.params.id;
+          // eslint-disable-next-line no-console
+          console.log(id);
+          
+      }
       
   },
   computed: {
       ...mapGetters([
           'LOAD_TENDERS',
           //'LOAD_DIBTENDERS'
-      ])
+      ]),
+
+      
   }
 
     
