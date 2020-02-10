@@ -172,14 +172,14 @@ export default {
   },
 
   created (tab){
-             tab = this.tab
-      this.GET_TENDERS(tab);
+             tab = this.$route.params.id;
+      this.GET_TENDERSDETAIL(tab);
 
   },
   
   methods:{
       ...mapActions([
-          'GET_TENDERS',
+          'GET_TENDERSDETAIL',
           //'GET_BIDTENDERS'
       ]),
 
@@ -188,13 +188,24 @@ export default {
           // eslint-disable-next-line no-console
           console.log(id);
       },
+
+      listId (id)
+      {
+          id = this.$route.params.id;
+          // eslint-disable-next-line no-console
+          console.log(id);
+          
+          
+      }
       
   },
   computed: {
       ...mapGetters([
-          'LOAD_TENDERS',
+          'LOAD_TENDERDETAILS',
           //'LOAD_DIBTENDERS'
-      ])
+      ]),
+
+      
   }
 
     
@@ -207,4 +218,12 @@ export default {
 }
 
 
-</styg
+</style>
+
+<style scoped>
+.pa-auto{
+    font-family :"Roboto",sans-serif !important;
+}
+
+
+</style>

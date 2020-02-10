@@ -86,7 +86,7 @@ const routes = [
   {
     path:'/agents',
     name:'agent',
-    component: Agent
+    components:{Agent}
   },
   {
     path:'/agent/editprofile',
@@ -96,17 +96,17 @@ const routes = [
   {
     path:'/agent/tenders',
     name:'tenders',
-    component: Tenders
+    components: {Tenders}
   },
   {
-    path:'/agent/biding',
-    name:'biding',
-    component: Biding
+    path:'/agent/biding/:id',
+    name:'Biding',
+    components: {Biding}
   },
   {
     path:'/agent/Abouttender/:id',
     name:'Abouttender',
-    component:Abouttender
+    components:{Abouttender}
   },
   {
     path:'/agent/tenderprogress',
