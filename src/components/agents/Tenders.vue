@@ -39,8 +39,11 @@
                     <v-row row class="px-3 mb-1">
                         <h4  class=" title ">500 USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small elevation="flat"  @click="theid(tender.id)" color="#4169E1" class="white--text" :to="{name:'Abouttender', params: {id:tender.id}}" >View Details</v-btn>
+                        <v-btn small elevation="flat"  @click="theid(tender.id)" 
+                        color="#4169E1" class="white--text" :to="{name:'Abouttender', 
+                        params: {id:tender.id}}" >View Details</v-btn>
                     </v-row>
+                    
                 </v-card>
             </v-flex>               
         </v-container>
