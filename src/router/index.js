@@ -84,7 +84,7 @@ const routes = [
 
   //-------------------- Agent routes
   {
-    path:'/agents',
+    path:'/agents/:id',
     name:'agent',
     components:{Agent}
   },
@@ -94,7 +94,7 @@ const routes = [
     component: Agenteditprofile
   },
   {
-    path:'/agent/tenders',
+    path:'/agent/tenders/:id',
     name:'tenders',
     components: {Tenders}
   },

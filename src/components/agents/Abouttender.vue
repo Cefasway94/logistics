@@ -13,10 +13,10 @@
                 </v-flex>
             </v-card>
 
-            <v-card flat width="1300" class=" mx-auto mb-10 px-5" color="#F5FAFF">
+            <v-card flat width="1300" class=" mx-auto mb-10 px-5" color="#F5FAFF" v-model="tender" >
                 <v-flex row >
                 <v-flex sm12 md9 lg9 xlg9 >
-                    <v-card width="" class="pt-6 pb-3 pl-8">
+                    <v-card width="" class="pt-6 pb-3 pl-8" >
                         <v-flex column>
                         <v-flex row >
                             <v-flex column class="pl-3">
@@ -82,7 +82,7 @@
                             <v-spacer></v-spacer>
                             <!-- Removed router to and added the 'listId' function that consologs the id passed from New tenders page
                                 <v-btn color="#4169E1" @click="listId ()" large class="white--text" rauter to="/agent/biding">Bid on tender</v-btn> -->
-                            <v-btn color="#4169E1" @click="listId ()" large class="white--text" 
+                            <v-btn color="#4169E1" large class="white--text" 
                          >Bid on tender</v-btn>
                         </v-flex>
                     </v-card>
@@ -93,8 +93,8 @@
 
                     <v-card color="#4169E1" width="" class="py-4 px-5">
                         <v-flex row >
-                            <v-flex column class="px-3">
-                            <p class="white--text body-1 font-weight-bold"> ABC FURNITURE </p>
+                            <v-flex column class="px-3" >
+                            <p class="white--text body-1 font-weight-bold" > {{LOAD_TENDER.username}} </p>
                             <v-flex column>
                             <v-flex row class="px-3 ">
                             <v-icon class="mb-3 white--text" >mail_outline</v-icon>
@@ -143,21 +143,19 @@ export default {
   
   data () {
       return{
-          
-          
+           tender:''         
       }
   },
 
-  created (tab){
+  mounted (tab){
              tab = this.$route.params.id;
-      this.GET_TENDERSDETAIL(tab);
-
+      this.GET_TENDERSDETAILs(tab);
   },
   
   methods:{
       ...mapActions([
-          'GET_TENDERSDETAIL',
-          //'GET_BIDTENDERS'
+          'GET_TENDERSDETAILs'
+
       ]),
 
       
@@ -166,22 +164,24 @@ export default {
           console.log(id);
       },
 
-      listId (id)
-      {
-          id = this.tenderdetails;
-          // eslint-disable-next-line no-console
-          console.log(id);
-          
-          
-      }
-      
+     
+
+    //   listId (id)
+    //   {
+    //     id= this.LOAD_TENDERS
+    //       id.map(data=>{
+    //            // eslint-disable-next-line no-console
+    //             console.log(data.name);
+    //           return this.tender = data
+    //       });       
+    //   }           
   },
+
   computed: {
       ...mapGetters([
-          'LOAD_TENDERDETAILS',
+          'LOAD_TENDER',
           //'LOAD_DIBTENDERS'
       ]),
-
       
   }
 

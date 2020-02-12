@@ -16,7 +16,7 @@
                    
                     <v-row  row class="pl-3 pt-1 mb-1 justify-space-between">
                         <v-flex wrap xs9 sm9>
-                        <h4  class="subtitle-1 font-weight-bold">j{{tender.username}}</h4>
+                        <h4  class="subtitle-1 font-weight-bold">{{tender.username}}</h4>
                         </v-flex>
                         
                         <v-flex xs1 sm1 justify="end">
@@ -39,8 +39,8 @@
                     <v-row row class="px-3 mb-1">
                         <h4  class=" title ">500 USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small elevation="flat"  @click="theid(tender.id)" 
-                        color="#4169E1" class="white--text" :to="{name:'Abouttender', 
+                        <v-btn small elevation="flat" 
+                        color="#4169E1" class="white--text" @click="gettenderdetails(tender.id)" :to="{name:'Abouttender', 
                         params: {id:tender.id}}" >View Details</v-btn>
                     </v-row>
                     
@@ -60,35 +60,34 @@ export default {
   
   data () {
       return{
-          tab: 'users',
-          
+          tab:  this.$route.params.id,
       }
   },
 
   created (tab){
              tab = this.tab
+            //const tend = this.$route.params.tid;
       this.GET_TENDERS(tab);
-      
   },
   
   methods:{
       ...mapActions([
-          'GET_TENDERS',
-          //'GET_BIDTENDERS'
+          'GET_TENDERS','GET_TENDERSDETAILs'
+          //'GET_TENDERSDETAIL'
+          
       ]),
-
       
-      theid(id){
-          // eslint-disable-next-line no-console
-          console.log(id);
-      },
+      gettenderdetails(tend){
+          this.GET_TENDERSDETAILs(tend);
+      }
       
   },
   computed: {
       ...mapGetters([
-          'LOAD_TENDERS',
+          'LOAD_TENDERS', 'LOAD_TENDER'
           //'LOAD_DIBTENDERS'
-      ])
+      ]),
+      
   }
 
     

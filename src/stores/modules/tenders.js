@@ -9,31 +9,38 @@ export default {
     getters:{
         LOAD_TENDERS: state => {
              const tenders = state.tenders;
-             return tenders
-               //eslint-disable-next-line no-console
-            //console.log(tenders);
+             //eslint-disable-next-line no-console
+             console.log(tenders);
+             return tenders             
+                        
         },
-        LOAD_TENDERDETAILS: state => {
-            const tenderdetails = state.tenderdetails;
-            return tenderdetails
-              //eslint-disable-next-line no-console
-            //console.log(tenderdetails);
-           
-            
-       },
+        LOAD_TENDER: state => {
+            const tenderdetails = state.tenderdetails
+            return tenderdetails;
+        }
+    //     LOAD_TENDERDETAILS: state => {
+    //         const tenderdetails = state.tenderdetails;
+    //         //return tenderdetails
+    //           //eslint-disable-next-line no-console
+    //         console.log(tenderdetails);
+                       
+    //    },
     },
     mutations: {
         SET_TENDERS: (state, payload) => {
             state.tenders = payload;
-            
-            
-        },
-        SET_TENDERDETAILS: (state, payload) => {
-            state.tenderdetails = payload;
             //eslint-disable-next-line no-console
-            //console.log(state.tenderdetails);
-            
+            //console.log(state.tenders);
         },
+        // SET_TENDERDETAILS: (state, payload) => {
+        //     state.tenders = payload;
+        //     //eslint-disable-next-line no-console
+        //     //console.log(state.tenders);
+            
+        // },
+        SET_TENDER: (state, payload) => {
+            state.tenderdetails = payload;
+        }
 
     },
     actions: {
@@ -49,7 +56,7 @@ export default {
         const url= 'https://jsonplaceholder.typicode.com/'+payload;
             await axios.get(url).then((res)=>{
                 // eslint-disable-next-line no-console
-                console.log(res.data);
+                //console.log(res.data);
                 commit('SET_TENDERS', res.data);
             }).catch((error)=>{
                 //eslint-disable-next-line no-console
@@ -59,29 +66,32 @@ export default {
             });                   
         },
 
-        GET_TENDERSDETAIL: async ({commit},payload) => {
+        GET_TENDERSDETAILs: async ({commit},payload) => {
             // axios.get('http://192.168.10.219:5000/api/v1/tenders/list/open')
             // .then(data =>{
-            //     console.log(data)
+                // eslint-disable-next-line no-console
+                console.log(payload)
             //     let tenders = data.data
             //     commit ("SET_TENDERS",tenders);
             // }).catch(error =>{
             //     console.log(error)
             // })
-        const url= 'https://jsonplaceholder.typicode.com/todos';
+        const url= 'https://jsonplaceholder.typicode.com/users';
             await axios.get(url,{
                 params:{
                     id:payload,
                 }
             }).then((res)=>{
-                // eslint-disable-next-line no-console
-                //console.log(res.data);
-                commit('SET_TENDERDETAILS', res.data);
+                res.data.map(data=>{
+                    commit('SET_TENDER', data);
+                    // eslint-disable-next-line no-console
+                   console.log(res.data);
+                });
             }).catch((error)=>{
                 //eslint-disable-next-line no-console
                 console.log(error);
                 const res=null;
-                commit('SET_TENDERDETAILS', res);
+                commit('SET_TENDER', res);
             });                   
         },
 

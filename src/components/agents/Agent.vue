@@ -84,7 +84,7 @@ export default {
   
   data () {
       return{
-          tab: 'todos',
+          tab: this.$route.params.id,
           
       }
   },

@@ -73,7 +73,7 @@
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title >{{ item.title }}</v-list-item-title>
+            <v-list-item-title  >{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -100,6 +100,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 
@@ -112,14 +113,28 @@ export default {
       colors: ['primary', 'accent', 'warning lighten-2', 'teal', 'orange'],
       drawer: true,
       items:[
-            {title: 'Tenders', icon: 'dashboard', router:'/agent/tenders'},
-            {title: 'Dashboard', icon: 'account_box', router:'/agents'},
+            {title: 'Tenders', icon: 'dashboard', router:{name:'tenders', params: {id:'users'}}},
+            {title: 'Dashboard', icon: 'account_box', router:{name:'agent', params:{id:'todos'}}},
             {title: 'Payments', icon: 'gavel', router:'/payment'}
       ],
          
       }
       
-    }
+    },
+
+    methods:{
+      ...mapActions([
+          'GET_TENDERS'
+          //'GET_TENDERSDETAIL'
+          
+      ]),
+      
+      gettenderdetails(tend){
+        tend = this.$route.params.id;
+          this.GET_TENDERS(tend);
+      }
+      
+  },
 
 }
 </script>
