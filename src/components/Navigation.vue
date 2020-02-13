@@ -67,7 +67,8 @@
           :key="item.title"
           router 
           :to="item.router"
-          link>
+          link
+          @click="gettenderdetails()">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -131,6 +132,9 @@ export default {
       
       gettenderdetails(tend){
         tend = this.$route.params.id;
+      // eslint-disable-next-line no-console
+        console.log(tend);
+        
           this.GET_TENDERS(tend);
       }
       
