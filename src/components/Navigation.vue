@@ -62,19 +62,51 @@
       width="200">
 
       <v-list>
+<!-- tender -->
         <v-list-item
-          v-for="item in items"
-          :key="item.title"
           router 
-          :to="item.router"
+          :to="{name:'tenders', 
+          params: {id:'users'}}"
           link
-          @click="gettenderdetails()">
+          @click="tenders()">
           <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon>dashboard</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title  >{{ item.title }}</v-list-item-title>
+            <v-list-item-title  >Tenders</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+<!-- dashboard -->
+        <v-list-item
+          router 
+          :to="{name:'agent', 
+          params: {id:'todos'}}"
+          link
+          @click="dashboard()">
+          <v-list-item-icon>
+            <v-icon>account_box</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title  >Dashboard</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+<!-- payment -->
+        <v-list-item
+          router 
+          to="/payment"
+          link
+          >
+
+          <v-list-item-icon>
+            <v-icon>gavel</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title  >Payment</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -125,19 +157,26 @@ export default {
 
     methods:{
       ...mapActions([
-          'GET_TENDERS'
+          'GET_TENDERS','GET_DASHBOARD'
           //'GET_TENDERSDETAIL'
           
       ]),
       
-      gettenderdetails(tend){
+      tenders(tend){
         tend = this.$route.params.id;
       // eslint-disable-next-line no-console
         console.log(tend);
         
           this.GET_TENDERS(tend);
+      },
+
+      dashboard(tend){
+        tend = this.$route.params.id;
+      // eslint-disable-next-line no-console
+        console.log(tend);
+        
+          this.GET_DASHBOARD(tend);
       }
-      
   },
 
 }

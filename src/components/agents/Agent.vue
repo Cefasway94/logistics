@@ -17,10 +17,11 @@
       background-color="#F5FAFF"
       color="deep-purple accent-4"
       right
+      :key="componemtkey"
     >
-      <v-tab @contextmenu="load()" @click="GET_TENDERS('todos')"  v-model="tab" class="">All</v-tab>
-             <v-tab @click="GET_TENDERS('null')"  v-model="tab">Biding</v-tab>
-             <v-tab @click="GET_TENDERS('users')" v-model="tab">Progress</v-tab>
+      <v-tab @contextmenu="load()" @click="GET_DASHBOARD('todos')"  class="">All</v-tab>
+             <v-tab @click="GET_DASHBOARD('null')"  v-model="tab">Biding</v-tab>
+             <v-tab @click="GET_DASHBOARD('users')" v-model="tab">Progress</v-tab>
 
 
       <v-tab-item v-for="n in 3" :key="n"  style="background-color:#F5FAFF;">
@@ -30,7 +31,7 @@
        <v-container row fluid class="pt-5" style="background-color:#F5FAFF;" >
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
-             v-for="tender in LOAD_TENDERS" :key="tender.id" v-model="LOAD_TENDERS.completed" >
+             v-for="tender in LOAD_DASHBOARDS" :key="tender.id" v-model="LOAD_DASHBOARDS.completed" >
 
                 <v-card column width="350"  elevation="3" class="px-3 pb-3 mx-auto">
                     <v-row justify="end" class="py-1" @click="true">
@@ -85,19 +86,20 @@ export default {
   data () {
       return{
           tab: this.$route.params.id,
+          componemtkey: 0,
           
       }
   },
 
   created (tab){
              tab = this.tab
-      this.GET_TENDERS(tab);
+      this.GET_DASHBOARD(tab);
 
   },
   
   methods:{
       ...mapActions([
-          'GET_TENDERS',
+          'GET_DASHBOARD',
           //'GET_BIDTENDERS'
       ]),
 
@@ -110,7 +112,7 @@ export default {
   },
   computed: {
       ...mapGetters([
-          'LOAD_TENDERS',
+          'LOAD_DASHBOARDS',
           //'LOAD_DIBTENDERS'
       ])
   }

@@ -5,8 +5,12 @@ export default {
     state:{
         tenders: [],
         tenderdetails:[],
+        dashboard: [],
+        dashboarddetails: []
     },
-    getters:{
+
+getters:{
+    // Tender getter =======================================>>>>
         LOAD_TENDERS: state => {
              const tenders = state.tenders;
              //eslint-disable-next-line no-console
@@ -17,33 +21,48 @@ export default {
         LOAD_TENDER: state => {
             const tenderdetails = state.tenderdetails
             return tenderdetails;
+        },
+
+    // Dashboard getter ==================================>>>>
+        LOAD_DASHBOARDS: state => {
+             const dashboard = state.dashboard;
+             //eslint-disable-next-line no-console
+             console.log(dashboard);
+             return dashboard             
+                        
+        },
+        LOAD_DASHBOARD: state => {
+            const dashboarddetails = state.dashboarddetails
+            return dashboarddetails;
         }
-    //     LOAD_TENDERDETAILS: state => {
-    //         const tenderdetails = state.tenderdetails;
-    //         //return tenderdetails
-    //           //eslint-disable-next-line no-console
-    //         console.log(tenderdetails);
-                       
-    //    },
+
     },
-    mutations: {
+
+mutations: {
+        // Tender section mutation  ========================>>>
         SET_TENDERS: (state, payload) => {
             state.tenders = payload;
             //eslint-disable-next-line no-console
             //console.log(state.tenders);
         },
-        // SET_TENDERDETAILS: (state, payload) => {
-        //     state.tenders = payload;
-        //     //eslint-disable-next-line no-console
-        //     //console.log(state.tenders);
-            
-        // },
+    
         SET_TENDER: (state, payload) => {
             state.tenderdetails = payload;
-        }
+        },
+
+        // dashboard section mutation =======================>>>>>>
+        SET_DASHBOARDS: (state, payload) => {
+            state.dashboard = payload;
+        },
+        SET_DASHBOARD: (state, payload) => {
+            state.dashboarddetails = payload;
+        },
+
 
     },
-    actions: {
+
+actions: {
+        // Tender actions =========================================>>>>
         GET_TENDERS: async ({commit},payload) => {
             // axios.get('http://192.168.10.219:5000/api/v1/tenders/list/open')
             // .then(data =>{
@@ -95,28 +114,50 @@ export default {
             });                   
         },
 
-        // GET_BIDTENDERS: async ({commit},payload) => {
-        //     // axios.get('http://192.168.10.219:5000/api/v1/tenders/list/open')
-        //     // .then(data =>{
-        //     //     console.log(data)
-        //     //     let tenders = data.data
-        //     //     commit ("SET_TENDERS",tenders);
-        //     // }).catch(error =>{
-        //     //     console.log(error)
-        //     // })
-        // const url= 'https://jsonplaceholder.typicode.com/'+payload;
-        //     await axios.get(url).then((res)=>{
-        //         // eslint-disable-next-line no-console
-        //         console.log(res.data);
-        //         commit('SET_TENDERS', res.data);
-        //     }).catch((error)=>{
-        //         //eslint-disable-next-line no-console
-        //         console.log(error);
-        //         const res=null;
-        //         commit('SET_BIDTENDERS', res);
-        //     });                   
-        // }
+// Dashboard actions ==================================================>>>>>>
+        GET_DASHBOARD: async ({commit},payload) => {
+            // axios.get('http://192.168.10.219:5000/api/v1/tenders/list/open')
+            // .then(data =>{
+            //     console.log(data)
+            //     let tenders = data.data
+            //     commit ("SET_TENDERS",tenders);
+            // }).catch(error =>{
+            //     console.log(error)
+            // })
+        const url= 'https://jsonplaceholder.typicode.com/'+payload;
+            await axios.get(url).then((res)=>{
+                // eslint-disable-next-line no-console
+                //console.log(res.data);
+                commit('SET_DASHBOARDS', res.data);
+            }).catch((error)=>{
+                //eslint-disable-next-line no-console
+                console.log(error);
+                const res=null;
+                commit('SET_DASHBOARDS', res);
+            });                   
+        },
+
+        GET_DASHBOARDDETAILs: async ({commit},payload) => {
+            // axios.get('http://192.168.10.219:5000/api/v1/tenders/list/open')
+            // .then(data =>{
+            //     console.log(data)
+            //     let tenders = data.data
+            //     commit ("SET_TENDERS",tenders);
+            // }).catch(error =>{
+            //     console.log(error)
+            // })
+        const url= 'https://jsonplaceholder.typicode.com/'+payload;
+            await axios.get(url).then((res)=>{
+                // eslint-disable-next-line no-console
+                //console.log(res.data);
+                commit('SET_DASHBOARD', res.data);
+            }).catch((error)=>{
+                //eslint-disable-next-line no-console
+                console.log(error);
+                const res=null;
+                commit('SET_DASHBOARD', res);
+            });                   
+        },
 
     }
-
 }
