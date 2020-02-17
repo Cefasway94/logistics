@@ -84,7 +84,7 @@
           :to="{name:'agent', 
           params: {id:'todos'}}"
           link
-          @click="dashboard()">
+          >
           <v-list-item-icon>
             <v-icon>account_box</v-icon>
           </v-list-item-icon>
