@@ -1,9 +1,9 @@
 <template>
   <v-app style="background-color:#F5FAFF;">
-      <div v-if="login">
+      <div v-if="!login">
         <Home/>
       </div>
-      <div v-if="!login">
+      <div v-if="login">
         <Login/>
       </div>
   </v-app>
@@ -11,7 +11,7 @@
 
 <script>
 // import HelloWorld from './components/HelloWorld';
-// import Login from './views/Login';
+// import Login from './views/Login'; #f1f3f4, #F5FAFF
 import Home from './views/Home.vue';
 import Login from './views/Login.vue';
 export default {

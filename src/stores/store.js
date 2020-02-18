@@ -3,13 +3,15 @@ import Vuex from 'vuex';
 
 // imported modules
 import tender from './modules/tenders';
+import accounts from './modules/accounts'
 
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
     modules: {
-        tenders:tender,
+        tender,
+        accounts
         
 
     }
