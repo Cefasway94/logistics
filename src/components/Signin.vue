@@ -52,8 +52,59 @@
 </template>
 
 <script>
+//import {mapActions} from 'vuex';
+/* eslint-disable no-console */
+
 export default {
   
+  data (){
+      return{
+          email:'',
+          secret:'',
+          rules: {
+            required: value => !!value || "Required",
+            email: value => {
+             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+             return pattern.test(value) || "Invalid e-mail.";
+            }
+           }
+      }
+  },
+
+methods:{
+
+    Register(){
+        if (this.valid()) {
+        this.$store.dispatch('REGISTER', {
+          username: this.name,
+          email: this.email,
+          secret: this.secret,
+          phone: this.phone_number
+        })
+        .then(({ status }) => {
+          this.$router.push('/signin')
+          console.log(status);
+          
+        })
+        .catch (error => {
+          this.userExists = true;
+          console.log(error);
+          
+        })
+      }else {
+          return this.match = true;
+      }
+
+    },
+
+    valid() {
+      return this.secret === this.confirm_secret;
+    },
+
+    matchsecret(){
+                  return this.match = false;
+        }
+  }
     
 }
 </script>
