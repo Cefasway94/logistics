@@ -19,7 +19,9 @@ getters:{
                         
         },
         LOAD_TENDER: state => {
-            const tenderdetails = state.tenderdetails
+            const tenderdetails = state.tenderdetails;
+            //eslint-disable-next-line no-console
+            console.log(tenderdetails);
             return tenderdetails;
         },
 
@@ -27,7 +29,7 @@ getters:{
         LOAD_DASHBOARDS: state => {
              const dashboard = state.dashboard;
              //eslint-disable-next-line no-console
-             console.log(dashboard);
+             //console.log(dashboard);
              return dashboard             
                         
         },
@@ -64,6 +66,17 @@ mutations: {
 actions: {
         // Tender actions =========================================>>>>
         GET_TENDERS: async ({commit},payload) => {
+            const url= 'http://test-clearing.oxoafrica.co.tz/api/v1/tenders/list/'+payload;
+            await axios.get(url).then((res)=>{
+                // eslint-disable-next-line no-console
+                console.log(res.data);
+                commit('SET_TENDERS', res.data);
+            }).catch((error)=>{
+                //eslint-disable-next-line no-console
+                console.log(error);
+                const res=null;
+                commit('SET_TENDERS', res);
+            }); 
             // axios.get('http://192.168.10.219:5000/api/v1/tenders/list/open')
             // .then(data =>{
             //     console.log(data)
@@ -71,21 +84,38 @@ actions: {
             //     commit ("SET_TENDERS",tenders);
             // }).catch(error =>{
             //     console.log(error)
-            // })
-        const url= 'https://jsonplaceholder.typicode.com/'+payload;
+            // })=========================================
+        // const url= 'https://jsonplaceholder.typicode.com/'+payload;
+        //     await axios.get(url).then((res)=>{
+        //         // eslint-disable-next-line no-console
+        //         //console.log(res.data);
+        //         commit('SET_TENDERS', res.data);
+        //     }).catch((error)=>{
+        //         //eslint-disable-next-line no-console
+        //         console.log(error);
+        //         const res=null;
+        //         commit('SET_TENDERS', res);
+        //     });                   
+        },
+
+        GET_TENDERSDETAILs: async ({commit},payload) => {
+            const url= 'http://test-clearing.oxoafrica.co.tz/api/v1/tenders/'+payload;
             await axios.get(url).then((res)=>{
+                // res.data.map(data=>{
+                //     commit('SET_TENDER', data);
+                //     // eslint-disable-next-line no-console
+                //    console.log(res.data);
+                // });===
+                
                 // eslint-disable-next-line no-console
-                //console.log(res.data);
-                commit('SET_TENDERS', res.data);
+                   console.log(res.data);
+                commit('SET_TENDER', res.data.objects);
             }).catch((error)=>{
                 //eslint-disable-next-line no-console
                 console.log(error);
                 const res=null;
-                commit('SET_TENDERS', res);
-            });                   
-        },
-
-        GET_TENDERSDETAILs: async ({commit},payload) => {
+                commit('SET_TENDER', res);
+            }); 
             // axios.get('http://192.168.10.219:5000/api/v1/tenders/list/open')
             // .then(data =>{
                 // eslint-disable-next-line no-console
@@ -94,24 +124,24 @@ actions: {
             //     commit ("SET_TENDERS",tenders);
             // }).catch(error =>{
             //     console.log(error)
-            // })
-        const url= 'https://jsonplaceholder.typicode.com/users';
-            await axios.get(url,{
-                params:{
-                    id:payload,
-                }
-            }).then((res)=>{
-                res.data.map(data=>{
-                    commit('SET_TENDER', data);
-                    // eslint-disable-next-line no-console
-                   console.log(res.data);
-                });
-            }).catch((error)=>{
-                //eslint-disable-next-line no-console
-                console.log(error);
-                const res=null;
-                commit('SET_TENDER', res);
-            });                   
+            // })=================================================================>>>
+        // const url= 'https://jsonplaceholder.typicode.com/users';
+        //     await axios.get(url,{
+        //         params:{
+        //             id:payload,
+        //         }
+        //     }).then((res)=>{
+        //         res.data.map(data=>{
+        //             commit('SET_TENDER', data);
+        //             // eslint-disable-next-line no-console
+        //            console.log(res.data);
+        //         });
+        //     }).catch((error)=>{
+        //         //eslint-disable-next-line no-console
+        //         console.log(error);
+        //         const res=null;
+        //         commit('SET_TENDER', res);
+        //     });                   
         },
 
 // Dashboard actions ==================================================>>>>>>

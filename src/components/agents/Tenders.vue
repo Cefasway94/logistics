@@ -10,13 +10,13 @@
     <v-container row fluid class="pt-5" style="background-color:#F5FAFF;" >
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
-             v-for="tender in LOAD_TENDERS" :key="tender.id" v-model="LOAD_TENDERS.completed" >
+             v-for="tender in LOAD_TENDERS.objects" :key="tender.id"  >
 
                 <v-card column width="350"  elevation="3" class="px-4 pb-3 pt-1 mx-auto">
                    
                     <v-row  row class="pl-3 pt-1 mb-1 justify-space-between">
                         <v-flex wrap xs9 sm9>
-                        <h4  class="subtitle-1 font-weight-bold">{{tender.username}}</h4>
+                        <h4  class="subtitle-1 font-weight-bold">{{tender.cargo_details}}</h4>
                         </v-flex>
                         
                         <v-flex xs1 sm1 justify="end">
@@ -25,10 +25,10 @@
                         </v-flex>
                     </v-row>
                    
-                        <p class=" body-2 grey--text mb-1">ABC furniture</p>
+                        <p class=" body-2 grey--text mb-1">{{tender.customer_id}}</p>
                     
                     <v-row class="px-3">
-                        <p class="body-2  pt-1 ">{{tender.completed}}</p>
+                        <p class="body-2  pt-1 ">Dar-es</p>
                         
                         <v-icon small color="#4169E1" class="px-2 pb-3">
                             arrow_forward
@@ -37,10 +37,10 @@
                     </v-row>
 
                     <v-row row class="px-3 mb-1">
-                        <h4  class=" title ">500 USD</h4>
+                        <h4  class=" title ">{{tender.customer_offer_amount}} USD</h4>
                         <v-spacer></v-spacer>
                         <v-btn small elevation="flat" 
-                        color="#4169E1" class="white--text" @click="gettenderdetails(tender.id)" :to="{name:'Abouttender', 
+                        color="#4169E1" class="white--text" @click="gettenderdetails(tender.tender_id)" :to="{name:'Abouttender', 
                         params: {id:tender.id}}" >View Details</v-btn>
                     </v-row>
                     

@@ -46,14 +46,15 @@ actions: {
         });
       },
 
-      REGISTER: ({ commit }, { username, email, password, secret }) => {
+      REGISTER: ({ commit }, { username, email, password, secret, category }) => {
         return new Promise((resolve, reject) => {
           axios
             .post(`http://192.168.1.66/api/v1/profiles/register`, {
               username,
               email,
               password,
-              secret
+              secret,
+              category
             })
             .then(({ data, status }) => {
               if (status === 201) {

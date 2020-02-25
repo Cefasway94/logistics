@@ -59,17 +59,17 @@ const routes = [
   {
     path:'/Client/editprofile',
     name:'Clienteditprofile',
-    component:Clienteditprofile
+    components:{Clienteditprofile}
   },
   {
     path:'/client/Createtender',
     name:'Createtender',
-    component:Createtender
+    components:{Createtender}
   },
   {
     path:'/client/tenderprogress',
     name:'Tenderprogressclient',
-    component:Tenderprogressclient
+    components:{Tenderprogressclient}
   },
   {
     path:'/client/payment',

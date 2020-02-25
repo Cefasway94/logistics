@@ -66,7 +66,7 @@
         <v-list-item
           router 
           :to="{name:'tenders', 
-          params: {id:'users'}}"
+          params: {id:'open'}}"
           link
           @click="tenders()">
           <v-list-item-icon>
@@ -146,7 +146,7 @@ export default {
       colors: ['primary', 'accent', 'warning lighten-2', 'teal', 'orange'],
       drawer: true,
       items:[
-            {title: 'Tenders', icon: 'dashboard', router:{name:'tenders', params: {id:'users'}}},
+            {title: 'Tenders', icon: 'dashboard', router:{name:'tenders', params: {id:'open'}}},
             {title: 'Dashboard', icon: 'account_box', router:{name:'agent', params:{id:'todos'}}},
             {title: 'Payments', icon: 'gavel', router:'/payment'}
       ],

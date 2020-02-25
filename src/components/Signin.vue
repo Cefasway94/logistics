@@ -11,41 +11,66 @@
                 <p class="text-center font-weight-regular body-2">Welcome back, please login to your account</p>
             </v-card-text>
             <v-form class="px-8">
-                
-                    <v-flex column>
-                    <p class="font-weight-regular body-2 grey--text mb-0" >EMAIL</p>
-                    <v-text-field solo class="mt-2" color="#4169E1" background-color="" clearable 
-                    v-model="email" required > 
+                <v-flex column>
+                   <v-flex row class="" >
+                    <v-flex column class="">
+                    <p class="font-weight-regular body-1 grey--text  mb-0" >EMAIL</p>
+                    <v-text-field 
+                    light
+                    solo 
+                    outlined
+                    class="mt-1 text-center" 
+                    color="#4169E1" 
+                    background-color="transparent" 
+                    clearable 
+                    v-model="email" 
+                    :rules="[rules.required, rules.email]" 
+                    > 
                     </v-text-field>
+                    </v-flex>            
                     </v-flex>
 
-                    <v-flex column>
-                    <p class="font-weight-regular body-2 grey--text mb-0" >PASSWORD</p>
-                    <v-text-field solo class="mt-2" color="#4169E1" background-color="" clearable
-                    v-model="email" required > 
+                    <v-flex row class="" >
+                    <v-flex column class="">
+                    <p class="font-weight-regular body-1 grey--text mb-0" >PASSWORD</p>
+                    <v-text-field 
+                    solo 
+                    outlined
+                    class="mt-1" 
+                    color="#4169E1" 
+                    background-color="transparent" 
+                    v-model="secret" 
+                    :rules="[rules.required]"
+                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                    @click:append="show = !show"
+                    :type="show ? 'text' : 'password'"> 
                     </v-text-field>
+                    </v-flex>           
                     </v-flex>
 
-                    <v-flex row class="row justify-center ">
-                        <v-checkbox color="#4169E1" label="remember me"> </v-checkbox>
+                    <v-flex row class=" justify-center ml-1">
+                        <v-checkbox color="#4169E1" 
+                        label="remember me"> </v-checkbox>
                         <v-spacer></v-spacer>
-                        <v-btn elevation="false" color="transparent" 
-                        class="mt-4 font-weight-regular body-1 text-capitalize" style="color:#4169E1;"> Forgot password
+                        <v-btn elevation="false" 
+                        color="transparent" 
+                        class="mt-4 font-weight-regular body-1 text-capitalize" 
+                        style="color:#4169E1;"> Forgot password
                         </v-btn>
                     </v-flex >
                 
-                <v-flex class="pa-2">
-                 <v-btn color="#4169E1" height="45" block>
+                <v-flex class="px-2 justify-center">
+                 <v-btn color="#4169E1" height="47" block>
                      <span class="white--text">Login</span>
                  </v-btn>
                 </v-flex>
 
                  <v-flex class="row my-5 justify-center">
                         <p class="text-center">Dont have an account ? 
-                        <a  class="ml-2" style="color:#4169E1;" >Sign up </a>
+                        <a  class="ml-4" style="color:#4169E1;" >Sign up </a>
                         </p>
                 </v-flex>
-
+              </v-flex>
             </v-form>
         </v-card>
     </v-app>
@@ -73,29 +98,7 @@ export default {
 
 methods:{
 
-    Register(){
-        if (this.valid()) {
-        this.$store.dispatch('REGISTER', {
-          username: this.name,
-          email: this.email,
-          secret: this.secret,
-          phone: this.phone_number
-        })
-        .then(({ status }) => {
-          this.$router.push('/signin')
-          console.log(status);
-          
-        })
-        .catch (error => {
-          this.userExists = true;
-          console.log(error);
-          
-        })
-      }else {
-          return this.match = true;
-      }
-
-    },
+    Login(){},
 
     valid() {
       return this.secret === this.confirm_secret;

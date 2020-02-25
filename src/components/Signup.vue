@@ -1,12 +1,12 @@
 <template>
     <v-app style="background-color:transparent; ">
         <v-card 
-        class="my-auto py-3"
+        class="my-auto mx-4"
         width="560" 
         flat
         color="transparent" >
             <v-card-title  class="justify-center">
-                <h2 class="primary--text text-center " >UBALORI</h2>
+                <h1 class="primary--text text-center py-2 " >UBALORI</h1>
             </v-card-title>
             <v-card-text>
                 <p class="text-center font-weight-regular body-1 mb-0">Welcome, please register to create your account</p>
@@ -31,49 +31,108 @@
                             <v-btn append-icon="account" small>click</v-btn>
                         </v-flex> -->
 
-                  <v-flex>
-                   
+                  <v-flex class="">
+            
+                    <v-flex row class="mx-auto mb-4 mt-3 ">
+                    <v-flex column xs12 sm4 lg4 class="px-2">
+                    <v-hover class="">
+                    <template v-slot="{ hover }">
+                    <v-card color="transparent" 
+                    height="60"
+                    width="70" 
+                    :elevation="hover ? 8 : 0">
+                    <v-btn 
+                    height="60"
+                    width="70"
+                    :elevation="be1"
+                    :color="btn1"
+                    class="white--text pb-2"
+                    @click="button1()">
+                    <v-img
+                    :src="require('../assets/truck.png')"
+                    class=""
+                    contain
+                    width=""
+                    height="50">
+                    </v-img>
+                    </v-btn>
+                    </v-card>
+                    </template>
+                    </v-hover>
+                    <p class="mt-1 mb-0 caption">Transporter</p>
+                    </v-flex>
                     
-                    <v-flex row class="px-1 mb-5 mt-3">
-                    <v-flex column xs12 sm4 lg4 class="px-2">
+                    <v-flex column xs4 sm4 md4 lg4 class="px-2">
+                    <v-hover class="">
+                    <template v-slot="{ hover }">
+                    <v-card color="transparent" 
+                    height="60"
+                    width="70" 
+                    :elevation="hover ? 8 : 0">
                     <v-btn 
-                    disabled="" 
                     append-icon="account" 
-                    small 
-                    color="#4169E1"
-                    class="white--text">
-                    click
+                    height="60"
+                    width="70"
+                    :elevation="be2"
+                    background-color="red"
+                    :color="btn2"
+                    class="white--text pb-2"
+                    @click="button2()">
+                    <v-img
+                    :src="require('../assets/box.png')"
+                    class="mt-1"
+                    contain
+                    width=""
+                    height="45">
+                    </v-img>
                     </v-btn>
+                    </v-card>
+                    </template>
+                    </v-hover>
+                    <v-flex class="pl-4 justify-center">
+                    <p class="mt-1  mb-0 caption">Agent</p>
                     </v-flex>
-                    <v-flex column xs12 sm4 lg4 class="px-2">
-                    <v-btn 
-                    append-icon="account" 
-                    small 
-                    color="#4169E1"
-                    class="white--text">
-                    <v-icon>
-                      <v-icon src="https://img.icons8.com/cotton/64/000000/truck.png">
-                      </v-icon>
+                    </v-flex>
 
-                    </v-icon>
-                    click
-                    </v-btn>
-                    </v-flex>
-                    <v-flex column xs12 sm4 lg4 class="px-2">
+                    <v-flex column xs4 sm4 md4 lg4 class="px-2">
+                    <v-hover class="">
+                    <template v-slot="{ hover }">
+                    <v-card color="transparent" 
+                    height="60"
+                    width="70" 
+                    :elevation="hover ? 8 : 0">
                     <v-btn 
                     append-icon="account" 
-                    small 
-                    color="#4169E1"
-                    class="white--text">
-                    click
+                    height="60"
+                    width="70"
+                    :elevation="be3"
+                    :color="btn3"
+                    class="white--text pb-2"
+                    @click="button3()">
+                    <v-img
+                    :src="require('../assets/list.png')"
+                    class="mt-2"
+                    contain
+                    width=""
+                    height="43">
+                    </v-img>
                     </v-btn>
+                    </v-card>
+                    </template>
+                    </v-hover>
+                    <v-flex class="pl-4 ">
+                    <p class="mt-1  mb-0 caption">Client</p>
+                    </v-flex>
                     </v-flex>
                     </v-flex>            
                     
-
-                    <v-flex row class="" >
-                    <v-flex column xs12 sm12 md12 lg12  class="px-1">
+                  
+                    <v-flex row class="mb-6">
+                    <v-flex column xs12 sm12 md12 lg12  class="">
                     <p class="font-weight-regular body-1 grey--text  mb-0" >EMAIL</p>
+                    <v-hover>
+                    <template v-slot="{ hover }">
+                    <v-card color="transparent" height="55" :elevation="hover ? 8 : 0">
                     <v-text-field 
                     light
                     solo 
@@ -86,8 +145,12 @@
                     :rules="[rules.required, rules.email]" 
                     > 
                     </v-text-field>
-                    </v-flex>            
+                    </v-card>
+                    </template>
+                    </v-hover>
                     </v-flex>
+                    </v-flex>            
+                    
                         
                     <!-- <v-flex column xs12 sm12 md12 lg12  class="">
                     <p class="font-weight-regular body-1 grey--text  mb-0" >EMAIL</p>
@@ -108,6 +171,11 @@
                     <v-flex row class="" >
                     <v-flex column xs12 sm12 md6 lg6  class="px-1">
                     <p class="font-weight-regular body-1 grey--text  mb-0" >NAME</p>
+                    <v-hover class="mb-6">
+                    <template v-slot="{ hover }">
+                    <v-card color="transparent" 
+                    height="55" 
+                    :elevation="hover ? 8 : 0">
                     <v-text-field 
                     light
                     solo 
@@ -117,14 +185,22 @@
                     background-color="transparent" 
                     clearable 
                     v-model="name" 
-                    :rules="[rules.required]" 
+                    :rules="[rules.required]"
                     > 
                     </v-text-field>
+                    </v-card>
+                    </template>
+                    </v-hover>
                     </v-flex>
 
                     
                     <v-flex column xs12 sm12 md6 lg6 class="px-1">
                     <p class="font-weight-regular body-1 grey--text  mb-0" >PHONE NUMBER</p>
+                    <v-hover class="mb-6">
+                    <template v-slot="{ hover }">
+                    <v-card color="transparent" 
+                    height="55" 
+                    :elevation="hover ? 8 : 0">
                     <v-text-field 
                     light
                     solo 
@@ -137,12 +213,20 @@
                     :rules="[rules.required]" 
                     > 
                     </v-text-field>
+                    </v-card>
+                    </template>
+                    </v-hover>
                     </v-flex>
                     </v-flex>
 
                     <v-flex row class="">
                     <v-flex column xs12 sm12 md6 lg6 class="px-1">
                     <p class="font-weight-regular body-1 grey--text mb-0" >PASSWORD</p>
+                    <v-hover class="mb-7">
+                    <template v-slot="{ hover }">
+                    <v-card color="transparent" 
+                    height="55" 
+                    :elevation="hover ? 8 : 0">
                     <v-text-field 
                     solo 
                     outlined
@@ -156,10 +240,18 @@
                     :type="show ? 'text' : 'password'"
                     > 
                     </v-text-field>
+                    </v-card>
+                    </template>
+                    </v-hover>
                     </v-flex>
 
                     <v-flex column xs12 sm12 md6 lg6 class="px-1">
                     <p class="font-weight-regular body-1 grey--text mb-0" >REPEAT PASSWORD</p>
+                    <v-hover class="mb-7">
+                    <template v-slot="{ hover }">
+                    <v-card color="transparent" 
+                    height="55" 
+                    :elevation="hover ? 8 : 0">
                     <v-text-field 
                     solo
                     outlined
@@ -173,6 +265,10 @@
                     @input=" matchsecret()"
                     :type="show ? 'text' : 'password'">
                     </v-text-field>
+                    </v-card>
+                    </template>
+                    </v-hover>
+
                     <v-alert
                     :value="match"
                     color="error"
@@ -190,12 +286,18 @@
                     </v-flex> -->
                                         
                     <v-flex row class="px-5" >
+                    <v-hover>
+                    <template v-slot="{ hover }">
+                    <v-card color="#4169E1" height="47" width="500" :elevation="hover ? 8 : 0">
                     <v-btn color="#4169E1" 
-                    height="45" 
+                    height="47" 
                     block 
                     @click.prevent="Register()">
                     <span class="white--text">Signup</span>
-                    </v-btn>         
+                    </v-btn>
+                    </v-card>
+                    </template>
+                    </v-hover>         
                     </v-flex>
 
                     </v-flex>
@@ -220,9 +322,16 @@ export default {
   
   data (){
       return{
+          be1: '5',
+          be2: '0',
+          be3: '0',
+          btn1:"#4169E1", 
+          btn2:"transparent", 
+          btn3:"transparent",
           match: false,
           userExists: false,
           show:false,
+          category:'',
           name:'',
           phone_number:'',
           email:'',
@@ -246,7 +355,8 @@ methods:{
           username: this.name,
           email: this.email,
           secret: this.secret,
-          phone: this.phone_number
+          phone: this.phone_number,
+          category: this.category
         })
         .then(({ status }) => {
           this.$router.push('/signin')
@@ -270,7 +380,42 @@ methods:{
 
     matchsecret(){
                   return this.match = false;
-        }
+        },
+    
+    button1 (){
+      this.btn1 = "#4169E1";
+      this.btn2 = "transparent";
+      this.btn3 = "transparent";
+      this.be1 ='5';
+      this.be2 ='0';
+      this.be3 ='0';
+      this.category = 1;
+      console.log(this.category);
+      
+    },
+    button2 (){
+      this.btn2 = "#4169E1";
+      this.btn1 = "transparent";
+      this.btn3 = "transparent";
+      this.be1 ='0';
+      this.be2 ='5';
+      this.be3 ='0';
+      this.category = 2;
+      console.log(this.category);
+
+    },
+    button3 (){
+      this.btn3 = "#4169E1";
+      this.btn1 = "transparent";
+      this.btn2 = "transparent";
+      this.be1 ='0';
+      this.be2 ='0';
+      this.be3 ='5';
+      this.category = 3;
+      console.log(this.category);
+
+
+    }
   }
     
 }

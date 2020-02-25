@@ -122,7 +122,7 @@
                     <v-card color="#4169E1" width="" class="py-4 px-5">
                         <v-flex row >
                             <v-flex column class="px-3" >
-                            <p class="white--text body-1 font-weight-bold" > {{LOAD_TENDER.username}} </p>
+                            <p  class="white--text body-1 font-weight-bold" > {{LOAD_TENDER.customer_id}} </p>
                             <v-flex column>
                             <v-flex row class="px-3 ">
                             <v-icon class="mb-3 white--text" >mail_outline</v-icon>
@@ -191,7 +191,8 @@ export default {
       
       theid(id){
           // eslint-disable-next-line no-console
-          console.log(id);
+         // console.log(id);
+         return id;
       },
 
       Bid: function() {
