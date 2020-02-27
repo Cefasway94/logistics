@@ -74,7 +74,7 @@ const routes = [
   {
     path:'/client/payment',
     name:'Payment',
-    component:Payment
+    components:{Payment}
   },
   {
     path:'/client/Aboutbid',

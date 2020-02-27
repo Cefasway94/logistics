@@ -1,10 +1,11 @@
 <template>
-  <v-app style="background-color:#F5FAFF;">
-      <div v-if="login">
+  <v-app src="require('./assets/truck.png')" style="background-color:#F5FAFF;">
+    
+      <div v-if="!login">
         <Home/>
       </div>
-      <div v-if="!login">
-        <Login/>
+      <div v-if="login">
+      <Login/>
       </div>
   </v-app>
 </template>

@@ -1,12 +1,12 @@
 <template>
     <v-app style="background-color:transparent; ">
-        <v-card 
+      <v-card 
         class="my-auto mx-4"
         width="560" 
-        flat
-        color="transparent" >
+        flat=""
+        color="gray" >
             <v-card-title  class="justify-center">
-                <h1 class="primary--text text-center py-2 " >UBALORI</h1>
+                <h1 class="primary--text text-center py-2 font-weight-medium  " >UBALORI</h1>
             </v-card-title>
             <v-card-text>
                 <p class="text-center font-weight-regular body-1 mb-0">Welcome, please register to create your account</p>
@@ -14,11 +14,11 @@
             <v-form class="px-7">
 
                 <v-alert
-                :value="userExists"
+                :value="error"
                 color="error"
                 icon="error_outline"
                 >
-                This user already exists, try a different set of data.
+                {{LOAD_RESPONSE}}
                 </v-alert>
                     
 <!-- <v-flex column xs4 sm4 lg4 class="px-2">
@@ -33,8 +33,9 @@
 
                   <v-flex class="">
             
-                    <v-flex row class="mx-auto mb-4 mt-3 ">
+                    <v-flex row class="mx-2 mb-5 mt-3" >
                     <v-flex column xs12 sm4 lg4 class="px-2">
+                    <center>
                     <v-hover class="">
                     <template v-slot="{ hover }">
                     <v-card color="transparent" 
@@ -60,9 +61,11 @@
                     </template>
                     </v-hover>
                     <p class="mt-1 mb-0 caption">Transporter</p>
+                    </center>
                     </v-flex>
                     
-                    <v-flex column xs4 sm4 md4 lg4 class="px-2">
+                    <v-flex column xs12 sm4 md4 lg4 class="px-2">
+                    <center>
                     <v-hover class="">
                     <template v-slot="{ hover }">
                     <v-card color="transparent" 
@@ -92,9 +95,11 @@
                     <v-flex class="pl-4 justify-center">
                     <p class="mt-1  mb-0 caption">Agent</p>
                     </v-flex>
+                    </center>
                     </v-flex>
 
-                    <v-flex column xs4 sm4 md4 lg4 class="px-2">
+                    <v-flex column xs12 sm4 md4 lg4 class="px-2">
+                    <center>
                     <v-hover class="">
                     <template v-slot="{ hover }">
                     <v-card color="transparent" 
@@ -123,16 +128,17 @@
                     <v-flex class="pl-4 ">
                     <p class="mt-1  mb-0 caption">Client</p>
                     </v-flex>
+                    </center>
                     </v-flex>
                     </v-flex>            
                     
                   
-                    <v-flex row class="mb-6">
+                    <v-flex row class="mb-6 ">
                     <v-flex column xs12 sm12 md12 lg12  class="">
-                    <p class="font-weight-regular body-1 grey--text  mb-0" >EMAIL</p>
+                    <p class="font-weight-regular subtitle-2 grey--text mb-0" >EMAIL</p>
                     <v-hover>
                     <template v-slot="{ hover }">
-                    <v-card color="transparent" height="55" :elevation="hover ? 8 : 0">
+                    <v-card color="transparent" height="55" :elevation="hover ? 6 : 0">
                     <v-text-field 
                     light
                     solo 
@@ -169,13 +175,13 @@
                     </v-flex> -->
 
                     <v-flex row class="" >
-                    <v-flex column xs12 sm12 md6 lg6  class="px-1">
-                    <p class="font-weight-regular body-1 grey--text  mb-0" >NAME</p>
+                    <v-flex column xs12 sm12 md6 lg6  class="px-1 ">
+                    <p class="font-weight-regular subtitle-2 grey--text  mb-0" >NAME</p>
                     <v-hover class="mb-6">
                     <template v-slot="{ hover }">
                     <v-card color="transparent" 
                     height="55" 
-                    :elevation="hover ? 8 : 0">
+                    :elevation="hover ? 6 : 0">
                     <v-text-field 
                     light
                     solo 
@@ -195,12 +201,12 @@
 
                     
                     <v-flex column xs12 sm12 md6 lg6 class="px-1">
-                    <p class="font-weight-regular body-1 grey--text  mb-0" >PHONE NUMBER</p>
+                    <p class="font-weight-regular subtitle-2 grey--text  mb-0" >PHONE NUMBER</p>
                     <v-hover class="mb-6">
                     <template v-slot="{ hover }">
                     <v-card color="transparent" 
                     height="55" 
-                    :elevation="hover ? 8 : 0">
+                    :elevation="hover ? 6 : 0">
                     <v-text-field 
                     light
                     solo 
@@ -221,12 +227,12 @@
 
                     <v-flex row class="">
                     <v-flex column xs12 sm12 md6 lg6 class="px-1">
-                    <p class="font-weight-regular body-1 grey--text mb-0" >PASSWORD</p>
+                    <p class="font-weight-regular subtitle-2 grey--text mb-0" >PASSWORD</p>
                     <v-hover class="mb-7">
                     <template v-slot="{ hover }">
                     <v-card color="transparent" 
                     height="55" 
-                    :elevation="hover ? 8 : 0">
+                    :elevation="hover ? 6 : 0">
                     <v-text-field 
                     solo 
                     outlined
@@ -246,12 +252,12 @@
                     </v-flex>
 
                     <v-flex column xs12 sm12 md6 lg6 class="px-1">
-                    <p class="font-weight-regular body-1 grey--text mb-0" >REPEAT PASSWORD</p>
+                    <p class="font-weight-regular subtitle-2 grey--text mb-0" >REPEAT PASSWORD</p>
                     <v-hover class="mb-7">
                     <template v-slot="{ hover }">
                     <v-card color="transparent" 
                     height="55" 
-                    :elevation="hover ? 8 : 0">
+                    :elevation="hover ? 6 : 0">
                     <v-text-field 
                     solo
                     outlined
@@ -315,7 +321,7 @@
 </template>
 
 <script>
-//import {mapActions} from 'vuex';
+import {mapGetters} from 'vuex';
 /* eslint-disable no-console */
 
 export default {
@@ -329,9 +335,10 @@ export default {
           btn2:"transparent", 
           btn3:"transparent",
           match: false,
-          userExists: false,
+          error: false,
+          abouterror:'',
           show:false,
-          category:'',
+          category: 2,
           name:'',
           phone_number:'',
           email:'',
@@ -339,6 +346,7 @@ export default {
           confirm_secret:'',
           rules: {
             required: value => !!value || "Required",
+            //number:value => {},
             email: value => {
              const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
              return pattern.test(value) || "Invalid e-mail.";
@@ -351,23 +359,36 @@ methods:{
 
     Register(){
         if (this.valid()) {
+          
         this.$store.dispatch('REGISTER', {
-          username: this.name,
+          name: this.name,
           email: this.email,
-          secret: this.secret,
+          password: this.secret,
+          password_confirmation:this.confirm_secret,
           phone: this.phone_number,
           category: this.category
         })
-        .then(({ status }) => {
+        .then(({ data, status }) => {
           this.$router.push('/signin')
+          //return data;
+          data = this.LOAD_RESPONSE;
+          console.log('success');
+          
+          console.log(data);
           console.log(status);
+          
           
         })
         .catch (error => {
           this.userExists = true;
-          console.log(error);
+          if (error.email) {
+            this.abouterror = 'User Already exist. Please try other datails or log in with appropriate credentials'
+          } else {
+            this.abouterror = 'registration failed, please check your internet and try again'
+          }
+         //  ======================== continue from here
           
-        })
+        });
       }else {
           return this.match = true;
       }
@@ -382,6 +403,7 @@ methods:{
                   return this.match = false;
         },
     
+    // Transporter select
     button1 (){
       this.btn1 = "#4169E1";
       this.btn2 = "transparent";
@@ -389,10 +411,11 @@ methods:{
       this.be1 ='5';
       this.be2 ='0';
       this.be3 ='0';
-      this.category = 1;
+      this.category = 2;
       console.log(this.category);
-      
     },
+
+    //Agent select
     button2 (){
       this.btn2 = "#4169E1";
       this.btn1 = "transparent";
@@ -400,10 +423,11 @@ methods:{
       this.be1 ='0';
       this.be2 ='5';
       this.be3 ='0';
-      this.category = 2;
+      this.category = 1;
       console.log(this.category);
-
     },
+
+    //Client selelct
     button3 (){
       this.btn3 = "#4169E1";
       this.btn1 = "transparent";
@@ -416,6 +440,13 @@ methods:{
 
 
     }
+  },
+ computed: {
+      ...mapGetters([
+          'LOAD_RESPONSE'
+          //'LOAD_DIBTENDERS'
+      ]),
+      
   }
     
 }

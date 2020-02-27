@@ -1,14 +1,16 @@
 <template>
 <v-content >
-
-
-<v-row wrap justify="end" class="backgriund" style="background-color:transparent;">
+    <v-parallax 
+    height="calc(100vh - 100px)"
+    src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">            
+<v-row wrap justify="end" class="pr-5" style="background-color:transparent;">
     <v-flex xs-12 sm11 md8 lg5 >        
     <router-view ></router-view>
 </v-flex>
 </v-row >
-
+</v-parallax>
 </v-content>
+
 </template>
 
 <script>

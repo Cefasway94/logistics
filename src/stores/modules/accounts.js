@@ -3,30 +3,30 @@ import axios from "axios"
 
 
 export default {
-//   state:{
-//     Login: [],
-//     Register:[],
-// },
+  state:{
+    Login: [],
+    Register:[],
+},
 
-// getters:{
-// // Tender getter =======================================>>>>
-//     LOAD_TENDERS: state => {
-//          const tenders = state.tenders;
-//          //eslint-disable-next-line no-console
-//          console.log(tenders);
-//          return tenders                           
-//     }
+getters:{
+// Tender getter =======================================>>>>
+    LOAD_RESPONSE: state => {
+         const tenders = state.register;
+         //eslint-disable-next-line no-console
+         console.log(tenders);
+         return tenders                           
+    }
 
-// },
+},
 
-// mutations: {
-//     // Tender section mutation  ========================>>>
-//     SET_TENDERS: (state, payload) => {
-//         state.tenders = payload;
-//         //eslint-disable-next-line no-console
-//         //console.log(state.tenders);
-//     }
-// },
+mutations: {
+    // Tender section mutation  ========================>>>
+    RESPONSE: (state, payload) => {
+        state.register = payload;
+        //eslint-disable-next-line no-console
+        //console.log(state.register);
+    }
+},
 
 actions: {
     LOGIN: ({commit},payload) => {
@@ -46,26 +46,34 @@ actions: {
         });
       },
 
-      REGISTER: ({ commit }, { username, email, password, secret, category }) => {
+      REGISTER: ({ commit }, { name, email, password, password_confirmation, category, phone }) => {
         return new Promise((resolve, reject) => {
           axios
-            .post(`http://192.168.1.66/api/v1/profiles/register`, {
-              username,
+            .post(`http://192.168.8.105/api/v1/profiles/register`, {
+              name,
               email,
               password,
-              secret,
+              password_confirmation,
+              phone,
               category
             })
             .then(({ data, status }) => {
-              if (status === 201) {
+              if (status === 200) {
                 resolve(true);
-                console.log(data);
-                commit(data);       // commit doesn't point to the mutation
-                return data;
+                //console.log(data);
+                commit('RESPONSE',data);       // commit doesn't point to the mutation
               }
             })
             .catch(error => {
-              reject(error);
+              reject (error);
+              if (error.response) {
+                console.log(error.response.data);
+                console.log(error.response.status);
+              }
+              //commit('RESPONSE',error);          
+              //console.log(error);
+              //console.log(data);
+              
             });
         });
       },
