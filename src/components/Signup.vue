@@ -4,7 +4,7 @@
         class="my-auto mx-4"
         width="560" 
         flat=""
-        color="gray" >
+        color="#F5FAFF" >
             <v-card-title  class="justify-center">
                 <h1 class="primary--text text-center py-2 font-weight-medium  " >UBALORI</h1>
             </v-card-title>
@@ -13,6 +13,7 @@
             </v-card-text>
             <v-form class="px-7">
 
+<!-------------  alerts ------------  -->
                 <v-alert
                 :value="error"
                 color="error"
@@ -20,16 +21,15 @@
                 >
                 {{LOAD_RESPONSE}}
                 </v-alert>
+
+                <!-- <v-alert
+                :value="invalid"
+                color="error"
+                icon="error_outline"
+                >
+                make sure all filsds are filled correctly
+                </v-alert> -->
                     
-<!-- <v-flex column xs4 sm4 lg4 class="px-2">
-                            <v-btn append-icon="account" small>click</v-btn>
-                        </v-flex>
-                        <v-flex column xs4 sm4 lg4 class="px-2">
-                            <v-btn append-icon="account" small>click</v-btn>
-                        </v-flex>
-                        <v-flex column xs4 sm4 lg4 class="px-2">
-                            <v-btn append-icon="account" small>click</v-btn>
-                        </v-flex> -->
 
                   <v-flex class="">
             
@@ -132,10 +132,10 @@
                     </v-flex>
                     </v-flex>            
                     
-                  
+                  <v-flex column class="pl-4">
                     <v-flex row class="mb-6 ">
                     <v-flex column xs12 sm12 md12 lg12  class="">
-                    <p class="font-weight-regular subtitle-2 grey--text mb-0" >EMAIL</p>
+                      <p class="font-weight-regular subtitle-2 grey--text mb-0" >EMAIL</p>
                     <v-hover>
                     <template v-slot="{ hover }">
                     <v-card color="transparent" height="55" :elevation="hover ? 6 : 0">
@@ -155,6 +155,18 @@
                     </template>
                     </v-hover>
                     </v-flex>
+                    <!-- <v-flex row>
+                    <v-spacer></v-spacer>
+                    <v-alert
+                      xs6 sm6 md6 lg6
+                      class=""
+                      :value="invalidemail"
+                      color="error"
+                      icon="error_outline"
+                      >
+                      Invalid email
+                      </v-alert>
+                      </v-flex> -->
                     </v-flex>            
                     
                         
@@ -215,7 +227,7 @@
                     color="#4169E1" 
                     background-color="transparent" 
                     clearable 
-                    v-model="phone_number" 
+                    v-model="phone_number"
                     :rules="[rules.required]" 
                     > 
                     </v-text-field>
@@ -268,15 +280,14 @@
                     :rules="[rules.required]"
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="show = !show"
-                    @input=" matchsecret()"
+                    @input="clear_alert()"
                     :type="show ? 'text' : 'password'">
                     </v-text-field>
                     </v-card>
                     </template>
                     </v-hover>
-
                     <v-alert
-                    :value="match"
+                    :value="invalid"
                     color="error"
                     icon="error_outline"
                     >
@@ -294,11 +305,15 @@
                     <v-flex row class="px-5" >
                     <v-hover>
                     <template v-slot="{ hover }">
-                    <v-card color="#4169E1" height="47" width="500" :elevation="hover ? 8 : 0">
+                    <v-card 
+                    color="#4169E1" 
+                    height="47" 
+                    width="500" 
+                    :elevation="hover ? 8 : 0">
                     <v-btn color="#4169E1" 
                     height="47" 
                     block 
-                    @click.prevent="Register()">
+                    @click.prevent=" Register()">
                     <span class="white--text">Signup</span>
                     </v-btn>
                     </v-card>
@@ -307,12 +322,21 @@
                     </v-flex>
 
                     </v-flex>
+                    </v-flex>
                                
 
                  <v-flex class="row mt-4 justify-center">
-                        <p class="text-center">already have account ? 
-                        <a  class="ml-2" style="color:#4169E1;" >Sign in </a>
-                        </p>
+                 <p class="text-center">already have account ? </p>
+                 <v-btn 
+                 elevation="flat" 
+                 color="transparent" 
+                 height="25"
+                 class="ml-2">
+                 <p class="mt-1" 
+                 style="color:#4169E1;">
+                 Sign in 
+                 </p>
+                 </v-btn>
                 </v-flex>
 
             </v-form>
@@ -334,7 +358,10 @@ export default {
           btn1:"#4169E1", 
           btn2:"transparent", 
           btn3:"transparent",
-          match: false,
+         //match: false,                // used to chcek if passwords match, 
+         invalid: false,             // togle fields
+         //invalidemail : false,      // check if email is valid
+         //valid: false,             // check if fields are empty
           error: false,
           abouterror:'',
           show:false,
@@ -358,9 +385,9 @@ export default {
 methods:{
 
     Register(){
-        if (this.valid()) {
-          
-        this.$store.dispatch('REGISTER', {
+      
+          if (this.validate()) {
+          this.$store.dispatch('REGISTER', {
           name: this.name,
           email: this.email,
           password: this.secret,
@@ -390,19 +417,18 @@ methods:{
           
         });
       }else {
-          return this.match = true;
-      }
-
+          return this.invalid = true;
+       }   
     },
 
-    valid() {
-      return this.secret === this.confirm_secret;
+    validate() {
+           return this.secret === this.confirm_secret
     },
 
-    matchsecret(){
-                  return this.match = false;
-        },
-    
+    clear_alert() {
+      return this.invalid = false
+    }, 
+   
     // Transporter select
     button1 (){
       this.btn1 = "#4169E1";
@@ -443,7 +469,7 @@ methods:{
   },
  computed: {
       ...mapGetters([
-          'LOAD_RESPONSE'
+          'LOAD_REGISTER'
           //'LOAD_DIBTENDERS'
       ]),
       

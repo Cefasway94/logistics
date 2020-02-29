@@ -2,8 +2,8 @@
 <v-content >
     <v-parallax 
     height="calc(100vh - 100px)"
-    src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">            
-<v-row wrap justify="end" class="pr-5" style="background-color:transparent;">
+    src="">            
+<v-row wrap justify="end" class="pr-5" style="background-color:#F5FAFF;">
     <v-flex xs-12 sm11 md8 lg5 >        
     <router-view ></router-view>
 </v-flex>

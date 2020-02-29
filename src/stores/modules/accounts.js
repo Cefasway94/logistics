@@ -10,7 +10,7 @@ export default {
 
 getters:{
 // Tender getter =======================================>>>>
-    LOAD_RESPONSE: state => {
+    LOAD_REGISTER: state => {
          const tenders = state.register;
          //eslint-disable-next-line no-console
          console.log(tenders);
@@ -21,7 +21,7 @@ getters:{
 
 mutations: {
     // Tender section mutation  ========================>>>
-    RESPONSE: (state, payload) => {
+    REGISTER: (state, payload) => {
         state.register = payload;
         //eslint-disable-next-line no-console
         //console.log(state.register);
@@ -61,7 +61,7 @@ actions: {
               if (status === 200) {
                 resolve(true);
                 //console.log(data);
-                commit('RESPONSE',data);       // commit doesn't point to the mutation
+                commit('REGISTER',data);       // commit doesn't point to the mutation
               }
             })
             .catch(error => {
