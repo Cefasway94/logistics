@@ -49,7 +49,12 @@
 
          <v-divider class="mx-auto" vertical></v-divider>
 
-         <v-btn depressed elevation="flat" class="white black--text mx-3 mt-2 hidden-md-and-down">Log out</v-btn>
+         <v-btn 
+         depressed elevation="flat" 
+         class="white black--text mx-3 mt-2 hidden-md-and-down"
+         @click.prevent="logout()">
+         Log out
+         </v-btn>
       </v-app-bar >
 
 <!-- Navbar -->
@@ -111,8 +116,13 @@
         </v-list-item>
       </v-list>
 
-        <div class="pa-2 hidden-md-and-up">
-          <v-btn color="#4169E1" elevation="false" block>Logout</v-btn>
+
+        <div class="px-2 pt-12">
+          <v-btn 
+          color="#4169E1" 
+          elevation="false" 
+          block 
+          @click.prevent="logout()">Logout</v-btn>
         </div>
       
     </v-navigation-drawer>
@@ -148,7 +158,7 @@ export default {
       items:[
             {title: 'Tenders', icon: 'dashboard', router:{name:'tenders', params: {id:'open'}}},
             {title: 'Dashboard', icon: 'account_box', router:{name:'agent', params:{id:'todos'}}},
-            {title: 'Payments', icon: 'gavel', router:'/payment'}
+            {title: 'Payments', icon: 'gavel', router:'/payment',}
       ],
          
       }
@@ -176,6 +186,12 @@ export default {
         console.log(tend);
         
           this.GET_DASHBOARD(tend);
+      },
+
+      logout(){
+        localStorage.removeItem("category");
+        localStorage.removeItem("secret");
+        this.$router.go('/signin')
       }
   },
 

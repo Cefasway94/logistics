@@ -26,5 +26,17 @@ export default {
     login:true,
     //
   }),
+
+  created(){
+    
+      if(localStorage.length ===3){
+        this.login = false;
+    }else{
+      
+      this.$router.push('/signin')
+    }
+
+  }
+
 };
 </script>

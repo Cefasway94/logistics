@@ -16,10 +16,10 @@
 <!--         alerts ------------  -->
                 <v-alert
                 :value="error"
-                color="error"
+                color="red"
                 icon="error_outline"
                 >
-                {{LOAD_RESPONSE}}
+                Field cant empty
                 </v-alert>
 
                 <!-- <v-alert
@@ -48,7 +48,8 @@
                     color="#4169E1" 
                     background-color="transparent" 
                     clearable 
-                    v-model="email" 
+                    v-model="email"
+                    @input="clear_alert()"
                     :rules="[rules.required, rules.email]" 
                     > 
                     </v-text-field>
@@ -137,7 +138,11 @@
                     height="47" 
                     width="500" 
                     :elevation="hover ? 8 : 0">
-                    <v-btn color="#4169E1" height="47" block>
+                    <v-btn  
+                    color="#4169E1" 
+                    height="47" 
+                    block
+                    @click.prevent="Login()">
                     <span class="white--text">Login</span>
                     </v-btn>
                     </v-card>
@@ -151,7 +156,8 @@
                     elevation="flat" 
                     color="transparent" 
                     height="30"
-                    class="ml-2 ">
+                    class="ml-2 "
+                    @click="signup()">
                     <p class=" text-uppercase mt-1" 
                     style="color:#4169E1;">
                     Sign up 
@@ -173,6 +179,7 @@
 
 <script>
 import {mapGetters} from 'vuex';
+import { required, minLength, email } from 'vuelidate/lib/validators'
 /* eslint-disable no-console */
 
 export default {
@@ -187,9 +194,9 @@ export default {
           error: false,
           abouterror:'',
           show:false,
-          category: 2,
           email:'',
           secret:'',
+          submitStatus: null,
           rules: {
             required: value => !!value || "Required",
             //number:value => {},
@@ -201,28 +208,33 @@ export default {
       }
   },
 
+validations:{
+    email:{required, email },
+    secret:{required, minLength:minLength(8)}
+  },
+
+created(){
+
+},
+
 methods:{
 
+// =====================================================================>>
     Login() {
-          if (this.validate()) {
+          if (!this.validate()) {
+            console.log(this.email);
           this.$store.dispatch('LOGIN', {
-          name: this.name,
           email: this.email,
           password: this.secret,
-          password_confirmation:this.confirm_secret,
-          phone: this.phone_number,
-          category: this.category
         })
-        .then(({ data, status }) => {
-          this.$router.push('/signin')
+        .then(( data) => {
+          // this.$router.push('/')
+          // this.$router.go('/')
           //return data;
-          data = this.LOAD_RESPONSE;
+          data = this.LOAD_LOGIN;
           console.log('success');
-          
-          console.log(data);
-          console.log(status);
-          
-          
+          console.log('success');
+          console.log(data.objects[1]);
         })
         .catch (error => {
           this.userExists = true;
@@ -235,24 +247,35 @@ methods:{
           
         });
       }else {
-          return this.invalid = true;
+        console.log('else');
+          return this.error = true;
        }   
     },
 
     validate() {
-           return true;
+           if (this.email === null){
+             return true
+           }
     },
 
     clear_alert() {
-      return this.invalid = false
-    }, 
+      return this.error = false
+    },
+    
+    signup() {
+      this.$router.push('/signup')
+    }
    
   },
  computed: {
       ...mapGetters([
-          'LOAD_RESPONSE'
+          'LOAD_LOGIN'
           //'LOAD_DIBTENDERS'
       ]),
+
+      // nameError () {
+
+      // }
       
   }
     

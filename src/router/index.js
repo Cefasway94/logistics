@@ -52,9 +52,9 @@ const routes = [
   
   //---------------------------client
   {
-    path:'/client',
+    path:'/',
     name:'client',
-    component: Client
+    components: {Client}
   },
   {
     path:'/Client/editprofile',

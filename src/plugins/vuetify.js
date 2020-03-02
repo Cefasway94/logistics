@@ -11,6 +11,7 @@ export default new Vuetify({
     },
     theme:{
         themes:{
+            light:{
             primary:'#4169E1',
             mainoragne:'#FF8C00',
             text:'#394361',
@@ -20,8 +21,9 @@ export default new Vuetify({
             lblue:'#F5FAFF',
             lgray0:'#BCBCCB',
             lgray1:'#E9E9F0'
-
-        },
+            },
+            
+        }
         
 
    }

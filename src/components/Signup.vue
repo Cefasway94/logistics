@@ -19,7 +19,7 @@
                 color="error"
                 icon="error_outline"
                 >
-                {{LOAD_RESPONSE}}
+                error
                 </v-alert>
 
                 <!-- <v-alert
@@ -331,7 +331,8 @@
                  elevation="flat" 
                  color="transparent" 
                  height="25"
-                 class="ml-2">
+                 class="ml-2"
+                 @click.prevent="signin()">
                  <p class="mt-1" 
                  style="color:#4169E1;">
                  Sign in 
@@ -387,6 +388,7 @@ methods:{
     Register(){
       
           if (this.validate()) {
+            console.log('here register');
           this.$store.dispatch('REGISTER', {
           name: this.name,
           email: this.email,
@@ -465,7 +467,12 @@ methods:{
       console.log(this.category);
 
 
+    },
+
+    signin() {
+      this.$router.push('/signin')
     }
+
   },
  computed: {
       ...mapGetters([
