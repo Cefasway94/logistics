@@ -6,6 +6,7 @@ export default {
   state:{
     login: [],
     register:[],
+    newss:[],
 },
 
 getters:{
@@ -21,10 +22,11 @@ getters:{
       LOAD_LOGIN: state => {
         const login = state.login;
         //eslint-disable-next-line no-console
-        console.log(login);
+        console.log('pter');
+      console.log(login);
+      
         return login                           
       },
-
 },
 
 mutations: {
@@ -38,8 +40,7 @@ mutations: {
 // Login section mutation  ========================>>>
     SET_LOGIN: (state, payload) => {
       state.login = payload;
-      //eslint-disable-next-line no-console
-      //console.log(state.register);
+      //eslint-disable-next-line no-console    
   }
 },
 
@@ -49,7 +50,7 @@ actions: {
       REGISTER: ({ commit }, { name, email, password, password_confirmation, category, phone }) => {
         return new Promise((resolve, reject) => {
           axios
-            .post(`http://192.168.8.101/api/v1/profiles/register`, {
+            .post(`http://192.168.1.49/api/v1/profiles/register`, {
               name,
               email,
               password,
@@ -84,18 +85,30 @@ actions: {
       LOGIN: ({commit},{email, password}) => {
         return new Promise((resolve, reject) => {
           axios
-            .post(`http://192.168.8.101/api/v1/profiles/login`, {email, password})
+            .post(`http://192.168.1.49/api/v1/profiles/login`, {email, password})
             .then(({ data, status }) => {             
-              if (status === 200) {
-                
+              if (status === 200 && data.genralErrorCode === 8000 && data.errorCount === 0) {
+                console.log(data.errorCount);
                 resolve(true);
                 commit('SET_LOGIN',data)
+                localStorage.removeItem("secret");
+                localStorage.removeItem("category");
                 localStorage.setItem("secret", data.objects[0]);
                 localStorage.setItem("category", data.objects[1]);     // commit doesn't point to the mutation
+              }else{
+                resolve(data.message);
+                console.log("-------");
+                commit('SET_LOGIN',data.message);
               }
             })
             .catch(error => {
               reject(error);
+              console.log('error');
+              
+              console.log(error.response.data);
+              commit('SET_LOGIN',error.response.data )
+              console.log('commited');
+              
             });
         });
       },

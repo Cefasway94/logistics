@@ -5,23 +5,67 @@
         width="500" 
         flat=""
         color="#F5FAFF" >
+
+            <v-progress-linear
+            :active="loading"
+            :indeterminate="loading"
+            absolute
+            height="3"
+            color="#4169E1">
+            </v-progress-linear>
+
             <v-card-title  class="justify-center">
                 <h1 class="primary--text text-center py-2 font-weight-medium  " >UBALORI</h1>
             </v-card-title>
             <v-card-text>
                 <p class="text-center font-weight-regular body-1 mb-0">Welcome, please register to create your account</p>
             </v-card-text>
+
             <v-form class="px-7">
 
-<!--         alerts ------------  -->
+<!--         alerts ------------  --> 
+
+                <v-alert
+                :value="servererror"
+                color="orange"
+                icon="error_outline"
+                >
+                Connection time out, please check your internet and try again.
+                </v-alert>
+
                 <v-alert
                 :value="error"
                 color="red"
                 icon="error_outline"
                 >
-                Field cant empty
+                Field cant be empty
                 </v-alert>
 
+                <v-alert
+                :value="Perror"
+                color="red"
+                icon="error_outline"
+                >
+                Could not log you in, Invalid Password
+                </v-alert>
+
+                <v-alert
+                :value="Eerror"
+                color="red"
+                icon="error_outline"
+                >
+                Could not log you in, Invalid Email
+                </v-alert>
+
+                <v-alert
+                :value="Cerror"
+                color="red"
+                icon="error_outline"
+                >
+                  {{DisplayCerror}}
+                </v-alert>
+
+                
                 <!-- <v-alert
                 :value="invalid"
                 color="error"
@@ -102,7 +146,8 @@
                     class="mt-1" 
                     color="#4169E1" 
                     background-color="transparent" 
-                    v-model="secret" 
+                    v-model="secret"
+                    @input="clear_alert()" 
                     :rules="[rules.required]"
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="show = !show"
@@ -191,11 +236,19 @@ export default {
          invalid: false,             // togle fields
          //invalidemail : false,      // check if email is valid
          //valid: false,             // check if fields are empty
+         loading:false,
           error: false,
+          Perror:false,
+          Eerror:false,
+          Cerror:false,
+          timeout:true,
+          servererror:false,
+          DisplayCerror:'',
           abouterror:'',
           show:false,
           email:'',
           secret:'',
+          logerror:'',
           submitStatus: null,
           rules: {
             required: value => !!value || "Required",
@@ -221,22 +274,84 @@ methods:{
 
 // =====================================================================>>
     Login() {
+              
           if (!this.validate()) {
-            console.log(this.email);
+            this.Perror= false,
+            this.Eerror= false,
+            this.loading = true;
+            this.servererror =false;
+            setTimeout (()=>{
+              if (this.timeout === true) {
+                this.servererror = true;
+                this.loading = false;
+              }
+            },6000)
           this.$store.dispatch('LOGIN', {
           email: this.email,
           password: this.secret,
         })
         .then(( data) => {
-          // this.$router.push('/')
-          // this.$router.go('/')
-          //return data;
-          data = this.LOAD_LOGIN;
+          if(this.LOAD_LOGIN.genralErrorCode === 8000 && this.LOAD_LOGIN.errorCount === 0){
+            this.timeout=false; // server timeout false
+            setTimeout(() => {
+              this.loading = false;
+              this.$router.push('/')
+              this.$router.go('/')
+              //return data;
+              // data = this.LOAD_LOGIN;
+              }, 2000)     //============ kill load
+         
           console.log('success');
           console.log('success');
           console.log(data.objects[1]);
+          }else{
+            if (this.LOAD_LOGIN === "Email does not exist") {
+                    this.timeout=false; // server timeout false
+                    console.log("whataaat");
+                    console.log(this.LOAD_LOGIN);
+                  setTimeout(() => {
+                    this.loading = false
+                    this.Eerror=true;
+                    }, 2000)     //============ kill load
+                
+            }else{
+              this.timeout=false; // server timeout false
+              console.log('incorrect password');
+              setTimeout(() => {
+                this.loading = false;
+                this.Perror=true;
+                }, 2000)  // ============= kill load              
+            }
+                
+                             
+          }
         })
         .catch (error => {
+          
+          console.log('am here');
+          console.log(error.response.data);
+           if (error.response.data.password) {
+             this.timeout=false; // server timeout false
+              console.log('require password');
+              console.log(this.LOAD_LOGIN.password[0]);
+               setTimeout(() => {
+                 this.loading = false;
+                 this.DisplayCerror = this.LOAD_LOGIN.password[0];
+                 this.Cerror = true;
+                 }, 0)   //============ kill load
+             
+           } else {
+             this.timeout=false; // server timeout false
+             console.log('required email');
+             console.log(this.LOAD_LOGIN.email[0]);
+               setTimeout(() => {
+                 this.loading = false;
+                 this.DisplayCerror =this.LOAD_LOGIN.email[0];
+                 this.Cerror = true;
+                 }, 2000)   //============ kill load
+           }
+          
+          
           this.userExists = true;
           if (error.email) {
             this.abouterror = 'User Already exist. Please try other datails or log in with appropriate credentials'
@@ -248,18 +363,27 @@ methods:{
         });
       }else {
         console.log('else');
-          return this.error = true;
+          return this.logerror = true;
        }   
     },
 
     validate() {
-           if (this.email === null){
+           if (this.email === null ){
+             this.loading = false
+             this.error = true;
              return true
-           }
+           } 
+           
     },
 
+   
     clear_alert() {
-      return this.error = false
+        this.servererror =false;
+        this.Cerror = false;
+        this.Perror = false;
+        this.Eerror = false;
+        this.error = false;
+       
     },
     
     signup() {
