@@ -24,28 +24,53 @@ export default {
     },
 
     actions: {
-        async fetchAllTenders({commit},customer_id){
-
         
-            const tenders = await axios.get(`http://192.168.43.27:8000/api/v1/tenders/list/${customer_id}`);
+        fetchAllTenders: async ({commit},customer_id) => {
 
-            commit('setAllTenders',tenders.data.objects)
+            const url = `http://192.168.1.44:8000/api/v1/tenders/list/${customer_id}`;
+
+            await axios.get(url).
+                            then((response) => {
+
+                                commit('setAllTenders',response.data.objects)
+
+                            }).catch(()=>{
+
+                                const response = null;
+                                commit('setAllTenders',response)
+                            });
         },
 
-        async fetchBidedTenders({commit},customer_id){
+        fetchBidedTenders: async ({commit},customer_id) => {
 
-        
-            const tenders = await axios.get(`http://192.168.43.27:8000/api/v1/tenders/bided/${customer_id}`);
+            const url = `http://192.168.1.44:8000/api/v1/tenders/bided/${customer_id}`;
 
-            commit('setBidedTenders',tenders.data.objects)
+            await axios.get(url).
+                            then((response) => {
+
+                                commit('setBidedTenders',response.data.objects)
+
+                            }).catch(()=>{
+
+                                const response = null;
+                                commit('setBidedTenders',response)
+                            });
         },
 
-        async fetchOnProgressTenders({commit},customer_id){
+        fetchOnProgressTenders: async ({commit},customer_id) => {
 
-        
-            const tenders = await axios.get(`http://192.168.43.27:8000/api/v1/tenders/on-progress/${customer_id}`);
+            const url = `http://192.168.1.44:8000/api/v1/tenders/on-progress/${customer_id}`;
 
-            commit('setOnProgressTenders',tenders.data.objects)
+            await axios.get(url).
+                            then((response) => {
+
+                                commit('setOnProgressTenders',response.data.objects)
+
+                            }).catch(()=>{
+
+                                const response = null;
+                                commit('setOnProgressTenders',response)
+                            });
         }
 
     }
