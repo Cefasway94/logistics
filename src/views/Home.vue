@@ -7,6 +7,7 @@
   <keep-alive>
     <router-view name="Createtender"></router-view>
     <router-view name="Agent"></router-view>
+     <router-view name="Client"></router-view>
     <router-view name="Tenders"></router-view>
     <router-view name="Abouttender"></router-view>
     <router-view name="Createtender"></router-view>

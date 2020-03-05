@@ -12,6 +12,14 @@ import Tenderprogressagent from '../components/agents/Tenderprogressagent.vue';
 import Tenders from '../components/agents/Tenders.vue';
 import Agenteditprofile from '../components/agents/Agenteditprofile.vue';
 
+//transpoter routes
+import Transpoter  from '../components/transporters/Transporter.vue';
+import Transpoterbiding from '../components/transporters/Transporterbiding.vue';
+import Abouttransportertender from '../components/transporters/Abouttransportertender.vue';
+import Tenderprogresstransporter from '../components/transporters/Tenderprogresstransporter.vue';
+import Transportertenders from '../components/transporters/Transportertenders.vue';
+import Transportereditprofile from '../components/transporters/Transportereditprofile.vue';
+
 //client routs
 import Client from '../components/client/Client.vue';
 import Createtender from '../components/client/Createtender.vue';
@@ -53,8 +61,8 @@ const routes = [
   //---------------------------client
   {
     path:'/client',
-    name:'client',
-    component: Client
+    name:'Client',
+    components: {Client}
   },
   {
     path:'/Client/editprofile',
@@ -113,6 +121,37 @@ const routes = [
     name:'Tenderprogressagent',
     component:Tenderprogressagent
   },
+  //-------------------- Transporter routes
+  {
+    path:'/transpoters/:id',
+    name:'Transpoter',
+    components:{Transpoter}
+  },
+  {
+    path:'/transpoter/editprofile',
+    name:'Transporterprofile',
+    component: Transportereditprofile
+  },
+  {
+    path:'/transpoter/tenders/:id',
+    name:'Transportertenders',
+    components: {Transportertenders}
+  },
+  {
+    path:'/transpoter/biding/:id',
+    name:'Transporterbiding',
+    components: {Transpoterbiding}
+  },
+  {
+    path:'/transpoter/Abouttender/:id',
+    name:'Abouttransportertender',
+    components:{Abouttransportertender}
+  },
+  {
+    path:'/transpoter/tenderprogress',
+    name:'Tenderprogresstransporter',
+    component:Tenderprogresstransporter
+  }
 
 ]
 
