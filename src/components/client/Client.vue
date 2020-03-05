@@ -9,6 +9,7 @@
                         <v-spacer></v-spacer>
                         <v-btn class="primary mt-5" router to="/client/createtender">Add New</v-btn>
                     </v-flex>
+                    
                 </v-card>
           
                 <v-card flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">

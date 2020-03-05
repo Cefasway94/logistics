@@ -19,12 +19,13 @@ export default {
        
         setAllTenders: (state,tenders) => state.AllTenders = tenders,
         setBidedTenders: (state,tenders) => state.BidedTenders = tenders,
-        setOnProgressTenders: (state,tenders) => state.TendersOnProgress = tenders
+        setOnProgressTenders: (state,tenders) => state.TendersOnProgress = tenders,
+        AddTender: (state,tender) => state.AllTenders.unshift(tender)
 
     },
 
     actions: {
-        
+
         fetchAllTenders: async ({commit},customer_id) => {
 
             const url = `http://192.168.1.44:8000/api/v1/tenders/list/${customer_id}`;
@@ -70,6 +71,22 @@ export default {
 
                                 const response = null;
                                 commit('setOnProgressTenders',response)
+                            });
+        },
+
+        AddTender: async ({commit},tender)=>{
+
+            const url = "http://192.168.1.44:8000/api/v1/tenders?customer_id=10";
+
+            await axios.post(url,tender).
+                            then((response) => {
+
+                                commit('AddTender',response.data.objects)
+
+                            }).catch(()=>{
+
+                                //const response = null;
+                                //commit('AddTender',response)
                             });
         }
 
