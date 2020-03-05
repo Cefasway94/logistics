@@ -6,14 +6,6 @@
         flat=""
         color="#F5FAFF" >
 
-            <v-progress-linear
-            :active="loading"
-            :indeterminate="loading"
-            absolute
-            height="3"
-            color="#4169E1">
-            </v-progress-linear>
-
             <v-card-title  class="justify-center">
                 <h1 class="primary--text text-center py-2 font-weight-medium  " >UBALORI</h1>
             </v-card-title>
@@ -24,10 +16,10 @@
             <v-form class="px-7">
 
 <!--         alerts ------------  --> 
-
+      
                 <v-alert
-                :value="servererror"
-                color="orange"
+                :value="Connectionerror"
+                color="red"
                 icon="error_outline"
                 >
                 Connection time out, please check your internet and try again.
@@ -39,7 +31,7 @@
                 icon="error_outline"
                 >
                 Field cant be empty
-                </v-alert>
+                </v-alert> 
 
                 <v-alert
                 :value="Perror"
@@ -65,6 +57,14 @@
                   {{DisplayCerror}}
                 </v-alert>
 
+                <v-alert
+                :value="servererror"
+                color="orange"
+                icon="error_outline"
+                >
+                  {{Displayservererror}}
+                </v-alert>
+
                 
                 <!-- <v-alert
                 :value="invalid"
@@ -73,7 +73,15 @@
                 >
                 make sure all filsds are filled correctly
                 </v-alert> -->
-                    
+            <v-card width="150" class="mb-3 mx-auto">
+            <v-progress-linear
+            :active="loading"
+            :indeterminate="loading"
+            absolute
+            height="6"
+            color="#4169E1">
+            </v-progress-linear>
+            </v-card>
 
                   <v-flex class="">
                    
@@ -241,8 +249,10 @@ export default {
           Perror:false,
           Eerror:false,
           Cerror:false,
+          Connectionerror:false,
           timeout:true,
           servererror:false,
+          Displayservererror:'',
           DisplayCerror:'',
           abouterror:'',
           show:false,
@@ -282,7 +292,7 @@ methods:{
             this.servererror =false;
             setTimeout (()=>{
               if (this.timeout === true) {
-                this.servererror = true;
+                this.Connectionerror = true;
                 this.loading = false;
               }
             },6000)
@@ -295,10 +305,25 @@ methods:{
             this.timeout=false; // server timeout false
             setTimeout(() => {
               this.loading = false;
-              this.$router.push('/')
-              this.$router.go('/')
+              if (this.LOAD_LOGIN.objects[1]===1 && localStorage.category ===1) {
+                this.$router.push('/agents')
+                this.$router.go('/agents')
               //return data;
               // data = this.LOAD_LOGIN;
+              console.log('Opened as Agent');
+                
+              } else if (this.LOAD_LOGIN.objects[1]===2 && localStorage.category ===2) {
+                this.$router.push('null')
+                this.$router.go('null')
+                
+              }else if (this.LOAD_LOGIN.objects[1]===3 && localStorage.category ===3){
+                this.$router.push('/')
+                this.$router.go('/')
+               // this.$route.params.id = //asign from local storage
+              //return data;
+              // data = this.LOAD_LOGIN;
+              console.log('Opened as client');
+              }
               }, 2000)     //============ kill load
          
           console.log('success');
@@ -340,14 +365,22 @@ methods:{
                  this.Cerror = true;
                  }, 0)   //============ kill load
              
-           } else {
+           } else if ( this.LOAD_LOGIN.email) {
              this.timeout=false; // server timeout false
              console.log('required email');
              console.log(this.LOAD_LOGIN.email[0]);
                setTimeout(() => {
                  this.loading = false;
-                 this.DisplayCerror =this.LOAD_LOGIN.email[0];
+                 this.DisplayCerror = this.LOAD_LOGIN.email[0];
                  this.Cerror = true;
+                 }, 2000)   //============ kill load
+           }else {
+             console.log('server error');
+             this.timeout=false
+              setTimeout(() => {
+                 this.loading = false;
+                 this.Displayservererror = "unable to connect to server at moment, Please try agin after few  minutes. 😔";
+                 this.servererror = true;
                  }, 2000)   //============ kill load
            }
           

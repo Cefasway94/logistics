@@ -1,18 +1,23 @@
 <template>
     <v-app style="background-color:transparent; ">
+      
       <v-card 
         class="my-auto mx-4"
         width="560" 
         flat=""
         color="#F5FAFF" >
+            
+
             <v-card-title  class="justify-center">
                 <h1 class="primary--text text-center py-2 font-weight-medium  " >UBALORI</h1>
             </v-card-title>
             <v-card-text>
                 <p class="text-center font-weight-regular body-1 mb-0">Welcome, please register to create your account</p>
             </v-card-text>
-            <v-form class="px-7">
 
+            
+            <v-form class="px-7">
+              
 <!-------------  alerts ------------  -->
                 <v-alert
                 :value="error"
@@ -21,6 +26,23 @@
                 >
                 error
                 </v-alert>
+
+                <v-alert
+                :value="emptyfilds"
+                color="error"
+                icon="error_outline"
+                >
+                All fields are required
+                </v-alert>
+                
+                <v-alert
+                :value="timeout"
+                color="error"
+                icon="error_outline"
+                >
+                connetction time out please, check your internet connetction and try again
+                </v-alert>
+
 
                 <!-- <v-alert
                 :value="invalid"
@@ -130,7 +152,18 @@
                     </v-flex>
                     </center>
                     </v-flex>
-                    </v-flex>            
+                    </v-flex>      
+
+
+                    <v-card width="150" class="mb-5 mx-auto">
+            <v-progress-linear
+            :active="loading"
+            :indeterminate="loading"
+            absolute
+            height="6"
+            color="#4169E1">
+            </v-progress-linear>
+            </v-card>      
                     
                   <v-flex column class="pl-4">
                     <v-flex row class="mb-6 ">
@@ -146,7 +179,8 @@
                     class="mt-1 text-center" 
                     color="#4169E1" 
                     background-color="transparent" 
-                    clearable 
+                    clearable
+                    @input="clear_alert()" 
                     v-model="email" 
                     :rules="[rules.required, rules.email]" 
                     > 
@@ -202,6 +236,7 @@
                     color="#4169E1" 
                     background-color="transparent" 
                     clearable 
+                    @input="clear_alert()"
                     v-model="name" 
                     :rules="[rules.required]"
                     > 
@@ -227,6 +262,7 @@
                     color="#4169E1" 
                     background-color="transparent" 
                     clearable 
+                    @input="clear_alert()"
                     v-model="phone_number"
                     :rules="[rules.required]" 
                     > 
@@ -251,7 +287,8 @@
                     class="mt-1" 
                     color="#4169E1" 
                     background-color="transparent" 
-                    v-model="secret" 
+                    v-model="secret"
+                    @input="clear_alert()" 
                     :rules="[rules.required]"
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="show = !show"
@@ -362,10 +399,13 @@ export default {
          //match: false,                // used to chcek if passwords match, 
          invalid: false,             // togle fields
          //invalidemail : false,      // check if email is valid
-         //valid: false,             // check if fields are empty
+          emptyfilds:false,         // Check fields      
           error: false,
           abouterror:'',
           show:false,
+          loading:false,
+          success: false,
+          timeout:false,
           category: 2,
           name:'',
           phone_number:'',
@@ -387,8 +427,19 @@ methods:{
 
     Register(){
       
+            
           if (this.validate()) {
-            console.log('here register');
+
+            this.loading = true;
+
+            setTimeout(()=>{
+                if (this.success === false) {
+                  this.loading = false;
+                  this.timeout = true;
+                }
+              },6000)
+
+          console.log('here register');
           this.$store.dispatch('REGISTER', {
           name: this.name,
           email: this.email,
@@ -398,6 +449,8 @@ methods:{
           category: this.category
         })
         .then(({ data, status }) => {
+          this.loading = false;
+          this.success = true;
           this.$router.push('/signin')
           //return data;
           data = this.LOAD_RESPONSE;
@@ -424,11 +477,17 @@ methods:{
     },
 
     validate() {
+      if((this.email == '') || (this.name == '' || this.phone_number == '')){
+         this.emptyfilds= true;
+         return false
+      }else{
            return this.secret === this.confirm_secret
+           }
     },
 
     clear_alert() {
-      return this.invalid = false
+      this.emptyfilds = false;
+      return this.invalid = false;
     }, 
    
     // Transporter select

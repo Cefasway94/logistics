@@ -6,7 +6,7 @@ export default {
   state:{
     login: [],
     register:[],
-    newss:[],
+    
 },
 
 getters:{
@@ -14,6 +14,7 @@ getters:{
     LOAD_REGISTER: state => {
          const register = state.register;
          //eslint-disable-next-line no-console
+         console.log('loaded');
          console.log(register);
          return register                           
     },
@@ -24,7 +25,6 @@ getters:{
         //eslint-disable-next-line no-console
         console.log('pter');
       console.log(login);
-      
         return login                           
       },
 },
@@ -34,7 +34,7 @@ mutations: {
     SET_REGISTER: (state, payload) => {
         state.register = payload;
         //eslint-disable-next-line no-console
-        //console.log(state.register);
+        console.log(payload);
     },
 
 // Login section mutation  ========================>>>
@@ -73,7 +73,9 @@ actions: {
                 console.log(error.response.data);
                 console.log(error.response.status);
               }
-              //commit('RESPONSE',error);          
+              console.log('her');
+              
+              commit('SET_REGISTER', error);          
               //console.log(error);
               //console.log(data);
               

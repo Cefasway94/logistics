@@ -70,51 +70,54 @@
 <!-- tender -->
         <v-list-item
           router 
-          :to="{name:'tenders', 
-          params: {id:'open'}}"
+          :to="{name:this.items[0].router.name, 
+            params:{id: this.items[0].router.params.id} }"
           link
           @click="tenders()">
           <v-list-item-icon>
-            <v-icon>dashboard</v-icon>
+            <v-icon>{{items[0].icon}}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title  >Tenders</v-list-item-title>
+            <v-list-item-title  >{{items[0].title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
 <!-- dashboard -->
         <v-list-item
           router 
-          :to="{name:'agent', 
-          params: {id:'todos'}}"
+          :to="{name: this.items[1].router.name, 
+          params: {id:this.items[1].router.params.id}}"
           link
           >
           <v-list-item-icon>
-            <v-icon>account_box</v-icon>
+            <v-icon>{{items[1].icon}}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title  >Dashboard</v-list-item-title>
+            <v-list-item-title  >{{items[1].title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
 <!-- payment -->
         <v-list-item
-          router 
-          to="/payment"
+         router 
+          :to="{name: this.items[2].router.name, 
+          params: {id:this.items[2].router.params.id}}"
           link
           >
 
           <v-list-item-icon>
-            <v-icon>gavel</v-icon>
+            <v-icon>{{items[2].icon}}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title  >Payment</v-list-item-title>
+            <v-list-item-title  >{{items[2].title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
+
+      <!-- ---------------------------------------------------------------------- to be continued -->
 
 
         <div class="px-2 pt-12">
@@ -143,6 +146,7 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import {mapActions} from 'vuex';
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
@@ -151,17 +155,33 @@ export default {
   name: 'home',
   data () {
     return {
-       messages: 0,
+      messages: 0,
       color: '#394361',
       colors: ['primary', 'accent', 'warning lighten-2', 'teal', 'orange'],
       drawer: true,
-      items:[
-            {title: 'Tenders', icon: 'dashboard', router:{name:'tenders', params: {id:'open'}}},
-            {title: 'Dashboard', icon: 'account_box', router:{name:'agent', params:{id:'todos'}}},
-            {title: 'Payments', icon: 'gavel', router:'/payment',}
-      ],
+      category:'',
+      items:'',
          
       }
+      
+    },
+
+    created(){
+      const type = localStorage.category;
+      console.log('navigatio');
+      
+      if (type == 3){
+        return this.client() 
+      }else if (type == 2) {
+        return this.transporter() 
+      }else if (type == 1) {
+        console.log('navigatio3');
+          this.items = this.agent();
+          console.log(this.items[0].router.params.id) 
+          console.log(this.items[0].router.name)             
+
+      }
+      
       
     },
 
@@ -171,6 +191,35 @@ export default {
           //'GET_TENDERSDETAIL'
           
       ]),
+       
+      client(){
+         const client = [
+                      {title: 'CTenders', icon: 'dashboard', router:{name:'Client', params: {id:'users'}}},
+                      {title: 'CDashboard', icon: 'account_box', router:{name:'agent', params:{id:'todos'}}},
+                      {title: 'CPayments', icon: 'gavel', router:{name:'Payment', params:{id:'null'}}}
+                      ]
+              return client
+        
+      },
+
+      agent(){
+           const agent = [
+                      {title: 'ATenders', icon: 'dashboard', router:{name:'AgentTenders', params: {id:'users'}}},
+                      {title: 'ADashboard', icon: 'account_box', router:{name:'Agent', params:{id:'todos'}}},
+                      {title: 'APayments', icon: 'gavel', router:{name:'Payment', params:{id:'null'}}}
+                      ]
+              return agent
+      },
+
+      transporter(){
+         const transporter = [
+                      {title: 'TTenders', icon: 'dashboard', router:{name:'tenders', params: {id: 'users'}}},
+                      {title: 'TDashboard', icon: 'account_box', router:{name:'agent', params:{id:'todos'}}},
+                      {title: 'TPayments', icon: 'gavel', router:{name:'Payment', params:{id:'null'}}}
+                      ]
+              return transporter
+
+      },
       
       tenders(tend){
         tend = this.$route.params.id;

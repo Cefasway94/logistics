@@ -35,7 +35,7 @@ const routes = [
     ]
   },
   {
-    path:'/signin',
+    path:'/',
     name:'signin',
     component: Signin
   },
@@ -52,7 +52,7 @@ const routes = [
   
   //---------------------------client
   {
-    path:'/',
+    path:'/client',
     name:'client',
     components: {Client}
   },
@@ -85,32 +85,32 @@ const routes = [
   //-------------------- Agent routes
   {
     path:'/agents/:id',
-    name:'agent',
+    name:'Agent',
     components:{Agent}
   },
   {
     path:'/agent/editprofile',
-    name:'Agentprofile',
+    name:'AgentProfile',
     component: Agenteditprofile
   },
   {
     path:'/agent/tenders/:id',
-    name:'tenders',
+    name:'AgentTenders',
     components: {Tenders}
   },
   {
     path:'/agent/biding/:id',
-    name:'Biding',
+    name:'AgentBiding',
     components: {Biding}
   },
   {
     path:'/agent/Abouttender/:id',
-    name:'Abouttender',
+    name:'AgentAbouttender',
     components:{Abouttender}
   },
   {
     path:'/agent/tenderprogress',
-    name:'Tenderprogressagent',
+    name:'AgentTenderprogress',
     component:Tenderprogressagent
   },
 

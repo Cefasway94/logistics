@@ -11,6 +11,7 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 // import HelloWorld from './components/HelloWorld';
 // import Login from './views/Login'; #f1f3f4, #F5FAFF
 import Home from './views/Home.vue';
@@ -27,16 +28,49 @@ export default {
     //
   }),
 
-  created(){
-    
-      if(localStorage.length ===3){
-        this.login = false;
+    created(){
+      if (localStorage.length === 2) {
+        this.login = false
     }else{
-      
-      this.$router.push('/signin')
+      this.$router.push('/');
+    }
     }
 
-  }
+  // methods : {
+  //   success (){
+  //      if(localStorage.length == 2){
+  //    this.login = true    
+  //    this.$router.push('/agents')       // to be removed remove
+  //    this.$router.go('/agents')  
+  //    console.log('bbbbb') 
+  //    }else{
+  //      this.$router.push('/signin')
+  //    }      // to be removed remove
+ 
+  // },
+  // },
 
-};
+  // created(){
+  //          console.log('sdfsdfsdfsdf')
+           
+  //         // to be removed remove
+  //        // return this.success()
+ 
+     
+  // }
+           
+  //  //   if(localStorage.length === 2){
+  //  //     this.login = false
+        
+  //   //     this.$router.push('/agents')       // to be removed remove
+  //   //     this.$router.go('/agents')         // to be removed remove
+  //   // }else{
+      
+  //   //   this.$router.push('/signin')
+  //   // }
+    
+
+  
+
+}
 </script>
