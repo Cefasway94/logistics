@@ -127,14 +127,15 @@
                                             </v-row>
                    
                                             <p class=" body-2 grey--text">{{ tender.description}}</p>
-                    
+
+                                           
                                             <v-row class="px-3">
-                                                <p class="body-2  pt-1 ">Dar-es-salaam</p>
+                                                <p class="body-2  pt-1 ">{{ tender.origin }}</p>
                         
                                                 <v-icon small color="#4169E1" class="px-2 pb-3">
                                                     arrow_forward
                                                 </v-icon>
-                                                <p  class="body-2  pt-1 ">Rwanda</p>
+                                                <p  class="body-2  pt-1 ">{{ tender.destination }}</p>
                                             </v-row>
 
                                             <v-row row class="px-3">

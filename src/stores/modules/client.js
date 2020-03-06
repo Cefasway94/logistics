@@ -20,7 +20,8 @@ export default {
         setAllTenders: (state,tenders) => state.AllTenders = tenders,
         setBidedTenders: (state,tenders) => state.BidedTenders = tenders,
         setOnProgressTenders: (state,tenders) => state.TendersOnProgress = tenders,
-        AddTender: (state,tender) => state.AllTenders.unshift(tender)
+        AddTender: (state,tender) => state.AllTenders.unshift(tender),
+        TestMutation:(state) => state.AllTenders
 
     },
 
@@ -78,13 +79,28 @@ export default {
 
             const url = "http://192.168.1.44:8000/api/v1/tenders?customer_id=10";
 
-            await axios.post(url,tender).
+            await axios.post(url,
+                            tender,
+                            {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            }).
                             then((response) => {
 
+                                /*commit('TestMutation');
+
+                                //eslint-disable-next-line no-console
+                                console.log(response.data);*/
+
                                 commit('AddTender',response.data.objects)
+                                //eslint-disable-next-line no-console
+                                //console.log(response.data);
 
                             }).catch(()=>{
 
+                                //eslint-disable-next-line no-console
+                                console.log("error occured");
                                 //const response = null;
                                 //commit('AddTender',response)
                             });

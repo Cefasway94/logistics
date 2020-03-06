@@ -127,9 +127,12 @@
                         <p class="primary--text body-2 text-uppercase mb-0"> CARGO PHOTO </p>
                         <v-card flat width="200" height="150" outlined>
 
-                            <v-file-input multiple label="File input"></v-file-input>
-                            
+                            <!--<v-file-input label="File input" ref="files" @change=""></v-file-input>-->
+                            <input type="file" ref="files" id="files" multiple @change="updateFilesUploaded()">
+
+                           
                         </v-card>
+                       
                         </v-col>  
                                       
                     </v-row>
@@ -219,27 +222,36 @@ export default {
     name: "createtender",
 
     data: ()=>({
-        details:'',
-        origin:'',
-        destination:'',
-        timeline:'',
-        size:'',
-        currency:'',
-        offer_amount:'',
-        description:'',
-        file:{},
-        terms:''
+        details:'sample Server7',
+        origin:'oxo',
+        destination:'oxo',
+        timeline:'2020-3-2',
+        size:'2',
+        currency:'TZ',
+        offer_amount:'23000',
+        description:'sample Server7',
+        files:[],
+        terms:'sample terms'
     }),
 
     methods: {
 
         ...mapActions(['AddTender']),
 
+        updateFilesUploaded(){
+
+            let uploadedfiles = this.$refs.files.files;
+
+            for(var i=0; i < uploadedfiles.length; i++){
+                this.files.push(uploadedfiles[i]);
+            }
+        },
+
         publishTender(){
 
-            const tender = {
+            /*const tender = {
                 cargo_details: this.details,
-                cargo_photo: this.file,
+                //cargo_photo: this.file,
                 description: this.description,
                 customer_offer_amount : this.offer_amount,
                 customer_terms_and_conditions: this.terms,
@@ -247,9 +259,33 @@ export default {
                 origin: this.origin,
                 destination: this.destination,
                 currency: this.currency
+            }*/
+
+            let formData = new FormData();
+
+            for( var i = 0; i < this.files.length; i++){
+                let file = this.files[i];
+
+            //eslint-disable-next-line no-console
+            //console.log(file);
+                formData.append('cargo_photo['+i+']',file);
+
             }
 
-            this.AddTender(tender);
+            formData.append('cargo_details',this.details);
+            formData.append('customer_offer_amount',this.offer_amount);
+            formData.append('customer_terms_and_conditions',this.terms);
+            formData.append('customer_delivery_timeline',this.timeline);
+            formData.append('origin',this.origin);
+            formData.append('destination',this.destination);
+            formData.append('currency',this.currency);
+            formData.append('description',this.description);
+
+            //eslint-disable-next-line no-console
+            //console.log(formData.get("name"));
+
+            
+            this.AddTender(formData);
 
             this.$router.push('/client');
         
