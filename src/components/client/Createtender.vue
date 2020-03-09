@@ -125,12 +125,15 @@
                     <v-row class="pa-3">
                         <v-col class="">
                         <p class="primary--text body-2 text-uppercase mb-0"> CARGO PHOTO </p>
-                        <v-card flat width="200" height="150" outlined>
+                        <v-card flat width="200" height="150" outlined >
 
-                            <!--<v-file-input label="File input" ref="files" @change=""></v-file-input>-->
-                            <input type="file" ref="files" id="files" multiple @change="updateFilesUploaded()">
-
-                           
+                            <v-file-input 
+                                label="File input" 
+                                id="files" 
+                                @change="updateFilesUploaded()"
+                                prepend-icon ="mdi-cloud-upload"
+                            >
+                            </v-file-input>
                         </v-card>
                        
                         </v-col>  
@@ -230,7 +233,7 @@ export default {
         currency:'TZ',
         offer_amount:'23000',
         description:'sample Server7',
-        files:[],
+        photos:[],
         terms:'sample terms'
     }),
 
@@ -240,11 +243,13 @@ export default {
 
         updateFilesUploaded(){
 
-            let uploadedfiles = this.$refs.files.files;
+            let uploadedfiles = document.getElementById("files").files;
 
             for(var i=0; i < uploadedfiles.length; i++){
-                this.files.push(uploadedfiles[i]);
+                this.photos.push(uploadedfiles[i]);  
             }
+
+             //eslint-disable-next-line no-console
         },
 
         publishTender(){
@@ -263,8 +268,8 @@ export default {
 
             let formData = new FormData();
 
-            for( var i = 0; i < this.files.length; i++){
-                let file = this.files[i];
+            for( var i = 0; i < this.photos.length; i++){
+                let file = this.photos[i];
 
             //eslint-disable-next-line no-console
             //console.log(file);
@@ -289,7 +294,10 @@ export default {
 
             this.$router.push('/client');
         
-            //alert("Publish tender");
+            //alert("Publish tender");*/
+
+             //eslint-disable-next-line no-console
+             //console.log(document.getElementById("files").files[0]);
         }
     }
 }

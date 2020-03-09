@@ -5,14 +5,31 @@ export default {
 
         AllTenders:[],
         BidedTenders:[],
-        TendersOnProgress:[]
+        TendersOnProgress:[],
+        tender:[]
 
     },
 
     getters:{
         AllTenders: (state) => state.AllTenders,
         BidedTenders: (state) => state.BidedTenders,
-        TendersOnProgress: (state) => state.TendersOnProgress
+        TendersOnProgress: (state) => state.TendersOnProgress,
+        getTender: (state) => state.tender,
+
+        fetchTenderById: (state)=>(id)=>{
+            return state.AllTenders.find(tender=>tender.id === id);
+        }
+
+        /*loadedTender(state,id){
+            return (tenderId)=>{
+                return state.AllTenders.find((tender)=>{
+                    return tender.id === tenderId
+                })
+            }
+            return state.AllTenders.find((tender)=>{
+                return tender.id === id;
+            });
+        }*/
     },
 
     mutations:{
@@ -21,7 +38,16 @@ export default {
         setBidedTenders: (state,tenders) => state.BidedTenders = tenders,
         setOnProgressTenders: (state,tenders) => state.TendersOnProgress = tenders,
         AddTender: (state,tender) => state.AllTenders.unshift(tender),
-        TestMutation:(state) => state.AllTenders
+        TestMutation:(state) => state.AllTenders,
+
+        /*setTender: (state)=>(id)=>{
+            state.tender =  state.AllTenders.find(tender=>tender.id === id);
+        }*/
+        //setTender: (state,payload) => state.tender = payload
+        setTender: (state,id) => {
+
+            state.tender = state.AllTenders.find(tender=>tender.id === id);
+        }
 
     },
 
@@ -30,6 +56,7 @@ export default {
         fetchAllTenders: async ({commit},customer_id) => {
 
             const url = `http://192.168.1.44:8000/api/v1/tenders/list/${customer_id}`;
+            //const url2 = `http://192.168.43.27:8000/api/v1/tenders/list/${customer_id}`;
 
             await axios.get(url).
                             then((response) => {
@@ -43,9 +70,18 @@ export default {
                             });
         },
 
+        setTender: async ({commit},tender_id) => {
+
+            //const url = `http://192.168.1.44:8000/api/v1/tenders/list/${customer_id}`;
+            //const url2 = `http://192.168.43.27:8000/api/v1/tenders/list/${customer_id}`
+
+            commit('setTender',tender_id)
+        },
+
         fetchBidedTenders: async ({commit},customer_id) => {
 
             const url = `http://192.168.1.44:8000/api/v1/tenders/bided/${customer_id}`;
+            //const url2 = `http://192.168.43.27:8000/api/v1/tenders/bided/${customer_id}`;
 
             await axios.get(url).
                             then((response) => {
@@ -62,6 +98,7 @@ export default {
         fetchOnProgressTenders: async ({commit},customer_id) => {
 
             const url = `http://192.168.1.44:8000/api/v1/tenders/on-progress/${customer_id}`;
+            //const url2 = `http://192.168.43.27:8000/api/v1/tenders/on-progress/${customer_id}`;
 
             await axios.get(url).
                             then((response) => {
@@ -78,6 +115,7 @@ export default {
         AddTender: async ({commit},tender)=>{
 
             const url = "http://192.168.1.44:8000/api/v1/tenders?customer_id=10";
+            //const url2 = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
 
             await axios.post(url,
                             tender,
@@ -88,10 +126,8 @@ export default {
                             }).
                             then((response) => {
 
-                                /*commit('TestMutation');
-
                                 //eslint-disable-next-line no-console
-                                console.log(response.data);*/
+                                //console.log(response.data);*
 
                                 commit('AddTender',response.data.objects)
                                 //eslint-disable-next-line no-console

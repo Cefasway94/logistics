@@ -57,18 +57,19 @@
                                             <p class=" body-2 grey--text">{{ tender.description}}</p>
                     
                                             <v-row class="px-3">
-                                                <p class="body-2  pt-1 ">Dar-es-salaam</p>
+                                                <p class="body-2  pt-1 ">{{  tender.origin }}</p>
                         
                                                 <v-icon small color="#4169E1" class="px-2 pb-3">
                                                     arrow_forward
                                                 </v-icon>
-                                                <p  class="body-2  pt-1 ">Rwanda</p>
+                                                <p  class="body-2  pt-1 ">{{ tender.destination }}</p>
                                             </v-row>
 
                                             <v-row row class="px-3">
                                                 <h4  class=" title ">{{ tender.customer_offer_amount}} {{ tender.currency}}</h4>
                                                     <v-spacer></v-spacer>
-                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>
+                                                    <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
+                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" @click="set(tender.id)" :to="'/client/tender/'+tender.id">View Details</v-btn>
                                             </v-row>
                                         </v-card>
                                     </v-flex>  
@@ -93,18 +94,18 @@
                                             <p class=" body-2 grey--text">{{ tender.description}}</p>
                     
                                             <v-row class="px-3">
-                                                <p class="body-2  pt-1 ">Dar-es-salaam</p>
+                                                <p class="body-2  pt-1 ">{{ tender.origin }}</p>
                         
                                                 <v-icon small color="#4169E1" class="px-2 pb-3">
                                                     arrow_forward
                                                 </v-icon>
-                                                <p  class="body-2  pt-1 ">Rwanda</p>
+                                                <p  class="body-2  pt-1 ">{{ tender.destination }}</p>
                                             </v-row>
 
                                             <v-row row class="px-3">
                                                 <h4  class=" title ">{{ tender.customer_offer_amount}} {{ tender.currency}}</h4>
                                                     <v-spacer></v-spacer>
-                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>
+                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/agent/Abouttender/' + tender.id">View Details</v-btn>
                                             </v-row>
                                         </v-card>
                                     </v-flex>  
@@ -141,7 +142,8 @@
                                             <v-row row class="px-3">
                                                 <h4  class=" title ">{{ tender.customer_offer_amount}} {{ tender.currency}}</h4>
                                                     <v-spacer></v-spacer>
-                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>
+                                                    <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>-->
+                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/agent/Abouttender/' + tender.id">View Details</v-btn>
                                             </v-row>
                                         </v-card>
                                     </v-flex>  
@@ -195,7 +197,13 @@ export default {
   },
 
   methods: {
-      ...mapActions(['fetchAllTenders','fetchBidedTenders','fetchOnProgressTenders'])
+      ...mapActions(['fetchAllTenders','fetchBidedTenders','fetchOnProgressTenders','setTender']),
+
+      set(id){
+          //eslint-disable-next-line no-console
+          //console.log(string);
+          this.setTender(id);
+      }
   },
 
   created(){

@@ -99,7 +99,9 @@ actions: {
         },
 
         GET_TENDERSDETAILs: async ({commit},payload) => {
-            const url= 'http://test-clearing.oxoafrica.co.tz/api/v1/tenders/'+payload;
+            //const url= 'http://test-clearing.oxoafrica.co.tz/api/v1/tenders/'+payload;
+
+            const url = 'http://192.168.43.27:8000/api/v1/tenders/'+payload;
             await axios.get(url).then((res)=>{
                 // res.data.map(data=>{
                 //     commit('SET_TENDER', data);
