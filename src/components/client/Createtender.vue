@@ -49,65 +49,68 @@
                         </v-row>
 
                         <v-row class="px-3">
-                            <v-row >
-                            <v-col>
-                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
-                                <v-text-field 
-                                outlined 
-                                clearable
-                                v-model="timeline">
-                                </v-text-field>
-                            </v-col>
-                            <v-col>
-                                <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
-                                <v-text-field 
-                                outlined 
-                                clearable
-                                v-model="size">
-                                </v-text-field>
-                            </v-col>
-                            </v-row>
+                            <v-row wrap>
+                                <v-col xs12 sm6 md4 lg4 xl4>
+                                    <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
+                                    <v-text-field 
+                                        outlined 
+                                        clearable
+                                        v-model="timeline">
+                                    </v-text-field>
+                                </v-col>
 
-                            <v-col>
-                                <p class="primary--text body-2 text-uppercase mb-0"> CURRENCY</p>
-                                <v-text-field 
-                                outlined 
-                                clearable
-                                v-model="currency">
-                                </v-text-field>
-                            </v-col>
-                            <v-col>
-                                <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
-                                <v-text-field 
-                                outlined 
-                                clearable
-                                v-model="offer_amount">
-                                </v-text-field>
-                            </v-col>
+                                <v-col xs12 sm6 md4 lg4 xl4>
+                                    <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
+                                    <v-text-field 
+                                        outlined 
+                                        clearable
+                                        v-model="size">
+                                    </v-text-field>
+                                </v-col>
+                            
+
+                                <v-col xs12 sm6 md4 lg4 xl4>
+                                    <p class="primary--text body-2 text-uppercase mb-0"> CURRENCY</p>
+                                    <v-text-field 
+                                        outlined 
+                                        clearable
+                                        v-model="currency">
+                                    </v-text-field>
+                                </v-col>
+
+                                <v-col xs12 sm6 md4 lg4 xl4>
+                                    <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
+                                    <v-text-field 
+                                        outlined 
+                                        clearable
+                                        v-model="offer_amount">
+                                    </v-text-field>
+                                </v-col>
+                            </v-row>
                         </v-row>
 
                         <v-row>
-                            <v-col>
-                            <p class="primary--text body-2 text-uppercase mb-0"> DESCRIPTION ON CARGO </p>
-                            <v-textarea
-                            outlined 
-                            clearable
-                            :auto-grow = "true"
-                            v-model="description">
-                            </v-textarea>
-                        </v-col>
+                            <v-col xs12>
+                                <p class="primary--text body-2 text-uppercase mb-0"> DESCRIPTION ON CARGO </p>
+                                <v-textarea
+                                    outlined 
+                                    clearable
+                                    :auto-grow = "true"
+                                    v-model="description">
+                                </v-textarea>
+                            </v-col>
                         </v-row>
 
                          <v-row>
-                            <v-col>
-                            <p class="primary--text body-2 text-uppercase mb-0"> TERMS AND CONDITION </p>
-                            <v-textarea
-                            outlined 
-                            clearable
-                            :auto-grow = "true"
-                            v-model="terms">
-                            </v-textarea>
-                        </v-col>
+                            <v-col xs12>
+                                <p class="primary--text body-2 text-uppercase mb-0"> TERMS AND CONDITION </p>
+                                <v-textarea
+                                    outlined 
+                                    clearable
+                                    :auto-grow = "true"
+                                    v-model="terms">
+                                </v-textarea>
+                            </v-col>
                         </v-row>
                         
                     </v-container>
@@ -124,22 +127,53 @@
                 <v-card width="1300" class="mx-auto pa-3">
                     <v-row class="pa-3">
                         <v-col class="">
-                        <p class="primary--text body-2 text-uppercase mb-0"> CARGO PHOTO </p>
-                        <v-card flat width="200" height="150" outlined >
+                            <p class="primary--text body-2 text-uppercase mb-0"> CARGO PHOTO </p>
+                            <v-card flat width="200" height="150" outlined >
 
-                            <v-file-input 
-                                label="File input" 
-                                id="files" 
-                                @change="updateFilesUploaded()"
-                                prepend-icon ="mdi-cloud-upload"
-                            >
-                            </v-file-input>
-                        </v-card>
+                                <v-file-input 
+                                    label="Photo input" 
+                                    id="files" 
+                                    @change="updateFilesUploaded()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                >
+                                </v-file-input>
+                            </v-card>
                        
-                        </v-col>  
+                        </v-col> 
+
+                        <v-col class="">
+                            <p class="primary--text body-2 text-uppercase mb-0"> BILL OF LADING</p>
+                            <v-card flat width="200" height="150" outlined >
+
+                                <v-file-input 
+                                    label="Bill of lading" 
+                                    id="bill"
+                                    @change="billUpdated()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                >
+                                </v-file-input>
+                            </v-card>
+                       
+                        </v-col>   
+
+                        <v-col class="">
+                            <p class="primary--text body-2 text-uppercase mb-0"> AUTHORIZATION LETTER</p>
+                            <v-card flat width="200" height="150" outlined >
+
+                                <v-file-input 
+                                    label="Authorization letter" 
+                                    id="letter"
+                                    @change="letterUpdated()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                >
+                                </v-file-input>
+                            </v-card>
+                       
+                        </v-col>   
                                       
                     </v-row>
                 </v-card>
+
             </v-card>
 
             <!--<v-card col flat width="1300" class="mx-auto mb-5" color="#F5FAFF">
@@ -229,12 +263,14 @@ export default {
         origin:'oxo',
         destination:'oxo',
         timeline:'2020-3-2',
-        size:'2',
+        size:'2 containers',
         currency:'TZ',
         offer_amount:'23000',
         description:'sample Server7',
         photos:[],
-        terms:'sample terms'
+        terms:'sample terms',
+        bill_of_lading:[],
+        authorization_letter:[]
     }),
 
     methods: {
@@ -250,6 +286,14 @@ export default {
             }
 
              //eslint-disable-next-line no-console
+        },
+
+        billUpdated(){
+            this.bill_of_lading.push(document.getElementById("bill").files[0]);
+        },
+
+        letterUpdated(){
+            this.authorization_letter.push(document.getElementById("letter").files[0]);
         },
 
         publishTender(){
@@ -272,11 +316,22 @@ export default {
                 let file = this.photos[i];
 
             //eslint-disable-next-line no-console
-            //console.log(file);
+            console.log(file);
                 formData.append('cargo_photo['+i+']',file);
 
             }
 
+             //eslint-disable-next-line no-console
+            console.log(this.bill_of_lading[0]);
+
+              //eslint-disable-next-line no-console
+            console.log(this.authorization_letter[0]);
+
+
+            
+            formData.append('cargo_size',this.size);
+            formData.append('bill_of_lading[0]',this.bill_of_lading[0]);
+            formData.append('authorization_letter[0]',this.authorization_letter[0]);
             formData.append('cargo_details',this.details);
             formData.append('customer_offer_amount',this.offer_amount);
             formData.append('customer_terms_and_conditions',this.terms);
@@ -292,12 +347,11 @@ export default {
             
             this.AddTender(formData);
 
-            this.$router.push('/client');
-        
-            //alert("Publish tender");*/
+            this.photos = [];
+            this.bill_of_lading = [];
+            this.authorization_letter = [];
 
-             //eslint-disable-next-line no-console
-             //console.log(document.getElementById("files").files[0]);
+            this.$router.push('/client');
         }
     }
 }
