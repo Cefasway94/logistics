@@ -40,7 +40,7 @@
                         <h4  class=" title ">{{tender.customer_offer_amount}} USD</h4>
                         <v-spacer></v-spacer>
                         <v-btn small elevation="flat" 
-                        color="#4169E1" class="white--text" @click="gettenderdetails(tender.tender_id)" :to="{name:'Abouttender', 
+                        color="#4169E1" class="white--text" @click="gettenderdetails(tender.id)" :to="{name:'AgentAbouttender', 
                         params: {id:tender.id}}" >View Details</v-btn>
                     </v-row>
                     
@@ -55,6 +55,7 @@
 
 <script>
 import {mapGetters, mapActions} from 'vuex';
+/* eslint-disable no-console */
 export default {
         
   
@@ -66,6 +67,8 @@ export default {
 
   created (tab){
              tab = this.tab
+             console.log(tab);
+             
             //const tend = this.$route.params.tid;
       this.GET_TENDERS(tab);
   },

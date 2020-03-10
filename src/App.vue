@@ -29,10 +29,10 @@ export default {
   }),
 
     created(){
-      if (localStorage.length === 2) {
-        this.login = false
+      if (localStorage.length == 3) {    
+          this.login = false
     }else{
-      this.$router.push('/');
+      this.login = true;
     }
     }
 
@@ -67,7 +67,7 @@ export default {
   //   // }else{
       
   //   //   this.$router.push('/signin')
-  //   // }
+  // }
     
 
   

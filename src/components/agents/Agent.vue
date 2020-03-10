@@ -93,13 +93,15 @@ export default {
 
   created (tab){
              tab = this.tab
-      this.GET_DASHBOARD(tab);
+             // eslint-disable-next-line no-console
+          console.log('44444444');
+      this.GET_TENDERS(tab);
 
   },
   
   methods:{
       ...mapActions([
-          'GET_DASHBOARD',
+          'GET_DASHBOARD','GET_TENDERS'
           //'GET_BIDTENDERS'
       ]),
 
@@ -112,7 +114,7 @@ export default {
   },
   computed: {
       ...mapGetters([
-          'LOAD_DASHBOARDS',
+          'LOAD_DASHBOARDS','LOAD_TENDERS'
           //'LOAD_DIBTENDERS'
       ])
   }

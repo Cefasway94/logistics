@@ -477,10 +477,13 @@ methods:{
     },
 
     validate() {
-      if((this.email == '') || (this.name == '' || this.phone_number == '')){
+      if((this.email == '' || this.secret=='') || (this.name === '' || this.phone_number == '') || (this.confirm_secret == '')){
+        console.log('how1');
          this.emptyfilds= true;
          return false
       }else{
+        console.log('how');
+        
            return this.secret === this.confirm_secret
            }
     },

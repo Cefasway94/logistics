@@ -1,10 +1,10 @@
-<template>
+<template >
     <v-app style="background-color:transparent; ">
       <v-card 
         class="my-auto mx-4"
         width="500" 
         flat=""
-        color="#F5FAFF" >
+        color="transparent" >
 
             <v-card-title  class="justify-center">
                 <h1 class="primary--text text-center py-2 font-weight-medium  " >UBALORI</h1>
@@ -19,7 +19,7 @@
       
                 <v-alert
                 :value="Connectionerror"
-                color="red"
+                color="#DC493A"
                 icon="error_outline"
                 >
                 Connection time out, please check your internet and try again.
@@ -27,7 +27,7 @@
 
                 <v-alert
                 :value="error"
-                color="red"
+                color="#DC493A"
                 icon="error_outline"
                 >
                 Field cant be empty
@@ -35,7 +35,7 @@
 
                 <v-alert
                 :value="Perror"
-                color="red"
+                color="#DC493A"
                 icon="error_outline"
                 >
                 Could not log you in, Invalid Password
@@ -43,7 +43,7 @@
 
                 <v-alert
                 :value="Eerror"
-                color="red"
+                color="#DC493A"
                 icon="error_outline"
                 >
                 Could not log you in, Invalid Email
@@ -51,7 +51,7 @@
 
                 <v-alert
                 :value="Cerror"
-                color="red"
+                color="#DC493A"
                 icon="error_outline"
                 >
                   {{DisplayCerror}}
@@ -301,24 +301,27 @@ methods:{
           password: this.secret,
         })
         .then(( data) => {
+          console.log(data);
+          console.log(this.LOAD_LOGIN);          
           if(this.LOAD_LOGIN.genralErrorCode === 8000 && this.LOAD_LOGIN.errorCount === 0){
             this.timeout=false; // server timeout false
             setTimeout(() => {
               this.loading = false;
-              if (this.LOAD_LOGIN.objects[1]===1 && localStorage.category ===1) {
-                this.$router.push('/agents')
-                this.$router.go('/agents')
+              if (this.LOAD_LOGIN.objects[1]==1 && localStorage.category ==1) {
+                this.$router.push('/agent/tenders/open')
+                this.$router.go('/agent/tenders/open')
               //return data;
               // data = this.LOAD_LOGIN;
               console.log('Opened as Agent');
                 
-              } else if (this.LOAD_LOGIN.objects[1]===2 && localStorage.category ===2) {
-                this.$router.push('null')
-                this.$router.go('null')
+              } else if (this.LOAD_LOGIN.objects[1]==2 && localStorage.category ==2) {
+                this.$router.push('/agents')
+                this.$router.go('/agents')
+                console.log('transporter');
                 
-              }else if (this.LOAD_LOGIN.objects[1]===3 && localStorage.category ===3){
-                this.$router.push('/')
-                this.$router.go('/')
+              }else if (this.LOAD_LOGIN.objects[1]==3 && localStorage.category ==3){
+                this.$router.push('/client')
+                this.$router.go('/client')
                // this.$route.params.id = //asign from local storage
               //return data;
               // data = this.LOAD_LOGIN;
@@ -328,7 +331,7 @@ methods:{
          
           console.log('success');
           console.log('success');
-          console.log(data.objects[1]);
+          console.log(this.LOAD_LOGIN.objects[1]);
           }else{
             if (this.LOAD_LOGIN === "Email does not exist") {
                     this.timeout=false; // server timeout false
@@ -411,6 +414,7 @@ methods:{
 
    
     clear_alert() {
+      this.Connectionerror = false;
         this.servererror =false;
         this.Cerror = false;
         this.Perror = false;

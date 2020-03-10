@@ -77,22 +77,26 @@
                         </v-flex>
                     </v-card>
                     
-                    <v-card flat width="1300" class="mt-5 mb-5" color="#F5FAFF">
+                    <v-card flat width="1300" class="mt-5" color="#F5FAFF">
                         <v-flex row class="">
                             <v-spacer></v-spacer>
                             <!-- Removed router to and added the 'listId' function that consologs the id passed from New tenders page
                                 <v-btn color="#4169E1" @click="listId ()" large class="white--text" rauter to="/agent/biding">Bid on tender</v-btn> -->
-                            <v-btn color="#4169E1" large class="white--text"
-                            @click="Bid">
-                            Bid on tender</v-btn>
+                            <v-btn 
+                            color="#4169E1" 
+                            large class="white--text"
+                            v-bind:style="{ visibility: buttonVisibility }"
+                            @click="Showbid()">
+                            Bid on tender
+                            </v-btn>
                         </v-flex>
                     </v-card>
 
          
-                <v-card width="1300" class="mt-5 mb-5 pl-8 pt-6 pb-5" 
+                <v-card width="1300" class=" mb-5 pl-8 pt-6 pb-5" 
                 v-bind:style="{ visibility: computedVisibility }">
                         <v-flex>
-                            <p class="body-1" style="color:#4169E1;" color="#4169E1">Biding detail</p>
+                            <p class="body-1" style="color:#4169E1;" color="#4169E1">Biding details</p>
                         </v-flex>
                         <v-flex row class="pl-2 mt-10">
                         <v-flex column class="sm3 md3 px-2">
@@ -110,7 +114,12 @@
                         </v-flex>
                         <v-flex row class="">
                             <v-spacer></v-spacer>
-                            <v-btn  elevation="flat" color="white" class="mx-3" style="color:#4169E1;">cancel</v-btn>
+                            <v-btn  
+                            elevation="flat" 
+                            color="white" 
+                            class="mx-3" 
+                            style="color:#4169E1;"
+                            @click="cancelbid()">cancel</v-btn>
                             <v-btn color="#4169E1" class="white--text">confirm bid</v-btn>
                         </v-flex>
                     </v-card>
@@ -122,7 +131,7 @@
                     <v-card color="#4169E1" width="" class="py-4 px-5">
                         <v-flex row >
                             <v-flex column class="px-3" >
-                            <p  class="white--text body-1 font-weight-bold" > {{LOAD_TENDER.customer_id}} </p>
+                            <p  class="white--text body-1 font-weight-bold" > {{LOAD_TENDER.id}} </p>
                             <v-flex column>
                             <v-flex row class="px-3 ">
                             <v-icon class="mb-3 white--text" >mail_outline</v-icon>
@@ -171,6 +180,7 @@ export default {
   
   data () {
       return{
+          btnvisibility:'visible',
           visibility: 'hidden',
            tender:'',
            onbiding: 'false'         
@@ -178,8 +188,11 @@ export default {
   },
 
   mounted (tab){
-             tab = this.$route.params.id;
+            tab = this.$route.params.id;
       this.GET_TENDERSDETAILs(tab);
+      //eslint-disable-next-line no-console
+      console.log(tab);
+      
   },
   
   methods:{
@@ -195,9 +208,14 @@ export default {
          return id;
       },
 
-      Bid: function() {
-            this.visibility = 'visible';
-           
+      Showbid() {
+            this.visibility = "visible";
+            this.btnvisibility = "hidden";
+        },
+
+        cancelbid() {
+            this.visibility = "hidden";
+            this.btnvisibility = "visible";
         }
 
      
@@ -221,7 +239,22 @@ export default {
 
       computedVisibility: function() {
             return this.visibility;
-        }
+        },
+
+        buttonVisibility: function() {
+            return this.btnvisibility;
+        },
+
+        // buttonvisibility: function(){
+        //     if (this.visibility == 'visible') {
+        //         this.btnvisibility = "hidden";
+        //         return this.btnvisibility;
+        //     } else {
+        //         this.btnvisibility= "visible";
+        //         return this.btnvisibility;
+        //     }
+            
+        // }
       
   }
 

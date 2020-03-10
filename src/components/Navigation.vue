@@ -73,7 +73,8 @@
           :to="{name:this.items[0].router.name, 
             params:{id: this.items[0].router.params.id} }"
           link
-          @click="tenders()">
+          @click="tenders()"
+          >
           <v-list-item-icon>
             <v-icon>{{items[0].icon}}</v-icon>
           </v-list-item-icon>
@@ -167,18 +168,20 @@ export default {
     },
 
     created(){
-      const type = localStorage.category;
-      console.log('navigatio');
-      
+      const type = localStorage.category;      
       if (type == 3){
-        return this.client() 
+        console.log('client');
+        this.items = this.client();
+        return this.client()
+
       }else if (type == 2) {
-        return this.transporter() 
+        console.log('transporter');
+        this.items = this.agent();        // =========================================== to be changed to transpoorter componetns
+        return this.transporter();
+         
       }else if (type == 1) {
-        console.log('navigatio3');
-          this.items = this.agent();
-          console.log(this.items[0].router.params.id) 
-          console.log(this.items[0].router.name)             
+        console.log('Agennt');
+          this.items = this.agent();      
 
       }
       
@@ -204,7 +207,7 @@ export default {
 
       agent(){
            const agent = [
-                      {title: 'ATenders', icon: 'dashboard', router:{name:'AgentTenders', params: {id:'users'}}},
+                      {title: 'ATenders', icon: 'dashboard', router:{name:'AgentTenders', params: {id:'open'}}},
                       {title: 'ADashboard', icon: 'account_box', router:{name:'Agent', params:{id:'todos'}}},
                       {title: 'APayments', icon: 'gavel', router:{name:'Payment', params:{id:'null'}}}
                       ]
@@ -240,7 +243,8 @@ export default {
       logout(){
         localStorage.removeItem("category");
         localStorage.removeItem("secret");
-        this.$router.go('/signin')
+        this.$router.push('/signin');
+        this.$router.go('/signin');
       }
   },
 
