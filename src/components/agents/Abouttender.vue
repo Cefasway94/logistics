@@ -100,18 +100,58 @@
                         </v-flex>
                         <v-flex row class="pl-2 mt-10">
                         <v-flex column class="sm3 md3 px-2">
-                            <v-text-field color="#4169E1" clearable
-                            label="Bid amount"></v-text-field>
+                            <v-text-field
+                             color="#4169E1"
+                             clearable
+                             v-model="bid_amount"
+                             label="Bid amount">
+                            </v-text-field>
                         </v-flex>
+
                         <v-flex column class="sm3 md3 px-2">
-                            <v-text-field color="#4169E1" clearable
-                            label="Delivery time"></v-text-field>
+                            <!-- <v-text-field 
+                            color="#4169E1" 
+                            clearable
+                            v-model="bid_delivery_timeline"
+                            label="Delivery time">
+                            </v-text-field> -->
+
+                            <!--  -->
+                            <v-menu
+                                ref="menu"
+                                v-model="menu"
+                                :close-on-content-click="false"
+                                :return-value.sync="bid_delivery_timeline"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="290px">
+                                <template v-slot:activator="{ on }">
+                                <v-text-field
+                                    v-model="date"
+                                    label="Delivery time"
+                                    readonly
+                                    v-on="on">
+                                    </v-text-field>
+                                </template>
+                                <v-date-picker v-model="date" no-title scrollable>
+                                <v-spacer></v-spacer>
+                                <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                                <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                                </v-date-picker>
+                            </v-menu>
+                            <!--  -->
                         </v-flex>
+
                         <v-flex column class="sm6 md6 px-2">
-                            <v-text-field color="#4169E1" clearable
-                            label="Terms and conditions"></v-text-field>
+                            <v-text-field 
+                            color="#4169E1" 
+                            clearable
+                            v-model="bid_terms_and_conditions"
+                            label="Terms and conditions">
+                            </v-text-field>
                         </v-flex>
                         </v-flex>
+
                         <v-flex row class="">
                             <v-spacer></v-spacer>
                             <v-btn  
@@ -120,7 +160,14 @@
                             class="mx-3" 
                             style="color:#4169E1;"
                             @click="cancelbid()">cancel</v-btn>
-                            <v-btn color="#4169E1" class="white--text">confirm bid</v-btn>
+                            <v-btn 
+                            color="#4169E1" 
+                            class="white--text"
+                            elevation="flat"
+                            @click="bidtender()"
+                            >
+                            bid tender
+                            </v-btn>
                         </v-flex>
                     </v-card>
 
@@ -174,16 +221,27 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
 import {mapGetters, mapActions} from 'vuex';
 export default {
         
   
   data () {
       return{
+          //date picker--------
+          date: new Date().toISOString().substr(0, 10),
+          menu: false,
+          //rest of data--------
           btnvisibility:'visible',
           visibility: 'hidden',
+           onbiding: 'false',         
            tender:'',
-           onbiding: 'false'         
+           agent_id:'',
+           tender_id:'',
+           bid_amount:'', // -------
+           bid_delivery_timeline:new Date().toISOString().substr(0, 10), // ----------
+           bid_terms_and_conditions:'',// -------
+
       }
   },
 
@@ -197,7 +255,7 @@ export default {
   
   methods:{
       ...mapActions([
-          'GET_TENDERSDETAILs'
+          'GET_TENDERSDETAILs', 'BID_TENDER'
 
       ]),
 
@@ -213,27 +271,39 @@ export default {
             this.btnvisibility = "hidden";
         },
 
-        cancelbid() {
+      cancelbid() {
             this.visibility = "hidden";
             this.btnvisibility = "visible";
+        },
+        
+        bidtender() {
+            this.BID_TENDER({
+                agent_id:'12345',
+                tender_id :this.LOAD_TENDER.id,
+                 bid_terms_and_conditions:this.bid_terms_and_conditions,
+                 bid_amount:this.bid_amount, 
+                 bid_delivery_timeline:this.bid_delivery_timeline,
+            })
+            .then(({data, status})=>{
+                console.log(data);
+                console.log(status);
+                console.log(this.LOAD_POST_BID);
+                
+            })
+            .catch(error=>{
+                console.log('error');
+                console.log(error.response.data);
+                console.log(this.LOAD_POST_BID);
+                
+            })           
+               //console.log(this.LOAD_LOGIN);
+               
         }
-
-     
-
-    //   listId (id)
-    //   {
-    //     id= this.LOAD_TENDERS
-    //       id.map(data=>{
-    //            // eslint-disable-next-line no-console
-    //             console.log(data.name);
-    //           return this.tender = data
-    //       });       
-    //   }           
   },
 
   computed: {
       ...mapGetters([
-          'LOAD_TENDER',
+          'LOAD_TENDER','LOAD_POST_BID','LOAD_LOGIN'
           //'LOAD_DIBTENDERS'
       ]),
 
@@ -244,18 +314,6 @@ export default {
         buttonVisibility: function() {
             return this.btnvisibility;
         },
-
-        // buttonvisibility: function(){
-        //     if (this.visibility == 'visible') {
-        //         this.btnvisibility = "hidden";
-        //         return this.btnvisibility;
-        //     } else {
-        //         this.btnvisibility= "visible";
-        //         return this.btnvisibility;
-        //     }
-            
-        // }
-      
   }
 
     

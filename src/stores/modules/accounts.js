@@ -46,7 +46,7 @@ mutations: {
 
 actions: {
 
-// Login action =========================================>>>>>>
+// Registration action =========================================>>>>>>
       REGISTER: ({ commit }, { name, email, password, password_confirmation, category, phone }) => {
         return new Promise((resolve, reject) => {
           axios
@@ -109,7 +109,7 @@ actions: {
               
               console.log(error.response.data);
               commit('SET_LOGIN',error.response.data )
-              console.log('commited');
+              console.log('committed');
               
             });
         });
