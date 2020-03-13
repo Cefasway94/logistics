@@ -2,43 +2,16 @@
     <v-container class="pa-3 mt-10 mx-auto">
 
         <v-layout class="pa-3 mt-10">
-
-            <Alert v-if="alert" v-bind:message= "alert"/>
-
             <v-card row flat class="mx-auto" width="1300" color="#F5FAFF" >
                 <v-row>
-                <h3 class="headline mt-1 font-weight-regular">Create new tender</h3>
+                <h3 class="headline mt-1 font-weight-regular">Edit Tender</h3>
                 <v-spacer></v-spacer>
                 <v-btn outlined color="primary" class="mx-4" router to="/client">Cancel</v-btn>
                 </v-row>
             </v-card>
         </v-layout>
 
-         <!--<v-container style="height: 400px;">
-            <v-row
-                class="fill-height"
-                align-content="center"
-                justify="center"
-            >
-                <v-col
-                    class="subtitle-1 text-center"
-                    cols="12"
-                >
-                    Getting your files
-                </v-col>
-
-                <v-col cols="6">
-                    <v-progress-linear
-                        color="deep-purple accent-4"
-                        indeterminate
-                        rounded
-                        height="6"
-                >
-                </v-progress-linear>
-                </v-col>
-            </v-row>
-        </v-container>-->
-
+    
         <v-layout column class="pa-3 px-auto" justify-center>
             <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row>
@@ -48,13 +21,14 @@
                 <v-card width="1300" class="mx-auto pa-3">
                     <v-form>
                     <v-container>
-                        <v-row>
+                        <v-row>                         
                         <v-col>
                             <p class="primary--text body-2 text-uppercase mb-0">CARGO DETAILS</p>
                             <v-text-field 
                             outlined 
                             clearable
-                            v-model="details">
+                            v-model="tender.cargo_details"
+                            >
                             </v-text-field>
                         </v-col>
                         <v-col>
@@ -62,7 +36,7 @@
                             <v-text-field 
                             outlined 
                             clearable
-                            v-model="origin">
+                            v-model="tender.origin">
                             </v-text-field>
                         </v-col>
 
@@ -71,7 +45,7 @@
                             <v-text-field 
                             outlined 
                             clearable
-                            v-model="destination">
+                            v-model="tender.destination">
                             </v-text-field>
                         </v-col>
                         </v-row>
@@ -83,7 +57,7 @@
                                     <v-text-field 
                                         outlined 
                                         clearable
-                                        v-model="timeline">
+                                        v-model="tender.customer_delivery_timeline">
                                     </v-text-field>
                                 </v-col>
 
@@ -92,7 +66,7 @@
                                     <v-text-field 
                                         outlined 
                                         clearable
-                                        v-model="size">
+                                        v-model="tender.cargo_size">
                                     </v-text-field>
                                 </v-col>
                             
@@ -102,7 +76,7 @@
                                     <v-text-field 
                                         outlined 
                                         clearable
-                                        v-model="currency">
+                                        v-model="tender.currency">
                                     </v-text-field>
                                 </v-col>
 
@@ -111,7 +85,7 @@
                                     <v-text-field 
                                         outlined 
                                         clearable
-                                        v-model="offer_amount">
+                                        v-model="tender.customer_offer_amount">
                                     </v-text-field>
                                 </v-col>
                             </v-row>
@@ -124,7 +98,7 @@
                                     outlined 
                                     clearable
                                     :auto-grow = "true"
-                                    v-model="description">
+                                    v-model="tender.description">
                                 </v-textarea>
                             </v-col>
                         </v-row>
@@ -136,7 +110,7 @@
                                     outlined 
                                     clearable
                                     :auto-grow = "true"
-                                    v-model="terms">
+                                    v-model="tender.customer_terms_and_conditions">
                                 </v-textarea>
                             </v-col>
                         </v-row>
@@ -147,7 +121,7 @@
                 </v-card>
             </v-card>
 
-            <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
+            <!--<v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row>
                 <v-icon color="grey" class="mb-4 ml-3 ">attachments</v-icon>
                 <p class="grey--text title">Attachments</p>
@@ -202,7 +176,7 @@
                     </v-row>
                 </v-card>
 
-            </v-card>
+            </v-card>-->
 
             <!--<v-card col flat width="1300" class="mx-auto mb-5" color="#F5FAFF">
                 <v-row>
@@ -266,35 +240,11 @@
                 </v-card>
             </v-card>-->
 
-             <v-row
-                class="fill-height"
-                align-content="center"
-                justify="center"
-                v-if="loading"
-            >
-                <v-col
-                    class="subtitle-1 text-center"
-                    cols="12"
-                >
-                    Creating a tender
-                </v-col>
-
-                <v-col cols="6">
-                    <v-progress-linear
-                        color="deep-purple accent-4"
-                        indeterminate
-                        rounded
-                        height="6"
-                >
-                </v-progress-linear>
-                </v-col>
-            </v-row>
-
             <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row class=" pa-3">
                     <v-spacer></v-spacer>
-                    <v-btn outlined color="primary" class="mx-4">Cancel</v-btn>
-                    <v-btn color="primary white--text" type="submit" @click="publishTender">Publish tender</v-btn>
+                    <v-btn outlined color="primary" class="mx-4" router to="/client">Cancel</v-btn>
+                    <v-btn color="primary white--text" type="submit" @click="editTender">Edit tender</v-btn>
                 </v-row>
             </v-card>
 
@@ -305,130 +255,80 @@
 </template>
 
 <script>
-import {mapActions,mapGetters} from 'vuex'
-import Alert from '@/components/Alert.vue'
+import {mapGetters,mapActions} from 'vuex'
 import axios from 'axios'
 
 export default {
     name: "createtender",
 
-    components: {Alert},
-
     data: ()=>({
-        details:'sample server  27',
-        origin:'dar',
-        destination:'zanzibar',
-        timeline:'2020-02-3',
-        size:'2 containers',
-        currency:'TZ',
-        offer_amount:'800000',
-        description:'sample description',
-        photos:[],
-        terms:'sample terms',
-        bill_of_lading:[],
-        authorization_letter:[],
-
-        loading:false,
-        alert:''
+        tender:[]
     }),
 
     computed:{
-      ...mapGetters(['tenderCreated'])
+        ...mapGetters(['getTender']),
+ 
     },
 
-    methods: {
+    methods:{
+        ...mapActions(['updateTender','fetchAllTenders']),
 
-        ...mapActions(['AddTender']),
-
-        updateFilesUploaded(){
-
-            let uploadedfiles = document.getElementById("files").files;
-
-            for(var i=0; i < uploadedfiles.length; i++){
-                this.photos.push(uploadedfiles[i]);  
-            }
+        setCustomerDetails(){
+            this.tender = this.getTender;
         },
 
-        billUpdated(){
-            this.bill_of_lading.push(document.getElementById("bill").files[0]);
-        },
+        editTender(){
 
-        letterUpdated(){
-            this.authorization_letter.push(document.getElementById("letter").files[0]);
-        },
+            let updatedTender = {           
 
-        createData(){
-
-            let formData = new FormData();
-
-            for( var i = 0; i < this.photos.length; i++){
-                let file = this.photos[i];
-
-                formData.append('cargo_photo['+i+']',file);
+                cargo_details: this.tender.cargo_details,
+                currency: this.tender.currency,
+                cargo_size: this.tender.cargo_size,
+                destination: this.tender.destination,
+                description: this.tender.description,
+                customer_offer_amount: this.tender.customer_offer_amount,
+                customer_terms_and_conditions: this.tender.customer_terms_and_conditions,
+                customer_delivery_timeline: this.tender.customer_delivery_timeline,
+                origin: this.tender.origin,
+                customer_id:10,
 
             }
 
-            formData.append('cargo_size',this.size);
-            formData.append('bill_of_lading[0]',this.bill_of_lading[0]);
-            formData.append('authorization_letter[0]',this.authorization_letter[0]);
-            formData.append('cargo_details',this.details);
-            formData.append('customer_offer_amount',this.offer_amount);
-            formData.append('customer_terms_and_conditions',this.terms);
-            formData.append('customer_delivery_timeline',this.timeline);
-            formData.append('origin',this.origin);
-            formData.append('destination',this.destination);
-            formData.append('currency',this.currency);
-            formData.append('description',this.description);
+            
+            axios.put(`http://192.168.1.44:8000/api/v1/tenders/${this.tender.id}`,updatedTender).
+                    then((response)=>{
+                  
+                        //eslint-disable-next-line no-console
+                        //console.log(res.data);
 
-            return formData;
-        },
+                        //this.$router.push('/client');
+                        
+                        //this.$router.push({path:'/client',query:{alert:'Customer has been edited'}});//then(window.location.load);
 
-        publishTender(){
+                        this.$router.push({path:'/client',query:{alert:response.data.message}});
 
-            this.loading = true;
+                    }).catch(()=>{
 
-            let formData = this.createData();
-
-            const url = "http://192.168.1.44:8000/api/v1/tenders?customer_id=10";
-            //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
-
-         
-            axios.post(url,
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }).
-                            then((response) => {
-
-                             
-                                this.loading = false;
-
-                                this.AddTender(response.data.objects);
-
-                                this.$router.push({path:'/client',query:{alert:response.data.message}});
-
-                                //eslint-disable-next-line no-console
-                                //console.log(response.data);
-
-                            }).catch(()=>{
-
-                                //eslint-disable-next-line no-console
-                                console.log("error occured");
-
-                                 this.$router.push({path:'/client/createtender',query:{alert:"Erro occured. Please try again"}});
-                            });    
+                        //eslint-disable-next-line no-console
+                        console.log("Error occured");
+                    });
+                    
         }
-    },
+   },
 
-    watch:{
-      '$route' () {
-          if(this.$route.query.alert){
-           this.alert = this.$route.query.alert;
-       }
-        
-      }
-    }
+   mounted(){
+       this.setCustomerDetails();
+   },
+
+    beforeRouteEnter (to, from, next) { 
+        next(vm => { 
+
+        //access to component's instance using `vm` .
+        //this is done because this navigation guard is called before the component is created.           
+        vm.setCustomerDetails();
+        next();
+  }) 
+} 
+
 }
 </script>

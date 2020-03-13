@@ -14,6 +14,7 @@
     <router-view name="Createtender"></router-view>
     <router-view name="Biding"></router-view>
     <router-view name="Tenderprogressclient"></router-view>
+    <router-view name="editTender"></router-view>
   </keep-alive>
 </transition>
       
@@ -24,6 +25,7 @@
 <script>
 // @ is an alias to /src
  import Navigation from '@/components/Navigation.vue'
+
 
 export default {
   name: 'home',

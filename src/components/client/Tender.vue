@@ -84,7 +84,8 @@
                                     <v-btn 
                                         :disabled="editValid" 
                                         color="#4169E1" 
-                                        large class="white--text">
+                                        large class="white--text"
+                                        :to="'/client/edittender/'+getTender.id">
                                         Edit
                                     </v-btn>
                             </v-flex>
@@ -144,7 +145,6 @@ export default {
     data: ()=>({
         
     }),
-
     computed: {
 
     ...mapGetters(['getTender']),

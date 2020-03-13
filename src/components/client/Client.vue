@@ -1,7 +1,10 @@
 <template >
     <div class=" pa-auto" >
 
+           
             <v-container  class=" mt-12 mx-auto">
+
+                 <Alert v-if="alert" v-bind:message= "alert"/>
 
                 <v-card flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
                     <v-flex row class="mt-5">
@@ -69,7 +72,7 @@
                                                 <h4  class=" title ">{{ tender.customer_offer_amount}} {{ tender.currency}}</h4>
                                                     <v-spacer></v-spacer>
                                                     <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
-                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" @click="set(tender.id)" :to="'/client/tender/'+tender.id">View Details</v-btn>
+                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" @click="set(tender.id)" :to="'/client/tender/' + tender.id">View Details</v-btn>
                                             </v-row>
                                         </v-card>
                                     </v-flex>  
@@ -165,10 +168,13 @@
 <script>
 
 import { mapGetters, mapActions} from 'vuex'
+import Alert from '@/components/Alert.vue'
 
 export default {
   
   name: 'Client',
+
+  components: {Alert},
 
   data () {
       return{
@@ -188,6 +194,7 @@ export default {
           tab: null,
 
           id: 10,
+          alert:''
 
       }
   },
@@ -206,12 +213,29 @@ export default {
       }
   },
 
-  created(){
+  created: function(){
+       /*if(this.$route.query.alert){
+          this.alert = this.$route.query.alert;
+      }*/
+      
       this.fetchAllTenders(this.id),
       this.fetchBidedTenders(this.id),
       this.fetchOnProgressTenders(this.id)
-  }
+  },
     
+    watch:{
+      '$route' () {
+        /*if(to !== from ) {
+          if(this.$route.query.alert){
+                this.alert = this.$route.query.alert;
+            }
+        }*/
+        if(this.alert !== this.$route.query.alert){
+            this.alert = this.$route.query.alert;
+        }
+      }
+    },
+
 }
 </script>
 

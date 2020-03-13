@@ -26,6 +26,7 @@ import Createtender from '../components/client/Createtender.vue';
 import Clienteditprofile from '../components/client/Clienteditprofile.vue';
 import Tenderprogressclient from '../components/client/Tenderprogressclient.vue'
 import Tender from '../components/client/Tender.vue'
+import editTender from '../components/client/editTender.vue'
 import Payment from '../components/client/Payment.vue';
 import Aboutbid from '../components/client/Aboutbid.vue'
 import paymenthistory from '../components/Paymenthistory.vue';
@@ -93,8 +94,12 @@ const routes = [
   {
     path:'/client/tender/:id',
     name:'Tender',
-    props:true,
     components:{Tender}
+  },
+  {
+    path:'/client/edittender/:id',
+    name:'editTender',
+    components:{editTender}
   },
 
   //-------------------- Agent routes
