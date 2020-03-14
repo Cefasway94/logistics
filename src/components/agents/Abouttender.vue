@@ -204,7 +204,7 @@
                             <v-icon class="mb-3 white--text" >local_phone</v-icon>
                             <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
                             </v-flex>
-                            <v-flex class="pl-8">
+                             <v-flex class="pl-8">
                             <p class="white--text ">Lorem@gamil.com</p>
                             </v-flex>
                             </v-flex>

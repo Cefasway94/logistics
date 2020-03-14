@@ -27,32 +27,143 @@
       <!--  -->
 
       <!--  -->
+      
 
-      <v-badge class="mr-5 pt-1" :content="messages" :value="messages" color="blue" overlap>
+      <!-- ----------------------------------------- -->
+   <v-menu transition="slide-y-transition">
+      <template v-slot:activator="{ on }">
+        <!--  -->
+        <v-badge 
+        v-ripple
+        class=" mr-5 pt-1" 
+        :content="messages" 
+        :value="messages" 
+        color="blue" 
+        overlap
+        >
         <p class="caption" small slot="badge">{{messages}}</p>
-        <v-icon @click="messages++">mdi-bell</v-icon>
+        <v-icon @click="messages++" v-on="on">mdi-bell</v-icon>
       </v-badge>
+        <!--  -->
+      </template>
+      <v-list>
+        <v-list-item v-for="n in 5" :key="n" link>
+          <v-list-item-title v-text="'Item ' + n"></v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
 
-      <v-divider class="mx-auto" vertical></v-divider>
+    <!-- ----------------------------------------- -->
 
-      <v-btn
+      <v-divider class="mx-5 hidden-sm-and-down" vertical></v-divider>
+
+      <!-- <v-btn
         depressed
         elevation="flat"
         class="white black--text mx-3 mt-2 hidden-md-and-down"
         @click.prevent="logout()"
-      >Log out</v-btn>
+      >Log out
+      </v-btn> -->
+      <!--  -->
+      
+           
+      <!--  -->
+
+      <v-menu transition="slide-y-transition">
+      <template v-slot:activator="{ on }">
+        <!--  -->
+        <v-btn  
+        fab 
+        elevation="flat" 
+        v-on="on"
+        color="transparent hidden-sm-and-down">
+        <v-avatar >
+        <v-icon 
+        size="35" 
+        color="grey" >
+        mdi-account-circle
+        </v-icon>
+        </v-avatar>
+        </v-btn> 
+        <!--  -->
+      </template>
+      
+        <v-card
+        class="mx-auto"
+        width="256"
+        tile >
+          <v-list>
+            <v-list-item>
+              <v-list-item-avatar>
+                <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+              </v-list-item-avatar>
+            </v-list-item>
+
+            <v-list-item link>
+              <v-list-item-content>
+                <v-list-item-title class="title">John Leider</v-list-item-title>
+                <v-list-item-subtitle>john@vuetifyjs.com</v-list-item-subtitle>
+              </v-list-item-content>
+
+              <v-list-item-action>
+                <v-icon>mdi-menu-down</v-icon>
+              </v-list-item-action>
+            </v-list-item>
+          </v-list>
+          <v-divider></v-divider>
+          <v-list
+            nav
+            dense >
+            <v-list-item-group v-model="item" color="primary">
+              <v-list-item
+                v-for="(item, i) in itemes"
+                :key="i">
+                <v-list-item-icon>
+                  <v-icon v-text="item.icon"></v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>       
+      </v-card>
+     </v-menu>
+
+
     </v-app-bar>
 
     <!-- Navbar -->
     <v-navigation-drawer
       app
       v-model="drawer"
+      expand-on-hover
       class="accent-4"
       style="background-color:#4169E1;"
       dark
       width="200"
     >
-      <v-list>
+      <v-list
+      nav
+      >
+
+      <!--  -->
+      <v-list-item two-line >
+            <v-list-item-avatar>
+              <img src="">
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title>UBALORI</v-list-item-title>
+              <v-list-item-subtitle>OXOAfrica.co.tz</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider>
+      <!--  -->
+
+
         <!-- tender -->
         <v-list-item
           router
@@ -105,10 +216,23 @@
 
       <!-- ---------------------------------------------------------------------- to be continued -->
 
-      <div class="px-2 pt-12">
-        <v-btn color="#4169E1" elevation="false" block @click.prevent="logout()">Logout</v-btn>
-      </div>
+      <v-flex class="px-2 pt-12">
+        
+      </v-flex>
+
+<template v-slot:append>
+        <div>
+         <v-btn 
+         x-large 
+         color="transparent" 
+         elevation="15" 
+         block @click.prevent="logout()">Logout</v-btn>
+        </div>
+      </template>
+
     </v-navigation-drawer>
+
+    
 
     <!-- Conponents -->
     <!-- <v-sheet
@@ -121,6 +245,7 @@
         </v-container>
     </v-sheet>-->
   </nav>
+  
 </template>
 
 <script>
@@ -139,7 +264,18 @@ export default {
       colors: ["primary", "accent", "warning lighten-2", "teal", "orange"],
       drawer: true,
       category: "",
-      items: ""
+      items: "",
+      // items for added Navigation profile list
+      item: 0,
+      itemes: [
+        { text: 'My Files', icon: 'mdi-folder' },
+        { text: 'Shared with me', icon: 'mdi-account-multiple' },
+        { text: 'Starred', icon: 'mdi-star' },
+        { text: 'Recent', icon: 'mdi-history' },
+        { text: 'Offline', icon: 'mdi-check-circle' },
+        { text: 'Uploads', icon: 'mdi-upload' },
+        { text: 'Backups', icon: 'mdi-cloud-upload' },
+      ],
     };
   },
 

@@ -12,6 +12,15 @@
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
              v-for="tender in LOAD_TENDERS.objects" :key="tender.id"  >
 
+             <!-- 
+                 <v-hover class="">
+                <template v-slot="{ hover }">
+                <v-card 
+                column width="350"
+                class="px-3 pb-3 mx-auto" 
+                :elevation="hover ? 15 : 3"> ========================= HOVER EFFECT
+              -->
+
                 <v-card column width="350"  elevation="3" class="px-4 pb-3 pt-1 mx-auto">
                    
                     <v-row  row class="pl-3 pt-1 mb-1 justify-space-between">

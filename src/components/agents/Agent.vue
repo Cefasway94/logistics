@@ -33,7 +33,12 @@
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
              v-for="tender in LOAD_DASHBOARDS" :key="tender.id" v-model="LOAD_DASHBOARDS.completed" >
 
-                <v-card column width="350"  elevation="3" class="px-3 pb-3 mx-auto">
+                <v-hover class="">
+                <template v-slot="{ hover }">
+                <v-card 
+                column width="350"
+                class="px-3 pb-3 mx-auto" 
+                :elevation="hover ? 15 : 3">
                     <v-row justify="end" class="py-1" @click="true">
                         <v-icon color="#E9E9F0" class="pr-1" @click="true">clear</v-icon>
                         </v-row>
@@ -66,6 +71,8 @@
                         <v-btn small elevation="flat"  @click="theid(tender.id)" color="#4169E1" class="white--text" to="/agent/abouttender">View Details</v-btn>
                     </v-row>
                 </v-card>
+                </template>
+                </v-hover>
             </v-flex>               
         </v-container>
       </v-tab-item>

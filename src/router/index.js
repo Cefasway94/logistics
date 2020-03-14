@@ -8,7 +8,7 @@ import login from '../views/Login.vue';
 import Agent  from '../components/agents/Agent.vue';
 import Biding from '../components/agents/Biding.vue';
 import Abouttender from '../components/agents/Abouttender';
-import Tenderprogressagent from '../components/agents/Tenderprogressagent.vue';
+import AgentTenderprogress from '../components/agents/Tenderprogressagent.vue';
 import Tenders from '../components/agents/Tenders.vue';
 import Agenteditprofile from '../components/agents/Agenteditprofile.vue';
 
@@ -111,7 +111,7 @@ const routes = [
   {
     path:'/agent/tenderprogress',
     name:'AgentTenderprogress',
-    component:Tenderprogressagent
+    components:{AgentTenderprogress}
   },
 
 ]

@@ -326,6 +326,9 @@ methods:{
               //return data;
               // data = this.LOAD_LOGIN;
               console.log('Opened as client');
+              }else {
+                this.$router.push('/Signin')
+                this.$router.go('/Signin')
               }
               }, 2000)     //============ kill load
          
