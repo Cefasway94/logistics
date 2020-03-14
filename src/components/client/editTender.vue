@@ -51,16 +51,8 @@
                         </v-row>
 
                         <v-row class="px-3">
+                            
                             <v-row wrap>
-                                <v-col xs12 sm6 md4 lg4 xl4>
-                                    <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
-                                    <v-text-field 
-                                        outlined 
-                                        clearable
-                                        v-model="tender.customer_delivery_timeline">
-                                    </v-text-field>
-                                </v-col>
-
                                 <v-col xs12 sm6 md4 lg4 xl4>
                                     <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
                                     <v-text-field 
@@ -89,6 +81,25 @@
                                     </v-text-field>
                                 </v-col>
                             </v-row>
+                        </v-row>
+
+                        <v-row>
+                            <v-col
+                                offset="2"
+                                align-self="center"
+                                cols='2'  
+                            >
+                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
+                            </v-col>
+                            <v-col
+                                col="9"  
+                            >
+                                <v-date-picker 
+                                    v-model="tender.customer_delivery_timeline"
+                                    :allowed-dates="allowedDates"
+                                    full-width>
+                                </v-date-picker>
+                            </v-col>
                         </v-row>
 
                         <v-row>
@@ -276,6 +287,8 @@ export default {
         setCustomerDetails(){
             this.tender = this.getTender;
         },
+
+         allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
 
         editTender(){
 

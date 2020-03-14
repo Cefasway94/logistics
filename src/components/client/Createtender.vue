@@ -78,14 +78,24 @@
 
                         <v-row class="px-3">
                             <v-row wrap>
-                                <v-col xs12 sm6 md4 lg4 xl4>
+                                <!--<v-col xs12 sm6 md4 lg4 xl4>
                                     <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
                                     <v-text-field 
                                         outlined 
                                         clearable
                                         v-model="timeline">
-                                    </v-text-field>
-                                </v-col>
+                                    </v-text-field>-->
+                                    <!--<v-date-picker
+                                        v-model="timeline"
+                                        :allowed-dates="allowedDates"
+                                        class="mt-4"
+                                        min="2016-06-15"
+                                        max="2018-03-20"
+                                     >                              
+                                    </v-date-picker>
+                                    <v-date-picker v-model="timeline"></v-date-picker>
+
+                                </v-col>-->
 
                                 <v-col xs12 sm6 md4 lg4 xl4>
                                     <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
@@ -115,6 +125,27 @@
                                     </v-text-field>
                                 </v-col>
                             </v-row>
+                        </v-row>
+
+                        <v-row>
+                            <v-col
+                                offset="2"
+                                align-self="center"
+                                cols='3'
+                               
+                            >
+                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
+                            </v-col>
+                            <v-col
+                                col="9"
+                                
+                            >
+                                <v-date-picker 
+                                    v-model="timeline"
+                                    :allowed-dates="allowedDates"
+                                    full-width>
+                                </v-date-picker>
+                            </v-col>
                         </v-row>
 
                         <v-row>
@@ -318,7 +349,7 @@ export default {
         details:'sample server  27',
         origin:'dar',
         destination:'zanzibar',
-        timeline:'2020-02-3',
+        timeline:new Date().toISOString().substr(0, 10),
         size:'2 containers',
         currency:'TZ',
         offer_amount:'800000',
@@ -339,6 +370,8 @@ export default {
     methods: {
 
         ...mapActions(['AddTender']),
+
+        allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
 
         updateFilesUploaded(){
 
