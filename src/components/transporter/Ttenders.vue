@@ -21,15 +21,7 @@
                 :elevation="hover ? 15 : 3"> ========================= HOVER EFFECT
               -->
 
-                <v-hover class="">
-                <template v-slot="{ hover }">
-                <v-card 
-                column 
-                width="350" 
-                class="px-4 pb-3 pt-1 mx-auto"
-                :to="{name:'AgentAbouttender', params: {id:tender.id}}"
-                @click="gettenderdetails(tender.id)"
-                :elevation="hover ? 15 : 3">
+                <v-card column width="350"  elevation="3" class="px-4 pb-3 pt-1 mx-auto">
                    
                     <v-row  row class="pl-3 pt-1 mb-1 justify-space-between">
                         <v-flex wrap xs9 sm9>
@@ -62,8 +54,6 @@
                     </v-row>
                     
                 </v-card>
-                </template>
-                </v-hover>
             </v-flex>               
         </v-container>
              

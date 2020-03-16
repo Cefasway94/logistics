@@ -12,6 +12,8 @@ import AgentTenderprogress from '../components/agents/Tenderprogressagent.vue';
 import Tenders from '../components/agents/Tenders.vue';
 import Agenteditprofile from '../components/agents/Agenteditprofile.vue';
 
+//transporter routes
+
 //client routs
 import Client from '../components/client/Client.vue';
 import Createtender from '../components/client/Createtender.vue';
@@ -20,6 +22,8 @@ import Tenderprogressclient from '../components/client/Tenderprogressclient.vue'
 import Payment from '../components/client/Payment.vue';
 import Aboutbid from '../components/client/Aboutbid.vue'
 import paymenthistory from '../components/Paymenthistory.vue';
+
+
 
 Vue.use(VueRouter)
 
@@ -91,7 +95,7 @@ const routes = [
   {
     path:'/agent/editprofile',
     name:'AgentProfile',
-    component: Agenteditprofile
+    components: {Agenteditprofile}
   },
   {
     path:'/agent/tenders/:id',

@@ -195,7 +195,7 @@
 export default {
    data() {
        return{
-       payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
+       payment_terms:['Full payment', 'Pay by installments (30%, 40%, 30%)'],
        service_type:['Agent', 'Transporter', 'Both'],
     }
    },

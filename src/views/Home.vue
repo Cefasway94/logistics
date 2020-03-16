@@ -15,6 +15,7 @@
     <router-view name="Payment"></router-view>
     <router-view name="Client"></router-view>
     <router-view name="AgentTenderprogress"></router-view>
+    <router-view name="Agenteditprofile"></router-view>
   </keep-alive>
 </transition>
       

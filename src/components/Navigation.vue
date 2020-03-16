@@ -47,7 +47,7 @@
         <!--  -->
       </template>
       <v-list>
-        <v-list-item v-for="n in 5" :key="n" link>
+        <v-list-item v-for="n in 100" :key="n" link>
           <v-list-item-title v-text="'Item ' + n"></v-list-item-title>
         </v-list-item>
       </v-list>
