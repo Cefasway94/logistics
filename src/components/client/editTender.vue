@@ -277,12 +277,12 @@ export default {
     }),
 
     computed:{
-        ...mapGetters(['getTender']),
+        ...mapGetters(['getTender','getAlert']),
  
     },
 
     methods:{
-        ...mapActions(['updateTender','fetchAllTenders']),
+        ...mapActions(['updateTender','fetchAllTenders','setAlert']),
 
         setCustomerDetails(){
             this.tender = this.getTender;
@@ -318,7 +318,11 @@ export default {
                         
                         //this.$router.push({path:'/client',query:{alert:'Customer has been edited'}});//then(window.location.load);
 
-                        this.$router.push({path:'/client',query:{alert:response.data.message}});
+                        //this.$router.push({path:'/client',query:{alert:response.data.message}});
+
+                        this.setAlert(response.data.message);
+
+                        this.$router.push('/client');
 
                     }).catch(()=>{
 

@@ -7,16 +7,20 @@ export default {
         BidedTenders:[],
         TendersOnProgress:[],
         tender:[],
-        tenderCreated:false
+        tenderCreated:false,
+        Alert:''
 
     },
 
     getters:{
+        
         AllTenders: (state) => state.AllTenders,
         BidedTenders: (state) => state.BidedTenders,
         TendersOnProgress: (state) => state.TendersOnProgress,
         getTender: (state) => state.tender,
         tenderCreaed: (state) => state.tenderCreated,
+
+        getAlert:(state) => state.Alert,
 
         fetchTenderById: (state)=>(id)=>{
             return state.AllTenders.find(tender=>tender.id === id);
@@ -32,6 +36,8 @@ export default {
         TestMutation:(state) => state.AllTenders,
         tenderCreated:(state,status) => state.tenderCreated = status,
 
+        setAlert:(state,message) => state.Alert = message,
+
         setTender: (state,id) => {
 
             state.tender = state.AllTenders.find(tender=>tender.id === id);
@@ -39,6 +45,10 @@ export default {
     },
 
     actions: {
+
+        setAlert({commit},message){
+            commit('setAlert',message)
+        },
 
         fetchAllTenders: async ({commit},customer_id) => {
 

@@ -1,9 +1,9 @@
 <template>
     <v-container class="pa-3 mt-10 mx-auto">
 
-        <v-layout class="pa-3 mt-10">
+        <Alert v-if="alert" v-bind:message= "alert"/>
 
-            <Alert v-if="alert" v-bind:message= "alert"/>
+        <v-layout class="pa-3 mt-10">
 
             <v-card row flat class="mx-auto" width="1300" color="#F5FAFF" >
                 <v-row>
@@ -324,7 +324,7 @@
             <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row class=" pa-3">
                     <v-spacer></v-spacer>
-                    <v-btn outlined color="primary" class="mx-4">Cancel</v-btn>
+                    <v-btn outlined color="primary" class="mx-4" router to="/client">Cancel</v-btn>
                     <v-btn color="primary white--text" type="submit" @click="publishTender">Publish tender</v-btn>
                 </v-row>
             </v-card>
@@ -364,12 +364,12 @@ export default {
     }),
 
     computed:{
-      ...mapGetters(['tenderCreated'])
+      ...mapGetters(['tenderCreated','getAlert'])
     },
 
     methods: {
 
-        ...mapActions(['AddTender']),
+        ...mapActions(['AddTender','setAlert']),
 
         allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
 
@@ -438,9 +438,19 @@ export default {
                              
                                 this.loading = false;
 
-                                this.AddTender(response.data.objects);
+                                if(response.data.genralErrorCode == 8004){
 
-                                this.$router.push({path:'/client',query:{alert:response.data.message}});
+                                    //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
+                                    this.alert = response.data.message;
+                                }
+                                else if(response.data.genralErrorCode == 8000){
+
+                                    this.AddTender(response.data.objects);
+
+                                    this.setAlert(response.data.message);
+
+                                    this.$router.push('/client');
+                                }
 
                                 //eslint-disable-next-line no-console
                                 //console.log(response.data);
@@ -450,18 +460,13 @@ export default {
                                 //eslint-disable-next-line no-console
                                 console.log("error occured");
 
-                                 this.$router.push({path:'/client/createtender',query:{alert:"Erro occured. Please try again"}});
+                                this.setAlert("Erro occured. Please try again");
+
+                                this.alert = this.getAlert();
+
+                                this.$router.push('/client/createtender');
                             });    
         }
-    },
-
-    watch:{
-      '$route' () {
-          if(this.$route.query.alert){
-           this.alert = this.$route.query.alert;
-       }
-        
-      }
-    }
+    }, 
 }
 </script>

@@ -4,7 +4,7 @@
            
             <v-container  class=" mt-12 mx-auto">
 
-                 <Alert v-if="alert" v-bind:message= "alert"/>
+                 <Alert v-if="alert" v-bind:message="alert"/>
 
                 <v-card flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
                     <v-flex row class="mt-5">
@@ -200,11 +200,11 @@ export default {
   },
 
   computed:{
-      ...mapGetters(['AllTenders','BidedTenders','TendersOnProgress'])
+      ...mapGetters(['AllTenders','BidedTenders','TendersOnProgress','getAlert'])
   },
 
   methods: {
-      ...mapActions(['fetchAllTenders','fetchBidedTenders','fetchOnProgressTenders','setTender']),
+      ...mapActions(['fetchAllTenders','fetchBidedTenders','fetchOnProgressTenders','setTender','setAlert']),
 
       set(id){
           //eslint-disable-next-line no-console
@@ -226,16 +226,28 @@ export default {
     watch:{
       '$route' () {
         /*if(to !== from ) {
+
           if(this.$route.query.alert){
                 this.alert = this.$route.query.alert;
             }
+
         }*/
         if(this.alert !== this.$route.query.alert){
             this.alert = this.$route.query.alert;
-        }
+        } 
       }
-    },
+    },  
 
+    beforeRouteEnter (to, from, next) { 
+        next(vm => { 
+
+        //access to component's instance using `vm` .
+        //this is done because this navigation guard is called before the component is created.           
+        vm.alert = vm.$store.getters.getAlert;
+
+        next();
+        }) 
+    },
 }
 </script>
 
@@ -243,6 +255,5 @@ export default {
 .pa-auto{
     font-family :"Roboto",sans-serif !important;
 }
-
 
 </style>
