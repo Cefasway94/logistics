@@ -308,11 +308,12 @@ methods:{
             setTimeout(() => {
               this.loading = false;
               if (this.LOAD_LOGIN.objects[1]==1 && localStorage.category ==1) {
+                //this.$store.state.tender.logins = this.LOAD_LOGIN
                 this.$router.push('/agent/tenders/open')
                 this.$router.go('/agent/tenders/open')
               //return data;
               // data = this.LOAD_LOGIN;
-              console.log('Opened as Agent');
+              console.log('Opened as Agent');              
                 
               } else if (this.LOAD_LOGIN.objects[1]==2 && localStorage.category ==2) {
                 this.$router.push('/agents')
@@ -331,8 +332,6 @@ methods:{
                 this.$router.go('/Signin')
               }
               }, 2000)     //============ kill load
-         
-          console.log('success');
           console.log('success');
           console.log(this.LOAD_LOGIN.objects[1]);
           }else{

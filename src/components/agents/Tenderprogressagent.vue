@@ -180,7 +180,7 @@
                 </v-alert>
                 </v-card>
 
-
+<!-- INSTALMENT CARDS SECTION-------------------------------------------------------------------- -->
                 <v-card row flat width="1300" class="mx-auto" color="#F5FAFF">
                 <v-flex row fluid class="pt-5" style="background-color:#F5FAFF;" >
                 <v-flex 
@@ -189,9 +189,9 @@
                 class="py-3 pl-6 pr-7"
                 v-for="(tender, i) in placeholder" 
                 :key="i" >
+<!-- CARDS --------------------------------------------------->
                 <v-hover class="">
                 <template v-slot="{ hover }">
-
                 <v-card 
                 width="550"
                 class=" py-2 pb-3 " 
@@ -212,7 +212,7 @@
                 <v-flex xsm10 sm10 md10 lg7 class="px-6 pt-1" style="background-color:;">
                 <v-flex row class="px-1" >
                 <P xsm6 sm6 md6 lg6 
-                class="text--text body-1 font-weight-medium mb-0">First installment</P>
+                class="text--text body-1 font-weight-medium mb-0">First instalment</P>
                 <v-chip color="primary" small xsm6 sm6 md6 lg6 class="ml-4 ">not received</v-chip>
                 </v-flex>
                 <v-flex row>

@@ -143,16 +143,12 @@
                         </v-flex>
 
                         <v-flex column class="sm6 md6 px-2">
-                            <v-select
-                            attach=""
-                            :items="items"
-                            chips
-                            multiple 
+                            <v-text-field 
                             color="#4169E1" 
                             clearable
-                            v-model="bid_terms_and_condition"
-                            label="Payment terms">
-                            </v-select>
+                            v-model="bid_terms_and_conditions"
+                            label="Terms and conditions">
+                            </v-text-field>
                         </v-flex>
                         </v-flex>
 
@@ -301,8 +297,7 @@ export default {
                 console.log(error.response.data);
                 console.log(this.LOAD_POST_BID);
                 
-            })           
-               //console.log(this.LOAD_LOGIN);
+            })                        
                
         }
   },

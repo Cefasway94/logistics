@@ -8,7 +8,9 @@ export default {
         tenderdetails:[],
         dashboard: [],
         dashboarddetails: [],
-        post_bid:[]
+        post_bid:[],
+        logins:[],
+        agent:[],
     },
 
 getters:{
@@ -28,7 +30,7 @@ getters:{
             return tenderdetails;
         },
 
-        // Dashboard getter ==================================>>>>
+// Dashboard getter ==================================>>>>
         LOAD_DASHBOARDS: state => {
              const dashboard = state.dashboard;
              //eslint-disable-next-line no-console
@@ -45,6 +47,12 @@ getters:{
         LOAD_POST_BID: state => {
             const posted_bid = state.post_bid;
             return posted_bid;
+        },
+
+// called agent ========================================>>>>>>
+        LOAD_AGENT: state=>{
+            const agent = state.agent;
+            return agent
         }
 
     },
@@ -73,7 +81,14 @@ mutations: {
 // agent bid on tender  mutation ================================>>>>>
         SET_POST_BID : (state,payload) =>{
             state.post_bid = payload;
-        }
+        },
+
+// called agent mutation ================================>>>>>
+        SET_AGENT : (state,payload) =>{
+            state.agent = payload;
+            console.log('here agent');
+            
+        },
 
 
     },
@@ -194,7 +209,22 @@ actions: {
                 
                 });
             });
-        },    
+        },
+        
+        GET_AGENT: async ({commit},payload) => {
+            const url= 'http://192.168.1.44:8000/api/v1/agents/show/'+payload;
+            await axios.get(url).then((res)=>{
+                // eslint-disable-next-line no-console
+                console.log(res.data);
+                commit('SET_AGENT', res.data);
+            }).catch((error)=>{
+                //eslint-disable-next-line no-console
+                console.log(error);
+                const res=null;
+                commit('SET_AGENT', res);
+            }); 
+                            
+        },
 
     }
 }

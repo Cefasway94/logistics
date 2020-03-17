@@ -23,8 +23,8 @@ getters:{
       LOAD_LOGIN: state => {
         const login = state.login;
         //eslint-disable-next-line no-console
-        console.log('pter');
-      console.log(login);
+        console.log('pter---------');
+      //console.log(login);
         return login                           
       },
 },
@@ -40,7 +40,9 @@ mutations: {
 // Login section mutation  ========================>>>
     SET_LOGIN: (state, payload) => {
       state.login = payload;
-      //eslint-disable-next-line no-console    
+      //eslint-disable-next-line no-console 
+      //eslint-disable-next-line no-console
+      console.log('pter');   
   }
 },
 
@@ -96,7 +98,8 @@ actions: {
                 localStorage.removeItem("secret");
                 localStorage.removeItem("category");
                 localStorage.setItem("secret", data.objects[0]);
-                localStorage.setItem("category", data.objects[1]);     // commit doesn't point to the mutation
+                localStorage.setItem("category", data.objects[1]);
+                localStorage.setItem("client", data.objects[2])     // commit doesn't point to the mutation
               }else{
                 resolve(data.message);
                 console.log("-------");

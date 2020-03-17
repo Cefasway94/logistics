@@ -99,16 +99,31 @@ export default {
   },
 
   created (tab){
-             tab = this.tab
+             //tab = this.tab
              // eslint-disable-next-line no-console
           console.log('44444444');
-      this.GET_TENDERS(tab);
+    //   this.GET_TENDERS(tab);
+             tab = localStorage.client
+        this.GET_AGENT(tab).then((data)=>{
+             // eslint-disable-next-line no-console
+            console.log(data);
+             // eslint-disable-next-line no-console
+            console.log(this.LOAD_AGENT);   
+             // eslint-disable-next-line no-console
+            console.log('here');         
+        }).catch(error=>{
+             // eslint-disable-next-line no-console
+            console.log(error);
+             // eslint-disable-next-line no-console
+              console.log(this.LOAD_AGENT);   
+            
+        })
 
   },
   
   methods:{
       ...mapActions([
-          'GET_DASHBOARD','GET_TENDERS'
+          'GET_DASHBOARD','GET_TENDERS', 'GET_AGENT'
           //'GET_BIDTENDERS'
       ]),
 
@@ -121,7 +136,7 @@ export default {
   },
   computed: {
       ...mapGetters([
-          'LOAD_DASHBOARDS','LOAD_TENDERS'
+          'LOAD_DASHBOARDS','LOAD_TENDERS', 'LOAD_AGENT'
           //'LOAD_DIBTENDERS'
       ])
   }

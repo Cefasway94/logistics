@@ -59,6 +59,7 @@
                         <v-btn small elevation="flat" 
                         color="#4169E1" class="white--text" @click="gettenderdetails(tender.id)" :to="{name:'AgentAbouttender', 
                         params: {id:tender.id}}" >View Details</v-btn>
+                        
                     </v-row>
                     
                 </v-card>
@@ -66,7 +67,6 @@
                 </v-hover>
             </v-flex>               
         </v-container>
-             
     </v-card>    
         </v-container>
     </div>
@@ -101,12 +101,13 @@ export default {
       
       gettenderdetails(tend){
           this.GET_TENDERSDETAILs(tend);
-      }
-      
+      },
+
+           
   },
   computed: {
       ...mapGetters([
-          'LOAD_TENDERS', 'LOAD_TENDER'
+          'LOAD_TENDERS', 'LOAD_TENDER', 'LOAD_LOGIN'
           //'LOAD_DIBTENDERS'
       ]),
       
