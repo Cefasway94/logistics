@@ -179,6 +179,30 @@
             </v-card>
 
             <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
+                 <v-row
+                    class="fill-height"
+                    align-content="center"
+                    justify="center"
+                    v-if="loading"
+                >
+                    <v-col
+                        class="subtitle-1 text-center"
+                        cols="12"
+                    >
+                        Creating a tender
+                    </v-col>
+
+                    <v-col cols="6">
+                        <v-progress-linear
+                            color="deep-purple accent-4"
+                            indeterminate
+                            rounded
+                            height="6"
+                        >
+                        </v-progress-linear>
+                    </v-col>
+                </v-row>
+
                 <v-row>
                 <v-icon color="grey" class="mb-4 ml-3 ">attachments</v-icon>
                 <p class="grey--text title">Attachments</p>
@@ -191,10 +215,13 @@
 
                                 <v-file-input 
                                     label="Photo input" 
+                                    multiple
                                     id="files" 
                                     @change="updateFilesUploaded()"
                                     prepend-icon ="mdi-cloud-upload"
+                                    @click:clear="removeFile()"
                                 >
+
                                 </v-file-input>
                             </v-card>
                        
@@ -209,6 +236,7 @@
                                     id="bill"
                                     @change="billUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
+                                   
                                 >
                                 </v-file-input>
                             </v-card>
@@ -234,92 +262,6 @@
                 </v-card>
 
             </v-card>
-
-            <!--<v-card col flat width="1300" class="mx-auto mb-5" color="#F5FAFF">
-                <v-row>
-                 <v-icon color="grey" class="mb-4 ml-3 mr-5">person_outline</v-icon> 
-                <p class="grey--text title ">Client details</p>
-                </v-row>
-                <v-card width="1300" class="mx-auto pa-3">
-                    <v-form>
-                    <v-container>
-                        <v-row>
-                        <v-col>
-                            <p class="primary--text body-2 text-uppercase mb-0"> NAME </p>
-                            <v-text-field 
-                            outlined 
-                            clearable>
-                            </v-text-field>
-                        </v-col>
-                        <v-col>
-                            <p class="primary--text body-2 text-uppercase mb-0">LOCATION</p>
-                            <v-text-field 
-                            outlined 
-                            clearable>
-                            </v-text-field>
-                        </v-col>
-                        </v-row>
-
-                        <v-row>
-                            <v-row >
-                            <v-col>
-                                <p class="primary--text body-2 text-uppercase mb-0"> PHONE NUMBER </p>
-                                <v-text-field 
-                                outlined 
-                                clearable>
-                                </v-text-field>
-                            </v-col>
-                            <v-col>
-                                <p class="primary--text body-2 text-uppercase mb-0"> FAX </p>
-                                <v-text-field 
-                                outlined 
-                                clearable>
-                                </v-text-field>
-                            </v-col>
-                            <v-col>
-                                <p class="primary--text body-2 text-uppercase mb-0"> EMAIL  </p>
-                                <v-text-field 
-                                outlined 
-                                clearable>
-                                </v-text-field>
-                            </v-col>
-                            </v-row>
-                            <v-col>
-                                <p class="primary--text body-2 text-uppercase mb-0"> P.O.BOX </p>
-                                <v-text-field 
-                                outlined 
-                                clearable>
-                                </v-text-field>
-                            </v-col>
-                        </v-row>                        
-                    </v-container>
-                    </v-form>
-                </v-card>
-            </v-card>-->
-
-             <v-row
-                class="fill-height"
-                align-content="center"
-                justify="center"
-                v-if="loading"
-            >
-                <v-col
-                    class="subtitle-1 text-center"
-                    cols="12"
-                >
-                    Creating a tender
-                </v-col>
-
-                <v-col cols="6">
-                    <v-progress-linear
-                        color="deep-purple accent-4"
-                        indeterminate
-                        rounded
-                        height="6"
-                >
-                </v-progress-linear>
-                </v-col>
-            </v-row>
 
             <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row class=" pa-3">
@@ -378,8 +320,16 @@ export default {
             let uploadedfiles = document.getElementById("files").files;
 
             for(var i=0; i < uploadedfiles.length; i++){
-                this.photos.push(uploadedfiles[i]);  
+
+                this.photos.push(uploadedfiles[i]); 
+
+                 //eslint-disable-next-line no-console
+                 //console.log(response.data); 
             }
+        },
+
+        removeFile(){
+            this.photos = [];
         },
 
         billUpdated(){

@@ -109,6 +109,22 @@ export default {
                             });
         },
 
+        fetchAllBidsOnTender: async ({commit},tender_id) => {
+            const url = `http://192.168.1.44:8000/api/v1/bids/${tender_id}`;
+            //const url = `http://192.168.43.27:8000/api/v1/tenders/on-progress/${customer_id}`;
+
+            await axios.get(url).
+                            then((response) => {
+
+                                commit('setOnProgressTenders',response.data.objects)
+
+                            }).catch(()=>{
+
+                                const response = null;
+                                commit('setOnProgressTenders',response)
+                            });
+        },
+
         /*AddTender: async ({commit},tender)=>{
 
             const url = "http://192.168.1.44:8000/api/v1/tenders?customer_id=10";

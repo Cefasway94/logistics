@@ -24,7 +24,7 @@
                         v-model="tab"
                     >
 
-                        <v-tab v-for="tab in tabs" :key="tab.title">
+                        <v-tab v-for="tab in tabs" :key="tab.title" @change="fetch(tab.title)">
                             {{ tab.title}}
                         </v-tab>
 
@@ -43,6 +43,7 @@
                                 <v-row fluid>
 
                                     <template v-if='tab.title === "All"'>
+
 
                                     <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in AllTenders" :key="tender.id">
                                         <v-card column width="350"  elevation="3" class="px-4 py-3">
@@ -86,8 +87,8 @@
                                             <v-row  row class="px-3 pt-1">
                                                 <h4  class="">{{ tender.cargo_details}}</h4>
                                                 <v-chip 
-                                                    small class="light-green white--text caption font-weight-light mx-3" >
-                                                    Pending
+                                                    small class="orange white--text caption font-weight-bold mx-3" >
+                                                    {{ tender.bids_count }} bids
                                                 </v-chip>
                                                 <v-spacer></v-spacer>
 
@@ -186,9 +187,9 @@ export default {
           ],
 
           tabs: [
+              {title:'All'},
               {title:'Biding'},
-              {title:'Progress'},
-              {title:'All'}
+              {title:'Progress'}
           ],
 
           tab: null,
@@ -210,6 +211,28 @@ export default {
           //eslint-disable-next-line no-console
           //console.log(string);
           this.setTender(id);
+      },
+
+      fetch(tab){
+          switch(tab){
+              case 'All':
+
+                  this.fetchAllTenders(this.id);
+                 
+                  break;
+              case 'Biding':
+
+                  this.fetchBidedTenders(this.id);
+                 
+                  break;
+              case 'Progress':
+
+                  this.fetchOnProgressTenders(this.id);
+                  
+                  break;
+              default:
+                  break;
+          }
       }
   },
 
@@ -244,6 +267,8 @@ export default {
         //access to component's instance using `vm` .
         //this is done because this navigation guard is called before the component is created.           
         vm.alert = vm.$store.getters.getAlert;
+
+
 
         next();
         }) 
