@@ -13,7 +13,7 @@ export default new Vuetify({
         themes:{
             light:{
             primary:'#4169E1',
-            mainoragne:'#FF8C00',
+            mainorange:'#FF8C00',
             text:'#394361',
             white:'#FFFFFF ',
             red:'#DC493A',

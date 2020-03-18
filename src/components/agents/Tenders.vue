@@ -90,11 +90,27 @@ export default {
              
             //const tend = this.$route.params.tid;
       this.GET_TENDERS(tab);
+      
+      tab = localStorage.client
+        this.GET_AGENT(tab).then((data)=>{
+             // eslint-disable-next-line no-console
+            console.log(data);
+             // eslint-disable-next-line no-console
+            console.log(this.LOAD_AGENT);   
+             // eslint-disable-next-line no-console
+            console.log('here');         
+        }).catch(error=>{
+             // eslint-disable-next-line no-console
+            console.log(error);
+             // eslint-disable-next-line no-console
+              console.log(this.LOAD_AGENT);   
+            
+        });
   },
   
   methods:{
       ...mapActions([
-          'GET_TENDERS','GET_TENDERSDETAILs'
+          'GET_TENDERS','GET_TENDERSDETAILs', 'GET_AGENT'
           //'GET_TENDERSDETAIL'
           
       ]),
@@ -107,7 +123,7 @@ export default {
   },
   computed: {
       ...mapGetters([
-          'LOAD_TENDERS', 'LOAD_TENDER', 'LOAD_LOGIN'
+          'LOAD_TENDERS', 'LOAD_TENDER', 'LOAD_LOGIN', 'LOAD_AGENT'
           //'LOAD_DIBTENDERS'
       ]),
       

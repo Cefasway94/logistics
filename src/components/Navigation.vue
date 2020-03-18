@@ -384,6 +384,7 @@ export default {
     logout() {
       localStorage.removeItem("category");
       localStorage.removeItem("secret");
+      localStorage.removeItem("client");
       this.$router.push("/signin");
       this.$router.go("/signin");
     }
