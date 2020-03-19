@@ -6,37 +6,36 @@
                 <v-card flat width="700" class=" mx-auto mt-12" color="#F5FAFF">
                 <v-alert
                 text
-                outlined
-                color="orange"
                 border="left"
+                outlined
+                class="mt-12"
+                :value="verify"
+                color="green"
                 type="error"
                 row
                 >
                 <v-flex row>
-                <v-flex row xms10 sm8 md10 lg10 class="pl-4">
+                <v-flex row xms9 sm9 md9 lg9 class="pl-4">
                 <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
                 <v-icon large color="orange" class="">notification_important</v-icon>    
                 </v-flex> -->
-                <v-flex xms11 sm11 md11 lg11>
+                <v-flex xms11 sm11 md11 lg11 class="pl-3">
                 <p class="text--text title mb-0">
-                Payment confirmation
+                Welcome to ubalori, this your working desk.
                 </p>
                 <p class="text--text subtitle-1 mb-0">
-                Vestibulum ullamcorper mauris at ligula. Nulla porta dolor
+                Please edit your profile to complete registration
                 </p>
                 </v-flex>
                 </v-flex>
-                <v-flex  xsm2 sm2 md2 lg2>
-                <v-card color="primary" width="100" class="my-6 mx-auto">
-                <v-btn  color="primary">
-                confirm
+                <v-flex  xsm3 sm3 md3 lg3>
+                <v-btn  width="200" large="" elevation="flat" color="primary" class="mx-5 mt-2">
+                edit profile
                 </v-btn>
-                </v-card>
                 </v-flex>
                 </v-flex>
                 </v-alert>
                 </v-card>
-                <h3  class="title text--text px-2">Dashboard</h3>
                 </v-card>
                 
             
@@ -45,7 +44,15 @@
 <!-- ----------------------------------------------------------------------------------------------
      ---------------------------------------------------------------------------------------------- 
 -->
-    <v-card flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
+    <v-card 
+    flat 
+    width="1300" 
+    class=" mx-auto mt-12 mb-5" 
+    color="#F5FAFF" 
+    v-show="verification">
+
+    <h3  class="title text--text px-2">Dashboard</h3>
+
     <v-tabs
       background-color="#F5FAFF"
       color="deep-purple accent-4"
@@ -124,6 +131,8 @@ export default {
   
   data () {
       return{
+          verify:false,
+          verification:true,
           tab: this.$route.params.id,
           componemtkey: 0,
           
@@ -131,14 +140,20 @@ export default {
   },
 
   created (tab){
-             tab = this.tab
+             
             // eslint-disable-next-line no-console
           console.log('44444444');
-       this.GET_TENDERS(tab);
              tab = localStorage.client
         this.GET_AGENT(tab).then((data)=>{
              // eslint-disable-next-line no-console
             console.log(data);
+             if (this.LOAD_AGENT.objects.is_verified == 0) {
+                 this.verify = true;
+                this.verification = false
+             }else{
+                 tab = this.tab
+                 this.GET_TENDERS(tab);
+             }
              // eslint-disable-next-line no-console
             console.log(this.LOAD_AGENT);   
              // eslint-disable-next-line no-console

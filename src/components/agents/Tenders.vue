@@ -1,12 +1,49 @@
 <template >
     <div class=" pa-auto" >
 
-            <v-container  class=" mt-12">
-                <v-card flat width="1300" class=" mx-auto mt-12" color="#F5FAFF">
-                <h3 style="color:#394361;" class="title mt-10 px-2">All new tenders</h3>
+            
+            
+
+            <v-container   class=" mt-12">
+                <v-card flat width="700" class=" mx-auto mt-12" color="#F5FAFF">
+                <v-alert
+                text
+                border="left"
+                outlined
+                class="mt-12"
+                :value="verify"
+                color="green"
+                type="error"
+                row
+                >
+                <v-flex row>
+                <v-flex row xms9 sm9 md9 lg9 class="pl-4">
+                <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                <v-icon large color="orange" class="">notification_important</v-icon>    
+                </v-flex> -->
+                <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                <p class="text--text title mb-0">
+                Welcome to ubalori, this your working desk.
+                </p>
+                <p class="text--text subtitle-1 mb-0">
+                Please edit your profile to complete registration
+                </p>
+                </v-flex>
+                </v-flex>
+                <v-flex  xsm3 sm3 md3 lg3>
+                <v-btn  width="200" large="" elevation="flat" color="primary" class="mx-5 mt-2">
+                edit profile
+                </v-btn>
+                </v-flex>
+                </v-flex>
+                </v-alert>
                 </v-card>
+
 <!-- v-for="tender in LOAD_TENDERS" :key="tender.id" v-model="LOAD_TENDERS.completed" -->
-    <v-card flat width="1300" class=" mx-auto" color="#F5FAFF" row>
+    <v-card v-show="verification" flat width="1300" class=" mx-auto" color="#F5FAFF" row>
+    <v-card flat width="1300" class=" mx-auto mt-12" color="#F5FAFF">
+    <h3 style="color:#394361;" class="title mt-10 px-2">All new tenders</h3>
+    </v-card>
     <v-container row fluid class="pt-5" style="background-color:#F5FAFF;" >
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
@@ -80,21 +117,30 @@ export default {
   
   data () {
       return{
+          verify:false,
+          verification:true,
           tab:  this.$route.params.id,
       }
   },
 
   created (tab){
-             tab = this.tab
+             
              console.log(tab);
              
             //const tend = this.$route.params.tid;
-      this.GET_TENDERS(tab);
+      
       
       tab = localStorage.client
         this.GET_AGENT(tab).then((data)=>{
              // eslint-disable-next-line no-console
             console.log(data);
+            if (this.LOAD_AGENT.objects.is_verified == 0) {
+                 this.verify = true;
+                 this.verification=false;
+             }else{
+                 tab = this.tab
+                 this.GET_TENDERS(tab);
+             }
              // eslint-disable-next-line no-console
             console.log(this.LOAD_AGENT);   
              // eslint-disable-next-line no-console
