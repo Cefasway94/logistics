@@ -27,8 +27,9 @@ import Clienteditprofile from '../components/client/Clienteditprofile.vue';
 import Tenderprogressclient from '../components/client/Tenderprogressclient.vue'
 import Tender from '../components/client/Tender.vue'
 import editTender from '../components/client/editTender.vue'
-import Payment from '../components/client/Payment.vue';
+import Payment from '../components/client/Payment.vue'
 import Aboutbid from '../components/client/Aboutbid.vue'
+import AboutTenderBids from '../components/client/AboutTenderBids.vue'
 import paymenthistory from '../components/Paymenthistory.vue';
 
 Vue.use(VueRouter)
@@ -67,6 +68,11 @@ const routes = [
     components: {Client}
   },
   {
+    path:'/client/AboutTenderBids/:id',
+    name:'AboutTenderBids',
+    components: {AboutTenderBids}
+  },
+  {
     path:'/Client/editprofile',
     name:'Clienteditprofile',
     components:{Clienteditprofile}
@@ -87,9 +93,9 @@ const routes = [
     component:Payment
   },
   {
-    path:'/client/Aboutbid',
+    path:'/client/Aboutbid/:id',
     name:'Aboutbid',
-    component:Aboutbid
+    components:{Aboutbid}
   },
   {
     path:'/client/tender/:id',

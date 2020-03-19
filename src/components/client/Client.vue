@@ -94,6 +94,16 @@
 
                                                 <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
                                             </v-row>
+
+                                            <v-row class="px-3 mt-4">
+
+                                                <p class="body-2  pt-1 ">status: </p>
+
+                                                 <v-chip 
+                                                    small class="green white--text caption font-weight-bold mx-3" >
+                                                    {{ tender.tender_status}}
+                                                </v-chip>
+                                            </v-row>
                    
                                             <p class=" body-2 grey--text">{{ tender.description}}</p>
                     
@@ -109,7 +119,7 @@
                                             <v-row row class="px-3">
                                                 <h4  class=" title ">{{ tender.customer_offer_amount}} {{ tender.currency}}</h4>
                                                     <v-spacer></v-spacer>
-                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/agent/Abouttender/' + tender.id">View Details</v-btn>
+                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" @click="set(tender.id)" :to="'/client/AboutTenderBids/' + tender.id">View Details</v-btn>
                                             </v-row>
                                         </v-card>
                                     </v-flex>  

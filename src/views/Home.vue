@@ -7,7 +7,7 @@
   <keep-alive>
     <router-view name="Createtender"></router-view>
     <router-view name="Agent"></router-view>
-     <router-view name="Client"></router-view>
+    <router-view name="Client"></router-view>
     <router-view name="Tenders"></router-view>
     <router-view name="Abouttender"></router-view>
     <router-view name="Tender"></router-view>
@@ -15,6 +15,8 @@
     <router-view name="Biding"></router-view>
     <router-view name="Tenderprogressclient"></router-view>
     <router-view name="editTender"></router-view>
+    <router-view name="AboutTenderBids"></router-view>
+    <router-view name="Aboutbid"></router-view>
   </keep-alive>
 </transition>
       

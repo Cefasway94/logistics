@@ -96,7 +96,6 @@
                             >
                                 <v-date-picker 
                                     v-model="tender.customer_delivery_timeline"
-                                    :allowed-dates="allowedDates"
                                     full-width>
                                 </v-date-picker>
                             </v-col>
@@ -288,7 +287,7 @@ export default {
             this.tender = this.getTender;
         },
 
-         allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
+        //allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
 
         editTender(){
 
