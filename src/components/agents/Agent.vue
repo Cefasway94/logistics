@@ -4,11 +4,23 @@
             <v-container  class=" mt-10 mx-auto" style="background-color:#F5FAFF;">
                 <v-card flat width="1300" class=" mx-auto mt-12" color="#F5FAFF">
                 <v-card flat width="700" class=" mx-auto mt-12" color="#F5FAFF">
+                
+                <!-- loading -->
+                <v-card width="300" v-show="loading" flat color="transparent" class="mb-3 mx-auto">
+                <v-progress-circular
+                active="true"
+                indeterminate
+                absolute
+                :size="50"
+                class="mt-12"
+                color="#4169E1">
+                </v-progress-circular>
+                </v-card>
+
                 <v-alert
                 text
-                border="left"
                 outlined
-                class="mt-12"
+                class=""
                 :value="verify"
                 color="green"
                 type="error"
@@ -29,7 +41,13 @@
                 </v-flex>
                 </v-flex>
                 <v-flex  xsm3 sm3 md3 lg3>
-                <v-btn  width="200" large="" elevation="flat" color="primary" class="mx-5 mt-2">
+                <v-btn  
+                width="200" 
+                large="" 
+                elevation="flat" 
+                color="primary" 
+                class="mx-5 mt-2"
+                @click="editprofile()">
                 edit profile
                 </v-btn>
                 </v-flex>
@@ -132,7 +150,8 @@ export default {
   data () {
       return{
           verify:false,
-          verification:true,
+          verification:false,
+          loading:false,
           tab: this.$route.params.id,
           componemtkey: 0,
           
@@ -140,7 +159,7 @@ export default {
   },
 
   created (tab){
-             
+              this.loading = true
             // eslint-disable-next-line no-console
           console.log('44444444');
              tab = localStorage.client
@@ -148,11 +167,20 @@ export default {
              // eslint-disable-next-line no-console
             console.log(data);
              if (this.LOAD_AGENT.objects.is_verified == 0) {
-                 this.verify = true;
-                this.verification = false
+                 setTimeout(()=>{
+                     this.loading = false
+                  this.verify = true;
+                 this.verification = false
+                 },2000)
+                
              }else{
                  tab = this.tab
                  this.GET_TENDERS(tab);
+                 setTimeout(()=>{
+                     this.loading = false
+                  this.verify = false;
+                 this.verification = true
+                 },2000)
              }
              // eslint-disable-next-line no-console
             console.log(this.LOAD_AGENT);   
@@ -179,6 +207,12 @@ export default {
           // eslint-disable-next-line no-console
           console.log(id);
       },
+
+      editprofile(){
+          this.verify = false
+          this.$router.push('/agent/editprofile')
+          this.$router.go('/agent/editprofile')
+      }
       
   },
   computed: {

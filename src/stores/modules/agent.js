@@ -11,6 +11,7 @@ export default {
         post_bid:[],
         logins:[],
         agent:[],
+        profile:[],
     },
 
 getters:{
@@ -53,6 +54,12 @@ getters:{
         LOAD_AGENT: state=>{
             const agent = state.agent;
             return agent
+        },
+
+// call profile ===================================>>>>>
+        LOAD_PROFILE: state=>{
+            const profile = state.profile;
+            return profile
         }
 
     },
@@ -88,6 +95,12 @@ mutations: {
             state.agent = payload;
             console.log('here agent');
             
+        },
+
+// edit profile mutation ================================>>>>>
+        SET_PROFILE: (state,payload)=>{
+            state.profile = payload;
+            console.log('ediprofile');
         },
 
 
@@ -226,5 +239,55 @@ actions: {
                             
         },
 
-    }
+// agent edit profile ====================================================================>>>>>>        
+        EDIT_PROFILE: async ({ commit }, {company_name, tin_number, phone_number, address, email, pobox, country, city, region, terms_of_payment, bank_name, account_name, account_number,}) => {
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization : localStorage.secret
+                    }
+                }
+         await axios.put(`http://192.168.1.44:8000/api/v1/agents/`+email, 
+         {
+                    company_name,
+                    tin_number,
+                    phone_number,
+                    address,
+                    pobox,
+                    country,
+                    city,
+                    region,
+                    terms_of_payment,
+                    bank_name,
+                    account_name,
+                    account_number,
+                },
+                config
+                )
+                .then(({ data, status }) => {
+                    console.log('profile edit');
+                if ((status == 200 && data.errorCount == 0) && (data.genralErrorCode == 8000)) {
+                    console.log(data);
+                    commit('SET_PROFILE',data);
+                    
+                        // commit doesn't point to the mutation
+                }
+                })
+                .catch(error => {
+                    console.log('not posted');
+                
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                }
+                console.log('here');
+                
+                commit('SET_PROFILE', error);          
+                //console.log(error);
+                //console.log(data);
+                
+                });
+            }
+        },
+
 }
