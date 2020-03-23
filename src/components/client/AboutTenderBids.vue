@@ -12,7 +12,7 @@
                     </v-flex>
 
                     <v-spacer></v-spacer>
-                    <h2 > {{ this.getTender.customer_offer_amount}}</h2>
+                    <h2 > {{this.getTender.currency}} {{ this.getTender.customer_offer_amount}}</h2>
                 </v-flex>
             </v-card>
 

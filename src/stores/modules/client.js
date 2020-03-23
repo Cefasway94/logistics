@@ -8,8 +8,8 @@ export default {
         TendersOnProgress:[],
         tender:[],
         tenderCreated:false,
-        Alert:''
-
+        Alert:'',
+        currencies:[]
     },
 
     getters:{
@@ -19,6 +19,8 @@ export default {
         TendersOnProgress: (state) => state.TendersOnProgress,
         getTender: (state) => state.tender,
         tenderCreaed: (state) => state.tenderCreated,
+        
+        getCurrencies: (state) => state.currencies,
 
         getAlert:(state) => state.Alert,
 
@@ -42,6 +44,8 @@ export default {
 
             state.tender = state.AllTenders.find(tender=>tender.id === id);
         },
+
+        setCurrencies: (state,currencies) => state.currencies = currencies
     },
 
     actions: {
@@ -91,6 +95,28 @@ export default {
                                 commit('setBidedTenders',response)
                             });
         },
+
+        fetchCurrencies: async ({commit}) => {
+
+            const url = `http://192.168.1.44:8000/api/v1/configurations/currencies`;
+            //const url2 = `http://192.168.43.27:8000/api/v1/tenders/bided/${customer_id}`;
+
+            await axios.get(url).
+                            then((response) => {
+
+                                commit('setCurrencies',response.data.objects)
+
+                            }).catch(()=>{
+
+                                //const response = null;
+                               // commit('setBidedTenders',response)
+
+                                //eslint-disable-next-line no-console
+                                console.log("there is an error");
+                            });
+        },
+
+    
 
         fetchOnProgressTenders: async ({commit},customer_id) => {
 

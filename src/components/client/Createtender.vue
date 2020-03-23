@@ -108,12 +108,21 @@
                             
 
                                 <v-col xs12 sm6 md4 lg4 xl4>
-                                    <p class="primary--text body-2 text-uppercase mb-0"> CURRENCY</p>
-                                    <v-text-field 
+                                    <!--<v-text-field 
                                         outlined 
                                         clearable
                                         v-model="currency">
-                                    </v-text-field>
+                                    </v-text-field>-->
+                                    <v-select 
+                                        class="mx-6" 
+                                        style="color:#4169E1;"
+                                        v-model = "currency" 
+                                        :items="currencies" 
+                                        color="#4169E1" 
+                                        label="Currency" 
+                                        clearable 
+                                    >
+                                    </v-select>
                                 </v-col>
 
                                 <v-col xs12 sm6 md4 lg4 xl4>
@@ -302,16 +311,17 @@ export default {
         authorization_letter:[],
 
         loading:false,
+        currencies:['TZS','USD'],
         alert:''
     }),
 
     computed:{
-      ...mapGetters(['tenderCreated','getAlert'])
+      ...mapGetters(['tenderCreated','getAlert','getCurrencies'])
     },
 
     methods: {
 
-        ...mapActions(['AddTender','setAlert']),
+        ...mapActions(['AddTender','setAlert','fetchCurrencies']),
 
         allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
 
@@ -417,6 +427,6 @@ export default {
                                 this.$router.push('/client/createtender');
                             });    
         }
-    }, 
+    },
 }
 </script>

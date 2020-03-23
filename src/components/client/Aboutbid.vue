@@ -20,13 +20,16 @@
                         <v-card width="" class="pt-6 pb-3 pl-8">
                             <v-flex column>
                                 <v-flex row >
-                                    <v-flex column class="pl-3">
-                                        <p class=" body-1 mb-2" style="color:#4169E1;"> TERMS AND CONDITIONS </p>
+                                    <v-flex column sm6 xs12 class="pl-3">
+                                        <p class=" body-1 mb-2" style="color:#4169E1;"> TERMS AND CONDITIONS: </p>
+    
+                                    </v-flex>
+                                    <v-flex column sm6 xs12 class="pl-3">
                                         <p class="body-1">{{bid.bid_terms_and_conditions}}</p>
                                     </v-flex>
                                 </v-flex>
 
-                                <v-flex row class="mt-11">
+                                <!--<v-flex row class="mt-11">
                                     <v-flex column class="pl-3">
                                         <p class=" body-1 mb-2" style="color:#4169E1;">DELIVERY TIMELINE</p>
                                         <v-date-picker
@@ -37,12 +40,49 @@
 
                                      <v-flex column class="pl-3">
                                         <p class=" body-1 mb-2" style="color:#4169E1;">PAYMENT METHOD</p>
-                                        <p class="body-1 mb-10">PAYMENT ID: {{ bid.payment_id}}</p>
+                                        <p class="body-1 mb-10">INSTALLMENT TYPE: {{ payment.installment_desc}}</p>
                                        
                                         <p class=" body-1 mb-2" style="color:#4169E1;">BID AMOUNT</p>
                                          <p class="body-1 mb-10">$ {{ bid.bid_amount}}</p>
                                     </v-flex>
+                                </v-flex>-->
+                                <v-flex row class="mt-10">
+                                    <v-flex column sm6 xs12  class="pl-3">
+                                        <p class=" body-1 mb-2" style="color:#4169E1;"> BID AMOUNT: </p>
+    
+                                    </v-flex>
+                                    <v-flex column sm6 xs12  class="pl-3">
+                                        <p class="body-1">{{ bid.bid_amount}}</p>
+                                    </v-flex>
                                 </v-flex>
+
+                                <v-flex row class="mt-10">
+                                    <v-flex column sm6 xs12  md6 class="pl-3">
+                                        <p class=" body-1 mb-2" style="color:#4169E1;"> PAYMENT TERM: </p>
+    
+                                    </v-flex>
+                                    <v-flex column sm6 xs12  class="pl-3">
+                                        <p class="body-1">{{ payment.installment_desc}}</p>
+                                    </v-flex>
+                                </v-flex>
+
+                                 <v-flex row class="mt-10">
+                                    <v-flex column sm6 xs12  class="pl-3">
+                                        <p class=" body-1 mb-2" style="color:#4169E1;"> DELIVERY TIMELINE: </p>
+    
+                                    </v-flex>
+                                    <v-flex column md6 xs12  class="pl-3">
+                                        <v-date-picker
+                                            v-model="bid.bid_delivery_timeline"
+                                            full-width
+                                        >
+                                        </v-date-picker>
+                                    </v-flex>
+                                </v-flex>
+
+                                
+
+
 
                             </v-flex>
                         </v-card>
@@ -151,7 +191,9 @@ import {mapActions} from 'vuex'
         dialog: false,
         awardDialog: false,
         payment_terms:['Full payment', 'Pay by installments (30%, 40%, 30%)'],
-        bid:[]
+        bid:[],
+        payment:[]
+      
       }
     },
 
@@ -172,7 +214,7 @@ import {mapActions} from 'vuex'
 
                                //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
-                               console.log(response.data.objects);
+                               //console.log(response.data.objects);
 
                                this.setAlert(response.data.message);
 
@@ -183,9 +225,10 @@ import {mapActions} from 'vuex'
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+                                this.setAlert("There is error during awarding a tender, Try again later");
+
+                                this.$router.push('/client');
                             });
-
-
 
         }
     },
@@ -197,14 +240,25 @@ import {mapActions} from 'vuex'
         //this is done because this navigation guard is called before the component is created.           
 
         let url = `http://192.168.1.44:8000/api/v1/bids/show/${vm.$route.params.id}`;
+        
 
         axios.get(url).then((response) => 
                             {
 
                                //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
-                               console.log(response.data.objects);
+                               //console.log(response.data.objects);
                                 vm.bid = response.data.objects;
+
+                                let url2 = `http://192.168.1.44:8000/api/v1/payment-terms/${response.data.objects.payment_id}`;
+
+                                axios.get(url2).then((response)=>{
+
+                                                
+                                             //eslint-disable-next-line no-console
+                                            console.log(response.data.objects);
+                                            vm.payment = response.data.objects;
+                                });
 
                             }).catch(()=>{
 

@@ -50,12 +50,10 @@
                                             <v-row  row class="px-3 pt-1">
                                                 <h4  class="">{{ tender.cargo_details}}</h4>
                                                 <v-chip 
-                                                    small class="light-green white--text caption font-weight-light mx-3" >
-                                                    Pending
+                                                    small class="light-green white--text caption font-weight-bold mx-3" >
+                                                    {{ tender.tender_status}}
                                                 </v-chip>
                                                 <v-spacer></v-spacer>
-
-                                                <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
                                             </v-row>
                    
                                             <p class=" body-2 grey--text">{{ tender.description}}</p>
@@ -70,7 +68,7 @@
                                             </v-row>
 
                                             <v-row row class="px-3">
-                                                <h4  class=" title ">{{ tender.customer_offer_amount}} {{ tender.currency}}</h4>
+                                                <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
                                                     <v-btn small elevation="flat" color="#4169E1" class="white--text" @click="set(tender.id)" :to="'/client/tender/' + tender.id">View Details</v-btn>
@@ -117,7 +115,7 @@
                                             </v-row>
 
                                             <v-row row class="px-3">
-                                                <h4  class=" title ">{{ tender.customer_offer_amount}} {{ tender.currency}}</h4>
+                                                <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <v-btn small elevation="flat" color="#4169E1" class="white--text" @click="set(tender.id)" :to="'/client/AboutTenderBids/' + tender.id">View Details</v-btn>
                                             </v-row>
@@ -134,7 +132,7 @@
                                                 <h4  class="">{{ tender.cargo_details}}</h4>
                                                 <v-chip 
                                                     small class="light-green white--text caption font-weight-light mx-3" >
-                                                    Pending
+                                                    {{ tender.tender_progress}}
                                                 </v-chip>
                                                 <v-spacer></v-spacer>
 
@@ -154,7 +152,7 @@
                                             </v-row>
 
                                             <v-row row class="px-3">
-                                                <h4  class=" title ">{{ tender.customer_offer_amount}} {{ tender.currency}}</h4>
+                                                <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>-->
                                                     <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/agent/Abouttender/' + tender.id">View Details</v-btn>
@@ -189,13 +187,6 @@ export default {
 
   data () {
       return{
-          project : [
-              {title: '', project:'', project1:'', project2:'', project3:'' },
-              {title: '', project:'', project1:'', project2:'', project3:'' },
-              {title: '', project:'', project1:'', project2:'', project3:'' },
-              {title: '', project:'', project1:'', project2:'', project3:'' }
-          ],
-
           tabs: [
               {title:'All'},
               {title:'Biding'},
@@ -215,7 +206,7 @@ export default {
   },
 
   methods: {
-      ...mapActions(['fetchAllTenders','fetchBidedTenders','fetchOnProgressTenders','setTender','setAlert']),
+      ...mapActions(['fetchAllTenders','fetchCurrencies','fetchBidedTenders','fetchOnProgressTenders','setTender','setAlert']),
 
       set(id){
           //eslint-disable-next-line no-console
@@ -254,6 +245,7 @@ export default {
       this.fetchAllTenders(this.id),
       this.fetchBidedTenders(this.id),
       this.fetchOnProgressTenders(this.id)
+      this.fetchCurrencies();
   },
     
     watch:{
@@ -277,8 +269,6 @@ export default {
         //access to component's instance using `vm` .
         //this is done because this navigation guard is called before the component is created.           
         vm.alert = vm.$store.getters.getAlert;
-
-
 
         next();
         }) 
