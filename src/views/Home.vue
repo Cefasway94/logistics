@@ -13,6 +13,7 @@
     <router-view name="Biding"></router-view>
     <router-view name="Tenderprogressclient"></router-view>
     <router-view name="Payment"></router-view>
+    <router-view name="Paymenthistory"></router-view>
     <router-view name="Client"></router-view>
     <router-view name="AgentTenderprogress"></router-view>
     <router-view name="Agenteditprofile"></router-view>

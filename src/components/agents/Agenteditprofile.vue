@@ -148,7 +148,7 @@
                 <v-flex>
                     <p class="bondy-2 mb-0">Fax</p>
                     <v-text-field 
-                    v-model="address"
+                    v-model="fax"
                     outlined 
                     color="#4169E1" 
                     clearable ></v-text-field>
@@ -370,7 +370,7 @@
     </v-container>
 </template>
 <script>
-import { mapActions,mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 /* eslint-disable no-console */
 export default {
    data() {
@@ -385,7 +385,7 @@ export default {
            company_name:'',
            tin_number:'',
            phone_number:'',
-           address:'',
+           fax:'',
            email:localStorage.client,
            pobox:'',
            country:'',
@@ -399,10 +399,7 @@ export default {
    },
 
    methods: {
-       ...mapActions([
-           'EDIT_PROFILE'
-       ]),
-
+      
        editaccount(){
            console.log(this.terms_of_payment);
            if(this.edit == "true"){
@@ -416,32 +413,53 @@ export default {
        },
 
        savechanges(){
-           this.EDIT_PROFILE( {
-                company_name: this.company_name,
+           const profile_image = 'profile image url';
+           const certificate = 'certificate image url';
+           const insurance = 'insurance image url'
+           //const company_name= this.company_name
+           this.$store.dispatch('EDIT_PROFILE',{
+                profile_image,certificate,insurance,
+                company_name:this.company_name,
+                email : this.email,
                 tin_number: this.tin_number,
-                phone_number: this.phone_number,
-                address:this.address,
-                email:this.email,
-                pobox:this.pobox,
+                phone: this.phone_number,
+                fax:this.fax,
+                p_o_box:this.pobox,
                 country:this.country,
                 city:this.city,
                 region:this.region,
                 terms_of_payment:this.terms_of_payment,
                 bank_name:this.bank_name,
                 account_name:this.account_name,
-                account_number:this.account_number}
-                ).then(()=>{
+                account_number:this.account_number
+                }).then((data) => {
+                    console.log('load profile....');
+                    console.log(status);
+                    console.log(data);                    
+                    console.log(this.LOAD_PROFILE);
+                    
+                    if (this.LOAD_PROFILE.errorCount == 0 && this.LOAD_PROFILE.genralErrorCode == 8000) {
+                    //console.log(this.LOAD_PROFILE);
                     this.loading = true;
                     setTimeout(()=>{
                         this.loading= false;
                         this.verify= true;
+                        this.$router.push('/agent/tenders/open')
+                        this.$router.go('/agent/tenders/open')
                     },2000)
                     console.log(this.email);
                     console.log(this.LOAD_PROFILE);
+                }else{
+                    console.log('profile failed');
+                    
+                }
+                    
             }).catch((error)=>{
                 console.log(error);
                 
             })
+        console.log(this.company_name);
+        
        }
 
    },

@@ -16,12 +16,13 @@
                 color="#4169E1">
                 </v-progress-circular>
                 </v-card>
-
+                
+    <!-- profile alert -->
                 <v-alert
                 text
                 outlined
                 class=""
-                :value="verify"
+                :value="profile"
                 color="green"
                 type="error"
                 row
@@ -50,6 +51,29 @@
                 @click="editprofile()">
                 edit profile
                 </v-btn>
+                </v-flex>
+                </v-flex>
+                </v-alert>
+
+        <!-- account verification alert -->
+                <v-alert
+                text
+                outlined
+                class=""
+                :value="verify"
+                color="green"
+                type="error"
+                row
+                clearable
+                >
+                <v-flex row>
+                <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                <v-icon large color="orange" class="">notification_important</v-icon>    
+                </v-flex> -->
+                <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                <p class="text--text title mb-0">
+                Hang on for verification
+                </p>
                 </v-flex>
                 </v-flex>
                 </v-alert>
@@ -150,6 +174,7 @@ export default {
   data () {
       return{
           verify:false,
+          profile:false,
           verification:false,
           loading:false,
           tab: this.$route.params.id,
@@ -166,21 +191,28 @@ export default {
         this.GET_AGENT(tab).then((data)=>{
              // eslint-disable-next-line no-console
             console.log(data);
-             if (this.LOAD_AGENT.objects.is_verified == 0) {
-                 setTimeout(()=>{
-                     this.loading = false
-                  this.verify = true;
+            if (!this.LOAD_AGENT.objects.agent_id == '') {
+                if (this.LOAD_AGENT.objects.is_verified == 0) {
+                    setTimeout(()=>{
+                    this.loading = false
+                    this.verify = true;
                  this.verification = false
                  },2000)
-                
-             }else{
-                 tab = this.tab
+                }else{
+                     tab = this.tab
                  this.GET_TENDERS(tab);
                  setTimeout(()=>{
                      this.loading = false
                   this.verify = false;
                  this.verification = true
                  },2000)
+                }
+             }else{
+                setTimeout(()=>{
+                     this.loading = false
+                  this.profile = true;
+                 this.verification = false
+                 },2000) 
              }
              // eslint-disable-next-line no-console
             console.log(this.LOAD_AGENT);   
@@ -191,7 +223,6 @@ export default {
             console.log(error);
              // eslint-disable-next-line no-console
               console.log(this.LOAD_AGENT);   
-            
         });
 
   },

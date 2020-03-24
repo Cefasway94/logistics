@@ -5,10 +5,10 @@
                 <v-flex row class="px-3 ">
                 <v-flex>
                 <v-row class="pl-2 mb-1">
-                <h1 class=" font-weight-regular headline ">Used furniture</h1>
-                <v-chip color="grey" small class="white--text ml-7 mt-1">Aavilable</v-chip>
+                <h1 class=" font-weight-regular headline ">{{LOAD_TENDER.cargo_details}}</h1>
+                <v-chip color="green" small class="white--text ml-7 mt-1">Aavilable</v-chip>
                 </v-row>
-                <p class="grey--text">1 40 feet container of used furniture</p>
+                <p class="grey--text mb-0">{{LOAD_TENDER.description}}</p>
                 </v-flex>
                 </v-flex>
             </v-card>
@@ -21,27 +21,26 @@
                         <v-flex row >
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> DESTINATION </p>
-                            <p class="body-1">Rwanda</p>
+                            <p class="body-1">{{LOAD_TENDER.destination}}</p>
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> ORIGIN </p>
-                            <p class="body-1">Rwanda</p>
+                            <p class="body-1">{{LOAD_TENDER.origin}}</p>
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
-                            <p class="body-1">40 feet</p>
+                            <p class="body-1">{{LOAD_TENDER.cargo_size}}</p>
                             </v-flex>
                         </v-flex>
 
                         <v-flex column class="mt-7 pr-4">
                             <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
-                            <p class="body-1">Lorem ipsum, dolor sit amet consectetur 
-                                adipisicing elit.</p>
+                            <p class="body-1">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
 
                         <v-flex row class="mt-10 mb-4" >
                             <v-flex column class="pl-3">
-                            <p class="primary--text body-1 mb-2"> DESTINATION </p>
+                            <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-img class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -53,7 +52,7 @@
                             </v-flex>
 
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> ORIGIN </p>
+                            <p class="primary--text body-1 mb-2"> AUTHORITY LETTER </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-img class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -64,7 +63,7 @@
                             </v-flex>
 
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
+                            <p class="primary--text body-1 mb-2"> OTHER </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-img class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -247,9 +246,14 @@ export default {
       }
   },
 
-  mounted (tab){
+  created (tab){
             tab = this.$route.params.id;
       this.GET_TENDERSDETAILs(tab);
+      //this.GET_AGENT(localStorage.email);
+      this.GET_AGENT_PAYMENT_TERMS(this.LOAD_AGENT.objects.agent_id)
+      console.log('payment terms');
+      console.log(this.LOAD_PROFILE.agent_id);
+      
       //eslint-disable-next-line no-console
       console.log(tab);
       
@@ -257,7 +261,9 @@ export default {
   
   methods:{
       ...mapActions([
-          'GET_TENDERSDETAILs', 'BID_TENDER'
+          'GET_TENDERSDETAILs', 'BID_TENDER', 
+          'GET_AGENT_PAYMENT_TERMS',
+          'GET_AGENT'
 
       ]),
 
@@ -304,8 +310,12 @@ export default {
 
   computed: {
       ...mapGetters([
-          'LOAD_TENDER','LOAD_POST_BID','LOAD_LOGIN'
-          //'LOAD_DIBTENDERS'
+          'LOAD_TENDER',
+          'LOAD_POST_BID',
+          'LOAD_LOGIN',
+          'LOAD_AGENT_PAYMENT_TERMS',
+          'LOAD_AGENT'
+          //'LOAD_BIDTENDERS'
       ]),
 
       computedVisibility: function() {

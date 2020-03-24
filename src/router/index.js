@@ -21,7 +21,7 @@ import Clienteditprofile from '../components/client/Clienteditprofile.vue';
 import Tenderprogressclient from '../components/client/Tenderprogressclient.vue'
 import Payment from '../components/client/Payment.vue';
 import Aboutbid from '../components/client/Aboutbid.vue'
-import paymenthistory from '../components/Paymenthistory.vue';
+import Paymenthistory from '../components/Paymenthistory.vue';
 
 
 
@@ -50,8 +50,8 @@ const routes = [
   },
   {
     path: '/paymenthistory',
-    name: 'paymenthistory',
-    component:paymenthistory,
+    name: 'Paymenthistory',
+    components:{Paymenthistory}
   },
   
   //---------------------------client

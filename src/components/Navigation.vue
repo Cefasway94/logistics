@@ -95,14 +95,14 @@
           <v-list>
             <v-list-item>
               <v-list-item-avatar>
-                <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+                <v-img src="../assets/newasset/truck.svg"></v-img>
               </v-list-item-avatar>
             </v-list-item>
 
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title class="title">John Leider</v-list-item-title>
-                <v-list-item-subtitle>john@vuetifyjs.com</v-list-item-subtitle>
+                <v-list-item-title class="title" >{{name}}</v-list-item-title>
+                <v-list-item-subtitle>{{email}}</v-list-item-subtitle>
               </v-list-item-content>
 
               <v-list-item-action>
@@ -151,12 +151,12 @@
       <!--  -->
       <v-list-item two-line >
             <v-list-item-avatar>
-              <img src="">
+              <img src="../assets/logo.svg">
             </v-list-item-avatar>
 
             <v-list-item-content>
               <v-list-item-title>UBALORI</v-list-item-title>
-              <v-list-item-subtitle>OXOAfrica.co.tz</v-list-item-subtitle>
+              <v-list-item-subtitle >OXOAfrica.co.tz</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
 
@@ -259,6 +259,9 @@ export default {
   name: "home",
   data() {
     return {
+      activator:'',
+      email:'',
+      name:'',
       messages: 0,
       color: "#394361",
       colors: ["primary", "accent", "warning lighten-2", "teal", "orange"],
@@ -268,13 +271,13 @@ export default {
       // items for added Navigation profile list
       item: 0,
       itemes: [
-        { text: 'My Files', icon: 'mdi-folder' },
-        { text: 'Shared with me', icon: 'mdi-account-multiple' },
-        { text: 'Starred', icon: 'mdi-star' },
-        { text: 'Recent', icon: 'mdi-history' },
-        { text: 'Offline', icon: 'mdi-check-circle' },
-        { text: 'Uploads', icon: 'mdi-upload' },
-        { text: 'Backups', icon: 'mdi-cloud-upload' },
+        { text: 'My profile', icon: 'mdi-account-multiple' },
+        // { text: 'My Files', icon: 'mdi-folder' },
+        // { text: 'Starred', icon: 'mdi-star' },
+        // { text: 'Recent', icon: 'mdi-history' },
+        // { text: 'Offline', icon: 'mdi-check-circle' },
+        // { text: 'Uploads', icon: 'mdi-upload' },
+        // { text: 'Backups', icon: 'mdi-cloud-upload' },
       ],
     };
   },
@@ -292,6 +295,8 @@ export default {
     } else if (type == 1) {
       console.log("Agennt");
       this.items = this.agent();
+      this.email = this.LOAD_AGENT.objects.email;
+      this.name = this.LOAD_AGENT.objects.company_name;
     }
   },
 
@@ -317,7 +322,7 @@ export default {
         {
           title: "CPayments",
           icon: "gavel",
-          router: { name: "Payment", params: { id: "null" } }
+          router: { name: "Paymenthistory", params: { id: "null" } }
         }
       ];
       return client;
@@ -338,7 +343,7 @@ export default {
         {
           title: "APayments",
           icon: "gavel",
-          router: { name: "Payment", params: { id: "null" } }
+          router: { name: "Paymenthistory", params: { id: "null" } }
         }
       ];
       return agent;
@@ -359,7 +364,7 @@ export default {
         {
           title: "TPayments",
           icon: "gavel",
-          router: { name: "Payment", params: { id: "null" } }
+          router: { name: "Paymenthistory", params: { id: "null" } }
         }
       ];
       return transporter;
@@ -391,7 +396,9 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["LOAD_LOGIN"])
+    ...mapGetters([
+      "LOAD_LOGIN",'LOAD_AGENT'
+      ])
   }
 };
 </script>

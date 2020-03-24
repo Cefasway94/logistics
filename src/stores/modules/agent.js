@@ -12,6 +12,7 @@ export default {
         logins:[],
         agent:[],
         profile:[],
+        payment_terms:[]
     },
 
 getters:{
@@ -56,9 +57,16 @@ getters:{
             return agent
         },
 
+// called agent payment terms =====================>>>>>>>>
+        LOAD_AGENT_PAYMENT_TERMS: state=>{
+            const payment_terms = state.payment_terms;
+            return payment_terms
+        },
+
 // call profile ===================================>>>>>
         LOAD_PROFILE: state=>{
             const profile = state.profile;
+            console.log('ediprofile load');
             return profile
         }
 
@@ -97,10 +105,16 @@ mutations: {
             
         },
 
+// called get agent payment terms ========================>>>
+        SET_AGENT_PAYMENT_TERMS: (state,payload) =>{
+             state.payment_terms = payload;
+             console.log('payment terms setted');
+             
+        },
+
 // edit profile mutation ================================>>>>>
         SET_PROFILE: (state,payload)=>{
             state.profile = payload;
-            console.log('ediprofile');
         },
 
 
@@ -180,7 +194,6 @@ actions: {
 //Agent biding on tender ======================================================================= 
         BID_TENDER: ({ commit }, { agent_id, tender_id, bid_terms_and_conditions, bid_amount, bid_delivery_timeline}) => {
             return new Promise((resolve, reject) => {
-
                 const config = {
                     headers: {
                         'Content-Type': 'application/json',
@@ -239,55 +252,84 @@ actions: {
                             
         },
 
-// agent edit profile ====================================================================>>>>>>        
-        EDIT_PROFILE: async ({ commit }, {company_name, tin_number, phone_number, address, email, pobox, country, city, region, terms_of_payment, bank_name, account_name, account_number,}) => {
-                const config = {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization : localStorage.secret
-                    }
-                }
-         await axios.put(`http://192.168.1.44:8000/api/v1/agents/`+email, 
-         {
-                    company_name,
-                    tin_number,
-                    phone_number,
-                    address,
-                    pobox,
-                    country,
-                    city,
-                    region,
-                    terms_of_payment,
-                    bank_name,
-                    account_name,
-                    account_number,
-                },
-                config
-                )
-                .then(({ data, status }) => {
-                    console.log('profile edit');
-                if ((status == 200 && data.errorCount == 0) && (data.genralErrorCode == 8000)) {
+//Agent bid terms  ========================================================>>>>          
+        GET_AGENT_PAYMENT_TERMS: async ({commit},payload) => {
+            const url= 'http://192.168.1.44:8000/api/v1/payment-terms/agent/'+payload;
+            await axios.get(url).then((data)=>{
+                // eslint-disable-next-line no-console
+                if (data.objects.errorCount == 0 && data.objects.genralErrorCode == 8000 ) {
                     console.log(data);
-                    commit('SET_PROFILE',data);
+                    commit('SET_AGENT_PAYMENT_TERMS', data);
+                }else{
+                    commit('SET_AGENT_PAYMENT_TERMS', data.message);
+                    console.log(data.message);
                     
+                }
+            }).catch((error)=>{
+                //eslint-disable-next-line no-console
+                console.log(error);
+                const res=null;
+                commit('SET_AGENT', res);
+            }); 
+                            
+        },
+
+// agent edit profile ====================================================================>>>>        
+        EDIT_PROFILE: ({ commit }, {profile_image,certificate,insurance,company_name,email, tin_number, phone, fax, p_o_box, country, city, region, terms_of_payment, bank_name, account_name, account_number}) => {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization : localStorage.secret
+                }
+            }
+            return new Promise((resolve, reject) => {
+              axios
+                .post(`http://192.168.1.44:8000/api/v1/agents/`+email, {
+                    profile_image,
+                    certificate,
+                    insurance,
+                    company_name, 
+                    tin_number, 
+                    phone, 
+                    fax,  
+                    p_o_box,  
+                    country, 
+                    city, 
+                    region, 
+                    terms_of_payment, 
+                    bank_name, 
+                    account_name, 
+                    account_number
+                },config)
+                .then(({ data, status }) => {
+                 if ((status == 200 && data.errorCount == 0) && (data.genralErrorCode == 8000)) {
+                    console.log(data);
+                    console.log('HERE DATA');
+                    resolve(true)
+                    commit('SET_PROFILE',data);
                         // commit doesn't point to the mutation
+                }else{
+                    console.log('failed if');
+                    console.log(data);
                 }
                 })
                 .catch(error => {
-                    console.log('not posted');
+                  reject (error);
+                  console.log('not posted');
                 
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                }
-                console.log('here');
-                
-                commit('SET_PROFILE', error);          
-                //console.log(error);
-                //console.log(data);
-                
+                  if (error.response) {
+                      console.log(error.response.data);
+                      console.log(error.response.status);
+                      commit('SET_PROFILE', error);          
+                      reject(true)
+                  }
+                  console.log('here');
+                  
+                  //console.log(error);
+                  //console.log(data);
                 });
-            }
-        },
+            });
+          },
 
+}
 }
