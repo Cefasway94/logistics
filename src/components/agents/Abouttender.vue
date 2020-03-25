@@ -13,7 +13,7 @@
                 </v-flex>
             </v-card>
 
-            <v-card flat width="1300" class=" mx-auto mb-10 px-5" color="#F5FAFF" v-model="tender" >
+            <v-card flat width="1300" class=" mx-auto px-5" color="#F5FAFF" v-model="tender" >
                 <v-flex row >
                 <v-flex sm12 md9 lg9 xlg9 >
                     <v-card width="" class="pt-6 pb-3 pl-8" >
@@ -91,85 +91,6 @@
                         </v-flex>
                     </v-card>
 
-         
-                <v-card width="1300" class=" mb-5 pl-8 pt-6 pb-5" 
-                v-bind:style="{ visibility: computedVisibility }">
-                        <v-flex>
-                            <p class="body-1" style="color:#4169E1;" color="#4169E1">Biding details</p>
-                        </v-flex>
-                        <v-flex row class="pl-2 mt-10">
-                        <v-flex column class="sm3 md3 px-2">
-                            <v-text-field
-                             color="#4169E1"
-                             clearable
-                             v-model="bid_amount"
-                             label="Bid amount">
-                            </v-text-field>
-                        </v-flex>
-
-                        <v-flex column class="sm3 md3 px-2">
-                            <!-- <v-text-field 
-                            color="#4169E1" 
-                            clearable
-                            v-model="bid_delivery_timeline"
-                            label="Delivery time">
-                            </v-text-field> -->
-
-                            <!--  -->
-                            <v-menu
-                                ref="menu"
-                                v-model="menu"
-                                :close-on-content-click="false"
-                                :return-value.sync="bid_delivery_timeline"
-                                transition="scale-transition"
-                                offset-y
-                                min-width="290px">
-                                <template v-slot:activator="{ on }">
-                                <v-text-field
-                                    v-model="date"
-                                    label="Delivery time"
-                                    readonly
-                                    v-on="on">
-                                    </v-text-field>
-                                </template>
-                                <v-date-picker v-model="date" no-title scrollable>
-                                <v-spacer></v-spacer>
-                                <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                                <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                                </v-date-picker>
-                            </v-menu>
-                            <!--  -->
-                        </v-flex>
-
-                        <v-flex column class="sm6 md6 px-2">
-                            <v-text-field 
-                            color="#4169E1" 
-                            clearable
-                            v-model="bid_terms_and_conditions"
-                            label="Terms and conditions">
-                            </v-text-field>
-                        </v-flex>
-                        </v-flex>
-
-                        <v-flex row class="">
-                            <v-spacer></v-spacer>
-                            <v-btn  
-                            elevation="flat" 
-                            color="white" 
-                            class="mx-3" 
-                            style="color:#4169E1;"
-                            @click="cancelbid()">cancel</v-btn>
-                            <v-btn 
-                            color="#4169E1" 
-                            class="white--text"
-                            elevation="flat"
-                            @click="bidtender()"
-                            >
-                            bid tender
-                            </v-btn>
-                        </v-flex>
-                    </v-card>
-
                 </v-flex>
 
                 <v-flex sm12 md3 lg3 xlg3 class="px-3">
@@ -216,6 +137,94 @@
                 </v-flex>
             </v-card>
 
+<!-- biding---------------------------- -->
+            <v-flex sm12 md9 lg9 xlg9 >
+            <v-card width="1300" class=" mb-5 mx-auto pl-8 pt-6 pb-5" 
+                v-bind:style="{ visibility: computedVisibility }">
+                        <v-flex>
+                            <p class="body-1" style="color:#4169E1;" color="#4169E1">Biding details</p>
+                        </v-flex>
+                        <v-flex row class="pl-2">
+                        <v-flex column class="sm3 md3 px-2">
+                            <v-text-field
+                             color="#4169E1"
+                             clearable
+                             v-model="bid_amount"
+                             label="Bid amount">
+                            </v-text-field>
+                        </v-flex>
+
+                        <v-flex column class="sm3 md3 px-2">
+                            
+                            <v-menu
+                                ref="menu"
+                                v-model="menu"
+                                :close-on-content-click="false"
+                                :return-value.sync="bid_delivery_timeline"
+                                transition="scale-transition"
+                                offset-y
+                                min-width="290px">
+                                <template v-slot:activator="{ on }">
+                                <v-text-field
+                                    v-model="date"
+                                    label="Delivery time"
+                                    readonly
+                                    v-on="on">
+                                    </v-text-field>
+                                </template>
+                                <v-date-picker v-model="date" no-title scrollable>
+                                <v-spacer></v-spacer>
+                                <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                                <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                                </v-date-picker>
+                            </v-menu>
+                            <!--  -->
+                        </v-flex>
+
+                        <v-flex column class="sm6 md6 px-2">
+                        <v-select
+                            v-model="payment_terms_and_conditions"
+                            :items="items"
+                            attach
+                            chips 
+                            color="#4169E1" 
+                            clearable
+                            label="Select payment terms">
+                            </v-select>
+                        </v-flex>
+                        </v-flex>
+
+                        <v-flex>
+                        <v-flex column class="pl-2 mt-3 pr-5">
+                        <v-text-field 
+                            color="#4169E1" 
+                            clearable
+                            v-model="bid_terms_and_conditions"
+                            label="Terms and conditions">
+                            </v-text-field>
+                        </v-flex>    
+                        </v-flex>
+
+                        <v-flex row class="">
+                            <v-spacer></v-spacer>
+                            <v-btn  
+                            elevation="flat" 
+                            color="white" 
+                            class="mx-3" 
+                            style="color:#4169E1;"
+                            @click="cancelbid()">cancel</v-btn>
+                            <v-btn 
+                            color="#4169E1" 
+                            class="white--text"
+                            elevation="flat"
+                            @click="bidtender()"
+                            >
+                            bid tender
+                            </v-btn>
+                        </v-flex>
+                    </v-card>
+            </v-flex>
+
     </v-container>
 </template>
 
@@ -227,8 +236,9 @@ export default {
   
   data () {
       return{
+          payment_terms_and_conditions:'',
           //bid terms
-          items:['Full','2 Installments (50%, 50%)', '3 Installments(50%, 30%, 20%)'],
+          items:[],
           //date picker--------
           date: new Date().toISOString().substr(0, 10),
           menu: false,
@@ -248,14 +258,19 @@ export default {
 
   created (tab){
             tab = this.$route.params.id;
-      this.GET_TENDERSDETAILs(tab);
-      //this.GET_AGENT(localStorage.email);
-      this.GET_AGENT_PAYMENT_TERMS(this.LOAD_AGENT.objects.agent_id)
-      console.log('payment terms');
-      console.log(this.LOAD_PROFILE.agent_id);
+
+      this.GET_TENDERSDETAILs(tab).then(()=>{
+          this.GET_AGENT(localStorage.client).then(()=>{
+              this.GET_AGENT_PAYMENT_TERMS(this.LOAD_AGENT.objects.agent_id).then(()=>{
+                  for (let index = 0; index < this.LOAD_AGENT_PAYMENT_TERMS.length; index++) {
+                      this.items.push( this.LOAD_AGENT_PAYMENT_TERMS[index].installment_desc)                      
+                  }
+              })
+          })
+      })
       
       //eslint-disable-next-line no-console
-      console.log(tab);
+      console.log('tab');
       
   },
   
@@ -286,8 +301,9 @@ export default {
         
         bidtender() {
             this.BID_TENDER({
-                agent_id:'12345',
+                agent_id:this.LOAD_AGENT.objects.agent_id,
                 tender_id :this.LOAD_TENDER.id,
+                payment_terms_and_conditions:this.payment_terms_and_conditions,
                  bid_terms_and_conditions:this.bid_terms_and_conditions,
                  bid_amount:this.bid_amount, 
                  bid_delivery_timeline:this.bid_delivery_timeline,

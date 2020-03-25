@@ -192,7 +192,7 @@ actions: {
         },
                 
 //Agent biding on tender ======================================================================= 
-        BID_TENDER: ({ commit }, { agent_id, tender_id, bid_terms_and_conditions, bid_amount, bid_delivery_timeline}) => {
+        BID_TENDER: ({ commit }, { agent_id, tender_id, payment_terms_and_conditions, bid_terms_and_conditions, bid_amount, bid_delivery_timeline}) => {
             return new Promise((resolve, reject) => {
                 const config = {
                     headers: {
@@ -204,6 +204,7 @@ actions: {
                 .post(`http://192.168.1.44:8000/api/v1/bids`, {
                  agent_id,
                  tender_id,
+                 payment_terms_and_conditions,
                  bid_terms_and_conditions,
                  bid_amount, 
                  bid_delivery_timeline,
@@ -257,12 +258,12 @@ actions: {
             const url= 'http://192.168.1.44:8000/api/v1/payment-terms/agent/'+payload;
             await axios.get(url).then((data)=>{
                 // eslint-disable-next-line no-console
-                if (data.objects.errorCount == 0 && data.objects.genralErrorCode == 8000 ) {
+                if (data.data.errorCount == 0 && data.data.genralErrorCode == 8000 ) {
                     console.log(data);
-                    commit('SET_AGENT_PAYMENT_TERMS', data);
+                    commit('SET_AGENT_PAYMENT_TERMS', data.data.objects);
+                    //console.log(data.message);
                 }else{
                     commit('SET_AGENT_PAYMENT_TERMS', data.message);
-                    console.log(data.message);
                     
                 }
             }).catch((error)=>{
