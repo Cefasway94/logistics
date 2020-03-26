@@ -108,12 +108,21 @@
             
                                                         <v-flex column>{{bid.bid_amount}}</v-flex>
                                                     </v-flex>
-                                                    
-                                                    <v-flex row offset-xs2 offset-sm3 offset-md5 offset-lg5 class="px-6 pt-1 mt-5 mb-0">
-                                                
-                                                           <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/Aboutbid/' + bid.id">View Bid</v-btn>
-                        
+
+                                                    <v-flex row  class="px-6 pt-1">
+
+                                                         <v-flex column class="px-6 pt-1 mt-5" v-if="bid.bid_status != 'Not awarded'">
+                                                            <v-chip color="green" small class="white--text ml-7 mt-1">{{ bid.bid_status}}</v-chip>
+                                                        </v-flex>
+                                                        <v-flex column class="px-6 pt-1 mt-5">
+                                                            <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/Aboutbid/' + bid.id">View Bid</v-btn>
+                                                        </v-flex>
+
                                                     </v-flex>
+                                                    
+                                        
+                                                
+                                                       
 
                                                 </v-flex>
                                         </v-flex>

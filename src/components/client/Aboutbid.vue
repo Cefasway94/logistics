@@ -120,15 +120,38 @@
                                         <v-card-title>Are you sure you want to award this agent?</v-card-title>
                                         <v-card-actions row>
 
-                                            <v-btn color="#4169E1" text @click="awardTender" class="mt-2 ml-2">YES</v-btn>
+                                            <v-btn color="#4169E1" text @click="awardTender()" class="mt-2 ml-2">YES</v-btn>
                                             <v-spacer></v-spacer>
                                             <v-btn color="#4169E1" text @click="awardDialog = false" class="mt-2 ml-2">NO</v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
 
+                                 <!--Award dialog -->
+                                 <v-dialog v-model="dropDialog" max-width="500" >
+                                    <v-card>
+                                        <v-card-title>Are you sure you want to drop this agent?</v-card-title>
+                                        <v-card-actions row>
+
+                                            <v-btn color="#4169E1" text @click="dropAward()" class="mt-2 ml-2">YES</v-btn>
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="#4169E1" text @click="dropDialog = false" class="mt-2 ml-2">NO</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
+
                                 <v-spacer></v-spacer>
-                                <v-btn color="#4169E1" elevation="flat" @click.stop="awardDialog = true" large class="white--text">Award tender</v-btn>
+                                <v-btn color="#4169E1" v-if="bid.bid_status == 'awarded'" elevation="flat" @click.stop="dropDialog = true" large class="white--text">Drop award</v-btn>
+                                <v-btn color="#4169E1" v-if="bid.bid_status == 'Not awarded'" elevation="flat" @click.stop="awardDialog = true" large class="white--text">Award tender</v-btn>
+                                <v-btn 
+                                    color="#4169E1" 
+                                    v-if="bid.bid_status == 'accepted'" 
+                                    elevation="flat"  
+                                    large class="white--text"
+                                    :to="'/client/payment/'+bid.tender_id"
+                                >
+                                    Pay Agent
+                                </v-btn>
                             </v-flex>
                         </v-card>
 
@@ -190,6 +213,7 @@ import {mapActions} from 'vuex'
       return {
         dialog: false,
         awardDialog: false,
+        dropDialog:false,
         payment_terms:['Full payment', 'Pay by installments (30%, 40%, 30%)'],
         bid:[],
         payment:[]
@@ -230,7 +254,37 @@ import {mapActions} from 'vuex'
                                 this.$router.push('/client');
                             });
 
-        }
+        },
+
+        dropAward(){
+
+            this.dropDialog = false;
+
+            let url = `http://192.168.1.44:8000/api/v1/bids/drop/${this.bid.id}`;
+
+            axios.put(url).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+
+                               this.setAlert(response.data.message);
+
+                               this.$router.push('/client');
+     
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                                this.setAlert("There is error during droping award for a tender , Try again later");
+
+                                this.$router.push('/client');
+                            });
+
+        },
+
     },
 
     beforeRouteEnter (to, from, next) { 
@@ -256,7 +310,7 @@ import {mapActions} from 'vuex'
 
                                                 
                                              //eslint-disable-next-line no-console
-                                            console.log(response.data.objects);
+                                            //console.log(response.data.objects);
                                             vm.payment = response.data.objects;
                                 });
 

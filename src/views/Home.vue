@@ -17,6 +17,7 @@
     <router-view name="editTender"></router-view>
     <router-view name="AboutTenderBids"></router-view>
     <router-view name="Aboutbid"></router-view>
+    <router-view name="Payment"></router-view>
   </keep-alive>
 </transition>
       

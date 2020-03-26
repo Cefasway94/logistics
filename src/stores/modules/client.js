@@ -87,6 +87,7 @@ export default {
             await axios.get(url).
                             then((response) => {
 
+                                
                                 commit('setBidedTenders',response.data.objects)
 
                             }).catch(()=>{
@@ -98,8 +99,7 @@ export default {
 
         fetchCurrencies: async ({commit}) => {
 
-            const url = `http://192.168.1.44:8000/api/v1/configurations/currencies`;
-            //const url2 = `http://192.168.43.27:8000/api/v1/tenders/bided/${customer_id}`;
+            const url = "http://192.168.1.44:8000/api/v1/configurations/currency";
 
             await axios.get(url).
                             then((response) => {

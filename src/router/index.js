@@ -83,14 +83,14 @@ const routes = [
     components:{Createtender}
   },
   {
-    path:'/client/tenderprogress',
+    path:'/client/tenderprogress/:id',
     name:'Tenderprogressclient',
     components:{Tenderprogressclient}
   },
   {
-    path:'/client/payment',
+    path:'/client/payment/:id',
     name:'Payment',
-    component:Payment
+    components:{Payment}
   },
   {
     path:'/client/Aboutbid/:id',
