@@ -93,7 +93,7 @@
     color="#F5FAFF" 
     v-show="verification">
 
-    <h3  class="title text--text px-2">Dashboard</h3>
+    <h3  class="title text--text px-2 ">Dashboard</h3>
 
     <v-tabs
       background-color="#F5FAFF"
@@ -101,44 +101,59 @@
       right
       :key="componemtkey"
     >
-      <v-tab @contextmenu="load()" @click="GET_DASHBOARD('todos')"  class="">All</v-tab>
-             <v-tab @click="GET_DASHBOARD('null')"  v-model="tab">Biding</v-tab>
-             <v-tab @click="GET_DASHBOARD('users')" v-model="tab">Progress</v-tab>
+      <v-tab @contextmenu="load()" @click="GET_DASHBOARD(tab)"  class="">Biding</v-tab>
+             <v-tab @click="GET_DASHBOARD('null')">On Progress</v-tab>
+             
 
       <v-tab-item v-for="n in 3" :key="n"  style="background-color:#F5FAFF;">
           
       <v-divider class="mx-auto " ></v-divider>
-      
-       <v-container row fluid class="pt-5" style="background-color:#F5FAFF;" >
+
+      <!--  -->
+      <v-container row fluid class="pt-5" style="background-color:#F5FAFF;" >
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
-             v-for="tender in LOAD_DASHBOARDS" :key="tender.id" v-model="LOAD_DASHBOARDS.completed" >
+             v-for="(tender, i) in LOAD_DASHBOARDS.objects" :key="i"  >
 
-                <v-hover class="">
+             <!-- 
+                 <v-hover class="">
                 <template v-slot="{ hover }">
                 <v-card 
                 column width="350"
                 class="px-3 pb-3 mx-auto" 
+                :elevation="hover ? 15 : 3"> ========================= HOVER EFFECT
+              -->
+
+                <v-hover class="">
+                <template v-slot="{ hover }">
+                <v-card 
+                column 
+                width="350" 
+                class="px-4 pb-3 pt-1 mx-auto"
+                :to="{name:'AgentAbouttender', params: {id:tender.id}}"
+                @click="gettenderdetails(tender.id)"
                 :elevation="hover ? 15 : 3">
-                    <v-row justify="end" class="py-1" @click="true">
-                        <v-icon color="#E9E9F0" class="pr-1" @click="true">clear</v-icon>
-                        </v-row>
-                    <v-row  row class="pl-3 pt-1 mb-1">
-                        <v-flex xs9 sm9 >
-                        <h4  class="">{{tender.id}}</h4>
+                   
+                    <v-row  row class="px-3 pt-2 mb-1 justify-space-between">
+                        <v-flex wrap xs7 sm8>
+                        <h4  class="subtitle-1 font-weight-bold">{{tender.bid_id}}</h4>
                         </v-flex>
-                        <v-flex xs3 sm3 justify="end" class="mx-0">
-                        <v-chip 
-                        small class="light-green white--text caption font-weight-light" >
-                        Pending
+                        
+                        <v-flex xs5 sm4 class="pl-2">
+                            
+                        <!-- <v-icon color="#E9E9F0" class="" @click="true">clear</v-icon> -->
+                        <v-chip small 
+                        class="mainorange white--text caption px-2 font-weight-regular">
+                        {{tender.bid_status}}
                         </v-chip>
                         </v-flex>
                     </v-row>
-                   
-                        <p class=" body-2 grey--text mb-1">ABC furniture</p>
-                    
+                    <v-row class="pl-3">
+                        <p xs12 sm7 md7 class=" body-2 grey--text">{{tender.bid_terms_and_conditions}}</p>
+                        <v-spacer></v-spacer>
+                    </v-row>
                     <v-row class="px-3">
-                        <p class="body-2  pt-1 ">{{tender.completed}}</p>
+                        <p class="body-2  pt-1 ">Dar-es</p>
                         
                         <v-icon small color="#4169E1" class="px-2 pb-3">
                             arrow_forward
@@ -147,10 +162,14 @@
                     </v-row>
 
                     <v-row row class="px-3 mb-1">
-                        <h4  class=" title ">500 USD</h4>
+                        <h4  class=" title ">{{tender.bid_amount}} USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small elevation="flat"  @click="theid(tender.id)" color="#4169E1" class="white--text" to="/agent/abouttender">View Details</v-btn>
+                        <v-btn small elevation="flat" 
+                        color="#4169E1" class="white--text" @click="gettenderdetails()" :to="{name:'AgentAbouttender', 
+                        params: {id:tender.id}}" >View Details</v-btn>
+                        
                     </v-row>
+                    
                 </v-card>
                 </template>
                 </v-hover>
@@ -200,12 +219,17 @@ export default {
                  },2000)
                 }else{
                      tab = this.tab
-                 this.GET_TENDERS(tab);
-                 setTimeout(()=>{
-                     this.loading = false
-                  this.verify = false;
-                 this.verification = true
-                 },2000)
+                 this.GET_DASHBOARD(tab).then(()=>{
+                     // eslint-disable-next-line no-console
+                     console.log('bidsss---');
+                     // eslint-disable-next-line no-console
+                     console.log(this.LOAD_DASHBOARDS);
+                     setTimeout(()=>{
+                         this.loading = false
+                      this.verify = false;
+                     this.verification = true
+                     },2000)
+                 })
                 }
              }else{
                 setTimeout(()=>{
@@ -214,10 +238,7 @@ export default {
                  this.verification = false
                  },2000) 
              }
-             // eslint-disable-next-line no-console
-            console.log(this.LOAD_AGENT);   
-             // eslint-disable-next-line no-console
-            console.log('here');         
+                   
         }).catch(error=>{
              // eslint-disable-next-line no-console
             console.log(error);
@@ -234,10 +255,10 @@ export default {
       ]),
 
       
-      theid(id){
-          // eslint-disable-next-line no-console
-          console.log(id);
-      },
+    //   theid(id){
+    //       // eslint-disable-next-line no-console
+    //       console.log(id);
+    //   },
 
       editprofile(){
           this.verify = false

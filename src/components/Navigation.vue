@@ -101,8 +101,8 @@
 
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title class="title" >{{name}}</v-list-item-title>
-                <v-list-item-subtitle>{{email}}</v-list-item-subtitle>
+                <v-list-item-title class="title" >{{LOAD_AGENT.objects.company_name}}</v-list-item-title>
+                <v-list-item-subtitle>{{LOAD_AGENT.objects.email}}</v-list-item-subtitle>
               </v-list-item-content>
 
               <v-list-item-action>
@@ -185,7 +185,7 @@
         <v-list-item
           router
           :to="{name: this.items[1].router.name, 
-          params: {id:this.items[1].router.params.id}}"
+          params: {id:this.LOAD_AGENT.objects.agent_id}}"
           link
         >
           <v-list-item-icon>
@@ -283,6 +283,11 @@ export default {
   },
 
   created() {
+    this.GET_AGENT(localStorage.client).then(() => {
+      console.log('get agent------');
+      console.log(this.LOAD_AGENT)      
+    })
+    
     const type = localStorage.category;
     if (type == 3) {
       console.log("client");
@@ -295,15 +300,14 @@ export default {
     } else if (type == 1) {
       console.log("Agennt");
       this.items = this.agent();
-      this.email = this.LOAD_AGENT.objects.email;
-      this.name = this.LOAD_AGENT.objects.company_name;
     }
   },
 
   methods: {
     ...mapActions([
       "GET_TENDERS",
-      "GET_DASHBOARD"
+      "GET_DASHBOARD",
+      "GET_AGENT",
       //'GET_TENDERSDETAIL'
     ]),
 
@@ -338,7 +342,7 @@ export default {
         {
           title: "ADashboard",
           icon: "account_box",
-          router: { name: "Agent", params: { id: "todos" } }
+          router: { name: "Agent" }
         },
         {
           title: "APayments",

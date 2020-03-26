@@ -316,8 +316,8 @@ methods:{
               console.log('Opened as Agent');              
                 
               } else if (this.LOAD_LOGIN.objects[1]==2 && localStorage.category ==2) {
-                this.$router.push('/agents')
-                this.$router.go('/agents')
+                this.$router.push('/agents/tenders/open')
+                this.$router.go('/agents/tenders/open')
                 console.log('transporter');
                 
               }else if (this.LOAD_LOGIN.objects[1]==3 && localStorage.category ==3){

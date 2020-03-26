@@ -6,7 +6,7 @@ export default {
     state:{
         tenders: [],
         tenderdetails:[],
-        dashboard: [],
+        dashboard: '',
         dashboarddetails: [],
         post_bid:[],
         logins:[],
@@ -36,7 +36,7 @@ getters:{
         LOAD_DASHBOARDS: state => {
              const dashboard = state.dashboard;
              //eslint-disable-next-line no-console
-             //console.log(dashboard);
+            // console.log(dashboard);
              return dashboard             
                         
         },
@@ -163,11 +163,11 @@ actions: {
 // Dashboard actions ==================================================>>>>>>
         GET_DASHBOARD: async ({commit},payload) => {
             
-        const url= 'https://jsonplaceholder.typicode.com/'+payload;
-            await axios.get(url).then((res)=>{
+        const url= 'http://192.168.1.44:8000/api/v1/bids/agent/'+payload;
+            await axios.get(url).then((data)=>{
                 // eslint-disable-next-line no-console
                 //console.log(res.data);
-                commit('SET_DASHBOARDS', res.data);
+                commit('SET_DASHBOARDS', data.data);
             }).catch((error)=>{
                 //eslint-disable-next-line no-console
                 console.log(error);
