@@ -170,12 +170,46 @@
                                 </v-col>            
                             </v-flex>
 
-                            <v-flex row class="">
+                            <v-flex row class=" mt-5">
+                                <p class=" title font-weight-regular mb-0"> Clearing progress</p>
                                 <v-col class="">
-                                    <v-card flat height="100"  width="1200" class="px-5 py-3" outlined >
+                                    <v-card flat height="150"  width="1200" class="px-5 py-3" outlined >
                                         
                                     </v-card>
                                 </v-col>            
+                            </v-flex>
+
+                            <v-flex row class="mx-auto">
+
+                                <v-flex row xs12 class="mb-4">
+                                    <p class=" title font-weight-regular mb-0"> Transporting progress</p>
+                                </v-flex> 
+
+                                <v-flex row xs6 sm9 md12 class="">
+                                    <v-card flat width="1200" class="px-5 py-3" outlined>
+                                        <v-flex row xs6 sm9 md12 offset-1>
+                                            <v-flex column v-for="progress in transporting_progress" :key="progress.id">
+                                                <v-card flat height="150"  width="180" class="px-5 py-3" outlined :class="{ InProgress: InProgress}">
+
+                                                    <v-flex row xs12 class="mb-3" offset-1>
+
+                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
+                                                                <v-icon large color="white" v-if="InProgress">
+                                                                    mdi-reload
+                                                                </v-icon>
+                                                            </v-card>
+                                                    </v-flex>
+                                                   
+                                                    <v-flex row xs12 class="">
+                                                        <p>{{ progress.name}} </p>
+                                                    </v-flex>
+
+                                                </v-card>
+                                            </v-flex> 
+                                        </v-flex>
+                                    </v-card>
+                                </v-flex> 
+                                        
                             </v-flex>
 
                         </v-col>                    
@@ -237,7 +271,12 @@ import axios from 'axios'
 export default {
 
     data: ()=>({
-        tender:[]
+        tender:[],
+        transporting_progress:[],
+
+        InProgress: true,
+        NotCompleted:false,
+        Completed: false,
     }),
 
     beforeRouteEnter (to, from, next) { 
@@ -247,6 +286,8 @@ export default {
         //this is done because this navigation guard is called before the component is created.           
 
         let url = `http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`;
+
+        let url2 = "http://192.168.1.44:8000/api/v1/configurations/transporting-progress";
         
         axios.get(url).then((response) => 
                             {
@@ -261,8 +302,41 @@ export default {
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
                             });
+
+        axios.get(url2).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                                vm.transporting_progress = response.data.objects;
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
             next();
         }) 
     },
 }
 </script>
+
+<style scoped>
+
+    .InProgress {
+        opacity: 0.5;
+
+    }
+    
+     .NotCompleted {
+        opacity: 1.0 ;
+
+    }
+
+     .Completed {
+        opacity: 1.0 ;
+
+    }
+
+</style>
