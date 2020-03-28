@@ -188,7 +188,8 @@
                                 <v-flex row xs6 sm9 md12 class="">
                                     <v-card flat width="1200" class="px-5 py-3" outlined>
                                         <v-flex row xs6 sm9 md12 offset-1>
-                                            <v-flex column v-for="progress in transporting_progress" :key="progress.id">
+                                            <!--<v-flex column v-for="progress in transporting_progress" :key="progress.id">
+                                                    
                                                 <v-card flat height="150"  width="180" class="px-5 py-3" outlined :class="{ InProgress: InProgress}">
 
                                                     <v-flex row xs12 class="mb-3" offset-1>
@@ -205,7 +206,140 @@
                                                     </v-flex>
 
                                                 </v-card>
-                                            </v-flex> 
+
+                                            </v-flex>-->
+                                            <v-flex column>
+                                                    
+                                                <v-card 
+                                                    flat height="150"  
+                                                    width="180" 
+                                                    class="px-5 py-3" 
+                                                    outlined 
+                                                    :class="{   InProgress: cargo_loading.InProgress, 
+                                                                waiting: cargo_loading.waiting, 
+                                                                completed: cargo_loading.completed
+                                                            }"
+                                                >
+
+                                                    <v-flex row xs12 class="mb-3" offset-1>
+
+                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
+                                                               
+
+                                                                <v-icon large color="white" v-if="cargo_loading.completed">
+                                                                    mdi-tick
+                                                                </v-icon>
+
+                                                                 <v-icon large color="white" v-if="cargo_loading.InProgress">
+                                                                    mdi-reload
+                                                                </v-icon>
+                                                                
+                                                            </v-card>
+                                                    </v-flex>
+                                                   
+                                                    <v-flex row xs12 class="">
+                                                        <!--<p>{{ transporting_progress[0].name}} </p>-->
+                                                        <p>Cargo loading</p>
+                                                    </v-flex>
+
+                                                </v-card>
+
+                                            </v-flex>
+
+                                            <v-flex column>
+                                                    
+                                                <v-card 
+                                                    flat height="150"  
+                                                    width="180" 
+                                                    class="px-5 py-3" 
+                                                    outlined 
+                                                    :class="{   InProgress: cargo_in_transmit.InProgress, 
+                                                                waiting: cargo_in_transmit.waiting, 
+                                                                completed: cargo_in_transmit.completed
+                                                            }"
+                                                >
+
+                                                    <v-flex row xs12 class="mb-3" offset-1>
+
+                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
+                                                                <v-icon large color="white">
+                                                                    mdi-reload
+                                                                </v-icon>
+                                                            </v-card>
+                                                    </v-flex>
+                                                   
+                                                    <v-flex row xs12 class="">
+                                                        <!--<p>{{ transporting_progress[1].name}} </p>-->
+                                                        <p>Cargo in transit</p>
+                                                    </v-flex>
+
+                                                </v-card>
+
+                                            </v-flex>
+
+                                            <v-flex column>
+                                                    
+                                                <v-card 
+                                                    flat height="150"  
+                                                    width="180" 
+                                                    class="px-5 py-3" 
+                                                    outlined 
+                                                    :class="{   InProgress: cargo_offloading.InProgress, 
+                                                                waiting: cargo_offloading.waiting, 
+                                                                completed: cargo_offloading.completed
+                                                            }"
+                                                >
+
+                                                    <v-flex row xs12 class="mb-3" offset-1>
+
+                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
+                                                                <v-icon large color="white">
+                                                                    mdi-reload
+                                                                </v-icon>
+                                                            </v-card>
+                                                    </v-flex>
+                                                   
+                                                    <v-flex row xs12 class="">
+                                                        <!--<p>{{ transporting_progress[2].name}} </p>-->
+                                                        <p>Cargo offloading</p>
+                                                    </v-flex>
+
+                                                </v-card>
+
+                                            </v-flex>
+
+                                            <v-flex column>
+                                                    
+                                                <v-card 
+                                                    flat height="150"  
+                                                    width="180" 
+                                                    class="px-5 py-3" 
+                                                    outlined 
+                                                    :class="{   InProgress: cargo_delivered.InProgress, 
+                                                                waiting: cargo_delivered.waiting, 
+                                                                completed: cargo_delivered.completed
+                                                            }"
+                                                >
+
+                                                    <v-flex row xs12 class="mb-3" offset-1>
+
+                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
+                                                                <v-icon large color="white">
+                                                                    mdi-reload
+                                                                </v-icon>
+                                                            </v-card>
+                                                    </v-flex>
+                                                   
+                                                    <v-flex row xs12 class="">
+                                                        <!--<p>{{ transporting_progress[3].name}} </p>-->
+                                                        <p>Cargo delivered</p>
+                                                    </v-flex>
+
+                                                </v-card>
+
+                                            </v-flex>
+                                            
+
                                         </v-flex>
                                     </v-card>
                                 </v-flex> 
@@ -271,13 +405,89 @@ import axios from 'axios'
 export default {
 
     data: ()=>({
+
         tender:[],
         transporting_progress:[],
+        tender_progress:[],
+        test:0,
 
-        InProgress: true,
-        NotCompleted:false,
-        Completed: false,
+        cargo_loading:{
+            
+            InProgress:false,
+            completed:false,
+            waiting: true,
+        },
+
+        cargo_in_transmit:{
+
+            InProgress:false,
+            completed:false,
+            waiting: true,
+        },
+
+        cargo_offloading:{
+
+            InProgress:false,
+            completed:false,
+            waiting: true,
+        },
+
+        cargo_delivered:{
+
+            InProgress:false,
+            completed:false,
+            waiting: true,
+        },
     }),
+
+    methods:{
+
+        setProgress(tender_progress){
+            
+            
+            for(let i=0; i< tender_progress.length; i++)
+            {
+                //eslint-disable-next-line no-console
+                //console.log(tender_progress[i].progress_name);
+
+                switch(tender_progress[i].progress_name){
+
+                    case "Cargo loading":
+
+                        this.cargo_loading.InProgress = tender_progress[i].InProgress;
+                        this.cargo_loading.completed = tender_progress[i].completed;
+                        this.cargo_loading.waiting = tender_progress[i].waiting;
+
+                        break;
+
+                    case "Cargo in transit":
+
+                        this.cargo_in_transmit.InProgress = tender_progress[i].InProgress;
+                        this.cargo_in_transmit.completed = tender_progress[i].completed;
+                        this.cargo_in_transmit.waiting = tender_progress[i].waiting;
+
+                        break;
+
+                    case "Cargo offloading":
+
+                        this.cargo_offloading.InProgress = tender_progress[i].InProgress;
+                        this.cargo_offloading.completed = tender_progress[i].completed;
+                        this.cargo_offloading.waiting = tender_progress[i].waiting;
+
+                        break;
+                    
+                    case "Cargo delivered":
+
+                        this.cargo_delivered.InProgress = tender_progress[i].InProgress;
+                        this.cargo_delivered.completed = tender_progress[i].completed;
+                        this.cargo_delivered.waiting = tender_progress[i].waiting;
+
+                        break;
+                }
+            }
+            
+        }
+    },
 
     beforeRouteEnter (to, from, next) { 
         next(vm => { 
@@ -288,6 +498,8 @@ export default {
         let url = `http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`;
 
         let url2 = "http://192.168.1.44:8000/api/v1/configurations/transporting-progress";
+
+        let url3 = `http://192.168.1.44:8000/api/v1/transport-progress/tender/${vm.$route.params.id}`;
         
         axios.get(url).then((response) => 
                             {
@@ -303,6 +515,7 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
+
         axios.get(url2).then((response) => 
                             {
 
@@ -310,6 +523,24 @@ export default {
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
                                 vm.transporting_progress = response.data.objects;
+                              
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+
+        axios.get(url3).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                                vm.tender_progress = response.data.objects;
+                                vm.setProgress(vm.tender_progress);
+                                 //eslint-disable-next-line no-console
+                                 //console.log(response.data.objects);
 
                             }).catch(()=>{
 
@@ -329,14 +560,13 @@ export default {
 
     }
     
-     .NotCompleted {
+     .waiting {
         opacity: 1.0 ;
 
     }
 
-     .Completed {
-        opacity: 1.0 ;
-
+     .completed {
+        opacity: 0.5 ;
     }
 
 </style>
