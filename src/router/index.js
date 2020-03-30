@@ -11,6 +11,7 @@ import Abouttender from '../components/agents/Abouttender';
 import AgentTenderprogress from '../components/agents/Tenderprogressagent.vue';
 import Tenders from '../components/agents/Tenders.vue';
 import Agenteditprofile from '../components/agents/Agenteditprofile.vue';
+import AgentAboutbid from '../components/agents/Aboutbid.vue';
 
 //transporter routes
 
@@ -112,6 +113,12 @@ const routes = [
     name:'AgentAbouttender',
     components:{Abouttender}
   },
+  {
+    path:'/agent/AgentAboutbid/:id',
+    name:'AgentAboutbid',
+    components:{AgentAboutbid}
+  },
+  // AgentAboutbid
   {
     path:'/agent/tenderprogress',
     name:'AgentTenderprogress',

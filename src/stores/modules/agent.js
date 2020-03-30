@@ -38,8 +38,9 @@ getters:{
              //eslint-disable-next-line no-console
             // console.log(dashboard);
              return dashboard             
-                        
         },
+
+// Dashboard details getter ==================================>>>>
         LOAD_DASHBOARD: state => {
             const dashboarddetails = state.dashboarddetails
             return dashboarddetails;
@@ -178,7 +179,7 @@ actions: {
 
         GET_DASHBOARDDETAILs: async ({commit},payload) => {
             
-        const url= 'https://jsonplaceholder.typicode.com/'+payload;
+        const url= 'http://192.168.1.44:8000/api/v1/bids/show/'+payload;
             await axios.get(url).then((res)=>{
                 // eslint-disable-next-line no-console
                 //console.log(res.data);

@@ -17,6 +17,7 @@
     <router-view name="Client"></router-view>
     <router-view name="AgentTenderprogress"></router-view>
     <router-view name="Agenteditprofile"></router-view>
+    <router-view name="AgentAboutbid"></router-view>
   </keep-alive>
 </transition>
       

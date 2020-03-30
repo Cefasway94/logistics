@@ -130,8 +130,8 @@
                 column 
                 width="350" 
                 class="px-4 pb-3 pt-1 mx-auto"
-                :to="{name:'AgentAbouttender', params: {id:tender.id}}"
-                @click="gettenderdetails(tender.id)"
+                :to="{name:'AgentAboutbid', params: {id:tender.id}}"
+                @click="getbiddetails(tender.bid_id)"
                 :elevation="hover ? 15 : 3">
                    
                     <v-row  row class="px-3 pt-2 mb-1 justify-space-between">
@@ -165,7 +165,7 @@
                         <h4  class=" title ">{{tender.bid_amount}} USD</h4>
                         <v-spacer></v-spacer>
                         <v-btn small elevation="flat" 
-                        color="#4169E1" class="white--text" @click="gettenderdetails()" :to="{name:'AgentAbouttender', 
+                        color="#4169E1" class="white--text" @click="getbiddetails(tender.bid_id)" :to="{name:'Aboutbid', 
                         params: {id:tender.id}}" >View Details</v-btn>
                         
                     </v-row>
@@ -250,7 +250,7 @@ export default {
   
   methods:{
       ...mapActions([
-          'GET_DASHBOARD','GET_TENDERS', 'GET_AGENT'
+          'GET_DASHBOARD','GET_DASHBOARDDETAILs', 'GET_AGENT'
           //'GET_BIDTENDERS'
       ]),
 
@@ -264,12 +264,26 @@ export default {
           this.verify = false
           this.$router.push('/agent/editprofile')
           this.$router.go('/agent/editprofile')
-      }
+      },
+
+// GEt bid detail ==============================>>>
+      getbiddetails(tab){
+
+          this.GET_DASHBOARDDETAILs(tab).then(()=>{
+              // eslint-disable-next-line no-console
+              console.log('the bid outpost');
+              // eslint-disable-next-line no-console
+              console.log(tab);
+              // eslint-disable-next-line no-console
+              console.log(this.LOAD_DASHBOARD);
+                            
+          });
+      },
       
   },
   computed: {
       ...mapGetters([
-          'LOAD_DASHBOARDS','LOAD_TENDERS', 'LOAD_AGENT'
+          'LOAD_DASHBOARDS', 'LOAD_AGENT', 'LOAD_DASHBOARD'
           //'LOAD_DIBTENDERS'
       ])
   }
