@@ -187,7 +187,7 @@
 
                                 <v-flex row xs6 sm9 md12 class="">
                                     <v-card flat width="1200" class="px-5 py-3" outlined>
-                                        <v-flex row xs6 sm9 md12 offset-1>
+                                        <v-flex row xs6 sm9 md12 justify="center">
                                             <!--<v-flex column v-for="progress in transporting_progress" :key="progress.id">
                                                     
                                                 <v-card flat height="150"  width="180" class="px-5 py-3" outlined :class="{ InProgress: InProgress}">
@@ -212,7 +212,7 @@
                                                     
                                                 <v-card 
                                                     flat height="150"  
-                                                    width="180" 
+                                                    width="210" 
                                                     class="px-5 py-3" 
                                                     outlined 
                                                     :class="{   InProgress: cargo_loading.InProgress, 
@@ -227,7 +227,8 @@
                                                                
 
                                                                 <v-icon large color="white" v-if="cargo_loading.completed">
-                                                                    mdi-tick
+                                                                    mdi-check-outline
+                    
                                                                 </v-icon>
 
                                                                  <v-icon large color="white" v-if="cargo_loading.InProgress">
@@ -239,7 +240,13 @@
                                                    
                                                     <v-flex row xs12 class="">
                                                         <!--<p>{{ transporting_progress[0].name}} </p>-->
-                                                        <p>Cargo loading</p>
+                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo loading</span></v-flex>
+                                                        <v-flex row xs12>
+
+                                                            <span v-if="!cargo_loading.completed" class="font-weight-regular body-2">Expected on {{ cargo_loading.expected_date}}</span>
+                                                            <span v-if="cargo_loading.completed" class="font-weight- body-2">Completed on {{ cargo_loading.completed_date}}</span>
+                                                            
+                                                        </v-flex>
                                                     </v-flex>
 
                                                 </v-card>
@@ -250,7 +257,7 @@
                                                     
                                                 <v-card 
                                                     flat height="150"  
-                                                    width="180" 
+                                                    width="210" 
                                                     class="px-5 py-3" 
                                                     outlined 
                                                     :class="{   InProgress: cargo_in_transmit.InProgress, 
@@ -262,7 +269,11 @@
                                                     <v-flex row xs12 class="mb-3" offset-1>
 
                                                             <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
-                                                                <v-icon large color="white">
+                                                                <v-icon large color="white" v-if="cargo_in_transmit.completed">
+                                                                    mdi-check-outline
+                                                                </v-icon>
+
+                                                                 <v-icon large color="white" v-if="cargo_in_transmit.InProgress">
                                                                     mdi-reload
                                                                 </v-icon>
                                                             </v-card>
@@ -270,7 +281,15 @@
                                                    
                                                     <v-flex row xs12 class="">
                                                         <!--<p>{{ transporting_progress[1].name}} </p>-->
-                                                        <p>Cargo in transit</p>
+                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo in transit</span></v-flex>
+                                                        <v-flex row xs12>
+
+                                                           <span v-if="!cargo_in_transmit.completed" class="font-weight-regular body-2">Expected on {{ cargo_in_transmit.expected_date}}</span>
+                                                            <span v-if="cargo_in_transmit.completed" class="font-weight- body-2">Completed on {{ cargo_in_transmit.completed_date}}</span>
+
+                                                        </v-flex>
+                                                        <!--<p class="font-weight-bold blue--text text--darken-2">Cargo in transit</p>-->
+                                                       
                                                     </v-flex>
 
                                                 </v-card>
@@ -281,7 +300,7 @@
                                                     
                                                 <v-card 
                                                     flat height="150"  
-                                                    width="180" 
+                                                    width="210" 
                                                     class="px-5 py-3" 
                                                     outlined 
                                                     :class="{   InProgress: cargo_offloading.InProgress, 
@@ -293,15 +312,27 @@
                                                     <v-flex row xs12 class="mb-3" offset-1>
 
                                                             <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
-                                                                <v-icon large color="white">
+                                                                
+                                                                <v-icon large color="white" v-if="cargo_offloading.completed">
+                                                                    mdi-check-outline
+                                                                </v-icon>
+
+                                                                 <v-icon large color="white" v-if="cargo_offloading.InProgress">
                                                                     mdi-reload
                                                                 </v-icon>
+
                                                             </v-card>
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
                                                         <!--<p>{{ transporting_progress[2].name}} </p>-->
-                                                        <p>Cargo offloading</p>
+                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo offloading</span></v-flex>
+                                                        <v-flex row xs12>
+
+                                                            <span v-if="!cargo_offloading.completed" class="font-weight-regular body-2">Expected on {{ cargo_offloading.expected_date}}</span>
+                                                            <span v-if="cargo_offloading.completed" class="font-weight- body-2">Completed on {{ cargo_offloading.completed_date}}</span>
+                                                            
+                                                        </v-flex>
                                                     </v-flex>
 
                                                 </v-card>
@@ -312,7 +343,7 @@
                                                     
                                                 <v-card 
                                                     flat height="150"  
-                                                    width="180" 
+                                                    width="210" 
                                                     class="px-5 py-3" 
                                                     outlined 
                                                     :class="{   InProgress: cargo_delivered.InProgress, 
@@ -323,16 +354,32 @@
 
                                                     <v-flex row xs12 class="mb-3" offset-1>
 
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
-                                                                <v-icon large color="white">
+                                                            
+                                                                 <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
+                                                                
+                                                                <v-icon large color="white" v-if="cargo_delivered.completed">
+                                                                    mdi-check-outline
+                                                                </v-icon>
+
+                                                                 <v-icon large color="white" v-if="cargo_delivered.InProgress">
                                                                     mdi-reload
                                                                 </v-icon>
-                                                            </v-card>
+
+                                                                </v-card>
+                                                            
+                                                           
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
                                                         <!--<p>{{ transporting_progress[3].name}} </p>-->
-                                                        <p>Cargo delivered</p>
+                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo delivered</span></v-flex>
+                                                        <v-flex row xs12>
+
+                                                           <span v-if="!cargo_delivered.completed" class="font-weight-regular body-2">Expected on {{ cargo_delivered.expected_date}}</span>
+                                                            <span v-if="cargo_delivered.completed" class="font-weight- body-2">Completed on {{ cargo_delivered.completed_date}}</span>
+                                                            
+                                                        </v-flex>
+                                        
                                                     </v-flex>
 
                                                 </v-card>
@@ -408,14 +455,16 @@ export default {
 
         tender:[],
         transporting_progress:[],
-        tender_progress:[],
-        test:0,
+        test:true,
+        complete:false,
 
         cargo_loading:{
             
             InProgress:false,
             completed:false,
             waiting: true,
+            expected_date:'',
+            completed_date:''
         },
 
         cargo_in_transmit:{
@@ -423,6 +472,8 @@ export default {
             InProgress:false,
             completed:false,
             waiting: true,
+            expected_date:'',
+            completed_date:''
         },
 
         cargo_offloading:{
@@ -430,6 +481,8 @@ export default {
             InProgress:false,
             completed:false,
             waiting: true,
+            expected_date:'',
+            completed_date:''
         },
 
         cargo_delivered:{
@@ -437,6 +490,8 @@ export default {
             InProgress:false,
             completed:false,
             waiting: true,
+            expected_date:'',
+            completed_date:''
         },
     }),
 
@@ -444,46 +499,68 @@ export default {
 
         setProgress(tender_progress){
             
-            
+
             for(let i=0; i< tender_progress.length; i++)
             {
                 //eslint-disable-next-line no-console
                 //console.log(tender_progress[i].progress_name);
+                                                                                                          
+                axios.get(`http://192.168.1.44:8000/api/v1/configurations/${tender_progress[i].progress_id}`).
+                            then((response) => 
+                            {
 
-                switch(tender_progress[i].progress_name){
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                                switch(response.data.objects.name){
 
-                    case "Cargo loading":
+                                    case "Cargo loading":
 
-                        this.cargo_loading.InProgress = tender_progress[i].InProgress;
-                        this.cargo_loading.completed = tender_progress[i].completed;
-                        this.cargo_loading.waiting = tender_progress[i].waiting;
+                                        this.cargo_loading.InProgress = tender_progress[i].InProgress;
+                                        this.cargo_loading.completed = tender_progress[i].completed;
+                                        this.cargo_loading.waiting = tender_progress[i].waiting;
+                                        this.cargo_loading.expected_date = tender_progress[i].expected_date;
+                                        this.cargo_loading.completed_date = tender_progress[i].completed_date;
 
-                        break;
 
-                    case "Cargo in transit":
+                                        break;
 
-                        this.cargo_in_transmit.InProgress = tender_progress[i].InProgress;
-                        this.cargo_in_transmit.completed = tender_progress[i].completed;
-                        this.cargo_in_transmit.waiting = tender_progress[i].waiting;
+                                    case "Cargo in transit":
 
-                        break;
+                                        this.cargo_in_transmit.InProgress = tender_progress[i].InProgress;
+                                        this.cargo_in_transmit.completed = tender_progress[i].completed;
+                                        this.cargo_in_transmit.waiting = tender_progress[i].waiting;
+                                        this.cargo_in_transmit.expected_date = tender_progress[i].expected_date;
+                                        this.cargo_in_transmit.completed_date = tender_progress[i].completed_date;
 
-                    case "Cargo offloading":
+                                        break;
 
-                        this.cargo_offloading.InProgress = tender_progress[i].InProgress;
-                        this.cargo_offloading.completed = tender_progress[i].completed;
-                        this.cargo_offloading.waiting = tender_progress[i].waiting;
+                                    case "Cargo offloading":
 
-                        break;
+                                        this.cargo_offloading.InProgress = tender_progress[i].InProgress;
+                                        this.cargo_offloading.completed = tender_progress[i].completed;
+                                        this.cargo_offloading.waiting = tender_progress[i].waiting;
+                                        this.cargo_offloading.expected_date = tender_progress[i].expected_date;
+                                        this.cargo_offloading.completed_date = tender_progress[i].completed_date;
+
+                                        break;
                     
-                    case "Cargo delivered":
+                                    case "Cargo delivered":
 
-                        this.cargo_delivered.InProgress = tender_progress[i].InProgress;
-                        this.cargo_delivered.completed = tender_progress[i].completed;
-                        this.cargo_delivered.waiting = tender_progress[i].waiting;
+                                        this.cargo_delivered.InProgress = tender_progress[i].InProgress;
+                                        this.cargo_delivered.completed = tender_progress[i].completed;
+                                        this.cargo_delivered.waiting = tender_progress[i].waiting;
+                                        this.cargo_delivered.expected_date = tender_progress[i].expected_date;
+                                        this.cargo_delivered.completed_date = tender_progress[i].completed_date;
 
-                        break;
-                }
+                                        break;
+
+                            }}).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+
             }
             
         }
@@ -492,19 +569,12 @@ export default {
     beforeRouteEnter (to, from, next) { 
         next(vm => { 
 
-        //access to component's instance using `vm` .
-        //this is done because this navigation guard is called before the component is created.           
+            let url = `http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`;
 
-        let url = `http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`;
-
-        let url2 = "http://192.168.1.44:8000/api/v1/configurations/transporting-progress";
-
-        let url3 = `http://192.168.1.44:8000/api/v1/transport-progress/tender/${vm.$route.params.id}`;
+            let url3 = `http://192.168.1.44:8000/api/v1/transport-progress/tender/${vm.$route.params.id}`;
         
-        axios.get(url).then((response) => 
+            axios.get(url).then((response) => 
                             {
-
-                               //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
                                 vm.tender = response.data.objects;
@@ -515,33 +585,11 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
-
-        axios.get(url2).then((response) => 
+            axios.get(url3).then((response) => 
                             {
-
-                               //commit('setOnProgressTenders',response.data.objects)
-                               //eslint-disable-next-line no-console
-                               //console.log(response.data.objects);
-                                vm.transporting_progress = response.data.objects;
-                              
-
-                            }).catch(()=>{
-
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
-                            });
-
-        axios.get(url3).then((response) => 
-                            {
-
-                               //commit('setOnProgressTenders',response.data.objects)
-                               //eslint-disable-next-line no-console
-                               //console.log(response.data.objects);
-                                vm.tender_progress = response.data.objects;
-                                vm.setProgress(vm.tender_progress);
+                                vm.setProgress(response.data.objects);
                                  //eslint-disable-next-line no-console
                                  //console.log(response.data.objects);
-
                             }).catch(()=>{
 
                                 // response = null;
@@ -556,17 +604,17 @@ export default {
 <style scoped>
 
     .InProgress {
-        opacity: 0.5;
+        opacity: 1.0;
 
     }
     
      .waiting {
-        opacity: 1.0 ;
-
+        opacity: 0.3 ;
+        
     }
 
      .completed {
-        opacity: 0.5 ;
+        opacity: 0.3 ;
     }
 
 </style>
