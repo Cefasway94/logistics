@@ -177,6 +177,7 @@ actions: {
             });                   
         },
 
+// Get bided tender details (Dashboard details) ==================================================>>>>>>
         GET_DASHBOARDDETAILs: async ({commit},payload) => {
             
         const url= 'http://192.168.1.44:8000/api/v1/bids/show/'+payload;
@@ -191,6 +192,22 @@ actions: {
                 commit('SET_DASHBOARD', res);
             });                   
         },
+
+// Get all on Progress tenders ============================================>>>
+        GET_ONPROGRESS: async ({commit},payload) => {
+            
+            const url= 'http://192.168.1.44:8000/api/v1/tenders/awarded/'+payload;
+                await axios.get(url).then((data)=>{
+                    // eslint-disable-next-line no-console
+                    //console.log(res.data);
+                    commit('SET_DASHBOARDS', data.data);
+                }).catch((error)=>{
+                    //eslint-disable-next-line no-console
+                    console.log(error);
+                    const res=null;
+                    commit('SET_DASHBOARDS', res);
+                });                   
+            },
                 
 //Agent biding on tender ======================================================================= 
         BID_TENDER: ({ commit }, { agent_id, tender_id, payment_terms_and_conditions, bid_terms_and_conditions, bid_amount, bid_delivery_timeline}) => {

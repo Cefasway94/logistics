@@ -197,49 +197,38 @@ export default {
   
   data () {
       return{
-         // payment_terms_and_conditions:'',
-          //bid terms
-         // items:[],
-          //date picker--------
-          //date: new Date().toISOString().substr(0, 10),
-          //menu: false,
-          //rest of data--------
-        //   btnvisibility:'visible',
-        //   visibility: 'hidden',         
-        //    tender:'',
-        //    agent_id:'',
-        //    tender_id:'',
-        //    bid_amount:'', // -------
-        //    bid_delivery_timeline:new Date().toISOString().substr(0, 10), // ----------
-        //    bid_terms_and_conditions:'',// -------
+         
+  }
 
-      }
+      
   },
 
-  created (tab){
-            tab = this.$route.params.id;
-
-      this.GET_DASHBOARDDETAILs(tab).then(()=>{
+   beforeRouteEnter (to, from, next){
+    next(vm =>{  vm.GET_DASHBOARDDETAILs(to.params.id).then(()=>{
           // eslint-disable-next-line no-console
               console.log('the bid outpost');
               // eslint-disable-next-line no-console
-              console.log(tab);
+              console.log(to.params.id);
               // eslint-disable-next-line no-console
-              console.log(this.LOAD_DASHBOARD);
-          this.GET_AGENT(localStorage.client).then(()=>{
-              this.GET_TENDERSDETAILs(this.LOAD_DASHBOARD.objects.tender_id).then(()=>{
+              console.log(vm.LOAD_DASHBOARD);
+          vm.GET_AGENT(localStorage.client).then(()=>{
+              vm.GET_TENDERSDETAILs(vm.LOAD_DASHBOARD.objects.tender_id).then(()=>{
                     // eslint-disable-next-line no-console
               console.log('tender detail beloow');
               // eslint-disable-next-line no-console
-              console.log(this.LOAD_TENDER);
+              console.log(vm.LOAD_TENDER);
+              next({name:'AgentAboutbid'})
               })
           })
       })
+      })
       
-      //eslint-disable-next-line no-console
-      console.log(tab);
-      
-  },
+    //   //eslint-disable-next-line no-console
+    //   console.log(tab);
+    console.log(to);
+    console.log(from);
+    console.log(next);
+    },
   
   methods:{
       ...mapActions([

@@ -101,16 +101,27 @@
       right
       :key="componemtkey"
     >
-      <v-tab @contextmenu="load()" @click="GET_DASHBOARD(tab)"  class="">Biding</v-tab>
-             <v-tab @click="GET_DASHBOARD('null')">On Progress</v-tab>
+      <v-tab @contextmenu="load()" @click="get_dashboard(tab)"  class="">Biding</v-tab>
+             <v-tab @click="get_onprogress()">On Progress</v-tab>
              
 
       <v-tab-item v-for="n in 3" :key="n"  style="background-color:#F5FAFF;">
           
       <v-divider class="mx-auto " ></v-divider>
 
+      <v-card width="300" v-show="loadingbiding" flat color="transparent" class="mb-3 mx-auto">
+                <v-progress-circular
+                active="true"
+                indeterminate
+                absolute
+                :size="50"
+                class="mt-12"
+                color="#4169E1">
+                </v-progress-circular>
+                </v-card>
+
       <!--  -->
-      <v-container row fluid class="pt-5" style="background-color:#F5FAFF;" >
+      <v-container v-show="bidliast" row fluid class="pt-5" style="background-color:#F5FAFF;" >
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
              v-for="(tender, i) in LOAD_DASHBOARDS.objects" :key="i"  >
@@ -123,7 +134,7 @@
                 class="px-3 pb-3 mx-auto" 
                 :elevation="hover ? 15 : 3"> ========================= HOVER EFFECT
               -->
-
+<!-- :to="{name:'AgentAboutbid', params: {id:tender.id}}" -->
                 <v-hover class="">
                 <template v-slot="{ hover }">
                 <v-card 
@@ -131,7 +142,6 @@
                 width="350" 
                 class="px-4 pb-3 pt-1 mx-auto"
                 :to="{name:'AgentAboutbid', params: {id:tender.id}}"
-                @click="getbiddetails(tender.bid_id)"
                 :elevation="hover ? 15 : 3">
                    
                     <v-row  row class="px-3 pt-2 mb-1 justify-space-between">
@@ -142,8 +152,10 @@
                         <v-flex xs5 sm4 class="pl-2">
                             
                         <!-- <v-icon color="#E9E9F0" class="" @click="true">clear</v-icon> -->
-                        <v-chip small 
-                        class="mainorange white--text caption px-2 font-weight-regular">
+                        <v-chip 
+                        small
+                        :color="tender.bid_status"
+                        class="mainorange white--text px-2 font-weight-regular">
                         {{tender.bid_status}}
                         </v-chip>
                         </v-flex>
@@ -153,12 +165,13 @@
                         <v-spacer></v-spacer>
                     </v-row>
                     <v-row class="px-3">
-                        <p class="body-2  pt-1 ">Dar-es</p>
+                        <p class="body-1  pt-2 ">Time line</p>
                         
-                        <v-icon small color="#4169E1" class="px-2 pb-3">
-                            arrow_forward
-                        </v-icon>
-                        <p  class="body-2  pt-1 ">Rwanda</p>
+                         <!-- <v-icon small color="#4169E1" class="px-2 pb-2">
+                        remove
+                        </v-icon>  -->
+                
+                        <p  class="  pt-2 primary--text mx-3">{{tender.bid_delivery_timeline}}</p>
                     </v-row>
 
                     <v-row row class="px-3 mb-1">
@@ -194,7 +207,9 @@ export default {
       return{
           verify:false,
           profile:false,
+          bidliast:true,
           verification:false,
+          loadingbiding:false,
           loading:false,
           tab: this.$route.params.id,
           componemtkey: 0,
@@ -224,6 +239,18 @@ export default {
                      console.log('bidsss---');
                      // eslint-disable-next-line no-console
                      console.log(this.LOAD_DASHBOARDS);
+
+// Set tender chip color ================================>>
+                // for (let index = 0; index < array.length; index++) {
+                //     const element = array[index];
+                    
+                // }
+                // if (this.LOAD_DASHBOARDS.objects.bid_status=='awarde') {
+                //      this.bidstatus = 'green'
+                // } else {
+                //      this.bidstatus = 'mainorange'
+                // }
+// Remove loadding ================================>>
                      setTimeout(()=>{
                          this.loading = false
                       this.verify = false;
@@ -250,7 +277,7 @@ export default {
   
   methods:{
       ...mapActions([
-          'GET_DASHBOARD','GET_DASHBOARDDETAILs', 'GET_AGENT'
+          'GET_DASHBOARD','GET_DASHBOARDDETAILs', 'GET_AGENT','GET_ONPROGRESS'
           //'GET_BIDTENDERS'
       ]),
 
@@ -265,6 +292,54 @@ export default {
           this.$router.push('/agent/editprofile')
           this.$router.go('/agent/editprofile')
       },
+
+      get_dashboard(tab){
+
+          this.bidliast=false
+              this.loadingbiding = true
+            // eslint-disable-next-line no-console
+          console.log('44444444');
+                     tab = this.tab
+                 this.GET_DASHBOARD(tab).then(()=>{
+                     // eslint-disable-next-line no-console
+                     console.log('bidsss---');
+                     // eslint-disable-next-line no-console
+                     console.log(this.LOAD_DASHBOARDS);
+                     setTimeout(()=>{
+                         this.loadingbiding = false
+                         this.bidliast=true
+                     },2000)
+                 }).catch(error=>{
+             // eslint-disable-next-line no-console
+            console.log(error);
+             // eslint-disable-next-line no-console
+              console.log(this.LOAD_AGENT);   
+        });
+      },
+
+      get_onprogress(tab){
+          this.bidliast=false
+              this.loadingbiding = true
+            // eslint-disable-next-line no-console
+          console.log('555555');
+                     tab = this.tab
+                 this.GET_ONPROGRESS(tab).then(()=>{
+                     // eslint-disable-next-line no-console
+                     console.log('bidsss---');
+                     // eslint-disable-next-line no-console
+                     console.log(this.LOAD_DASHBOARDS);
+                     setTimeout(()=>{
+                         this.loadingbiding = false
+                         this.bidliast=true
+                     },2000)
+                 }).catch(error=>{
+             // eslint-disable-next-line no-console
+            console.log(error);
+             // eslint-disable-next-line no-console
+              console.log(this.LOAD_AGENT);   
+        });
+      },
+        
 
 // GEt bid detail ==============================>>>
       getbiddetails(tab){

@@ -18,6 +18,8 @@ export default new Vuetify({
             white:'#FFFFFF ',
             red:'#DC493A',
             green:'#4CB944',
+            awarded:'#4CB944',
+            'Not awarded':'#FF8C00',
             lblue:'#F5FAFF',
             lgray0:'#BCBCCB',
             lgray1:'#E9E9F0'
