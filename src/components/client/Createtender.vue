@@ -49,31 +49,37 @@
                     <v-form>
                     <v-container>
                         <v-row>
+                            <v-col>
+                                <v-select 
+                                    class="mx-6" 
+                                    style="color:#4169E1;"
+                                    v-model = "tender_category" 
+                                    :items="tender_categories" 
+                                    color="#4169E1" 
+                                    label="Tender category" 
+                                    clearable 
+                                >
+                                </v-select>
+                            </v-col>
                         <v-col>
                             <p class="primary--text body-2 text-uppercase mb-0">CARGO DETAILS</p>
                             <v-text-field 
-                            outlined 
-                            clearable
-                            v-model="details">
-                            </v-text-field>
-                        </v-col>
-                        <v-col>
-                            <p class="primary--text body-2 text-uppercase mb-0">ORIGIN</p>
-                            <v-text-field 
-                            outlined 
-                            clearable
-                            v-model="origin">
+                                outlined 
+                                clearable
+                                v-model="details">
                             </v-text-field>
                         </v-col>
 
-                        <v-col>
-                            <p class="primary--text body-2 text-uppercase mb-0">DESTINATION</p>
-                            <v-text-field 
-                            outlined 
-                            clearable
-                            v-model="destination">
-                            </v-text-field>
+                         <v-col xs12 sm6 md4 lg4 xl4>
+                                    <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
+                                    <v-text-field 
+                                        outlined 
+                                        clearable
+                                        v-model="size">
+                                    </v-text-field>
                         </v-col>
+                        
+                       
                         </v-row>
 
                         <v-row class="px-3">
@@ -97,16 +103,27 @@
 
                                 </v-col>-->
 
-                                <v-col xs12 sm6 md4 lg4 xl4>
-                                    <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
+                               
+                            
+                                <v-col>
+                                    <p class="primary--text body-2 text-uppercase mb-0">ORIGIN</p>
                                     <v-text-field 
                                         outlined 
                                         clearable
-                                        v-model="size">
+                                        v-model="origin"
+                                    >
                                     </v-text-field>
                                 </v-col>
-                            
 
+                                <v-col>
+                                    <p class="primary--text body-2 text-uppercase mb-0">DESTINATION</p>
+                                    <v-text-field 
+                                        outlined 
+                                        clearable
+                                        v-model="destination"
+                                    >
+                                    </v-text-field>
+                                </v-col>
                                 <v-col xs12 sm6 md4 lg4 xl4>
                                     <!--<v-text-field 
                                         outlined 
@@ -125,19 +142,19 @@
                                     </v-select>
                                 </v-col>
 
-                                <v-col xs12 sm6 md4 lg4 xl4>
+                                <!--<v-col xs12 sm6 md4 lg4 xl4>
                                     <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
                                     <v-text-field 
                                         outlined 
                                         clearable
                                         v-model="offer_amount">
                                     </v-text-field>
-                                </v-col>
+                                </v-col>-->
                             </v-row>
                         </v-row>
 
                         <v-row>
-                            <v-col
+                            <!--<v-col
                                 offset="2"
                                 align-self="center"
                                 cols='3'
@@ -154,7 +171,26 @@
                                     :allowed-dates="allowedDates"
                                     full-width>
                                 </v-date-picker>
+                            </v-col>-->
+
+                            <v-col xs12 sm6 md4 lg4 xl4>
+                                    <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
+                                    <v-text-field 
+                                        outlined 
+                                        clearable
+                                        v-model="offer_amount">
+                                    </v-text-field>
                             </v-col>
+
+                            <v-col  xs12 sm6 md4 lg4 xl4>
+                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
+                                <v-date-picker 
+                                    v-model="timeline"
+                                    :allowed-dates="allowedDates"
+                                    full-width>
+                                </v-date-picker>
+                            </v-col>
+
                         </v-row>
 
                         <v-row>
@@ -312,7 +348,9 @@ export default {
 
         loading:false,
         currencies:['TZS','USD'],
-        alert:''
+        alert:'',
+        tender_categories:[],
+        tender_category:''
     }),
 
     computed:{
@@ -372,6 +410,7 @@ export default {
             formData.append('destination',this.destination);
             formData.append('currency',this.currency);
             formData.append('description',this.description);
+            formData.append('tender_category',this.tender_category);
 
             return formData;
         },
@@ -427,6 +466,29 @@ export default {
                                 this.$router.push('/client/createtender');
                             });    
         }
+    },
+
+    beforeRouteEnter (to, from, next) { 
+        next(vm => { 
+
+            let url = "http://192.168.1.44:8000/api/v1/agent-industries";
+
+            axios.get(url).then((response) => 
+                            {
+                               
+                                //eslint-disable-next-line no-console
+                               //console.log(response.data.objects[i].industry_name);
+
+                               for(let i=0; i< response.data.objects.length; i++)
+                                    vm.tender_categories.push(response.data.objects[i].industry_name);
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+            next();
+        }) 
     },
 }
 </script>
