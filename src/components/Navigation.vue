@@ -1,8 +1,8 @@
  <template>
   <nav>
     <!-- nav bar -->
-    <v-app-bar absolute scroll-target color="white" elevate>
-      <v-app-bar-nav-icon @click="drawer = !drawer" color="#394361"></v-app-bar-nav-icon>
+    <v-app-bar scroll-target="#scrolling-techniques" absolute color="white"  >
+      <v-app-bar-nav-icon  @click="drawer = !drawer" color="#394361"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="grey--text hidden-md-and-down">Dashboard</v-toolbar-title>
 
@@ -142,6 +142,7 @@
       class="accent-4"
       style="background-color:#4169E1;"
       dark
+      fixed
       width="200"
     >
       <v-list
@@ -221,12 +222,17 @@
       </v-flex>
 
 <template v-slot:append>
-        <div>
+        <div class="py-2 px-1">
          <v-btn 
-         x-large 
-         color="transparent" 
-         elevation="15" 
-         block @click.prevent="logout()">Logout</v-btn>
+         color="paleblack" 
+         elevation="20" 
+         class=""
+         block 
+         @click.prevent="logout()">
+         <p class="my-auto body-1 font-weight-regular text-capitalize">
+         Logout
+         </p>
+         </v-btn>
         </div>
       </template>
 

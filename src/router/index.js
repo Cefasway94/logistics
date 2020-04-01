@@ -120,7 +120,7 @@ const routes = [
   },
   // AgentAboutbid
   {
-    path:'/agent/tenderprogress',
+    path:'/agent/tenderprogress/:id',
     name:'AgentTenderprogress',
     components:{AgentTenderprogress}
   },

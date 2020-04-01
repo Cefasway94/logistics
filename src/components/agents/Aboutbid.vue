@@ -166,7 +166,7 @@
                         </v-flex>
                 </v-flex>
 
-                        <v-flex row class="">
+                        <!-- <v-flex row class="">
                             <v-spacer></v-spacer>
                             <v-btn  
                             elevation="flat" 
@@ -182,7 +182,7 @@
                             >
                             bid tender
                             </v-btn>
-                        </v-flex>
+                        </v-flex> -->
                     </v-card>
          </v-card>
 

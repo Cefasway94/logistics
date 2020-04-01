@@ -1,5 +1,5 @@
 <template>
-    <v-container class=" mt-12 px-5">
+    <v-container id="scrolling-techniques" class=" mt-12 px-5">
 
             <v-card flat width="1300" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">

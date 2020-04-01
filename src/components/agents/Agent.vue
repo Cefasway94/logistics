@@ -120,21 +120,12 @@
                 </v-progress-circular>
                 </v-card>
 
-      <!--  -->
-      <v-container v-show="bidliast" row fluid class="pt-5" style="background-color:#F5FAFF;" >
+<!-- ----------------- Biding card------------- -->
+      <v-container v-show="bidlist" row fluid class="pt-5" style="background-color:#F5FAFF;" >
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
              v-for="(tender, i) in LOAD_DASHBOARDS.objects" :key="i"  >
 
-             <!-- 
-                 <v-hover class="">
-                <template v-slot="{ hover }">
-                <v-card 
-                column width="350"
-                class="px-3 pb-3 mx-auto" 
-                :elevation="hover ? 15 : 3"> ========================= HOVER EFFECT
-              -->
-<!-- :to="{name:'AgentAboutbid', params: {id:tender.id}}" -->
                 <v-hover class="">
                 <template v-slot="{ hover }">
                 <v-card 
@@ -188,6 +179,67 @@
                 </v-hover>
             </v-flex>               
         </v-container>
+
+<!-- ----------------- On progress cards------------- -->
+        <v-container v-show="onprogressliast" row fluid class="pt-5" style="background-color:#F5FAFF;" >
+            
+             <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
+             v-for="(tender, i) in LOAD_DASHBOARDS.objects" :key="i"  >
+
+                <v-hover class="">
+                <template v-slot="{ hover }">
+                <v-card 
+                column 
+                width="350" 
+                class="px-4 pb-3 pt-1 mx-auto"
+                :to="{name:'AgentTenderprogress', params: {id:tender.bid_id}}"
+                :elevation="hover ? 15 : 3">
+                   
+                    <v-row  row class="px-3 pt-2 mb-1 justify-space-between">
+                        <v-flex wrap xs7 sm8>
+                        <h4  class="subtitle-1 font-weight-bold">{{tender.bid_id}}</h4>
+                        </v-flex>
+                        
+                        <v-flex xs5 sm4 class="pl-2">
+                            
+                        <!-- <v-icon color="#E9E9F0" class="" @click="true">clear</v-icon> -->
+                        <v-chip 
+                        small
+                        :color="tender.tender_status"
+                        class="mainorange white--text px-2 font-weight-regular">
+                        {{tender.tender_status}}
+                        </v-chip>
+                        </v-flex>
+                    </v-row>
+                    <v-row class="pl-3">
+                        <p xs12 sm7 md7 class=" body-2 grey--text">{{tender.description}}</p>
+                        <v-spacer></v-spacer>
+                    </v-row>
+                    <v-row class="px-3">
+                        <p class="body-1  pt-2 ">Time line</p>
+                        
+                         <!-- <v-icon small color="#4169E1" class="px-2 pb-2">
+                        remove
+                        </v-icon>  -->
+                
+                        <p  class="  pt-2 primary--text mx-3">{{tender.customer_delivery_timeline}}</p>
+                    </v-row>
+
+                    <v-row row class="px-3 mb-1">
+                        <h4  class=" title ">{{tender.customer_offer_amount}} USD </h4>
+                        <v-spacer></v-spacer>
+                        <v-btn small elevation="flat" 
+                        color="#4169E1" class="white--text" @click="getbiddetails(tender.bid_id)" :to="{name:'Aboutbid', 
+                        params: {id:tender.id}}" >View Details</v-btn>
+                        
+                    </v-row>
+                    
+                </v-card>
+                </template>
+                </v-hover>
+            </v-flex>               
+        </v-container>
+
       </v-tab-item>
     </v-tabs>
   </v-card>
@@ -207,7 +259,8 @@ export default {
       return{
           verify:false,
           profile:false,
-          bidliast:true,
+          onprogressliast:false,
+          bidlist:true,
           verification:false,
           loadingbiding:false,
           loading:false,
@@ -231,7 +284,7 @@ export default {
                     this.loading = false
                     this.verify = true;
                  this.verification = false
-                 },2000)
+                 },1000)
                 }else{
                      tab = this.tab
                  this.GET_DASHBOARD(tab).then(()=>{
@@ -255,7 +308,7 @@ export default {
                          this.loading = false
                       this.verify = false;
                      this.verification = true
-                     },2000)
+                     },1000)
                  })
                 }
              }else{
@@ -263,7 +316,7 @@ export default {
                      this.loading = false
                   this.profile = true;
                  this.verification = false
-                 },2000) 
+                 },1000) 
              }
                    
         }).catch(error=>{
@@ -294,8 +347,8 @@ export default {
       },
 
       get_dashboard(tab){
-
-          this.bidliast=false
+          this.onprogressliast = false
+          this.bidlist = false
               this.loadingbiding = true
             // eslint-disable-next-line no-console
           console.log('44444444');
@@ -307,8 +360,8 @@ export default {
                      console.log(this.LOAD_DASHBOARDS);
                      setTimeout(()=>{
                          this.loadingbiding = false
-                         this.bidliast=true
-                     },2000)
+                         this.bidlist=true
+                     },1000)
                  }).catch(error=>{
              // eslint-disable-next-line no-console
             console.log(error);
@@ -318,7 +371,8 @@ export default {
       },
 
       get_onprogress(tab){
-          this.bidliast=false
+          this.onprogressliast = false
+          this.bidlist = false
               this.loadingbiding = true
             // eslint-disable-next-line no-console
           console.log('555555');
@@ -330,8 +384,8 @@ export default {
                      console.log(this.LOAD_DASHBOARDS);
                      setTimeout(()=>{
                          this.loadingbiding = false
-                         this.bidliast=true
-                     },2000)
+                         this.onprogressliast=true
+                     },1000)
                  }).catch(error=>{
              // eslint-disable-next-line no-console
             console.log(error);

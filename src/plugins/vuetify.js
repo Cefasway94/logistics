@@ -22,7 +22,10 @@ export default new Vuetify({
             'Not awarded':'#FF8C00',
             lblue:'#F5FAFF',
             lgray0:'#BCBCCB',
-            lgray1:'#E9E9F0'
+            lgray1:'#E9E9F0',
+            darkblue:'#3F51B5',
+            paleblack:'#37474F',
+            try:'#7486e8'
             },
             
         }
