@@ -127,7 +127,24 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
-          </v-list>       
+          </v-list> 
+             <!--  -->
+             
+        <div class="pt-3">
+         <v-btn 
+         color="white" 
+         elevation="flat" 
+         class=""
+         large
+         block 
+         @click.prevent="logout()">
+         <p  class="my-auto body-1 font-weight-regular text--text text-capitalize">
+         Logout
+         </p>
+         </v-btn>
+        </div>
+             <!--  -->
+
       </v-card>
      </v-menu>
 
@@ -277,7 +294,8 @@ export default {
       // items for added Navigation profile list
       item: 0,
       itemes: [
-        { text: 'My profile', icon: 'mdi-account-multiple' },
+        { text: 'My profile', icon: 'mdi-account-multiple' }
+
         // { text: 'My Files', icon: 'mdi-folder' },
         // { text: 'Starred', icon: 'mdi-star' },
         // { text: 'Recent', icon: 'mdi-history' },

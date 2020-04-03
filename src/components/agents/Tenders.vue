@@ -82,6 +82,7 @@
     <v-card v-show="verification" flat width="1300" class=" mx-auto" color="#F5FAFF" row>
     <v-card flat width="1300" class=" mx-auto mt-12" color="#F5FAFF">
     <h3 style="color:#394361;" class="title mt-10 px-2">All new tenders</h3>
+    <v-divider class="mx-auto mt-3 " ></v-divider>
     </v-card>
     <v-container row fluid class="pt-5" style="background-color:#F5FAFF;" >
             

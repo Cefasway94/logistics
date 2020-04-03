@@ -12,7 +12,8 @@ export default {
         logins:[],
         agent:[],
         profile:[],
-        payment_terms:[]
+        payment_terms:[],
+        accepted_bid:[]
     },
 
 getters:{
@@ -50,6 +51,13 @@ getters:{
         LOAD_POST_BID: state => {
             const posted_bid = state.post_bid;
             return posted_bid;
+        },
+
+// load accept bid ========================================>>>
+        LOAD_ACCEPT_BID: state => {
+            const accept_bid = state.accepted_bid
+            console.log(accept_bid);
+            return accept_bid  
         },
 
 // called agent ========================================>>>>>>
@@ -99,6 +107,11 @@ mutations: {
             state.post_bid = payload;
         },
 
+// agent accept bid mutation ===========================>>>>>>>
+        SET_ACCEPT_BID : (state,payload)=>{
+            state.accepted_bid = payload;
+        },
+
 // called agent mutation ================================>>>>>
         SET_AGENT : (state,payload) =>{
             state.agent = payload;
@@ -138,6 +151,7 @@ actions: {
                             
         },
 
+// get tenderdetails ==========================================>>>>
         GET_TENDERSDETAILs: async ({commit},payload) => {
              // eslint-disable-next-line no-console
             //console.log(payload);
@@ -193,10 +207,25 @@ actions: {
             });                   
         },
 
+// Get all AWARDED TENDER LIST tenders ============================================>>>
+        // GET_ONAWARDED: async ({commit},payload) => {
+            
+        //     const url= 'http://192.168.1.44:8000/api/v1/tenders/awarded/'+payload;
+        //         await axios.get(url).then((data)=>{
+        //             // eslint-disable-next-line no-console
+        //             //console.log(res.data);
+        //             commit('SET_DASHBOARDS', data.data);
+        //         }).catch((error)=>{
+        //             //eslint-disable-next-line no-console
+        //             console.log(error);
+        //             const res=null;
+        //             commit('SET_DASHBOARDS', res);
+        //         });                   
+        //     },
+
 // Get all on Progress tenders ============================================>>>
         GET_ONPROGRESS: async ({commit},payload) => {
-            
-            const url= 'http://192.168.1.44:8000/api/v1/tenders/awarded/'+payload;
+            const url= 'http://192.168.1.44:8000/api/v1/tenders/on-progress/agent/'+payload;
                 await axios.get(url).then((data)=>{
                     // eslint-disable-next-line no-console
                     //console.log(res.data);
@@ -255,7 +284,20 @@ actions: {
                 });
             });
         },
-        
+
+// accept warded tender ================================================>>>>        
+        ACCEPT_BID : async ({commit},payload)=>{
+            const url = 'http://192.168.1.44:8000/api/v1/bids/confirm/'+payload;
+            await axios.put(url).then((data)=>{
+                console.log('accept bid');
+                console.log(data);
+                commit('SET_ACCEPT_BID',data)                
+            }).catch((error)=>{
+                console.log(error);
+                commit('SET_ACCEPT_BID',error) 
+            })
+        },
+// get agent details =================================================>>>>>
         GET_AGENT: async ({commit},payload) => {
             const url= 'http://192.168.1.44:8000/api/v1/agents/show/'+payload;
             await axios.get(url).then((res)=>{

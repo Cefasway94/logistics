@@ -102,7 +102,7 @@
       :key="componemtkey"
     >
       <v-tab @contextmenu="load()" @click="get_dashboard(tab)"  class="">Biding</v-tab>
-             <v-tab @click="get_onprogress()">On Progress</v-tab>
+      <v-tab @click="get_onprogress()">On Progress</v-tab>
              
 
       <v-tab-item v-for="n in 3" :key="n"  style="background-color:#F5FAFF;">
@@ -126,22 +126,21 @@
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
              v-for="(tender, i) in LOAD_DASHBOARDS.objects" :key="i"  >
 
-                <v-hover class="">
+                <v-hover 
+                class=""
+                v-show="accept">
                 <template v-slot="{ hover }">
                 <v-card 
                 column 
                 width="350" 
-                class="px-4 pb-3 pt-1 mx-auto"
-                :to="{name:'AgentAboutbid', params: {id:tender.id}}"
+                class="pl-3 pr-2 pb-2 pt-1 mx-auto"
                 :elevation="hover ? 15 : 3">
                    
-                    <v-row  row class="px-3 pt-2 mb-1 justify-space-between">
-                        <v-flex wrap xs7 sm8>
-                        <h4  class="subtitle-1 font-weight-bold">{{tender.bid_id}}</h4>
+                    <v-row  row class="pl-3 pt-3 mb-1 justify-space-between">
+                        <v-flex class="mb-1" wrap xs7 sm8>
+                        <h4  class="subtitle-1 font-weight-bold mb-0">{{tender.bid_id}}</h4>
                         </v-flex>
-                        
-                        <v-flex xs5 sm4 class="pl-2">
-                            
+                        <v-flex xs5 sm4 class="pl-3">
                         <!-- <v-icon color="#E9E9F0" class="" @click="true">clear</v-icon> -->
                         <v-chip 
                         small
@@ -151,26 +150,46 @@
                         </v-chip>
                         </v-flex>
                     </v-row>
+                    
                     <v-row class="pl-3">
-                        <p xs12 sm7 md7 class=" body-2 grey--text">{{tender.bid_terms_and_conditions}}</p>
+                        <p xs12 sm7 md7 class=" body-2 grey--text mb-1">{{tender.bid_terms_and_conditions}}</p>
                         <v-spacer></v-spacer>
                     </v-row>
                     <v-row class="px-3">
-                        <p class="body-1  pt-2 ">Time line</p>
+                        <p class="body-1  pt-2 mb-2">Time line</p>
                         
                          <!-- <v-icon small color="#4169E1" class="px-2 pb-2">
                         remove
                         </v-icon>  -->
                 
-                        <p  class="  pt-2 primary--text mx-3">{{tender.bid_delivery_timeline}}</p>
+                        <p  class="  pt-2 primary--text mx-3 mb-2">{{tender.bid_delivery_timeline}}</p>
                     </v-row>
 
-                    <v-row row class="px-3 mb-1">
+                    <v-row row class="mb-1 ">
+                        <v-flex xsm12 sm12 md6 lg6 class="px-3">
                         <h4  class=" title ">{{tender.bid_amount}} USD</h4>
-                        <v-spacer></v-spacer>
+                        </v-flex>
+                        <v-flex row xsm12 sm12 md12 lg6 class="px-3 pt-1">
+                        <v-flex xsm6 sm6 md6 class="px-1">
+                        
+                         <v-btn
+                        :to="{name:'AgentAboutbid', params: {id:tender.id}}"
+                         small 
+                         elevation="flat" 
+                        color="#4169E1" class="white--text" >
+                        view bid
+                        </v-btn>
+                        
+                        </v-flex>
+                        <v-flex :id="tender.bid_status" :ref="tender.bid_status" xsm6 sm6 md6 class="px-1">
+                        <center>
                         <v-btn small elevation="flat" 
-                        color="#4169E1" class="white--text" @click="getbiddetails(tender.bid_id)" :to="{name:'Aboutbid', 
-                        params: {id:tender.id}}" >View Details</v-btn>
+                        color="#4169E1" class="white--text" @click="acceptbid(tender.id)">
+                        accept
+                        </v-btn>
+                        </center>
+                        </v-flex>
+                        </v-flex>
                         
                     </v-row>
                     
@@ -205,9 +224,9 @@
                         <!-- <v-icon color="#E9E9F0" class="" @click="true">clear</v-icon> -->
                         <v-chip 
                         small
-                        :color="tender.tender_status"
+                        :color="tender.tender_progress" 
                         class="mainorange white--text px-2 font-weight-regular">
-                        {{tender.tender_status}}
+                        {{tender.tender_progress}}
                         </v-chip>
                         </v-flex>
                     </v-row>
@@ -257,6 +276,7 @@ export default {
   
   data () {
       return{
+          accept: true,
           verify:false,
           profile:false,
           onprogressliast:false,
@@ -275,9 +295,8 @@ export default {
             // eslint-disable-next-line no-console
           console.log('44444444');
              tab = localStorage.client
-        this.GET_AGENT(tab).then((data)=>{
-             // eslint-disable-next-line no-console
-            console.log(data);
+        this.GET_AGENT(tab).then(()=>{
+            
             if (!this.LOAD_AGENT.objects.agent_id == '') {
                 if (this.LOAD_AGENT.objects.is_verified == 0) {
                     setTimeout(()=>{
@@ -288,21 +307,21 @@ export default {
                 }else{
                      tab = this.tab
                  this.GET_DASHBOARD(tab).then(()=>{
+                     let status = this.$refs.accepted
+                     
+                         //document.getElementById()
                      // eslint-disable-next-line no-console
-                     console.log('bidsss---');
-                     // eslint-disable-next-line no-console
-                     console.log(this.LOAD_DASHBOARDS);
+                     console.log(status);
+                     if (status == 'accept') {
+                         // eslint-disable-next-line no-console
+                         console.log('did ------------------------');
+                         
+                     }else{
 
-// Set tender chip color ================================>>
-                // for (let index = 0; index < array.length; index++) {
-                //     const element = array[index];
-                    
-                // }
-                // if (this.LOAD_DASHBOARDS.objects.bid_status=='awarde') {
-                //      this.bidstatus = 'green'
-                // } else {
-                //      this.bidstatus = 'mainorange'
-                // }
+                         // eslint-disable-next-line no-console
+                         console.log(this.LOAD_DASHBOARDS);
+                     }
+
 // Remove loadding ================================>>
                      setTimeout(()=>{
                          this.loading = false
@@ -330,7 +349,7 @@ export default {
   
   methods:{
       ...mapActions([
-          'GET_DASHBOARD','GET_DASHBOARDDETAILs', 'GET_AGENT','GET_ONPROGRESS'
+          'GET_DASHBOARD','GET_DASHBOARDDETAILs', 'GET_AGENT','GET_ONPROGRESS','ACCEPT_BID'
           //'GET_BIDTENDERS'
       ]),
 
@@ -346,6 +365,7 @@ export default {
           this.$router.go('/agent/editprofile')
       },
 
+// get all dashboards (on bid tenders) ========================>>>>>>
       get_dashboard(tab){
           this.onprogressliast = false
           this.bidlist = false
@@ -370,6 +390,9 @@ export default {
         });
       },
 
+
+
+// get all awarded tenders     =============================>>>>
       get_onprogress(tab){
           this.onprogressliast = false
           this.bidlist = false
@@ -393,7 +416,20 @@ export default {
               console.log(this.LOAD_AGENT);   
         });
       },
+
+// accept bid ============================>>>
+    acceptbid(bid_id){
+        // eslint-disable-next-line no-console
+        console.log(bid_id);
         
+        this.ACCEPT_BID(bid_id).then(()=>{
+            // eslint-disable-next-line no-console
+            console.log(this.LOAD_ACCEPT_BID);
+            
+        })
+    },
+
+
 
 // GEt bid detail ==============================>>>
       getbiddetails(tab){
