@@ -3,21 +3,32 @@ import axios from 'axios'
 export default {
     state:{
 
-        AllTenders:[],
-        BidedTenders:[],
-        TendersOnProgress:[],
+        AllClearingTenders:[],
+        ClearingBidedTenders:[],
+        ClearingTendersOnProgress:[],
+
         tender:[],
         tenderCreated:false,
         Alert:'',
-        currencies:[]
+        currencies:[],
+
+        AllTransportingTenders:[],
+        TransportingBidedTenders:[],
+        TransportingOnProgressTenders:[],
+
+        Tenders:[],
+        BidedTenders:[],
+        OnProgressTenders:[],
     },
 
     getters:{
         
-        AllTenders: (state) => state.AllTenders,
-        BidedTenders: (state) => state.BidedTenders,
-        TendersOnProgress: (state) => state.TendersOnProgress,
+        AllClearingTenders: (state) => state.AllClearingTenders,
+        ClearingBidedTenders: (state) => state.ClearingBidedTenders,
+        ClearingTendersOnProgress: (state) => state.ClearingTendersOnProgress,
+        
         getTender: (state) => state.tender,
+
         tenderCreaed: (state) => state.tenderCreated,
         
         getCurrencies: (state) => state.currencies,
@@ -25,27 +36,46 @@ export default {
         getAlert:(state) => state.Alert,
 
         fetchTenderById: (state)=>(id)=>{
-            return state.AllTenders.find(tender=>tender.id === id);
-        }  
+            return state.AllClearingTenders.find(tender=>tender.id === id);
+        }, 
+
+
+        AllTransportingTenders: (state) => state.AllTransportingTenders,
+        TransportingBidedTenders: (state) => state.TransportingBidedTenders,
+        TransportingOnProgressTenders: (state) => state.TransportingOnProgressTenders,
+
+        Tenders: (state) => state.Tenders,
+        BidedTenders: (state) => state.BidedTenders,
+        OnProgressTenders: (state) => state.OnProgressTenders
     },
 
     mutations:{
        
-        setAllTenders: (state,tenders) => state.AllTenders = tenders,
-        setBidedTenders: (state,tenders) => state.BidedTenders = tenders,
-        setOnProgressTenders: (state,tenders) => state.TendersOnProgress = tenders,
-        AddTender: (state,tender) => state.AllTenders.unshift(tender),
-        TestMutation:(state) => state.AllTenders,
+        setAllClearingTenders: (state,tenders) => state.AllClearingTenders = tenders,
+        setClearingBidedTenders: (state,tenders) => state.BidedTenders = tenders,
+        setClearingTendersOnProgress: (state,tenders) => state.ClearingTendersOnProgress = tenders,
+
+        AddTender: (state,tender) => state.AllClearingTenders.unshift(tender),
+        TestMutation:(state) => state.AllClearingTenders,
         tenderCreated:(state,status) => state.tenderCreated = status,
 
         setAlert:(state,message) => state.Alert = message,
 
-        setTender: (state,id) => {
+        /*setTender: (state,id) => {
 
-            state.tender = state.AllTenders.find(tender=>tender.id === id);
-        },
+            state.tender = state.Tenders.find(tender=>tender.id === id);
+        },*/
 
-        setCurrencies: (state,currencies) => state.currencies = currencies
+        setCurrencies: (state,currencies) => state.currencies = currencies,
+
+        setAllTransportingTenders: (state,tenders) => state.AllTransportingTenders = tenders,
+        setTransportingBidedTenders: (state, tenders) => state.TransportingOnProgressTenders = tenders,
+        setTransportingOnProgressTenders: (state, tenders) => state.TransportingOnProgressTenders = tenders,
+
+        setTenders: (state) => state.Tenders = state.AllClearingTenders.concat(state.AllTransportingTenders),
+        setBidedTenders: (state) => state.BidedTenders = state.ClearingBidedTenders.concat(state.TransportingBidedTenders),
+        setOnProgressTenders: (state) => state.OnProgressTenders = state.ClearingTendersOnProgress.concat(state.TransportingOnProgressTenders)
+
     },
 
     actions: {
@@ -54,7 +84,7 @@ export default {
             commit('setAlert',message)
         },
 
-        fetchAllTenders: async ({commit},customer_id) => {
+        fetchAllClearingTenders: async ({commit},customer_id) => {
 
             const url = `http://192.168.1.44:8000/api/v1/tenders/list/${customer_id}`;
             //const url = `http://192.168.43.27:8000/api/v1/tenders/list/${customer_id}`;
@@ -62,14 +92,16 @@ export default {
             await axios.get(url).
                             then((response) => {
 
-                                commit('setAllTenders',response.data.objects)
+                                commit('setAllClearingTenders',response.data.objects)
 
                             }).catch(()=>{
 
                                 const response = null;
-                                commit('setAllTenders',response)
+                                commit('setAllClearingTenders',response)
                             });
         },
+
+
 
         setTender: async ({commit},tender_id) => {
 
@@ -79,7 +111,7 @@ export default {
             commit('setTender',tender_id)
         },
 
-        fetchBidedTenders: async ({commit},customer_id) => {
+        fetchClearingBidedTenders: async ({commit},customer_id) => {
 
             const url = `http://192.168.1.44:8000/api/v1/tenders/bided/${customer_id}`;
             //const url2 = `http://192.168.43.27:8000/api/v1/tenders/bided/${customer_id}`;
@@ -88,12 +120,12 @@ export default {
                             then((response) => {
 
                                 
-                                commit('setBidedTenders',response.data.objects)
+                                commit('setClearingBidedTenders',response.data.objects)
 
                             }).catch(()=>{
 
                                 const response = null;
-                                commit('setBidedTenders',response)
+                                commit('setClearingBidedTenders',response)
                             });
         },
 
@@ -116,9 +148,7 @@ export default {
                             });
         },
 
-    
-
-        fetchOnProgressTenders: async ({commit},customer_id) => {
+        fetchClearingTendersOnProgress: async ({commit},customer_id) => {
 
             const url = `http://192.168.1.44:8000/api/v1/tenders/on-progress/${customer_id}`;
             //const url = `http://192.168.43.27:8000/api/v1/tenders/on-progress/${customer_id}`;
@@ -126,12 +156,12 @@ export default {
             await axios.get(url).
                             then((response) => {
 
-                                commit('setOnProgressTenders',response.data.objects)
+                                commit('setClearingTendersOnProgress',response.data.objects)
 
                             }).catch(()=>{
 
                                 const response = null;
-                                commit('setOnProgressTenders',response)
+                                commit('setClearingTendersOnProgress',response)
                             });
         },
 
@@ -142,13 +172,66 @@ export default {
             await axios.get(url).
                             then((response) => {
 
-                                commit('setOnProgressTenders',response.data.objects)
+                                commit('setClearingTendersOnProgress',response.data.objects)
 
                             }).catch(()=>{
 
                                 const response = null;
-                                commit('setOnProgressTenders',response)
+                                commit('setClearingTendersOnProgress',response)
                             });
+        },
+
+        fetchAllTransportingTenders: async ({commit},customer_id) => {
+
+            const url = `http://192.168.1.44:9000/api/v1/tenders/list/${customer_id}`;
+  
+            await axios.get(url).
+                              then((response) => {
+
+
+                                //eslint-disable-next-line no-console
+                                //console.log(response.data.objects);
+                                  commit('setAllTransportingTenders',response.data.objects)
+                                 
+  
+                              }).catch(()=>{
+  
+                                  //const response = null;
+                                  //commit('setAllTenders',response)
+                              });
+        },
+  
+        fetchTransportingBidedTenders: async ({commit},customer_id) => {
+  
+            const url = `http://192.168.1.44:9000/api/v1/tenders/bided/${customer_id}`;
+  
+            await axios.get(url).
+                              then((response) => {
+  
+                                  commit('setTransportingBidedTenders',response.data.objects)
+                                  
+                              }).catch(()=>{
+  
+                                  //const response = null;
+                                  //commit('setAllTenders',response)
+                              });
+        },
+  
+        fetchTransportingOnProgressTenders: async ({commit},customer_id) => {
+  
+            const url = `http://192.168.1.44:9000/api/v1/tenders/on-progress/${customer_id}`;
+  
+            await axios.get(url).
+                              then((response) => {
+  
+                                  commit('setTransportingOnProgressTenders',response.data.objects)
+                                   
+                              }).catch(()=>{
+  
+                                  //const response = null;
+                                  //commit('setAllTenders',response)
+                              });
+  
         },
 
         /*AddTender: async ({commit},tender)=>{
@@ -188,6 +271,21 @@ export default {
         AddTender: ({commit},tender)=>{
 
             commit('AddTender',tender)
+        },
+
+
+        setTenders: ({commit}) =>{
+
+            commit('setTenders')
+        },
+
+        setOnProgressTenders: ({commit}) =>{
+            commit('setOnProgressTenders')
+        },
+
+        setBidedTenders: ({commit}) => {
+            commit('setBidedTenders')
         }
+        
     }
 }

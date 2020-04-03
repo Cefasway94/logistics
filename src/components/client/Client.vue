@@ -45,7 +45,7 @@
                                     <template v-if='tab.title === "All"'>
 
 
-                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in AllTenders" :key="tender.id">
+                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in Tenders" :key="tender.id">
                                         <v-card column width="350"  elevation="3" class="px-4 py-3">
                                             <v-row  row class="px-3 pt-1">
                                                 <h4  class="">{{ tender.cargo_details}}</h4>
@@ -58,7 +58,7 @@
                    
                                             <p class=" body-2 grey--text">{{ tender.description}}</p>
                     
-                                            <v-row class="px-3">
+                                            <v-row class="px-3" v-show="tender.tender_type == 1">
                                                 <p class="body-2  pt-1 ">{{  tender.origin }}</p>
                         
                                                 <v-icon small color="#4169E1" class="px-2 pb-3">
@@ -71,7 +71,7 @@
                                                 <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
-                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" @click="set(tender.id)" :to="'/client/tender/' + tender.id">View Details</v-btn>
+                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View Details</v-btn>
                                             </v-row>
                                         </v-card>
                                     </v-flex>  
@@ -126,7 +126,7 @@
 
                                      <template v-if='tab.title === "Progress"'>
 
-                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in TendersOnProgress" :key="tender.id">
+                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in OnProgressTenders" :key="tender.id">
                                         <v-card column width="350"  elevation="3" class="px-4 py-3">
                                             <v-row  row class="px-3 pt-1">
                                                 <h4  class="">{{ tender.cargo_details}}</h4>
@@ -196,17 +196,24 @@ export default {
           tab: null,
 
           id: 10,
-          alert:''
+          alert:'',
 
       }
+
   },
 
   computed:{
-      ...mapGetters(['AllTenders','BidedTenders','TendersOnProgress','getAlert'])
+      ...mapGetters(['AllClearingTenders','Tenders','ClearingBidedTenders','OnProgressTenders',
+                        'ClearingTendersOnProgress','getAlert','AllTransportingTenders',
+                        'TransportingBidedTenders','TransportingOnProgressTenders','BidedTenders',
+                    ])
   },
 
   methods: {
-      ...mapActions(['fetchAllTenders','fetchCurrencies','fetchBidedTenders','fetchOnProgressTenders','setTender','setAlert']),
+      ...mapActions(['fetchAllClearingTenders','fetchCurrencies','fetchClearingBidedTenders',
+                        'fetchClearingTendersOnProgress','setTender','setAlert',
+                        'fetchAllTransportingTenders','setTenders','fetchTransportingBidedTenders',
+                        'fetchTransportingOnProgressTenders','setOnProgressTenders','setBidedTenders']),
 
       set(id){
           //eslint-disable-next-line no-console
@@ -215,20 +222,30 @@ export default {
       },
 
       fetch(tab){
+
           switch(tab){
+
               case 'All':
 
-                  this.fetchAllTenders(this.id);
-                 
+                  this.fetchAllClearingTenders(this.id);
+                  this.fetchAllTransportingTenders(this.id);
+                  this.setTenders();
+                   
                   break;
+
               case 'Biding':
 
-                  this.fetchBidedTenders(this.id);
-                 
+                  this.fetchClearingBidedTenders(this.id);
+                  this.fetchTransportingBidedTenders(this.id);
+                  this.setBidedTenders()
+                  
                   break;
               case 'Progress':
 
-                  this.fetchOnProgressTenders(this.id);
+                  this.fetchClearingTendersOnProgress(this.id);
+                  this.fetchTransportingOnProgressTenders(this.id);
+                  this.setOnProgressTenders();
+                  
                   
                   break;
               default:
@@ -242,9 +259,14 @@ export default {
           this.alert = this.$route.query.alert;
       }*/
       
-      this.fetchAllTenders(this.id),
-      this.fetchBidedTenders(this.id),
-      this.fetchOnProgressTenders(this.id)
+      this.fetchAllClearingTenders(this.id),
+      this.fetchClearingBidedTenders(this.id),
+      this.fetchClearingTendersOnProgress(this.id)
+     
+      this.fetchAllTransportingTenders(this.id);
+      this.fetchTransportingBidedTenders(this.id);
+      this.fetchTransportingOnProgressTenders(this.id);
+
       this.fetchCurrencies();
   },
     

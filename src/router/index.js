@@ -98,7 +98,7 @@ const routes = [
     components:{Aboutbid}
   },
   {
-    path:'/client/tender/:id',
+    path:'/client/tender/:id/:tender_type',
     name:'Tender',
     components:{Tender}
   },
