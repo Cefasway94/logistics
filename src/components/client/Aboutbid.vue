@@ -231,6 +231,9 @@ import {mapActions} from 'vuex'
 
             this.awardDialog = false;
 
+             //eslint-disable-next-line no-console
+                               //console.log(this.bid.id);
+
             let url = `http://192.168.1.44:8000/api/v1/bids/award/${this.bid.id}`;
 
             axios.put(url).then((response) => 

@@ -61,6 +61,20 @@
                                 >
                                 </v-select>
                             </v-col>
+                        </v-row>
+                        <v-row>
+                            <!--<v-col>
+                                <v-select 
+                                    class="mx-6" 
+                                    style="color:#4169E1;"
+                                    v-model = "tender_category" 
+                                    :items="tender_categories" 
+                                    color="#4169E1" 
+                                    label="Tender category" 
+                                    clearable 
+                                >
+                                </v-select>
+                            </v-col>-->
                         <v-col>
                             <p class="primary--text body-2 text-uppercase mb-0">CARGO DETAILS</p>
                             <v-text-field 
@@ -83,7 +97,7 @@
                         </v-row>
 
                         <v-row class="px-3">
-                            <v-row wrap>
+                            <v-row wrap v-show="tender_category === 'Transporting'">
                                 <!--<v-col xs12 sm6 md4 lg4 xl4>
                                     <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
                                     <v-text-field 
@@ -103,8 +117,6 @@
 
                                 </v-col>-->
 
-                               
-                            
                                 <v-col>
                                     <p class="primary--text body-2 text-uppercase mb-0">ORIGIN</p>
                                     <v-text-field 
@@ -124,23 +136,7 @@
                                     >
                                     </v-text-field>
                                 </v-col>
-                                <v-col xs12 sm6 md4 lg4 xl4>
-                                    <!--<v-text-field 
-                                        outlined 
-                                        clearable
-                                        v-model="currency">
-                                    </v-text-field>-->
-                                    <v-select 
-                                        class="mx-6" 
-                                        style="color:#4169E1;"
-                                        v-model = "currency" 
-                                        :items="currencies" 
-                                        color="#4169E1" 
-                                        label="Currency" 
-                                        clearable 
-                                    >
-                                    </v-select>
-                                </v-col>
+                                
 
                                 <!--<v-col xs12 sm6 md4 lg4 xl4>
                                     <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
@@ -172,6 +168,24 @@
                                     full-width>
                                 </v-date-picker>
                             </v-col>-->
+
+                            <v-col xs12 sm6 md4 lg4 xl4>
+                                    <!--<v-text-field 
+                                        outlined 
+                                        clearable
+                                        v-model="currency">
+                                    </v-text-field>-->
+                                    <v-select 
+                                        class="mx-6" 
+                                        style="color:#4169E1;"
+                                        v-model = "currency" 
+                                        :items="currencies" 
+                                        color="#4169E1" 
+                                        label="Currency" 
+                                        clearable 
+                                    >
+                                    </v-select>
+                                </v-col>
 
                             <v-col xs12 sm6 md4 lg4 xl4>
                                     <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
@@ -311,7 +325,7 @@
             <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row class=" pa-3">
                     <v-spacer></v-spacer>
-                    <v-btn outlined color="primary" class="mx-4" router to="/client">Cancel</v-btn>
+                    <v-btn outlined color="primary" class="mx-4"  @click="cancel">Cancel</v-btn>
                     <v-btn color="primary white--text" type="submit" @click="publishTender">Publish tender</v-btn>
                 </v-row>
             </v-card>
@@ -350,7 +364,8 @@ export default {
         currencies:['TZS','USD'],
         alert:'',
         tender_categories:[],
-        tender_category:''
+        tender_category:'',
+
     }),
 
     computed:{
@@ -360,6 +375,13 @@ export default {
     methods: {
 
         ...mapActions(['AddTender','setAlert','fetchCurrencies']),
+
+        cancel(){
+
+            this.loading = false;
+
+            this.$router.push('/client');
+        },
 
         allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
 
@@ -392,13 +414,17 @@ export default {
 
             let formData = new FormData();
 
-            for( var i = 0; i < this.photos.length; i++){
-                let file = this.photos[i];
+            if(this.photos.length > 0){
 
-                formData.append('cargo_photo['+i+']',file);
+                for( var i = 0; i < this.photos.length; i++){
 
+                    let file = this.photos[i];
+
+                    formData.append('cargo_photo['+i+']',file);
+
+                }
             }
-
+            
             formData.append('cargo_size',this.size);
             formData.append('bill_of_lading[0]',this.bill_of_lading[0]);
             formData.append('authorization_letter[0]',this.authorization_letter[0]);
@@ -406,8 +432,14 @@ export default {
             formData.append('customer_offer_amount',this.offer_amount);
             formData.append('customer_terms_and_conditions',this.terms);
             formData.append('customer_delivery_timeline',this.timeline);
-            formData.append('origin',this.origin);
-            formData.append('destination',this.destination);
+
+            if(this.tender_category === 'Transporting'){
+
+                formData.append('origin',this.origin);
+                
+                formData.append('destination',this.destination);
+            }
+            
             formData.append('currency',this.currency);
             formData.append('description',this.description);
             formData.append('tender_category',this.tender_category);
@@ -421,11 +453,15 @@ export default {
 
             let formData = this.createData();
 
-            const url = "http://192.168.1.44:8000/api/v1/tenders?customer_id=10";
-            //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
+
+
+            if(this.tender_category === 'Transporting')
+            {
+                const url = "http://192.168.1.44:9000/api/v1/tenders?customer_id=10";
+                //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
 
          
-            axios.post(url,
+                axios.post(url,
                             formData,
                             {
                                 headers: {
@@ -464,7 +500,56 @@ export default {
                                 this.alert = this.getAlert();
 
                                 this.$router.push('/client/createtender');
-                            });    
+                            }); 
+
+            } else if(this.tender_category === 'Clearing')
+
+            {
+                const url = "http://192.168.1.44:8000/api/v1/tenders?customer_id=10";
+                //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
+
+                axios.post(url,
+                            formData,
+                            {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            }).
+                            then((response) => {
+
+                             
+                                this.loading = false;
+
+                                if(response.data.genralErrorCode == 8004){
+
+                                    //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
+                                    this.alert = response.data.message;
+                                }
+                                else if(response.data.genralErrorCode == 8000){
+
+                                    this.AddTender(response.data.objects);
+
+                                    this.setAlert(response.data.message);
+
+                                    this.$router.push('/client');
+                                }
+
+                                //eslint-disable-next-line no-console
+                                //console.log(response.data);
+
+                            }).catch(()=>{
+
+                                //eslint-disable-next-line no-console
+                                console.log("error occured");
+
+                                this.setAlert("Erro occured. Please try again");
+
+                                this.alert = this.getAlert();
+
+                                this.$router.push('/client/createtender');
+                            }); 
+            }
+              
         }
     },
 

@@ -869,9 +869,10 @@ export default {
                             {
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
+
                                 vm.tender = response.data.objects;
 
-                                 axios.get(`http://192.168.1.44:8000//api/v1/agent-industries/${response.data.objects.tender_type}`).then((response) => 
+                                axios.get(`http://192.168.1.44:8000//api/v1/agent-industries/${response.data.objects.tender_type}`).then((response) => 
                                     {   
                                         if(response.data.objects.industry_name === "Transporting")
                                             vm.transporting = true;
