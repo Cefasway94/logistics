@@ -107,7 +107,7 @@
                                         :disabled="editValid" 
                                         color="#4169E1" 
                                         large class="white--text"
-                                        :to="'/client/edittender/'+tender.id">
+                                        :to="'/client/edittender/'+tender.id+'/'+tender.tender_type">
                                         Edit
                                     </v-btn>
                             </v-flex>

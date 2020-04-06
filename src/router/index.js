@@ -68,7 +68,7 @@ const routes = [
     components: {Client}
   },
   {
-    path:'/client/AboutTenderBids/:id',
+    path:'/client/AboutTenderBids/:id/:tender_type',
     name:'AboutTenderBids',
     components: {AboutTenderBids}
   },
@@ -83,7 +83,7 @@ const routes = [
     components:{Createtender}
   },
   {
-    path:'/client/tenderprogress/:id',
+    path:'/client/tenderprogress/:id/:tender_type',
     name:'Tenderprogressclient',
     components:{Tenderprogressclient}
   },
@@ -93,7 +93,7 @@ const routes = [
     components:{Payment}
   },
   {
-    path:'/client/Aboutbid/:id',
+    path:'/client/Aboutbid/:id/:tender_type',
     name:'Aboutbid',
     components:{Aboutbid}
   },
@@ -103,7 +103,7 @@ const routes = [
     components:{Tender}
   },
   {
-    path:'/client/edittender/:id',
+    path:'/client/edittender/:id/:tender_type',
     name:'editTender',
     components:{editTender}
   },

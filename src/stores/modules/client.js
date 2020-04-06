@@ -52,7 +52,7 @@ export default {
     mutations:{
        
         setAllClearingTenders: (state,tenders) => state.AllClearingTenders = tenders,
-        setClearingBidedTenders: (state,tenders) => state.BidedTenders = tenders,
+        setClearingBidedTenders: (state,tenders) => state.ClearingBidedTenders = tenders,
         setClearingTendersOnProgress: (state,tenders) => state.ClearingTendersOnProgress = tenders,
 
         AddTender: (state,tender) => state.AllClearingTenders.unshift(tender),
@@ -61,15 +61,15 @@ export default {
 
         setAlert:(state,message) => state.Alert = message,
 
-        /*setTender: (state,id) => {
+        setTender: (state,tender) => {
 
-            state.tender = state.Tenders.find(tender=>tender.id === id);
-        },*/
+            state.tender = tender;
+        },
 
         setCurrencies: (state,currencies) => state.currencies = currencies,
 
         setAllTransportingTenders: (state,tenders) => state.AllTransportingTenders = tenders,
-        setTransportingBidedTenders: (state, tenders) => state.TransportingOnProgressTenders = tenders,
+        setTransportingBidedTenders: (state, tenders) => state.TransportingBidedTenders = tenders,
         setTransportingOnProgressTenders: (state, tenders) => state.TransportingOnProgressTenders = tenders,
 
         setTenders: (state) => state.Tenders = state.AllClearingTenders.concat(state.AllTransportingTenders),
@@ -103,12 +103,9 @@ export default {
 
 
 
-        setTender: async ({commit},tender_id) => {
+        setTender: ({commit},tender) => {
 
-            //const url = `http://192.168.1.44:8000/api/v1/tenders/list/${customer_id}`;
-            //const url2 = `http://192.168.43.27:8000/api/v1/tenders/list/${customer_id}`
-
-            commit('setTender',tender_id)
+            commit('setTender',tender)
         },
 
         fetchClearingBidedTenders: async ({commit},customer_id) => {
@@ -119,7 +116,6 @@ export default {
             await axios.get(url).
                             then((response) => {
 
-                                
                                 commit('setClearingBidedTenders',response.data.objects)
 
                             }).catch(()=>{
@@ -202,19 +198,26 @@ export default {
         },
   
         fetchTransportingBidedTenders: async ({commit},customer_id) => {
-  
+
+        
             const url = `http://192.168.1.44:9000/api/v1/tenders/bided/${customer_id}`;
   
             await axios.get(url).
-                              then((response) => {
-  
-                                  commit('setTransportingBidedTenders',response.data.objects)
-                                  
-                              }).catch(()=>{
-  
-                                  //const response = null;
-                                  //commit('setAllTenders',response)
-                              });
+                                then((response) => {
+
+                                       //eslint-disable-next-line no-console
+                                        //console.log(response.data.objects);
+
+                                    commit('setTransportingBidedTenders',response.data.objects)
+
+                            }).catch(()=>{
+
+                                //const response = null;
+                                //commit('setClearingBidedTenders',response)
+                                //eslint-disable-next-line no-console
+                                        console.log("There is an error");
+
+            });
         },
   
         fetchTransportingOnProgressTenders: async ({commit},customer_id) => {

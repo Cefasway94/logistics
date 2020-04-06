@@ -52,7 +52,7 @@
     
                                     </v-flex>
                                     <v-flex column sm6 xs12  class="pl-3">
-                                        <p class="body-1">{{ bid.bid_amount}}</p>
+                                        <p class="body-1">{{bid.bid_amount}}</p>
                                     </v-flex>
                                 </v-flex>
 
@@ -234,9 +234,11 @@ import {mapActions} from 'vuex'
              //eslint-disable-next-line no-console
                                //console.log(this.bid.id);
 
-            let url = `http://192.168.1.44:8000/api/v1/bids/award/${this.bid.id}`;
+            if(this.$route.params.tender_type == 1){
 
-            axios.put(url).then((response) => 
+                let url = `http://192.168.1.44:9000/api/v1/bids/award/${this.bid.id}`;
+
+                axios.put(url).then((response) => 
                             {
 
                                //commit('setOnProgressTenders',response.data.objects)
@@ -257,15 +259,46 @@ import {mapActions} from 'vuex'
                                 this.$router.push('/client');
                             });
 
+            } else if(this.$route.params.tender_type == 2){
+
+                let url = `http://192.168.1.44:8000/api/v1/bids/award/${this.bid.id}`;
+
+                axios.put(url).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+
+                               this.setAlert(response.data.message);
+
+                               this.$router.push('/client');
+     
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                                this.setAlert("There is error during awarding a tender, Try again later");
+
+                                this.$router.push('/client');
+                            });
+
+            }
+
+            
+
         },
 
         dropAward(){
 
             this.dropDialog = false;
 
-            let url = `http://192.168.1.44:8000/api/v1/bids/drop/${this.bid.id}`;
+            if(this.$route.params.tender_type == 1){
 
-            axios.put(url).then((response) => 
+                let url = `http://192.168.1.44:9000/api/v1/bids/drop/${this.bid.id}`;
+
+                axios.put(url).then((response) => 
                             {
 
                                //commit('setOnProgressTenders',response.data.objects)
@@ -286,6 +319,34 @@ import {mapActions} from 'vuex'
                                 this.$router.push('/client');
                             });
 
+            } else if(this.$route.params.tender_type == 2){
+
+                let url = `http://192.168.1.44:8000/api/v1/bids/drop/${this.bid.id}`;
+
+                axios.put(url).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+
+                               this.setAlert(response.data.message);
+
+                               this.$router.push('/client');
+     
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                                this.setAlert("There is error during droping award for a tender , Try again later");
+
+                                this.$router.push('/client');
+                            });
+            }
+
+            
+
         },
 
     },
@@ -296,10 +357,12 @@ import {mapActions} from 'vuex'
         //access to component's instance using `vm` .
         //this is done because this navigation guard is called before the component is created.           
 
-        let url = `http://192.168.1.44:8000/api/v1/bids/show/${vm.$route.params.id}`;
+        if(vm.$route.params.tender_type ==1 )
+        {
+            let url = `http://192.168.1.44:9000/api/v1/bids/show/${vm.$route.params.id}`;
         
 
-        axios.get(url).then((response) => 
+            axios.get(url).then((response) => 
                             {
 
                                //commit('setOnProgressTenders',response.data.objects)
@@ -322,8 +385,36 @@ import {mapActions} from 'vuex'
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
                             });
+
+        } else if(vm.$route.params.tender_type == 2){
+
+            let url = `http://192.168.1.44:8000/api/v1/bids/show/${vm.$route.params.id}`;
         
 
+            axios.get(url).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                                vm.bid = response.data.objects;
+
+                                let url2 = `http://192.168.1.44:8000/api/v1/payment-terms/${response.data.objects.payment_id}`;
+
+                                axios.get(url2).then((response)=>{
+
+                                                
+                                             //eslint-disable-next-line no-console
+                                            //console.log(response.data.objects);
+                                            vm.payment = response.data.objects;
+                                });
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+            }
          next();
         }) 
     },

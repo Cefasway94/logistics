@@ -117,7 +117,7 @@
                                             <v-row row class="px-3">
                                                 <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
                                                     <v-spacer></v-spacer>
-                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" @click="set(tender.id)" :to="'/client/AboutTenderBids/' + tender.id">View Details</v-btn>
+                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text"  @click="set(tender)" :to="'/client/AboutTenderBids/'+ tender.id+'/'+tender.tender_type">View Details</v-btn>
                                             </v-row>
                                         </v-card>
                                     </v-flex>  
@@ -215,11 +215,11 @@ export default {
                         'fetchAllTransportingTenders','setTenders','fetchTransportingBidedTenders',
                         'fetchTransportingOnProgressTenders','setOnProgressTenders','setBidedTenders']),
 
-      set(id){
+      set(tender){
           //eslint-disable-next-line no-console
-          //console.log(string);
-          this.setTender(id);
-      },
+          //console.log(tender);
+          this.setTender(tender);
+      },    
 
       fetch(tab){
 
@@ -237,6 +237,10 @@ export default {
 
                   this.fetchClearingBidedTenders(this.id);
                   this.fetchTransportingBidedTenders(this.id);
+
+                   //eslint-disable-next-line no-console
+                                //console.log(this.TransportingBidedTenders);
+
                   this.setBidedTenders()
                   
                   break;
@@ -266,6 +270,9 @@ export default {
       this.fetchAllTransportingTenders(this.id);
       this.fetchTransportingBidedTenders(this.id);
       this.fetchTransportingOnProgressTenders(this.id);
+
+         //eslint-disable-next-line no-console
+                        //console.log(this.ClearingBidedTenders);
 
       this.fetchCurrencies();
   },

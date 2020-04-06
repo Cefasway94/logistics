@@ -24,11 +24,11 @@
                     <v-card width="" class="pt-6 pb-3 pl-8">
                         <v-flex column>
                             <v-flex row >
-                                <v-flex column class="pl-3">
+                                <v-flex column class="pl-3" v-show="transporting">
                                     <p class=" body-1 mb-2" style="color:#4169E1;"> DESTINATION </p>
                                     <p class="body-1">{{ tender.destination }}</p>
                                 </v-flex>
-                                <v-flex column >
+                                <v-flex column v-show="transporting">
                                     <p class=" body-1 mb-2" style="color:#4169E1;"> ORIGIN </p>
                                     <p class="body-1">{{ tender.destination }}</p>
                                 </v-flex>
@@ -38,11 +38,14 @@
                                 </v-flex>
                             </v-flex>
 
-                        <v-flex column class="mt-7 pr-4">
-                            <p class=" body-1 mb-1" style="color:#4169E1;"> TERMS AND CONDITIIONS </p>
-                            <p class="body-1">{{ tender.customer_terms_and_conditions }}</p>
-                        </v-flex>
+                            <v-flex row>
+                                 <v-flex column class="mt-7 pr-4">
+                                    <p class=" body-1 mb-1" style="color:#4169E1;"> TERMS AND CONDITIIONS </p>
+                                    <p class="body-1">{{ tender.customer_terms_and_conditions }}</p>
+                                </v-flex>
 
+                            </v-flex>
+                       
                         <v-flex row class="mt-10 mb-4" >
 
                             <v-flex column class="pl-3">
@@ -720,7 +723,7 @@ export default {
 
     methods:{
 
-        setProgress(tender_progress){
+        setTransportingProgress(tender_progress){
             
 
             for(let i=0; i< tender_progress.length; i++)
@@ -728,7 +731,7 @@ export default {
                 //eslint-disable-next-line no-console
                 //console.log(tender_progress[i].progress_name);
                                                                                                           
-                axios.get(`http://192.168.1.44:8000/api/v1/configurations/${tender_progress[i].progress_id}`).
+                axios.get(`http://192.168.1.44:9000/api/v1/configurations/${tender_progress[i].progress_id}`).
                             then((response) => 
                             {
 
@@ -859,34 +862,20 @@ export default {
     beforeRouteEnter (to, from, next) { 
         next(vm => { 
 
-            let url = `http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`;
+            if(vm.$route.params.tender_type == 1){
 
-            //let transporting = `http://192.168.1.44:8000/api/v1/transport-progress/tender/${vm.$route.params.id}`;
+                let url = `http://192.168.1.44:9000/api/v1/tenders/${vm.$route.params.id}`;
 
-            let clearing = `http://192.168.1.44:8000/api/v1/clearing-progress/tender/${vm.$route.params.id}`;
+                let transporting = `http://192.168.1.44:9000/api/v1/transport-progress/tender/${vm.$route.params.id}`;
+
+                vm.transporting = true;
         
-            axios.get(url).then((response) => 
+                axios.get(url).then((response) => 
                             {
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
 
                                 vm.tender = response.data.objects;
-
-                                axios.get(`http://192.168.1.44:8000//api/v1/agent-industries/${response.data.objects.tender_type}`).then((response) => 
-                                    {   
-                                        if(response.data.objects.industry_name === "Transporting")
-                                            vm.transporting = true;
-                                        else 
-                                            vm.clearing = true;
-
-                                        //eslint-disable-next-line no-console
-                                        //console.log(response.data.objects);
-
-                                    }).catch(()=>{
-
-                                    // response = null;
-                                    //commit('setOnProgressTenders',response)
-                                    });
 
                             }).catch(()=>{
 
@@ -894,7 +883,41 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
-            axios.get(clearing).then((response) => 
+                axios.get(transporting).then((response) => 
+                            {
+                                //vm.setProgress(response.data.objects);
+                                
+                                vm.setTransportingProgress(response.data.objects);
+                                 //eslint-disable-next-line no-console
+                                 //console.log(response.data.objects);
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+
+            } else if(vm.$route.params.tender_type == 2){
+
+                let url = `http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`;
+
+                let clearing = `http://192.168.1.44:8000/api/v1/clearing-progress/tender/${vm.$route.params.id}`;
+
+                vm.clearing = true;
+        
+                axios.get(url).then((response) => 
+                            {
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+
+                                vm.tender = response.data.objects;
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+
+                axios.get(clearing).then((response) => 
                             {
                                 //vm.setProgress(response.data.objects);
                                 
@@ -906,6 +929,9 @@ export default {
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
                             });
+            }
+
+            
             next();
         }) 
     },

@@ -5,14 +5,14 @@
                 <v-flex row class="px-3 ">
                     <v-flex>
                         <v-row class="pl-2 mb-1">
-                            <h1 class=" font-weight-regular headline ">{{ this.getTender.cargo_details}}</h1>
-                            <v-chip color="green" small class="white--text ml-7 mt-1">{{ this.getTender.tender_progress}}</v-chip>
+                            <h1 class=" font-weight-regular headline ">{{ tender.cargo_details}}</h1>
+                            <v-chip color="green" small class="white--text ml-7 mt-1">{{ tender.tender_progress}}</v-chip>
                         </v-row>
-                        <p class="grey--text">{{ this.getTender.description}}</p>
+                        <p class="grey--text">{{ tender.description}}</p>
                     </v-flex>
 
                     <v-spacer></v-spacer>
-                    <h2 > {{this.getTender.currency}} {{ this.getTender.customer_offer_amount}}</h2>
+                    <h2 > {{tender.currency}} {{ tender.customer_offer_amount}}</h2>
                 </v-flex>
             </v-card>
 
@@ -23,24 +23,29 @@
                             <v-flex column>
                                 <v-flex row >
 
-                                    <v-flex column class="pl-3">
-                                        <p class="primary--text body-1 mb-2"> DESTINATION </p>
-                                        <p class="body-1">{{ this.getTender.destination}}</p>
+                                    <v-flex column class="pl-3" v-show="tender.tender_type == 2">
+                                        <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
+                                        <p class="body-1">{{ tender.customer_terms_and_conditions}}</p>
                                     </v-flex>
-                                    <v-flex column >
+                                    
+                                    <v-flex column class="pl-3" v-show="tender.tender_type == 1">
+                                        <p class="primary--text body-1 mb-2"> DESTINATION </p>
+                                        <p class="body-1">{{ tender.destination}}</p>
+                                    </v-flex>
+                                    <v-flex column v-show="tender.tender_type == 1">
                                         <p class="primary--text body-1 mb-2"> ORIGIN </p>
-                                        <p class="body-1">{{ this.getTender.origin}}</p>
+                                        <p class="body-1">{{ tender.origin}}</p>
                                     </v-flex>
                                     <v-flex column >
                                         <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
-                                        <p class="body-1">{{ this.getTender.cargo_size}}</p>
+                                        <p class="body-1">{{ tender.cargo_size}}</p>
                                     </v-flex>
 
                                 </v-flex>   
 
-                                <v-flex column class="mt-7 pr-4">
+                                <v-flex column class="mt-7 pr-4" v-show="tender.tender_type == 1">
                                     <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
-                                    <p class="body-1">{{ this.getTender.customer_terms_and_conditions}}</p>
+                                    <p class="body-1">{{ tender.customer_terms_and_conditions}}</p>
                                 </v-flex>
                             </v-flex>
                         </v-card>
@@ -115,7 +120,7 @@
                                                             <v-chip color="green" small class="white--text ml-7 mt-1">{{ bid.bid_status}}</v-chip>
                                                         </v-flex>
                                                         <v-flex column class="px-6 pt-1 mt-5">
-                                                            <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/Aboutbid/' + bid.id">View Bid</v-btn>
+                                                            <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/Aboutbid/' + bid.id+'/'+tender.tender_type">View Bid</v-btn>
                                                         </v-flex>
 
                                                     </v-flex>
@@ -143,6 +148,7 @@ export default {
             placeholder: 3,
             value:80,
             bids:[],
+            tender:[]
         }
     },
 
@@ -151,7 +157,7 @@ export default {
     },
 
     methods:{
-        ...mapActions(['setTender'])
+        ...mapActions(['setTender']),
     },
 
     beforeRouteEnter (to, from, next) { 
@@ -159,10 +165,27 @@ export default {
 
         //access to component's instance using `vm` .
         //this is done because this navigation guard is called before the component is created.           
+        //vm.tender_type = vm.getTender.tender_type;
+        if(vm.$route.params.tender_type == 1){
 
-        let url = `http://192.168.1.44:8000/api/v1/bids/${vm.$route.params.id}`;
+            //fetching the tender
+            axios.get(`http://192.168.1.44:9000/api/v1/tenders/${vm.$route.params.id}`).then((response) => 
+                            {
 
-        axios.get(url).then((response) => 
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                                vm.tender = response.data.objects;
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+
+            let url = `http://192.168.1.44:9000/api/v1/bids/${vm.$route.params.id}`;
+
+            axios.get(url).then((response) => 
                             {
 
                                //commit('setOnProgressTenders',response.data.objects)
@@ -175,8 +198,41 @@ export default {
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
                             });
-        
 
+        } else if(vm.$route.params.tender_type == 2 ){
+
+            //fetching the tender
+            axios.get(`http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                                vm.tender = response.data.objects;
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+
+            //fetching tender bids
+            let url = `http://192.168.1.44:8000/api/v1/bids/${vm.$route.params.id}`;
+
+            axios.get(url).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                                vm.bids = response.data.objects;
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+        }
          next();
         }) 
     },

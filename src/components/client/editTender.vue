@@ -22,7 +22,7 @@
                     <v-form>
                     <v-container>
                         <v-row>                         
-                        <v-col>
+                        <v-col xs12 sm6 md4 lg4 xl4>
                             <p class="primary--text body-2 text-uppercase mb-0">CARGO DETAILS</p>
                             <v-text-field 
                             outlined 
@@ -31,7 +31,7 @@
                             >
                             </v-text-field>
                         </v-col>
-                        <v-col>
+                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 1">
                             <p class="primary--text body-2 text-uppercase mb-0">ORIGIN</p>
                             <v-text-field 
                             outlined 
@@ -40,7 +40,7 @@
                             </v-text-field>
                         </v-col>
 
-                        <v-col>
+                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 1">
                             <p class="primary--text body-2 text-uppercase mb-0">DESTINATION</p>
                             <v-text-field 
                             outlined 
@@ -48,12 +48,21 @@
                             v-model="tender.destination">
                             </v-text-field>
                         </v-col>
+
+                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 2">
+                                    <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
+                                    <v-text-field 
+                                        outlined 
+                                        clearable
+                                        v-model="tender.cargo_size">
+                                    </v-text-field>
+                                </v-col>
                         </v-row>
 
                         <v-row class="px-3">
                             
                             <v-row wrap>
-                                <v-col xs12 sm6 md4 lg4 xl4>
+                                <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 1">
                                     <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
                                     <v-text-field 
                                         outlined 
@@ -272,7 +281,8 @@ export default {
     name: "createtender",
 
     data: ()=>({
-        tender:[]
+        tender:[],
+        tender_type:''
     }),
 
     computed:{
@@ -291,23 +301,25 @@ export default {
 
         editTender(){
 
-            let updatedTender = {           
+            if(this.$route.params.tender_type == 1) {
+
+                let updatedTender = {           
 
                 cargo_details: this.tender.cargo_details,
                 currency: this.tender.currency,
                 cargo_size: this.tender.cargo_size,
-                destination: this.tender.destination,
                 description: this.tender.description,
                 customer_offer_amount: this.tender.customer_offer_amount,
                 customer_terms_and_conditions: this.tender.customer_terms_and_conditions,
                 customer_delivery_timeline: this.tender.customer_delivery_timeline,
                 origin: this.tender.origin,
+                destination: this.tender.destination,
                 customer_id:10,
 
             }
 
-            
-            axios.put(`http://192.168.1.44:8000/api/v1/tenders/${this.tender.id}`,updatedTender).
+
+                axios.put(`http://192.168.1.44:9000/api/v1/tenders/${this.tender.id}`,updatedTender).
                     then((response)=>{
                   
                         //eslint-disable-next-line no-console
@@ -328,6 +340,44 @@ export default {
                         //eslint-disable-next-line no-console
                         console.log("Error occured");
                     });
+
+            } else if(this.$route.params.tender_type == 2){
+
+                let updatedTender = {           
+                    cargo_details: this.tender.cargo_details,
+                    currency: this.tender.currency,
+                    cargo_size: this.tender.cargo_size,
+                    description: this.tender.description,
+                    customer_offer_amount: this.tender.customer_offer_amount,
+                    customer_terms_and_conditions: this.tender.customer_terms_and_conditions,
+                    customer_delivery_timeline: this.tender.customer_delivery_timeline,
+                    customer_id:10,
+
+                }
+
+                axios.put(`http://192.168.1.44:8000/api/v1/tenders/${this.tender.id}`,updatedTender).
+                    then((response)=>{
+                  
+                        //eslint-disable-next-line no-console
+                        //console.log(res.data);
+
+                        //this.$router.push('/client');
+                        
+                        //this.$router.push({path:'/client',query:{alert:'Customer has been edited'}});//then(window.location.load);
+
+                        //this.$router.push({path:'/client',query:{alert:response.data.message}});
+
+                        this.setAlert(response.data.message);
+
+                        this.$router.push('/client');
+
+                    }).catch(()=>{
+
+                        //eslint-disable-next-line no-console
+                        console.log("Error occured");
+                    });
+            }
+            
                     
         }
    },
@@ -341,7 +391,65 @@ export default {
 
         //access to component's instance using `vm` .
         //this is done because this navigation guard is called before the component is created.           
-        vm.setCustomerDetails();
+        //vm.setCustomerDetails();
+
+        if(vm.$route.params.tender_type == 1){
+             //eslint-disable-next-line no-console
+                        console.log("Tender type is 1");
+            axios.get(`http://192.168.1.44:9000/api/v1/tenders/${vm.$route.params.id}`).
+                    then((response)=>{
+                  
+                         //eslint-disable-next-line no-console
+                        //console.log(response.data.objects);
+
+                        //this.$router.push('/client');
+                        
+                        //this.$router.push({path:'/client',query:{alert:'Customer has been edited'}});//then(window.location.load);
+
+                        //this.$router.push({path:'/client',query:{alert:response.data.message}});
+
+                        //this.setAlert(response.data.message);
+
+                        //this.$router.push('/client');
+                        vm.tender = response.data.objects;
+
+                        vm.tender_type = "Transporting";
+
+                    }).catch(()=>{
+
+                        //eslint-disable-next-line no-console
+                        console.log("Error occured");
+                    });
+        } else if(vm.$route.params.tender_type == 2 ){
+
+            axios.get(`http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`).
+                    then((response)=>{
+                  
+                       
+                        //this.$router.push('/client');
+                        
+                        //this.$router.push({path:'/client',query:{alert:'Customer has been edited'}});//then(window.location.load);
+
+                        //this.$router.push({path:'/client',query:{alert:response.data.message}});
+
+                        //this.setAlert(response.data.message);
+
+                        //this.$router.push('/client');
+
+                         //eslint-disable-next-line no-console
+                        console.log(response.data.objects);
+
+                         vm.tender = response.data.objects;
+
+                          vm.tender_type = "Clearing";
+
+                    }).catch(()=>{
+
+                        //eslint-disable-next-line no-console
+                        console.log("Error occured");
+                    });
+        }
+
         next();
   }) 
 } 
