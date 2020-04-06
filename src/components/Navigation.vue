@@ -319,7 +319,7 @@ export default {
       return this.client();
     } else if (type == 2) {
       console.log("transporter");
-      this.items = this.agent(); // =========================================== to be changed to transpoorter componetns
+      this.items = this.transporter(); // =========================================== to be changed to transpoorter componetns
       return this.transporter();
     } else if (type == 1) {
       console.log("Agennt");
@@ -338,20 +338,20 @@ export default {
     client() {
       const client = [
         {
-          title: "CTenders",
+          title: "CDashboard",
           icon: "dashboard",
           router: { name: "Client", params: { id: "users" } }
-        },
-        {
-          title: "CDashboard",
-          icon: "account_box",
-          router: { name: "agent", params: { id: "todos" } }
         },
         {
           title: "CPayments",
           icon: "gavel",
           router: { name: "Paymenthistory", params: { id: "null" } }
-        }
+        },
+                  // {
+                  //   title: "CDashboard",
+                  //   icon: "account_box",
+                  //   router: { name: "agent", params: { id: "todos" } }
+                  // },
       ];
       return client;
     },
@@ -382,12 +382,12 @@ export default {
         {
           title: "TTenders",
           icon: "dashboard",
-          router: { name: "tenders", params: { id: "users" } }
+          router: { name: "Ttenders", params: { id: "open" } }
         },
         {
           title: "TDashboard",
           icon: "account_box",
-          router: { name: "agent", params: { id: "todos" } }
+          router: { name: "Transporter"}
         },
         {
           title: "TPayments",

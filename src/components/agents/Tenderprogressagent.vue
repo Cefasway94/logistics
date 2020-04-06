@@ -5,10 +5,10 @@
                 <v-flex row class="px-3 ">
                 <v-flex>
                 <v-row class="pl-2 mb-1">
-                <h1 class=" font-weight-regular headline ">Used furniture</h1>
+                <h1 class=" font-weight-regular headline ">{{LOAD_TENDER.cargo_details}}</h1>
                 <v-chip color="green" small class="white--text ml-7 mt-1">Inprogress</v-chip>
                 </v-row>
-                <p class="grey--text">1 40 feet container of used furniture</p>
+                <p class="grey--text">{{LOAD_TENDER.description}}</p>
                 </v-flex>
                 <v-spacer></v-spacer>
                 <h2 >$ 500.0</h2>
@@ -22,30 +22,26 @@
                         <v-flex row >
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> DESTINATION </p>
-                            <p class="body-1">Rwanda</p>
+                            <p class="body-1">{{LOAD_TENDER.destination}}</p>
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> ORIGIN </p>
-                            <p class="body-1">Rwanda</p>
+                            <p class="body-1">{{LOAD_TENDER.origin}}</p>
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
-                            <p class="body-1">40 feet</p>
+                            <p class="body-1">{{LOAD_TENDER.cargo_size}}</p>
                             </v-flex>
                         </v-flex>
 
-                        <v-flex column class="mt-7 pr-4">
+                        <v-flex column class="mt-5 pr-4">
                             <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
-                            <p class="body-1">Lorem ipsum, dolor sit amet consectetur 
-                                adipisicing elit. Doloremque, maiores. Sit repellat amet, 
-                                odit molestias adipisci, tempora voluptates quod voluptate 
-                                exercitationem blanditiis nulla quos delectus, quae ut! Neque, 
-                                recusandae perspiciatis!</p>
+                            <p class="body-1 ">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
 
-                        <v-flex row class="mt-10 mb-4" >
+                        <v-flex row class="mt-7 mb-4" >
                             <v-flex column class="pl-3">
-                            <p class="primary--text body-1 mb-2"> DESTINATION </p>
+                            <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-image class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -322,6 +318,9 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 export default {
 
     data(){
@@ -330,5 +329,39 @@ export default {
             value:80,
         }
     },
+
+     beforeRouteEnter (to, from, next){
+    next(vm =>{  vm.GET_TENDERSDETAILs(to.params.id).then(()=>{
+          // eslint-disable-next-line no-console
+              console.log('the onprogress outpost');
+              // eslint-disable-next-line no-console
+              console.log(to.params.id);
+              // eslint-disable-next-line no-console
+              console.log(vm.LOAD_TENDER);
+          vm.GET_AGENT(localStorage.client).then(()=>{
+              console.log(vm.LOAD_AGENT);
+          })
+      })
+      })
+      
+    //   //eslint-disable-next-line no-console
+    //   console.log(tab);
+    console.log(to);
+    console.log(from);
+    console.log(next);
+    },
+    
+    computed: {
+    ...mapGetters([
+      "LOAD_LOGIN",'LOAD_AGENT','LOAD_TENDER'
+      ])
+  },
+    methods :{
+    ...mapActions([
+      "GET_AGENT",
+      'GET_TENDERSDETAILs'
+    ]),
+
+    }
 }
 </script>

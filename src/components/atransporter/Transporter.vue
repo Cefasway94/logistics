@@ -135,7 +135,7 @@
                 width="350" 
                 class="pl-3 pr-2 pb-2 pt-1 mx-auto"
                 :elevation="hover ? 15 : 3">
-                   <v-card  :to="{name:'AgentAboutbid', params: {id:tender.id}}" flat>
+                   
                     <v-row  row class="pl-3 pt-3 mb-1 justify-space-between">
                         <v-flex class="mb-1" wrap xs7 sm8>
                         <h4  class="subtitle-1 font-weight-bold mb-0">{{tender.bid_id}}</h4>
@@ -164,7 +164,6 @@
                 
                         <p  class="  pt-2 primary--text mx-3 mb-2">{{tender.bid_delivery_timeline}}</p>
                     </v-row>
-                    </v-card>
 
                     <v-row row class="mb-1 ">
                         <v-flex xsm12 sm12 md6 lg6 class="px-3">
@@ -212,7 +211,7 @@
                 column 
                 width="350" 
                 class="px-4 pb-3 pt-1 mx-auto"
-                :to="{name:'AgentTenderprogress', params: {id:tender.id}}"
+                :to="{name:'AgentTenderprogress', params: {id:tender.bid_id}}"
                 :elevation="hover ? 15 : 3">
                    
                     <v-row  row class="px-3 pt-2 mb-1 justify-space-between">
@@ -249,11 +248,9 @@
                         <h4  class=" title ">{{tender.customer_offer_amount}} USD </h4>
                         <v-spacer></v-spacer>
                         <v-btn small elevation="flat" 
-                        color="#4169E1" class="white--text" 
-                        @click="getbiddetails(tender.bid_id)" 
-                        :to="{name:'AgentTenderprogress', params: {id:tender.id}}">
-                        View Details
-                        </v-btn>                        
+                        color="#4169E1" class="white--text" @click="getbiddetails(tender.bid_id)" :to="{name:'Aboutbid', 
+                        params: {id:tender.id}}" >View Details</v-btn>
+                        
                     </v-row>
                     
                 </v-card>
