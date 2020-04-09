@@ -71,7 +71,8 @@
                 </v-flex> -->
                 <v-flex xms11 sm11 md11 lg11 class="pl-3">
                 <p class="text--text title mb-0">
-                Hang on for verification
+                Your account has been registered, please stay put for it
+                to be verified
                 </p>
                 </v-flex>
                 </v-flex>
@@ -104,7 +105,7 @@
                 column 
                 width="350" 
                 class="px-4 pb-3 pt-1 mx-auto"
-                :to="{name:'AgentAbouttender', params: {id:tender.id}}"
+                :to="{name:'Tabouttender', params: {id:tender.id}}"
                 @click="gettenderdetails(tender.id)"
                 :elevation="hover ? 15 : 3">
                    
@@ -172,7 +173,7 @@ export default {
             //const tend = this.$route.params.tid;
       
       tab = localStorage.client
-        this.GET_AGENT(tab).then((data)=>{
+        this.T_GET_AGENT(tab).then((data)=>{
              // eslint-disable-next-line no-console
             console.log(data);
             if (!this.LOAD_AGENT.objects.agent_id == '') {
@@ -184,7 +185,7 @@ export default {
                  },1000)
                 }else{
                      tab = this.tab
-                 this.GET_TENDERS(tab);
+                 this.T_GET_TENDERS(tab);
                  setTimeout(()=>{
                      this.loading = false
                   this.verify = false;
@@ -213,19 +214,19 @@ export default {
   
   methods:{
       ...mapActions([
-          'GET_TENDERS','GET_TENDERSDETAILs', 'GET_AGENT'
+          'T_GET_TENDERS','T_GET_TENDERSDETAILs', 'T_GET_AGENT'
           //'GET_TENDERSDETAIL'
           
       ]),
       
       gettenderdetails(tend){
-          this.GET_TENDERSDETAILs(tend);
+          this.T_GET_TENDERSDETAILs(tend);
       },
 
       editprofile(){
           this.verify = false
-          this.$router.push('/agent/editprofile')
-          this.$router.go('/agent/editprofile')
+          this.$router.push('/transporter/editprofile')
+          this.$router.go('/transporter/editprofile')
       }
 
            

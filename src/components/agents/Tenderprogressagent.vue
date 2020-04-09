@@ -52,7 +52,7 @@
                             </v-flex>
 
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> ORIGIN </p>
+                            <p class="primary--text body-1 mb-2"> LETTER </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-image class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -63,7 +63,7 @@
                             </v-flex>
 
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
+                            <p class="primary--text body-1 mb-2"> OTHER </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-image class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -126,8 +126,8 @@
                 color="#4169E1">
                 
                 <v-tab class="text-capitalize body-1">Tender progress</v-tab>
-                <v-tab class="text-capitalize body-1">Negotiation history</v-tab>
-                <v-tab class="text-capitalize body-1" >Despute</v-tab>
+                <!-- <v-tab class="text-capitalize body-1">Negotiation history</v-tab>
+                <v-tab class="text-capitalize body-1" >Despute</v-tab> -->
 
                 
                 
@@ -145,6 +145,7 @@
                 <v-alert
                 text
                 outlined
+                :value="extension"
                 color="primary"
                 border="left"
                 row
@@ -178,7 +179,7 @@
 
 <!-- INSTALMENT CARDS SECTION-------------------------------------------------------------------- -->
                 <v-card row flat width="1300" class="mx-auto" color="#F5FAFF">
-                <v-flex row fluid class="pt-5" style="background-color:#F5FAFF;" >
+                <v-flex row fluid class="pt-1" style="background-color:#F5FAFF;" >
                 <v-flex 
                 xs12 sm6 md6 lg6 xl6 
                 row
@@ -325,6 +326,7 @@ export default {
 
     data(){
         return{
+            extension:false,
             placeholder: 3,
             value:80,
         }

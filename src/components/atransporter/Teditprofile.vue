@@ -417,7 +417,7 @@ export default {
            const certificate = 'certificate image url';
            const insurance = 'insurance image url'
            //const company_name= this.company_name
-           this.$store.dispatch('EDIT_PROFILE',{
+           this.$store.dispatch('T_EDIT_PROFILE',{
                 profile_image,certificate,insurance,
                 company_name:this.company_name,
                 email : this.email,
@@ -444,8 +444,8 @@ export default {
                     setTimeout(()=>{
                         this.loading= false;
                         this.verify= true;
-                        this.$router.push('/agent/tenders/open')
-                        this.$router.go('/agent/tenders/open')
+                        this.$router.push('/transporter/tenders/open')
+                        this.$router.go('/transporter/tenders/open')
                     },2000)
                     console.log(this.email);
                     console.log(this.LOAD_PROFILE);

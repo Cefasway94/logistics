@@ -39,13 +39,13 @@ export default {
 
   created (tab){
              tab = this.$route.params.id;
-      this.GET_TENDERSDETAIL(tab);
+      this.T_GET_TENDERSDETAIL(tab);
 
   },
   
   methods:{
       ...mapActions([
-          'GET_TENDERSDETAIL',
+          'T_GET_TENDERSDETAIL',
           //'GET_BIDTENDERS'
       ]),
 

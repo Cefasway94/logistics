@@ -5,10 +5,10 @@
                 <v-flex row class="px-3 ">
                 <v-flex>
                 <v-row class="pl-2 mb-1">
-                <h1 class=" font-weight-regular headline ">Used furniture</h1>
+                <h1 class=" font-weight-regular headline ">{{LOAD_TENDER.cargo_details}}</h1>
                 <v-chip color="green" small class="white--text ml-7 mt-1">Inprogress</v-chip>
                 </v-row>
-                <p class="grey--text">1 40 feet container of used furniture</p>
+                <p class="grey--text">{{LOAD_TENDER.description}}</p>
                 </v-flex>
                 <v-spacer></v-spacer>
                 <h2 >$ 500.0</h2>
@@ -22,30 +22,26 @@
                         <v-flex row >
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> DESTINATION </p>
-                            <p class="body-1">Rwanda</p>
+                            <p class="body-1">{{LOAD_TENDER.destination}}</p>
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> ORIGIN </p>
-                            <p class="body-1">Rwanda</p>
+                            <p class="body-1">{{LOAD_TENDER.origin}}</p>
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
-                            <p class="body-1">40 feet</p>
+                            <p class="body-1">{{LOAD_TENDER.cargo_size}}</p>
                             </v-flex>
                         </v-flex>
 
-                        <v-flex column class="mt-7 pr-4">
+                        <v-flex column class="mt-5 pr-4">
                             <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
-                            <p class="body-1">Lorem ipsum, dolor sit amet consectetur 
-                                adipisicing elit. Doloremque, maiores. Sit repellat amet, 
-                                odit molestias adipisci, tempora voluptates quod voluptate 
-                                exercitationem blanditiis nulla quos delectus, quae ut! Neque, 
-                                recusandae perspiciatis!</p>
+                            <p class="body-1 ">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
 
-                        <v-flex row class="mt-10 mb-4" >
+                        <v-flex row class="mt-7 mb-4" >
                             <v-flex column class="pl-3">
-                            <p class="primary--text body-1 mb-2"> DESTINATION </p>
+                            <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-image class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -56,7 +52,7 @@
                             </v-flex>
 
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> ORIGIN </p>
+                            <p class="primary--text body-1 mb-2"> LETTER </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-image class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -67,7 +63,7 @@
                             </v-flex>
 
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
+                            <p class="primary--text body-1 mb-2"> OTEHER </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-image class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
@@ -140,13 +136,14 @@
 
                 <v-card row flat width="1300" class="mt-7 mx-auto" color="#F5FAFF">
                 <v-flex row class="">
-                <v-icon color="grey"  class="mb-4 ml-3 mr-5" >credit_card</v-icon>
-                <p class="grey--text title" >Payment</p>
+                <v-icon color="grey"  class="ml-3 mr-5" >credit_card</v-icon>
+                <p class="grey--text title mb-0" >Payment</p>
                 </v-flex>
                 </v-card>
 
-                <v-card row width="1300" class="mt-3 mx-auto" color="#F5FAFF">
+                <v-card row width="1300" class=" mx-auto" color="#F5FAFF">
                 <v-alert
+                :value="extension"
                 text
                 outlined
                 color="primary"
@@ -241,6 +238,11 @@
 
                 <v-card width="1300" class="mx-auto mb-10 d-flex pa-3" color="">
                     <v-col>
+                    
+                    <v-flex>
+                    <v-flex class="px-3">
+                    <h1 style="color:#4169E1;" class=" font-weight-bold text-center body-1 my-3 mb-0">progress timeline</h1>
+                    </v-flex>
                     <v-flex row class="">
                         <v-col class="">
                         <v-card flat height="100"  width="1200" class="px-5 py-3" outlined >
@@ -248,18 +250,57 @@
                         </v-card>
                         </v-col>            
                     </v-flex>
+                    </v-flex>
 
-                    <v-flex>
+                    <v-flex class="px-3">
+                    <h1 style="color:#4169E1;" class=" font-weight-bold body-1 my-5 mb-0">update timeline</h1>
+                    </v-flex>
+                    
+                        <v-col class="">
+                        <v-card flat height="160"  width="1200" class="px-5 ">
+                       <v-flex column>
+                                <v-flex row class="">
+                                    <v-flex column sm6 mb6 class="px-6">
+                                        <p class="bondy-2 mb-0">Select stage</p>
+                                        <v-text-field 
+                                        v-model="stages"
+                                        outlined 
+                                        class="" 
+                                        clearable 
+                                        color="#4169E1"></v-text-field>
+                                    </v-flex>
+                                    <v-flex row sm6 mb6 justify-center>
+                                    <v-flex>
+                                        <p class="bondy-2 mb-0">comment</p>
+                                        <v-text-field 
+                                        v-model="comment"
+                                        outlined 
+                                        color="#4169E1" 
+                                        clearable >
+                                        </v-text-field>
+                                    </v-flex>
+                                    </v-flex>
+                                    </v-flex>
+                                    <v-btn elevation="flat" 
+                                    class="mx-3 primary " > 
+                                    Submite progress
+                                    </v-btn>
+                                </v-flex>
+                        </v-card>
+                        </v-col>            
+                    
+
+                    <!-- <v-flex>
                     <v-card class="mx-auto" width="700" flat >
                     <v-flex column class="mt-7 pr-4 ">
-                        <p class="primary--text body-1 mb-1" > EXTEND DELIVERY TIME </p>
+                        <p class="primary--text body-1 mb-1" > EXTEND DELIVERY TIME </p>                                DELIVERY TIME EXTENSION
                         <v-flex row class="mx-auto">
                             <v-text-field outlined="" clearable ></v-text-field>
                             <v-btn elevation="0" class="mx-2 primary" height="55"> SUBMITE REQUEST</v-btn>
                         </v-flex>
                         </v-flex>
                     </v-card>
-                    </v-flex>
+                    </v-flex> -->
 
                     </v-col>                    
                 </v-card>
@@ -322,13 +363,51 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 export default {
 
     data(){
         return{
+            extension:false,
             placeholder: 3,
             value:80,
         }
     },
+
+     beforeRouteEnter (to, from, next){
+    next(vm =>{  vm.T_GET_TENDERSDETAILs(to.params.id).then(()=>{
+          // eslint-disable-next-line no-console
+              console.log('the onprogress outpost');
+              // eslint-disable-next-line no-console
+              console.log(to.params.id);
+              // eslint-disable-next-line no-console
+              console.log(vm.LOAD_TENDER);
+          vm.T_GET_AGENT(localStorage.client).then(()=>{
+              console.log(vm.LOAD_AGENT);
+          })
+      })
+      })
+      
+    //   //eslint-disable-next-line no-console
+    //   console.log(tab);
+    console.log(to);
+    console.log(from);
+    console.log(next);
+    },
+    
+    computed: {
+    ...mapGetters([
+      "LOAD_LOGIN",'LOAD_AGENT','LOAD_TENDER'
+      ])
+  },
+    methods :{
+    ...mapActions([
+      "T_GET_AGENT",
+      'T_GET_TENDERSDETAILs'
+    ]),
+
+    }
 }
 </script>

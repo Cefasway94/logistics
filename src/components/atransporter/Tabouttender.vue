@@ -258,10 +258,23 @@ export default {
 
   created (tab){
             tab = this.$route.params.id;
-
-      this.GET_TENDERSDETAILs(tab).then(()=>{
-          this.GET_AGENT(localStorage.client).then(()=>{
-              this.GET_AGENT_PAYMENT_TERMS(this.LOAD_AGENT.objects.agent_id).then(()=>{
+    
+    console.log();
+    console.log();
+    console.log();
+    
+    
+    
+    
+      this.T_GET_TENDERSDETAILs(tab).then(()=>{
+          console.log('tender details bellowwwwwwww');
+          console.log(this.LOAD_TENDER);
+          this.T_GET_AGENT(localStorage.client).then(()=>{
+              console.log('transporter details below');
+              console.log(this.LOAD_AGENT);
+              this.T_GET_AGENT_PAYMENT_TERMS(this.LOAD_AGENT.objects.agent_id).then(()=>{
+                  console.log('transporter payment terms');
+                  console.log(this.LOAD_AGENT_PAYMENT_TERMS);
                   for (let index = 0; index < this.LOAD_AGENT_PAYMENT_TERMS.length; index++) {
                       this.items.push( this.LOAD_AGENT_PAYMENT_TERMS[index].installment_desc)                      
                   }
@@ -276,9 +289,9 @@ export default {
   
   methods:{
       ...mapActions([
-          'GET_TENDERSDETAILs', 'BID_TENDER', 
-          'GET_AGENT_PAYMENT_TERMS',
-          'GET_AGENT'
+          'T_GET_TENDERSDETAILs', 'T_BID_TENDER', 
+          'T_GET_AGENT_PAYMENT_TERMS',
+          'T_GET_AGENT'
 
       ]),
 
@@ -300,7 +313,7 @@ export default {
         },
         
         bidtender() {
-            this.BID_TENDER({
+            this.T_BID_TENDER({
                 agent_id:this.LOAD_AGENT.objects.agent_id,
                 tender_id :this.LOAD_TENDER.id,
                 payment_terms_and_conditions:this.payment_terms_and_conditions,

@@ -94,7 +94,7 @@ const routes = [
     component:Aboutbid
   },
 
-//------------------------------- Agent routes  
+//----------------------------------------- Agent routes  
   { // Agent editing profile
     path:'/agent/editprofile',
     name:'AgentProfile',
@@ -131,9 +131,9 @@ const routes = [
     components:{AgentTenderprogress}
   },
 
-//------------------------------- Transporter routes
+//---------------------------------------- Transporter routes
   { // Transporter editing profile
-    path:'/transporter/Teditprofile',
+    path:'/transporter/editprofile',
     name:'Teditprofile',
     components: {Teditprofile}
   },
@@ -158,7 +158,7 @@ const routes = [
     components:{Transporter}
   },
   { // Agent Aboutbid
-    path:'/transporter/Taboutbid/:id',
+    path:'/transporter/aboutbid/:id',
     name:'Taboutbid',
     components:{Taboutbid}
   },

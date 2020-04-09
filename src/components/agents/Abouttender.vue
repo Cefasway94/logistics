@@ -1,7 +1,7 @@
 <template>
     <v-container class=" mt-12 px-5 pt-12">
 
-            <v-card flat width="1300" class="mt-12 mx-auto mb-5" color="#F5FAFF">
+            <v-card flat width="1300" class="mt-3 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                 <v-flex>
                 <v-row class="pl-2 mb-1">
@@ -139,7 +139,7 @@
 
 <!-- biding---------------------------- -->
             <v-flex sm12 md9 lg9 xlg9 >
-            <v-card width="1300" class=" mb-5 mx-auto pl-8 pt-6 pb-5" 
+            <v-card width="1000" class=" mb-5 mx-auto pl-8 pt-6 pb-5" 
                 v-bind:style="{ visibility: computedVisibility }">
                         <v-flex>
                             <p class="body-1" style="color:#4169E1;" color="#4169E1">Biding details</p>

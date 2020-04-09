@@ -204,20 +204,20 @@ export default {
   },
 
    beforeRouteEnter (to, from, next){
-    next(vm =>{  vm.GET_DASHBOARDDETAILs(to.params.id).then(()=>{
+    next(vm =>{  vm.T_GET_DASHBOARDDETAILs(to.params.id).then(()=>{
           // eslint-disable-next-line no-console
               console.log('the bid outpost');
               // eslint-disable-next-line no-console
               console.log(to.params.id);
               // eslint-disable-next-line no-console
               console.log(vm.LOAD_DASHBOARD);
-          vm.GET_AGENT(localStorage.client).then(()=>{
-              vm.GET_TENDERSDETAILs(vm.LOAD_DASHBOARD.objects.tender_id).then(()=>{
+          vm.T_GET_AGENT(localStorage.client).then(()=>{
+              vm.T_GET_TENDERSDETAILs(vm.LOAD_DASHBOARD.objects.tender_id).then(()=>{
                     // eslint-disable-next-line no-console
               console.log('tender detail beloow');
               // eslint-disable-next-line no-console
               console.log(vm.LOAD_TENDER);
-              next({name:'AgentAboutbid'})
+              next({name:'Taboutbid'})
               })
           })
       })
@@ -232,8 +232,8 @@ export default {
   
   methods:{
       ...mapActions([
-          'GET_TENDERSDETAILs', 'GET_DASHBOARDDETAILs',
-          'GET_AGENT'
+          'T_GET_TENDERSDETAILs', 'T_GET_DASHBOARDDETAILs',
+          'T_GET_AGENT'
 
       ]),
 

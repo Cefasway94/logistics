@@ -72,7 +72,8 @@
                 </v-flex> -->
                 <v-flex xms11 sm11 md11 lg11 class="pl-3">
                 <p class="text--text title mb-0">
-                Hang on for verification
+                Your account has been registered, please stay put for it
+                to be verified
                 </p>
                 </v-flex>
                 </v-flex>
@@ -173,7 +174,7 @@
                         <v-flex xsm6 sm6 md6 class="px-1">
                         
                          <v-btn
-                        :to="{name:'AgentAboutbid', params: {id:tender.id}}"
+                        :to="{name:'Taboutbid', params: {id:tender.id}}"
                          small 
                          elevation="flat" 
                         color="#4169E1" class="white--text" >
@@ -211,7 +212,7 @@
                 column 
                 width="350" 
                 class="px-4 pb-3 pt-1 mx-auto"
-                :to="{name:'AgentTenderprogress', params: {id:tender.bid_id}}"
+                :to="{name:'Tenderprogress', params: {id:tender.bid_id}}"
                 :elevation="hover ? 15 : 3">
                    
                     <v-row  row class="px-3 pt-2 mb-1 justify-space-between">
@@ -286,6 +287,7 @@ export default {
           loading:false,
           tab: this.$route.params.id,
           componemtkey: 0,
+          i:''
           
       }
   },
@@ -295,7 +297,7 @@ export default {
             // eslint-disable-next-line no-console
           console.log('44444444');
              tab = localStorage.client
-        this.GET_AGENT(tab).then(()=>{
+        this.T_GET_AGENT(tab).then(()=>{
             
             if (!this.LOAD_AGENT.objects.agent_id == '') {
                 if (this.LOAD_AGENT.objects.is_verified == 0) {
@@ -306,7 +308,7 @@ export default {
                  },1000)
                 }else{
                      tab = this.tab
-                 this.GET_DASHBOARD(tab).then(()=>{
+                 this.T_GET_DASHBOARD(tab).then(()=>{
                      let status = this.$refs.accepted
                      
                          //document.getElementById()
@@ -349,7 +351,7 @@ export default {
   
   methods:{
       ...mapActions([
-          'GET_DASHBOARD','GET_DASHBOARDDETAILs', 'GET_AGENT','GET_ONPROGRESS','ACCEPT_BID'
+          'T_GET_DASHBOARD','T_GET_DASHBOARDDETAILs', 'T_GET_AGENT','T_GET_ONPROGRESS','T_ACCEPT_BID'
           //'GET_BIDTENDERS'
       ]),
 
@@ -361,8 +363,8 @@ export default {
 
       editprofile(){
           this.verify = false
-          this.$router.push('/agent/editprofile')
-          this.$router.go('/agent/editprofile')
+          this.$router.push('/transporter/editprofile')
+          this.$router.go('/transporter/editprofile')
       },
 
 // get all dashboards (on bid tenders) ========================>>>>>>
@@ -373,7 +375,7 @@ export default {
             // eslint-disable-next-line no-console
           console.log('44444444');
                      tab = this.tab
-                 this.GET_DASHBOARD(tab).then(()=>{
+                 this.T_GET_DASHBOARD(tab).then(()=>{
                      // eslint-disable-next-line no-console
                      console.log('bidsss---');
                      // eslint-disable-next-line no-console
@@ -400,7 +402,7 @@ export default {
             // eslint-disable-next-line no-console
           console.log('555555');
                      tab = this.tab
-                 this.GET_ONPROGRESS(tab).then(()=>{
+                 this.T_GET_ONPROGRESS(tab).then(()=>{
                      // eslint-disable-next-line no-console
                      console.log('bidsss---');
                      // eslint-disable-next-line no-console
@@ -419,12 +421,14 @@ export default {
 
 // accept bid ============================>>>
     acceptbid(bid_id){
+        
         // eslint-disable-next-line no-console
         console.log(bid_id);
         
-        this.ACCEPT_BID(bid_id).then(()=>{
+        this.T_ACCEPT_BID(bid_id).then(()=>{
             // eslint-disable-next-line no-console
             console.log(this.LOAD_ACCEPT_BID);
+            return this.get_dashboard();
             
         })
     },
@@ -434,7 +438,7 @@ export default {
 // GEt bid detail ==============================>>>
       getbiddetails(tab){
 
-          this.GET_DASHBOARDDETAILs(tab).then(()=>{
+          this.T_GET_DASHBOARDDETAILs(tab).then(()=>{
               // eslint-disable-next-line no-console
               console.log('the bid outpost');
               // eslint-disable-next-line no-console

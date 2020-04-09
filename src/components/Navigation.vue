@@ -114,10 +114,12 @@
           <v-list
             nav
             dense >
-            <v-list-item-group v-model="item" color="primary">
+            <v-list-item-group
+             v-model="item" color="primary">
               <v-list-item
                 v-for="(item, i) in itemes"
-                :key="i">
+                :key="i"
+                :to="{name:'Teditprofile', params: {id:LOAD_AGENT.id}}">
                 <v-list-item-icon>
                   <v-icon v-text="item.icon"></v-icon>
                 </v-list-item-icon>
@@ -174,7 +176,8 @@
 
             <v-list-item-content>
               <v-list-item-title>UBALORI</v-list-item-title>
-              <v-list-item-subtitle >OXOAfrica.co.tz</v-list-item-subtitle>
+              <v-list-item-subtitle >{{category}}</v-list-item-subtitle>
+              <!-- <v-list-item-subtitle >OXOAfrica.co.tz</v-list-item-subtitle> -->
             </v-list-item-content>
           </v-list-item>
 
@@ -282,6 +285,7 @@ export default {
   name: "home",
   data() {
     return {
+      
       activator:'',
       email:'',
       name:'',
@@ -294,7 +298,7 @@ export default {
       // items for added Navigation profile list
       item: 0,
       itemes: [
-        { text: 'My profile', icon: 'mdi-account-multiple' }
+        { text: 'My profile', icon: 'mdi-account-multiple',  }
 
         // { text: 'My Files', icon: 'mdi-folder' },
         // { text: 'Starred', icon: 'mdi-star' },
@@ -307,31 +311,46 @@ export default {
   },
 
   created() {
-    this.GET_AGENT(localStorage.client).then(() => {
-      console.log('get agent------');
-      console.log(this.LOAD_AGENT)      
-    })
-    
+
     const type = localStorage.category;
+
     if (type == 3) {
+      this.category = 'Agent'
       console.log("client");
-      this.items = this.client();
-      return this.client();
+    //   this.GET_AGENT(localStorage.client).then(() => {
+    //   console.log('get client------');
+    //   console.log(this.LOAD_AGENT)      
+    //   this.items = this.client();
+    //   return this.client();
+    // })
+
     } else if (type == 2) {
       console.log("transporter");
-      this.items = this.transporter(); // =========================================== to be changed to transpoorter componetns
+      this.T_GET_AGENT(localStorage.client).then(() => {
+      console.log('get transporter------');
+      console.log(this.LOAD_AGENT)
+      this.category = 'Transporter'
+      this.items = this.transporter();
       return this.transporter();
+    })
+
     } else if (type == 1) {
       console.log("Agennt");
+      this.GET_AGENT(localStorage.client).then(() => {
+      console.log('get agent------');
+      console.log(this.LOAD_AGENT)
+      this.category = 'Agent'     
       this.items = this.agent();
+      return this.agent();
+    })
     }
   },
 
   methods: {
     ...mapActions([
-      "GET_TENDERS",
-      "GET_DASHBOARD",
-      "GET_AGENT",
+      "GET_TENDERS","T_GET_TENDERS",
+      "GET_DASHBOARD","T_GET_DASHBOARD",
+      "GET_AGENT","T_GET_AGENT"
       //'GET_TENDERSDETAIL'
     ]),
 
@@ -347,11 +366,6 @@ export default {
           icon: "gavel",
           router: { name: "Paymenthistory", params: { id: "null" } }
         },
-                  // {
-                  //   title: "CDashboard",
-                  //   icon: "account_box",
-                  //   router: { name: "agent", params: { id: "todos" } }
-                  // },
       ];
       return client;
     },
@@ -359,17 +373,17 @@ export default {
     agent() {
       const agent = [
         {
-          title: "ATenders",
+          title: "Tenders",
           icon: "dashboard",
           router: { name: "AgentTenders", params: { id: "open" } }
         },
         {
-          title: "ADashboard",
+          title: "Dashboard",
           icon: "account_box",
           router: { name: "Agent" }
         },
         {
-          title: "APayments",
+          title: "Payments",
           icon: "gavel",
           router: { name: "Paymenthistory", params: { id: "null" } }
         }
@@ -380,17 +394,17 @@ export default {
     transporter() {
       const transporter = [
         {
-          title: "TTenders",
+          title: "Tenders",
           icon: "dashboard",
           router: { name: "Ttenders", params: { id: "open" } }
         },
         {
-          title: "TDashboard",
+          title: "Dashboard",
           icon: "account_box",
           router: { name: "Transporter"}
         },
         {
-          title: "TPayments",
+          title: "Payments",
           icon: "gavel",
           router: { name: "Paymenthistory", params: { id: "null" } }
         }
@@ -403,15 +417,37 @@ export default {
       // eslint-disable-next-line no-console
       console.log(tend);
 
+      const type = localStorage.category;
+    if (type == 2) {
+      console.log("transporter");
+      this.T_GET_TENDERS(tend);
+
+    } else if (type == 1) {
+      console.log("Agennt");
       this.GET_TENDERS(tend);
+    }
+            
     },
 
     dashboard(tend) {
       tend = this.$route.params.id;
       // eslint-disable-next-line no-console
       console.log(tend);
+      // 
+       const type = localStorage.category;
+    if (type == 3) {
+      console.log("client");
+      // --------------------------------- add client directory to get client dashboard
 
+    } else if (type == 2) {
+      console.log("transporter");
+      this.T_GET_DASHBOARD(tend);
+
+    } else if (type == 1) {
+      console.log("Agennt");
       this.GET_DASHBOARD(tend);
+    }
+      // 
     },
 
     logout() {

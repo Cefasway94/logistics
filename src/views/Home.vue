@@ -4,7 +4,7 @@
     <Navigation/>
    
       <transition>
-  <keep-alive>
+  
     <!-- transporter -->
     <router-view name="Teditprofile"></router-view>
     <router-view name="Ttenders"></router-view>
@@ -30,7 +30,7 @@
     <router-view name="Payment"></router-view>
     <router-view name="Paymenthistory"></router-view>
     <router-view name="Client"></router-view>
-  </keep-alive>
+  
 </transition>
       
   </v-content>

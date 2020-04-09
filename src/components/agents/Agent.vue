@@ -93,7 +93,7 @@
     color="#F5FAFF" 
     v-show="verification">
 
-    <h3  class="title text--text px-2 ">Dashboard</h3>
+    <h3  class="title text--text px-2 mb-0">Dashboard</h3>
 
     <v-tabs
       background-color="#F5FAFF"

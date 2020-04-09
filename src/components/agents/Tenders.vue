@@ -113,10 +113,10 @@
                         <h4  class="subtitle-1 font-weight-bold">{{tender.cargo_details}}</h4>
                         </v-flex>
                         
-                        <v-flex xs1 sm1 justify="end">
+                        <!-- <v-flex xs1 sm1 justify="end">
                             <v-spacer></v-spacer>
                         <v-icon color="#E9E9F0" class="" @click="true">clear</v-icon>
-                        </v-flex>
+                        </v-flex> -->
                     </v-row>
                    
                         <p class=" body-2 grey--text mb-1">{{tender.customer_id}}</p>
