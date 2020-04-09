@@ -457,7 +457,7 @@ export default {
 
             if(this.tender_category === 'Transporting')
             {
-                const url = "http://192.168.1.44:9000/api/v1/tenders?customer_id=10";
+                const url = "http://207.180.215.239:9000/api/v1/tenders?customer_id=10";
                 //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
 
          
@@ -480,7 +480,7 @@ export default {
                                 }
                                 else if(response.data.genralErrorCode == 8000){
 
-                                    this.AddTender(response.data.objects);
+                                    //this.AddTender(response.data.objects);
 
                                     this.setAlert(response.data.message);
 
@@ -505,7 +505,7 @@ export default {
             } else if(this.tender_category === 'Clearing')
 
             {
-                const url = "http://192.168.1.44:8000/api/v1/tenders?customer_id=10";
+                const url = "http://207.180.215.239:8000/api/v1/tenders?customer_id=10";
                 //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
 
                 axios.post(url,
@@ -527,7 +527,7 @@ export default {
                                 }
                                 else if(response.data.genralErrorCode == 8000){
 
-                                    this.AddTender(response.data.objects);
+                                    //this.AddTender(response.data.objects);
 
                                     this.setAlert(response.data.message);
 
@@ -556,7 +556,7 @@ export default {
     beforeRouteEnter (to, from, next) { 
         next(vm => { 
 
-            let url = "http://192.168.1.44:8000/api/v1/agent-industries";
+            let url = "http://207.180.215.239:8000/api/v1/agent-industries";
 
             axios.get(url).then((response) => 
                             {

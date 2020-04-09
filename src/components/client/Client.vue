@@ -45,7 +45,7 @@
                                     <template v-if='tab.title === "All"'>
 
 
-                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in Tenders" :key="tender.id">
+                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in Tenders" :key="tender.tender_id">
                                         <v-card column width="350"  elevation="3" class="px-4 py-3">
                                             <v-row  row class="px-3 pt-1">
                                                 <h4  class="">{{ tender.cargo_details}}</h4>
@@ -263,13 +263,13 @@ export default {
           this.alert = this.$route.query.alert;
       }*/
       
-      this.fetchAllClearingTenders(this.id),
+      /*this.fetchAllClearingTenders(this.id),
       this.fetchClearingBidedTenders(this.id),
       this.fetchClearingTendersOnProgress(this.id)
      
       this.fetchAllTransportingTenders(this.id);
       this.fetchTransportingBidedTenders(this.id);
-      this.fetchTransportingOnProgressTenders(this.id);
+      this.fetchTransportingOnProgressTenders(this.id);*/
 
          //eslint-disable-next-line no-console
                         //console.log(this.ClearingBidedTenders);

@@ -55,7 +55,7 @@ export default {
         setClearingBidedTenders: (state,tenders) => state.ClearingBidedTenders = tenders,
         setClearingTendersOnProgress: (state,tenders) => state.ClearingTendersOnProgress = tenders,
 
-        AddTender: (state,tender) => state.AllClearingTenders.unshift(tender),
+        //AddTender: (state,tender) => state.AllClearingTenders.unshift(tender),
         TestMutation:(state) => state.AllClearingTenders,
         tenderCreated:(state,status) => state.tenderCreated = status,
 
@@ -86,7 +86,7 @@ export default {
 
         fetchAllClearingTenders: async ({commit},customer_id) => {
 
-            const url = `http://192.168.1.44:8000/api/v1/tenders/list/${customer_id}`;
+            const url = `http://207.180.215.239:8000/api/v1/tenders/list/${customer_id}`;
             //const url = `http://192.168.43.27:8000/api/v1/tenders/list/${customer_id}`;
 
             await axios.get(url).
@@ -110,7 +110,7 @@ export default {
 
         fetchClearingBidedTenders: async ({commit},customer_id) => {
 
-            const url = `http://192.168.1.44:8000/api/v1/tenders/bided/${customer_id}`;
+            const url = `http://207.180.215.239:8000/api/v1/tenders/bided/${customer_id}`;
             //const url2 = `http://192.168.43.27:8000/api/v1/tenders/bided/${customer_id}`;
 
             await axios.get(url).
@@ -127,7 +127,7 @@ export default {
 
         fetchCurrencies: async ({commit}) => {
 
-            const url = "http://192.168.1.44:8000/api/v1/configurations/currency";
+            const url = "http://207.180.215.239:8000/api/v1/configurations/currency";
 
             await axios.get(url).
                             then((response) => {
@@ -146,7 +146,7 @@ export default {
 
         fetchClearingTendersOnProgress: async ({commit},customer_id) => {
 
-            const url = `http://192.168.1.44:8000/api/v1/tenders/on-progress/${customer_id}`;
+            const url = `http://207.180.215.239:8000/api/v1/tenders/on-progress/${customer_id}`;
             //const url = `http://192.168.43.27:8000/api/v1/tenders/on-progress/${customer_id}`;
 
             await axios.get(url).
@@ -162,7 +162,7 @@ export default {
         },
 
         fetchAllBidsOnTender: async ({commit},tender_id) => {
-            const url = `http://192.168.1.44:8000/api/v1/bids/${tender_id}`;
+            const url = `http://207.180.215.239:8000/api/v1/bids/${tender_id}`;
             //const url = `http://192.168.43.27:8000/api/v1/tenders/on-progress/${customer_id}`;
 
             await axios.get(url).
@@ -179,7 +179,7 @@ export default {
 
         fetchAllTransportingTenders: async ({commit},customer_id) => {
 
-            const url = `http://192.168.1.44:9000/api/v1/tenders/list/${customer_id}`;
+            const url = `http://207.180.215.239:9000/api/v1/tenders/list/${customer_id}`;
   
             await axios.get(url).
                               then((response) => {
@@ -200,7 +200,7 @@ export default {
         fetchTransportingBidedTenders: async ({commit},customer_id) => {
 
         
-            const url = `http://192.168.1.44:9000/api/v1/tenders/bided/${customer_id}`;
+            const url = `http://207.180.215.239:9000/api/v1/tenders/bided/${customer_id}`;
   
             await axios.get(url).
                                 then((response) => {
@@ -222,7 +222,7 @@ export default {
   
         fetchTransportingOnProgressTenders: async ({commit},customer_id) => {
   
-            const url = `http://192.168.1.44:9000/api/v1/tenders/on-progress/${customer_id}`;
+            const url = `http://207.180.215.239:9000/api/v1/tenders/on-progress/${customer_id}`;
   
             await axios.get(url).
                               then((response) => {
@@ -239,7 +239,7 @@ export default {
 
         /*AddTender: async ({commit},tender)=>{
 
-            const url = "http://192.168.1.44:8000/api/v1/tenders?customer_id=10";
+            const url = "http://207.180.215.239:8000/api/v1/tenders?customer_id=10";
             //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
 
             commit('tenderCreated',false);
