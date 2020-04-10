@@ -234,7 +234,7 @@ import {mapActions} from 'vuex'
              //eslint-disable-next-line no-console
                                //console.log(this.bid.id);
 
-            if(this.$route.params.tender_type == 2){
+            if(this.$route.params.tender_type == "Transporting"){
 
                 let url = `http://207.180.215.239:9000/api/v1/bids/award/${this.bid.id}`;
 
@@ -259,7 +259,7 @@ import {mapActions} from 'vuex'
                                 this.$router.push('/client');
                             });
 
-            } else if(this.$route.params.tender_type == 1){
+            } else if(this.$route.params.tender_type == "Clearing"){
 
                 let url = `http://207.180.215.239:8000/api/v1/bids/award/${this.bid.id}`;
 
@@ -294,7 +294,7 @@ import {mapActions} from 'vuex'
 
             this.dropDialog = false;
 
-            if(this.$route.params.tender_type == 2){
+            if(this.$route.params.tender_type == "Transporting"){
 
                 let url = `http://207.180.215.239:9000/api/v1/bids/drop/${this.bid.id}`;
 
@@ -319,7 +319,7 @@ import {mapActions} from 'vuex'
                                 this.$router.push('/client');
                             });
 
-            } else if(this.$route.params.tender_type == 1){
+            } else if(this.$route.params.tender_type == "Clearing"){
 
                 let url = `http://207.180.215.239:8000/api/v1/bids/drop/${this.bid.id}`;
 
@@ -357,7 +357,7 @@ import {mapActions} from 'vuex'
         //access to component's instance using `vm` .
         //this is done because this navigation guard is called before the component is created.           
 
-        if(vm.$route.params.tender_type ==2 )
+        if(vm.$route.params.tender_type == 'Transporting' )
         {
             let url = `http://207.180.215.239:9000/api/v1/bids/show/${vm.$route.params.id}`;
         
@@ -386,7 +386,7 @@ import {mapActions} from 'vuex'
                                 //commit('setOnProgressTenders',response)
                             });
 
-        } else if(vm.$route.params.tender_type == 1){
+        } else if(vm.$route.params.tender_type == 'Clearing'){
 
             let url = `http://207.180.215.239:8000/api/v1/bids/show/${vm.$route.params.id}`;
         

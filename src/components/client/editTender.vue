@@ -31,7 +31,7 @@
                             >
                             </v-text-field>
                         </v-col>
-                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 2">
+                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 'Transporting'">
                             <p class="primary--text body-2 text-uppercase mb-0">ORIGIN</p>
                             <v-text-field 
                             outlined 
@@ -40,7 +40,7 @@
                             </v-text-field>
                         </v-col>
 
-                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 2">
+                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 'Transporting'">
                             <p class="primary--text body-2 text-uppercase mb-0">DESTINATION</p>
                             <v-text-field 
                             outlined 
@@ -49,7 +49,7 @@
                             </v-text-field>
                         </v-col>
 
-                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 1">
+                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 'Clearing'">
                                     <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
                                     <v-text-field 
                                         outlined 
@@ -62,7 +62,7 @@
                         <v-row class="px-3">
                             
                             <v-row wrap>
-                                <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 2">
+                                <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 'Clearing'">
                                     <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
                                     <v-text-field 
                                         outlined 
@@ -282,7 +282,7 @@ export default {
 
     data: ()=>({
         tender:[],
-        tender_type:''
+       
     }),
 
     computed:{
@@ -301,7 +301,7 @@ export default {
 
         editTender(){
 
-            if(this.$route.params.tender_type == 2) {
+            if(this.$route.params.tender_type == "Transporting") {
 
                 let updatedTender = {           
 
@@ -341,7 +341,7 @@ export default {
                         console.log("Error occured");
                     });
 
-            } else if(this.$route.params.tender_type == 1){
+            } else if(this.$route.params.tender_type == "Clearing"){
 
                 let updatedTender = {           
                     cargo_details: this.tender.cargo_details,
@@ -393,7 +393,7 @@ export default {
         //this is done because this navigation guard is called before the component is created.           
         //vm.setCustomerDetails();
 
-        if(vm.$route.params.tender_type == 2){
+        if(vm.$route.params.tender_type == "Transporting"){
 
              //eslint-disable-next-line no-console
                         console.log("Tender type is 1");
@@ -414,14 +414,14 @@ export default {
                         //this.$router.push('/client');
                         vm.tender = response.data.objects;
 
-                        vm.tender_type = "Transporting";
+                     
 
                     }).catch(()=>{
 
                         //eslint-disable-next-line no-console
                         console.log("Error occured");
                     });
-        } else if(vm.$route.params.tender_type == 1 ){
+        } else if(vm.$route.params.tender_type == "Clearing" ){
 
                     //eslint-disable-next-line no-console
                         console.log("CLEARING::::::::::");
@@ -445,7 +445,7 @@ export default {
 
                          vm.tender = response.data.objects;
 
-                          vm.tender_type = "Clearing";
+                         
 
                     }).catch(()=>{
 

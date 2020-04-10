@@ -22,7 +22,7 @@
                                     <v-flex column class="pl-3">
 
                                         <p class="primary--text body-1 mb-2"> TENDER TYPE </p>
-                                        <p class="body-1">{{ tender_type}}</p>
+                                        <p class="body-1">{{ tender.tender_type}}</p>
 
                                     </v-flex>
 
@@ -39,7 +39,7 @@
                                     </v-flex>
                                 </v-flex>
 
-                                <v-flex row class="mt-7 pr-4" v-show="tender.tender_type == 2">
+                                <v-flex row class="mt-7 pr-4" v-show="tender.tender_type == 'Transporting'">
 
                                      <v-flex column class="pl-3" >
 
@@ -168,7 +168,7 @@ export default {
     data: ()=>({
         
         tender:[],
-        tender_type:''
+       
     }),
     computed: {
 
@@ -193,7 +193,7 @@ export default {
          //eslint-disable-next-line no-console
           //console.log(vm.$route.params.tender_type);
 
-          if(vm.$route.params.tender_type == 2) // Transporting tender
+          if(vm.$route.params.tender_type == "Transporting") // Transporting tender
           {
               let url = `http://207.180.215.239:9000/api/v1/tenders/${vm.$route.params.id}`;
 
@@ -203,8 +203,6 @@ export default {
                                 //eslint-disable-next-line no-console
                                //console.log(response.data.objects[i].industry_name);
                                vm.tender = response.data.objects;
-
-                               vm.tender_type = "Transporting";
 
                                 //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
@@ -217,7 +215,7 @@ export default {
                             });
 
 
-          } else if(vm.$route.params.tender_type == 1) //Clearing tender
+          } else if(vm.$route.params.tender_type == "Clearing") //Clearing tender
           {
 
               let url = `http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`;
@@ -229,8 +227,6 @@ export default {
                                //console.log(response.data.objects[i].industry_name);
 
                                 vm.tender = response.data.objects;
-
-                                vm.tender_type = "Clearing";
 
                                 //eslint-disable-next-line no-console
                                //console.log(response.data.objects);

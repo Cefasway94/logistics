@@ -607,7 +607,7 @@
                 <v-card width="1300" class="mx-auto pa-3">
                     <v-row class="pa-3">
                         <v-col class="">
-                        <p class=" body-2 text-uppercase" style="color:#4169E1;"> oxoafrica commented</p>
+                        <p class=" body-2 text-uppercase" style="color:#4169E1;"> {{ tender.awarded_agent_id}} commented</p>
                         <v-card flat height="100" width="1200" class="px-5 py-3" outlined>
                             <p class=" body-2 ">
                               
@@ -880,7 +880,7 @@ export default {
     beforeRouteEnter (to, from, next) { 
         next(vm => { 
 
-            if(vm.$route.params.tender_type == 2){
+            if(vm.$route.params.tender_type == "Transporting"){
 
                 let url = `http://207.180.215.239:9000/api/v1/tenders/${vm.$route.params.id}`;
 
@@ -916,7 +916,7 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
-            } else if(vm.$route.params.tender_type == 1){
+            } else if(vm.$route.params.tender_type == "Clearing"){
 
                 let url = `http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`;
 
