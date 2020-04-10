@@ -23,12 +23,12 @@
                             <v-flex column>
                                 <v-flex row >
 
-                                    <v-flex column class="pl-3" v-show="tender.tender_type == 2">
+                                    <v-flex column class="pl-3" v-show="tender.tender_type == 1">
                                         <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
                                         <p class="body-1">{{ tender.customer_terms_and_conditions}}</p>
                                     </v-flex>
                                     
-                                    <v-flex column class="pl-3" v-show="tender.tender_type == 1">
+                                    <v-flex column class="pl-3" v-show="tender.tender_type == 2">
                                         <p class="primary--text body-1 mb-2"> DESTINATION </p>
                                         <p class="body-1">{{ tender.destination}}</p>
                                     </v-flex>
@@ -43,7 +43,7 @@
 
                                 </v-flex>   
 
-                                <v-flex column class="mt-7 pr-4" v-show="tender.tender_type == 1">
+                                <v-flex column class="mt-7 pr-4" v-show="tender.tender_type == 2">
                                     <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
                                     <p class="body-1">{{ tender.customer_terms_and_conditions}}</p>
                                 </v-flex>
@@ -166,10 +166,10 @@ export default {
         //access to component's instance using `vm` .
         //this is done because this navigation guard is called before the component is created.           
         //vm.tender_type = vm.getTender.tender_type;
-        if(vm.$route.params.tender_type == 1){
+        if(vm.$route.params.tender_type == 2){
 
             //fetching the tender
-            axios.get(`http://192.168.1.44:9000/api/v1/tenders/${vm.$route.params.id}`).then((response) => 
+            axios.get(`http://207.180.215.239:9000/api/v1/tenders/${vm.$route.params.id}`).then((response) => 
                             {
 
                                //commit('setOnProgressTenders',response.data.objects)
@@ -183,7 +183,7 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
-            let url = `http://192.168.1.44:9000/api/v1/bids/${vm.$route.params.id}`;
+            let url = `http://207.180.215.239:9000/api/v1/bids/${vm.$route.params.id}`;
 
             axios.get(url).then((response) => 
                             {
@@ -199,10 +199,10 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
-        } else if(vm.$route.params.tender_type == 2 ){
+        } else if(vm.$route.params.tender_type == 1 ){
 
             //fetching the tender
-            axios.get(`http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`).then((response) => 
+            axios.get(`http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`).then((response) => 
                             {
 
                                //commit('setOnProgressTenders',response.data.objects)
@@ -217,7 +217,7 @@ export default {
                             });
 
             //fetching tender bids
-            let url = `http://192.168.1.44:8000/api/v1/bids/${vm.$route.params.id}`;
+            let url = `http://207.180.215.239:8000/api/v1/bids/${vm.$route.params.id}`;
 
             axios.get(url).then((response) => 
                             {

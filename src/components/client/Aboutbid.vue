@@ -142,7 +142,7 @@
 
                                 <v-spacer></v-spacer>
                                 <v-btn color="#4169E1" v-if="bid.bid_status == 'awarded'" elevation="flat" @click.stop="dropDialog = true" large class="white--text">Drop award</v-btn>
-                                <v-btn color="#4169E1" v-if="bid.bid_status == 'Not awarded'" elevation="flat" @click.stop="awardDialog = true" large class="white--text">Award tender</v-btn>
+                                <v-btn color="#4169E1" v-if="bid.bid_status == 'Not-awarded'" elevation="flat" @click.stop="awardDialog = true" large class="white--text">Award tender</v-btn>
                                 <v-btn 
                                     color="#4169E1" 
                                     v-if="bid.bid_status == 'accepted'" 
@@ -234,9 +234,9 @@ import {mapActions} from 'vuex'
              //eslint-disable-next-line no-console
                                //console.log(this.bid.id);
 
-            if(this.$route.params.tender_type == 1){
+            if(this.$route.params.tender_type == 2){
 
-                let url = `http://192.168.1.44:9000/api/v1/bids/award/${this.bid.id}`;
+                let url = `http://207.180.215.239:9000/api/v1/bids/award/${this.bid.id}`;
 
                 axios.put(url).then((response) => 
                             {
@@ -259,9 +259,9 @@ import {mapActions} from 'vuex'
                                 this.$router.push('/client');
                             });
 
-            } else if(this.$route.params.tender_type == 2){
+            } else if(this.$route.params.tender_type == 1){
 
-                let url = `http://192.168.1.44:8000/api/v1/bids/award/${this.bid.id}`;
+                let url = `http://207.180.215.239:8000/api/v1/bids/award/${this.bid.id}`;
 
                 axios.put(url).then((response) => 
                             {
@@ -294,9 +294,9 @@ import {mapActions} from 'vuex'
 
             this.dropDialog = false;
 
-            if(this.$route.params.tender_type == 1){
+            if(this.$route.params.tender_type == 2){
 
-                let url = `http://192.168.1.44:9000/api/v1/bids/drop/${this.bid.id}`;
+                let url = `http://207.180.215.239:9000/api/v1/bids/drop/${this.bid.id}`;
 
                 axios.put(url).then((response) => 
                             {
@@ -319,9 +319,9 @@ import {mapActions} from 'vuex'
                                 this.$router.push('/client');
                             });
 
-            } else if(this.$route.params.tender_type == 2){
+            } else if(this.$route.params.tender_type == 1){
 
-                let url = `http://192.168.1.44:8000/api/v1/bids/drop/${this.bid.id}`;
+                let url = `http://207.180.215.239:8000/api/v1/bids/drop/${this.bid.id}`;
 
                 axios.put(url).then((response) => 
                             {
@@ -357,9 +357,9 @@ import {mapActions} from 'vuex'
         //access to component's instance using `vm` .
         //this is done because this navigation guard is called before the component is created.           
 
-        if(vm.$route.params.tender_type ==1 )
+        if(vm.$route.params.tender_type ==2 )
         {
-            let url = `http://192.168.1.44:9000/api/v1/bids/show/${vm.$route.params.id}`;
+            let url = `http://207.180.215.239:9000/api/v1/bids/show/${vm.$route.params.id}`;
         
 
             axios.get(url).then((response) => 
@@ -370,7 +370,7 @@ import {mapActions} from 'vuex'
                                //console.log(response.data.objects);
                                 vm.bid = response.data.objects;
 
-                                let url2 = `http://192.168.1.44:8000/api/v1/payment-terms/${response.data.objects.payment_id}`;
+                                let url2 = `http://207.180.215.239:8000/api/v1/payment-terms/${response.data.objects.payment_id}`;
 
                                 axios.get(url2).then((response)=>{
 
@@ -386,9 +386,9 @@ import {mapActions} from 'vuex'
                                 //commit('setOnProgressTenders',response)
                             });
 
-        } else if(vm.$route.params.tender_type == 2){
+        } else if(vm.$route.params.tender_type == 1){
 
-            let url = `http://192.168.1.44:8000/api/v1/bids/show/${vm.$route.params.id}`;
+            let url = `http://207.180.215.239:8000/api/v1/bids/show/${vm.$route.params.id}`;
         
 
             axios.get(url).then((response) => 
@@ -399,7 +399,7 @@ import {mapActions} from 'vuex'
                                //console.log(response.data.objects);
                                 vm.bid = response.data.objects;
 
-                                let url2 = `http://192.168.1.44:8000/api/v1/payment-terms/${response.data.objects.payment_id}`;
+                                let url2 = `http://207.180.215.239:8000/api/v1/payment-terms/${response.data.objects.payment_id}`;
 
                                 axios.get(url2).then((response)=>{
 

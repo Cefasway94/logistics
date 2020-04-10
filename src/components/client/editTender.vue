@@ -31,7 +31,7 @@
                             >
                             </v-text-field>
                         </v-col>
-                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 1">
+                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 2">
                             <p class="primary--text body-2 text-uppercase mb-0">ORIGIN</p>
                             <v-text-field 
                             outlined 
@@ -40,7 +40,7 @@
                             </v-text-field>
                         </v-col>
 
-                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 1">
+                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 2">
                             <p class="primary--text body-2 text-uppercase mb-0">DESTINATION</p>
                             <v-text-field 
                             outlined 
@@ -49,7 +49,7 @@
                             </v-text-field>
                         </v-col>
 
-                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 2">
+                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 1">
                                     <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
                                     <v-text-field 
                                         outlined 
@@ -62,7 +62,7 @@
                         <v-row class="px-3">
                             
                             <v-row wrap>
-                                <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 1">
+                                <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 2">
                                     <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
                                     <v-text-field 
                                         outlined 
@@ -294,14 +294,14 @@ export default {
         ...mapActions(['updateTender','fetchAllTenders','setAlert']),
 
         setCustomerDetails(){
-            this.tender = this.getTender;
+            //this.tender = this.getTender;
         },
 
         //allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
 
         editTender(){
 
-            if(this.$route.params.tender_type == 1) {
+            if(this.$route.params.tender_type == 2) {
 
                 let updatedTender = {           
 
@@ -319,7 +319,7 @@ export default {
             }
 
 
-                axios.put(`http://192.168.1.44:9000/api/v1/tenders/${this.tender.id}`,updatedTender).
+                axios.put(`http://207.180.215.239:9000/api/v1/tenders/${this.tender.id}`,updatedTender).
                     then((response)=>{
                   
                         //eslint-disable-next-line no-console
@@ -341,7 +341,7 @@ export default {
                         console.log("Error occured");
                     });
 
-            } else if(this.$route.params.tender_type == 2){
+            } else if(this.$route.params.tender_type == 1){
 
                 let updatedTender = {           
                     cargo_details: this.tender.cargo_details,
@@ -355,7 +355,7 @@ export default {
 
                 }
 
-                axios.put(`http://192.168.1.44:8000/api/v1/tenders/${this.tender.id}`,updatedTender).
+                axios.put(`http://207.180.215.239:8000/api/v1/tenders/${this.tender.id}`,updatedTender).
                     then((response)=>{
                   
                         //eslint-disable-next-line no-console
@@ -383,7 +383,7 @@ export default {
    },
 
    mounted(){
-       this.setCustomerDetails();
+       //this.setCustomerDetails();
    },
 
     beforeRouteEnter (to, from, next) { 
@@ -393,10 +393,11 @@ export default {
         //this is done because this navigation guard is called before the component is created.           
         //vm.setCustomerDetails();
 
-        if(vm.$route.params.tender_type == 1){
+        if(vm.$route.params.tender_type == 2){
+
              //eslint-disable-next-line no-console
                         console.log("Tender type is 1");
-            axios.get(`http://192.168.1.44:9000/api/v1/tenders/${vm.$route.params.id}`).
+            axios.get(`http://207.180.215.239:9000/api/v1/tenders/${vm.$route.params.id}`).
                     then((response)=>{
                   
                          //eslint-disable-next-line no-console
@@ -420,9 +421,12 @@ export default {
                         //eslint-disable-next-line no-console
                         console.log("Error occured");
                     });
-        } else if(vm.$route.params.tender_type == 2 ){
+        } else if(vm.$route.params.tender_type == 1 ){
 
-            axios.get(`http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`).
+                    //eslint-disable-next-line no-console
+                        console.log("CLEARING::::::::::");
+
+            axios.get(`http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`).
                     then((response)=>{
                   
                        

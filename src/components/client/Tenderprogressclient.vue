@@ -234,7 +234,7 @@
                                                    
                                                     <v-flex row xs12 class="">
                                                         <!--<p>{{ transporting_progress[0].name}} </p>-->
-                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Clearing started</span></v-flex>
+                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Border clearing</span></v-flex>
                                                         <v-flex row xs12>
 
                                                             <span v-show="!clearing_started.completed" class="font-weight-regular body-2">Expected on {{ clearing_started.expected_date}}</span>
@@ -275,7 +275,7 @@
                                                    
                                                     <v-flex row xs12 class="">
                                                         <!--<p>{{ transporting_progress[1].name}} </p>-->
-                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Tcra processing</span></v-flex>
+                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">TRA processing</span></v-flex>
                                                         <v-flex row xs12>
 
                                                            <span v-show="!tcra_processing.completed" class="font-weight-regular body-2">Expected on {{ tcra_processing.expected_date}}</span>
@@ -610,8 +610,8 @@
                         <p class=" body-2 text-uppercase" style="color:#4169E1;"> oxoafrica commented</p>
                         <v-card flat height="100" width="1200" class="px-5 py-3" outlined>
                             <p class=" body-2 ">
-                               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt praesentium laudantium quibusdam sint odit repellendus consectetur commodi si
-                               t nihil minima, molestiae culpa saepe? Reiciendis soluta, voluptates obcaecati eaque provident magni!
+                              
+                               {{ InProgress.comments}}
                             </p>
                         </v-card>
                         </v-col>  
@@ -658,6 +658,8 @@ export default {
 
         tender:[],
 
+        InProgress:[],
+
         transporting_progress:[],
 
         clearing:false,
@@ -670,7 +672,8 @@ export default {
             completed:false,
             waiting: true,
             expected_date:'',
-            completed_date:''
+            completed_date:'',
+            comments:''
         },
 
         cargo_in_transmit:{
@@ -679,7 +682,8 @@ export default {
             completed:false,
             waiting: true,
             expected_date:'',
-            completed_date:''
+            completed_date:'',
+            comments:''
         },
 
         cargo_offloading:{
@@ -688,7 +692,8 @@ export default {
             completed:false,
             waiting: true,
             expected_date:'',
-            completed_date:''
+            completed_date:'',
+            comments:''
         },
 
         cargo_delivered:{
@@ -697,7 +702,8 @@ export default {
             completed:false,
             waiting: true,
             expected_date:'',
-            completed_date:''
+            completed_date:'',
+            comments:''
         },
 
 
@@ -708,7 +714,8 @@ export default {
             completed:false,
             waiting: true,
             expected_date:'',
-            completed_date:''
+            completed_date:'',
+            comments:''
         },
 
         clearing_started:{
@@ -717,7 +724,8 @@ export default {
             completed:false,
             waiting: true,
             expected_date:'',
-            completed_date:''
+            completed_date:'',
+            comments:''
         },
     }),
 
@@ -731,7 +739,7 @@ export default {
                 //eslint-disable-next-line no-console
                 //console.log(tender_progress[i].progress_name);
                                                                                                           
-                axios.get(`http://192.168.1.44:9000/api/v1/configurations/${tender_progress[i].progress_id}`).
+                axios.get(`http://207.180.215.239:9000/api/v1/configurations/${tender_progress[i].progress_id}`).
                             then((response) => 
                             {
 
@@ -747,6 +755,7 @@ export default {
                                         this.cargo_loading.waiting = tender_progress[i].waiting;
                                         this.cargo_loading.expected_date = tender_progress[i].expected_date;
                                         this.cargo_loading.completed_date = tender_progress[i].completed_date;
+                                        this.cargo_loading.comments = tender_progress[i].comments;
 
 
                                         break;
@@ -758,6 +767,7 @@ export default {
                                         this.cargo_in_transmit.waiting = tender_progress[i].waiting;
                                         this.cargo_in_transmit.expected_date = tender_progress[i].expected_date;
                                         this.cargo_in_transmit.completed_date = tender_progress[i].completed_date;
+                                        this.cargo_in_transmit.comments = tender_progress[i].comments;
 
                                         break;
 
@@ -768,6 +778,7 @@ export default {
                                         this.cargo_offloading.waiting = tender_progress[i].waiting;
                                         this.cargo_offloading.expected_date = tender_progress[i].expected_date;
                                         this.cargo_offloading.completed_date = tender_progress[i].completed_date;
+                                        this.cargo_offloading.comments = tender_progress[i].comments;
 
                                         break;
                     
@@ -778,6 +789,7 @@ export default {
                                         this.cargo_delivered.waiting = tender_progress[i].waiting;
                                         this.cargo_delivered.expected_date = tender_progress[i].expected_date;
                                         this.cargo_delivered.completed_date = tender_progress[i].completed_date;
+                                        this.cargo_delivered.comments = tender_progress[i].comments;
 
                                         break;
 
@@ -798,7 +810,7 @@ export default {
                 //eslint-disable-next-line no-console
                 //console.log(tender_progress[i].progress_name);
                                                                                                           
-                axios.get(`http://192.168.1.44:8000/api/v1/configurations/${tender_progress[i].clearing_progress_id}`).
+                axios.get(`http://207.180.215.239:8000/api/v1/configurations/${tender_progress[i].clearing_progress_id}`).
                             then((response) => 
                             {
 
@@ -807,45 +819,29 @@ export default {
                                //console.log(response.data.objects);
                                 switch(response.data.objects.name){
 
-                                    case "Clearing started":
+                                    case "Border clearing":
 
                                         this.clearing_started.InProgress = tender_progress[i].InProgress;
                                         this.clearing_started.completed = tender_progress[i].completed;
                                         this.clearing_started.waiting = tender_progress[i].waiting;
                                         this.clearing_started.expected_date = tender_progress[i].expected_date;
                                         this.clearing_started.completed_date = tender_progress[i].completed_date;
+                                         this.clearing_started.comments = tender_progress[i].comments;
 
 
                                         break;
 
-                                    case "TRA process":
+                                    case "TRA processing":
 
                                         this.tcra_processing.InProgress = tender_progress[i].InProgress;
                                         this.tcra_processing.completed = tender_progress[i].completed;
                                         this.tcra_processing.waiting = tender_progress[i].waiting;
                                         this.tcra_processing.expected_date = tender_progress[i].expected_date;
                                         this.tcra_processing.completed_date = tender_progress[i].completed_date;
+                                        this.tcra_processing.comments = tender_progress[i].comments;
 
                                         break;
-
-                                    case "Cargo offloading":
-
-                                        this.cargo_offloading.InProgress = tender_progress[i].InProgress;
-                                        this.cargo_offloading.completed = tender_progress[i].completed;
-                                        this.cargo_offloading.waiting = tender_progress[i].waiting;
-                                        this.cargo_offloading.expected_date = tender_progress[i].expected_date;
-                                        this.cargo_offloading.completed_date = tender_progress[i].completed_date;
-
-                                        break;
-                    
-                                    case "Cargo delivered":
-
-                                        this.cargo_delivered.InProgress = tender_progress[i].InProgress;
-                                        this.cargo_delivered.completed = tender_progress[i].completed;
-                                        this.cargo_delivered.waiting = tender_progress[i].waiting;
-                                        this.cargo_delivered.expected_date = tender_progress[i].expected_date;
-                                        this.cargo_delivered.completed_date = tender_progress[i].completed_date;
-
+                                    default:
                                         break;
 
                             }}).catch(()=>{
@@ -856,17 +852,39 @@ export default {
 
             }
             
+        },
+
+        setClearingInProgress(progresses){
+
+            for(let i=0; i< progresses.length; i++)
+            {
+                if(progresses[i].InProgress){
+                    this.InProgress = progresses[i];
+                    break;
+                }
+            }
+        },
+
+         setTransportingInProgress(progresses){
+
+            for(let i=0; i< progresses.length; i++)
+            {
+                if(progresses[i].InProgress){
+                    this.InProgress = progresses[i];
+                    break;
+                }
+            }
         }
     },
 
     beforeRouteEnter (to, from, next) { 
         next(vm => { 
 
-            if(vm.$route.params.tender_type == 1){
+            if(vm.$route.params.tender_type == 2){
 
-                let url = `http://192.168.1.44:9000/api/v1/tenders/${vm.$route.params.id}`;
+                let url = `http://207.180.215.239:9000/api/v1/tenders/${vm.$route.params.id}`;
 
-                let transporting = `http://192.168.1.44:9000/api/v1/transport-progress/tender/${vm.$route.params.id}`;
+                let transporting = `http://207.180.215.239:9000/api/v1/transport-progress/tender/${vm.$route.params.id}`;
 
                 vm.transporting = true;
         
@@ -888,6 +906,8 @@ export default {
                                 //vm.setProgress(response.data.objects);
                                 
                                 vm.setTransportingProgress(response.data.objects);
+
+                                vm.setTransportingInProgress(response.data.objects);
                                  //eslint-disable-next-line no-console
                                  //console.log(response.data.objects);
                             }).catch(()=>{
@@ -896,11 +916,11 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
-            } else if(vm.$route.params.tender_type == 2){
+            } else if(vm.$route.params.tender_type == 1){
 
-                let url = `http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`;
+                let url = `http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`;
 
-                let clearing = `http://192.168.1.44:8000/api/v1/clearing-progress/tender/${vm.$route.params.id}`;
+                let clearing = `http://207.180.215.239:8000/api/v1/clearing-progress/tender/${vm.$route.params.id}`;
 
                 vm.clearing = true;
         
@@ -922,6 +942,9 @@ export default {
                                 //vm.setProgress(response.data.objects);
                                 
                                 vm.setClearingProgress(response.data.objects);
+
+                                vm.setClearingInProgress(response.data.objects);
+
                                  //eslint-disable-next-line no-console
                                  //console.log(response.data.objects);
                             }).catch(()=>{

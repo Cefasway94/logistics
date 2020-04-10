@@ -58,7 +58,7 @@
                    
                                             <p class=" body-2 grey--text">{{ tender.description}}</p>
                     
-                                            <v-row class="px-3" v-show="tender.tender_type == 1">
+                                            <v-row class="px-3" v-show="tender.tender_type == 2">
                                                 <p class="body-2  pt-1 ">{{  tender.origin }}</p>
                         
                                                 <v-icon small color="#4169E1" class="px-2 pb-3">
@@ -80,7 +80,7 @@
 
                                      <template v-if='tab.title === "Biding"'>
 
-                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in BidedTenders" :key="tender.id">
+                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in BidedTenders" :key="tender.tender_id">
                                         <v-card column width="350"  elevation="3" class="px-4 py-3">
                                             <v-row  row class="px-3 pt-1">
                                                 <h4  class="">{{ tender.cargo_details}}</h4>
@@ -126,7 +126,7 @@
 
                                      <template v-if='tab.title === "Progress"'>
 
-                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in OnProgressTenders" :key="tender.id">
+                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in OnProgressTenders" :key="tender.tender_id">
                                         <v-card column width="350"  elevation="3" class="px-4 py-3">
                                             <v-row  row class="px-3 pt-1">
                                                 <h4  class="">{{ tender.cargo_details}}</h4>

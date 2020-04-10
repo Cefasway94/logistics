@@ -8,7 +8,7 @@
                             <h1 class=" font-weight-regular headline ">{{ tender.cargo_details }}</h1>
                             <v-chip color="grey" small class="white--text ml-7 mt-1">Available</v-chip>
                         </v-row>
-                        <p class="grey--text">{{ getTender.description }}</p>
+                        <p class="grey--text">{{ tender.description }}</p>
                     </v-flex>
                 </v-flex>
             </v-card>
@@ -39,7 +39,7 @@
                                     </v-flex>
                                 </v-flex>
 
-                                <v-flex row class="mt-7 pr-4" v-show="tender.tender_type == 1">
+                                <v-flex row class="mt-7 pr-4" v-show="tender.tender_type == 2">
 
                                      <v-flex column class="pl-3" >
 
@@ -193,9 +193,9 @@ export default {
          //eslint-disable-next-line no-console
           //console.log(vm.$route.params.tender_type);
 
-          if(vm.$route.params.tender_type == 1) // Transporting tender
+          if(vm.$route.params.tender_type == 2) // Transporting tender
           {
-              let url = `http://192.168.1.44:9000/api/v1/tenders/${vm.$route.params.id}`;
+              let url = `http://207.180.215.239:9000/api/v1/tenders/${vm.$route.params.id}`;
 
               axios.get(url).then((response) => 
                             {
@@ -217,10 +217,10 @@ export default {
                             });
 
 
-          } else if(vm.$route.params.tender_type == 2) //Clearing tender
+          } else if(vm.$route.params.tender_type == 1) //Clearing tender
           {
 
-              let url = `http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`;
+              let url = `http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`;
 
               axios.get(url).then((response) => 
                             {
