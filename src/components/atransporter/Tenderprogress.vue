@@ -126,8 +126,8 @@
                 color="#4169E1">
                 
                 <v-tab class="text-capitalize body-1">Tender progress</v-tab>
-                <v-tab class="text-capitalize body-1">Negotiation history</v-tab>
-                <v-tab class="text-capitalize body-1" >Despute</v-tab>
+                <!-- <v-tab class="text-capitalize body-1">Negotiation history</v-tab>
+                <v-tab class="text-capitalize body-1" >Despute</v-tab> -->
 
                 
                 
@@ -241,11 +241,91 @@
                     
                     <v-flex>
                     <v-flex class="px-3">
-                    <h1 style="color:#4169E1;" class=" font-weight-bold text-center body-1 my-3 mb-0">progress timeline</h1>
+                    <h1 style="color:#4169E1;" 
+                    class=" font-weight-bold text-center body-1 my-3 mb-0">
+                    progress timeline
+                    </h1>
                     </v-flex>
                     <v-flex row class="">
                         <v-col class="">
-                        <v-card flat height="100"  width="1200" class="px-5 py-3" outlined >
+                        <v-card 
+                        flat                           
+                        width="1200" 
+                        class="px-5 py-3" 
+                        outlined >
+
+                        <!-- STEPPPER -->
+                        <v-stepper
+                        flat
+                        v-model="e1"
+                        :vertical="vertical"
+                        :alt-labels="altLabels"
+                        >
+
+                        <template>
+                        <v-stepper-header>
+                        <template v-for="n in steps">
+                            <v-card 
+                            :key="`${n}-step`" 
+                            flat
+                            width="80" 
+                            outlined >
+                            <v-icon 
+                            class="center-text mx-auto mb-0"
+                            size="50">
+                            local_shipping
+                            </v-icon>   
+                            <v-stepper-step
+                            :key="`${n}-step`"
+                            :complete="e1 > n"
+                            :step="n"
+                            :editable="editable" 
+                            >
+                            <p class="body-2">
+                            Step {{ n }}
+                            </p>
+                            </v-stepper-step>
+                             </v-card>
+                            <v-card 
+                            :key="n"
+                            width="120" 
+                            color="red"
+                            class="py-12" >
+                            <v-divider
+                            v-if="n !== steps"
+                            :key="n"
+                            class="ml-1"
+                            ></v-divider>
+                            </v-card>
+                        </template>
+                        </v-stepper-header>
+
+                        <v-stepper-items>
+                        <v-stepper-content
+                            v-for="n in steps"
+                            :key="`${n}-content`"
+                            :step="n"
+                        >
+                            <v-card
+                            class="mb-12"
+                            color="grey lighten-1"
+                            height="200px"
+                            ></v-card>
+
+                            <v-btn
+                            color="primary"
+                            @click="nextStep(n)"
+                            >
+                            Continue
+                            </v-btn>
+
+                            <v-btn text>Cancel</v-btn>
+                        </v-stepper-content>
+                        </v-stepper-items>
+                    </template>
+
+                        </v-stepper>
+                        <!--  -->
                         
                         </v-card>
                         </v-col>            
@@ -253,7 +333,9 @@
                     </v-flex>
 
                     <v-flex class="px-3">
-                    <h1 style="color:#4169E1;" class=" font-weight-bold body-1 my-5 mb-0">update timeline</h1>
+                    <h1 style="color:#4169E1;" class=" font-weight-bold body-1 my-5 mb-0">
+                    update timeline
+                    </h1>
                     </v-flex>
                     
                         <v-col class="">
@@ -370,6 +452,13 @@ export default {
 
     data(){
         return{
+            //-----------stepper
+            e1: 1,
+            steps: 5,
+            vertical: false,
+            altLabels: true,
+            editable: false,
+            //----------------
             extension:false,
             placeholder: 3,
             value:80,
@@ -392,10 +481,22 @@ export default {
       
     //   //eslint-disable-next-line no-console
     //   console.log(tab);
-    console.log(to);
-    console.log(from);
-    console.log(next);
+    // console.log(to);
+    // console.log(from);
+    // console.log(next);
     },
+
+    //  watch: {
+    //   steps (val) {
+    //     if (this.e1 > val) {
+    //       this.e1 = val
+    //     }
+    //   },
+    //   vertical () {
+    //     this.e1 = 2
+    //     requestAnimationFrame(() => this.e1 = 1) // Workarounds
+    //   },
+    // },
     
     computed: {
     ...mapGetters([
@@ -407,6 +508,18 @@ export default {
       "T_GET_AGENT",
       'T_GET_TENDERSDETAILs'
     ]),
+
+    // ------------stepper method
+    onInput (val) {
+        this.steps = parseInt(val)
+      },
+      nextStep (n) {
+        if (n === this.steps) {
+          this.e1 = 1
+        } else {
+          this.e1 = n + 1
+        }
+      },
 
     }
 }
