@@ -18,6 +18,8 @@
     <router-view name="AboutTenderBids"></router-view>
     <router-view name="Aboutbid"></router-view>
     <router-view name="Payment"></router-view>
+    <router-view name="Clientupdateprofile"></router-view>
+
   </keep-alive>
 </transition>
       

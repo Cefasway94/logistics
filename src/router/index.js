@@ -23,7 +23,7 @@ import Transportereditprofile from '../components/transporters/Transportereditpr
 //client routs
 import Client from '../components/client/Client.vue';
 import Createtender from '../components/client/Createtender.vue';
-import Clienteditprofile from '../components/client/Clienteditprofile.vue';
+import Clientupdateprofile from '../components/client/Clientupdateprofile.vue';
 import Tenderprogressclient from '../components/client/Tenderprogressclient.vue'
 import Tender from '../components/client/Tender.vue'
 import editTender from '../components/client/editTender.vue'
@@ -73,9 +73,9 @@ const routes = [
     components: {AboutTenderBids}
   },
   {
-    path:'/Client/editprofile',
-    name:'Clienteditprofile',
-    components:{Clienteditprofile}
+    path:'/Client/editprofile/:id',
+    name:'Clientupdateprofile',
+    components:{Clientupdateprofile}
   },
   {
     path:'/client/Createtender',
