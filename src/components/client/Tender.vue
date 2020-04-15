@@ -6,7 +6,7 @@
                     <v-flex>
                         <v-row class="pl-2 mb-1">
                             <h1 class=" font-weight-regular headline ">{{ tender.cargo_details }}</h1>
-                            <v-chip color="grey" small class="white--text ml-7 mt-1">Available</v-chip>
+                            <v-chip color="grey" small class="white--text ml-7 mt-1">{{ tender.tender_progress }}</v-chip>
                         </v-row>
                         <p class="grey--text">{{ tender.description }}</p>
                     </v-flex>
@@ -107,8 +107,18 @@
                                         :disabled="editValid" 
                                         color="#4169E1" 
                                         large class="white--text"
-                                        :to="'/client/edittender/'+tender.id+'/'+tender.tender_type">
+                                        :to="'/client/edittender/'+tender.id+'/'+tender.tender_type"
+                                        v-show ="tender.tender_progress !== 'onProgress'">
                                         Edit
+                                    </v-btn>
+
+                                     <v-btn 
+                                        :disabled="editValid" 
+                                        color="#4169E1" 
+                                        large class="white--text"
+                                        :to="'/client/tenderprogress/'+tender.id+'/'+tender.tender_type"
+                                        v-show ="tender.tender_progress === 'onProgress'">
+                                        Show progress
                                     </v-btn>
                             </v-flex>
                         </v-card>
@@ -167,8 +177,7 @@ export default {
   
     data: ()=>({
         
-        tender:[],
-       
+        tender:[], 
     }),
     computed: {
 
@@ -205,7 +214,7 @@ export default {
                                vm.tender = response.data.objects;
 
                                 //eslint-disable-next-line no-console
-                               //console.log(response.data.objects);
+                                //console.log(vm.tender.tender_progress);
 
 
                             }).catch(()=>{

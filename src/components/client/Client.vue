@@ -45,7 +45,38 @@
                                     <template v-if='tab.title === "All"'>
 
 
-                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in Tenders" :key="tender.tender_id">
+                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in AllClearingTenders" :key="tender.tender_id">
+                                        <v-card column width="350"  elevation="3" class="px-4 py-3">
+                                            <v-row  row class="px-3 pt-1">
+                                                <h4  class="">{{ tender.cargo_details}}</h4>
+                                                <v-chip 
+                                                    small class="light-green white--text caption font-weight-bold mx-3" >
+                                                    {{ tender.tender_status}}
+                                                </v-chip>
+                                                <v-spacer></v-spacer>
+                                            </v-row>
+                   
+                                            <p class=" body-2 grey--text">{{ tender.description}}</p>
+                    
+                                            <v-row class="px-3" v-show="tender.tender_type == 2">
+                                                <p class="body-2  pt-1 ">{{  tender.origin }}</p>
+                        
+                                                <v-icon small color="#4169E1" class="px-2 pb-3">
+                                                    arrow_forward
+                                                </v-icon>
+                                                <p  class="body-2  pt-1 ">{{ tender.destination }}</p>
+                                            </v-row>
+
+                                            <v-row row class="px-3">
+                                                <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
+                                                    <v-spacer></v-spacer>
+                                                    <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
+                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View Details</v-btn>
+                                            </v-row>
+                                        </v-card>
+                                    </v-flex> 
+
+                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in AllTransportingTenders" :key="tender.tender_id">
                                         <v-card column width="350"  elevation="3" class="px-4 py-3">
                                             <v-row  row class="px-3 pt-1">
                                                 <h4  class="">{{ tender.cargo_details}}</h4>
@@ -80,7 +111,7 @@
 
                                      <template v-if='tab.title === "Biding"'>
 
-                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in BidedTenders" :key="tender.tender_id">
+                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in ClearingBidedTenders" :key="tender.tender_id">
                                         <v-card column width="350"  elevation="3" class="px-4 py-3">
                                             <v-row  row class="px-3 pt-1">
                                                 <h4  class="">{{ tender.cargo_details}}</h4>
@@ -122,11 +153,53 @@
                                         </v-card>
                                     </v-flex>  
 
+                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in TransportingBidedTenders" :key="tender.tender_id">
+                                        <v-card column width="350"  elevation="3" class="px-4 py-3">
+                                            <v-row  row class="px-3 pt-1">
+                                                <h4  class="">{{ tender.cargo_details}}</h4>
+                                                <v-chip 
+                                                    small class="orange white--text caption font-weight-bold mx-3" >
+                                                    {{ tender.bids_count }} bids
+                                                </v-chip>
+                                                <v-spacer></v-spacer>
+
+                                                <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
+                                            </v-row>
+
+                                            <v-row class="px-3 mt-4">
+
+                                                <p class="body-2  pt-1 ">status: </p>
+
+                                                 <v-chip 
+                                                    small class="green white--text caption font-weight-bold mx-3" >
+                                                    {{ tender.tender_status}}
+                                                </v-chip>
+                                            </v-row>
+                   
+                                            <p class=" body-2 grey--text">{{ tender.description}}</p>
+                    
+                                            <v-row class="px-3">
+                                                <p class="body-2  pt-1 ">{{ tender.origin }}</p>
+                        
+                                                <v-icon small color="#4169E1" class="px-2 pb-3">
+                                                    arrow_forward
+                                                </v-icon>
+                                                <p  class="body-2  pt-1 ">{{ tender.destination }}</p>
+                                            </v-row>
+
+                                            <v-row row class="px-3">
+                                                <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text"  @click="set(tender)" :to="'/client/AboutTenderBids/'+ tender.id+'/'+tender.tender_type">View Details</v-btn>
+                                            </v-row>
+                                        </v-card>
+                                    </v-flex>
+
                                     </template>
 
                                      <template v-if='tab.title === "Progress"'>
 
-                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in OnProgressTenders" :key="tender.tender_id">
+                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in ClearingTendersOnProgress" :key="tender.tender_id">
                                         <v-card column width="350"  elevation="3" class="px-4 py-3">
                                             <v-row  row class="px-3 pt-1">
                                                 <h4  class="">{{ tender.cargo_details}}</h4>
@@ -155,7 +228,41 @@
                                                 <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>-->
-                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/agent/Abouttender/' + tender.id">View Details</v-btn>
+                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id+'/'+tender.tender_type">View Details</v-btn>
+                                            </v-row>
+                                        </v-card>
+                                    </v-flex> 
+
+                                    <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in TransportingOnProgressTenders" :key="tender.tender_id">
+                                        <v-card column width="350"  elevation="3" class="px-4 py-3">
+                                            <v-row  row class="px-3 pt-1">
+                                                <h4  class="">{{ tender.cargo_details}}</h4>
+                                                <v-chip 
+                                                    small class="light-green white--text caption font-weight-light mx-3" >
+                                                    {{ tender.tender_progress}}
+                                                </v-chip>
+                                                <v-spacer></v-spacer>
+
+                                                <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
+                                            </v-row>
+                   
+                                            <p class=" body-2 grey--text">{{ tender.description}}</p>
+
+                                           
+                                            <v-row class="px-3">
+                                                <p class="body-2  pt-1 ">{{ tender.origin }}</p>
+                        
+                                                <v-icon small color="#4169E1" class="px-2 pb-3">
+                                                    arrow_forward
+                                                </v-icon>
+                                                <p  class="body-2  pt-1 ">{{ tender.destination }}</p>
+                                            </v-row>
+
+                                            <v-row row class="px-3">
+                                                <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
+                                                    <v-spacer></v-spacer>
+                                                    <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>-->
+                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id+'/'+tender.tender_type">View Details</v-btn>
                                             </v-row>
                                         </v-card>
                                     </v-flex>  
@@ -229,7 +336,8 @@ export default {
 
                   this.fetchAllClearingTenders(this.id);
                   this.fetchAllTransportingTenders(this.id);
-                  this.setTenders();
+
+                  //this.setTenders();
                    
                   break;
 
@@ -241,16 +349,15 @@ export default {
                    //eslint-disable-next-line no-console
                                 //console.log(this.TransportingBidedTenders);
 
-                  this.setBidedTenders()
+                  //this.setBidedTenders()
                   
                   break;
+
               case 'Progress':
 
                   this.fetchClearingTendersOnProgress(this.id);
                   this.fetchTransportingOnProgressTenders(this.id);
-                  this.setOnProgressTenders();
-                  
-                  
+                
                   break;
               default:
                   break;
@@ -263,13 +370,13 @@ export default {
           this.alert = this.$route.query.alert;
       }*/
       
-      /*this.fetchAllClearingTenders(this.id),
+      this.fetchAllClearingTenders(this.id),
       this.fetchClearingBidedTenders(this.id),
       this.fetchClearingTendersOnProgress(this.id)
      
       this.fetchAllTransportingTenders(this.id);
       this.fetchTransportingBidedTenders(this.id);
-      this.fetchTransportingOnProgressTenders(this.id);*/
+      this.fetchTransportingOnProgressTenders(this.id);
 
          //eslint-disable-next-line no-console
                         //console.log(this.ClearingBidedTenders);
