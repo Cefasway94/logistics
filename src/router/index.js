@@ -8,7 +8,7 @@ import login from '../views/Login.vue';
 import Agenteditprofile from '../components/agents/Agenteditprofile.vue';
 import Tenders from '../components/agents/Tenders.vue';
 import Abouttender from '../components/agents/Abouttender';
-import Biding from '../components/agents/Biding.vue';
+import ABiding from '../components/agents/Biding.vue';
 import Agent  from '../components/agents/Agent.vue';
 import AgentAboutbid from '../components/agents/Aboutbid.vue';
 import AgentTenderprogress from '../components/agents/Tenderprogressagent.vue';
