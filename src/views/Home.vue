@@ -18,19 +18,38 @@
     <router-view name="Agenteditprofile"></router-view>
     <router-view name="Tenders"></router-view>
     <router-view name="Abouttender"></router-view>
-    <router-view name="Biding"></router-view>
+    <router-view name="ABiding"></router-view>
     <router-view name="Agent"></router-view>
     <router-view name="AgentAboutbid"></router-view>
     <router-view name="AgentTenderprogress"></router-view>
 
-    <!-- client -->
     <router-view name="Createtender"></router-view>
-    <router-view name="Clienteditprofile"></router-view>
-    <router-view name="Tenderprogressclient"></router-view>
-    <router-view name="Payment"></router-view>
-    <router-view name="Paymenthistory"></router-view>
+    <router-view name="Agent"></router-view>
     <router-view name="Client"></router-view>
-  
+    <router-view name="Tenders"></router-view>
+    <router-view name="Abouttender"></router-view>
+    <router-view name="Tender"></router-view>
+    <router-view name="Createtender"></router-view>
+    
+
+    <!-- client -->
+    
+    <router-view name="Paymenthistory"></router-view>
+    <router-view name="Createtender"></router-view>
+    <router-view name="Agent"></router-view>
+    <router-view name="Client"></router-view>
+    <router-view name="Tenders"></router-view>
+    <router-view name="Abouttender"></router-view>
+    <router-view name="Tender"></router-view>
+    <router-view name="Biding"></router-view>
+    <router-view name="Tenderprogressclient"></router-view>
+    <router-view name="editTender"></router-view>
+    <router-view name="AboutTenderBids"></router-view>
+    <router-view name="Aboutbid"></router-view>
+    <router-view name="Payment"></router-view>
+    <router-view name="Clientupdateprofile"></router-view>
+
+
 </transition>
       
   </v-content>
@@ -40,6 +59,7 @@
 <script>
 // @ is an alias to /src
  import Navigation from '@/components/Navigation.vue'
+
 
 export default {
   name: 'home',

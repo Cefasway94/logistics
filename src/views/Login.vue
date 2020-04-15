@@ -5,6 +5,7 @@
     height="auto"
     src="../assets/newasset/truck.svg">            
 <v-row wrap justify="end" class="pr-5" style="background-color:transparent;">
+
     <v-flex xs-12 sm11 md8 lg5 >        
     <router-view ></router-view>
 </v-flex>
