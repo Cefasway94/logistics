@@ -42,9 +42,9 @@
                         <v-flex row class="mt-7 mb-4" >
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
-                            <v-card flat width="200" height="150" outlined>
+                            <v-card color="lblue" flat width="150" height="130" outlined>
                             <v-image class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
+                                <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
                             </v-image>
@@ -53,9 +53,9 @@
 
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> LETTER </p>
-                            <v-card flat width="200" height="150" outlined>
+                            <v-card color="lblue" flat width="150" height="130" outlined>
                             <v-image class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
+                                <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
                             </v-image>
@@ -64,9 +64,9 @@
 
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> OTEHER </p>
-                            <v-card flat width="200" height="150" outlined>
+                            <v-card color="lblue" flat width="150" height="130" outlined>
                             <v-image class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
+                                <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
                             </v-image>
@@ -251,100 +251,76 @@
                         <v-card 
                         flat                           
                         width="1200" 
-                        class="px-5 py-3" 
-                        outlined >
+                        class="px-3 py-3" 
+                        outlined>
 
-                        <!-- STEPPPER -->
-                        <v-stepper
-                        flat
-                        v-model="e1"
-                        :vertical="vertical"
-                        :alt-labels="altLabels"
-                        >
+                       <v-flex class="progress">
+                           <ul class="text-center">
+                               <li style="" class="steps">
+                                   <v-icon color="" size="50">assignment_turned_in</v-icon><br>
+                                   <v-btn class="my-2" color="primary" disabled=""  elevation="flat" fab x-small>
+                                    <v-icon class="x-large ">done</v-icon>
+                                    </v-btn>
+                                   <p class="mb-0">stage name of stage</p>
+                                   <p class="mt-1">stage name of stage</p>
+                               </li>
+                               <li class="divider" >
+                                <v-divider  color="blue" width="100" size="20"></v-divider>
+                                
+                               </li>
+                                <li class="steps">
+                                   <v-icon elevation="10" color="primary" size="50">assignment_turned_in</v-icon><br>
+                                   <v-btn class="my-2" color="primary" elevation=""  fab x-small>
+                                   <v-icon class="x-large ">done</v-icon>
+                                   </v-btn>
+                                   <p class="mb-0">stage name of stage</p>
+                                   <p class="mt-1">stage name of stage</p>
+                               </li>
+                               <li class="divider">
+                                <v-divider color="" width="100" size="20"></v-divider>
+                               </li>
+                                <li class="steps">
+                                   <v-icon size="50">assignment_turned_in</v-icon><br>
+                                   <v-btn class="my-2" color=""  disabled="" elevation="flat" fab x-small>
+                                    <v-icon class="x-large ">done</v-icon>
+                                    </v-btn>
+                                   <p class="mb-0">stage name of stage</p>
+                                   <p class="mt-1">stage name of stage</p>
+                               </li>
+                               <li class="divider">
+                                <v-divider color="" width="100" size="20"></v-divider>
+                               </li>
+                               <li class="steps">
+                                   <v-icon size="50">assignment_turned_in</v-icon><br>
+                                   <v-btn class="my-2" color=""  disabled elevation="falt" fab x-small>
+                                    <v-icon class="x-large ">done</v-icon>
+                                    </v-btn>
+                                   <p class="mb-0">stage name of stage</p>
+                                   <p class="mt-1">stage name of stage</p>
+                               </li>
 
-                        <template>
-                        <v-stepper-header>
-                        <template v-for="n in steps">
-                            <v-card 
-                            :key="`${n}-step`" 
-                            flat
-                            width="80" 
-                            outlined >
-                            <v-icon 
-                            class="center-text mx-auto mb-0"
-                            size="50">
-                            local_shipping
-                            </v-icon>   
-                            <v-stepper-step
-                            :key="`${n}-step`"
-                            :complete="e1 > n"
-                            :step="n"
-                            :editable="editable" 
-                            >
-                            <p class="body-2">
-                            Step {{ n }}
-                            </p>
-                            </v-stepper-step>
-                             </v-card>
-                            <v-card 
-                            :key="n"
-                            width="120" 
-                            color="red"
-                            class="py-12" >
-                            <v-divider
-                            v-if="n !== steps"
-                            :key="n"
-                            class="ml-1"
-                            ></v-divider>
-                            </v-card>
-                        </template>
-                        </v-stepper-header>
-
-                        <v-stepper-items>
-                        <v-stepper-content
-                            v-for="n in steps"
-                            :key="`${n}-content`"
-                            :step="n"
-                        >
-                            <v-card
-                            class="mb-12"
-                            color="grey lighten-1"
-                            height="200px"
-                            ></v-card>
-
-                            <v-btn
-                            color="primary"
-                            @click="nextStep(n)"
-                            >
-                            Continue
-                            </v-btn>
-
-                            <v-btn text>Cancel</v-btn>
-                        </v-stepper-content>
-                        </v-stepper-items>
-                    </template>
-
-                        </v-stepper>
-                        <!--  -->
+                           </ul>
+                       </v-flex>
                         
                         </v-card>
                         </v-col>            
                     </v-flex>
                     </v-flex>
 
-                    <v-flex class="px-3">
+                     <v-flex class="px-3">
                     <h1 style="color:#4169E1;" class=" font-weight-bold body-1 my-5 mb-0">
                     update timeline
                     </h1>
                     </v-flex>
                     
                         <v-col class="">
-                        <v-card flat height="160"  width="1200" class="px-5 ">
+                        <v-card flat height="160"  width="1000" class="px-5 mx-auto ">
                        <v-flex column>
                                 <v-flex row class="">
                                     <v-flex column sm6 mb6 class="px-6">
                                         <p class="bondy-2 mb-0">Select stage</p>
                                         <v-text-field 
+                                        dense="100"
                                         v-model="stages"
                                         outlined 
                                         class="" 
@@ -355,6 +331,7 @@
                                     <v-flex>
                                         <p class="bondy-2 mb-0">comment</p>
                                         <v-text-field 
+                                        dense="100"
                                         v-model="comment"
                                         outlined 
                                         color="#4169E1" 
@@ -363,14 +340,16 @@
                                     </v-flex>
                                     </v-flex>
                                     </v-flex>
-                                    <v-btn elevation="flat" 
+                                    <v-btn
+                                    small 
+                                    elevation="flat" 
                                     class="mx-3 primary " > 
                                     Submite progress
                                     </v-btn>
                                 </v-flex>
                         </v-card>
-                        </v-col>            
-                    
+                        </v-col>
+
 
                     <!-- <v-flex>
                     <v-card class="mx-auto" width="700" flat >
@@ -416,9 +395,42 @@
                     <v-row class="pa-3">
                         <v-col class="">
                         <p class="primary--text body-2 text-uppercase"> BILL OF LADING </p>
-                        <v-card flat width="200" height="150" outlined>
+                        <v-card color="lblue" flat width="140" height="150" outlined>
                             <v-image class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
+                                <v-icon color="primary" x-large class="mx-12 mt-12">
+                                    cloud_upload
+                                </v-icon>
+                            </v-image>
+                        </v-card>
+                        </v-col>  
+
+                        <v-col class="">
+                        <p class="primary--text body-2 text-uppercase"> AUTHORITY LATTER </p>
+                        <v-card color="lblue" flat width="140" height="150" outlined>
+                            <v-image class="ma-auto">
+                                <v-icon color="primary" x-large class="mx-12 mt-12">
+                                    cloud_upload
+                                </v-icon>
+                            </v-image>
+                        </v-card>
+                        </v-col>  
+
+                        <v-col class="">
+                        <p class="primary--text body-2 text-uppercase"> OTHER </p>
+                        <v-card color="lblue" flat width="140" height="150" outlined>
+                            <v-image class="ma-auto">
+                                <v-icon color="primary" x-large class="mx-12 mt-12">
+                                    cloud_upload
+                                </v-icon>
+                            </v-image>
+                        </v-card>
+                        </v-col>  
+
+                        <v-col class="">
+                        <p class="primary--text body-2 text-uppercase"> OTHER </p>
+                        <v-card color="lblue" flat width="140" height="150" outlined>
+                            <v-image class="ma-auto">
+                                <v-icon color="primary" x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
                             </v-image>
@@ -452,13 +464,9 @@ export default {
 
     data(){
         return{
-            //-----------stepper
-            e1: 1,
-            steps: 5,
-            vertical: false,
-            altLabels: true,
-            editable: false,
+         
             //----------------
+            comment:'',
             extension:false,
             placeholder: 3,
             value:80,
@@ -475,52 +483,67 @@ export default {
               console.log(vm.LOAD_TENDER);
           vm.T_GET_AGENT(localStorage.client).then(()=>{
               console.log(vm.LOAD_AGENT);
+
+              vm.T_GET_PROGRESS_STAGES().then(()=>{
+                  console.log(vm.LOAD_PROGRESS_STAGES);
+              })
           })
       })
       })
       
-    //   //eslint-disable-next-line no-console
-    //   console.log(tab);
-    // console.log(to);
-    // console.log(from);
-    // console.log(next);
+       //eslint-disable-next-line no-console
+    /*   console.log(tab);
+     console.log(to);
+     console.log(from);
+     console.log(next);*/
     },
 
-    //  watch: {
-    //   steps (val) {
-    //     if (this.e1 > val) {
-    //       this.e1 = val
-    //     }
-    //   },
-    //   vertical () {
-    //     this.e1 = 2
-    //     requestAnimationFrame(() => this.e1 = 1) // Workarounds
-    //   },
-    // },
     
     computed: {
     ...mapGetters([
-      "LOAD_LOGIN",'LOAD_AGENT','LOAD_TENDER'
+      "LOAD_LOGIN",
+      'LOAD_AGENT',
+      'LOAD_TENDER',
+      'LOAD_PROGRESS_STAGES'
       ])
   },
-    methods :{
+
+   
+methods :{
     ...mapActions([
       "T_GET_AGENT",
-      'T_GET_TENDERSDETAILs'
+      'T_GET_TENDERSDETAILs',
+      'T_GET_PROGRESS_STAGES'
     ]),
-
-    // ------------stepper method
-    onInput (val) {
-        this.steps = parseInt(val)
-      },
-      nextStep (n) {
-        if (n === this.steps) {
-          this.e1 = 1
-        } else {
-          this.e1 = n + 1
-        }
-      },
-
     }
 }
 </script>
+
+<style>
+.progress{
+  margin: 20px 20px;
+}
+ul{
+    text-align: center;
+    
+}
+
+ul li{
+    display: inline-block;
+}
+
+.steps{
+    width: 150px;
+}
+.divider{
+    margin-bottom: 70px;
+}
+#line{
+    ;
+}
+ul li .x-large{
+    
+    
+}
+</style>
+

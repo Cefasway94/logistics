@@ -13,7 +13,8 @@ export default {
         agent:[],
         profile:[],
         payment_terms:[],
-        accepted_bid:[]
+        accepted_bid:[],
+        progress_stages:[]
     },
 
 getters:{
@@ -77,6 +78,13 @@ getters:{
             const profile = state.profile;
             console.log('ediprofile load');
             return profile
+        },
+
+//  load progress_stages ===========================>>>>
+        LOAD_PROGRESS_STAGES: state=>{
+            const progress_stages = state.progress_stages
+            console.log('list of progress load');
+            return progress_stages
         }
 
     },
@@ -130,6 +138,11 @@ mutations: {
         SET_PROFILE: (state,payload)=>{
             state.profile = payload;
         },
+
+// get transporter tender stages mutation =================>>>
+        SET_PROGRESS_STAGES: (state,payload)=>{
+            state.progress_stages = payload
+        }
 
 
     },
@@ -652,6 +665,28 @@ actions: {
                 });
             });
           },
+
+//Agent bid terms  ---------------------------------------------------------------------------         
+T_GET_PROGRESS_STAGES: async ({commit}) => {
+    const url= 'http://207.180.215.239:9000/api/v1/configurations/transporting-progress'
+    await axios.get(url).then((data)=>{
+        // eslint-disable-next-line no-console
+        if (data.data.errorCount == 0 && data.data.genralErrorCode == 8000 ) {
+            console.log(data);
+            commit('SET_PROGRESS_STAGES', data.data);
+            //console.log(data.message);
+        }else{
+            commit('SET_PROGRESS_STAGES', data.message);
+            
+        }
+    }).catch((error)=>{
+        //eslint-disable-next-line no-console
+        console.log(error);
+        const res=null;
+        commit('SET_AGENT', res);
+    }); 
+                    
+},
 
 }
 }
