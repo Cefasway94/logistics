@@ -56,7 +56,7 @@
                   <v-flex class="">
             
                     <v-flex row class="mx-2 mb-5 mt-3" >
-                    <v-flex column xs12 sm4 lg4 class="px-2">
+                    <v-flex column xs4 sm4 lg4 class="px-2">
                     <center>
                     <v-hover class="">
                     <template v-slot="{ hover }">
@@ -86,7 +86,7 @@
                     </center>
                     </v-flex>
                     
-                    <v-flex column xs12 sm4 md4 lg4 class="px-2">
+                    <v-flex column xs4 sm4 md4 lg4 class="px-2">
                     <center>
                     <v-hover class="">
                     <template v-slot="{ hover }">
@@ -120,7 +120,7 @@
                     </center>
                     </v-flex>
 
-                    <v-flex column xs12 sm4 md4 lg4 class="px-2">
+                    <v-flex column xs4 sm4 md4 lg4 class="px-2">
                     <center>
                     <v-hover class="">
                     <template v-slot="{ hover }">
@@ -274,7 +274,7 @@
                     </v-flex>
 
                     <v-flex row class="">
-                    <v-flex column xs12 sm12 md6 lg6 class="px-1">
+                    <v-flex column xs6 sm6 md6 lg6 class="px-1">
                     <p class="font-weight-regular subtitle-2 grey--text mb-0" >PASSWORD</p>
                     <v-hover class="mb-7">
                     <template v-slot="{ hover }">
@@ -300,7 +300,7 @@
                     </v-hover>
                     </v-flex>
 
-                    <v-flex column xs12 sm12 md6 lg6 class="px-1">
+                    <v-flex column xs6 sm6 md6 lg6 class="px-1">
                     <p class="font-weight-regular subtitle-2 grey--text mb-0" >REPEAT PASSWORD</p>
                     <v-hover class="mb-7">
                     <template v-slot="{ hover }">

@@ -1,7 +1,7 @@
 <template >
-    <v-app style="background-color:; ">
+   <v-app style="background-color:#f5faff; height:80%; ">
       <v-card 
-        class="my-auto mx-4"
+        class="my-10 mx-4"
         width="500" 
         flat=""
         color="transparent" >
