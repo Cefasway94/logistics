@@ -1,5 +1,5 @@
 <template >
-    <v-app style="background-color:transparent; ">
+    <v-app style="background-color:; ">
       <v-card 
         class="my-auto mx-4"
         width="500" 

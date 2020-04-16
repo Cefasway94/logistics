@@ -150,7 +150,7 @@ mutations: {
 actions: {
         // Tender actions =========================================>>>>
         GET_TENDERS: async ({commit},payload) => {
-            const url= 'http://192.168.1.44:8000/api/v1/tenders/list/'+payload;
+            const url= 'http://207.180.215.239:8000/api/v1/tenders/list/'+payload;
             await axios.get(url).then((res)=>{
                 // eslint-disable-next-line no-console
                 console.log(res.data);
@@ -169,7 +169,7 @@ actions: {
              // eslint-disable-next-line no-console
             //console.log(payload);
             
-            const url= 'http://192.168.1.44:8000/api/v1/tenders/'+payload;
+            const url= 'http://207.180.215.239:8000/api/v1/tenders/'+payload;
             await axios.get(url).then((res)=>{
                 // res.data.map(data=>{
                 //     commit('SET_TENDER', data);
@@ -191,7 +191,7 @@ actions: {
 // Dashboard actions ==================================================>>>>>>
         GET_DASHBOARD: async ({commit},payload) => {
             
-        const url= 'http://192.168.1.44:8000/api/v1/bids/agent/'+payload;
+        const url= 'http://207.180.215.239:8000/api/v1/bids/agent/'+payload;
             await axios.get(url).then((data)=>{
                 // eslint-disable-next-line no-console
                 //console.log(res.data);
@@ -207,7 +207,7 @@ actions: {
 // Get bided tender details (Dashboard details) ==================================================>>>>>>
         GET_DASHBOARDDETAILs: async ({commit},payload) => {
             
-        const url= 'http://192.168.1.44:8000/api/v1/bids/show/'+payload;
+        const url= 'http://207.180.215.239:8000/api/v1/bids/show/'+payload;
             await axios.get(url).then((res)=>{
                 // eslint-disable-next-line no-console
                 //console.log(res.data);
@@ -238,7 +238,7 @@ actions: {
 
 // Get all on Progress tenders ============================================>>>
         GET_ONPROGRESS: async ({commit},payload) => {
-            const url= 'http://192.168.1.44:8000/api/v1/tenders/on-progress/agent/'+payload;
+            const url= 'http://207.180.215.239:8000/api/v1/tenders/on-progress/agent/'+payload;
                 await axios.get(url).then((data)=>{
                     // eslint-disable-next-line no-console
                     //console.log(res.data);
@@ -261,7 +261,7 @@ actions: {
                     }
                 }
             axios
-                .post(`http://192.168.1.44:8000/api/v1/bids`, {
+                .post(`http://207.180.215.239:8000/api/v1/bids`, {
                  agent_id,
                  tender_id,
                  payment_terms_and_conditions,
@@ -300,7 +300,7 @@ actions: {
 
 // accept warded tender ================================================>>>>        
         ACCEPT_BID : async ({commit},payload)=>{
-            const url = 'http://192.168.1.44:8000/api/v1/bids/confirm/'+payload;
+            const url = 'http://207.180.215.239:8000/api/v1/bids/confirm/'+payload;
             await axios.put(url).then((data)=>{
                 console.log('accept bid');
                 console.log(data);
@@ -312,7 +312,7 @@ actions: {
         },
 // get agent details =================================================>>>>>
         GET_AGENT: async ({commit},payload) => {
-            const url= 'http://192.168.1.44:8000/api/v1/agents/show/'+payload;
+            const url= 'http://207.180.215.239:8000/api/v1/agents/show/'+payload;
             await axios.get(url).then((res)=>{
                 // eslint-disable-next-line no-console
                 console.log(res.data);
@@ -328,7 +328,7 @@ actions: {
 
 //Agent bid terms  ========================================================>>>>          
         GET_AGENT_PAYMENT_TERMS: async ({commit},payload) => {
-            const url= 'http://192.168.1.44:8000/api/v1/payment-terms/agent/'+payload;
+            const url= 'http://207.180.215.239:8000/api/v1/payment-terms/agent/'+payload;
             await axios.get(url).then((data)=>{
                 // eslint-disable-next-line no-console
                 if (data.data.errorCount == 0 && data.data.genralErrorCode == 8000 ) {
@@ -358,7 +358,7 @@ actions: {
             }
             return new Promise((resolve, reject) => {
               axios
-                .post(`http://192.168.1.44:8000/api/v1/agents/`+email, {
+                .post(`http://207.180.215.239:8000/api/v1/agents/`+email, {
                     profile_image,
                     certificate,
                     insurance,
