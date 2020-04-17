@@ -89,7 +89,7 @@ actions: {
       LOGIN: ({commit},{email, password}) => {
         return new Promise((resolve, reject) => {
           axios  
-            .post(`http://192.168.1.49/api/v1/profiles/login`, {email, password})
+            .post(`http://164.68.113.159:2000/api/v1/profiles/login`, {email, password})
             .then(({ data, status }) => {             
               if (status === 200 && data.genralErrorCode === 8000 && data.errorCount === 0) {
                 console.log(data.errorCount);

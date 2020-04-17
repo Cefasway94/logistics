@@ -239,32 +239,73 @@
             <v-row class="pt-3">
                 <v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Certificate</p>
-                     <v-card flat color="#F5FAFF" width="200" height="150" outlined class="mx-3">
+                     <v-card 
+                     flat 
+                     color="#F5FAFF" 
+                     width="200" 
+                     height="150" 
+                     outlined 
+                     class="mx-3">
                          <v-flex class="" >
-                            <v-file-input flat dropzone class="mb-0 pb-0" height="150" width="100" 
-                            outlined prepend-icon="" 
-                            ></v-file-input>
+                            <v-file-input 
+                            id="certificate"
+                            flat 
+                            dropzone 
+                            class="mb-0 pb-0" 
+                            height="150" 
+                            width="100" 
+                            outlined 
+                            prepend-icon=""
+                            @change="updatecertificatie()">
+                            </v-file-input>
                          </v-flex>
                     </v-card>
                 </v-col>
 
                 <v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Insurance</p>
-                     <v-card flat color="#F5FAFF" width="200" height="150" outlined class="mx-3">
+                     <v-card 
+                     flat color="#F5FAFF" 
+                     width="200" 
+                     height="150" 
+                     outlined 
+                     class="mx-3">
                          <v-flex class="" >
-                            <v-file-input flat dropzone class="mb-0 pb-0" height="150" width="100" 
-                            outlined prepend-icon="" 
-                            ></v-file-input>
+                            <v-file-input 
+                            id="insurance"
+                            flat 
+                            dropzone 
+                            class="mb-0 pb-0" 
+                            height="150" 
+                            width="100" 
+                            outlined 
+                            prepend-icon="" 
+                            @change="updateinsurance()"
+                            >
+                            </v-file-input>
                          </v-flex>
                     </v-card>
                 </v-col>
 
                 <v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Other</p>
-                     <v-card flat color="#F5FAFF" width="200" height="150" outlined class="mx-3">
+                     <v-card 
+                     flat color="#F5FAFF" 
+                     width="200" 
+                     height="150" 
+                     outlined 
+                     class="mx-3">
                          <v-flex class="" >
-                            <v-file-input flat dropzone class="mb-0 pb-0" height="150" width="100" 
-                            outlined prepend-icon="" 
+                            <v-file-input
+                            id="other" 
+                            flat 
+                            dropzone 
+                            class="mb-0 pb-0" 
+                            height="150" 
+                            width="100" 
+                            outlined 
+                            prepend-icon=""
+                            @change="uploadother()" 
                             ></v-file-input>
                          </v-flex>
                     </v-card>
@@ -382,6 +423,9 @@ export default {
            btncancel:'cancel',
            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
            // fields
+           certificates:'',
+           insurances:'',
+           others:'',
            company_name:'',
            tin_number:'',
            phone_number:'',
