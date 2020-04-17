@@ -18,7 +18,7 @@
     <router-view name="Agenteditprofile"></router-view>
     <router-view name="Tenders"></router-view>
     <router-view name="Abouttender"></router-view>
-    <router-view name="ABiding"></router-view>
+    <router-view name="Biding"></router-view>
     <router-view name="Agent"></router-view>
     <router-view name="AgentAboutbid"></router-view>
     <router-view name="AgentTenderprogress"></router-view>

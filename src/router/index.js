@@ -23,12 +23,12 @@ import Taboutbid from '../components/atransporter/Taboutbid.vue'
 import Tenderprogress from '../components/atransporter/Tenderprogress.vue'
 
 //transpoter routes
-import Transpoter  from '../components/transporters/Transporter.vue';
-import Transpoterbiding from '../components/transporters/Transporterbiding.vue';
-import Abouttransportertender from '../components/transporters/Abouttransportertender.vue';
-import Tenderprogresstransporter from '../components/transporters/Tenderprogresstransporter.vue';
-import Transportertenders from '../components/transporters/Transportertenders.vue';
-import Transportereditprofile from '../components/transporters/Transportereditprofile.vue';
+// import Transpoter  from '../components/transporters/Transporter.vue';
+// import Transpoterbiding from '../components/transporters/Transporterbiding.vue';
+// import Abouttransportertender from '../components/transporters/Abouttransportertender.vue';
+// import Tenderprogresstransporter from '../components/transporters/Tenderprogresstransporter.vue';
+// import Transportertenders from '../components/transporters/Transportertenders.vue';
+// import Transportereditprofile from '../components/transporters/Transportereditprofile.vue';
 
 //client routs
 import Client from '../components/client/Client.vue';
@@ -155,37 +155,37 @@ const routes = [
     name:'AgentTenderprogress',
     components:{AgentTenderprogress}
   },
-  //-------------------- Transporter routes
-  {
-    path:'/transpoters/:id',
-    name:'Transpoter',
-    components:{Transpoter}
-  },
-  {
-    path:'/transpoter/editprofile',
-    name:'Transporterprofile',
-    component: Transportereditprofile
-  },
-  {
-    path:'/transpoter/tenders/:id',
-    name:'Transportertenders',
-    components: {Transportertenders}
-  },
-  {
-    path:'/transpoter/biding/:id',
-    name:'Transporterbiding',
-    components: {Transpoterbiding}
-  },
-  {
-    path:'/transpoter/Abouttender/:id',
-    name:'Abouttransportertender',
-    components:{Abouttransportertender}
-  },
-  {
-    path:'/transpoter/tenderprogress',
-    name:'Tenderprogresstransporter',
-    component:Tenderprogresstransporter
-  },
+  //-------------------- Transporter routes not active
+  // {
+  //   path:'/transpoters/:id',
+  //   name:'Transpoter',
+  //   components:{Transpoter}
+  // },
+  // {
+  //   path:'/transpoter/editprofile',
+  //   name:'Transporterprofile',
+  //   component: Transportereditprofile
+  // },
+  // {
+  //   path:'/transpoter/tenders/:id',
+  //   name:'Transportertenders',
+  //   components: {Transportertenders}
+  // },
+  // {
+  //   path:'/transpoter/biding/:id',
+  //   name:'Transporterbiding',
+  //   components: {Transpoterbiding}
+  // },
+  // {
+  //   path:'/transpoter/Abouttender/:id',
+  //   name:'Abouttransportertender',
+  //   components:{Abouttransportertender}
+  // },
+  // {
+  //   path:'/transpoter/tenderprogress',
+  //   name:'Tenderprogresstransporter',
+  //   component:Tenderprogresstransporter
+  // },
 
 //---------------------------------------- Transporter routes
   { // Transporter editing profile
