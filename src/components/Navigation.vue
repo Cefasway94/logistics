@@ -315,13 +315,13 @@ export default {
     const type = localStorage.category;
 
     if (type == 3) {
-      this.category = 'Client'
+      //this.category = 'Client'
       console.log("client");
     //   this.GET_AGENT(localStorage.client).then(() => {
     //   console.log('get client------');
     //   console.log(this.LOAD_AGENT)      
-       this.items = this.client();
-      return this.client();
+      // this.items = this.client();
+     // return this.client();
     // })
 
     } else if (type == 2) {
@@ -359,7 +359,7 @@ export default {
         {
           title: "CDashboard",
           icon: "dashboard",
-          router: { name: "Client" }
+          router: { name: "Client", params: { id: "users"} }
         },
         {
           title: "CPayments",
