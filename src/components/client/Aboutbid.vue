@@ -149,6 +149,7 @@
                                     elevation="flat"  
                                     large class="white--text"
                                     :to="'/client/payment/'+bid.tender_id"
+                                   
                                 >
                                     Pay Agent
                                 </v-btn>

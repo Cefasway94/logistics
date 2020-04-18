@@ -175,9 +175,11 @@
 
                             <v-flex row class="mt-6" v-show="clearing">
 
-                                <v-flex row xs12 class="mb-4">
-                                    <p class=" title font-weight-regular mb-0"> Clearing progress</p>
-                                </v-flex> 
+                                <v-row class="mb-4">
+                                    <v-col cols="12">
+                                        <p class=" title font-weight-bold blue--text text--darken-2 mb-0"> Clearing progress</p>
+                                    </v-col>
+                                </v-row> 
 
                                 <v-flex row xs6 sm9 md12 class="">
                                     <v-card flat width="1200" class="px-5 py-3" outlined>
@@ -386,9 +388,11 @@
 
                             <v-flex row class="mt-6" v-show="transporting">
 
-                                <v-flex row xs12 class="mb-4">
-                                    <p class=" title font-weight-regular mb-0"> Transporting progress</p>
-                                </v-flex> 
+                                <v-row class="mb-4">
+                                    <v-col cols="12">
+                                        <p class=" title font-weight-bold blue--text text--darken-2 mb-0"> Transporting progress</p>
+                                    </v-col>
+                                </v-row> 
 
                                 <v-flex row xs6 sm9 md12 class="">
                                     <v-card flat width="1200" class="px-5 py-3" outlined>
@@ -596,6 +600,47 @@
                                         
                             </v-flex>
 
+                            <v-flex row xs12 class="mt-12">
+                                <p class="title font-weight-bold blue--text text--darken-2"> Payment Progress</p>
+                                <v-container>
+                                    <v-progress-linear
+                                        :active="true"
+                                        :value= payment_value
+                                        :height="20"
+                                        :background-opacity="0.2"
+                                        :striped="true"
+                                        :buffer-value="100"
+                                        color="light-blue"
+
+                                    ></v-progress-linear>
+
+                                    <v-row
+                                    >
+                                        <v-col :offset="5">
+                                            <span class="font-weight-regular black--text text--darken-2">You have paid {{ payment_value }}%</span>
+                                        </v-col>
+                                       
+                                        <v-col :offset="10">
+                                            <v-btn
+                                                color="#4169E1"
+                                                elevation="flat"
+                                                class="white--text"
+                                                :to="'/client/payment/'+tender.id"
+                                                :disabled="fullPaid()"
+                                            >
+                                                Pay
+                                            </v-btn>
+                                        </v-col>
+
+                                    </v-row>
+                                    
+                                </v-container>
+                                
+
+
+                            </v-flex>
+
+
                         </v-col>                    
                     </v-card>
 
@@ -666,6 +711,8 @@ export default {
 
         transporting:false,
 
+        payment_value:"80",
+
         cargo_loading:{
             
             InProgress:false,
@@ -730,6 +777,11 @@ export default {
     }),
 
     methods:{
+
+        fullPaid(){
+
+            return (this.payment_value == "100");
+        },
 
         setTransportingProgress(tender_progress){
             
