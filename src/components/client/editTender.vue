@@ -319,7 +319,12 @@ export default {
             }
 
 
-                axios.put(`http://207.180.215.239:9000/api/v1/tenders/${this.tender.id}`,updatedTender).
+                axios.post(`http://207.180.215.239:9000/api/v1/tenders/${this.tender.id}`,updatedTender,
+                        {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                        }).
                     then((response)=>{
                   
                         //eslint-disable-next-line no-console
@@ -355,7 +360,12 @@ export default {
 
                 }
 
-                axios.put(`http://207.180.215.239:8000/api/v1/tenders/${this.tender.id}`,updatedTender).
+                axios.post(`http://207.180.215.239:8000/api/v1/tenders/${this.tender.id}`,updatedTender,
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        }).
                     then((response)=>{
                   
                         //eslint-disable-next-line no-console
