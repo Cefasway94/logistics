@@ -754,6 +754,58 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
+            axios.get(`http://207.180.215.239:8181//api/v1/customers/1`).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                               //vm.client_types = response.data.objects;
+
+                               vm.first_name = response.data.objects.first_name;
+                               vm.last_name = response.data.objects.last_name;
+                               vm.country = response.data.objects.country;
+                               vm.mobile_number = response.data.objects.mobile_number;
+                               vm.office_mobile = response.data.objects.office_mobile;
+                               vm.address = response.data.objects.address;
+                               vm.bank_acount_name = response.data.objects.bank_acount_name;
+                               vm.bank_account_number = response.data.objects.bank_account_number;
+                               vm.second_bank_account_name = response.data.objects.second_bank_account_name;
+                               vm.second_bank_account_number = response.data.objects.second_bank_account_number;
+                               vm.bank_swift_code = response.data.objects.bank_swift_code;
+                               vm.bank_address = response.data.objects.bank_address;
+                               vm.customer_type = response.data.objects.customer_type;
+                               vm.contact_person_names = response.data.objects.contact_person_names;
+                               vm.Contact_person_phone_number  = response.data.objects.Contact_person_phone_number;
+                               vm.Contact_person_designation = response.data.objects.Contact_person_designation;
+                               vm.company_sector = response.data.objects.company_sector;
+                               vm.company_name = response.data.objects.company_name;
+                               vm.city = response.data.objects.city;
+                               vm.region = response.data.objects.region;
+                               vm.company_logo = response.data.objects.company_logo;
+                               vm.certificate_of_registration = response.data.objects.certificate_of_registration;
+                               vm.tax_payer_identification_document = response.data.objects.tax_payer_identification_document;
+                               vm.vat_certificate = response.data.objects.vat_certificate;
+                               vm.business_licence_document = response.data.objects.business_licence_document;
+                               vm.three_months_bank_statement = response.data.objects.three_months_bank_statement;
+                               vm.profile_photo = response.data.objects.profile_photo;
+                               vm.copy_of_identity_card = response.data.objects.copy_of_identity_card;
+                               vm.copy_of_tax_identification_number_certificate = response.data.objects.copy_of_tax_identification_number_certificate;
+                               
+                               //vm.client_types = response.data.objects;
+
+                            }).catch(()=>{
+
+                                //eslint-disable-next-line no-console
+                                console.log("request failed");
+
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+
+                            
+
             next();
         });
     }
