@@ -122,15 +122,14 @@
 
                     <v-flex column xs12 sm6 class=" pl-2">
                         <p class=" body-1 mb-0 text-capitalize"> Receipt </p>
-                        <v-file-input 
-                            clearable outlined 
-                            prepend-inner-icon="cloud_upload"
-                            prepend-icon="" color="#4169E1" 
-                            label="Upload file here"
-                            id="slip"
-                            @change="slipUpdated()">
                         
-                        </v-file-input>
+                         <v-file-input 
+                                    label="Upload file here" 
+                                    id="slip"
+                                    @change="slipUpdated()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                >
+                         </v-file-input>
                     
                     </v-flex> 
             
