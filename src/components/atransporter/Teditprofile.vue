@@ -8,7 +8,6 @@
                 <v-dialog
                 v-model="verify"
                 max-width="700"
-                
                 >
                 
                 <v-alert

@@ -212,7 +212,7 @@
                 column 
                 width="350" 
                 class="px-4 pb-3 pt-1 mx-auto"
-                :to="{name:'Tenderprogress', params: {id:tender.bid_id}}"
+                :to="{name:'Tenderprogress', params: {id:tender.id}}"
                 :elevation="hover ? 15 : 3">
                    
                     <v-row  row class="px-3 pt-2 mb-1 justify-space-between">

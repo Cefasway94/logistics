@@ -14,7 +14,8 @@ export default {
         profile:[],
         payment_terms:[],
         accepted_bid:[],
-        progress_stages:[]
+        progress_stages:[],
+        progress_feedback:[]
     },
 
 getters:{
@@ -85,6 +86,16 @@ getters:{
             const progress_stages = state.progress_stages
             console.log('list of progress load');
             return progress_stages
+        },
+
+//  load progress feedback ==========================>>>
+        LOAD_PROGRESS_FEEDBACK: state=>{
+            const progress_feedback = state.progress_feedback
+            console.log('loaded feedback');
+            console.log(progress_feedback);
+            return progress_feedback
+            
+            
         }
 
     },
@@ -142,8 +153,12 @@ mutations: {
 // get transporter tender stages mutation =================>>>
         SET_PROGRESS_STAGES: (state,payload)=>{
             state.progress_stages = payload
-        }
+        },
 
+// get progress feedback =============================>>>
+        SET_PROGRESS_FEEDBACK: (state,payload)=>{
+            state.progress_feedback = payload
+        },
 
     },
 
@@ -405,6 +420,74 @@ actions: {
             });
           },
 
+//Agent get progress details  ---------------------------------------------------------------------------         
+GET_PROGRESS_STAGES: async ({commit},payload) => {
+    const url= 'http://207.180.215.239:9000/api/v1/transport-progress/tender'+payload;
+    await axios.get(url).then((data)=>{
+        // eslint-disable-next-line no-console
+        if (data.data.errorCount == 0 && data.data.genralErrorCode == 8000 ) {
+            console.log(data);
+            commit('SET_PROGRESS_STAGES', data.data);
+            //console.log(data.message);
+        }else{
+            commit('SET_PROGRESS_STAGES', data.message);
+            
+        }
+    }).catch((error)=>{
+        //eslint-disable-next-line no-console
+        console.log(error);
+        const res=null;
+        commit('SET_AGENT', res);
+    }); 
+                    
+},
+
+//Agent get progress details  ---------------------------------------------------------------------------         
+UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_id,expected_date }) => {
+    return new Promise((resolve, reject) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization : localStorage.secret
+            }
+        }
+    axios
+        .post(`http://207.180.215.239:9000/api/v1/transport-progress`, {
+            agent_id,
+            progress_status,
+            tender_id,
+            progress_id,
+            expected_date
+        },
+        config
+        )
+        .then(({ data, status }) => {
+            console.log('posted');
+        if (status === 200) {
+            resolve(true);
+            //console.log(data);
+            commit('SET_PROGRESS_FEEDBACK',data);
+            
+                // commit doesn't point to the mutation
+        }
+        })
+        .catch(error => {
+            console.log('not posted');
+        reject (error);
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+        }
+        console.log('her');
+        
+        commit('SET_PROGRESS_FEEDBACK', error);          
+        //console.log(error);
+        //console.log(data);
+        
+        });
+    });
+},
+
 
 //  ===========  TRANSPORTER ACTIONS==================
 
@@ -439,7 +522,7 @@ actions: {
                 // });===
                 
                 // eslint-disable-next-line no-console
-                  //console.log(res.data.objects);
+                  console.log(res.data.objects);
                 commit('SET_TENDER', res.data.objects);
             }).catch((error)=>{
                 //eslint-disable-next-line no-console
@@ -666,9 +749,9 @@ actions: {
             });
           },
 
-//Agent bid terms  ---------------------------------------------------------------------------         
-T_GET_PROGRESS_STAGES: async ({commit}) => {
-    const url= 'http://207.180.215.239:9000/api/v1/configurations/transporting-progress'
+//Transporter get progress details  ---------------------------------------------------------------------------         
+T_GET_PROGRESS_STAGES: async ({commit},payload) => {
+    const url= 'http://207.180.215.239:9000/api/v1/transport-progress/tender/'+payload;
     await axios.get(url).then((data)=>{
         // eslint-disable-next-line no-console
         if (data.data.errorCount == 0 && data.data.genralErrorCode == 8000 ) {
@@ -687,6 +770,51 @@ T_GET_PROGRESS_STAGES: async ({commit}) => {
     }); 
                     
 },
+
+T_UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_id,expected_date }) => {
+    return new Promise((resolve, reject) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization : localStorage.secret
+            }
+        }
+    axios
+        .post(`http://207.180.215.239:9000/api/v1/transport-progress`, {
+            agent_id,
+            progress_status,
+            tender_id,
+            progress_id,
+            expected_date
+        },
+        config
+        )
+        .then(({ data, status }) => {
+            console.log('posted');
+        if (status === 200) {
+            resolve(true);
+            //console.log(data);
+            commit('SET_PROGRESS_FEEDBACK',data);
+            
+                // commit doesn't point to the mutation
+        }
+        })
+        .catch(error => {
+            console.log('not posted');
+        reject (error);
+        if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+        }
+        console.log('her');
+        
+        commit('SET_PROGRESS_FEEDBACK', error);          
+        //console.log(error);
+        //console.log(data);
+        
+        });
+    });
+}
 
 }
 }

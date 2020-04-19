@@ -11,7 +11,7 @@
                 <p class="grey--text">{{LOAD_TENDER.description}}</p>
                 </v-flex>
                 <v-spacer></v-spacer>
-                <h2 >$ 500.0</h2>
+                <h2 style="colo:#4169E1;">$ 500.0</h2>
                 </v-flex>
             </v-card>
             <v-card flat width="1300" class="mx-auto mb-10 px-5" color="#F5FAFF">
@@ -257,47 +257,171 @@
                        <v-flex class="progress">
                            <ul class="text-center">
                                <li style="" class="steps">
-                                   <v-icon color="" size="50">assignment_turned_in</v-icon><br>
-                                   <v-btn class="my-2" color="primary" disabled=""  elevation="flat" fab x-small>
+
+                                <!-- state card-->
+                                <template v-if="stage1 === 'A'">
+                                   <v-card  flat disabled >
+                                   <v-icon :disabled="true" size="50">archive</v-icon><br>
+                                   <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
+                                    <v-icon class="x-large ">cached</v-icon>
+                                    </v-btn>
+                                   <p class="mb-0">1. Cargo loading</p>
+                                   <p class="mt-1">Complete on </p>
+                                   </v-card>
+                                </template>
+                                <!-- state card -->
+                                <template v-else-if="stage1 === 'B'">
+                                   <v-card flat >
+                                   <v-icon color="primary" :disabled="false" size="50">archive</v-icon><br>
+                                   <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                    <v-icon class="x-large ">cached</v-icon>
+                                    </v-btn>
+                                   <p class="mb-0">1. Cargo loading</p>
+                                   <p class="mt-1">Complete on </p>
+                                   </v-card>
+                                </template>
+                                <!-- state card -->
+                                <template v-else-if="stage1 === 'C'">
+                                   <v-card flat disabled  >
+                                   <v-icon color="primary" :disabled="true" size="50">archive</v-icon><br>
+                                   <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">stage name of stage</p>
-                                   <p class="mt-1">stage name of stage</p>
+                                   <p class="mb-0">1. Cargo loading</p>
+                                   <p class="mt-1">Complete on </p>
+                                   </v-card>
+                                </template>
                                </li>
+                    <!--------  ----------------->
+
                                <li class="divider" >
-                                <v-divider  color="blue" width="100" size="20"></v-divider>
-                                
+                                <v-divider v-if="stage2 === 'A'" color="" width="100" size="20"></v-divider>
+                                <v-divider v-else-if="stage2 === 'B'" color="blue" width="100" size="20"></v-divider>
+                                <v-divider v-else-if="stage2 === 'C'" color="lightblue" width="100" size="20"></v-divider>
                                </li>
-                                <li class="steps">
-                                   <v-icon elevation="10" color="primary" size="50">assignment_turned_in</v-icon><br>
-                                   <v-btn class="my-2" color="primary" elevation=""  fab x-small>
-                                   <v-icon class="x-large ">done</v-icon>
-                                   </v-btn>
-                                   <p class="mb-0">stage name of stage</p>
-                                   <p class="mt-1">stage name of stage</p>
-                               </li>
-                               <li class="divider">
-                                <v-divider color="" width="100" size="20"></v-divider>
-                               </li>
-                                <li class="steps">
-                                   <v-icon size="50">assignment_turned_in</v-icon><br>
-                                   <v-btn class="my-2" color=""  disabled="" elevation="flat" fab x-small>
+
+                                <li style="" class="steps">
+                            <!-- state card-->
+                                <template v-if="stage2 === 'A'">
+                                   <v-card  flat disabled >
+                                   <v-icon :disabled="true" size="50">local_shipping</v-icon><br>
+                                   <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
+                                    <v-icon class="x-large ">cached</v-icon>
+                                    </v-btn>
+                                   <p class="mb-0">2. Cargo in transit</p>
+                                   <p class="mt-1">Complete on </p>
+                                   </v-card>
+                                </template>
+                                <!-- state card -->
+                                <template v-else-if="stage2 === 'B'">
+                                   <v-card flat >
+                                   <v-icon color="primary" :disabled="false" size="50">local_shipping</v-icon><br>
+                                   <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                    <v-icon class="x-large ">cached</v-icon>
+                                    </v-btn>
+                                   <p class="mb-0">2. Cargo in transit</p>
+                                   <p class="mt-1">Complete on </p>
+                                   </v-card>
+                                </template>
+                                <!-- state card -->
+                                <template v-else-if="stage2 === 'C'">
+                                   <v-card flat disabled  >
+                                   <v-icon color="primary" :disabled="true" size="50">local_shipping</v-icon><br>
+                                   <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">stage name of stage</p>
-                                   <p class="mt-1">stage name of stage</p>
+                                   <p class="mb-0">2. Cargo in transit</p>
+                                   <p class="mt-1">Complete on </p>
+                                   </v-card>
+                                </template>
                                </li>
-                               <li class="divider">
-                                <v-divider color="" width="100" size="20"></v-divider>
+                    <!--------  ----------------->
+
+                               <li class="divider" >
+                                <v-divider v-if="stage3 === 'A'" color="" width="100" size="20"></v-divider>
+                                <v-divider v-else-if="stage3 === 'B'" color="blue" width="100" size="20"></v-divider>
+                                <v-divider v-else-if="stage3 === 'C'" color="lightblue" width="100" size="20"></v-divider>
                                </li>
-                               <li class="steps">
-                                   <v-icon size="50">assignment_turned_in</v-icon><br>
-                                   <v-btn class="my-2" color=""  disabled elevation="falt" fab x-small>
+
+                                <li style="" class="steps">
+                            <!-- state card-->
+                                <template v-if="stage3 === 'A'">
+                                   <v-card  flat disabled >
+                                   <v-icon :disabled="true" size="50">unarchive</v-icon><br>
+                                   <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
+                                    <v-icon class="x-large ">cached</v-icon>
+                                    </v-btn>
+                                   <p class="mb-0">3. Cargo offloading</p>
+                                   <p class="mt-1">Complete on </p>
+                                   </v-card>
+                                </template>
+                                <!-- state card -->
+                                <template v-else-if="stage3 === 'B'">
+                                   <v-card flat >
+                                   <v-icon color="primary" :disabled="false" size="50">unarchive</v-icon><br>
+                                   <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                    <v-icon class="x-large ">cached</v-icon>
+                                    </v-btn>
+                                   <p class="mb-0">3. Cargo offloading</p>
+                                   <p class="mt-1">Complete on </p>
+                                   </v-card>
+                                </template>
+                                <!-- state card -->
+                                <template v-else-if="stage3 === 'C'">
+                                   <v-card flat disabled  >
+                                   <v-icon color="primary" :disabled="true" size="50">unarchive</v-icon><br>
+                                   <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">stage name of stage</p>
-                                   <p class="mt-1">stage name of stage</p>
+                                   <p class="mb-0">3. Cargo offloading</p>
+                                   <p class="mt-1">Complete on </p>
+                                   </v-card>
+                                </template>
                                </li>
+                    <!--------  ----------------->
+
+                               <li class="divider" >
+                                <v-divider v-if="stage4 === 'A'" color="" width="100" size="20"></v-divider>
+                                <v-divider v-else-if="stage4 === 'B'" color="blue" width="100" size="20"></v-divider>
+                                <v-divider v-else-if="stage4 === 'C'" color="lightblue" width="100" size="20"></v-divider>
+                               </li>
+
+                               <li style="" class="steps">
+                            <!-- state card-->
+                                <template v-if="stage4 === 'A'">
+                                   <v-card  flat disabled >
+                                   <v-icon :disabled="true" size="50">assignment_turned_in</v-icon><br>
+                                   <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
+                                    <v-icon class="x-large ">cached</v-icon>
+                                    </v-btn>
+                                   <p class="mb-0">4. Cargo delivered</p>
+                                   <p class="mt-1">Complete on </p>
+                                   </v-card>
+                                </template>
+                                <!-- state card -->
+                                <template v-else-if="stage4 === 'B'">
+                                   <v-card flat >
+                                   <v-icon color="primary" :disabled="false" size="50">assignment_turned_in</v-icon><br>
+                                   <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                    <v-icon class="x-large ">cached</v-icon>
+                                    </v-btn>
+                                   <p class="mb-0">4. Cargo delivered</p>
+                                   <p class="mt-1">Complete on </p>
+                                   </v-card>
+                                </template>
+                                <!-- state card -->
+                                <template v-else-if="stage4 === 'C'">
+                                   <v-card flat disabled  >
+                                   <v-icon color="primary" :disabled="true" size="50">assignment_turned_in</v-icon><br>
+                                   <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                    <v-icon class="x-large ">done</v-icon>
+                                    </v-btn>
+                                   <p class="mb-0">4. Cargo delivered</p>
+                                   <p class="mt-1">Complete on </p>
+                                   </v-card>
+                                </template>
+                               </li>
+                    <!--------  ----------------->
 
                            </ul>
                        </v-flex>
@@ -317,33 +441,67 @@
                         <v-card flat height="160"  width="1000" class="px-5 mx-auto ">
                        <v-flex column>
                                 <v-flex row class="">
-                                    <v-flex column sm6 mb6 class="px-6">
+                                    <v-flex column sm4 mb4 class="">
                                         <p class="bondy-2 mb-0">Select stage</p>
-                                        <v-text-field 
-                                        dense="100"
-                                        v-model="stages"
-                                        outlined 
-                                        class="" 
-                                        clearable 
-                                        color="#4169E1"></v-text-field>
-                                    </v-flex>
-                                    <v-flex row sm6 mb6 justify-center>
-                                    <v-flex>
-                                        <p class="bondy-2 mb-0">comment</p>
-                                        <v-text-field 
-                                        dense="100"
-                                        v-model="comment"
+                                        <v-select 
+                                        dense
+                                        v-model="feedstage"
+                                        :items="stageitems"
                                         outlined 
                                         color="#4169E1" 
                                         clearable >
+                                        </v-select>
+                                    </v-flex>
+
+                                    <v-flex row sm4 mb4 justify-center class="pl-5 pr-2">
+                                    <v-flex>
+                                        <p class="bondy-2 mb-0">Select state</p>
+                                        <v-select 
+                                        dense
+                                        v-model="feedstate"
+                                        :items="stateitems"
+                                        outlined 
+                                        color="#4169E1" 
+                                        clearable >
+                                        </v-select>
+                                    </v-flex>
+                                    </v-flex>
+
+                                    <v-flex row sm4 mb4 justify-center class="pl-6">
+                                    <v-flex>
+                                        <p class="bondy-2 mb-0">Delivery date</p>
+                                        <v-menu
+                                        ref="menu"
+                                        v-model="menu"
+                                        :close-on-content-click="false"
+                                        :return-value.sync="delivery_time"
+                                        transition="scale-transition"
+                                        offset-y
+                                        min-width="290px">
+                                        <template v-slot:activator="{ on }">
+                                        <v-text-field
+                                            dense
+                                            v-model="date"
+                                            readonly
+                                            v-on="on"
+                                            outlined
+                                            clearable>
                                         </v-text-field>
+                                        </template>
+                                        <v-date-picker v-model="date" no-title scrollable>
+                                        <v-spacer></v-spacer>
+                                        <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                                        <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                                        </v-date-picker>
+                                    </v-menu>
                                     </v-flex>
                                     </v-flex>
                                     </v-flex>
                                     <v-btn
                                     small 
                                     elevation="flat" 
-                                    class="mx-3 primary " > 
+                                    class=" primary "
+                                    @click="submiteProgress()" > 
                                     Submite progress
                                     </v-btn>
                                 </v-flex>
@@ -464,7 +622,33 @@ export default {
 
     data(){
         return{
-         
+            //---- stage 1 ---
+                        // state1:false,
+                        // state2:false,
+                        // state3:false,
+            stage1:'A',
+            //---- stage 2 ---
+            stage2:'A',
+            //--- stage 3 ---
+            stage3:'A',
+            //--- stage 4 ---
+            stage4: 'A',
+            //----- steper---
+            icon:'',
+            step:'',
+            text:'',
+
+            //------- STAGE COMMENTING------
+            //---- Stages and states ---
+            stageitems:['1. Cargo loading', '2. Cargo in transit', '3. Cargo offloading', '4. Cargo delivered'],
+            stateitems:['InProgrss', 'Complete'],
+            feedstage:'',
+            feedstate:'',
+            progress_id:'',
+            menu:'',
+            date: new Date().toISOString().substr(0, 10),
+            delivery_time:new Date().toISOString().substr(0, 10),
+
             //----------------
             comment:'',
             extension:false,
@@ -484,8 +668,18 @@ export default {
           vm.T_GET_AGENT(localStorage.client).then(()=>{
               console.log(vm.LOAD_AGENT);
 
-              vm.T_GET_PROGRESS_STAGES().then(()=>{
-                  console.log(vm.LOAD_PROGRESS_STAGES);
+              vm.T_GET_PROGRESS_STAGES(to.params.id).then(()=>{
+                  console.log(vm.LOAD_PROGRESS_STAGES.objects[0].progress_id);
+                if (vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && vm.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
+                    console.log('stage B');
+                    vm.stage1 = 'C'
+                    vm.stage2 = 'C'
+                    vm.stage3 = 'C'
+                    vm.stage4 = 'B'
+                } else if( vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && vm.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
+                    console.log('stage c');
+                     vm.stage4 = 'C'
+                }
               })
           })
       })
@@ -504,7 +698,8 @@ export default {
       "LOAD_LOGIN",
       'LOAD_AGENT',
       'LOAD_TENDER',
-      'LOAD_PROGRESS_STAGES'
+      'LOAD_PROGRESS_STAGES',
+      'LOAD_PROGRESS_FEEDBACK'
       ])
   },
 
@@ -513,8 +708,45 @@ methods :{
     ...mapActions([
       "T_GET_AGENT",
       'T_GET_TENDERSDETAILs',
-      'T_GET_PROGRESS_STAGES'
+      'T_GET_PROGRESS_STAGES',
+      'T_UPGRADE_PROGRESS',
     ]),
+
+
+    submiteProgress(){
+        if (this.feedstage === '1. Cargo loading') {
+            this.progress_id = 2
+        } else if (this.feedstage === '2. Cargo in transit') {
+            this.progress_id = 3
+        } else if (this.feedstage === '3. Cargo offloading') {
+            this.progress_id = 4
+        } else if (this.feedstage == '4. Cargo delivered') {
+            this.progress_id = 1
+        }
+            
+        //        const        agent_id = this.LOAD_AGENT.objects.agent_id
+        //          const progress_status = this.feedstate
+        //    const       tender_id = this.LOAD_TENDER.id
+        //     const     progress_id = this.progress_id
+        //        const   expected_date = this.date
+            
+
+           this.$store.dispatch('T_UPGRADE_PROGRESS',{
+                  agent_id : this.LOAD_AGENT.objects.agent_id,
+                  progress_status : this.feedstate,
+                  tender_id : this.LOAD_TENDER.id,
+                  progress_id : this.progress_id,
+                  expected_date : this.date, 
+                }).then(()=>{
+                    console.log(this.LOAD_PROGRESS_FEEDBACK);
+                    
+                })
+
+        //    console.log(agent_id, progress_status, tender_id, expected_date);           
+        //    console.log(progress_id);
+       
+    }
+
     }
 }
 </script>
