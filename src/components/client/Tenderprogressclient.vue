@@ -968,7 +968,7 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
-                axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.tender.id}`)
+                axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
                         .then((response) => 
                             {
 
@@ -1028,7 +1028,7 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
-                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.tender.id}`)
+                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
                         .then((response) => 
                             {
 
