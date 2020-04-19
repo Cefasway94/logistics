@@ -803,7 +803,7 @@ export default {
                                     case "Cargo loading":
 
                                         this.cargo_loading.InProgress = tender_progress[i].InProgress;
-                                        this.cargo_loading.completed = tender_progress[i].completed;
+                                        this.cargo_loading.completed = tender_progress[i].delivered;
                                         this.cargo_loading.waiting = tender_progress[i].waiting;
                                         this.cargo_loading.expected_date = tender_progress[i].expected_date;
                                         this.cargo_loading.completed_date = tender_progress[i].completed_date;
@@ -815,7 +815,7 @@ export default {
                                     case "Cargo in transit":
 
                                         this.cargo_in_transmit.InProgress = tender_progress[i].InProgress;
-                                        this.cargo_in_transmit.completed = tender_progress[i].completed;
+                                        this.cargo_in_transmit.completed = tender_progress[i].delivered;
                                         this.cargo_in_transmit.waiting = tender_progress[i].waiting;
                                         this.cargo_in_transmit.expected_date = tender_progress[i].expected_date;
                                         this.cargo_in_transmit.completed_date = tender_progress[i].completed_date;
@@ -826,7 +826,7 @@ export default {
                                     case "Cargo offloading":
 
                                         this.cargo_offloading.InProgress = tender_progress[i].InProgress;
-                                        this.cargo_offloading.completed = tender_progress[i].completed;
+                                        this.cargo_offloading.completed = tender_progress[i].delivered;
                                         this.cargo_offloading.waiting = tender_progress[i].waiting;
                                         this.cargo_offloading.expected_date = tender_progress[i].expected_date;
                                         this.cargo_offloading.completed_date = tender_progress[i].completed_date;
@@ -837,7 +837,7 @@ export default {
                                     case "Cargo delivered":
 
                                         this.cargo_delivered.InProgress = tender_progress[i].InProgress;
-                                        this.cargo_delivered.completed = tender_progress[i].completed;
+                                        this.cargo_delivered.completed = tender_progress[i].delivered;
                                         this.cargo_delivered.waiting = tender_progress[i].waiting;
                                         this.cargo_delivered.expected_date = tender_progress[i].expected_date;
                                         this.cargo_delivered.completed_date = tender_progress[i].completed_date;
