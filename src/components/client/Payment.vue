@@ -223,7 +223,7 @@ export default {
 
             let formData = this.createData();
 
-            let url = `http://192.168.1.44:8000/api/v1/tenders/pay/${this.tender.id}`;
+            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.id}`;
 
             axios.post(url,
                             formData,
