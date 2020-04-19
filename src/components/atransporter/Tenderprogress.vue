@@ -43,7 +43,7 @@
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-image class="ma-auto">
+                            <v-image class="ma-auto" :src="LOAD_TENDER.bill_of_lading">
                                 <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
@@ -54,7 +54,7 @@
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> LETTER </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-image class="ma-auto">
+                            <v-image class="ma-auto" :src="LOAD_TENDER.authorization_letter">
                                 <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
@@ -65,7 +65,7 @@
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> OTEHER </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-image class="ma-auto">
+                            <v-image class="ma-auto" :src="LOAD_TENDER.cargo_photo">
                                 <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
@@ -194,10 +194,10 @@
                 class=" py-2 pb-3 " 
                 :elevation="hover ? 15 : 3">
                 <v-flex row class="px-1 py-2" >
-                <v-flex xsm2 sm2 md2 lg2 class="pl-5 pt-1">
+                <v-flex xsm4 sm4 md4 lg4 class="pl-5 pt-1">
                 <v-progress-circular
                 :rotate="-90"
-                :size="50"
+                :size="100"
                 :width="5"
                 :value="value"
                 color="primary">
@@ -206,7 +206,7 @@
                 </p>
                 </v-progress-circular>
                 </v-flex>
-                <v-flex xsm10 sm10 md10 lg7 class="px-6 pt-1" style="background-color:;">
+                <v-flex xsm7 sm7 md7 lg7 class="px-6 pt-7" style="background-color:;">
                 <v-flex row class="px-1" >
                 <P xsm6 sm6 md6 lg6 
                 class="text--text body-1 font-weight-medium mb-0">First instalment</P>
@@ -216,11 +216,11 @@
                 <p class="text--text mb-0 px-1">Received on Date...</p>
                 </v-flex>
                 </v-flex>
-                <v-flex xsm12 sm12 md12 lg3 class="">
+                <!-- <v-flex xsm12 sm12 md12 lg3 class="">
                 <p class="title text--text text-center mb-0 my-4">
-                100000 USD
+                1000001 USD
                 </p>
-                </v-flex>
+                </v-flex> -->
                 </v-flex>
                 </v-card>
                 </template>
@@ -649,11 +649,14 @@ export default {
             date: new Date().toISOString().substr(0, 10),
             delivery_time:new Date().toISOString().substr(0, 10),
 
+            //------ PAYMENT PROGRESS ------------
+            payment_percentage:'',
+
             //----------------
             comment:'',
             extension:false,
-            placeholder: 3,
-            value:80,
+            placeholder: 1,
+            value:''
         }
     },
 
@@ -667,6 +670,19 @@ export default {
               console.log(vm.LOAD_TENDER);
           vm.T_GET_AGENT(localStorage.client).then(()=>{
               console.log(vm.LOAD_AGENT);
+
+            vm.T_GET_PAYMENT_PROGRESS(to.params.id).then(()=>{
+                console.log(vm.LOAD_PAYMENT_PROGRESS)
+
+                if (vm.LOAD_PAYMENT_PROGRESS.objects.length === 0 ) {
+                    console.log(vm.LOAD_PAYMENT_PROGRESS);
+                   vm.value = 0;
+                    //console.log(data.message);
+                }else{
+                    vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                    
+                }
+            })
 
               vm.T_GET_PROGRESS_STAGES(to.params.id).then(()=>{
                   console.log(vm.LOAD_PROGRESS_STAGES.objects[0].progress_id);
@@ -699,7 +715,8 @@ export default {
       'LOAD_AGENT',
       'LOAD_TENDER',
       'LOAD_PROGRESS_STAGES',
-      'LOAD_PROGRESS_FEEDBACK'
+      'LOAD_PROGRESS_FEEDBACK',
+      'LOAD_PAYMENT_PROGRESS'
       ])
   },
 
@@ -710,6 +727,7 @@ methods :{
       'T_GET_TENDERSDETAILs',
       'T_GET_PROGRESS_STAGES',
       'T_UPGRADE_PROGRESS',
+      'T_GET_PAYMENT_PROGRESS'
     ]),
 
 

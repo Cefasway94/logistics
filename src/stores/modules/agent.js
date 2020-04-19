@@ -15,7 +15,8 @@ export default {
         payment_terms:[],
         accepted_bid:[],
         progress_stages:[],
-        progress_feedback:[]
+        progress_feedback:[],
+        payment_progress:[]
     },
 
 getters:{
@@ -96,6 +97,15 @@ getters:{
             return progress_feedback
             
             
+        },
+
+//  load payment progress =============================>>>
+        LOAD_PAYMENT_PROGRESS: state=>{
+            const payment_progress = state.payment_progress
+            console.log('payment progress data');
+            console.log(payment_progress);
+            return payment_progress
+            
         }
 
     },
@@ -159,6 +169,12 @@ mutations: {
         SET_PROGRESS_FEEDBACK: (state,payload)=>{
             state.progress_feedback = payload
         },
+
+// get payment progress ==============================>>>
+        SET_PAYMENT_PROGRESS: (state, payload)=>{
+            state.payment_progress = payload
+
+        }
 
     },
 
@@ -488,6 +504,23 @@ UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_id,
     });
 },
 
+//Agent get progress details  ----------------------------------------     
+GET_PAYMENT_PROGRESS: async ({commit},payload) => {
+    const url= 'http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/'+payload;
+    await axios.get(url).then((res)=>{
+        // eslint-disable-next-line no-console
+            console.log(res);
+           commit('SET_PAYMENT_PROGRESS', res.data);
+            //console.log(data.message);
+    }).catch((error)=>{
+        //eslint-disable-next-line no-console
+        console.log(error);
+        const res=null;
+        commit('SET_PAYMENT_PROGRESS', res);
+    }); 
+                    
+},
+
 
 //  ===========  TRANSPORTER ACTIONS==================
 
@@ -766,7 +799,7 @@ T_GET_PROGRESS_STAGES: async ({commit},payload) => {
         //eslint-disable-next-line no-console
         console.log(error);
         const res=null;
-        commit('SET_AGENT', res);
+        commit('SET_PROGRESS_STAGES', res);
     }); 
                     
 },
@@ -814,7 +847,25 @@ T_UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_i
         
         });
     });
-}
+},
+
+//Transporter get progress details  ---------------------------------------------------------------------------         
+        T_GET_PAYMENT_PROGRESS: async ({commit},payload) => {
+            const url= 'http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/'+payload;
+            await axios.get(url).then((res)=>{
+                // eslint-disable-next-line no-console
+                    console.log(res);
+                   commit('SET_PAYMENT_PROGRESS', res.data);
+                    //console.log(data.message);
+            }).catch((error)=>{
+                //eslint-disable-next-line no-console
+                console.log(error);
+                const res=null;
+                commit('SET_PAYMENT_PROGRESS', res);
+            }); 
+                            
+        }
 
 }
 }
+
