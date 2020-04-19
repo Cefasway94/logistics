@@ -277,7 +277,7 @@ export default {
 
         vm.setCurrencies();
 
-        let url = `http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`;
+        let url = `http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`;
 
         axios.get(url).then((response) => 
                             {
