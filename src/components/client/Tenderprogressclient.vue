@@ -625,7 +625,7 @@
                                                 color="#4169E1"
                                                 elevation="flat"
                                                 class="white--text"
-                                                :to="'/client/payment/'+tender.id"
+                                                :to="'/client/payment/'+tender.id+'/'+tender.tender_type"
                                                 :disabled="fullPaid()"
                                             >
                                                 Pay
