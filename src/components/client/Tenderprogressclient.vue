@@ -711,7 +711,7 @@ export default {
 
         transporting:false,
 
-        payment_value:"80",
+        payment_value:80,
 
         cargo_loading:{
             
@@ -968,6 +968,29 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
+                axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.tender.id}`)
+                        .then((response) => 
+                            {
+
+                                if(response.data.objects.length === 0)
+                                    vm.payment_value = 0;
+                                else
+                                    vm.payment_value = response.data.objects.percentage_deposited;
+                                //eslint-disable-next-line no-console
+                                 //console.log(response.data.objects);
+
+                                //vm.payment_value = response.data.objects.percentage_deposited;
+                                 //eslint-disable-next-line no-console
+                                 //console.log(response.data.objects);
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                                //eslint-disable-next-line no-console
+                                //console.log("There is an error");
+                            });
+
             } else if(vm.$route.params.tender_type == "Clearing"){
 
                 let url = `http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`;
@@ -1003,6 +1026,25 @@ export default {
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+                            });
+
+                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.tender.id}`)
+                        .then((response) => 
+                            {
+
+                                if(response.data.objects.length === 0)
+                                    vm.payment_value = 0;
+                                else
+                                    vm.payment_value = response.data.objects.percentage_deposited;
+                                //eslint-disable-next-line no-console
+                                 //console.log(response.data.objects);
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                                //eslint-disable-next-line no-console
+                                 console.log("There is an error");
                             });
             }
 
