@@ -148,7 +148,7 @@
                                     v-if="bid.bid_status == 'accepted'" 
                                     elevation="flat"  
                                     large class="white--text"
-                                    :to="'/client/payment/'+bid.tender_id"
+                                    :to="'/client/payment/'+bid.tender_id+'/'+tender_type"
                                    
                                 >
                                     Pay Agent
@@ -217,7 +217,9 @@ import {mapActions} from 'vuex'
         dropDialog:false,
         payment_terms:['Full payment', 'Pay by installments (30%, 40%, 30%)'],
         bid:[],
-        payment:[]
+        payment:[],
+
+        tender_type:''
       
       }
     },
@@ -357,6 +359,7 @@ import {mapActions} from 'vuex'
 
         //access to component's instance using `vm` .
         //this is done because this navigation guard is called before the component is created.           
+        vm.tender_type = vm.$route.params.tender_type;
 
         if(vm.$route.params.tender_type == 'Transporting' )
         {

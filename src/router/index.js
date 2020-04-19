@@ -99,7 +99,7 @@ const routes = [
     components:{Tenderprogressclient}
   },
   {
-    path:'/client/payment/:id',
+    path:'/client/payment/:id/:tender_type',
     name:'Payment',
     components:{Payment}
   },

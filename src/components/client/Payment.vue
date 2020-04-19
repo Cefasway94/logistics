@@ -122,15 +122,14 @@
 
                     <v-flex column xs12 sm6 class=" pl-2">
                         <p class=" body-1 mb-0 text-capitalize"> Receipt </p>
-                        <v-file-input 
-                            clearable outlined 
-                            prepend-inner-icon="cloud_upload"
-                            prepend-icon="" color="#4169E1" 
-                            label="Upload file here"
-                            id="slip"
-                            @change="slipUpdated()">
                         
-                        </v-file-input>
+                         <v-file-input 
+                                    label="Upload file here" 
+                                    id="slip"
+                                    @change="slipUpdated()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                >
+                         </v-file-input>
                     
                     </v-flex> 
             
@@ -220,10 +219,10 @@ export default {
         },
 
         confirmPayment(){
-
+            
             let formData = this.createData();
 
-            let url = `http://192.168.1.44:8000/api/v1/tenders/pay/${this.tender.id}`;
+            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.id}/${this.tender.tender_type}`;
 
             axios.post(url,
                             formData,
@@ -277,9 +276,11 @@ export default {
 
         vm.setCurrencies();
 
-        let url = `http://192.168.1.44:8000/api/v1/tenders/${vm.$route.params.id}`;
+        if(vm.$route.params.tender_type == "Transporting")
+        {
+            let url = `http://207.180.215.239:9000/api/v1/tenders/${vm.$route.params.id}`;
 
-        axios.get(url).then((response) => 
+            axios.get(url).then((response) => 
                             {
 
                                //commit('setOnProgressTenders',response.data.objects)
@@ -295,6 +296,28 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
+        } else if(vm.$route.params.tender_type == "Clearing"){
+
+            let url = `http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`;
+
+            axios.get(url).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                                vm.tender = response.data.objects;
+
+                            }).catch(()=>{
+
+                                  //eslint-disable-next-line no-console
+                               console.log("There is an error during fetching");
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+        }
+
+    
          next();
         }) 
     },
