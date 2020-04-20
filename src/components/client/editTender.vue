@@ -303,23 +303,21 @@ export default {
 
             if(this.$route.params.tender_type == "Transporting") {
 
-                let updatedTender = {           
+                let formData = new FormData();
 
-                cargo_details: this.tender.cargo_details,
-                currency: this.tender.currency,
-                cargo_size: this.tender.cargo_size,
-                description: this.tender.description,
-                customer_offer_amount: this.tender.customer_offer_amount,
-                customer_terms_and_conditions: this.tender.customer_terms_and_conditions,
-                customer_delivery_timeline: this.tender.customer_delivery_timeline,
-                origin: this.tender.origin,
-                destination: this.tender.destination,
-                customer_id:10,
-
-            }
+                formData.append('cargo_details',this.tender.cargo_details);
+                formData.append('currency',this.tender.currency);
+                formData.append('cargo_size',this.tender.cargo_size);
+                formData.append('description',this.tender.description);
+                formData.append('customer_offer_amount',this.tender.customer_offer_amount);
+                formData.append('customer_terms_and_conditions',this.tender.customer_terms_and_conditions);
+                formData.append('customer_delivery_timeline',this.tender.customer_delivery_timeline);
+                formData.append('origin',this.tender.origin);
+                formData.append('destination',this.tender.destination);
+                formData.append('customer_id',10);
 
 
-                axios.post(`http://207.180.215.239:9000/api/v1/tenders/${this.tender.id}`,updatedTender,
+                axios.post(`http://207.180.215.239:9000/api/v1/tenders/${this.tender.id}`,formData,
                         {
                                 headers: {
                                     'Content-Type': 'multipart/form-data'
@@ -348,24 +346,27 @@ export default {
 
             } else if(this.$route.params.tender_type == "Clearing"){
 
-                let updatedTender = {           
-                    cargo_details: this.tender.cargo_details,
-                    currency: this.tender.currency,
-                    cargo_size: this.tender.cargo_size,
-                    description: this.tender.description,
-                    customer_offer_amount: this.tender.customer_offer_amount,
-                    customer_terms_and_conditions: this.tender.customer_terms_and_conditions,
-                    customer_delivery_timeline: this.tender.customer_delivery_timeline,
-                    customer_id:10,
+                let formData = new FormData();
 
-                }
+                formData.append('cargo_details',this.tender.cargo_details);
+                formData.append('currency',this.tender.currency);
+                formData.append('cargo_size',this.tender.cargo_size);
+                formData.append('description',this.tender.description);
+                formData.append('customer_offer_amount',this.tender.customer_offer_amount);
+                formData.append('customer_terms_and_conditions',this.tender.customer_terms_and_conditions);
+                formData.append('customer_delivery_timeline',this.tender.customer_delivery_timeline);
+                formData.append('customer_id',10);
 
-                axios.post(`http://207.180.215.239:8000/api/v1/tenders/${this.tender.id}`,updatedTender,
-                        {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
+
+                axios.post(`http://207.180.215.239:8000/api/v1/tenders/${this.tender.id}`,
+
+                            formData,
+                            {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
                             }
-                        }).
+                       ).
                     then((response)=>{
                   
                         //eslint-disable-next-line no-console
