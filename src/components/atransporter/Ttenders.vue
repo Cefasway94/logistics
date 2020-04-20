@@ -173,9 +173,9 @@ export default {
             //const tend = this.$route.params.tid;
       
       tab = localStorage.client
-        this.T_GET_AGENT(tab).then((data)=>{
+        this.T_GET_AGENT(tab).then(()=>{
              // eslint-disable-next-line no-console
-            console.log(data);
+            console.log(this.LOAD_AGENT);
             if (!this.LOAD_AGENT.objects.agent_id == '') {
                 if (this.LOAD_AGENT.objects.is_verified == 0) {
                     setTimeout(()=>{

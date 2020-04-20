@@ -276,12 +276,69 @@ validations:{
     secret:{required, minLength:minLength(8)}
   },
 
+// beforeRouteEnter (to, from, next){
+//     next(vm =>{ 
+//            if (localStorage.category === 1) {
+//                 next(this.$router.push('/agent/tenders/open'))
+//               //return data;
+//               // data = this.LOAD_LOGIN;
+//               console.log('Opened as Agent');              
+                
+//               } else if (localStorage.category === 2) {
+                
+//                 next(vm.$router.push('/transporter/tenders/open'))
+                
+//                 console.log('transporter');
+                
+//               }else if (localStorage.category === 3){
+                
+//                 next(vm.$router.push('/client'))
+                
+//                // this.$route.params.id = //asign from local storage
+//               //return data;
+//               // data = this.LOAD_LOGIN;
+//               console.log('Opened as client');
+//               }else {
+//                 vm.$router.push('/')
+//                 vm.$router.go('/')
+//               }
+//               console.log(to);
+//               console.log(from);
+//               console.log(next);
+              
+              
+              
+//     })
+// },
 created(){
+  if (localStorage.category === 1) {
+                this.$router.push('/agent/tenders/open')
+              //return data;
+              // data = this.LOAD_LOGIN;
+              console.log('Opened as Agent');              
+                
+              } else if (localStorage.category === 2) {
+                
+                this.$router.push('/transporter/tenders/open')
+                
+                console.log('transporter');
+                
+              }else if (localStorage.category === 3){
+                
+                this.$router.push('/client')
+                
+               // this.$route.params.id = //asign from local storage
+              //return data;
+              // data = this.LOAD_LOGIN;
+              console.log('Opened as client');
+              }else {
+                this.$router.push('/')
+                this.$router.go('/')
+              }
 
 },
 
 methods:{
-
 // =====================================================================>>>
     Login() {
               
@@ -429,6 +486,7 @@ methods:{
     }
    
   },
+
  computed: {
       ...mapGetters([
           'LOAD_LOGIN'
