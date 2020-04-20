@@ -454,8 +454,8 @@ export default {
       localStorage.removeItem("category");
       localStorage.removeItem("secret");
       localStorage.removeItem("client");
-      this.$router.push("/signin");
-      this.$router.go("/signin");
+      this.$router.push("/");
+      this.$router.go("/");
     }
   },
 

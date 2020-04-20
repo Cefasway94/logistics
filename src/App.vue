@@ -37,7 +37,31 @@ export default {
       if (localStorage.length >= 3) {    
           this.login = false
           console.log('app');
-          
+
+          if (localStorage.category ==1) {
+                this.$router.push('/agent/tenders/open')
+                
+              //return data;
+              // data = this.LOAD_LOGIN;
+              console.log('Opened as Agent');              
+                
+              } else if (localStorage.category ==2) {
+                this.$router.push('/transporter/tenders/open')
+                
+                console.log('transporter');
+                
+              }else if (localStorage.category ==3){
+                this.$router.push('/client')
+                
+               // this.$route.params.id = //asign from local storage
+              //return data;
+              // data = this.LOAD_LOGIN;
+              console.log('Opened as client');
+              }else {
+                this.$router.push('/Signin')
+                
+              }
+
           console.log(this.$store.state.tender.logins);
           
     }else{
