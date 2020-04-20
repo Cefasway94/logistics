@@ -311,30 +311,30 @@ validations:{
 //     })
 // },
 created(){
-  if (localStorage.category === 1) {
-                this.$router.push('/agent/tenders/open')
-              //return data;
-              // data = this.LOAD_LOGIN;
-              console.log('Opened as Agent');              
+  // if (localStorage.category === 1) {
+  //               this.$router.push('/agent/tenders/open')
+  //             //return data;
+  //             // data = this.LOAD_LOGIN;
+  //             console.log('Opened as Agent');              
                 
-              } else if (localStorage.category === 2) {
+  //             } else if (localStorage.category === 2) {
                 
-                this.$router.push('/transporter/tenders/open')
+  //               this.$router.push('/transporter/tenders/open')
                 
-                console.log('transporter');
+  //               console.log('transporter');
                 
-              }else if (localStorage.category === 3){
+  //             }else if (localStorage.category === 3){
                 
-                this.$router.push('/client')
+  //               this.$router.push('/client')
                 
-               // this.$route.params.id = //asign from local storage
-              //return data;
-              // data = this.LOAD_LOGIN;
-              console.log('Opened as client');
-              }else {
-                this.$router.push('/')
-                this.$router.go('/')
-              }
+  //              // this.$route.params.id = //asign from local storage
+  //             //return data;
+  //             // data = this.LOAD_LOGIN;
+  //             console.log('Opened as client');
+  //             }else {
+  //               this.$router.push('/')
+  //               this.$router.go('/')
+  //             }
 
 },
 
