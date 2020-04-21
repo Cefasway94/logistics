@@ -451,7 +451,7 @@ methods:{
         .then(({ data, status }) => {
           this.loading = false;
           this.success = true;
-          this.$router.push('/signin')
+          this.$router.push('/')
           //return data;
           data = this.LOAD_RESPONSE;
           console.log('success');
