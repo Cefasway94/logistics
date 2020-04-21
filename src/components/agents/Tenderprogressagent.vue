@@ -265,8 +265,8 @@
                                    <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">1. Cargo loading</p>
-                                   <p class="mt-1">Complete on </p>
+                                   <p class="mb-0">1. Port processing</p>
+                                   <p class="mt-1">Waiting</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -276,8 +276,8 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">1. Cargo loading</p>
-                                   <p class="mt-1">Complete on </p>
+                                   <p class="mb-0">1. Port processing</p>
+                                   <p class="mt-1">In progress</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -287,7 +287,7 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">1. Cargo loading</p>
+                                   <p class="mb-0">1. Port processing</p>
                                    <p class="mt-1">Complete on </p>
                                    </v-card>
                                 </template>
@@ -308,8 +308,8 @@
                                    <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">2. Cargo in transit</p>
-                                   <p class="mt-1">Complete on </p>
+                                   <p class="mb-0">2. TRA</p>
+                                   <p class="mt-1">Waiting</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -319,8 +319,8 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">2. Cargo in transit</p>
-                                   <p class="mt-1">Complete on </p>
+                                   <p class="mb-0">2. TRA</p>
+                                   <p class="mt-1">In progress</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -330,7 +330,7 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">2. Cargo in transit</p>
+                                   <p class="mb-0">2. TRA</p>
                                    <p class="mt-1">Complete on </p>
                                    </v-card>
                                 </template>
@@ -351,8 +351,8 @@
                                    <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">3. Cargo offloading</p>
-                                   <p class="mt-1">Complete on </p>
+                                   <p class="mb-0">3. Other processes</p>
+                                   <p class="mt-1">Waiting</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -362,8 +362,8 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">3. Cargo offloading</p>
-                                   <p class="mt-1">Complete on </p>
+                                   <p class="mb-0">3. Other processes</p>
+                                   <p class="mt-1">In progress</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -373,7 +373,7 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">3. Cargo offloading</p>
+                                   <p class="mb-0">3. Other processes</p>
                                    <p class="mt-1">Complete on </p>
                                    </v-card>
                                 </template>
@@ -394,8 +394,8 @@
                                    <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">4. Cargo delivered</p>
-                                   <p class="mt-1">Complete on </p>
+                                   <p class="mb-0">4. Complition</p>
+                                   <p class="mt-1">Waiting</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -405,8 +405,8 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">4. Cargo delivered</p>
-                                   <p class="mt-1">Complete on </p>
+                                   <p class="mb-0">4. Complition</p>
+                                   <p class="mt-1">In progress</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -416,7 +416,7 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">4. Cargo delivered</p>
+                                   <p class="mb-0">4. Complite</p>
                                    <p class="mt-1">Complete on </p>
                                    </v-card>
                                 </template>
