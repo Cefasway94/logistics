@@ -184,11 +184,11 @@ export default {
 
         ...mapActions(['fetchCurrencies']),
 
-        setCurrencies(){
+        /*setCurrencies(){
     
             for(let i = 0; i< this.getCurrencies.length; i++)
                 this.currencies.push(this.getCurrencies[i].name)      
-        },
+        },*/
 
          slipUpdated(){
             this.depositors_slip.push(document.getElementById("slip").files[0]);
@@ -196,11 +196,11 @@ export default {
 
         createData(){
 
-            for(let i = 0; i< this.getCurrencies.length; i++)
+            for(let i = 0; i< this.currencies.length; i++)
             {
-                if(this.getCurrencies[i].name === this.currency)
+                if(this.currencies[i].name === this.currency)
                 {
-                     this.currency_id = this.getCurrencies[i].id;
+                     this.currency_id = this.currencies[i].id;
 
                      break;
                 }
@@ -222,7 +222,13 @@ export default {
             
             let formData = this.createData();
 
-            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.id}/${this.tender.tender_type}`;
+              //eslint-disable-next-line no-console
+                console.log(formData.get('amount'));
+
+            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.tender_id}/${this.tender.tender_type}`;
+
+             //eslint-disable-next-line no-console
+                console.log(formData.get('customers_acct_number'));
 
             axios.post(url,
                             formData,
@@ -274,10 +280,33 @@ export default {
 
         //vm.fetchCurrencies();
 
-        vm.setCurrencies();
+        //vm.setCurrencies();
 
         if(vm.$route.params.tender_type == "Transporting")
         {
+
+            const currency = "http://207.180.215.239:8000/api/v1/configurations/currency";
+
+             axios.get(currency).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                               
+
+                                for(let i = 0; i< response.data.objects.length; i++)
+                                    vm.currencies.push(response.data.objects[i].name) 
+
+                            }).catch(()=>{
+
+                                  //eslint-disable-next-line no-console
+                               console.log("There is an error during fetching");
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+
+
             let url = `http://207.180.215.239:9000/api/v1/tenders/${vm.$route.params.id}`;
 
             axios.get(url).then((response) => 
@@ -296,7 +325,27 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
+
         } else if(vm.$route.params.tender_type == "Clearing"){
+
+            const currency = "http://207.180.215.239:8000/api/v1/configurations/currency";
+
+             axios.get(currency).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                                for(let i = 0; i< response.data.objects.length; i++)
+                                    vm.currencies.push(response.data.objects[i].name) 
+
+                            }).catch(()=>{
+
+                                  //eslint-disable-next-line no-console
+                               console.log("There is an error during fetching");
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
 
             let url = `http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`;
 
