@@ -421,7 +421,7 @@ export default {
     if (type == 2) {
       console.log("transporter");
       this.T_GET_TENDERS(tend);
-
+      
     } else if (type == 1) {
       console.log("Agennt");
       this.GET_TENDERS(tend);
@@ -454,8 +454,8 @@ export default {
       localStorage.removeItem("category");
       localStorage.removeItem("secret");
       localStorage.removeItem("client");
-      this.$router.push("/signin");
-      this.$router.go("/signin");
+      this.$router.push("/");
+      this.$router.go("/");
     }
   },
 
