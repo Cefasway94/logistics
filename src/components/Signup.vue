@@ -532,7 +532,7 @@ methods:{
     },
 
     signin() {
-      this.$router.push('/signin')
+      this.$router.push('/')
     }
 
   },
