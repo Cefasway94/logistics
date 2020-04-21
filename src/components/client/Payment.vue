@@ -172,6 +172,9 @@ export default {
             currency:'',
             depositors_slip:[],
             currency_id:'',
+
+            no_of_installment:'',
+            response_message:''
         }
     },
 
@@ -184,11 +187,11 @@ export default {
 
         ...mapActions(['fetchCurrencies']),
 
-        setCurrencies(){
+        /*setCurrencies(){
     
             for(let i = 0; i< this.getCurrencies.length; i++)
                 this.currencies.push(this.getCurrencies[i].name)      
-        },
+        },*/
 
          slipUpdated(){
             this.depositors_slip.push(document.getElementById("slip").files[0]);
@@ -196,11 +199,11 @@ export default {
 
         createData(){
 
-            for(let i = 0; i< this.getCurrencies.length; i++)
+            for(let i = 0; i< this.currencies.length; i++)
             {
-                if(this.getCurrencies[i].name === this.currency)
+                if(this.currencies[i].name === this.currency)
                 {
-                     this.currency_id = this.getCurrencies[i].id;
+                     this.currency_id = this.currencies[i].id;
 
                      break;
                 }
@@ -218,13 +221,23 @@ export default {
             
         },
 
-        confirmPayment(){
+        checkIfPaymentIsValid(){
+
+               return this.tender.customer_offer_amount == this.amount;
             
+        },
+
+        confirmPayment(){
+
             let formData = this.createData();
 
-            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.id}/${this.tender.tender_type}`;
+            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.tender_id}/${this.tender.tender_type}`;
 
-            axios.post(url,
+            if(this.no_of_installment == "1"){
+
+                if(this.tender.customer_offer_amount == this.amount){
+
+                   axios.post(url,
                             formData,
                             {
                                 headers: {
@@ -249,7 +262,9 @@ export default {
                                 }*/
 
                                 //eslint-disable-next-line no-console
-                                console.log(response.data);
+                                //console.log(response.data);
+
+                                this.response_message = response.data.message;
 
                             }).catch(()=>{
 
@@ -263,6 +278,58 @@ export default {
                                 this.$router.push('/client');
                             });  
 
+                }else {
+
+                     alert("Tender is paid under full payment term");
+                }
+
+            } else {
+
+                axios.post(url,
+                            formData,
+                            {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            }).
+                            then((response) => {
+
+
+                                /*if(response.data.genralErrorCode == 8004){
+
+                                    //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
+                                    //this.alert = response.data.message;
+                                }
+                                else if(response.data.genralErrorCode == 8000){
+
+                                    //this.AddTender(response.data.objects);
+
+                                    this.setAlert(response.data.message);
+
+                                    this.$router.push('/client');
+                                }*/
+
+                                //eslint-disable-next-line no-console
+                                //console.log(response.data);
+
+                                this.response_message = response.data.message;
+
+                            }).catch(()=>{
+
+                                //eslint-disable-next-line no-console
+                                console.log("error occured");
+
+                                this.setAlert("Erro occured. Please try again");
+
+                                this.alert = this.getAlert();
+
+                                this.$router.push('/client');
+                            });  
+
+            }
+            
+           
+
         }
     },
 
@@ -274,10 +341,11 @@ export default {
 
         //vm.fetchCurrencies();
 
-        vm.setCurrencies();
+        //vm.setCurrencies();
 
         if(vm.$route.params.tender_type == "Transporting")
         {
+
             let url = `http://207.180.215.239:9000/api/v1/tenders/${vm.$route.params.id}`;
 
             axios.get(url).then((response) => 
@@ -288,6 +356,26 @@ export default {
                                //console.log(response.data.objects);
                                 vm.tender = response.data.objects;
 
+                                let get_payment_term = `http://207.180.215.239:9000/api/v1/payment-terms/${vm.tender.payment_terms_id}`;
+
+                                axios.get(get_payment_term).then((response) => 
+                                {
+
+                                    //commit('setOnProgressTenders',response.data.objects)
+                                    //eslint-disable-next-line no-console
+                                    //console.log(response.data.objects);
+
+                                    vm.no_of_installment = response.data.objects.no_of_installment;
+                               
+
+                                }).catch(()=>{
+
+                                    //eslint-disable-next-line no-console
+                                    console.log("There is an error during fetching");
+                                    // response = null;
+                                    //commit('setOnProgressTenders',response)
+                                });
+
                             }).catch(()=>{
 
                                   //eslint-disable-next-line no-console
@@ -296,7 +384,51 @@ export default {
                                 //commit('setOnProgressTenders',response)
                             });
 
+
+            const currency = "http://207.180.215.239:8000/api/v1/configurations/currency";
+
+            axios.get(currency).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                               
+
+                                for(let i = 0; i< response.data.objects.length; i++)
+                                    vm.currencies.push(response.data.objects[i].name) 
+
+                            }).catch(()=>{
+
+                                  //eslint-disable-next-line no-console
+                               console.log("There is an error during fetching");
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+
+
         } else if(vm.$route.params.tender_type == "Clearing"){
+
+            const currency = "http://207.180.215.239:8000/api/v1/configurations/currency";
+
+             axios.get(currency).then((response) => 
+                            {
+
+                               //commit('setOnProgressTenders',response.data.objects)
+                               //eslint-disable-next-line no-console
+                               //console.log(response.data.objects);
+                                for(let i = 0; i< response.data.objects.length; i++)
+                                    vm.currencies.push(response.data.objects[i].name) 
+
+                            }).catch(()=>{
+
+                                  //eslint-disable-next-line no-console
+                               console.log("There is an error during fetching");
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+
+            
 
             let url = `http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`;
 
@@ -307,6 +439,26 @@ export default {
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
                                 vm.tender = response.data.objects;
+
+                                let get_payment_term = `http://207.180.215.239:8000/api/v1/payment-terms/${vm.tender.payment_terms_id}`;
+
+                                axios.get(get_payment_term).then((response) => 
+                                {
+
+                                    //commit('setOnProgressTenders',response.data.objects)
+                                    //eslint-disable-next-line no-console
+                                    //console.log(response.data.objects);
+
+                                    vm.no_of_installment = response.data.objects.no_of_installment;
+                               
+
+                                }).catch(()=>{
+
+                                    //eslint-disable-next-line no-console
+                                    console.log("There is an error during fetching");
+                                    // response = null;
+                                    //commit('setOnProgressTenders',response)
+                                });
 
                             }).catch(()=>{
 
