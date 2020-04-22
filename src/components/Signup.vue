@@ -40,17 +40,18 @@
                 color="error"
                 icon="error_outline"
                 >
-                connetction time out please, check your internet connetction and try again
+                Please check your internet connetction or try again with the 
+                right credentials
                 </v-alert>
 
 
-                <!-- <v-alert
+                <v-alert
                 :value="invalid"
                 color="error"
                 icon="error_outline"
                 >
-                make sure all filsds are filled correctly
-                </v-alert> -->
+                {{abouterror}}
+                </v-alert> 
                     
 
                   <v-flex class="">
@@ -318,7 +319,8 @@
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="show = !show"
                     @input="clear_alert()"
-                    :type="show ? 'text' : 'password'">
+                    :type="show ? 'text' : 'password'"
+                    v-on:keyup.enter="Register()">
                     </v-text-field>
                     </v-card>
                     </template>
@@ -384,6 +386,7 @@
 
 <script>
 import {mapGetters} from 'vuex';
+import {mapActions} from 'vuex';
 /* eslint-disable no-console */
 
 export default {
@@ -425,15 +428,22 @@ export default {
 
 methods:{
 
+          ...mapActions([
+        "T_GET_AGENT"
+      //'GET_TENDERSDETAIL'
+    ]),
+
     Register(){
       
             
-          if (this.validate()) {
+  if (this.validate()) {
 
             this.loading = true;
 
             setTimeout(()=>{
-                if (this.success === false) {
+                if (this.success === false && this.invalid == true) {
+                  this.invalid == true
+                } else if (this.success === false && this.invalid == false){
                   this.loading = false;
                   this.timeout = true;
                 }
@@ -448,7 +458,12 @@ methods:{
           phone: this.phone_number,
           category: this.category
         })
-        .then(({ data, status }) => {
+        .then((data) => {
+          if(this.LOAD_REGISTER.email){
+            this.abouterror = 'User Already exist. Please try other datails or log in with appropriate credentials'
+            this.invalid = true
+            this.success = false
+          }
           this.loading = false;
           this.success = true;
           this.$router.push('/')

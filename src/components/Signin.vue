@@ -41,12 +41,13 @@
                 Could not log you in, Invalid Password
                 </v-alert>
 
+                
                 <v-alert
                 :value="Eerror"
                 color="#DC493A"
                 icon="error_outline"
                 >
-                Could not log you in, Invalid Email
+                Kindly check your email and try again
                 </v-alert>
 
                 <v-alert
@@ -160,6 +161,7 @@
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                     @click:append="show = !show"
                     :type="show ? 'text' : 'password'"
+                    v-on:keyup.enter="Login()"
                     > 
                     </v-text-field>
                     </v-card>
@@ -335,7 +337,7 @@ methods:{
           console.log('success');
           console.log(this.LOAD_LOGIN.objects[1]);
           }else{
-            if (this.LOAD_LOGIN === "Email does not exist") {
+            if (this.LOAD_LOGIN === "Kindly check your email") {
                     this.timeout=false; // server timeout false
                     console.log("whataaat");
                     console.log(this.LOAD_LOGIN);

@@ -34,7 +34,7 @@ mutations: {
     SET_REGISTER: (state, payload) => {
         state.register = payload;
         //eslint-disable-next-line no-console
-        console.log(payload);
+        //console.log(payload);
     },
 
 // Login section mutation  ========================>>>
@@ -61,23 +61,34 @@ actions: {
               category
             })
             .then(({ data, status }) => {
-              if (status === 200) {
+              if (status == 200) {
                 resolve(true);
                 //console.log(data);
                 commit('SET_REGISTER',data);
+                console.log(1);
+                
                 
                        // commit doesn't point to the mutation
+              }else if( status == 422 ){
+                reject(data);
+                console.log(data);
+                commit('SET_REGISTER',data);
+                console.log(2);
+                
+
               }
             })
             .catch(error => {
               reject (error);
+               console.log(3);
+              
               if (error.response) {
                 console.log(error.response.data);
                 console.log(error.response.status);
               }
               console.log('her');
               
-              commit('SET_REGISTER', error);          
+              commit('SET_REGISTER', error.response);          
               //console.log(error);
               //console.log(data);
               

@@ -6,7 +6,7 @@
                     <!-- alert ----------------------------- -->
                                 
                 <v-dialog
-                v-model="verify"
+                v-model="edited"
                 max-width="700"
                 >
                 
@@ -14,7 +14,7 @@
                 
                 clearable
                 class=""
-                :value="verify"
+                :value="edited"
                 color="lblue"
                 type="error"
                 row
@@ -48,28 +48,61 @@
                 </v-alert>    
                 
                 </v-dialog>   
+
+
+                <!-- <v-alert
+                text
+                outlined
+                class=""
+                :value="verification"
+                color="green"
+                type="error"
+                row
+                clearable
+                >
+                <v-flex row>
+                <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                <p class="text--text title mb-0">
+                Your account has been registered, please stay put for it
+                to be verified
+                </p>
+                </v-flex>
+                </v-flex>
+                </v-alert> -->
                                 
                     <!-- alert ----------------------------- -->
 
 
 
-        <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
+        <v-card flat width="900" class="mt-12 mx-auto mb-7" color="#F5FAFF">
             <v-flex row class="px-3 ">
                 <h1 class=" font-weight-regular headline mb-0 ">Profile info</h1>
-               
+                <v-chip 
+                color="orange" 
+                class="mx-auto" 
+                v-show="verification"> 
+                Account waiting for verification
+                </v-chip>
                 </v-flex>
         </v-card>
 
         <v-card flat width="900" class="mt-5 mx-auto " color="#F5FAFF">
             <v-flex row class="px-3">
             <v-icon color="#4169E1" class="mr-5">person_outline</v-icon>
-            <h1 style="color:#4169E1;" class=" font-weight-regular title ">Agent details</h1>
+            <h1 style="color:#4169E1;" class=" font-weight-regular title ">Transporter details</h1>
              <v-spacer></v-spacer>
-                <v-btn 
+                <v-btn
                 color="#4169E1" 
                 class="white--text" 
                 width="100"
-                @click="editaccount()">{{btnedit}}</v-btn>
+                v-show="editaccounts" 
+                @click="editaccount()">EDIT</v-btn>
+                <v-btn
+                color="#4169E1" 
+                class="white--text" 
+                width="100"
+                v-show="canceledits" 
+                @click="canceledit()">CANCEL</v-btn>
             </v-flex>
         </v-card>
 
@@ -101,7 +134,7 @@
                     outlined 
                     class="" 
                     clearable
-                    label="" 
+                    :label="name" 
                     color="#4169E1">
                     </v-text-field>
                 </v-flex>
@@ -120,10 +153,14 @@
                 <v-flex column class="">
                     <p class="bondy-2 mb-0">Tin No</p>
                     <v-text-field 
+                    sm3 md3
                     v-model="tin_number"
                     outlined 
+                    :label="tin"
                     color="#4169E1" 
-                    clearable sm3 md3></v-text-field>
+                    clearable 
+                    >
+                    </v-text-field>
                 </v-flex>
                 </v-flex>
             </v-flex>
@@ -140,6 +177,7 @@
                     v-model="phone_number"
                     outlined 
                     class="" 
+                    :label="phone"
                     clearable 
                     color="#4169E1"></v-text-field>
                 </v-flex>
@@ -148,6 +186,7 @@
                     <p class="bondy-2 mb-0">Fax</p>
                     <v-text-field 
                     v-model="fax"
+                    :label="faxnumber"
                     outlined 
                     color="#4169E1" 
                     clearable ></v-text-field>
@@ -158,7 +197,7 @@
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Email</p>
                     <v-text-field
-                    v-model="email" 
+                    v-model="email"
                     outlined 
                     class="" 
                     clearable 
@@ -169,6 +208,7 @@
                     <p class="bondy-2 mb-0">P.O.Box</p>
                     <v-text-field 
                     v-model="pobox"
+                    :label="box"
                     outlined 
                     color="#4169E1" 
                     clearable ></v-text-field>
@@ -186,6 +226,7 @@
                     <p class="bondy-2 mb-0">Country</p>
                     <v-text-field 
                     v-model="country"
+                    :label="nation"
                     outlined 
                     class="" 
                     clearable 
@@ -196,6 +237,7 @@
                     <p class="bondy-2 mb-0">City</p>
                     <v-text-field 
                     v-model="city"
+                    :label="pcity"
                     outlined 
                     color="#4169E1" 
                     clearable ></v-text-field>
@@ -207,6 +249,7 @@
                     <p class="bondy-2 mb-0">Region</p>
                     <v-text-field 
                     v-model="region"
+                    :label="pregion"
                     outlined 
                     class="" 
                     clearable 
@@ -367,6 +410,7 @@
             <p class="bondy-2 mb-0 mb-0">Bank name</p>
             <v-text-field 
             v-model="bank_name"
+            :label="bname"
             outlined 
             class="" 
             clearable 
@@ -377,6 +421,7 @@
             <p class="bondy-2 mb-0 mb-0">Account name</p>
             <v-text-field 
             v-model="account_name"
+            :label="aname"
             outlined 
             class="" 
             clearable 
@@ -387,6 +432,7 @@
             <p class="bondy-2 mb-0 mb-0">Acount number</p>
             <v-text-field
             v-model="account_number"
+            :label="acnumber"
             outlined 
             class="" 
             clearable 
@@ -411,17 +457,35 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 /* eslint-disable no-console */
 export default {
    data() {
        return{
-           verify:false,
+           //place holders
+           name:'',
+           faxnumber:'',
+           pcity:'',
+           tin:'',
+           phone:'',
+           mail:'',
+           box:'',
+           nation:'',
+           pregion:'',
+           bname:'',
+           aname:'',
+           acnumber:'',
+
+           //others 
+           edited:false,
+           verification:false,
            loading:false,
-           edit:'true',
-           btnedit:"edit",
-           btncancel:'cancel',
+           editaccounts:true,
+           canceledits:false,
+           edit:true,
            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
-           // fields
+          
+          // fields
            certificates:'',
            insurances:'',
            others:'',
@@ -441,19 +505,88 @@ export default {
     }
    },
 
+
+    created (){
+         
+        this.T_GET_AGENT(localStorage.client).then(()=>{
+            console.log(this.LOAD_AGENT);
+            if (
+                !this.LOAD_AGENT.objects.agent_id == '' && 
+                this.LOAD_AGENT.objects.is_verified == 0 ){
+
+                this.verification = true
+                
+            }
+
+            if (!this.LOAD_AGENT.objects.agent_id == ''){
+                
+                this.name = this.LOAD_AGENT.objects.company_name
+                this.faxnumber = this.LOAD_AGENT.objects.fax
+                this.tin = this.LOAD_AGENT.objects.tin_number
+                this.phone = this.LOAD_AGENT.objects.phone
+                this.mail = this.LOAD_AGENT.objects.email
+                this.box = this.LOAD_AGENT.objects.p_o_box
+                this.nation = this.LOAD_AGENT.objects.country
+                this.pcity = this.LOAD_AGENT.objects.city
+                this.pregion = this.LOAD_AGENT.objects.city
+                this.bname = this.LOAD_AGENT.objects.bank_name
+                this.aname = this.LOAD_AGENT.objects.account_name
+                this.acnumber = this.LOAD_AGENT.objects.account_number
+           }
+        })
+
+    },
+
    methods: {
+
+       ...mapActions([
+        "T_GET_AGENT"
+      //'GET_TENDERSDETAIL'
+    ]),
       
        editaccount(){
            console.log(this.terms_of_payment);
-           if(this.edit == "true"){
+           this.editaccounts = false
+           this.canceledits = true
+           
                this.edit=false
-               this.btnedit= "cancel"               
-           }else if(this.edit == "false"){
-               this.edit=false
-               this.btnedit= "edit"
-           }
+               this.btnedit= "cancel"    
+               this.name = ''
+                this.faxnumber = ''
+                this.tin = ''
+                this.phone = ''
+                this.mail = ''
+                this.box = ''
+                this.nation = ''
+                this.pcity = ''
+                this.pregion = ''
+                this.bname = ''
+                this.aname = ''
+                this.acnumber = ''
+               
+           },
 
-       },
+           canceledit(){
+
+                 this.editaccounts = true
+                 this.canceledits = false
+                 this.edit = true
+                
+               this.name = this.LOAD_AGENT.objects.company_name
+                this.faxnumber = this.LOAD_AGENT.objects.fax
+                this.tin = this.LOAD_AGENT.objects.tin_number
+                this.phone = this.LOAD_AGENT.objects.phone
+                this.mail = this.LOAD_AGENT.objects.email
+                this.box = this.LOAD_AGENT.objects.p_o_box
+                this.nation = this.LOAD_AGENT.objects.country
+                this.pcity = this.LOAD_AGENT.objects.city
+                this.pregion = this.LOAD_AGENT.objects.city
+                this.bname = this.LOAD_AGENT.objects.bank_name
+                this.aname = this.LOAD_AGENT.objects.account_name
+                this.acnumber = this.LOAD_AGENT.objects.account_number
+           },
+
+       
 
        savechanges(){
            const profile_image = 'profile image url';
@@ -481,12 +614,14 @@ export default {
                     console.log(data);                    
                     console.log(this.LOAD_PROFILE);
                     
+                    
+                    
                     if (this.LOAD_PROFILE.errorCount == 0 && this.LOAD_PROFILE.genralErrorCode == 8000) {
                     //console.log(this.LOAD_PROFILE);
                     this.loading = true;
                     setTimeout(()=>{
                         this.loading= false;
-                        this.verify= true;
+                        this.edited= true;
                         this.$router.push('/transporter/tenders/open')
                         this.$router.go('/transporter/tenders/open')
                     },2000)

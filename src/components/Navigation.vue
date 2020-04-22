@@ -24,15 +24,12 @@
       </v-col>
       <v-spacer></v-spacer>
 
-      <!--  -->
-
-      <!--  -->
       
 
-      <!-- ----------------------------------------- -->
+
    <v-menu transition="slide-y-transition">
       <template v-slot:activator="{ on }">
-        <!--  -->
+        
         <v-badge 
         v-ripple
         class=" mr-5 pt-1" 
@@ -44,7 +41,7 @@
         <p class="caption" small slot="badge">{{messages}}</p>
         <v-icon @click="messages++" v-on="on">mdi-bell</v-icon>
       </v-badge>
-        <!--  -->
+        
       </template>
       <v-list>
         <v-list-item v-for="n in 100" :key="n" link>
@@ -53,25 +50,14 @@
       </v-list>
     </v-menu>
 
-    <!-- ----------------------------------------- -->
-
+    
       <v-divider class="mx-5 hidden-sm-and-down" vertical></v-divider>
 
-      <!-- <v-btn
-        depressed
-        elevation="flat"
-        class="white black--text mx-3 mt-2 hidden-md-and-down"
-        @click.prevent="logout()"
-      >Log out
-      </v-btn> -->
-      <!--  -->
-      
-           
-      <!--  -->
+ 
 
       <v-menu transition="slide-y-transition">
       <template v-slot:activator="{ on }">
-        <!--  -->
+        
         <v-btn  
         fab 
         elevation="flat" 
@@ -85,7 +71,7 @@
         </v-icon>
         </v-avatar>
         </v-btn> 
-        <!--  -->
+        
       </template>
       
         <v-card
@@ -145,7 +131,7 @@
          </p>
          </v-btn>
         </div>
-             <!--  -->
+             
 
       </v-card>
      </v-menu>
@@ -317,12 +303,12 @@ export default {
     if (type == 3) {
       //this.category = 'Client'
       console.log("client");
-    //   this.GET_AGENT(localStorage.client).then(() => {
+     // this.GET_AGENT(localStorage.client).then(() => {
     //   console.log('get client------');
     //   console.log(this.LOAD_AGENT)      
-      // this.items = this.client();
-     // return this.client();
-    // })
+     this.items = this.client();
+     return this.client();
+     //})
 
     } else if (type == 2) {
       console.log("transporter");
@@ -357,12 +343,12 @@ export default {
     client() {
       const client = [
         {
-          title: "CDashboard",
+          title: "Dashboard",
           icon: "dashboard",
           router: { name: "Client", params: { id: "users"} }
         },
         {
-          title: "CPayments",
+          title: "Payments",
           icon: "gavel",
           router: { name: "Paymenthistory", params: { id: "null" } }
         },
