@@ -25,8 +25,6 @@
       <v-spacer></v-spacer>
 
       
-
-
    <v-menu transition="slide-y-transition">
       <template v-slot:activator="{ on }">
         
@@ -54,8 +52,8 @@
       <v-divider class="mx-5 hidden-sm-and-down" vertical></v-divider>
 
  
-
-      <v-menu transition="slide-y-transition">
+      <!-- Agent and transporter  --------------------------------------------------------->
+      <v-menu v-if="user == 1 " transition="slide-y-transition">
       <template v-slot:activator="{ on }">
         
         <v-btn  
@@ -134,12 +132,98 @@
              
 
       </v-card>
+
+  </v-menu>
+     <!--  ------------------------------------->
+
+     <!-- --------------------- Client ----------------------->
+     <v-menu v-else transition="slide-y-transition">
+      <template v-slot:activator="{ on }">
+        
+        <v-btn  
+        fab 
+        elevation="flat" 
+        v-on="on"
+        color="transparent hidden-sm-and-down">
+        <v-avatar >
+        <v-icon 
+        size="35" 
+        color="grey" >
+        mdi-account-circle
+        </v-icon>
+        </v-avatar>
+        </v-btn> 
+        
+      </template>
+      
+        <v-card
+        class="mx-auto"
+        width="256"
+        tile >
+          <v-list>
+            <v-list-item>
+              <v-list-item-avatar>
+                <v-img src="../assets/newasset/truck.svg"></v-img>
+              </v-list-item-avatar>
+            </v-list-item>
+
+            <v-list-item link>
+              <v-list-item-content>
+                <v-list-item-title class="title" >{{LOAD_AGENT.objects.company_name}}</v-list-item-title>
+                <v-list-item-subtitle>{{LOAD_AGENT.objects.email}}</v-list-item-subtitle>
+              </v-list-item-content>
+
+              <v-list-item-action>
+                <v-icon>mdi-menu-down</v-icon>
+              </v-list-item-action>
+            </v-list-item>
+          </v-list>
+          <v-divider></v-divider>
+          <v-list
+            nav
+            dense >
+            <v-list-item-group
+             v-model="item" color="primary">
+              <v-list-item
+                v-for="(item, i) in itemes"
+                :key="i"
+                :to="{name:'Clientupdateprofile', params: {id:LOAD_AGENT.email}}">
+                <v-list-item-icon>
+                  <v-icon v-text="item.icon"></v-icon>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.text"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list> 
+             <!--  -->
+             
+        <div class="pt-3">
+         <v-btn 
+         color="white" 
+         elevation="flat" 
+         class=""
+         large
+         block 
+         @click.prevent="logout()">
+         <p  class="my-auto body-1 font-weight-regular text--text text-capitalize">
+         Logout
+         </p>
+         </v-btn>
+        </div>
+             
+
+      </v-card>
      </v-menu>
+     <!--  ------------------------------>
 
 
     </v-app-bar>
 
     <!-- Navbar -->
+    <!-- ----------------------------------------Agent and Transporter -->
     <v-navigation-drawer
       app
       v-model="drawer"
@@ -149,6 +233,7 @@
       dark
       fixed
       width="200"
+      v-if="user == 1"
     >
       <v-list
       nav
@@ -243,6 +328,114 @@
       </template>
 
     </v-navigation-drawer>
+    <!-- --------------------------------------------------------------- -->
+
+    <!-- -----------------------------------------------------Cutomer -->
+    <v-navigation-drawer
+      app
+      v-model="drawer"
+      expand-on-hover
+      class="accent-4"
+      style="background-color:#4169E1;"
+      dark
+      fixed
+      width="200"
+      v-else
+    >
+      <v-list
+      nav
+      >
+
+      <!--  -->
+      <v-list-item two-line >
+            <v-list-item-avatar>
+              <img src="../assets/logo.svg">
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title>UBALORI</v-list-item-title>
+              <v-list-item-subtitle >{{category}}</v-list-item-subtitle>
+              <!-- <v-list-item-subtitle >OXOAfrica.co.tz</v-list-item-subtitle> -->
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-divider></v-divider>
+      <!--  -->
+
+
+        <!-- tender -->
+        <v-list-item
+          router
+          :to="{name:this.items[0].router.name, 
+            params:{id: this.items[0].router.params.id} }"
+          link
+          @click="tenders()"
+        >
+          <v-list-item-icon>
+            <v-icon>{{items[0].icon}}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{items[0].title}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <!-- dashboard -->
+        <!-- <v-list-item
+          router
+          :to="{name: this.items[1].router.name, 
+          params: {id:this.LOAD_AGENT.objects.agent_id}}"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{items[1].icon}}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{items[1].title}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item> -->
+
+        <!-- payment -->
+        <v-list-item
+          router
+          :to="{name: this.items[1].router.name, 
+          params: {id:this.items[1].router.params.id}}"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{items[1].icon}}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{items[1].title}}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <!-- ---------------------------------------------------------------------- to be continued -->
+
+      <v-flex class="px-2 pt-12">
+        
+      </v-flex>
+
+<template v-slot:append>
+        <div class="py-2 px-1">
+         <v-btn 
+         color="paleblack" 
+         elevation="20" 
+         class=""
+         block 
+         @click.prevent="logout()">
+         <p class="my-auto body-1 font-weight-regular text-capitalize">
+         Logout
+         </p>
+         </v-btn>
+        </div>
+      </template>
+
+    </v-navigation-drawer>
+    <!-- ------------------------------------------------------------- -->
 
     
 
@@ -257,8 +450,12 @@
         </v-container>
     </v-sheet>-->
   </nav>
-  
+
 </template>
+
+ <!--  customer--------------------------------------------------------------------------------->
+ <!--  --------------------------------------------------------------------------------->
+  
 
 <script>
 /* eslint-disable no-console */
@@ -272,6 +469,7 @@ export default {
   data() {
     return {
       
+      user:'',
       activator:'',
       email:'',
       name:'',
@@ -303,14 +501,16 @@ export default {
     if (type == 3) {
       //this.category = 'Client'
       console.log("client");
-     // this.GET_AGENT(localStorage.client).then(() => {
-    //   console.log('get client------');
-    //   console.log(this.LOAD_AGENT)      
-     this.items = this.client();
+      this.GET_CUSTOMER(localStorage.client).then(() => {
+      console.log('get client------');
+      console.log(this.LOAD_AGENT)
+      this.category = 'Customer'      
+      this.items = this.client();
      return this.client();
-     //})
+     })
 
     } else if (type == 2) {
+      this.user = 1
       console.log("transporter");
       this.T_GET_AGENT(localStorage.client).then(() => {
       console.log('get transporter------');
@@ -321,6 +521,7 @@ export default {
     })
 
     } else if (type == 1) {
+      this.user = 1
       console.log("Agennt");
       this.GET_AGENT(localStorage.client).then(() => {
       console.log('get agent------');
@@ -336,7 +537,7 @@ export default {
     ...mapActions([
       "GET_TENDERS","T_GET_TENDERS",
       "GET_DASHBOARD","T_GET_DASHBOARD",
-      "GET_AGENT","T_GET_AGENT"
+      "GET_AGENT","T_GET_AGENT","GET_CUSTOMER"
       //'GET_TENDERSDETAIL'
     ]),
 
@@ -352,7 +553,7 @@ export default {
           icon: "gavel",
           router: { name: "Paymenthistory", params: { id: "null" } }
         },
-      ];
+       ];
       return client;
     },
 

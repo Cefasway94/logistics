@@ -864,7 +864,23 @@ T_UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_i
                 commit('SET_PAYMENT_PROGRESS', res);
             }); 
                             
-        }
+        },
+
+// get agent details =================================================>>>>>
+        GET_CUSTOMER: async ({commit},payload) => {
+            const url= 'http://207.180.215.239:8181/api/v1/customers/fetch?email='+payload
+            await axios.get(url).then((res)=>{
+                // eslint-disable-next-line no-console
+                console.log(res.data);
+                commit('SET_AGENT', res.data);
+            }).catch((error)=>{
+                //eslint-disable-next-line no-console
+                console.log(error);
+                const res=null;
+                commit('SET_AGENT', res);
+            }); 
+                            
+        },
 
 }
 }

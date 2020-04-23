@@ -51,6 +51,14 @@
                 </v-alert>
 
                 <v-alert
+                :value="Verror"
+                color="#DC493A"
+                icon="error_outline"
+                >
+                Kindly check your email and verify your account
+                </v-alert>
+
+                <v-alert
                 :value="Cerror"
                 color="#DC493A"
                 icon="error_outline"
@@ -250,6 +258,7 @@ export default {
           error: false,
           Perror:false,
           Eerror:false,
+          Verror:false,
           Cerror:false,
           Connectionerror:false,
           timeout:true,
@@ -346,6 +355,14 @@ methods:{
                     this.Eerror=true;
                     }, 2000)     //============ kill load
                 
+            }else if (this.LOAD_LOGIN === "Kindly check your email and verify your account"){
+                    this.timeout=false; // server timeout false
+                    console.log("whataaat");
+                    console.log(this.LOAD_LOGIN);
+                  setTimeout(() => {
+                    this.loading = false
+                    this.Verror=true;
+                    }, 2000)     //============ kill load
             }else{
               this.timeout=false; // server timeout false
               console.log('incorrect password');
@@ -423,6 +440,7 @@ methods:{
         this.Cerror = false;
         this.Perror = false;
         this.Eerror = false;
+        this.Verror =false;
         this.error = false;
        
     },
