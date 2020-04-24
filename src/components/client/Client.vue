@@ -370,7 +370,7 @@ export default {
           this.alert = this.$route.query.alert;
       }*/
       
-      this.fetchAllClearingTenders(this.id),
+      /*this.fetchAllClearingTenders(this.id),
       this.fetchClearingBidedTenders(this.id),
       this.fetchClearingTendersOnProgress(this.id)
      
@@ -381,7 +381,7 @@ export default {
          //eslint-disable-next-line no-console
                         //console.log(this.ClearingBidedTenders);
 
-      this.fetchCurrencies();
+      this.fetchCurrencies();*/
   },
     
     watch:{
@@ -400,11 +400,25 @@ export default {
     },  
 
     beforeRouteEnter (to, from, next) { 
+
         next(vm => { 
 
         //access to component's instance using `vm` .
         //this is done because this navigation guard is called before the component is created.           
         vm.alert = vm.$store.getters.getAlert;
+
+        vm.fetchAllClearingTenders(vm.id),
+        vm.fetchClearingBidedTenders(vm.id),
+        vm.fetchClearingTendersOnProgress(vm.id)
+     
+        vm.fetchAllTransportingTenders(vm.id);
+        vm.fetchTransportingBidedTenders(vm.id);
+        vm.fetchTransportingOnProgressTenders(vm.id);
+
+         //eslint-disable-next-line no-console
+                        //console.log(this.ClearingBidedTenders);
+
+        vm.fetchCurrencies();
 
         next();
         }) 
