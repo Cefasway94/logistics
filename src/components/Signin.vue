@@ -297,6 +297,8 @@ methods:{
 // =====================================================================>>>
     Login() {
               
+        this.clear_alert()
+
           if (!this.validate()) {
             this.Perror= false,
             this.Eerror= false,

@@ -1,7 +1,7 @@
 <template>
     <v-container class=" mt-12 px-5 pt-12">
 
-            <v-card flat width="1300" class="mt-3 mx-auto mb-5" color="#F5FAFF">
+            <v-card flat width="1300" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                 <v-flex>
                 <v-row class="pl-2 mb-1">
@@ -14,6 +14,7 @@
             </v-card>
 
             <v-card flat width="1300" class=" mx-auto px-5" color="#F5FAFF" v-model="tender" >
+                
                 <v-flex row >
                 <v-flex sm12 md9 lg9 xlg9 >
                     <v-card width="" class="pt-6 pb-3 pl-8" >
@@ -137,11 +138,49 @@
                 </v-flex>
             </v-card>
 
+             <v-card flat width="750" class=" mt-5 px-5" color="#F5FAFF" v-model="tender" >
+             <v-alert
+                text
+                outlined
+                class=""
+                :value="bided"
+                color="orange"
+                type="error"
+                row
+                clearable
+                >
+                <v-flex row>
+                <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                <v-icon large color="orange" class="">notification_important</v-icon>    
+                </v-flex> -->
+                <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                <p class="text--text body-1 mb-0">
+                You have already bid on  tender. Not allowed to bid on a 
+                same tender twice
+                </p>
+                </v-flex>
+                </v-flex>
+                </v-alert>
+             </v-card>
+
+            
+
 <!-- biding---------------------------- -->
             <v-flex sm12 md9 lg9 xlg9 >
-            <v-card width="1000" class=" mb-5 mx-auto pl-8 pt-6 pb-5" 
-                v-bind:style="{ visibility: computedVisibility }">
-                        <v-flex>
+            <v-card 
+            width="1300" 
+            class=" mb-5 mx-auto pl-8 pb-5" 
+            v-bind:style="{ visibility: computedVisibility }">
+
+            <!-- loading -->
+            <v-progress-linear
+                :active="loading"
+                indeterminate
+                absolute
+                color="#4169E1">
+                </v-progress-linear>
+            <!-- loading -->
+                        <v-flex class="pt-5">
                             <p class="body-1" style="color:#4169E1;" color="#4169E1">Biding details</p>
                         </v-flex>
                         <v-flex row class="pl-2">
@@ -236,6 +275,8 @@ export default {
   
   data () {
       return{
+          bided: false,
+          loading: false,
           payment_terms_and_conditions:'',
           //bid terms
           items:[],
@@ -258,10 +299,23 @@ export default {
 
   created (tab){
             tab = this.$route.params.id;
-
+    
+    console.log();
+    console.log();
+    console.log();
+    
+    
+    
+    
       this.GET_TENDERSDETAILs(tab).then(()=>{
+          console.log('tender details bellowwwwwwww');
+          console.log(this.LOAD_TENDER);
           this.GET_AGENT(localStorage.client).then(()=>{
-              this.GET_AGENT_PAYMENT_TERMS(this.LOAD_AGENT.objects.agent_id).then(()=>{
+              console.log('transporter details below');
+              console.log(this.LOAD_AGENT);
+              this.GET_AGENT_PAYMENT_TERMS(this.LOAD_AGENT.objects.email).then(()=>{
+                  console.log('transporter payment terms');
+                  console.log(this.LOAD_AGENT_PAYMENT_TERMS.length);
                   for (let index = 0; index < this.LOAD_AGENT_PAYMENT_TERMS.length; index++) {
                       this.items.push( this.LOAD_AGENT_PAYMENT_TERMS[index].installment_desc)                      
                   }
@@ -300,18 +354,31 @@ export default {
         },
         
         bidtender() {
+
+            this.loading = true
+
             this.BID_TENDER({
                 agent_id:this.LOAD_AGENT.objects.agent_id,
+                email : this.LOAD_AGENT.objects.email,
                 tender_id :this.LOAD_TENDER.id,
                 payment_terms_and_conditions:this.payment_terms_and_conditions,
                  bid_terms_and_conditions:this.bid_terms_and_conditions,
                  bid_amount:this.bid_amount, 
                  bid_delivery_timeline:this.bid_delivery_timeline,
             })
-            .then(({data, status})=>{
-                console.log(data);
-                console.log(status);
+            .then(()=>{
+                
                 console.log(this.LOAD_POST_BID);
+                if(this.LOAD_POST_BID.errors[0] == "You can not bid more than once on the same tender" ) {
+
+                    this.loading = false
+                    this.bided = true
+                }else{
+                     this.loading = false
+                    
+                    this.$router.push('/transporter/tenders/open')
+                    this.$router.go('/transporter/tenders/open')
+                }
                 
             })
             .catch(error=>{

@@ -22,7 +22,10 @@
                 </v-progress-circular>
                 </v-card>
                  
-                 <!-- profile alert -->
+            <v-card flat width="1300" class=" mx-auto mt-12" color="#F5FAFF">
+            <v-card flat width="750" class=" mx-auto mt-12" color="#F5FAFF">
+            
+                <!-- profile alert -->
                 <v-alert
                 text
                 outlined
@@ -39,7 +42,7 @@
                 </v-flex> -->
                 <v-flex xms11 sm11 md11 lg11 class="pl-3">
                 <p class="text--text title mb-0">
-                Welcome to ubalori, this your working desk.
+                Welcome to ubalori, this is your working desk.
                 </p>
                 <p class="text--text subtitle-1 mb-0">
                 Please edit your profile to complete registration
@@ -60,7 +63,7 @@
                 </v-flex>
                 </v-alert>
 
-        <!-- account verification alert -->
+                <!-- account verification alert -->
                 <v-alert
                 text
                 outlined
@@ -84,7 +87,10 @@
                 </v-flex>
                 </v-alert>
 
-                <v-card v-show="verify" flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
+            </v-card>
+            </v-card>
+
+                <v-card v-show="verification" flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
                     <v-flex row class="mt-5">
                         <h3 style="color:#394361;" class="title mt-10 px-2">Dashboard</h3>
                         <v-spacer></v-spacer>
@@ -93,7 +99,7 @@
                     
                 </v-card>
           
-                <v-card v-show="verify" flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
+                <v-card v-show="verification" flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
                     <v-tabs
                         right
                         background-color="transparent"
@@ -408,7 +414,13 @@ export default {
           //eslint-disable-next-line no-console
           //console.log(tender);
           this.setTender(tender);
-      },    
+      },  
+
+      editprofile(){
+          this.verify = false
+          this.$router.push('/Client/editprofile/'+localStorage.client)
+          this.$router.go('/Client/editprofile/'+localStorage.client)
+      },  
 
       fetch(tab){
 
@@ -499,40 +511,20 @@ export default {
                     vm.verify = true;
                  vm.verification = false
                  },1000)
+                }else{
+                    setTimeout(()=>{
+                         vm.loading = false
+                      vm.verify = false;
+                     vm.verification = true
+                     },1000)
                 }
-//                 }else{
-//                      tab = vm.tab
-//                  vm.T_GET_DASHBOARD(tab).then(()=>{
-//                      let status = vm.$refs.accepted
-                     
-//                          //document.getElementById()
-//                      // eslint-disable-next-line no-console
-//                      console.log(status);
-//                      if (status == 'accept') {
-//                          // eslint-disable-next-line no-console
-//                          console.log('did ------------------------');
-                         
-//                      }else{
-
-//                          // eslint-disable-next-line no-console
-//                          console.log(vm.LOAD_DASHBOARDS);
-//                      }
-
-// // Remove loadding ================================>>
-//                      setTimeout(()=>{
-//                          vm.loading = false
-//                       vm.verify = false;
-//                      vm.verification = true
-//                      },1000)
-//                  })
-//                 }
-             } //else{
-            //     setTimeout(()=>{
-            //          vm.loading = false
-            //       vm.profile = true;
-            //      vm.verification = false
-            //      },1000) 
-            //  }
+             } else{
+                setTimeout(()=>{
+                     vm.loading = false
+                  vm.profile = true;
+                 vm.verification = false
+                 },1000) 
+             }
         })
             //----------------------------------------------------------------
 

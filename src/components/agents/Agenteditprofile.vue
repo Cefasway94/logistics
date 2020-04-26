@@ -447,16 +447,14 @@ export default {
                                 console.log(data);                    
                                 console.log(this.LOAD_PROFILE);
                                 
-                                
-                                
                                 if (this.LOAD_PROFILE.errorCount == 0 && this.LOAD_PROFILE.genralErrorCode == 8000) {
                                 //console.log(this.LOAD_PROFILE);
                                 this.loading = true;
                                 setTimeout(()=>{
                                     this.loading= false;
                                     this.edited= true;
-                                    // this.$router.push('/transporter/tenders/open')
-                                    // this.$router.go('/transporter/tenders/open')
+                                     this.$router.push('/agent/tenders/open')
+                                     this.$router.go('/agent/tenders/open')
                                 },2000)
                                 console.log(this.email);
                                 console.log(this.LOAD_PROFILE);

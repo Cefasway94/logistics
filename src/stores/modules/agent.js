@@ -299,7 +299,7 @@ actions: {
             },
                 
 //Agent biding on tender ======================================================================= 
-        BID_TENDER: ({ commit }, { agent_id, tender_id, payment_terms_and_conditions, bid_terms_and_conditions, bid_amount, bid_delivery_timeline}) => {
+        BID_TENDER: ({ commit }, { agent_id, email, tender_id, payment_terms_and_conditions, bid_terms_and_conditions, bid_amount, bid_delivery_timeline}) => {
             return new Promise((resolve, reject) => {
                 const config = {
                     headers: {
@@ -310,6 +310,7 @@ actions: {
             axios
                 .post(`http://207.180.215.239:8000/api/v1/bids`, {
                  agent_id,
+                 email,
                  tender_id,
                  payment_terms_and_conditions,
                  bid_terms_and_conditions,
@@ -320,9 +321,9 @@ actions: {
                 )
                 .then(({ data, status }) => {
                     console.log('posted');
-                if (status === 200) {
+                if (status == 200) {
                     resolve(true);
-                    //console.log(data);
+                    console.log(data);
                     commit('SET_POST_BID',data);
                     
                         // commit doesn't point to the mutation
@@ -688,7 +689,7 @@ GET_PAYMENT_PROGRESS: async ({commit},payload) => {
             },
                 
 //Agent biding on tender --------------------------------------------------------------- 
-        T_BID_TENDER: ({ commit }, { agent_id, tender_id, payment_terms_and_conditions, bid_terms_and_conditions, bid_amount, bid_delivery_timeline}) => {
+        T_BID_TENDER: ({ commit }, { agent_id, email, tender_id, payment_terms_and_conditions, bid_terms_and_conditions, bid_amount, bid_delivery_timeline}) => {
             return new Promise((resolve, reject) => {
                 const config = {
                     headers: {
@@ -699,6 +700,7 @@ GET_PAYMENT_PROGRESS: async ({commit},payload) => {
             axios
                 .post(`http://207.180.215.239:9000/api/v1/bids`, {
                  agent_id,
+                 email,
                  tender_id,
                  payment_terms_and_conditions,
                  bid_terms_and_conditions,
@@ -709,7 +711,9 @@ GET_PAYMENT_PROGRESS: async ({commit},payload) => {
                 )
                 .then(({ data, status }) => {
                     console.log('posted');
-                if (status === 200) {
+                if (status == 200) {
+                    console.log(data);
+                    
                     resolve(true);
                     //console.log(data);
                     commit('SET_POST_BID',data);
@@ -972,8 +976,8 @@ T_UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_i
 
 // get agent details =================================================>>>>>
         GET_CUSTOMER: async ({commit},payload) => {
-            const url= 'http://207.180.215.239:8181/api/v1/customers/fetch/'
-            await axios.get(url,payload).then((res)=>{
+            const url= 'http://207.180.215.239:8181/api/v1/customers/fetch/?email='+payload
+            await axios.get(url).then((res)=>{
                 // eslint-disable-next-line no-console
                 console.log(res.data);
                 commit('SET_AGENT', res.data);

@@ -114,7 +114,12 @@
           
       <v-divider class="mx-auto " ></v-divider>
 
-      <v-card width="300" v-show="loadingbiding" flat color="transparent" class="mb-3 mx-auto">
+      <v-card 
+      width="300" 
+      v-show="loadingbiding" 
+      flat color="transparent" 
+      class="mb-3 mx-auto">
+                
                 <v-progress-circular
                 active="true"
                 indeterminate
@@ -126,7 +131,12 @@
                 </v-card>
 
 <!-- ----------------- Biding card------------- -->
-      <v-container v-show="bidlist" row fluid class="pt-5" style="background-color:#F5FAFF;" >
+      <v-container 
+      v-show="bidlist" 
+      row 
+      fluid 
+      class="pt-5" 
+      style="background-color:#F5FAFF;" >
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
              v-for="(tender, i) in LOAD_DASHBOARDS.objects" :key="i"  >
