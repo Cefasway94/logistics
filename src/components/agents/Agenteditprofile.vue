@@ -416,48 +416,63 @@ export default {
            const profile_image = 'profile image url';
            const certificate = 'certificate image url';
            const insurance = 'insurance image url'
+
            //const company_name= this.company_name
-           this.$store.dispatch('EDIT_PROFILE',{
-                profile_image,certificate,insurance,
-                company_name:this.company_name,
-                email : this.email,
-                tin_number: this.tin_number,
-                phone: this.phone_number,
-                fax:this.fax,
-                p_o_box:this.pobox,
-                country:this.country,
-                city:this.city,
-                region:this.region,
-                terms_of_payment:this.terms_of_payment,
-                bank_name:this.bank_name,
-                account_name:this.account_name,
-                account_number:this.account_number
-                }).then((data) => {
-                    console.log('load profile....');
-                    console.log(status);
-                    console.log(data);                    
-                    console.log(this.LOAD_PROFILE);
-                    
-                    if (this.LOAD_PROFILE.errorCount == 0 && this.LOAD_PROFILE.genralErrorCode == 8000) {
-                    //console.log(this.LOAD_PROFILE);
-                    this.loading = true;
-                    setTimeout(()=>{
-                        this.loading= false;
-                        this.verify= true;
-                        this.$router.push('/agent/tenders/open')
-                        this.$router.go('/agent/tenders/open')
-                    },2000)
-                    console.log(this.email);
-                    console.log(this.LOAD_PROFILE);
-                }else{
-                    console.log('profile failed');
-                    
-                }
-                    
-            }).catch((error)=>{
-                console.log(error);
-                
-            })
+            this.$store.dispatch('POST_PAYMENT_TERMS',{
+               email : this.email,
+               installment_desc:this.terms_of_payment,
+           }).then(()=>{
+               console.log('sent payment terms with email');
+
+               if ( this.LOAD_POST_PAYMENT_TERMS){
+        
+                       this.$store.dispatch('EDIT_PROFILE',{
+                            profile_image,certificate,insurance,
+                            company_name:this.company_name,
+                            email : this.email,
+                            tin_number: this.tin_number,
+                            phone: this.phone_number,
+                            fax:this.fax,
+                            p_o_box:this.pobox,
+                            country:this.country,
+                            city:this.city,
+                            region:this.region,
+                            terms_of_payment:this.terms_of_payment,
+                            bank_name:this.bank_name,
+                            account_name:this.account_name,
+                            account_number:this.account_number
+                            }).then((data) => {
+                                console.log('load profile....');
+                                console.log(status);
+                                console.log(data);                    
+                                console.log(this.LOAD_PROFILE);
+                                
+                                
+                                
+                                if (this.LOAD_PROFILE.errorCount == 0 && this.LOAD_PROFILE.genralErrorCode == 8000) {
+                                //console.log(this.LOAD_PROFILE);
+                                this.loading = true;
+                                setTimeout(()=>{
+                                    this.loading= false;
+                                    this.edited= true;
+                                    // this.$router.push('/transporter/tenders/open')
+                                    // this.$router.go('/transporter/tenders/open')
+                                },2000)
+                                console.log(this.email);
+                                console.log(this.LOAD_PROFILE);
+                            }else{
+                                console.log('profile failed');
+                                
+                            }
+                                
+                        }).catch((error)=>{
+                            console.log(error);
+                            
+                        })                   
+               }
+               
+               
+           })
         console.log(this.company_name);
         
        }
@@ -466,7 +481,7 @@ export default {
 
    computed: {
       ...mapGetters([
-          'LOAD_AGENT','LOAD_PROFILE'
+          'LOAD_AGENT','LOAD_PROFILE','LOAD_POST_PAYMENT_TERMS'
           //'LOAD_DIBTENDERS'
       ])
   }

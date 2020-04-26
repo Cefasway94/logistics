@@ -16,7 +16,8 @@ export default {
         accepted_bid:[],
         progress_stages:[],
         progress_feedback:[],
-        payment_progress:[]
+        payment_progress:[],
+        post_payment_terms:''
     },
 
 getters:{
@@ -70,13 +71,21 @@ getters:{
         },
 
 // called agent payment terms =====================>>>>>>>>
-        LOAD_AGENT_PAYMENT_TERMS: state=>{
+        LOAD_AGENT_PAYMENT_TERMS: state =>{
             const payment_terms = state.payment_terms;
             return payment_terms
         },
 
+// load on posted payment terms ===================>>>>
+        LOAD_POST_PAYMENT_TERMS: state =>{
+            const post_payment_terms = state.post_payment_terms;
+            console.log(post_payment_terms);
+            
+            return post_payment_terms;
+        },
+
 // call profile ===================================>>>>>
-        LOAD_PROFILE: state=>{
+        LOAD_PROFILE: state =>{
             const profile = state.profile;
             console.log('ediprofile load');
             return profile
@@ -145,6 +154,13 @@ mutations: {
         SET_AGENT : (state,payload) =>{
             state.agent = payload;
             console.log('here agent');
+            
+        },
+
+// called on  post payment terms =========================>>>
+        SET_POST_PAYMENT_TERMS: (state, payload) =>{
+            state.post_payment_terms = payload;
+            console.log('posted terms');
             
         },
 
@@ -380,7 +396,7 @@ actions: {
         },
 
 // agent edit profile ====================================================================>>>>        
-        EDIT_PROFILE: ({ commit }, {profile_image,certificate,insurance,company_name,email, tin_number, phone, fax, p_o_box, country, city, region, terms_of_payment, bank_name, account_name, account_number}) => {
+        EDIT_PROFILE: ({ commit }, {profile_image,certificate,insurance,company_name,email, tin_number, phone, fax, p_o_box, country, city, region, bank_name, account_name, account_number}) => {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -400,8 +416,7 @@ actions: {
                     p_o_box,  
                     country, 
                     city, 
-                    region, 
-                    terms_of_payment, 
+                    region,
                     bank_name, 
                     account_name, 
                     account_number
@@ -435,6 +450,50 @@ actions: {
                 });
             });
           },
+
+// Agent post payment terms ---------------------------------------------------------------------->>>>
+            POST_PAYMENT_TERMS: ({ commit }, {installment_desc, email}) => {
+                const config = {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization : localStorage.secret
+                    }
+                }
+                return new Promise((resolve, reject) => {
+                axios
+                    .post(`http://207.180.215.239:8000/api/v1/payment-terms`, {installment_desc, email},config)
+                    .then(({ data, status }) => {
+                        
+                    if (status == 200 ) {
+                        console.log('HERE DATA');
+                        console.log(status)
+                        data = 'success'
+                        console.log(data);
+                        resolve(true)
+                        commit('SET_POST_PAYMENT_TERMS',data);
+                            // commit doesn't point to the mutation
+                    }else{
+                        console.log('failed sent payment terms');
+                        console.log(data);
+                    }
+                    })
+                    .catch(error => {
+                    reject (error);
+                    console.log('not posted');
+                    
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        commit('SET_PROFILE', error);          
+                        reject(true)
+                    }
+                    console.log('here');
+                    
+                    //console.log(error);
+                    //console.log(data);
+                    });
+                });
+            },
 
 //Agent get progress details  ---------------------------------------------------------------------------         
 GET_PROGRESS_STAGES: async ({commit},payload) => {
@@ -726,7 +785,7 @@ GET_PAYMENT_PROGRESS: async ({commit},payload) => {
         },
 
 // agent edit profile ------------------------------------------------------------------------------------------        
-        T_EDIT_PROFILE: ({ commit }, {profile_image,certificate,insurance,company_name,email, tin_number, phone, fax, p_o_box, country, city, region, terms_of_payment, bank_name, account_name, account_number}) => {
+        T_EDIT_PROFILE: ({ commit }, {profile_image,certificate,insurance,company_name,email, tin_number, phone, fax, p_o_box, country, city, region, bank_name, account_name, account_number}) => {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -747,7 +806,6 @@ GET_PAYMENT_PROGRESS: async ({commit},payload) => {
                     country, 
                     city, 
                     region, 
-                    terms_of_payment, 
                     bank_name, 
                     account_name, 
                     account_number
@@ -782,6 +840,51 @@ GET_PAYMENT_PROGRESS: async ({commit},payload) => {
             });
           },
 
+// Transporter post payment terms ---------------------------------------------------------------------->>>>
+        T_POST_PAYMENT_TERMS: ({ commit }, {installment_desc, email}) => {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization : localStorage.secret
+                }
+            }
+            return new Promise((resolve, reject) => {
+              axios
+                .post(`http://207.180.215.239:9000/api/v1/payment-terms`, {installment_desc, email},config)
+                .then(({ data, status }) => {
+                    
+                 if (status == 200 ) {
+                     console.log('HERE DATA');
+                     console.log(status)
+                     data = 'success'
+                     console.log(data);
+                    resolve(true)
+                    commit('SET_POST_PAYMENT_TERMS',data);
+                        // commit doesn't point to the mutation
+                }else{
+                    console.log('failed sent payment terms');
+                    console.log(data);
+                }
+                })
+                .catch(error => {
+                  reject (error);
+                  console.log('not posted');
+                
+                  if (error.response) {
+                      console.log(error.response.data);
+                      console.log(error.response.status);
+                      commit('SET_PROFILE', error);          
+                      reject(true)
+                  }
+                  console.log('here');
+                  
+                  //console.log(error);
+                  //console.log(data);
+                });
+            });
+          },
+
+
 //Transporter get progress details  ---------------------------------------------------------------------------         
 T_GET_PROGRESS_STAGES: async ({commit},payload) => {
     const url= 'http://207.180.215.239:9000/api/v1/transport-progress/tender/'+payload;
@@ -804,6 +907,7 @@ T_GET_PROGRESS_STAGES: async ({commit},payload) => {
                     
 },
 
+// Transporter update progress ------------------------------------------------------->>
 T_UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_id,expected_date }) => {
     return new Promise((resolve, reject) => {
         const config = {
@@ -868,8 +972,8 @@ T_UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_i
 
 // get agent details =================================================>>>>>
         GET_CUSTOMER: async ({commit},payload) => {
-            const url= 'http://207.180.215.239:8181/api/v1/customers/fetch?email='+payload
-            await axios.get(url).then((res)=>{
+            const url= 'http://207.180.215.239:8181/api/v1/customers/fetch/'
+            await axios.get(url,payload).then((res)=>{
                 // eslint-disable-next-line no-console
                 console.log(res.data);
                 commit('SET_AGENT', res.data);

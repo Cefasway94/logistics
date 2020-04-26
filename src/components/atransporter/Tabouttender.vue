@@ -272,9 +272,9 @@ export default {
           this.T_GET_AGENT(localStorage.client).then(()=>{
               console.log('transporter details below');
               console.log(this.LOAD_AGENT);
-              this.T_GET_AGENT_PAYMENT_TERMS(this.LOAD_AGENT.objects.agent_id).then(()=>{
+              this.T_GET_AGENT_PAYMENT_TERMS(this.LOAD_AGENT.objects.email).then(()=>{
                   console.log('transporter payment terms');
-                  console.log(this.LOAD_AGENT_PAYMENT_TERMS);
+                  console.log(this.LOAD_AGENT_PAYMENT_TERMS.length);
                   for (let index = 0; index < this.LOAD_AGENT_PAYMENT_TERMS.length; index++) {
                       this.items.push( this.LOAD_AGENT_PAYMENT_TERMS[index].installment_desc)                      
                   }

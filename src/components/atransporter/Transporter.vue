@@ -6,7 +6,11 @@
                 <v-card flat width="700" class=" mx-auto mt-12" color="#F5FAFF">
                 
                 <!-- loading -->
-                <v-card width="300" v-show="loading" flat color="transparent" class="mb-3 mx-auto">
+                <v-card width="300" 
+                v-show="loading" 
+                flat 
+                color="transparent" 
+                class="mb-3 mx-auto">
                 <v-progress-circular
                 active="true"
                 indeterminate

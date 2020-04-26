@@ -6,7 +6,85 @@
 
                  <Alert v-if="alert" v-bind:message="alert"/>
 
-                <v-card flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
+                 <!-- loading -->
+                <v-card width="300" 
+                v-show="loading" 
+                flat 
+                color="transparent" 
+                class="mb-3 mx-auto">
+                <v-progress-circular
+                active="true"
+                indeterminate
+                absolute
+                :size="50"
+                class="mt-12"
+                color="#4169E1">
+                </v-progress-circular>
+                </v-card>
+                 
+                 <!-- profile alert -->
+                <v-alert
+                text
+                outlined
+                class=""
+                :value="profile"
+                color="green"
+                type="error"
+                row
+                >
+                <v-flex row>
+                <v-flex row xms9 sm9 md9 lg9 class="pl-4">
+                <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                <v-icon large color="orange" class="">notification_important</v-icon>    
+                </v-flex> -->
+                <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                <p class="text--text title mb-0">
+                Welcome to ubalori, this your working desk.
+                </p>
+                <p class="text--text subtitle-1 mb-0">
+                Please edit your profile to complete registration
+                </p>
+                </v-flex>
+                </v-flex>
+                <v-flex  xsm3 sm3 md3 lg3>
+                <v-btn  
+                width="200" 
+                large="" 
+                elevation="flat" 
+                color="primary" 
+                class="mx-5 mt-2"
+                @click="editprofile()">
+                edit profile
+                </v-btn>
+                </v-flex>
+                </v-flex>
+                </v-alert>
+
+        <!-- account verification alert -->
+                <v-alert
+                text
+                outlined
+                class=""
+                :value="verify"
+                color="green"
+                type="error"
+                row
+                clearable
+                >
+                <v-flex row>
+                <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                <v-icon large color="orange" class="">notification_important</v-icon>    
+                </v-flex> -->
+                <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                <p class="text--text title mb-0">
+                Your account has been registered, please stay put for it
+                to be verified
+                </p>
+                </v-flex>
+                </v-flex>
+                </v-alert>
+
+                <v-card v-show="verify" flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
                     <v-flex row class="mt-5">
                         <h3 style="color:#394361;" class="title mt-10 px-2">Dashboard</h3>
                         <v-spacer></v-spacer>
@@ -15,7 +93,7 @@
                     
                 </v-card>
           
-                <v-card flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
+                <v-card v-show="verify" flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">
                     <v-tabs
                         right
                         background-color="transparent"
@@ -294,6 +372,10 @@ export default {
 
   data () {
       return{
+
+          profile:false,
+          verify:false,
+          loading:false,
           tabs: [
               {title:'All'},
               {title:'Biding'},
@@ -312,7 +394,7 @@ export default {
   computed:{
       ...mapGetters(['AllClearingTenders','Tenders','ClearingBidedTenders','OnProgressTenders',
                         'ClearingTendersOnProgress','getAlert','AllTransportingTenders',
-                        'TransportingBidedTenders','TransportingOnProgressTenders','BidedTenders',
+                        'TransportingBidedTenders','TransportingOnProgressTenders','BidedTenders', 'LOAD_AGENT'
                     ])
   },
 
@@ -320,7 +402,7 @@ export default {
       ...mapActions(['fetchAllClearingTenders','fetchCurrencies','fetchClearingBidedTenders',
                         'fetchClearingTendersOnProgress','setTender','setAlert',
                         'fetchAllTransportingTenders','setTenders','fetchTransportingBidedTenders',
-                        'fetchTransportingOnProgressTenders','setOnProgressTenders','setBidedTenders']),
+                        'fetchTransportingOnProgressTenders','setOnProgressTenders','setBidedTenders', 'GET_CUSTOMER']),
 
       set(tender){
           //eslint-disable-next-line no-console
@@ -402,6 +484,57 @@ export default {
     beforeRouteEnter (to, from, next) { 
 
         next(vm => { 
+
+            // ---------------------------------------------------------------
+                  vm.loading = true
+            // eslint-disable-next-line no-console
+          console.log('44444444');
+            let tab = localStorage.client
+        vm.GET_CUSTOMER(tab).then(()=>{
+            
+            if (!vm.LOAD_AGENT.objects.customer_id == '') {
+                if (vm.LOAD_AGENT.objects.is_verified == 0) {
+                    setTimeout(()=>{
+                    vm.loading = false
+                    vm.verify = true;
+                 vm.verification = false
+                 },1000)
+                }
+//                 }else{
+//                      tab = vm.tab
+//                  vm.T_GET_DASHBOARD(tab).then(()=>{
+//                      let status = vm.$refs.accepted
+                     
+//                          //document.getElementById()
+//                      // eslint-disable-next-line no-console
+//                      console.log(status);
+//                      if (status == 'accept') {
+//                          // eslint-disable-next-line no-console
+//                          console.log('did ------------------------');
+                         
+//                      }else{
+
+//                          // eslint-disable-next-line no-console
+//                          console.log(vm.LOAD_DASHBOARDS);
+//                      }
+
+// // Remove loadding ================================>>
+//                      setTimeout(()=>{
+//                          vm.loading = false
+//                       vm.verify = false;
+//                      vm.verification = true
+//                      },1000)
+//                  })
+//                 }
+             } //else{
+            //     setTimeout(()=>{
+            //          vm.loading = false
+            //       vm.profile = true;
+            //      vm.verification = false
+            //      },1000) 
+            //  }
+        })
+            //----------------------------------------------------------------
 
         //access to component's instance using `vm` .
         //this is done because this navigation guard is called before the component is created.           
