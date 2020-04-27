@@ -130,11 +130,10 @@
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Name</p>
                     <v-text-field
-                    v-model="company_name" 
+                    v-model="name" 
                     outlined 
                     class="" 
-                    clearable
-                    :label="name" 
+                    clearable 
                     color="#4169E1">
                     </v-text-field>
                 </v-flex>
@@ -154,9 +153,8 @@
                     <p class="bondy-2 mb-0">Tin No</p>
                     <v-text-field 
                     sm3 md3
-                    v-model="tin_number"
+                    v-model="tin"
                     outlined 
-                    :label="tin"
                     color="#4169E1" 
                     clearable 
                     >
@@ -174,10 +172,9 @@
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Phone number</p>
                     <v-text-field 
-                    v-model="phone_number"
+                    v-model="phone"
                     outlined 
                     class="" 
-                    :label="phone"
                     clearable 
                     color="#4169E1"></v-text-field>
                 </v-flex>
@@ -185,8 +182,7 @@
                 <v-flex>
                     <p class="bondy-2 mb-0">Fax</p>
                     <v-text-field 
-                    v-model="fax"
-                    :label="faxnumber"
+                    v-model="faxnumber"
                     outlined 
                     color="#4169E1" 
                     clearable ></v-text-field>
@@ -197,7 +193,7 @@
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Email</p>
                     <v-text-field
-                    v-model="email"
+                    v-model="mail"
                     outlined 
                     class="" 
                     clearable 
@@ -207,8 +203,7 @@
                 <v-flex>
                     <p class="bondy-2 mb-0">P.O.Box</p>
                     <v-text-field 
-                    v-model="pobox"
-                    :label="box"
+                    v-model="box"
                     outlined 
                     color="#4169E1" 
                     clearable ></v-text-field>
@@ -226,7 +221,6 @@
                     <p class="bondy-2 mb-0">Country</p>
                     <v-text-field 
                     v-model="country"
-                    :label="nation"
                     outlined 
                     class="" 
                     clearable 
@@ -236,8 +230,7 @@
                 <v-flex>
                     <p class="bondy-2 mb-0">City</p>
                     <v-text-field 
-                    v-model="city"
-                    :label="pcity"
+                    v-model="pcity"
                     outlined 
                     color="#4169E1" 
                     clearable ></v-text-field>
@@ -248,8 +241,7 @@
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Region</p>
                     <v-text-field 
-                    v-model="region"
-                    :label="pregion"
+                    v-model="pregion"
                     outlined 
                     class="" 
                     clearable 
@@ -409,8 +401,7 @@
             <v-flex column class="px-3 pt-7">
             <p class="bondy-2 mb-0 mb-0">Bank name</p>
             <v-text-field 
-            v-model="bank_name"
-            :label="bname"
+            v-model="bname"
             outlined 
             class="" 
             clearable 
@@ -420,8 +411,7 @@
             <v-flex column class="px-3">
             <p class="bondy-2 mb-0 mb-0">Account name</p>
             <v-text-field 
-            v-model="account_name"
-            :label="aname"
+            v-model="aname"
             outlined 
             class="" 
             clearable 
@@ -431,8 +421,7 @@
             <v-flex column class="px-3">
             <p class="bondy-2 mb-0 mb-0">Acount number</p>
             <v-text-field
-            v-model="account_number"
-            :label="acnumber"
+            v-model="acnumber"
             outlined 
             class="" 
             clearable 
@@ -470,8 +459,9 @@ export default {
            phone:'',
            mail:'',
            box:'',
-           nation:'',
+           country:'',
            pregion:'',
+           terms_of_payment:[],
            bname:'',
            aname:'',
            acnumber:'',
@@ -486,22 +476,22 @@ export default {
            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
           
           // fields
-           certificates:'',
-           insurances:'',
-           others:'',
-           company_name:'',
-           tin_number:'',
-           phone_number:'',
-           fax:'',
-           email:localStorage.client,
-           pobox:'',
-           country:'',
-           city:'',
-           region:'',
-           terms_of_payment:[],
-           bank_name:'',
-           account_name:'',
-           account_number:'',
+        //    certificates:'',
+        //    insurances:'',
+        //    others:'',
+        //    company_name:'',
+        //    tin_number:'',
+        //    phone_number:'',
+        //    fax:'',
+        //    email:localStorage.client,
+        //    pobox:'',
+        //    city:'',
+        //    region:'',
+        //    terms_of_payment:[],
+        //    bank_name:'',
+        //    account_name:'',
+        //    account_number:'',
+
     }
    },
 
@@ -526,12 +516,14 @@ export default {
                 this.phone = this.LOAD_AGENT.objects.phone
                 this.mail = this.LOAD_AGENT.objects.email
                 this.box = this.LOAD_AGENT.objects.p_o_box
-                this.nation = this.LOAD_AGENT.objects.country
+                this.country = this.LOAD_AGENT.objects.country
                 this.pcity = this.LOAD_AGENT.objects.city
                 this.pregion = this.LOAD_AGENT.objects.city
                 this.bname = this.LOAD_AGENT.objects.bank_name
                 this.aname = this.LOAD_AGENT.objects.account_name
                 this.acnumber = this.LOAD_AGENT.objects.account_number
+           }else{
+               this.mail = localStorage.client
            }
         })
 
@@ -551,18 +543,18 @@ export default {
            
                this.edit=false
                this.btnedit= "cancel"    
-               this.name = ''
-                this.faxnumber = ''
-                this.tin = ''
-                this.phone = ''
-                this.mail = ''
-                this.box = ''
-                this.nation = ''
-                this.pcity = ''
-                this.pregion = ''
-                this.bname = ''
-                this.aname = ''
-                this.acnumber = ''
+                // this.name = ''
+                // this.faxnumber = ''
+                // this.tin = ''
+                // this.phone = ''
+                // this.mail = ''
+                // this.box = ''
+                // this.nation = ''
+                // this.pcity = ''
+                // this.pregion = ''
+                // this.bname = ''
+                // this.aname = ''
+                // this.acnumber = ''
                
            },
 
@@ -578,7 +570,7 @@ export default {
                 this.phone = this.LOAD_AGENT.objects.phone
                 this.mail = this.LOAD_AGENT.objects.email
                 this.box = this.LOAD_AGENT.objects.p_o_box
-                this.nation = this.LOAD_AGENT.objects.country
+                this.country = this.LOAD_AGENT.objects.country
                 this.pcity = this.LOAD_AGENT.objects.city
                 this.pregion = this.LOAD_AGENT.objects.city
                 this.bname = this.LOAD_AGENT.objects.bank_name
@@ -597,28 +589,29 @@ export default {
 
            //const company_name= this.company_name T_POST_PAYMENT_TERMS
            this.$store.dispatch('T_POST_PAYMENT_TERMS',{
-               email : this.email,
+               email : this.mail,
                installment_desc:this.terms_of_payment,
+               
            }).then(()=>{
                console.log('sent payment terms with email');
 
                if ( this.LOAD_POST_PAYMENT_TERMS){
-        
+                                    
                        this.$store.dispatch('T_EDIT_PROFILE',{
                             profile_image,certificate,insurance,
-                            company_name:this.company_name,
-                            email : this.email,
-                            tin_number: this.tin_number,
-                            phone: this.phone_number,
-                            fax:this.fax,
-                            p_o_box:this.pobox,
+                            company_name:this.name,
+                            email : this.mail,
+                            tin_number: this.tin,
+                            phone: this.phone,
+                            fax:this.faxnumber,
+                            p_o_box:this.box,
                             country:this.country,
-                            city:this.city,
-                            region:this.region,
+                            city:this.pcity,
+                            region:this.pregion,
                             terms_of_payment:this.terms_of_payment,
-                            bank_name:this.bank_name,
-                            account_name:this.account_name,
-                            account_number:this.account_number
+                            bank_name:this.bname,
+                            account_name:this.aname,
+                            account_number:this.acnumber
                             }).then((data) => {
                                 console.log('load profile....');
                                 console.log(status);

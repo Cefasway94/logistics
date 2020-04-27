@@ -105,12 +105,12 @@ actions: {
               if (status === 200 && data.genralErrorCode === 8000 && data.errorCount === 0) {
                 console.log(data.errorCount);
                 resolve(true);
-                commit('SET_LOGIN',data)
+                commit('SET_LOGIN',data);
                 localStorage.removeItem("secret");
                 localStorage.removeItem("category");
                 localStorage.setItem("secret", data.objects[0]);
                 localStorage.setItem("category", data.objects[1]);
-                localStorage.setItem("client", data.objects[2])     // commit doesn't point to the mutation
+                localStorage.setItem("client", data.objects[2]);     // commit doesn't point to the mutation
               }else{
                 resolve(data.message);
                 console.log("-------");

@@ -187,7 +187,7 @@
               <v-list-item
                 v-for="(item, i) in itemes"
                 :key="i"
-                :to="{name:'Clientupdateprofile', params: {id:LOAD_AGENT.email}}">
+                @click="clienteditprofile()">
                 <v-list-item-icon>
                   <v-icon v-text="item.icon"></v-icon>
                 </v-list-item-icon>
@@ -541,12 +541,26 @@ export default {
       //'GET_TENDERSDETAIL'
     ]),
 
+    // Client edit profile ---------------------
+    clienteditprofile(){
+          this.verify = false
+          this.$router.push('/Client/editprofile/'+localStorage.client)
+          this.$router.go('/Client/editprofile/'+localStorage.client)
+      }, 
+
+
+
     client() {
       const client = [
         {
           title: "Dashboard",
           icon: "dashboard",
           router: { name: "Client", params: { id: "users"} }
+        },
+        {
+          title: "Payments",
+          icon: "gavel",
+          router: { name: "Paymenthistory", params: { id: "null" } }
         },
         {
           title: "Payments",

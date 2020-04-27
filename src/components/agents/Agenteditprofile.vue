@@ -6,16 +6,15 @@
                     <!-- alert ----------------------------- -->
                                 
                 <v-dialog
-                v-model="verify"
+                v-model="edited"
                 max-width="700"
-                
                 >
                 
                 <v-alert
                 
                 clearable
                 class=""
-                :value="verify"
+                :value="edited"
                 color="lblue"
                 type="error"
                 row
@@ -49,28 +48,61 @@
                 </v-alert>    
                 
                 </v-dialog>   
+
+
+                <!-- <v-alert
+                text
+                outlined
+                class=""
+                :value="verification"
+                color="green"
+                type="error"
+                row
+                clearable
+                >
+                <v-flex row>
+                <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                <p class="text--text title mb-0">
+                Your account has been registered, please stay put for it
+                to be verified
+                </p>
+                </v-flex>
+                </v-flex>
+                </v-alert> -->
                                 
                     <!-- alert ----------------------------- -->
 
 
 
-        <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
+        <v-card flat width="900" class="mt-12 mx-auto mb-7" color="#F5FAFF">
             <v-flex row class="px-3 ">
                 <h1 class=" font-weight-regular headline mb-0 ">Profile info</h1>
-               
+                <v-chip 
+                color="orange" 
+                class="mx-auto" 
+                v-show="verification"> 
+                Account waiting for verification
+                </v-chip>
                 </v-flex>
         </v-card>
 
         <v-card flat width="900" class="mt-5 mx-auto " color="#F5FAFF">
             <v-flex row class="px-3">
             <v-icon color="#4169E1" class="mr-5">person_outline</v-icon>
-            <h1 style="color:#4169E1;" class=" font-weight-regular title ">Agent details</h1>
+            <h1 style="color:#4169E1;" class=" font-weight-regular title ">Transporter details</h1>
              <v-spacer></v-spacer>
-                <v-btn 
+                <v-btn
                 color="#4169E1" 
                 class="white--text" 
                 width="100"
-                @click="editaccount()">{{btnedit}}</v-btn>
+                v-show="editaccounts" 
+                @click="editaccount()">EDIT</v-btn>
+                <v-btn
+                color="#4169E1" 
+                class="white--text" 
+                width="100"
+                v-show="canceledits" 
+                @click="canceledit()">CANCEL</v-btn>
             </v-flex>
         </v-card>
 
@@ -98,11 +130,10 @@
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Name</p>
                     <v-text-field
-                    v-model="company_name" 
+                    v-model="name" 
                     outlined 
                     class="" 
-                    clearable
-                    label="" 
+                    clearable 
                     color="#4169E1">
                     </v-text-field>
                 </v-flex>
@@ -121,10 +152,13 @@
                 <v-flex column class="">
                     <p class="bondy-2 mb-0">Tin No</p>
                     <v-text-field 
-                    v-model="tin_number"
+                    sm3 md3
+                    v-model="tin"
                     outlined 
                     color="#4169E1" 
-                    clearable sm3 md3></v-text-field>
+                    clearable 
+                    >
+                    </v-text-field>
                 </v-flex>
                 </v-flex>
             </v-flex>
@@ -138,7 +172,7 @@
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Phone number</p>
                     <v-text-field 
-                    v-model="phone_number"
+                    v-model="phone"
                     outlined 
                     class="" 
                     clearable 
@@ -148,7 +182,7 @@
                 <v-flex>
                     <p class="bondy-2 mb-0">Fax</p>
                     <v-text-field 
-                    v-model="fax"
+                    v-model="faxnumber"
                     outlined 
                     color="#4169E1" 
                     clearable ></v-text-field>
@@ -159,7 +193,7 @@
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Email</p>
                     <v-text-field
-                    v-model="email" 
+                    v-model="mail"
                     outlined 
                     class="" 
                     clearable 
@@ -169,7 +203,7 @@
                 <v-flex>
                     <p class="bondy-2 mb-0">P.O.Box</p>
                     <v-text-field 
-                    v-model="pobox"
+                    v-model="box"
                     outlined 
                     color="#4169E1" 
                     clearable ></v-text-field>
@@ -196,7 +230,7 @@
                 <v-flex>
                     <p class="bondy-2 mb-0">City</p>
                     <v-text-field 
-                    v-model="city"
+                    v-model="pcity"
                     outlined 
                     color="#4169E1" 
                     clearable ></v-text-field>
@@ -207,7 +241,7 @@
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Region</p>
                     <v-text-field 
-                    v-model="region"
+                    v-model="pregion"
                     outlined 
                     class="" 
                     clearable 
@@ -239,32 +273,73 @@
             <v-row class="pt-3">
                 <v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Certificate</p>
-                     <v-card flat color="#F5FAFF" width="200" height="150" outlined class="mx-3">
+                     <v-card 
+                     flat 
+                     color="#F5FAFF" 
+                     width="200" 
+                     height="150" 
+                     outlined 
+                     class="mx-3">
                          <v-flex class="" >
-                            <v-file-input flat dropzone class="mb-0 pb-0" height="150" width="100" 
-                            outlined prepend-icon="" 
-                            ></v-file-input>
+                            <v-file-input 
+                            id="certificate"
+                            flat 
+                            dropzone 
+                            class="mb-0 pb-0" 
+                            height="150" 
+                            width="100" 
+                            outlined 
+                            prepend-icon=""
+                            @change="updatecertificatie()">
+                            </v-file-input>
                          </v-flex>
                     </v-card>
                 </v-col>
 
                 <v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Insurance</p>
-                     <v-card flat color="#F5FAFF" width="200" height="150" outlined class="mx-3">
+                     <v-card 
+                     flat color="#F5FAFF" 
+                     width="200" 
+                     height="150" 
+                     outlined 
+                     class="mx-3">
                          <v-flex class="" >
-                            <v-file-input flat dropzone class="mb-0 pb-0" height="150" width="100" 
-                            outlined prepend-icon="" 
-                            ></v-file-input>
+                            <v-file-input 
+                            id="insurance"
+                            flat 
+                            dropzone 
+                            class="mb-0 pb-0" 
+                            height="150" 
+                            width="100" 
+                            outlined 
+                            prepend-icon="" 
+                            @change="updateinsurance()"
+                            >
+                            </v-file-input>
                          </v-flex>
                     </v-card>
                 </v-col>
 
                 <v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Other</p>
-                     <v-card flat color="#F5FAFF" width="200" height="150" outlined class="mx-3">
+                     <v-card 
+                     flat color="#F5FAFF" 
+                     width="200" 
+                     height="150" 
+                     outlined 
+                     class="mx-3">
                          <v-flex class="" >
-                            <v-file-input flat dropzone class="mb-0 pb-0" height="150" width="100" 
-                            outlined prepend-icon="" 
+                            <v-file-input
+                            id="other" 
+                            flat 
+                            dropzone 
+                            class="mb-0 pb-0" 
+                            height="150" 
+                            width="100" 
+                            outlined 
+                            prepend-icon=""
+                            @change="uploadother()" 
                             ></v-file-input>
                          </v-flex>
                     </v-card>
@@ -326,7 +401,7 @@
             <v-flex column class="px-3 pt-7">
             <p class="bondy-2 mb-0 mb-0">Bank name</p>
             <v-text-field 
-            v-model="bank_name"
+            v-model="bname"
             outlined 
             class="" 
             clearable 
@@ -336,7 +411,7 @@
             <v-flex column class="px-3">
             <p class="bondy-2 mb-0 mb-0">Account name</p>
             <v-text-field 
-            v-model="account_name"
+            v-model="aname"
             outlined 
             class="" 
             clearable 
@@ -346,7 +421,7 @@
             <v-flex column class="px-3">
             <p class="bondy-2 mb-0 mb-0">Acount number</p>
             <v-text-field
-            v-model="account_number"
+            v-model="acnumber"
             outlined 
             class="" 
             clearable 
@@ -371,81 +446,178 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 /* eslint-disable no-console */
 export default {
    data() {
        return{
-           verify:false,
-           loading:false,
-           edit:'true',
-           btnedit:"edit",
-           btncancel:'cancel',
-           payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
-           // fields
-           company_name:'',
-           tin_number:'',
-           phone_number:'',
-           fax:'',
-           email:localStorage.client,
-           pobox:'',
+           //place holders
+           name:'',
+           faxnumber:'',
+           pcity:'',
+           tin:'',
+           phone:'',
+           mail:'',
+           box:'',
            country:'',
-           city:'',
-           region:'',
-           terms_of_payment:'',
-           bank_name:'',
-           account_name:'',
-           account_number:'',
+           pregion:'',
+           terms_of_payment:[],
+           bname:'',
+           aname:'',
+           acnumber:'',
+
+           //others 
+           edited:false,
+           verification:false,
+           loading:false,
+           editaccounts:true,
+           canceledits:false,
+           edit:true,
+           payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
+          
+          // fields
+        //    certificates:'',
+        //    insurances:'',
+        //    others:'',
+        //    company_name:'',
+        //    tin_number:'',
+        //    phone_number:'',
+        //    fax:'',
+        //    email:localStorage.client,
+        //    pobox:'',
+        //    city:'',
+        //    region:'',
+        //    terms_of_payment:[],
+        //    bank_name:'',
+        //    account_name:'',
+        //    account_number:'',
+
     }
    },
 
+
+    created (){
+         
+        this.GET_AGENT(localStorage.client).then(()=>{
+            console.log(this.LOAD_AGENT);
+            if (
+                !this.LOAD_AGENT.objects.agent_id == '' && 
+                this.LOAD_AGENT.objects.is_verified == 0 ){
+
+                this.verification = true
+                
+            }
+
+            if (!this.LOAD_AGENT.objects.agent_id == ''){
+                
+                this.name = this.LOAD_AGENT.objects.company_name
+                this.faxnumber = this.LOAD_AGENT.objects.fax
+                this.tin = this.LOAD_AGENT.objects.tin_number
+                this.phone = this.LOAD_AGENT.objects.phone
+                this.mail = this.LOAD_AGENT.objects.email
+                this.box = this.LOAD_AGENT.objects.p_o_box
+                this.country = this.LOAD_AGENT.objects.country
+                this.pcity = this.LOAD_AGENT.objects.city
+                this.pregion = this.LOAD_AGENT.objects.city
+                this.bname = this.LOAD_AGENT.objects.bank_name
+                this.aname = this.LOAD_AGENT.objects.account_name
+                this.acnumber = this.LOAD_AGENT.objects.account_number
+           }else{
+                this.mail = localStorage.client
+           }
+        })
+
+    },
+
    methods: {
+
+       ...mapActions([
+        "GET_AGENT","POST_PAYMENT_TERMS"
+      //'GET_TENDERSDETAIL'
+    ]),
       
        editaccount(){
            console.log(this.terms_of_payment);
-           if(this.edit == "true"){
+           this.editaccounts = false
+           this.canceledits = true
+           
                this.edit=false
-               this.btnedit= "cancel"               
-           }else if(this.edit == "false"){
-               this.edit=false
-               this.btnedit= "edit"
-           }
+               this.btnedit= "cancel"    
+                // this.name = ''
+                // this.faxnumber = ''
+                // this.tin = ''
+                // this.phone = ''
+                // this.mail = ''
+                // this.box = ''
+                // this.nation = ''
+                // this.pcity = ''
+                // this.pregion = ''
+                // this.bname = ''
+                // this.aname = ''
+                // this.acnumber = ''
+               
+           },
 
-       },
+           canceledit(){
+
+                 this.editaccounts = true
+                 this.canceledits = false
+                 this.edit = true
+                
+               this.name = this.LOAD_AGENT.objects.company_name
+                this.faxnumber = this.LOAD_AGENT.objects.fax
+                this.tin = this.LOAD_AGENT.objects.tin_number
+                this.phone = this.LOAD_AGENT.objects.phone
+                this.mail = this.LOAD_AGENT.objects.email
+                this.box = this.LOAD_AGENT.objects.p_o_box
+                this.country = this.LOAD_AGENT.objects.country
+                this.pcity = this.LOAD_AGENT.objects.city
+                this.pregion = this.LOAD_AGENT.objects.city
+                this.bname = this.LOAD_AGENT.objects.bank_name
+                this.aname = this.LOAD_AGENT.objects.account_name
+                this.acnumber = this.LOAD_AGENT.objects.account_number
+           },
+
+       
 
        savechanges(){
+           console.log(this.terms_of_payment);
+           
            const profile_image = 'profile image url';
            const certificate = 'certificate image url';
            const insurance = 'insurance image url'
 
-           //const company_name= this.company_name
-            this.$store.dispatch('POST_PAYMENT_TERMS',{
-               email : this.email,
+           //const company_name= this.company_name T_POST_PAYMENT_TERMS
+           this.$store.dispatch('POST_PAYMENT_TERMS',{
+               email : this.mail,
                installment_desc:this.terms_of_payment,
            }).then(()=>{
                console.log('sent payment terms with email');
 
                if ( this.LOAD_POST_PAYMENT_TERMS){
-        
+                                    
                        this.$store.dispatch('EDIT_PROFILE',{
                             profile_image,certificate,insurance,
-                            company_name:this.company_name,
-                            email : this.email,
-                            tin_number: this.tin_number,
-                            phone: this.phone_number,
-                            fax:this.fax,
-                            p_o_box:this.pobox,
+                            company_name:this.name,
+                            email : this.mail,
+                            tin_number: this.tin,
+                            phone: this.phone,
+                            fax:this.faxnumber,
+                            p_o_box:this.box,
                             country:this.country,
-                            city:this.city,
-                            region:this.region,
+                            city:this.pcity,
+                            region:this.pregion,
                             terms_of_payment:this.terms_of_payment,
-                            bank_name:this.bank_name,
-                            account_name:this.account_name,
-                            account_number:this.account_number
+                            bank_name:this.bname,
+                            account_name:this.aname,
+                            account_number:this.acnumber
                             }).then((data) => {
                                 console.log('load profile....');
                                 console.log(status);
                                 console.log(data);                    
                                 console.log(this.LOAD_PROFILE);
+                                
+                                
                                 
                                 if (this.LOAD_PROFILE.errorCount == 0 && this.LOAD_PROFILE.genralErrorCode == 8000) {
                                 //console.log(this.LOAD_PROFILE);
@@ -453,7 +625,7 @@ export default {
                                 setTimeout(()=>{
                                     this.loading= false;
                                     this.edited= true;
-                                     this.$router.push('/agent/tenders/open')
+                                     this.$router.push('/agent/tenders/open') 
                                      this.$router.go('/agent/tenders/open')
                                 },2000)
                                 console.log(this.email);
@@ -471,6 +643,8 @@ export default {
                
                
            })
+           
+        
         console.log(this.company_name);
         
        }
