@@ -374,7 +374,7 @@ import {mapActions} from 'vuex'
                                //console.log(response.data.objects);
                                 vm.bid = response.data.objects;
 
-                                let url2 = `http://207.180.215.239:8000/api/v1/payment-terms/${response.data.objects.payment_id}`;
+                                let url2 = `http://207.180.215.239:9000/api/v1/payment-terms/${response.data.objects.payment_id}`;
 
                                 axios.get(url2).then((response)=>{
 
@@ -400,7 +400,7 @@ import {mapActions} from 'vuex'
 
                                //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
-                               //console.log(response.data.objects);
+                              // console.log(response.data.objects);
                                 vm.bid = response.data.objects;
 
                                 let url2 = `http://207.180.215.239:8000/api/v1/payment-terms/${response.data.objects.payment_id}`;
