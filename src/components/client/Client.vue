@@ -369,6 +369,7 @@
 
 import { mapGetters, mapActions} from 'vuex'
 import Alert from '@/components/Alert.vue'
+import axios from 'axios'
 
 export default {
   
@@ -392,6 +393,8 @@ export default {
 
           id: 10,
           alert:'',
+
+          customer:[],
 
       }
 
@@ -428,8 +431,8 @@ export default {
 
               case 'All':
 
-                  this.fetchAllClearingTenders(this.id);
-                  this.fetchAllTransportingTenders(this.id);
+                  this.fetchAllClearingTenders(this.customer.id);
+                  this.fetchAllTransportingTenders(this.customer.id);
 
                   //this.setTenders();
                    
@@ -437,8 +440,8 @@ export default {
 
               case 'Biding':
 
-                  this.fetchClearingBidedTenders(this.id);
-                  this.fetchTransportingBidedTenders(this.id);
+                  this.fetchClearingBidedTenders(this.customer.id);
+                  this.fetchTransportingBidedTenders(this.customer.id);
 
                    //eslint-disable-next-line no-console
                                 //console.log(this.TransportingBidedTenders);
@@ -449,8 +452,8 @@ export default {
 
               case 'Progress':
 
-                  this.fetchClearingTendersOnProgress(this.id);
-                  this.fetchTransportingOnProgressTenders(this.id);
+                  this.fetchClearingTendersOnProgress(this.customer.id);
+                  this.fetchTransportingOnProgressTenders(this.customer.id);
                 
                   break;
               default:
@@ -498,50 +501,69 @@ export default {
         next(vm => { 
 
             // ---------------------------------------------------------------
-                  vm.loading = true
+            vm.loading = true
             // eslint-disable-next-line no-console
-          console.log('44444444');
+            console.log('44444444');
             let tab = localStorage.client
-        vm.GET_CUSTOMER(tab).then(()=>{
+            vm.GET_CUSTOMER(tab).then(()=>{
             
-            if (!vm.LOAD_AGENT.objects.customer_id == '') {
-                if (vm.LOAD_AGENT.objects.is_verified == 0) {
-                    setTimeout(()=>{
-                    vm.loading = false
-                    vm.verify = true;
-                 vm.verification = false
-                 },1000)
-                }else{
+                if (!vm.LOAD_AGENT.objects.customer_id == '') {
+                    if (vm.LOAD_AGENT.objects.is_verified == 0) {
+                        setTimeout(()=>{
+                            vm.loading = false
+                            vm.verify = true;
+                            vm.verification = false
+                        },1000)
+                    }else{
                     setTimeout(()=>{
                          vm.loading = false
-                      vm.verify = false;
-                     vm.verification = true
+                        vm.verify = false;
+                        vm.verification = true
                      },1000)
+                    }
+                } else{
+                    setTimeout(()=>{
+                        vm.loading = false
+                        vm.profile = true;
+                        vm.verification = false
+                    },1000) 
                 }
-             } else{
-                setTimeout(()=>{
-                     vm.loading = false
-                  vm.profile = true;
-                 vm.verification = false
-                 },1000) 
-             }
         })
             //----------------------------------------------------------------
 
         //access to component's instance using `vm` .
-        //this is done because this navigation guard is called before the component is created.           
+        //this is done because this navigation guard is called before the component is created. 
+        
+        let url1 = "http://207.180.215.239:8181/api/v1/customers/fetch?email="+localStorage.client;
+
+            axios.get(url1).then((response) => 
+                            {
+                               
+                                //eslint-disable-next-line no-console
+                               //console.log(response.data.objects[i].industry_name);
+
+                                vm.customer = response.data.objects;
+
+                                vm.fetchAllClearingTenders(response.data.objects.id),
+                                vm.fetchClearingBidedTenders(response.data.objects.id),
+                                vm.fetchClearingTendersOnProgress(response.data.objects.id)
+     
+                                vm.fetchAllTransportingTenders(response.data.objects.id);
+                                vm.fetchTransportingBidedTenders(response.data.objects.id);
+                                vm.fetchTransportingOnProgressTenders(response.data.objects.id);
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+
         vm.alert = vm.$store.getters.getAlert;
 
-        vm.fetchAllClearingTenders(vm.id),
-        vm.fetchClearingBidedTenders(vm.id),
-        vm.fetchClearingTendersOnProgress(vm.id)
-     
-        vm.fetchAllTransportingTenders(vm.id);
-        vm.fetchTransportingBidedTenders(vm.id);
-        vm.fetchTransportingOnProgressTenders(vm.id);
+        
 
          //eslint-disable-next-line no-console
-                        //console.log(this.ClearingBidedTenders);
+         //console.log(this.ClearingBidedTenders);
 
         vm.fetchCurrencies();
 

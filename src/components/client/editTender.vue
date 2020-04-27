@@ -281,7 +281,10 @@ export default {
     name: "createtender",
 
     data: ()=>({
+
         tender:[],
+
+        customer:[]
        
     }),
 
@@ -314,7 +317,7 @@ export default {
                 formData.append('customer_delivery_timeline',this.tender.customer_delivery_timeline);
                 formData.append('origin',this.tender.origin);
                 formData.append('destination',this.tender.destination);
-                formData.append('customer_id',10);
+                formData.append('customer_id',this.customer.id);
 
 
                 axios.post(`http://207.180.215.239:9000/api/v1/tenders/${this.tender.id}`,formData,
@@ -355,7 +358,7 @@ export default {
                 formData.append('customer_offer_amount',this.tender.customer_offer_amount);
                 formData.append('customer_terms_and_conditions',this.tender.customer_terms_and_conditions);
                 formData.append('customer_delivery_timeline',this.tender.customer_delivery_timeline);
-                formData.append('customer_id',10);
+                formData.append('customer_id',this.customer.id);
 
 
                 axios.post(`http://207.180.215.239:8000/api/v1/tenders/${this.tender.id}`,
@@ -404,10 +407,29 @@ export default {
         //this is done because this navigation guard is called before the component is created.           
         //vm.setCustomerDetails();
 
+        let url1 = "http://207.180.215.239:8181/api/v1/customers/fetch?email="+localStorage.client;
+
+        axios.get(url1).then((response) => 
+            {
+                               
+                //eslint-disable-next-line no-console
+                //console.log(response.data.objects[i].industry_name);
+
+                vm.customer = response.data.objects;
+
+            }).catch(()=>{
+
+                 // response = null;
+                //commit('setOnProgressTenders',response)
+            });
+
+        
+
         if(vm.$route.params.tender_type == "Transporting"){
 
              //eslint-disable-next-line no-console
                         console.log("Tender type is 1");
+                        
             axios.get(`http://207.180.215.239:9000/api/v1/tenders/${vm.$route.params.id}`).
                     then((response)=>{
                   

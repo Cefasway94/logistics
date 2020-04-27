@@ -352,16 +352,16 @@ export default {
     components: {Alert},
 
     data: ()=>({
-        details:'sample server  27',
-        origin:'dar',
-        destination:'zanzibar',
+        details:'',
+        origin:'',
+        destination:'',
         timeline:new Date().toISOString().substr(0, 10),
-        size:'2 containers',
-        currency:'TZ',
-        offer_amount:'800000',
-        description:'sample description',
+        size:'',
+        currency:'',
+        offer_amount:'',
+        description:'',
         photos:[],
-        terms:'sample terms',
+        terms:'',
         bill_of_lading:[],
         authorization_letter:[],
 
@@ -370,6 +370,8 @@ export default {
         alert:'',
         tender_categories:[],
         tender_category:'',
+
+        customer:[]
 
     }),
 
@@ -448,6 +450,7 @@ export default {
             formData.append('currency',this.currency);
             formData.append('description',this.description);
             formData.append('tender_category',this.tender_category);
+            formData.append('customer_verification',this.customer.is_verified);
 
             return formData;
         },
@@ -462,7 +465,7 @@ export default {
 
             if(this.tender_category === 'Transporting')
             {
-                const url = "http://207.180.215.239:9000/api/v1/tenders?customer_id=10";
+                const url = "http://207.180.215.239:9000/api/v1/tenders?customer_id="+this.customer.id;
                 //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
 
          
@@ -510,7 +513,7 @@ export default {
             } else if(this.tender_category === 'Clearing')
 
             {
-                const url = "http://207.180.215.239:8000/api/v1/tenders?customer_id=10";
+                const url = "http://207.180.215.239:8000/api/v1/tenders?customer_id="+this.customer.id;
                 //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
 
                 axios.post(url,
@@ -571,6 +574,23 @@ export default {
 
                                for(let i=0; i< response.data.objects.length; i++)
                                     vm.tender_categories.push(response.data.objects[i].industry_name);
+
+                            }).catch(()=>{
+
+                                // response = null;
+                                //commit('setOnProgressTenders',response)
+                            });
+                          
+
+            let url1 = "http://207.180.215.239:8181/api/v1/customers/fetch?email="+localStorage.client;
+
+            axios.get(url1).then((response) => 
+                            {
+                               
+                                //eslint-disable-next-line no-console
+                               //console.log(response.data.objects[i].industry_name);
+
+                               vm.customer = response.data.objects;
 
                             }).catch(()=>{
 

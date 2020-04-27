@@ -492,14 +492,17 @@ export default {
         },
 
         personalTinUpdated(){
+
             this.copy_of_tax_identification_number_certificate.push(document.getElementById("personal_tin").files[0]);
         },
 
         updateID(){
+
             this.copy_of_identity_card.push(document.getElementById("copy_of_id").files[0]);
         },
 
         updateProfilePhoto(){
+
             this.profile_photo.push(document.getElementById("profilePhoto").files[0]);
         },
 
@@ -586,13 +589,16 @@ export default {
                     formData.append('three_months_bank_statement[0]',this.three_months_bank_statement[0]);
                     formData.append('company_logo[0]',this.company_logo[0]);
 
+
                 } else if(this.client_type == "Personal"){
 
                     formData.append('copy_of_identity_card[0]',this.copy_of_identity_card[0]);
                     formData.append('copy_of_tax_identification_number_certificate[0]',this.copy_of_tax_identification_number_certificate[0]);
                     formData.append('profile_photo[0]',this.profile_photo[0]);
-                    
+   
                 }
+
+                 
 
                 return formData;
 
@@ -604,7 +610,6 @@ export default {
             this.loading = true;
 
             let formData = this.createData();
-
 
             if(this.documents){
 
@@ -635,7 +640,7 @@ export default {
 
                                     //this.setAlert(response.data.message);
 
-                                    //this.$router.push('/client');
+                                    this.$router.push('/client');
 
                                     //eslint-disable-next-line no-console
                                     console.log(response.data);
@@ -752,14 +757,21 @@ export default {
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+
                             });
 
-            axios.get(`http://207.180.215.239:8181//api/v1/customers/1`).then((response) => 
+            axios.get(`http://207.180.215.239:8181/api/v1/customers/fetch?email=${vm.$route.params.id}`).then((response) => 
                             {
 
                                //commit('setOnProgressTenders',response.data.objects)
+
+                               //eslint-disable-next-line no-console
+                               //console.log(vm.$route.params.id);
+
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
+
+                              
                                //vm.client_types = response.data.objects;
 
                                vm.first_name = response.data.objects.first_name;
@@ -782,7 +794,8 @@ export default {
                                vm.company_name = response.data.objects.company_name;
                                vm.city = response.data.objects.city;
                                vm.region = response.data.objects.region;
-                               vm.company_logo = response.data.objects.company_logo;
+
+                               /*vm.company_logo = response.data.objects.company_logo;
                                vm.certificate_of_registration = response.data.objects.certificate_of_registration;
                                vm.tax_payer_identification_document = response.data.objects.tax_payer_identification_document;
                                vm.vat_certificate = response.data.objects.vat_certificate;
@@ -790,7 +803,7 @@ export default {
                                vm.three_months_bank_statement = response.data.objects.three_months_bank_statement;
                                vm.profile_photo = response.data.objects.profile_photo;
                                vm.copy_of_identity_card = response.data.objects.copy_of_identity_card;
-                               vm.copy_of_tax_identification_number_certificate = response.data.objects.copy_of_tax_identification_number_certificate;
+                               vm.copy_of_tax_identification_number_certificate = response.data.objects.copy_of_tax_identification_number_certificate;*/
                                
                                //vm.client_types = response.data.objects;
 
