@@ -22,34 +22,24 @@
                     <v-form>
                     <v-container>
                         <v-row>                         
-                        <v-col xs12 sm6 md4 lg4 xl4>
-                            <p class="primary--text body-2 text-uppercase mb-0">CARGO DETAILS</p>
+                        <v-col cols="12" md="6">
+                            <p class="primary--text body-2 text-uppercase mb-0">TENDER NAME</p>
                             <v-text-field 
                             outlined 
                             clearable
                             v-model="tender.cargo_details"
+                            :rules="[v => !!v || 'Tender name is required']"
+                            required
                             >
-                            </v-text-field>
-                        </v-col>
-                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 'Transporting'">
-                            <p class="primary--text body-2 text-uppercase mb-0">ORIGIN</p>
-                            <v-text-field 
-                            outlined 
-                            clearable
-                            v-model="tender.origin">
-                            </v-text-field>
-                        </v-col>
+                                <template #label>
+                                    <span class="red--text"><strong>* </strong></span>
+                                </template>
 
-                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 'Transporting'">
-                            <p class="primary--text body-2 text-uppercase mb-0">DESTINATION</p>
-                            <v-text-field 
-                            outlined 
-                            clearable
-                            v-model="tender.destination">
                             </v-text-field>
                         </v-col>
+                        
 
-                        <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 'Clearing'">
+                        <v-col cols="12" md="6">
                                     <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
                                     <v-text-field 
                                         outlined 
@@ -60,33 +50,71 @@
                         </v-row>
 
                         <v-row class="px-3">
+                            <v-col cols="12" md="6" v-if="tender.tender_type == 'Transporting'">
+                            <p class="primary--text body-2 text-uppercase mb-0">ORIGIN</p>
+                            <v-text-field 
+                            outlined 
+                            clearable
+                            v-model="tender.origin"
+                            :rules="[v => !!v || 'Origin is required']"
+                            required>
+
+                                <template #label>
+                                    <span class="red--text"><strong>* </strong></span>
+                                </template>
+
+                            </v-text-field>
+                        </v-col>
+
+                        <v-col cols="12" md="6" v-if="tender.tender_type == 'Transporting'">
+                            <p class="primary--text body-2 text-uppercase mb-0">DESTINATION</p>
+                            <v-text-field 
+                            outlined 
+                            clearable
+                            v-model="tender.destination"
+                            :rules="[v => !!v || 'Destination is required']"
+                            required
+                            >
+                                <template #label>
+                                    <span class="red--text"><strong>* </strong></span>
+                                </template>
+
+                            </v-text-field>
+                        </v-col>
+                        </v-row>
+                        <v-row class="px-3">
                             
                             <v-row wrap>
-                                <v-col xs12 sm6 md4 lg4 xl4 v-show="tender.tender_type == 'Clearing'">
-                                    <p class="primary--text body-2 text-uppercase mb-0"> CARGO SIZE </p>
-                                    <v-text-field 
-                                        outlined 
-                                        clearable
-                                        v-model="tender.cargo_size">
-                                    </v-text-field>
-                                </v-col>
-                            
-
-                                <v-col xs12 sm6 md4 lg4 xl4>
+                                <v-col cols="12" md="6">
                                     <p class="primary--text body-2 text-uppercase mb-0"> CURRENCY</p>
                                     <v-text-field 
                                         outlined 
                                         clearable
-                                        v-model="tender.currency">
+                                        v-model="tender.currency"
+                                        :rules="[v => !!v || 'Currency is required']"
+                                        required>
+
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
+
                                     </v-text-field>
                                 </v-col>
 
-                                <v-col xs12 sm6 md4 lg4 xl4>
+                                <v-col cols="12" md="6">
                                     <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
                                     <v-text-field 
                                         outlined 
                                         clearable
-                                        v-model="tender.customer_offer_amount">
+                                        v-model="tender.customer_offer_amount"
+                                        @change="isValid()"
+                                        :rules="[v => !!v || 'Amount is required']"
+                                        required>
+
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
+
                                     </v-text-field>
                                 </v-col>
                             </v-row>
@@ -96,12 +124,14 @@
                             <v-col
                                 offset="2"
                                 align-self="center"
-                                cols='2'  
+                                cols='12' 
+                                md="3" 
                             >
-                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
+                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE  <span class="red--text"><strong>* </strong></span></p>
                             </v-col>
                             <v-col
-                                col="9"  
+                                cols="12" 
+                                md="9" 
                             >
                                 <v-date-picker 
                                     v-model="tender.customer_delivery_timeline"
@@ -111,7 +141,7 @@
                         </v-row>
 
                         <v-row>
-                            <v-col xs12>
+                            <v-col cols=12>
                                 <p class="primary--text body-2 text-uppercase mb-0"> DESCRIPTION ON CARGO </p>
                                 <v-textarea
                                     outlined 
@@ -123,13 +153,20 @@
                         </v-row>
 
                          <v-row>
-                            <v-col xs12>
+                            <v-col cols=12>
                                 <p class="primary--text body-2 text-uppercase mb-0"> TERMS AND CONDITION </p>
                                 <v-textarea
                                     outlined 
                                     clearable
                                     :auto-grow = "true"
-                                    v-model="tender.customer_terms_and_conditions">
+                                    v-model="tender.customer_terms_and_conditions"
+                                    :rules="[v => !!v || 'Terms required']"
+                                    required>
+
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+
                                 </v-textarea>
                             </v-col>
                         </v-row>
@@ -263,7 +300,7 @@
                 <v-row class=" pa-3">
                     <v-spacer></v-spacer>
                     <v-btn outlined color="primary" class="mx-4" router to="/client">Cancel</v-btn>
-                    <v-btn color="primary white--text" type="submit" @click="editTender">Edit tender</v-btn>
+                    <v-btn color="primary white--text"  @click="editTender($event)" :disabled="!isValid()">Edit tender</v-btn>
                 </v-row>
             </v-card>
 
@@ -302,8 +339,36 @@ export default {
 
         //allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
 
-        editTender(){
+        isValid(){
 
+            if(this.$route.params.tender_type == "Transporting"){
+
+                if(this.tender.cargo_details == '' || this.tender.origin == '' || this.tender.destination == '' || this.tender.customer_delivery_timeline == ''
+                    || this.tender.currency == '' || this.tender.customer_offer_amount == '' || this.tender.customer_terms_and_conditions =='')
+
+                    return false
+                else 
+                    return true;
+
+            } else if(this.$route.params.tender_type == "Clearing"){
+
+                if(this.tender.cargo_details == '' || this.tender.customer_delivery_timeline == '' || this.tender.currency == '' || 
+                    this.tender.customer_offer_amount == '' || this.tender.customer_terms_and_conditions =='')
+
+                    return false
+
+                else 
+
+                    return true;
+            }     
+        },
+
+        editTender(event){
+
+            if(event)
+                event.preventDefault();
+
+            
             if(this.$route.params.tender_type == "Transporting") {
 
                 let formData = new FormData();

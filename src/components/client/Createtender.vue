@@ -44,7 +44,7 @@
             <v-card col flat width="1000" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row>
                 <v-icon color="grey" class="mb-4 ml-3 mr-5">list_alt</v-icon>
-                <p class="grey--text title">Cargo details</p>
+                <p class="grey--text title">Tender name</p>
                 </v-row>
                 <v-card width="1300" class="mx-auto pa-3">
                     <v-form>
@@ -56,10 +56,14 @@
                                     style="color:#4169E1;"
                                     v-model = "tender_category" 
                                     :items="tender_categories" 
+                                    :rules="[v => !!v || 'Category is required']"
+                                    required
                                     color="#4169E1" 
-                                    label="Tender category" 
                                     clearable 
                                 >
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>Tender category
+                                    </template>
                                 </v-select>
                             </v-col>
                         </v-row>
@@ -77,11 +81,16 @@
                                 </v-select>
                             </v-col>-->
                         <v-col>
-                            <p class="primary--text body-2 text-uppercase mb-0">CARGO DETAILS</p>
+                            <p class="primary--text body-2 text-uppercase mb-0">TENDER NAME</p>
                             <v-text-field 
                                 outlined 
                                 clearable
+                                :rules="[v => !!v || 'Tender name is required']"
+                                required
                                 v-model="details">
+                                <template #label>
+                                    <span class="red--text"><strong>* </strong></span>
+                                </template>
                             </v-text-field>
                         </v-col>
 
@@ -98,7 +107,7 @@
                         </v-row>
 
                         <v-row class="px-3">
-                            <v-row wrap v-show="tender_category === 'Transporting'">
+                            <v-row wrap v-if="tender_category === 'Transporting'">
                                 <!--<v-col xs12 sm6 md4 lg4 xl4>
                                     <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
                                     <v-text-field 
@@ -123,8 +132,13 @@
                                     <v-text-field 
                                         outlined 
                                         clearable
+                                        :rules="[v => !!v || 'Origin is required']"
+                                        required
                                         v-model="origin"
                                     >
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
                                     </v-text-field>
                                 </v-col>
 
@@ -133,8 +147,15 @@
                                     <v-text-field 
                                         outlined 
                                         clearable
+                                        :rules="[v => !!v || 'Destination is required']"
+                                        required
                                         v-model="destination"
                                     >
+
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+
                                     </v-text-field>
                                 </v-col>
                                 
@@ -182,9 +203,14 @@
                                         v-model = "currency" 
                                         :items="currencies" 
                                         color="#4169E1" 
-                                        label="Currency" 
+                                        :rules="[v => !!v || 'Currency is required']"
+                                        required
                                         clearable 
                                     >
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span> Currency
+                                        </template>
+
                                     </v-select>
                                 </v-col>
 
@@ -193,17 +219,31 @@
                                     <v-text-field 
                                         outlined 
                                         clearable
+                                        :rules="[v => !!v || 'Amout is required']"
+                                        required
                                         v-model="offer_amount">
+
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template><template #label>
+
+                                    <span class="red--text"><strong>* </strong></span>
+                                </template>
                                     </v-text-field>
                             </v-col>
 
                             <v-col  xs12 sm6 md4 lg4 xl4>
-                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
+                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE  <span class="red--text"><strong>* </strong></span> </p>
                                 <v-date-picker 
                                     v-model="timeline"
-                                    :allowed-dates="allowedDates"
+                                    :rules="[v => !!v || 'Date is required']"
+                                    :min= time
+                                    required
                                     full-width>
+
+
                                 </v-date-picker>
+                             
                             </v-col>
 
                         </v-row>
@@ -227,7 +267,15 @@
                                     outlined 
                                     clearable
                                     :auto-grow = "true"
+                                    :rules="[v => !!v || 'Terms and conditions is required']"
+                                    
+                                    required
                                     v-model="terms">
+
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+
                                 </v-textarea>
                             </v-col>
                         </v-row>
@@ -292,13 +340,18 @@
                             <p class="primary--text body-2 text-uppercase mb-0"> BILL OF LADING</p>
                             <v-card flat width="200" height="150" outlined >
 
-                                <v-file-input 
-                                    label="Bill of lading" 
+                                <v-file-input  
                                     id="bill"
+                                    :rules="[v => !!v || 'Bill of lading is required']"
+                                    required
                                     @change="billUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
                                    
                                 >
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span> Bill of lading
+                                    </template>
+
                                 </v-file-input>
                             </v-card>
                        
@@ -309,11 +362,16 @@
                             <v-card flat width="200" height="150" outlined >
 
                                 <v-file-input 
-                                    label="Authorization letter" 
                                     id="letter"
+                                    :rules="[v => !!v || 'Authorization letter is required']"
+                                    required
                                     @change="letterUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
                                 >
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span> Authorization letter
+                                    </template>
+
                                 </v-file-input>
                             </v-card>
                        
@@ -331,7 +389,7 @@
                     <v-spacer></v-spacer>
             
                     <v-btn outlined color="primary" class="mx-4"  @click="cancel">Cancel</v-btn>
-                    <v-btn color="primary white--text" type="submit" @click="publishTender">Publish tender</v-btn>
+                    <v-btn color="primary white--text"  @click="publishTender($event)" :disabled="!isValid()">Publish tender</v-btn>
                 </v-row>
             </v-card>
 
@@ -356,6 +414,7 @@ export default {
         origin:'',
         destination:'',
         timeline:new Date().toISOString().substr(0, 10),
+        time: new Date().toISOString().substr(0, 10),
         size:'',
         currency:'',
         offer_amount:'',
@@ -380,6 +439,31 @@ export default {
     },
 
     methods: {
+
+        isValid(){
+
+            if(this.tender_category == "Transporting"){
+
+                if(this.details == '' || this.origin == '' || this.destination == '' || this.timeline == ''
+                    || this.currency == '' || this.offer_amount == '' || this.terms =='' || this.tender_category == ''
+                    || this.bill_of_lading.length == 0 || this.authorization_letter.length == 0)
+
+                    return false
+                else 
+                    return true;
+
+            } else if(this.tender_category == "Clearing"){
+
+                if(this.details == '' || this.timeline == '' || this.currency == '' || this.offer_amount == '' || this.terms =='' 
+                    || this.tender_category == '' || this.bill_of_lading.length == 0 || this.authorization_letter.length == 0)
+
+                    return false
+
+                else 
+
+                    return true;
+            }     
+        },
 
         ...mapActions(['AddTender','setAlert','fetchCurrencies']),
 
@@ -455,13 +539,15 @@ export default {
             return formData;
         },
 
-        publishTender(){
+        publishTender(event){
 
+            if(event)
+                event.preventDefault();
+
+            
             this.loading = true;
 
             let formData = this.createData();
-
-
 
             if(this.tender_category === 'Transporting')
             {
