@@ -1,24 +1,8 @@
 <template>
     <v-container class="mt-12 pa-3">
        
-            <v-alert 
-                v-if="display_alert"
-                type="error"
-                dismissible
-                border="left"
-                elevation="3"
-            >
-
-                {{ this.alert }}
-
-            </v-alert>
-            <!--<v-row class="mt-3 mb-3" v-if="display_alert">
-
-                <v-col cols=12>
-
-                     <Alert  v-bind:message="alert"/>
-                </v-col>
-            </v-row>-->
+            <AlertError v-if="display_alert" v-bind:message="alert"/>
+          
 
              <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
@@ -241,6 +225,7 @@
 <script>
 import axios from 'axios'
 import {mapGetters,mapActions} from 'vuex'
+import AlertError from '@/components/AlertError.vue'
 
 
 export default {
@@ -270,6 +255,8 @@ export default {
 
         }
     },
+
+    components: {AlertError},
 
     computed:{
         ...mapGetters(['getCurrencies']),
@@ -347,108 +334,11 @@ export default {
             this.loading = true;
 
         
-            let formData = this.createData();
-
-            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.id}/${this.tender.tender_type}`;
-
-            if(this.no_of_installment == "1"){
-
-                if(this.tender.customer_offer_amount == this.amount){
-
-                   axios.post(url,
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }).
-                            then((response) => {
-
-
-                                if(response.data.genralErrorCode == 8004){
-                                    
-                                    this.loading = false;
-
-                                    this.display_alert = false;
-
-                        
-                                    this.alert = response.data.message;
-                                }
-                                else if(response.data.genralErrorCode == 8000){
-
-                                    this.loading = false;
-
-                                    this.display_alert = false;
-
-                                    this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
-                                }
-
-                                //eslint-disable-next-line no-console
-                                //console.log(response.data);
-
-                            }).catch(()=>{
-
-                               
-                                this.loading = false;
-
-                                this.alert = "Error occured. Please try again";
+              this.alert = "Error occured. Please try again";
 
                                 this.display_alert = true;
 
                                 document.getElementById('app').scrollIntoView();
-
-                            });  
-
-                }else {
-
-                     alert("Tender is paid under full payment term");
-                }
-
-            } else {
-
-                axios.post(url,
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }).
-                            then((response) => {
-
-
-                                if(response.data.genralErrorCode == 8004){
-                                    
-                                    this.loading = false;
-
-                                    this.display_alert = false;
-
-                        
-                                    this.alert = response.data.message;
-                                }
-                                else if(response.data.genralErrorCode == 8000){
-
-                                    this.loading = false;
-
-                                    this.display_alert = false;
-
-                                    this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
-                                }
-
-                            }).catch(()=>{
-
-                                //eslint-disable-next-line no-console
-                                console.log("error occured");
-
-                                this.loading = false;
-
-                                this.alert = "Error occured. Please try again";
-
-                                this.display_alert = true;
-
-                                document.getElementById('app').scrollIntoView();
-                            });  
-
-            }
 
         }
     },
