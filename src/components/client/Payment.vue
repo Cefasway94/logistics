@@ -1,6 +1,24 @@
 <template>
     <v-container class="mt-12 pa-3">
        
+            <v-alert 
+                v-if="display_alert"
+                type="error"
+                dismissible
+                border="left"
+                elevation="3"
+            >
+
+                {{ this.alert }}
+
+            </v-alert>
+            <!--<v-row class="mt-3 mb-3" v-if="display_alert">
+
+                <v-col cols=12>
+
+                     <Alert  v-bind:message="alert"/>
+                </v-col>
+            </v-row>-->
 
              <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
@@ -62,6 +80,8 @@
                     </v-flex>-->
                 </v-flex>
             </v-card>
+
+           
 
             <v-card row flat width="900" class="mt-10 mx-auto" color="#F5FAFF">
                 <v-flex row class="">
@@ -181,7 +201,31 @@
             </v-card>
 
             <v-card flat width="900" class="mx-auto mt-8 " color="#F5FAFF">
-                <v-flex row align-self-center justify-center>
+                <v-row
+                    class="fill-height"
+                    align-content="center"
+                    justify="center"
+                    v-if="loading"
+                >
+                    <v-col
+                        class="subtitle-1 text-center"
+                        cols="12"
+                    >
+                       <span class="font-weight-bold blue--text text--darken-2">Payment processing</span>
+                    </v-col>
+
+                    <v-col cols="6">
+                        <v-progress-linear
+                            color="deep-purple accent-4"
+                            indeterminate
+                            rounded
+                            height="6"
+                        >
+                        </v-progress-linear>
+                    </v-col>
+                </v-row>
+
+                <v-flex row align-self-center justify-center class="mt-3">
                     <v-btn elevation="flat" color="#F5FAFF"> 
                         <v-icon color="#4169E1">keyboard_arrow_left</v-icon>
                         <p class=" body-1 mb-0 text-upercase pt-1" style="color:#4169E1;"> go back </p>
@@ -198,6 +242,7 @@
 import axios from 'axios'
 import {mapGetters,mapActions} from 'vuex'
 
+
 export default {
     data () {
         return{
@@ -205,6 +250,7 @@ export default {
             tender:[],
             payment_options:['Bank Transfer', 'Other'],
             currencies:[],
+
             alert:'',
 
             currency_object:[],
@@ -217,7 +263,11 @@ export default {
             currency_id:'',
 
             no_of_installment:'',
-            response_message:''
+            response_message:'',
+
+            loading: false,
+            display_alert: false,
+
         }
     },
 
@@ -289,10 +339,14 @@ export default {
 
         confirmPayment(event){
 
+            
+
             if(event)
                 event.preventDefault();
 
+            this.loading = true;
 
+        
             let formData = this.createData();
 
             let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.id}/${this.tender.tender_type}`;
@@ -311,35 +365,38 @@ export default {
                             then((response) => {
 
 
-                                /*if(response.data.genralErrorCode == 8004){
+                                if(response.data.genralErrorCode == 8004){
+                                    
+                                    this.loading = false;
 
-                                    //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
-                                    //this.alert = response.data.message;
+                                    this.display_alert = false;
+
+                        
+                                    this.alert = response.data.message;
                                 }
                                 else if(response.data.genralErrorCode == 8000){
 
-                                    //this.AddTender(response.data.objects);
+                                    this.loading = false;
 
-                                    this.setAlert(response.data.message);
+                                    this.display_alert = false;
 
-                                    this.$router.push('/client');
-                                }*/
+                                    this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+                                }
 
                                 //eslint-disable-next-line no-console
                                 //console.log(response.data);
 
-                                this.response_message = response.data.message;
-
                             }).catch(()=>{
 
-                                //eslint-disable-next-line no-console
-                                console.log("error occured");
+                               
+                                this.loading = false;
 
-                                this.setAlert("Erro occured. Please try again");
+                                this.alert = "Error occured. Please try again";
 
-                                this.alert = this.getAlert();
+                                this.display_alert = true;
 
-                                this.$router.push('/client');
+                                document.getElementById('app').scrollIntoView();
+
                             });  
 
                 }else {
@@ -359,39 +416,39 @@ export default {
                             then((response) => {
 
 
-                                /*if(response.data.genralErrorCode == 8004){
+                                if(response.data.genralErrorCode == 8004){
+                                    
+                                    this.loading = false;
 
-                                    //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
-                                    //this.alert = response.data.message;
+                                    this.display_alert = false;
+
+                        
+                                    this.alert = response.data.message;
                                 }
                                 else if(response.data.genralErrorCode == 8000){
 
-                                    //this.AddTender(response.data.objects);
+                                    this.loading = false;
 
-                                    this.setAlert(response.data.message);
+                                    this.display_alert = false;
 
-                                    this.$router.push('/client');
-                                }*/
-
-                                //eslint-disable-next-line no-console
-                                //console.log(response.data);
-
-                                this.response_message = response.data.message;
+                                    this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+                                }
 
                             }).catch(()=>{
 
                                 //eslint-disable-next-line no-console
                                 console.log("error occured");
 
-                                this.setAlert("Erro occured. Please try again");
+                                this.loading = false;
 
-                                this.alert = this.getAlert();
+                                this.alert = "Error occured. Please try again";
 
-                                this.$router.push('/client');
+                                this.display_alert = true;
+
+                                document.getElementById('app').scrollIntoView();
                             });  
 
             }
-
 
         }
     },
