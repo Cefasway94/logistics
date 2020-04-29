@@ -211,6 +211,15 @@ export default {
                                
                                 //eslint-disable-next-line no-console
                                //console.log(response.data.objects[i].industry_name);
+                               //eslint-disable-next-line no-console
+                                     console.log(response.data.genralErrorCode);
+
+                                if(response.data.genralErrorCode === 8000)
+                                    {
+                                         //eslint-disable-next-line no-console
+                                     console.log("Error code 8000");
+                                    }
+
                                vm.tender = response.data.objects;
 
                                 //eslint-disable-next-line no-console

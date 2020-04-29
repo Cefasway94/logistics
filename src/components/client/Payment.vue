@@ -334,11 +334,122 @@ export default {
             this.loading = true;
 
         
-              this.alert = "Error occured. Please try again";
+            let formData = this.createData();
+
+            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.id}/${this.tender.tender_type}`;
+
+            if(this.no_of_installment == "1"){
+
+                if(this.tender.customer_offer_amount == this.amount){
+
+                   axios.post(url,
+                            formData,
+                            {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            }).
+                            then((response) => {
+
+                                 //eslint-disable-next-line no-console
+                                    console.log(response.data);
+                                    
+                                /*if(response.data.genralErrorCode == 8004){
+                                    
+                                    this.loading = false;
+
+                                    this.display_alert = false;
+
+                        
+                                    this.alert = response.data.message;
+                                }
+                                else if(response.data.genralErrorCode == 8000){
+
+                                    this.loading = false;
+
+                                    this.display_alert = false;
+
+                                    this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+                                }*/
+
+                            
+                                this.loading = false;
+
+                                this.display_alert = false;
+
+                                this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+
+                            }).catch(()=>{
+
+                               
+                                this.loading = false;
+
+                                this.alert = "Error occured. Please try again";
 
                                 this.display_alert = true;
 
                                 document.getElementById('app').scrollIntoView();
+
+                            });  
+
+                }else {
+
+                     alert("Tender is paid under full payment term");
+                }
+
+            } else {
+
+                axios.post(url,
+                            formData,
+                            {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            }).
+                            then((response) => {
+
+                                 //eslint-disable-next-line no-console
+                                    console.log(response.data);
+
+                                /*if(response.data.genralErrorCode === 8004){
+                                    
+                                    this.loading = false;
+
+                                    this.display_alert = false;
+
+                        
+                                    this.alert = response.data.message;
+                                }
+                                else if(response.data.genralErrorCode === 8000){
+
+                                    this.loading = false;
+
+                                    this.display_alert = false;
+
+                                    this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+                                }*/
+
+                                this.loading = false;
+
+                                this.display_alert = false;
+
+                                this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+
+                            }).catch(()=>{
+
+                                //eslint-disable-next-line no-console
+                                console.log("error occured");
+
+                                this.loading = false;
+
+                                this.alert = "Error occured. Please try again";
+
+                                this.display_alert = true;
+
+                                document.getElementById('app').scrollIntoView();
+                            });  
+
+            }
 
         }
     },
@@ -430,7 +541,7 @@ export default {
                                //console.log(response.data.objects);
 
                                 vm.currency_object = response.data.objects;
-                                
+
                                 for(let i = 0; i< response.data.objects.length; i++)
                                     vm.currencies.push(response.data.objects[i].name) 
 
