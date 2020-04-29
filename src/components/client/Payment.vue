@@ -395,7 +395,7 @@ export default {
                             });
 
 
-            const currency = "http://207.180.215.239:8000/api/v1/configurations/currency";
+            const currency = "http://207.180.215.239:9000/api/v1/configurations/currency";
 
             axios.get(currency).then((response) => 
                             {
@@ -428,6 +428,9 @@ export default {
                                //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
+
+                                vm.currency_object = response.data.objects;
+                                
                                 for(let i = 0; i< response.data.objects.length; i++)
                                     vm.currencies.push(response.data.objects[i].name) 
 
