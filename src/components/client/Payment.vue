@@ -295,7 +295,7 @@ export default {
 
             let formData = this.createData();
 
-            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.tender_id}/${this.tender.tender_type}`;
+            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.id}/${this.tender.tender_type}`;
 
             if(this.no_of_installment == "1"){
 
