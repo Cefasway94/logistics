@@ -185,8 +185,8 @@
                         <h4  class=" title ">{{tender.bid_amount}} USD</h4>
                         </v-flex>
                         <v-flex row xsm12 sm12 md12 lg6 class="px-3 pt-1">
+
                         <v-flex xsm6 sm6 md6 class="px-1">
-                        
                          <v-btn
                         :to="{name:'Taboutbid', params: {id:tender.id}}"
                          small 
@@ -194,16 +194,17 @@
                         color="#4169E1" class="white--text" >
                         view bid
                         </v-btn>
-                        
                         </v-flex>
-                        <v-flex :id="tender.bid_status" :ref="tender.bid_status" xsm6 sm6 md6 class="px-1">
+
+                        <v-flex xsm6 sm6 md6 class="px-1">
                         <center>
-                        <v-btn  small elevation="flat" 
+                        <v-btn v-if="showaccept == LOAD_DASHBOARDS.objects[i].bid_status" small elevation="flat" 
                         color="#4169E1" class="white--text" @click="acceptbid(tender.id)">
                         accept
                         </v-btn>
                         </center>
                         </v-flex>
+
                         </v-flex>
                         
                     </v-row>
@@ -263,7 +264,7 @@
                         <h4  class=" title ">{{tender.customer_offer_amount}} USD </h4>
                         <v-spacer></v-spacer>
                         <v-btn small elevation="flat" 
-                        color="#4169E1" class="white--text" @click="getbiddetails(tender.bid_id)" :to="{name:'Aboutbid', 
+                        color="#4169E1" class="white--text" @click="getbiddetails(tender.bid_id)" :to="{name:'Tenderprogress', 
                         params: {id:tender.id}}" >View Details</v-btn>
                         
                     </v-row>
@@ -291,7 +292,7 @@ export default {
   
   data () {
       return{
-          awarded:'',
+          showaccept:'awarded',
           accept: true,
           verify:false,
           profile:false,
@@ -324,7 +325,7 @@ export default {
                 }else{
                      tab = this.tab
                  this.T_GET_DASHBOARD(tab).then(()=>{
-                     let status = this.$refs.accepted
+                    // let status = this.$refs.accepted
                      
                          //document.getElementById()
                      // eslint-disable-next-line no-console

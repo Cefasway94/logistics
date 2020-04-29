@@ -182,9 +182,9 @@
                         </v-btn>
                         
                         </v-flex>
-                        <v-flex :id="tender.bid_status" :ref="tender.bid_status" xsm6 sm6 md6 class="px-1">
+                        <v-flex xsm6 sm6 md6 class="px-1">
                         <center>
-                        <v-btn small elevation="flat" 
+                        <v-btn v-if="showaccept == LOAD_DASHBOARDS.objects[i].bid_status" small elevation="flat" 
                         color="#4169E1" class="white--text" @click="acceptbid(tender.id)">
                         accept
                         </v-btn>
@@ -279,6 +279,7 @@ export default {
   
   data () {
       return{
+          showaccept:'awarded',
           accept: true,
           verify:false,
           profile:false,

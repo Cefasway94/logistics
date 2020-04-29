@@ -211,7 +211,11 @@
                                     v-on="on">
                                     </v-text-field>
                                 </template>
-                                <v-date-picker v-model="date" no-title scrollable>
+                                <v-date-picker 
+                                v-model="date"
+                                :min="notless" 
+                                no-title 
+                                scrollable>
                                 <v-spacer></v-spacer>
                                 <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
                                 <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
@@ -282,6 +286,7 @@ export default {
           items:[],
           //date picker--------
           date: new Date().toISOString().substr(0, 10),
+          notless: new Date().toISOString().substr(0, 10),
           menu: false,
           //rest of data--------
           btnvisibility:'visible',
@@ -308,12 +313,17 @@ export default {
     
     
       this.GET_TENDERSDETAILs(tab).then(()=>{
+
           console.log('tender details bellowwwwwwww');
           console.log(this.LOAD_TENDER);
+
           this.GET_AGENT(localStorage.client).then(()=>{
+
               console.log('transporter details below');
               console.log(this.LOAD_AGENT);
+
               this.GET_AGENT_PAYMENT_TERMS(this.LOAD_AGENT.objects.email).then(()=>{
+                  
                   console.log('transporter payment terms');
                   console.log(this.LOAD_AGENT_PAYMENT_TERMS.length);
                   for (let index = 0; index < this.LOAD_AGENT_PAYMENT_TERMS.length; index++) {

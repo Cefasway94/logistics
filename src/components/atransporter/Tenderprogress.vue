@@ -43,33 +43,33 @@
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-image class="ma-auto" :src="LOAD_TENDER.bill_of_lading">
+                            <v-img class="ma-auto" :src="LOAD_TENDER.bill_of_lading">
                                 <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                             </v-flex>
 
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> LETTER </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-image class="ma-auto" :src="LOAD_TENDER.authorization_letter">
+                            <v-img class="ma-auto" :src="LOAD_TENDER.authorization_letter">
                                 <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                             </v-flex>
 
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> OTEHER </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-image class="ma-auto" :src="LOAD_TENDER.cargo_photo">
+                            <v-img class="ma-auto" :src="LOAD_TENDER.cargo_photo">
                                 <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                             </v-flex>
                         </v-flex>
@@ -120,7 +120,12 @@
                 </v-flex>
             </v-card>
 
-            <v-card flat width="1300" class="mx-auto mb-5" color="transparent">
+
+            <v-card 
+            flat width="1300" 
+            class="mx-auto mb-5" 
+            color="transparent">
+
             <v-tabs 
                 background-color="transparent"
                 color="#4169E1">
@@ -133,6 +138,37 @@
                 
                 <v-tab-item style="background-color:#F5FAFF;">
                     <v-divider></v-divider>
+
+                 <!-------- Alert before main progress -->
+                <v-card row width="500" class=" mx-auto mt-5 mb-5" color="#F5FAFF">
+                <v-alert
+                :value="wait"
+                text
+                outlined
+                color="orange"
+                border="left"
+                row
+                >
+                <v-flex row class="pl-4">
+                <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                <v-icon large color="orange" class="">notification_important</v-icon>    
+                </v-flex>
+                <v-flex xms11 sm11 md11 lg11>
+                <p class="text--text title mb-0">
+                Waiting on payment for tender to start
+                </p>
+                </v-flex>
+                </v-flex>
+                </v-alert>
+                </v-card>
+        <!-------------  --> 
+
+        <v-card 
+        v-show="show"
+        flat 
+        width="1300" 
+        class="mx-auto mb-5" 
+        color="transparent">             
 
                 <v-card row flat width="1300" class="mt-7 mx-auto" color="#F5FAFF">
                 <v-flex row class="">
@@ -554,61 +590,68 @@
                         <v-col class="">
                         <p class="primary--text body-2 text-uppercase"> BILL OF LADING </p>
                         <v-card color="lblue" flat width="140" height="150" outlined>
-                            <v-image class="ma-auto">
+                            <v-img class="ma-auto">
                                 <v-icon color="primary" x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                         </v-col>  
 
                         <v-col class="">
                         <p class="primary--text body-2 text-uppercase"> AUTHORITY LATTER </p>
                         <v-card color="lblue" flat width="140" height="150" outlined>
-                            <v-image class="ma-auto">
+                            <v-img class="ma-auto">
                                 <v-icon color="primary" x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                         </v-col>  
 
                         <v-col class="">
                         <p class="primary--text body-2 text-uppercase"> OTHER </p>
                         <v-card color="lblue" flat width="140" height="150" outlined>
-                            <v-image class="ma-auto">
+                            <v-img class="ma-auto">
                                 <v-icon color="primary" x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                         </v-col>  
 
                         <v-col class="">
                         <p class="primary--text body-2 text-uppercase"> OTHER </p>
                         <v-card color="lblue" flat width="140" height="150" outlined>
-                            <v-image class="ma-auto">
+                            <v-img class="ma-auto">
                                 <v-icon color="primary" x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                         </v-col>  
                                       
                     </v-row>
                 </v-card>
-            </v-card>
-
+            </v-card> 
+        
+        </v-card>
             
                 </v-tab-item>
             </v-tabs>
 
-            <v-card flat width="1300" class=" mb-5" color="#F5FAFF">
-                        <v-flex row class="">
-                            <v-spacer></v-spacer>
-                            <v-btn large class="primary" rauter >complete tender</v-btn>
-                        </v-flex>
-                    </v-card>
+            <v-card 
+            v-show="show" 
+            flat 
+            width="1300" 
+            class=" mb-5" 
+            color="#F5FAFF">
+                <v-flex row class="">
+                       <v-spacer></v-spacer>
+                       <v-btn disabled large class="primary" rauter >complete tender</v-btn>
+                </v-flex>
+            </v-card>
+
             </v-card>
 
     </v-container>
@@ -653,6 +696,8 @@ export default {
             payment_percentage:'',
 
             //----------------
+            show:true,
+            wait:false, 
             comment:'',
             extension:false,
             placeholder: 1,
@@ -669,14 +714,16 @@ export default {
               // eslint-disable-next-line no-console
               console.log(vm.LOAD_TENDER);
           vm.T_GET_AGENT(localStorage.client).then(()=>{
-              console.log(vm.LOAD_AGENT);
+              console.log(vm.LOAD_AGENT)
 
             vm.T_GET_PAYMENT_PROGRESS(to.params.id).then(()=>{
                 console.log(vm.LOAD_PAYMENT_PROGRESS)
 
-                if (vm.LOAD_PAYMENT_PROGRESS.objects.length === 0 ) {
+                if (vm.LOAD_PAYMENT_PROGRESS.objects.length === 0 && vm.LOAD_PAYMENT_PROGRESS.genralErrorCode == 8001 ) {
                     console.log(vm.LOAD_PAYMENT_PROGRESS);
-                   vm.value = 0;
+                    vm.wait = true
+                    vm.show = false
+                   vm.value = 0
                     //console.log(data.message);
                 }else{
                     vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
