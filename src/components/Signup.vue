@@ -446,7 +446,7 @@ methods:{
                   this.invalid == true
                 } else if (this.success === false && this.invalid == false){
                   this.loading = false;
-                  this.timeout = true;
+                  //this.timeout = true;
                 }
               },6000)
 
@@ -489,7 +489,12 @@ methods:{
             this.success = false
             this.loading = false
           }else if (error.response.data.phone){
-            this.abouterror = error.response.data.email[0]
+            this.abouterror = error.response.data.phone[0]
+            this.invalid = true
+            this.success = false
+            this.loading = false
+          }else if (error.response.data.name){
+            this.abouterror = error.response.data.name[0]
             this.invalid = true
             this.success = false
             this.loading = false
