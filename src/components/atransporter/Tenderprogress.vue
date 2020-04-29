@@ -685,7 +685,7 @@ export default {
             })
 
               vm.T_GET_PROGRESS_STAGES(to.params.id).then(()=>{
-                  console.log(vm.LOAD_PROGRESS_STAGES.objects[0].progress_id);
+                  console.log(vm.LOAD_PROGRESS_STAGES);
                 if (vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && vm.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
                     console.log('stage B');
                     vm.stage1 = 'C'
@@ -757,6 +757,20 @@ methods :{
                   expected_date : this.date, 
                 }).then(()=>{
                     console.log(this.LOAD_PROGRESS_FEEDBACK);
+
+            //         this.T_GET_PROGRESS_STAGES(this.$router.params.id).then(()=>{
+            //       console.log(this.LOAD_PROGRESS_STAGES.objects[0].progress_id);
+            //     if (this.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && this.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
+            //         console.log('stage B');
+            //         this.stage1 = 'C'
+            //         this.stage2 = 'C'
+            //         this.stage3 = 'C'
+            //         this.stage4 = 'B'
+            //     } else if( this.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && this.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
+            //         console.log('stage c');
+            //          this.stage4 = 'C'
+            //     }
+            //   })
                     
                 })
 

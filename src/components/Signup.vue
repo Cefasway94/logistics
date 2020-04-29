@@ -326,7 +326,7 @@
                     </template>
                     </v-hover>
                     <v-alert
-                    :value="invalid"
+                    :value="dontmatch"
                     color="error"
                     icon="error_outline"
                     >
@@ -402,7 +402,8 @@ export default {
          //match: false,                // used to chcek if passwords match, 
          invalid: false,             // togle fields
          //invalidemail : false,      // check if email is valid
-          emptyfilds:false,         // Check fields      
+          emptyfilds:false,         // Check fields   
+          dontmatch : false,   
           error: false,
           abouterror:'',
           show:false,
@@ -459,6 +460,8 @@ methods:{
           category: this.category
         })
         .then((data) => {
+          console.log(this.LOAD_REGISTER.email);
+          
           if(this.LOAD_REGISTER.email){
             this.abouterror = 'User Already exist. Please try other datails or log in with appropriate credentials'
             this.invalid = true
@@ -477,35 +480,75 @@ methods:{
           
         })
         .catch (error => {
-          this.userExists = true;
-          if (error.email) {
-            this.abouterror = 'User Already exist. Please try other datails or log in with appropriate credentials'
-          } else {
-            this.abouterror = 'registration failed, please check your internet and try again'
+
+          console.log(error.response.data)
+
+          if (error.response.data.email) {
+            this.abouterror = error.response.data.email[0]
+            this.invalid = true
+            this.success = false
+            this.loading = false
+          }else if (error.response.data.phone){
+            this.abouterror = error.response.data.email[0]
+            this.invalid = true
+            this.success = false
+            this.loading = false
           }
+          
          //  ======================== continue from here
           
         });
-      }else {
-          return this.invalid = true;
-       }   
+      }
     },
 
+
     validate() {
-      if((this.email == '' || this.secret=='') || (this.name === '' || this.phone_number == '') || (this.confirm_secret == '')){
+      if(this.email == '') {
+
         console.log('how1');
          this.emptyfilds= true;
          return false
-      }else{
-        console.log('how');
-        
+      
+      }else if(this.secret==''){
+
+        console.log('how1');
+         this.emptyfilds= true;
+         return false
+
+      }else if(this.name == ''){
+
+        console.log('how1');
+         this.emptyfilds= true;
+         return false
+
+      }else if( this.phone_number == ''){
+         
+         console.log('how1');
+         this.emptyfilds= true;
+         return false
+
+      }else if(this.confirm_secret == ''){
+
+        console.log('how1');
+         this.emptyfilds= true;
+         return false
+      }
+
+      if( this.secret !== this.confirm_secret){
+           this.dontmatch = true;
+          return false
+      } else {       
+        console.log('how');       
            return this.secret === this.confirm_secret
            }
     },
 
     clear_alert() {
-      this.emptyfilds = false;
-      return this.invalid = false;
+      this.emptyfilds = false
+      this.invalid = false
+      this.error = false
+      this.timeout = false
+      this.dontmatch = false
     }, 
    
     // Transporter select

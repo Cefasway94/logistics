@@ -198,7 +198,7 @@
                         </v-flex>
                         <v-flex :id="tender.bid_status" :ref="tender.bid_status" xsm6 sm6 md6 class="px-1">
                         <center>
-                        <v-btn small elevation="flat" 
+                        <v-btn  small elevation="flat" 
                         color="#4169E1" class="white--text" @click="acceptbid(tender.id)">
                         accept
                         </v-btn>
@@ -291,6 +291,7 @@ export default {
   
   data () {
       return{
+          awarded:'',
           accept: true,
           verify:false,
           profile:false,
