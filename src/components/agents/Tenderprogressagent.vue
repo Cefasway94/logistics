@@ -134,48 +134,51 @@
                 <v-tab-item style="background-color:#F5FAFF;">
                     <v-divider></v-divider>
 
-                <v-card row flat width="1300" class="mt-7 mx-auto" color="#F5FAFF">
+                 <!-------- Alert before main progress -->
+                <v-card row width="500" class=" mx-auto mt-5 mb-5" color="#F5FAFF">
+                <v-alert
+                :value="wait"
+                text
+                outlined
+                color="orange"
+                border="left"
+                row
+                >
+                <v-flex row class="pl-4">
+                <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                <v-icon large color="orange" class="">notification_important</v-icon>    
+                </v-flex>
+                <v-flex xms11 sm11 md11 lg11>
+                <p class="text--text title mb-0">
+                Waiting on payment for tender to start
+                </p>
+                </v-flex>
+                </v-flex>
+                </v-alert>
+                </v-card>
+        <!-------------  --> 
+
+
+        <v-card 
+        v-show="show"
+        flat 
+        width="1300" 
+        class="mx-auto mb-5" 
+        color="transparent"> 
+
+                <v-card 
+                row 
+                flat 
+                width="1300" 
+                class="mt-7 mx-auto" 
+                color="#F5FAFF">
                 <v-flex row class="">
                 <v-icon color="grey"  class="ml-3 mr-5" >credit_card</v-icon>
                 <p class="grey--text title mb-0" >Payment</p>
                 </v-flex>
                 </v-card>
 
-                <v-card row width="1300" class=" mx-auto" color="#F5FAFF">
-                <v-alert
-                :value="extension"
-                text
-                outlined
-                color="primary"
-                border="left"
-                row
-                >
-                <v-flex row>
-                <v-flex row xms10 sm8 md10 lg10 class="pl-4">
-                <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
-                <v-icon large color="orange" class="">notification_important</v-icon>    
-                </v-flex>
-                <v-flex xms11 sm11 md11 lg11>
-                <p class="text--text title mb-0">
-                Payment confirmation
-                </p>
-                <p class="text--text subtitle-1 mb-0">
-                Vestibulum ullamcorper mauris at ligula. Nulla porta dolor. Vestibulum facilisis, 
-                purus nec pulvinar iaculis, ligula mi congue nunc, vitae euismod ligula urna in 
-                dolor. Curabitur at lacus ac velit ornare lobortis.
-                </p>
-                </v-flex>
-                </v-flex>
-                <v-flex  xsm2 sm2 md2 lg2>
-                <v-card color="primary" width="100" class="my-6 mx-auto">
-                <v-btn  color="primary">
-                confirm
-                </v-btn>
-                </v-card>
-                </v-flex>
-                </v-flex>
-                </v-alert>
-                </v-card>
+               
 
 <!-- INSTALMENT CARDS SECTION-------------------------------------------------------------------- -->
                 <v-card row flat width="1300" class="mx-auto" color="#F5FAFF">
@@ -599,14 +602,15 @@
                 </v-card>
             </v-card>
 
-            
+        </v-card>
+       
                 </v-tab-item>
             </v-tabs>
 
-            <v-card flat width="1300" class=" mb-5" color="#F5FAFF">
+            <v-card v-show="show" flat width="1300" class=" mb-5" color="#F5FAFF">
                         <v-flex row class="">
                             <v-spacer></v-spacer>
-                            <v-btn large class="primary" rauter >complete tender</v-btn>
+                            <v-btn disabled large class="primary" rauter >complete tender</v-btn>
                         </v-flex>
                     </v-card>
             </v-card>
@@ -650,8 +654,10 @@ export default {
             delivery_time:new Date().toISOString().substr(0, 10),
 
             //---- extension ---
+            show: true,
+            wait: false,
             extension:false,
-            placeholder: 3,
+            placeholder: 1,
             value:'',
         }
     },
@@ -670,8 +676,10 @@ export default {
               vm.GET_PAYMENT_PROGRESS(to.params.id).then(()=>{
                 console.log(vm.LOAD_PAYMENT_PROGRESS)
 
-                if (vm.LOAD_PAYMENT_PROGRESS.objects.length === 0 ) {
+                if (vm.LOAD_PAYMENT_PROGRESS.objects.length === 0 && vm.LOAD_PAYMENT_PROGRESS.genralErrorCode == 8001 ) {
                     console.log(vm.LOAD_PAYMENT_PROGRESS);
+                    vm.wait = true
+                    vm.show = false
                    vm.value = 0;
                     //console.log(data.message);
                 }else{
