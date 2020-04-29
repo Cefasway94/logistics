@@ -207,6 +207,7 @@ export default {
             currencies:[],
             alert:'',
 
+            currency_object:[],
 
             amount:'',
             account_number:'',
@@ -253,16 +254,21 @@ export default {
 
         createData(){
 
-            for(let i = 0; i< this.currencies.length; i++)
+            //eslint-disable-next-line no-console
+                               
+
+            for(let i = 0; i< this.currency_object.length; i++)
             {
-                if(this.currencies[i].name === this.currency)
+
+                if(this.currency_object[i].name === this.currency)
                 {
-                     this.currency_id = this.currencies[i].id;
+                     this.currency_id = this.currency_object[i].id;
 
                      break;
                 }
             }
                 
+          
             let formData = new FormData();
             
             formData.append('amount',this.amount);
@@ -286,7 +292,7 @@ export default {
             if(event)
                 event.preventDefault();
 
-            
+
             let formData = this.createData();
 
             let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.tender_id}/${this.tender.tender_type}`;
@@ -385,8 +391,7 @@ export default {
                             });  
 
             }
-            
-           
+
 
         }
     },
@@ -452,6 +457,7 @@ export default {
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
                                
+                                vm.currency_object = response.data.objects;
 
                                 for(let i = 0; i< response.data.objects.length; i++)
                                     vm.currencies.push(response.data.objects[i].name) 
