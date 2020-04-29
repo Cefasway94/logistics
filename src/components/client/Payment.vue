@@ -31,7 +31,17 @@
                     <v-flex row xs12 class="px-4">
                         <v-flex column xs12 class="px-2">
                             <p class=" body-1 mb-0 text-capitalize"> Acc number </p>
-                            <v-text-field clearable outlined v-model="account_number"></v-text-field>
+                            <v-text-field 
+                                clearable outlined 
+                                v-model="account_number"
+                                :rules="[v => !!v || 'Account name is required']"
+                                required>
+
+                                <template #label>
+                                    <span class="red--text"><strong>* </strong></span>
+                                </template>
+
+                            </v-text-field>
                         </v-flex>
                     <!--<v-flex column sm6 md6 class="pl-2">
                     <p class=" body-1 mb-0 text-capitalize"> Swift code </p>
@@ -89,13 +99,29 @@
                             :items="currencies"
                             color="#4169E1"
                             clearable
+                            :rules="[v => !!v || 'Currency is required']"
+                            required
                          >     
+                            <template #label>
+                                <span class="red--text"><strong>* </strong></span>
+                            </template>
+
                          </v-select>
                     </v-flex>
 
                     <v-flex column xs12 sm6 class=" pl-2">
                          <p class=" body-1 mb-0 text-capitalize"> Amount</p>
-                        <v-text-field clearable outlined v-model="amount"></v-text-field>
+                        <v-text-field 
+                            clearable outlined 
+                            v-model="amount"
+                            :rules="[v => !!v || 'Amount is required']"
+                            required>
+
+                            <template #label>
+                                <span class="red--text"><strong>* </strong></span>
+                            </template>
+
+                            </v-text-field>
                     
                     </v-flex> 
             
@@ -117,7 +143,16 @@
 
                     <v-flex column xs12 sm6 class="px-2">
                         <p class=" body-1 mb-0 text-capitalize"> Depositor's name </p>
-                        <v-text-field clearable outlined v-model="depositors_name"></v-text-field>
+                        <v-text-field 
+                            clearable outlined 
+                            v-model="depositors_name"
+                            :rules="[v => !!v || 'Name is required']"
+                            required
+                        >
+                            <template #label>
+                                <span class="red--text"><strong>* </strong></span>
+                            </template>
+                        </v-text-field>
                     </v-flex>
 
                     <v-flex column xs12 sm6 class=" pl-2">
@@ -128,7 +163,14 @@
                                     id="slip"
                                     @change="slipUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
-                                >
+                                    :rules="[v => !!v || 'Receipt is required']"
+                                    required
+                            >
+
+                            <template #label>
+                                <span class="red--text"><strong>* </strong></span>
+                            </template>
+
                          </v-file-input>
                     
                     </v-flex> 
@@ -145,7 +187,7 @@
                         <p class=" body-1 mb-0 text-upercase pt-1" style="color:#4169E1;"> go back </p>
                     </v-btn>
                     <v-spacer></v-spacer>
-                    <v-btn color="#4169E1" class="" @click="confirmPayment" dark> Confirm payment</v-btn>
+                    <v-btn color="primary white--text" class="" @click="confirmPayment($event)" :disabled="!isValid()"> Confirm payment</v-btn>
                 </v-flex>
             </v-card>
 
@@ -165,6 +207,7 @@ export default {
             currencies:[],
             alert:'',
 
+            currency_object:[],
 
             amount:'',
             account_number:'',
@@ -197,18 +240,35 @@ export default {
             this.depositors_slip.push(document.getElementById("slip").files[0]);
         },
 
+        isValid(){
+
+           if(this.amount == '' || this.account_number == '' || this.depositors_name == '' 
+                || this.currency == '' || this.depositors_slip.length == 0)
+
+                    return false
+                else 
+                    return true;
+
+                
+        },
+
         createData(){
 
-            for(let i = 0; i< this.currencies.length; i++)
+            //eslint-disable-next-line no-console
+                               
+
+            for(let i = 0; i< this.currency_object.length; i++)
             {
-                if(this.currencies[i].name === this.currency)
+
+                if(this.currency_object[i].name === this.currency)
                 {
-                     this.currency_id = this.currencies[i].id;
+                     this.currency_id = this.currency_object[i].id;
 
                      break;
                 }
             }
                 
+          
             let formData = new FormData();
             
             formData.append('amount',this.amount);
@@ -227,11 +287,15 @@ export default {
             
         },
 
-        confirmPayment(){
+        confirmPayment(event){
+
+            if(event)
+                event.preventDefault();
+
 
             let formData = this.createData();
 
-            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.tender_id}/${this.tender.tender_type}`;
+            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.id}/${this.tender.tender_type}`;
 
             if(this.no_of_installment == "1"){
 
@@ -327,8 +391,7 @@ export default {
                             });  
 
             }
-            
-           
+
 
         }
     },
@@ -394,6 +457,7 @@ export default {
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
                                
+                                vm.currency_object = response.data.objects;
 
                                 for(let i = 0; i< response.data.objects.length; i++)
                                     vm.currencies.push(response.data.objects[i].name) 
