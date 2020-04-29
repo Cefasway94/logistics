@@ -12,14 +12,14 @@
                 </v-flex>
             </v-card>
 
-             <v-card row flat width="1300" class="mt-10 mx-auto" color="#F5FAFF">
+             <v-card row flat width="1300" class="mt-10 mx-auto" color="#F5FAFF" v-if="client_details">
                 <v-flex row class="">
                     <v-icon color="grey" class="mb-4 ml-3 mr-5">person_outline</v-icon>
-                    <p class="grey--text title ">Client type</p>
+                    <p class="grey--text title ">Client type  <span class="red--text"><strong>* </strong></span></p>
                 </v-flex>
             </v-card>
 
-            <v-card width="1300" class="mx-auto mb-5 d-flex pa-3" color="">
+            <v-card width="1300" class="mx-auto mb-5 d-flex pa-3" color="" v-if="client_details">
                 <v-flex row xs12>
                      <v-select 
                         class="mx-6" 
@@ -29,6 +29,8 @@
                         color="#4169E1" 
                         label="Select your type" 
                         clearable 
+                        :rules="[v => !!v || 'Client type is required']"
+                        required
                     >
                     </v-select>
                 </v-flex>
@@ -53,22 +55,62 @@
 
                         <v-flex column xs12 sm6 class="px-2" v-show="client_type == 'Personal'">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">First Name </p>
-                            <v-text-field clearable  outlined v-model="first_name"></v-text-field>
+                            <v-text-field 
+                                clearable  
+                                outlined v-model="first_name"
+                                :rules="[v => !!v || 'First name is required']"
+                                required
+                            >
+                                <template #label>
+                                    <span class="red--text"><strong>* </strong></span>
+                                </template>
+
+                            </v-text-field>
                         </v-flex>
 
                         <v-flex column xs12 sm6 class="px-2" v-show="client_type == 'Personal'">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">Last Name </p>
-                            <v-text-field clearable outlined v-model="last_name"></v-text-field>
+                            <v-text-field 
+                                clearable outlined 
+                                v-model="last_name"
+                                :rules="[v => !!v || 'Last name is required']"
+                                required>
+
+                                <template #label>
+                                    <span class="red--text"><strong>* </strong></span>
+                                </template>
+
+                            </v-text-field>
                         </v-flex>
 
                          <v-flex column xs12 sm6 class="px-2" v-show="client_type == 'Company'">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">Company Name </p>
-                            <v-text-field clearable outlined v-model="company_name"></v-text-field>
+                            <v-text-field 
+                                clearable 
+                                outlined 
+                                v-model="company_name"
+                                :rules="[v => !!v || 'Company name is required']"
+                                required
+                                >
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+                                </v-text-field>
                         </v-flex>
 
                         <v-flex column xs12 sm6 class="px-2" v-show="client_type == 'Company'">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">Company Sector </p>
-                            <v-text-field clearable outlined v-model="company_sector"></v-text-field>
+                            <v-text-field 
+                                clearable 
+                                outlined 
+                                v-model="company_sector"
+                                :rules="[v => !!v || 'Company sector is required']"
+                                required
+                                >
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+                            </v-text-field>
                         </v-flex>
 
                         <!--<v-flex column xs12 sm4 class="px-2">
@@ -100,24 +142,76 @@
                         <v-flex row>
                             <v-flex column xs12 sm6 class="px-2">
                                 <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Mobile number </p>
-                                <v-text-field clearable outlined v-model="mobile_number"></v-text-field>
+                                <v-text-field 
+                                    clearable outlined 
+                                    v-model="mobile_number"
+                                    :rules="[v => !!v || 'Mobile number is required']"
+                                    required
+                                    >
+
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+
+                                </v-text-field>
                             </v-flex>
 
-                            <v-flex column xs12 sm6 class="px-2">
+                            <v-flex column xs12 sm6 class="px-2" v-show="client_type == 'Company'">
                                 <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Office mobile</p>
-                                <v-text-field clearable outlined v-model="office_mobile"></v-text-field>
+                                <v-text-field 
+                                clearable outlined 
+                                v-model="office_mobile"
+                                :rules="[v => !!v || 'office mobile is required']"
+                                required
+                                >
+                                     <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+
+                                </v-text-field>
+                            </v-flex>
+
+                            <v-flex column xs12 sm6 class="px-2" v-show="client_type == 'Personal'">
+                                <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Office mobile</p>
+                                <v-text-field 
+                                clearable outlined 
+                                v-model="office_mobile"
+                                >
+
+                                </v-text-field>
                             </v-flex>
                         </v-flex>
 
                         <v-flex row>
                                <v-flex column xs12 sm4 class="px-2" v-show="client_type == 'Company'">
                                     <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Contact person name </p>
-                                    <v-text-field clearable outlined v-model="contact_person_names"></v-text-field>
+                                    <v-text-field 
+                                        clearable outlined 
+                                        v-model="contact_person_names"
+                                        :rules="[v => !!v || 'Contact person name is required']"
+                                        required>
+
+                                            <template #label>
+                                                <span class="red--text"><strong>* </strong></span>
+                                            </template>
+                                    </v-text-field>
                                 </v-flex>
 
                                 <v-flex column xs12 sm4 class="px-2" v-show="client_type == 'Company'">
                                     <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Contact person number </p>
-                                    <v-text-field clearable outlined v-model="Contact_person_phone_number"></v-text-field>
+                                    <v-text-field 
+                                        clearable 
+                                        outlined 
+                                        v-model="Contact_person_phone_number"
+                                        :rules="[v => !!v || 'Contact person number is required']"
+                                        required
+                                        >
+
+                                            <template #label>
+                                                <span class="red--text"><strong>* </strong></span>
+                                            </template>
+
+                                    </v-text-field>
                                 </v-flex>
 
                                  <v-flex column xs12 sm4 class="px-2" v-show="client_type == 'Company'">
@@ -138,22 +232,64 @@
                
                         <v-flex column xs12 sm4 class="px-2">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> country </p>
-                            <v-text-field clearable outlined v-model="country"></v-text-field>
+                            <v-text-field 
+                                clearable 
+                                outlined 
+                                v-model="country"
+                                :rules="[v => !!v || 'country is required']"
+                                required
+                                >
+
+                                 <template #label>
+                                    <span class="red--text"><strong>* </strong></span>
+                                </template>
+
+                            </v-text-field>
                         </v-flex>
 
                         <v-flex column xs12 sm4 class="px-2">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> city </p>
-                            <v-text-field clearable outlined v-model="city"></v-text-field>
+                            <v-text-field 
+                                clearable 
+                                outlined 
+                                v-model="city"
+                                :rules="[v => !!v || 'city is required']"
+                                required>
+
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+                            </v-text-field>
                         </v-flex>
 
                         <v-flex column xs12 sm4 class="px-2">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> region </p>
-                            <v-text-field clearable outlined v-model="region"></v-text-field>
+                            <v-text-field 
+                                clearable 
+                                outlined 
+                                v-model="region"
+                                :rules="[v => !!v || 'region is required']"
+                                required>
+
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+                            </v-text-field>
                         </v-flex>
 
                         <v-flex column xs12 class="px-2">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">P.o box </p>
-                            <v-text-field clearable outlined v-model="address"></v-text-field>
+                            <v-text-field 
+                                clearable 
+                                outlined 
+                                v-model="address"
+                                :rules="[v => !!v || 'P.o box is required']"
+                                required>
+
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+                            </v-text-field>
                         </v-flex>
                                 
                     </v-flex>
@@ -176,12 +312,33 @@
 
                         <v-flex column xs12 sm6 class="px-2">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">Bank account name </p>
-                            <v-text-field clearable outlined v-model="bank_acount_name"></v-text-field>
+                            <v-text-field 
+                                clearable 
+                                outlined 
+                                v-model="bank_acount_name"
+                                :rules="[v => !!v || 'account name is required']"
+                                required>
+
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+
+                            </v-text-field>
                         </v-flex>
 
                         <v-flex column xs12 sm6 class="px-2">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">Bank account number </p>
-                            <v-text-field clearable outlined v-model="bank_account_number"></v-text-field>
+                            <v-text-field 
+                                clearable 
+                                outlined 
+                                v-model="bank_account_number"
+                                :rules="[v => !!v || 'account number is required']"
+                                required
+                            >
+                                <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                </template>
+                            </v-text-field>
                         </v-flex>
 
                     </v-flex>
@@ -207,12 +364,32 @@
                         <v-flex row>
                             <v-flex column xs12 sm6 class="px-2">
                                 <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Bank swift code</p>
-                                <v-text-field clearable outlined v-model="bank_swift_code"></v-text-field>
+                                <v-text-field 
+                                    clearable 
+                                    outlined 
+                                    v-model="bank_swift_code"
+                                    :rules="[v => !!v || 'swift code is required']"
+                                    required>
+
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
+                                </v-text-field>
                             </v-flex>
 
                             <v-flex column xs12 sm6 class="px-2">
                                 <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Bank address</p>
-                                <v-text-field clearable outlined v-model="bank_address"></v-text-field>
+                                <v-text-field 
+                                    clearable 
+                                    outlined 
+                                    v-model="bank_address"
+                                    :rules="[v => !!v || 'address is required']"
+                                    required
+                                >
+                                    <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                    </template>
+                                </v-text-field>
                             </v-flex>
                         </v-flex>
 
@@ -250,7 +427,7 @@
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> COPY OF IDENTITY CARD </p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> COPY OF IDENTITY CARD  <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="200" height="150" outlined >
 
                                 <v-file-input 
@@ -258,6 +435,8 @@
                                     id="copy_of_id" 
                                     @change="updateID()"
                                     prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'identity card is required']"
+                                    required
                                    
                                 >
 
@@ -267,7 +446,7 @@
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> COPY OF TIN CERTIFICATE</p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> COPY OF TIN CERTIFICATE <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="200" height="150" outlined >
 
                                 <v-file-input 
@@ -275,6 +454,8 @@
                                     id="personal_tin"
                                     @change="personalTinUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'tin certificate is required']"
+                                    required
                                    
                                 >
                                 </v-file-input>
@@ -301,7 +482,7 @@
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> CERTIFICATE OF REGISTRATION</p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> CERTIFICATE OF REGISTRATION <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="200" height="150" outlined >
 
                                 <v-file-input 
@@ -309,6 +490,8 @@
                                     id="registration_certificate"
                                     @change="registrationCertificateUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'Registration certificate is required']"
+                                    required
                                    
                                 >
                                 </v-file-input>
@@ -317,7 +500,7 @@
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0">TIN DOCUMENT</p>
+                            <p class="primary--text body-2 text-uppercase mb-0">TIN DOCUMENT <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="200" height="150" outlined >
 
                                 <v-file-input 
@@ -325,6 +508,8 @@
                                     id="tin_document"
                                     @change="tinDocumentUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'Tin document is required']"
+                                    required
                                    
                                 >
                                 </v-file-input>
@@ -335,7 +520,7 @@
 
                     <v-row class="pa-3" v-if="client_type == 'Company'">
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> VAT CERTIFICATE </p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> VAT CERTIFICATE <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="200" height="150" outlined >
 
                                 <v-file-input 
@@ -344,6 +529,8 @@
                                     id="vat_certificate" 
                                     @change="vatCertificateUploaded()"
                                     prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'vat certificate is required']"
+                                    required
                                    
                                 >
 
@@ -353,7 +540,7 @@
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> BUSINESS LICENCE</p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> BUSINESS LICENCE <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="200" height="150" outlined >
 
                                 <v-file-input 
@@ -361,6 +548,8 @@
                                     id="business_licence"
                                     @change="businessLicenceUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'Business licence is required']"
+                                    required
                                    
                                 >
                                 </v-file-input>
@@ -369,7 +558,7 @@
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> THREE MONTHS BANK STATEMENT</p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> THREE MONTHS BANK STATEMENT <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="200" height="150" outlined >
 
                                 <v-file-input 
@@ -377,6 +566,8 @@
                                     id="bank_statement"
                                     @change="bankStatementUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'statement is required']"
+                                    required
                                    
                                 >
                                 </v-file-input>
@@ -406,7 +597,7 @@
                     </v-col>
                
                     <v-spacer></v-spacer>
-                    <v-btn color="primary white--text" type="submit" @click="save" :disabled="loading">Save</v-btn>
+                    <v-btn color="primary white--text" :disabled="!isValid()" @click="save">Save</v-btn>
                 </v-row>
             </v-card>
 
@@ -465,6 +656,73 @@ export default {
     }),
 
     methods: {
+
+        
+        isValid(){
+            
+            if(this.client_type == "Personal"){
+
+                if(this.client_details){
+
+                    if(this.first_name == '' || this.last_name == '' || this.mobile_number == ''
+                        || this.country == '' || this.city == '' || this.region == '' || this.address == ''
+                    )
+
+                        return false
+                    else 
+                        return true;
+
+                } else if(this.bank_details)
+                {
+                    if(this.bank_acount_name == '' || this.bank_account_number == '' || this.bank_swift_code == ''
+                        || this.bank_address == '')
+
+                        return false
+                    else 
+                        return true;
+
+                } else if(this.documents){
+
+                    if(this.copy_of_identity_card.length == 0 || this.copy_of_tax_identification_number_certificate.length == 0)
+
+                        return false
+                    else 
+                        return true;
+                }
+
+            } else if(this.client_type == "Company"){
+
+                 if(this.client_details){
+
+                     if(this.company_name === '' || this.company_sector === '' || this.mobile_number === ''
+                        || this.office_mobile === '' || this.contact_person_names ==='' || this.Contact_person_phone_number === '' 
+                        || this.country === '' || this.city === '' || this.region === '' || this.address === '')
+
+                        return false
+                    else 
+                        return true;
+
+                } else if(this.bank_details)
+                {
+                    if(this.bank_acount_name == '' || this.bank_account_number == '' || this.bank_swift_code == ''
+                        || this.bank_address == '')
+
+                        return false
+                    else 
+                        return true;
+
+                } else if(this.documents){
+
+                    if(this.certificate_of_registration.length == 0 || this.tax_payer_identification_document.length == 0
+                        || this.vat_certificate.length == 0 || this.business_licence_document == 0 
+                        || this.three_months_bank_statement ==0)
+
+                        return false
+                    else 
+                        return true;
+                }
+            }
+        },
 
 
         bankStatementUpdated(){
