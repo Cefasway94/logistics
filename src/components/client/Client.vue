@@ -8,86 +8,90 @@
 
                  <!-- loading -->
                 <v-card width="300" 
-                v-show="loading" 
-                flat 
-                color="transparent" 
-                class="mb-3 mx-auto">
-                <v-progress-circular
-                active="true"
-                indeterminate
-                absolute
-                :size="50"
-                class="mt-12"
-                color="#4169E1">
-                </v-progress-circular>
+                    v-show="loading" 
+                    flat 
+                    color="transparent" 
+                    class="mb-3 mx-auto"
+                >
+
+                    <v-progress-circular
+                        active="true"
+                        indeterminate
+                        absolute
+                        :size="50"
+                        class="mt-12"
+                        color="#4169E1">
+                    </v-progress-circular>
                 </v-card>
                  
             <v-card flat width="1300" class=" mx-auto mt-12" color="#F5FAFF">
-            <v-card flat width="750" class=" mx-auto mt-12" color="#F5FAFF">
+                <v-card flat width="750" class=" mx-auto mt-12" color="#F5FAFF">
             
-                <!-- profile alert -->
-                <v-alert
-                text
-                outlined
-                class=""
-                :value="profile"
-                color="green"
-                type="error"
-                row
-                >
-                <v-flex row>
-                <v-flex row xms9 sm9 md9 lg9 class="pl-4">
-                <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
-                <v-icon large color="orange" class="">notification_important</v-icon>    
-                </v-flex> -->
-                <v-flex xms11 sm11 md11 lg11 class="pl-3">
-                <p class="text--text title mb-0">
-                Welcome to ubalori, this is your working desk.
-                </p>
-                <p class="text--text subtitle-1 mb-0">
-                Please edit your profile to complete registration
-                </p>
-                </v-flex>
-                </v-flex>
-                <v-flex  xsm3 sm3 md3 lg3>
-                <v-btn  
-                width="200" 
-                large="" 
-                elevation="flat" 
-                color="primary" 
-                class="mx-5 mt-2"
-                @click="editprofile()">
-                edit profile
-                </v-btn>
-                </v-flex>
-                </v-flex>
+                    <!-- profile alert -->
+                    <v-alert
+                        text
+                        outlined
+                        class=""
+                        :value="profile"
+                        color="green"
+                        type="error"
+                        row
+                    >
+                        <v-flex row>
+                            <v-flex row xms9 sm9 md9 lg9 class="pl-4">
+                                <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                                <v-icon large color="orange" class="">notification_important</v-icon>    
+                                </v-flex> -->
+                                <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                                    <p class="text--text title mb-0">
+                                         Welcome to ubalori, this is your working desk.
+                                    </p>
+                                    <p class="text--text subtitle-1 mb-0">
+                                        Please edit your profile to complete registration
+                                    </p>
+                                </v-flex>
+                        </v-flex>
+
+                        <v-flex  xsm3 sm3 md3 lg3>
+                            <v-btn  
+                                width="200" 
+                                large="" 
+                                elevation="flat" 
+                                color="primary" 
+                                class="mx-5 mt-2"
+                                @click="editprofile()"
+                            >
+                                edit profile
+                            </v-btn>
+                        </v-flex>
+                    </v-flex>
                 </v-alert>
 
                 <!-- account verification alert -->
                 <v-alert
-                text
-                outlined
-                class=""
-                :value="verify"
-                color="green"
-                type="error"
-                row
-                clearable
+                    text
+                    outlined
+                    class=""
+                    :value="verify"
+                    color="green"
+                    type="error"
+                    row
+                    clearable
                 >
-                <v-flex row>
-                <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
-                <v-icon large color="orange" class="">notification_important</v-icon>    
-                </v-flex> -->
-                <v-flex xms11 sm11 md11 lg11 class="pl-3">
-                <p class="text--text title mb-0">
-                Your account has been registered, please stay put for it
-                to be verified
-                </p>
-                </v-flex>
-                </v-flex>
+                    <v-flex row>
+                        <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                        <v-icon large color="orange" class="">notification_important</v-icon>    
+                        </v-flex> -->
+                        <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                            <p class="text--text title mb-0">
+                                Your account has been registered, please stay put for it
+                                to be verified
+                            </p>
+                        </v-flex>
+                    </v-flex>
                 </v-alert>
 
-            </v-card>
+                </v-card>
             </v-card>
 
                 <v-card v-show="verification" flat width="1300" class=" mx-auto mb-5" color="#F5FAFF">

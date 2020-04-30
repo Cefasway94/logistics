@@ -49,7 +49,8 @@
     <router-view name="Payment"></router-view>
     <router-view name="Clientupdateprofile"></router-view>
 
-
+    <!--admin-->
+    <router-view name="AdminHome"></router-view>
 </transition>
       
   </v-content>

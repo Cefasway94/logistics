@@ -43,6 +43,9 @@ import Aboutbid from '../components/client/Aboutbid.vue'
 import Paymenthistory from '../components/Paymenthistory.vue';
 import AboutTenderBids from '../components/client/AboutTenderBids.vue'
 
+//admin routes
+import AdminHome from '../components/admin/AdminHome.vue'
+
 
 Vue.use(VueRouter)
 
@@ -223,6 +226,13 @@ const routes = [
     path:'/transporter/tenderprogress/:id',
     name:'Tenderprogress',
     components:{Tenderprogress}
+  },
+
+  //---------------------------------------- Admin routes
+  { 
+    path:'/admin/',
+    name:'AdminHome',
+    components:{AdminHome}
   },
 
 
