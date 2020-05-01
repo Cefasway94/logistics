@@ -2,9 +2,7 @@
   <v-container>
 
       <v-card class="mx-auto mt-12" color="#F5FAFF">
-
-          <h1>Admin page</h1>
-
+        
           <AlertError v-if="display_alert" v-bind:message="alert"/>
 
           <v-tabs
@@ -37,6 +35,7 @@
                           <th class="text-left">Email</th>
                           <th class="text-left">Country</th>
                           <th></th>
+                          <th></th>
                         </tr>
                       </thead>
 
@@ -50,8 +49,38 @@
                               elevation="flat" 
                               color="#4169E1" 
                               class="white--text"
+                              :to="'admin/verify/'+customer.id"
+                              :disabled="customer.is_verified == 1"
                             >
-                              View
+                              Verify
+                            </v-btn>
+                          </td>
+                          <td>
+                            <v-btn
+                              small 
+                              elevation="flat" 
+                              color="#4169E1" 
+                              class="white--text"
+                              :disabled="customer.is_verified == 0"
+                            >
+                              Deny
+                            </v-btn>
+                          </td>
+                          <td>
+                            <v-btn
+                              small 
+                              elevation="flat" 
+                              color="#4169E1" 
+                              class="white--text"   
+                            >
+                              <v-icon small color="white" v-show="customer.is_verified">
+                                  mdi-check-outline
+                              </v-icon>
+
+                              <v-icon small color="white" v-show="!customer.is_verified">
+                                  mdi-reload
+                              </v-icon>
+
                             </v-btn>
                           </td>
                         </tr>
@@ -74,6 +103,7 @@
                           <th class="text-left">Email</th>
                           <th class="text-left">Country</th>
                           <th></th>
+                          <th></th>
                         </tr>
                       </thead>
 
@@ -87,8 +117,38 @@
                               elevation="flat" 
                               color="#4169E1" 
                               class="white--text"
+                              :to="'admin/verify/Clearing/'+agent.id"
+                              :disabled="agent.is_verified == 1"
                             >
-                              View
+                              Verify
+                            </v-btn>
+                          </td>
+                          <td>
+                            <v-btn
+                              small 
+                              elevation="flat" 
+                              color="#4169E1" 
+                              class="white--text"
+                              :disabled="agent.is_verified == 0"
+                            >
+                              Deny
+                            </v-btn>
+                          </td>
+                          <td>
+                            <v-btn
+                              small 
+                              elevation="flat" 
+                              color="#4169E1" 
+                              class="white--text"   
+                            >
+                              <v-icon small color="white" v-show="agent.is_verified">
+                                  mdi-check-outline
+                              </v-icon>
+
+                              <v-icon small color="white" v-show="!agent.is_verified">
+                                  mdi-reload
+                              </v-icon>
+
                             </v-btn>
                           </td>
                         </tr>
@@ -110,6 +170,7 @@
                           <th class="text-left">Email</th>
                           <th class="text-left">Country</th>
                           <th></th>
+                          <th></th>
                         </tr>
                       </thead>
 
@@ -123,8 +184,40 @@
                               elevation="flat" 
                               color="#4169E1" 
                               class="white--text"
+                              :to="'admin/verify/Transporting/'+transporter.id"
+                              :disabled="transporter.is_verified == 1"
                             >
-                              View
+                              Verify
+                            </v-btn>
+                          </td>
+
+                          <td>
+                            <v-btn
+                              small 
+                              elevation="flat" 
+                              color="#4169E1" 
+                              class="white--text"
+                              :disabled="transporter.is_verified == 0"
+                            >
+                              Deny
+                            </v-btn>
+                          </td>
+                          
+                          <td>
+                            <v-btn
+                              small 
+                              elevation="flat" 
+                              color="#4169E1" 
+                              class="white--text"   
+                            >
+                              <v-icon small color="white" v-show="transporter.is_verified">
+                                  mdi-check-outline
+                              </v-icon>
+
+                              <v-icon small color="white" v-show="!transporter.is_verified">
+                                  mdi-reload
+                              </v-icon>
+
                             </v-btn>
                           </td>
                         </tr>
@@ -180,28 +273,31 @@ export default {
       switch(title)
       {
         case 'Customers':
-        
+
+          this.fetchCustomers();
+
           break;
 
         case 'Agents':
+
+          this.fetchAgents();
         
           break;
 
         case 'Transporters':
+
+          this.fetchTransporters();
            
           break;
 
         default:
           break;
       }
-    }
-  },
+    },
 
-  beforeRouteEnter(to, from, next){
-    next(vm => {
-
-      //getting all customers
-      const customers = " http://207.180.215.239:8181/api/v1/customers/";
+    fetchCustomers(){
+     //getting all customers
+      const customers = " http://207.180.215.239:8181/api/v1/customers/profiles";
 
       axios.get(customers).then((response) => 
       {
@@ -211,7 +307,7 @@ export default {
 
         if(response.data.genralErrorCode === 8000)
         {
-          vm.customers = response.data.objects;
+          this.customers = response.data.objects;
 
         } else if(response.data.genralErrorCode === 8004){
 
@@ -232,11 +328,12 @@ export default {
 
           document.getElementById('app').scrollIntoView();                       
       });
+  },
 
+  fetchAgents(){
 
-
-      //getting all agents
-      const agents = "http://207.180.215.239:8000/api/v1/agents/";
+    //getting all agents
+      const agents = "http://207.180.215.239:8000/api/v1/agents/profiles";
 
       axios.get(agents).then((response) => 
       {
@@ -246,7 +343,7 @@ export default {
 
         if(response.data.genralErrorCode === 8000)
         {
-          vm.agents = response.data.objects;
+          this.agents = response.data.objects;
 
         } else if(response.data.genralErrorCode === 8004){
 
@@ -267,9 +364,11 @@ export default {
 
           document.getElementById('app').scrollIntoView();                       
       });
+  },
 
-      //getting all transporters
-      const transporters = "http://207.180.215.239:9000/api/v1/transporters/"
+  fetchTransporters(){
+       //getting all transporters
+      const transporters = "http://207.180.215.239:9000/api/v1/transporters/profiles"
 
        axios.get(transporters).then((response) => 
       {
@@ -279,7 +378,7 @@ export default {
 
         if(response.data.genralErrorCode === 8000)
         {
-          vm.transporters = response.data.objects;
+          this.transporters = response.data.objects;
 
         } else if(response.data.genralErrorCode === 8004){
 
@@ -300,6 +399,23 @@ export default {
 
           document.getElementById('app').scrollIntoView();                       
       });
+  },
+
+
+  },
+
+  
+
+  beforeRouteEnter(to, from, next){
+    next(vm => {
+
+     
+
+      vm.fetchCustomers();
+
+      vm.fetchAgents();
+
+      vm.fetchTransporters();
 
       next();
     })
