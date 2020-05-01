@@ -576,7 +576,7 @@
                         <p class="primary--text body-2 text-uppercase"> oxoafrica commented </p>
                         <v-card flat height="100" width="1200" class="px-5 py-3" outlined>
                             <v-text class="" outlined>
-                               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt praesentium laudantium quibusdam s
+                               No comment
                             </v-text>
                         </v-card>
                         </v-col>  
@@ -689,7 +689,7 @@ export default {
             //------- STAGE COMMENTING------
             //---- Stages and states ---
             stageitems:['1. Cargo loading', '2. Cargo in transit', '3. Cargo offloading', '4. Cargo delivered'],
-            stateitems:['InProgrss', 'Complete'],
+            stateitems:['InProgress', 'Delivered'],
             feedstage:'',
             feedstate:'',
             progress_id:'',
@@ -725,29 +725,43 @@ export default {
             vm.T_GET_PAYMENT_PROGRESS(to.params.id).then(()=>{
                 console.log(vm.LOAD_PAYMENT_PROGRESS)
 
-                if (vm.LOAD_PAYMENT_PROGRESS.objects.length === 0 && vm.LOAD_PAYMENT_PROGRESS.genralErrorCode == 8001 ) {
+                if (vm.LOAD_PAYMENT_PROGRESS.objects.length === 0 && 
+                        vm.LOAD_PAYMENT_PROGRESS.genralErrorCode == 8001 ) {
+
                     console.log(vm.LOAD_PAYMENT_PROGRESS);
                     vm.wait = true
                     vm.show = false
                    vm.value = 0
                     //console.log(data.message);
+
                 }else{
                     vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
                     
                 }
             })
 
+              vm.T_GET_TIMELINE_STAGES().then(()=>{
+                    console.log(vm.LOAD_TIMELINE_STAGES);
+                  
+              })
+
               vm.T_GET_PROGRESS_STAGES(to.params.id).then(()=>{
                   console.log(vm.LOAD_PROGRESS_STAGES);
-                if (vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && vm.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
+                if (vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && 
+                         vm.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
+
                     console.log('stage B');
                     vm.stage1 = 'C'
                     vm.stage2 = 'C'
                     vm.stage3 = 'C'
                     vm.stage4 = 'B'
-                } else if( vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && vm.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
+
+                } else if( vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 &&
+                             vm.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
+                    
                     console.log('stage c');
                      vm.stage4 = 'C'
+
                 }
               })
           })
@@ -769,7 +783,8 @@ export default {
       'LOAD_TENDER',
       'LOAD_PROGRESS_STAGES',
       'LOAD_PROGRESS_FEEDBACK',
-      'LOAD_PAYMENT_PROGRESS'
+      'LOAD_PAYMENT_PROGRESS',
+      'LOAD_TIMELINE_STAGES'
       ])
   },
 
@@ -780,19 +795,20 @@ methods :{
       'T_GET_TENDERSDETAILs',
       'T_GET_PROGRESS_STAGES',
       'T_UPGRADE_PROGRESS',
-      'T_GET_PAYMENT_PROGRESS'
+      'T_GET_PAYMENT_PROGRESS',
+      'T_GET_TIMELINE_STAGES'
     ]),
 
 
     submiteProgress(){
         if (this.feedstage === '1. Cargo loading') {
-            this.progress_id = 2
+            this.progress_id = this.LOAD_TIMELINE_STAGES.objects[0].id
         } else if (this.feedstage === '2. Cargo in transit') {
-            this.progress_id = 3
+            this.progress_id = this.LOAD_TIMELINE_STAGES.objects[1].id
         } else if (this.feedstage === '3. Cargo offloading') {
-            this.progress_id = 4
+            this.progress_id = this.LOAD_TIMELINE_STAGES.objects[2].id
         } else if (this.feedstage == '4. Cargo delivered') {
-            this.progress_id = 1
+            this.progress_id = this.LOAD_TIMELINE_STAGES.objects[3].id
         }
             
         //        const        agent_id = this.LOAD_AGENT.objects.agent_id
@@ -809,6 +825,8 @@ methods :{
                   progress_id : this.progress_id,
                   expected_date : this.date, 
                 }).then(()=>{
+                    console.log(this.progress_id);
+                    
                     console.log(this.LOAD_PROGRESS_FEEDBACK);
 
             //         this.T_GET_PROGRESS_STAGES(this.$router.params.id).then(()=>{

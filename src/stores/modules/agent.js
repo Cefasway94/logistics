@@ -17,7 +17,8 @@ export default {
         progress_stages:[],
         progress_feedback:[],
         payment_progress:[],
-        post_payment_terms:''
+        post_payment_terms:'',
+        timeline_stages:[]
     },
 
 getters:{
@@ -115,6 +116,12 @@ getters:{
             console.log(payment_progress);
             return payment_progress
             
+        },
+
+// load timeline stages =================================>>>
+        LOAD_TIMELINE_STAGES: state=> {
+            const timeline_stages = state.timeline_stages
+            return timeline_stages
         }
 
     },
@@ -190,6 +197,11 @@ mutations: {
         SET_PAYMENT_PROGRESS: (state, payload)=>{
             state.payment_progress = payload
 
+        },
+
+// get timeline stages ============================>>>
+        SET_TIMELINE_STAGES: (state, payload)=>{
+            state.timeline_stages = payload
         }
 
     },
@@ -516,6 +528,26 @@ GET_PROGRESS_STAGES: async ({commit},payload) => {
         commit('SET_AGENT', res);
     }); 
                     
+},
+
+// Transporter reference stages  ------------------------------------------------------------------------------->>>
+GET_TIMELINE_STAGES : async ({commit}) => {
+    const url= '207.180.215.239:8000/api/v1/configurations/clearing-progress';
+    await axios.get(url).then((data)=>{
+        // eslint-disable-next-line no-console
+        if (data.data.errorCount == 0 && data.data.genralErrorCode == 8000 ) {
+            console.log(data);
+            commit('SET_TIMELINE_STAGES', data.data);
+            //console.log(data.message);
+        }else{
+            commit('SET_TIMELINE_STAGES', data);
+            
+        }
+    }).catch((error)=>{
+        //eslint-disable-next-line no-console
+        console.log(error);
+        commit('SET_TIMELINE_STAGES', error.response.data);
+    }); 
 },
 
 //Agent get progress details  ---------------------------------------------------------------------------         
@@ -910,6 +942,28 @@ T_GET_PROGRESS_STAGES: async ({commit},payload) => {
     }); 
                     
 },
+
+// Transporter reference stages  ------------------------------------------------------------------------------->>>
+T_GET_TIMELINE_STAGES : async ({commit}) => {
+    const url= 'http://207.180.215.239:9000/api/v1/configurations/transporting-progress';
+    await axios.get(url).then((data)=>{
+        // eslint-disable-next-line no-console
+        if (data.data.errorCount == 0 && data.data.genralErrorCode == 8000 ) {
+            console.log(data.data);
+            commit('SET_TIMELINE_STAGES', data.data);
+            //console.log(data.message);
+        }else{
+            commit('SET_TIMELINE_STAGES', data);
+            
+        }
+    }).catch((error)=>{
+        //eslint-disable-next-line no-console
+        console.log(error);
+        commit('SET_TIMELINE_STAGES', error.response.data);
+    }); 
+                    
+},
+
 
 // Transporter update progress ------------------------------------------------------->>
 T_UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_id,expected_date }) => {

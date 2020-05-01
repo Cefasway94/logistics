@@ -397,7 +397,7 @@
                                    <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">4. Complition</p>
+                                   <p class="mb-0">4. Completion</p>
                                    <p class="mt-1">Waiting</p>
                                    </v-card>
                                 </template>
@@ -408,7 +408,7 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">4. Complition</p>
+                                   <p class="mb-0">4. Completion</p>
                                    <p class="mt-1">In progress</p>
                                    </v-card>
                                 </template>
@@ -419,7 +419,7 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">4. Complite</p>
+                                   <p class="mb-0">4. Complete</p>
                                    <p class="mt-1">Complete on </p>
                                    </v-card>
                                 </template>
@@ -649,7 +649,7 @@ export default {
             //------- STAGE COMMENTING------
             //---- Stages and states ---
             stageitems:['1. Cargo loading', '2. Cargo in transit', '3. Cargo offloading', '4. Cargo delivered'],
-            stateitems:['InProgrss', 'Complete'],
+            stateitems:['InProgress', 'Complete'],
             feedstage:'',
             feedstate:'',
             progress_id:'',
