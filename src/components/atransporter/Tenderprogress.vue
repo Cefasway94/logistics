@@ -524,7 +524,12 @@
                                             clearable>
                                         </v-text-field>
                                         </template>
-                                        <v-date-picker v-model="date" no-title scrollable>
+                                        <v-date-picker 
+                                        v-model="date"
+                                        :min="notless" 
+                                        no-title 
+                                        scrollable
+                                        >
                                         <v-spacer></v-spacer>
                                         <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
                                         <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
@@ -691,6 +696,7 @@ export default {
             menu:'',
             date: new Date().toISOString().substr(0, 10),
             delivery_time:new Date().toISOString().substr(0, 10),
+            notless:new Date().toISOString().substr(0, 10),
 
             //------ PAYMENT PROGRESS ------------
             payment_percentage:'',
