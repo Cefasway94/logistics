@@ -49,7 +49,10 @@
     <router-view name="Payment"></router-view>
     <router-view name="Clientupdateprofile"></router-view>
 
-
+    <!--admin-->
+    <router-view name="AdminHome"></router-view>
+    <router-view name="CustomerVerifying"></router-view>
+    <router-view name="AgentVerifying"></router-view>
 </transition>
       
   </v-content>
