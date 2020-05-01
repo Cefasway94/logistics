@@ -2,7 +2,7 @@
   <v-container>
 
       <v-card class="mx-auto mt-12" color="#F5FAFF">
-        
+
           <AlertError v-if="display_alert" v-bind:message="alert"/>
 
           <v-tabs
@@ -56,15 +56,53 @@
                             </v-btn>
                           </td>
                           <td>
-                            <v-btn
-                              small 
-                              elevation="flat" 
-                              color="#4169E1" 
-                              class="white--text"
-                              :disabled="customer.is_verified == 0"
+                            <v-dialog              
+                              v-model="dialog"
+                              width="600"
                             >
-                              Deny
-                            </v-btn>
+                              <template v-slot:activator="{ on }">
+                                <v-btn
+                                  small 
+                                  elevation="flat" 
+                                  color="#4169E1" 
+                                  class="white--text"
+                                  :disabled="customer.is_verified == 0"
+                                  @click="setEmail(customer.email)"
+                                  v-on="on"
+                                >
+                                  Deny
+                                </v-btn>
+                              </template>
+
+                              <v-card>
+                                <v-card-title
+                                  class="body-3 grey lighten-2"
+                              
+                                  >
+                                  Are you want to cancel verification for this Agent?
+                                </v-card-title>
+
+                                <v-divider></v-divider>
+
+                                <v-card-actions>
+                                  <v-spacer></v-spacer>
+                                    <v-btn
+                                      color="primary"
+                                      text
+                                      @click="dialog = false"
+                                    >
+                                    No
+                                  </v-btn>
+                                  <v-btn
+                                      color="primary"
+                                      text
+                                      @click="denyCustomerVerification()"
+                                    >
+                                    Yes
+                                  </v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
                           </td>
                           <td>
                             <v-btn
@@ -124,15 +162,53 @@
                             </v-btn>
                           </td>
                           <td>
-                            <v-btn
-                              small 
-                              elevation="flat" 
-                              color="#4169E1" 
-                              class="white--text"
-                              :disabled="agent.is_verified == 0"
+                            <v-dialog              
+                              v-model="dialog"
+                              width="600"
                             >
-                              Deny
-                            </v-btn>
+                              <template v-slot:activator="{ on }">
+                                <v-btn
+                                  small 
+                                  elevation="flat" 
+                                  color="#4169E1" 
+                                  class="white--text"
+                                  :disabled="agent.is_verified == 0"
+                                  @click="setEmail(agent.email)"
+                                  v-on="on"
+                                >
+                                  Deny
+                                </v-btn>
+                              </template>
+
+                              <v-card>
+                                <v-card-title
+                                  class="body-3 grey lighten-2"
+                              
+                                  >
+                                  Are you want to cancel verification for this Agent?
+                                </v-card-title>
+
+                                <v-divider></v-divider>
+
+                                <v-card-actions>
+                                  <v-spacer></v-spacer>
+                                    <v-btn
+                                      color="primary"
+                                      text
+                                      @click="dialog = false"
+                                    >
+                                    No
+                                  </v-btn>
+                                  <v-btn
+                                      color="primary"
+                                      text
+                                      @click="denyAgentVerification()"
+                                    >
+                                    Yes
+                                  </v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
                           </td>
                           <td>
                             <v-btn
@@ -192,15 +268,54 @@
                           </td>
 
                           <td>
-                            <v-btn
-                              small 
-                              elevation="flat" 
-                              color="#4169E1" 
-                              class="white--text"
-                              :disabled="transporter.is_verified == 0"
+                           
+                            <v-dialog              
+                              v-model="dialog"
+                              width="600"
                             >
-                              Deny
-                            </v-btn>
+                              <template v-slot:activator="{ on }">
+                                <v-btn
+                                  small 
+                                  elevation="flat" 
+                                  color="#4169E1" 
+                                  class="white--text"
+                                  :disabled="transporter.is_verified == 0"
+                                  @click="setEmail(transporter.email)"
+                                  v-on="on"
+                                >
+                                  Deny
+                                </v-btn>
+                              </template>
+
+                              <v-card>
+                                <v-card-title
+                                  class="body-3 grey lighten-2"
+                              
+                                  >
+                                  Are you want to cancel verification for this Transporter?
+                                </v-card-title>
+
+                                <v-divider></v-divider>
+
+                                <v-card-actions>
+                                  <v-spacer></v-spacer>
+                                    <v-btn
+                                      color="primary"
+                                      text
+                                      @click="dialog = false"
+                                    >
+                                    No
+                                  </v-btn>
+                                  <v-btn
+                                      color="primary"
+                                      text
+                                      @click="denyVerification()"
+                                    >
+                                    Yes
+                                  </v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
                           </td>
                           
                           <td>
@@ -259,8 +374,12 @@ export default {
 
       transporters:[],
 
+      dialog: false,
+
       alert:'',
-      display_alert: false
+      display_alert: false,
+
+      email:''
 
     }
   },
@@ -400,6 +519,134 @@ export default {
           document.getElementById('app').scrollIntoView();                       
       });
   },
+
+  setEmail(email){
+    this.email = email;
+
+     //eslint-disable-next-line no-console
+        console.log(this.email);
+  },
+
+  denyVerification(){
+
+    this.dialog = false;
+
+  
+    const url = `http://207.180.215.239:9000/api/v1/transporters/deny/${this.email}`;
+
+              
+    axios.post(url).then((response) => 
+      {
+                               
+        //eslint-disable-next-line no-console
+        //console.log(response.data.objects[i].industry_name);
+
+        if(response.data.genralErrorCode === 8000)
+          {
+            this.display_alert = false;
+
+            this.$router.push('/admin');
+                
+            this.$router.go('/admin');
+           
+          } else if(response.data.genralErrorCode === 8004){
+
+            this.display_alert = false;
+
+            this.alert = response.data.message;
+
+            this.display_alert = true;
+
+            document.getElementById('app').scrollIntoView();
+          }
+
+          }).catch(()=>
+      
+          {
+
+                    /*vm.alert = "Error occured. Please try again";
+
+                    vm.display_alert = true;
+
+                    document.getElementById('app').scrollIntoView();*/                     
+          });
+        },
+    
+    denyAgentVerification(){
+      
+
+        const url = `http://207.180.215.239:8000/api/v1/agents/deny/${this.email}`;
+
+        axios.post(url).then((response) => 
+          {
+                               
+            //eslint-disable-next-line no-console
+            //console.log(response.data.objects[i].industry_name);
+
+            if(response.data.genralErrorCode === 8000)
+              {
+                this.display_alert = false;
+
+                this.$router.push('/admin');
+                
+                this.$router.go('/admin');
+
+              } else if(response.data.genralErrorCode === 8004){
+
+                this.display_alert = false;
+
+                this.alert = response.data.message;
+
+                this.display_alert = true;
+
+                document.getElementById('app').scrollIntoView();
+              }
+
+              }).catch(()=>
+      
+              {
+
+                                      
+              });     
+    },
+    
+
+    denyCustomerVerification(){
+      
+        const url = `http://207.180.215.239:8181/api/v1/customers/deny/${this.email}`;
+
+        axios.post(url).then((response) => 
+          {
+                               
+            //eslint-disable-next-line no-console
+            //console.log(response.data.objects[i].industry_name);
+
+            if(response.data.genralErrorCode === 8000)
+              {
+                this.display_alert = false;
+
+                this.$router.push('/admin');
+
+                this.$router.go('/admin');
+
+              } else if(response.data.genralErrorCode === 8004){
+
+                this.display_alert = false;
+
+                this.alert = response.data.message;
+
+                this.display_alert = true;
+
+                document.getElementById('app').scrollIntoView();
+              }
+
+              }).catch(()=>
+      
+              {
+
+                                      
+              });     
+    },
 
 
   },

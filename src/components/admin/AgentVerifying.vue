@@ -337,7 +337,7 @@ export default {
                     {
                        this.display_alert = false;
 
-                       this.$route.push('admin');
+                       this.$router.push('/admin');
 
                     } else if(response.data.genralErrorCode === 8004){
 
@@ -379,11 +379,12 @@ export default {
                     //eslint-disable-next-line no-console
                     //console.log(response.data.objects[i].industry_name);
 
+                    
                     if(response.data.genralErrorCode === 8000)
                     {
                         this.display_alert = false;
 
-                        this.$route.push('admin');
+                        this.$router.push('/admin');
 
                     } else if(response.data.genralErrorCode === 8004){
 

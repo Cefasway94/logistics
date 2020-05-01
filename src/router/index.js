@@ -232,7 +232,7 @@ const routes = [
 
   //---------------------------------------- Admin routes
   { 
-    path:'/admin/',
+    path:'/admin',
     name:'AdminHome',
     components:{AdminHome}
   },
