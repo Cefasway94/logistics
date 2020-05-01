@@ -16,7 +16,7 @@
         </v-card>
 
         <v-card flat class="mt-3 mx-auto mb-3" color="white">
-            <v-row>
+            <v-row class="mt-3 mx-auto mb-3">
                 <v-col cols=6 md=3>
                      <p class="primary--text body-1 mb-2">COMPANY NAME</p>
                      <p class="body-1">{{ agent.company_name}}</p>
@@ -88,7 +88,7 @@
 
         <v-card flat class="mt-3 mx-auto mb-3" color="#F5FAFF">
             <v-row  class="px-3">
-                <p class="grey--text title " v-show="transporter">Attachments</p>
+                <p class="grey--text title ">Attachments</p>
             </v-row>
         </v-card>
 
