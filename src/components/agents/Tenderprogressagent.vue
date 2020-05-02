@@ -302,7 +302,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Port processing</p>
-                                   <p class="mt-1">Waiting</p>
+                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[0].expected_date}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -313,7 +313,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Port processing</p>
-                                   <p class="mt-1">In progress</p>
+                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[0].expected_date}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -324,7 +324,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Port processing</p>
-                                   <p class="mt-1">Complete on </p>
+                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[0].expected_date}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -345,7 +345,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. TRA</p>
-                                   <p class="mt-1">Waiting</p>
+                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[1].expected_date}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -356,7 +356,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. TRA</p>
-                                   <p class="mt-1">In progress</p>
+                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[1].expected_date}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -367,7 +367,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. TRA</p>
-                                   <p class="mt-1">Complete on </p>
+                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[1].expected_date}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -388,7 +388,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Other processes</p>
-                                   <p class="mt-1">Waiting</p>
+                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[2].expected_date}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -399,7 +399,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Other processes</p>
-                                   <p class="mt-1">In progress</p>
+                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[2].expected_date}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -410,7 +410,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Other processes</p>
-                                   <p class="mt-1">Complete on </p>
+                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[2].expected_date}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -431,7 +431,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">4. Completion</p>
-                                   <p class="mt-1">Waiting</p>
+                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[3].expected_date}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -442,7 +442,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">4. Completion</p>
-                                   <p class="mt-1">In progress</p>
+                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[3].expected_date}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -453,7 +453,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">4. Complete</p>
-                                   <p class="mt-1">Complete on </p>
+                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[3].expected_date}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -702,7 +702,7 @@ export default {
             //------- STAGE COMMENTING------
             //---- Stages and states ---
             stageitems:['1. Port processing', '2. TRA', '3. Other processes', '4. Completion'],
-            stateitems:['InProgress', 'complited'],
+            stateitems:['InProgress', 'completed'],
             feedstage:'',
             feedstate:'',
             progress_id:'',
@@ -772,7 +772,7 @@ export default {
                     vm.stage4 = 'A'
 
                 } else if( vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id &&
-                             vm.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
+                             vm.LOAD_PROGRESS_STAGES.objects[0].delivered === 1 ) {
                     
                     console.log('Stage 1 completed');
                     vm.stage1 = 'C'
@@ -794,7 +794,7 @@ export default {
                     vm.stage4 = 'A'
 
                     }else if( vm.LOAD_PROGRESS_STAGES.objects[1].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id &&
-                             vm.LOAD_PROGRESS_STAGES.objects[1].Delivered === 1 ){
+                             vm.LOAD_PROGRESS_STAGES.objects[1].delivered === 1 ){
                     
                      console.log('Stage 1 completed');
                      vm.stage1 = 'C'
@@ -816,7 +816,7 @@ export default {
                     vm.stage4 = 'A'
 
                     }else if( vm.LOAD_PROGRESS_STAGES.objects[2].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id &&
-                             vm.LOAD_PROGRESS_STAGES.objects[2].Delivered === 1 ){
+                             vm.LOAD_PROGRESS_STAGES.objects[2].delivered === 1 ){
                     
                      console.log('Stage 1 completed');
                      vm.stage1 = 'C'
@@ -838,7 +838,7 @@ export default {
                     vm.stage4 = 'B'
 
                     }else if( vm.LOAD_PROGRESS_STAGES.objects[3].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id &&
-                             vm.LOAD_PROGRESS_STAGES.objects[3].Delivered === 1 ){
+                             vm.LOAD_PROGRESS_STAGES.objects[3].delivered === 1 ){
                     
                      console.log('Stage 1 completed');
                      vm.stage1 = 'C'
@@ -941,7 +941,7 @@ methods :{
                     this.stage4 = 'A'
 
                 } else if( this.LOAD_PROGRESS_STAGES.objects[0].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
-                             this.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
+                             this.LOAD_PROGRESS_STAGES.objects[0].delivered === 1 ) {
                     
                     console.log('Stage 1 completed');
                     this.stage1 = 'C'
@@ -963,7 +963,7 @@ methods :{
                     this.stage4 = 'A'
 
                     }else if( this.LOAD_PROGRESS_STAGES.objects[1].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id &&
-                             this.LOAD_PROGRESS_STAGES.objects[1].Delivered === 1 ){
+                             this.LOAD_PROGRESS_STAGES.objects[1].delivered === 1 ){
                     
                      console.log('Stage 1 completed');
                      this.stage1 = 'C'
@@ -985,7 +985,7 @@ methods :{
                     this.stage4 = 'A'
 
                     }else if( this.LOAD_PROGRESS_STAGES.objects[2].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id &&
-                             this.LOAD_PROGRESS_STAGES.objects[2].Delivered === 1 ){
+                             this.LOAD_PROGRESS_STAGES.objects[2].delivered === 1 ){
                     
                      console.log('Stage 1 completed');
                      this.stage1 = 'C'
@@ -1007,7 +1007,7 @@ methods :{
                     this.stage4 = 'B'
 
                     }else if( this.LOAD_PROGRESS_STAGES.objects[3].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id &&
-                             this.LOAD_PROGRESS_STAGES.objects[3].Delivered === 1 ){
+                             this.LOAD_PROGRESS_STAGES.objects[3].delivered === 1 ){
                     
                      console.log('Stage 1 completed');
                      this.stage1 = 'C'
