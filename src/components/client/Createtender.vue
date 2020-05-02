@@ -1,7 +1,7 @@
 <template>
     <v-container class="pa-3 mt-10 mx-auto">
 
-        <Alert v-if="alert" v-bind:message= "alert"/>
+        <AlertError v-if="display_alert" v-bind:message="alert"/>
 
         <v-layout class="pa-3 mt-10">
             
@@ -401,13 +401,14 @@
 
 <script>
 import {mapActions,mapGetters} from 'vuex'
-import Alert from '@/components/Alert.vue'
+import AlertError from '@/components/AlertError.vue'
+
 import axios from 'axios'
 
 export default {
     name: "createtender",
 
-    components: {Alert},
+    components: {AlertError},
 
     data: ()=>({
         details:'',
@@ -426,16 +427,18 @@ export default {
 
         loading:false,
         currencies:['TZS','USD'],
-        alert:'',
         tender_categories:[],
         tender_category:'',
 
-        customer:[]
+        customer:[],
+
+        alert:'',
+        display_alert: false,
 
     }),
 
     computed:{
-      ...mapGetters(['tenderCreated','getAlert','getCurrencies'])
+      ...mapGetters(['tenderCreated','getCurrencies'])
     },
 
     methods: {
@@ -535,7 +538,7 @@ export default {
             formData.append('description',this.description);
             formData.append('tender_category',this.tender_category);
             formData.append('customer_verification',this.customer.is_verified);
-
+        
             return formData;
         },
 
@@ -587,13 +590,13 @@ export default {
                             }).catch(()=>{
 
                                 //eslint-disable-next-line no-console
-                                console.log("error occured");
+                                this.loading = false;
 
-                                this.setAlert("Erro occured. Please try again");
+                                this.alert = "Error occured. Please try again";
 
-                                this.alert = this.getAlert();
+                                this.display_alert = true;
 
-                                this.$router.push('/client/createtender');
+                                document.getElementById('app').scrollIntoView();
                             }); 
 
             } else if(this.tender_category === 'Clearing')
@@ -634,13 +637,13 @@ export default {
                             }).catch(()=>{
 
                                 //eslint-disable-next-line no-console
-                                console.log("error occured");
+                                this.loading = false;
 
-                                this.setAlert("Erro occured. Please try again");
+                                this.alert = "Error occured. Please try again";
 
-                                this.alert = this.getAlert();
+                                this.display_alert = true;
 
-                                this.$router.push('/client/createtender');
+                                document.getElementById('app').scrollIntoView();
                             }); 
             }
               
