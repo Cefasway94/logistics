@@ -389,7 +389,7 @@
                     <v-spacer></v-spacer>
             
                     <v-btn outlined color="primary" class="mx-4"  @click="cancel">Cancel</v-btn>
-                    <v-btn color="primary white--text"  @click="publishTender($event)" :disabled="!isValid()">Publish tender</v-btn>
+                    <v-btn color="primary white--text"  @click.prevent="publishTender()" :disabled="!isValid()">Publish tender</v-btn>
                 </v-row>
             </v-card>
 
@@ -543,12 +543,8 @@ export default {
             return formData;
         },
 
-        publishTender(event){
+        publishTender(){
 
-            if(event)
-                event.preventDefault();
-
-            
             this.loading = true;
 
             let formData = this.createData();
@@ -598,7 +594,7 @@ export default {
                                 this.display_alert = true;
 
                                 document.getElementById('app').scrollIntoView();*/
-                                this.setAlert("There is a server error, if you don't see your tender please create again");
+                                this.setAlert("There is a server error, Refresh a page to see your tender otherwise please create again");
 
                                 this.$router.push('/client');
                             }); 
