@@ -438,7 +438,7 @@ export default {
     }),
 
     computed:{
-      ...mapGetters(['tenderCreated','getAlert','getCurrencies'])
+      ...mapGetters(['tenderCreated','getCurrencies'])
     },
 
     methods: {
@@ -590,7 +590,7 @@ export default {
                             }).catch(()=>{
 
                                 //eslint-disable-next-line no-console
-                                this.loading = true;
+                                this.loading = false;
 
                                 this.alert = "Error occured. Please try again";
 
@@ -637,13 +637,13 @@ export default {
                             }).catch(()=>{
 
                                 //eslint-disable-next-line no-console
-                                console.log("error occured");
+                                this.loading = false;
 
-                                this.setAlert("Erro occured. Please try again");
+                                this.alert = "Error occured. Please try again";
 
-                                this.alert = this.getAlert();
+                                this.display_alert = true;
 
-                                this.$router.push('/client/createtender');
+                                document.getElementById('app').scrollIntoView();
                             }); 
             }
               
