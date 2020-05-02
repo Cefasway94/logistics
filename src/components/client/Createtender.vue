@@ -535,6 +535,7 @@ export default {
             formData.append('description',this.description);
             formData.append('tender_category',this.tender_category);
             formData.append('customer_verification',this.customer.is_verified);
+            formData.append('customer_id',this.customer.id);
 
             return formData;
         },
