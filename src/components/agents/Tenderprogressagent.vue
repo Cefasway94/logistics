@@ -11,7 +11,7 @@
                 <p class="grey--text">{{LOAD_TENDER.description}}</p>
                 </v-flex>
                 <v-spacer></v-spacer>
-                <h2 >$ 500.0</h2>
+                <h2 style="colo:#4169E1;">$ 500.0</h2>
                 </v-flex>
             </v-card>
             <v-card flat width="1300" class="mx-auto mb-10 px-5" color="#F5FAFF">
@@ -43,33 +43,33 @@
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-image class="ma-auto" :src="LOAD_TENDER.bill_of_lading">
+                            <v-img class="ma-auto" :src="LOAD_TENDER.bill_of_lading">
                                 <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                             </v-flex>
 
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> LETTER </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-image class="ma-auto" :src="LOAD_TENDER.authorization_letter">
+                            <v-img class="ma-auto" :src="LOAD_TENDER.authorization_letter">
                                 <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                             </v-flex>
 
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> OTEHER </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-image class="ma-auto" :src="LOAD_TENDER.cargo_photo">
+                            <v-img class="ma-auto" :src="LOAD_TENDER.cargo_photo">
                                 <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                             </v-flex>
                         </v-flex>
@@ -120,7 +120,12 @@
                 </v-flex>
             </v-card>
 
-            <v-card flat width="1300" class="mx-auto mb-5" color="transparent">
+
+            <v-card 
+            flat width="1300" 
+            class="mx-auto mb-5" 
+            color="transparent">
+
             <v-tabs 
                 background-color="transparent"
                 color="#4169E1">
@@ -158,27 +163,55 @@
                 </v-card>
         <!-------------  --> 
 
-
         <v-card 
         v-show="show"
         flat 
         width="1300" 
         class="mx-auto mb-5" 
-        color="transparent"> 
+        color="transparent">             
 
-                <v-card 
-                row 
-                flat 
-                width="1300" 
-                class="mt-7 mx-auto" 
-                color="#F5FAFF">
+                <v-card row flat width="1300" class="mt-7 mx-auto" color="#F5FAFF">
                 <v-flex row class="">
                 <v-icon color="grey"  class="ml-3 mr-5" >credit_card</v-icon>
                 <p class="grey--text title mb-0" >Payment</p>
                 </v-flex>
                 </v-card>
 
-               
+                <v-card row width="1300" class=" mx-auto" color="#F5FAFF">
+                <v-alert
+                :value="extension"
+                text
+                outlined
+                color="primary"
+                border="left"
+                row
+                >
+                <v-flex row>
+                <v-flex row xms10 sm8 md10 lg10 class="pl-4">
+                <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                <v-icon large color="orange" class="">notification_important</v-icon>    
+                </v-flex>
+                <v-flex xms11 sm11 md11 lg11>
+                <p class="text--text title mb-0">
+                Payment confirmation
+                </p>
+                <p class="text--text subtitle-1 mb-0">
+                Vestibulum ullamcorper mauris at ligula. Nulla porta dolor. Vestibulum facilisis, 
+                purus nec pulvinar iaculis, ligula mi congue nunc, vitae euismod ligula urna in 
+                dolor. Curabitur at lacus ac velit ornare lobortis.
+                </p>
+                </v-flex>
+                </v-flex>
+                <v-flex  xsm2 sm2 md2 lg2>
+                <v-card color="primary" width="100" class="my-6 mx-auto">
+                <v-btn  color="primary">
+                confirm
+                </v-btn>
+                </v-card>
+                </v-flex>
+                </v-flex>
+                </v-alert>
+                </v-card>
 
 <!-- INSTALMENT CARDS SECTION-------------------------------------------------------------------- -->
                 <v-card row flat width="1300" class="mx-auto" color="#F5FAFF">
@@ -428,8 +461,21 @@
 
                            </ul>
                        </v-flex>
-                        
                         </v-card>
+                    
+                    <v-card 
+                        flat                           
+                        width="1200" 
+                        class="px-3" 
+                        outlined>
+                                <v-progress-linear
+                                :active="loading"
+                                indeterminate
+                                absolute
+                                color="#4169E1">
+                                </v-progress-linear>
+                    </v-card>
+
                         </v-col>            
                     </v-flex>
                     </v-flex>
@@ -492,10 +538,11 @@
                                         </v-text-field>
                                         </template>
                                         <v-date-picker 
-                                        v-model="date" 
-                                        :min="notless"
+                                        v-model="date"
+                                        :min="notless" 
                                         no-title 
-                                        scrollable>
+                                        scrollable
+                                        >
                                         <v-spacer></v-spacer>
                                         <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
                                         <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
@@ -542,7 +589,7 @@
                         <p class="primary--text body-2 text-uppercase"> oxoafrica commented </p>
                         <v-card flat height="100" width="1200" class="px-5 py-3" outlined>
                             <v-text class="" outlined>
-                               Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt praesentium laudantium quibusdam s
+                               No comment
                             </v-text>
                         </v-card>
                         </v-col>  
@@ -561,62 +608,68 @@
                         <v-col class="">
                         <p class="primary--text body-2 text-uppercase"> BILL OF LADING </p>
                         <v-card color="lblue" flat width="140" height="150" outlined>
-                            <v-image class="ma-auto">
+                            <v-img class="ma-auto">
                                 <v-icon color="primary" x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                         </v-col>  
 
                         <v-col class="">
                         <p class="primary--text body-2 text-uppercase"> AUTHORITY LATTER </p>
                         <v-card color="lblue" flat width="140" height="150" outlined>
-                            <v-image class="ma-auto">
+                            <v-img class="ma-auto">
                                 <v-icon color="primary" x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                         </v-col>  
 
                         <v-col class="">
                         <p class="primary--text body-2 text-uppercase"> OTHER </p>
                         <v-card color="lblue" flat width="140" height="150" outlined>
-                            <v-image class="ma-auto">
+                            <v-img class="ma-auto">
                                 <v-icon color="primary" x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                         </v-col>  
 
                         <v-col class="">
                         <p class="primary--text body-2 text-uppercase"> OTHER </p>
                         <v-card color="lblue" flat width="140" height="150" outlined>
-                            <v-image class="ma-auto">
+                            <v-img class="ma-auto">
                                 <v-icon color="primary" x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
-                            </v-image>
+                            </v-img>
                         </v-card>
                         </v-col>  
                                       
                     </v-row>
                 </v-card>
-            </v-card>
-
+            </v-card> 
+        
         </v-card>
-       
+            
                 </v-tab-item>
             </v-tabs>
 
-            <v-card v-show="show" flat width="1300" class=" mb-5" color="#F5FAFF">
-                        <v-flex row class="">
-                            <v-spacer></v-spacer>
-                            <v-btn disabled large class="primary" rauter >complete tender</v-btn>
-                        </v-flex>
-                    </v-card>
+            <v-card 
+            v-show="show" 
+            flat 
+            width="1300" 
+            class=" mb-5" 
+            color="#F5FAFF">
+                <v-flex row class="">
+                       <v-spacer></v-spacer>
+                       <v-btn disabled large class="primary" rauter >complete tender</v-btn>
+                </v-flex>
+            </v-card>
+
             </v-card>
 
     </v-container>
@@ -648,8 +701,8 @@ export default {
 
             //------- STAGE COMMENTING------
             //---- Stages and states ---
-            stageitems:['1. Cargo loading', '2. Cargo in transit', '3. Cargo offloading', '4. Cargo delivered'],
-            stateitems:['InProgress', 'Complete'],
+            stageitems:['1. Port processing', '2. TRA', '3. Other processes', '4. Completion'],
+            stateitems:['InProgress', 'Delivered'],
             feedstage:'',
             feedstate:'',
             progress_id:'',
@@ -658,12 +711,17 @@ export default {
             delivery_time:new Date().toISOString().substr(0, 10),
             notless:new Date().toISOString().substr(0, 10),
 
-            //---- extension ---
-            show: true,
-            wait: false,
+            //------ PAYMENT PROGRESS ------------
+            payment_percentage:'',
+
+            //----------------
+            loading:false,
+            show:true,
+            wait:false, 
+            comment:'',
             extension:false,
             placeholder: 1,
-            value:'',
+            value:''
         }
     },
 
@@ -676,46 +734,135 @@ export default {
               // eslint-disable-next-line no-console
               console.log(vm.LOAD_TENDER);
           vm.GET_AGENT(localStorage.client).then(()=>{
-              console.log(vm.LOAD_AGENT);
+              console.log(vm.LOAD_AGENT)
 
-              vm.GET_PAYMENT_PROGRESS(to.params.id).then(()=>{
+            vm.GET_PAYMENT_PROGRESS(to.params.id).then(()=>{
                 console.log(vm.LOAD_PAYMENT_PROGRESS)
 
-                if (vm.LOAD_PAYMENT_PROGRESS.objects.length === 0 && vm.LOAD_PAYMENT_PROGRESS.genralErrorCode == 8001 ) {
+                if (vm.LOAD_PAYMENT_PROGRESS.objects.length === 0 && 
+                        vm.LOAD_PAYMENT_PROGRESS.genralErrorCode == 8001 ) {
+
                     console.log(vm.LOAD_PAYMENT_PROGRESS);
                     vm.wait = true
                     vm.show = false
-                   vm.value = 0;
+                   vm.value = 0
                     //console.log(data.message);
+
                 }else{
                     vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
                     
                 }
             })
 
-               vm.GET_PROGRESS_STAGES(to.params.id).then(()=>{
-                  console.log(vm.LOAD_PROGRESS_STAGES.objects[0].progress_id);
-                if (vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && vm.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
-                    console.log('stage B');
+              vm.GET_TIMELINE_STAGES().then(()=>{
+                    console.log(vm.LOAD_TIMELINE_STAGES);
+                  
+
+              vm.GET_PROGRESS_STAGES(to.params.id).then(()=>{
+                  console.log(vm.LOAD_PROGRESS_STAGES);
+
+    // stage One --------------------------------
+                if (vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
+
+                    console.log('Stage 1 In progress');
+                    vm.stage1 = 'B'
+                    vm.stage2 = 'A'
+                    vm.stage3 = 'A'
+                    vm.stage4 = 'A'
+
+                } else if( vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
+                    
+                    console.log('Stage 1 completed');
+                    vm.stage1 = 'C'
+                    vm.stage2 = 'A'
+                    vm.stage3 = 'A'
+                    vm.stage4 = 'A'
+
+                }
+
+    // stage Two ----------------------------------
+
+                if (vm.LOAD_PROGRESS_STAGES.objects[1].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[1].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    vm.stage1 = 'C'
+                    vm.stage2 = 'B'
+                    vm.stage3 = 'A'
+                    vm.stage4 = 'A'
+
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[1].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[1].Delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     vm.stage1 = 'C'
+                     vm.stage2 = 'C'
+                     vm.stage3 = 'A'
+                     vm.stage4 = 'A'
+
+                    }
+
+    // stage Three -----------------------------------
+
+                if (vm.LOAD_PROGRESS_STAGES.objects[2].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[2].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    vm.stage1 = 'C'
+                    vm.stage2 = 'C'
+                    vm.stage3 = 'B'
+                    vm.stage4 = 'A'
+
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[2].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[2].Delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     vm.stage1 = 'C'
+                     vm.stage2 = 'C'
+                     vm.stage3 = 'C'
+                     vm.stage4 = 'A'
+
+                    }
+
+    // Stage Four -------------------------------------
+
+                if (vm.LOAD_PROGRESS_STAGES.objects[3].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[3].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
                     vm.stage1 = 'C'
                     vm.stage2 = 'C'
                     vm.stage3 = 'C'
                     vm.stage4 = 'B'
-                } else if( vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && vm.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
-                    console.log('stage c');
+
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[3].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[3].Delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     vm.stage1 = 'C'
+                     vm.stage2 = 'C'
+                     vm.stage3 = 'C'
                      vm.stage4 = 'C'
-                }
+
+                    }
+
+
+
+                }) //--
               })
           })
       })
       })
       
-    //   //eslint-disable-next-line no-console
-    //   console.log(tab);
-    // console.log(to);
-    // console.log(from);
-    // console.log(next);
+       //eslint-disable-next-line no-console
+    /*   console.log(tab);
+     console.log(to);
+     console.log(from);
+     console.log(next);*/
     },
+
     
     computed: {
     ...mapGetters([
@@ -724,28 +871,38 @@ export default {
       'LOAD_TENDER',
       'LOAD_PROGRESS_STAGES',
       'LOAD_PROGRESS_FEEDBACK',
-      'LOAD_PAYMENT_PROGRESS'
+      'LOAD_PAYMENT_PROGRESS',
+      'LOAD_TIMELINE_STAGES'
       ])
   },
-    methods :{
+
+   
+methods :{
     ...mapActions([
       "GET_AGENT",
       'GET_TENDERSDETAILs',
       'GET_PROGRESS_STAGES',
       'UPGRADE_PROGRESS',
-      'GET_PAYMENT_PROGRESS'
+      'GET_PAYMENT_PROGRESS',
+      'GET_TIMELINE_STAGES'
     ]),
 
-     submiteProgress(){
-        if (this.feedstage === '1. Cargo loading') {
-            this.progress_id = 2
-        } else if (this.feedstage === '2. Cargo in transit') {
-            this.progress_id = 3
-        } else if (this.feedstage === '3. Cargo offloading') {
-            this.progress_id = 4
-        } else if (this.feedstage == '4. Cargo delivered') {
-            this.progress_id = 1
+
+    submiteProgress(){
+
+            this.loading = true
+
+        if (this.feedstage === '1. Port processing') {
+            this.progress_id = this.LOAD_TIMELINE_STAGES.objects[0].id
+        } else if (this.feedstage === '2. TRA') {
+            this.progress_id = this.LOAD_TIMELINE_STAGES.objects[1].id
+        } else if (this.feedstage === '3. Other processes') {
+            this.progress_id = this.LOAD_TIMELINE_STAGES.objects[2].id
+        } else if (this.feedstage == '4. Completion') {
+            this.progress_id = this.LOAD_TIMELINE_STAGES.objects[3].id
         }
+
+        console.log(this.$route.params.id);
             
         //        const        agent_id = this.LOAD_AGENT.objects.agent_id
         //          const progress_status = this.feedstate
@@ -754,14 +911,114 @@ export default {
         //        const   expected_date = this.date
             
 
-           this.$store.dispatch('T_UPGRADE_PROGRESS',{
+           this.$store.dispatch('UPGRADE_PROGRESS',{
                   agent_id : this.LOAD_AGENT.objects.agent_id,
                   progress_status : this.feedstate,
                   tender_id : this.LOAD_TENDER.id,
                   progress_id : this.progress_id,
                   expected_date : this.date, 
                 }).then(()=>{
+                    console.log(this.progress_id);
+                    
                     console.log(this.LOAD_PROGRESS_FEEDBACK);
+                    
+
+                    this.GET_PROGRESS_STAGES(this.$route.params.id).then(()=>{
+                            
+                            this.loading = false
+
+                            console.log(this.LOAD_PROGRESS_STAGES.objects)
+
+// stage One --------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[0].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
+
+                    console.log('Stage 1 In progress');
+                    this.stage1 = 'B'
+                    this.stage2 = 'A'
+                    this.stage3 = 'A'
+                    this.stage4 = 'A'
+
+                } else if( this.LOAD_PROGRESS_STAGES.objects[0].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
+                    
+                    console.log('Stage 1 completed');
+                    this.stage1 = 'C'
+                    this.stage2 = 'A'
+                    this.stage3 = 'A'
+                    this.stage4 = 'A'
+
+                }
+
+// stage Two ----------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[1].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[1].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    this.stage1 = 'C'
+                    this.stage2 = 'B'
+                    this.stage3 = 'A'
+                    this.stage4 = 'A'
+
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[1].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[1].Delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     this.stage1 = 'C'
+                     this.stage2 = 'C'
+                     this.stage3 = 'A'
+                     this.stage4 = 'A'
+
+                    }
+
+// stage Three -----------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[2].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[2].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    this.stage1 = 'C'
+                    this.stage2 = 'C'
+                    this.stage3 = 'B'
+                    this.stage4 = 'A'
+
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[2].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[2].Delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     this.stage1 = 'C'
+                     this.stage2 = 'C'
+                     this.stage3 = 'C'
+                     this.stage4 = 'A'
+
+                    }
+
+// Stage Four -------------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[3].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[3].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    this.stage1 = 'C'
+                    this.stage2 = 'C'
+                    this.stage3 = 'C'
+                    this.stage4 = 'B'
+
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[3].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[3].Delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     this.stage1 = 'C'
+                     this.stage2 = 'C'
+                     this.stage3 = 'C'
+                     this.stage4 = 'C'
+
+                    }
+
+
+              })
                     
                 })
 
@@ -801,3 +1058,4 @@ ul li .x-large{
     
 }
 </style>
+

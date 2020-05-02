@@ -461,8 +461,21 @@
 
                            </ul>
                        </v-flex>
-                        
                         </v-card>
+                    
+                    <v-card 
+                        flat                           
+                        width="1200" 
+                        class="px-3" 
+                        outlined>
+                                <v-progress-linear
+                                :active="loading"
+                                indeterminate
+                                absolute
+                                color="#4169E1">
+                                </v-progress-linear>
+                    </v-card>
+
                         </v-col>            
                     </v-flex>
                     </v-flex>
@@ -702,6 +715,7 @@ export default {
             payment_percentage:'',
 
             //----------------
+            loading:false,
             show:true,
             wait:false, 
             comment:'',
@@ -743,26 +757,100 @@ export default {
               vm.T_GET_TIMELINE_STAGES().then(()=>{
                     console.log(vm.LOAD_TIMELINE_STAGES);
                   
-              })
 
               vm.T_GET_PROGRESS_STAGES(to.params.id).then(()=>{
                   console.log(vm.LOAD_PROGRESS_STAGES);
-                if (vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && 
+
+    // stage One --------------------------------
+                if (vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
 
-                    console.log('stage B');
+                    console.log('Stage 1 In progress');
+                    vm.stage1 = 'B'
+                    vm.stage2 = 'A'
+                    vm.stage3 = 'A'
+                    vm.stage4 = 'A'
+
+                } else if( vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
+                    
+                    console.log('Stage 1 completed');
+                    vm.stage1 = 'C'
+                    vm.stage2 = 'A'
+                    vm.stage3 = 'A'
+                    vm.stage4 = 'A'
+
+                }
+
+    // stage Two ----------------------------------
+
+                if (vm.LOAD_PROGRESS_STAGES.objects[1].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[1].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    vm.stage1 = 'C'
+                    vm.stage2 = 'B'
+                    vm.stage3 = 'A'
+                    vm.stage4 = 'A'
+
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[1].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[1].Delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     vm.stage1 = 'C'
+                     vm.stage2 = 'C'
+                     vm.stage3 = 'A'
+                     vm.stage4 = 'A'
+
+                    }
+
+    // stage Three -----------------------------------
+
+                if (vm.LOAD_PROGRESS_STAGES.objects[2].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[2].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    vm.stage1 = 'C'
+                    vm.stage2 = 'C'
+                    vm.stage3 = 'B'
+                    vm.stage4 = 'A'
+
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[2].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[2].Delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     vm.stage1 = 'C'
+                     vm.stage2 = 'C'
+                     vm.stage3 = 'C'
+                     vm.stage4 = 'A'
+
+                    }
+
+    // Stage Four -------------------------------------
+
+                if (vm.LOAD_PROGRESS_STAGES.objects[3].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[3].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
                     vm.stage1 = 'C'
                     vm.stage2 = 'C'
                     vm.stage3 = 'C'
                     vm.stage4 = 'B'
 
-                } else if( vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 &&
-                             vm.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[3].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[3].Delivered === 1 ){
                     
-                    console.log('stage c');
+                     console.log('Stage 1 completed');
+                     vm.stage1 = 'C'
+                     vm.stage2 = 'C'
+                     vm.stage3 = 'C'
                      vm.stage4 = 'C'
 
-                }
+                    }
+
+
+
+                }) //--
               })
           })
       })
@@ -801,6 +889,9 @@ methods :{
 
 
     submiteProgress(){
+
+            this.loading = true
+
         if (this.feedstage === '1. Cargo loading') {
             this.progress_id = this.LOAD_TIMELINE_STAGES.objects[0].id
         } else if (this.feedstage === '2. Cargo in transit') {
@@ -810,6 +901,8 @@ methods :{
         } else if (this.feedstage == '4. Cargo delivered') {
             this.progress_id = this.LOAD_TIMELINE_STAGES.objects[3].id
         }
+
+        console.log(this.$route.params.id);
             
         //        const        agent_id = this.LOAD_AGENT.objects.agent_id
         //          const progress_status = this.feedstate
@@ -828,20 +921,104 @@ methods :{
                     console.log(this.progress_id);
                     
                     console.log(this.LOAD_PROGRESS_FEEDBACK);
+                    
 
-            //         this.T_GET_PROGRESS_STAGES(this.$router.params.id).then(()=>{
-            //       console.log(this.LOAD_PROGRESS_STAGES.objects[0].progress_id);
-            //     if (this.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && this.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
-            //         console.log('stage B');
-            //         this.stage1 = 'C'
-            //         this.stage2 = 'C'
-            //         this.stage3 = 'C'
-            //         this.stage4 = 'B'
-            //     } else if( this.LOAD_PROGRESS_STAGES.objects[0].progress_id === 1 && this.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
-            //         console.log('stage c');
-            //          this.stage4 = 'C'
-            //     }
-            //   })
+                    this.T_GET_PROGRESS_STAGES(this.$route.params.id).then(()=>{
+                            
+                            this.loading = false
+
+                            console.log(this.LOAD_PROGRESS_STAGES.objects)
+
+// stage One --------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[0].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
+
+                    console.log('Stage 1 In progress');
+                    this.stage1 = 'B'
+                    this.stage2 = 'A'
+                    this.stage3 = 'A'
+                    this.stage4 = 'A'
+
+                } else if( this.LOAD_PROGRESS_STAGES.objects[0].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[0].Delivered === 1 ) {
+                    
+                    console.log('Stage 1 completed');
+                    this.stage1 = 'C'
+                    this.stage2 = 'A'
+                    this.stage3 = 'A'
+                    this.stage4 = 'A'
+
+                }
+
+// stage Two ----------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[1].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[1].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    this.stage1 = 'C'
+                    this.stage2 = 'B'
+                    this.stage3 = 'A'
+                    this.stage4 = 'A'
+
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[1].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[1].Delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     this.stage1 = 'C'
+                     this.stage2 = 'C'
+                     this.stage3 = 'A'
+                     this.stage4 = 'A'
+
+                    }
+
+// stage Three -----------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[2].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[2].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    this.stage1 = 'C'
+                    this.stage2 = 'C'
+                    this.stage3 = 'B'
+                    this.stage4 = 'A'
+
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[2].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[2].Delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     this.stage1 = 'C'
+                     this.stage2 = 'C'
+                     this.stage3 = 'C'
+                     this.stage4 = 'A'
+
+                    }
+
+// Stage Four -------------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[3].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[3].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    this.stage1 = 'C'
+                    this.stage2 = 'C'
+                    this.stage3 = 'C'
+                    this.stage4 = 'B'
+
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[3].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[3].Delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     this.stage1 = 'C'
+                     this.stage2 = 'C'
+                     this.stage3 = 'C'
+                     this.stage4 = 'C'
+
+                    }
+
+
+              })
                     
                 })
 

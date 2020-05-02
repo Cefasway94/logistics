@@ -115,3 +115,101 @@
 
     </v-container>
 </template>
+
+<script>
+/* eslint-disable no-console */
+
+/*
+
+import {mapGetters, mapActions} from 'vuex';
+export default {
+        
+  
+  data () {
+      return{
+          bided: false,
+          loading: false,
+          
+      }
+  },
+
+  created (){
+          
+    
+    console.log();
+    console.log();
+    console.log();
+    
+    
+    
+    
+     
+
+          this.T_GET_AGENT(localStorage.client).then(()=>{
+
+              console.log('transporter details below');
+              console.log(this.LOAD_AGENT);
+
+              this.T_GET_PAYMENT_HISTORY(this.LOAD_AGENT.objects.agent_id).then(()=>{
+
+                  console.log('transporter payment terms');
+                  console.log(this.LOAD_PAYMENT_HISTORY);
+                 
+              })
+          })
+
+          this.GET_AGENT(localStorage.client).then(()=>{
+
+              console.log('Agent details below');
+              console.log(this.LOAD_AGENT);
+
+              this.GET_PAYMENT_HISTORY(this.LOAD_AGENT.objects.agent_id).then(()=>{
+
+                  console.log('Agent payment histoiry');
+                  console.log(this.LOAD_PAYMENT_HISTORY);
+                  
+              })
+          })
+
+          this.GET_CUSTOMER(localStorage.client).then(()=>{
+
+              console.log('Agent details below');
+              console.log(this.LOAD_AGENT);
+
+              this.C_GET_PAYMENT_HISTORY(this.LOAD_AGENT.objects.agent_id).then(()=>{
+
+                  console.log('Agent payment histoiry');
+                  console.log(this.LOAD_PAYMENT_HISTORY);
+                  
+              })
+          })
+     
+      
+      //eslint-disable-next-line no-console
+
+      
+  },
+  
+  methods:{
+      ...mapActions([
+          'T_GET_PAYMENT_HISTORY',
+          'GET_PAYMENT_HISTORY',
+          'C_GET_PAYMENT_HISTORY',
+          'T_GET_AGENT',
+          'GET_AGENT', 
+          'GET_CUSTOMER'
+      ]),
+
+  },
+
+  computed: {
+      ...mapGetters([
+          'LOAD_PAYMENT_HISTORY', 'LOAD_AGENT', 
+      ]),
+
+  }
+
+    
+}
+                                   */
+</script>
