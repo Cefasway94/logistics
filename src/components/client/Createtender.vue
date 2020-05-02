@@ -538,6 +538,7 @@ export default {
             formData.append('description',this.description);
             formData.append('tender_category',this.tender_category);
             formData.append('customer_verification',this.customer.is_verified);
+            formData.append('customer_id',this.customer.id);
         
             return formData;
         },
@@ -554,7 +555,7 @@ export default {
 
             if(this.tender_category === 'Transporting')
             {
-                const url = "http://207.180.215.239:9000/api/v1/tenders?customer_id="+this.customer.id;
+                const url = "http://207.180.215.239:9000/api/v1/tenders";
                 //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
 
          
@@ -592,17 +593,20 @@ export default {
                                 //eslint-disable-next-line no-console
                                 this.loading = false;
 
-                                this.alert = "Error occured. Please try again";
+                                /*this.alert = "Error occured. Please try again";
 
                                 this.display_alert = true;
 
-                                document.getElementById('app').scrollIntoView();
+                                document.getElementById('app').scrollIntoView();*/
+                                this.setAlert("There is a server error, if you don't see your tender please create again");
+
+                                this.$router.push('/client');
                             }); 
 
             } else if(this.tender_category === 'Clearing')
 
             {
-                const url = "http://207.180.215.239:8000/api/v1/tenders?customer_id="+this.customer.id;
+                const url = "http://207.180.215.239:8000/api/v1/tenders";
                 //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
 
                 axios.post(url,
@@ -639,11 +643,9 @@ export default {
                                 //eslint-disable-next-line no-console
                                 this.loading = false;
 
-                                this.alert = "Error occured. Please try again";
+                                this.setAlert("There is a server error, if you don't see your tender please create again");
 
-                                this.display_alert = true;
-
-                                document.getElementById('app').scrollIntoView();
+                                this.$router.push('/client');
                             }); 
             }
               
