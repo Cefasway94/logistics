@@ -702,7 +702,7 @@ export default {
             //------- STAGE COMMENTING------
             //---- Stages and states ---
             stageitems:['1. Cargo loading', '2. Cargo in transit', '3. Cargo offloading', '4. Cargo delivered'],
-            stateitems:['InProgress', 'Delivered'],
+            stateitems:['InProgress', 'complited'],
             feedstage:'',
             feedstate:'',
             progress_id:'',

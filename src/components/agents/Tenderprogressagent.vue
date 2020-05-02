@@ -702,7 +702,7 @@ export default {
             //------- STAGE COMMENTING------
             //---- Stages and states ---
             stageitems:['1. Port processing', '2. TRA', '3. Other processes', '4. Completion'],
-            stateitems:['InProgress', 'Delivered'],
+            stateitems:['InProgress', 'complited'],
             feedstage:'',
             feedstate:'',
             progress_id:'',
