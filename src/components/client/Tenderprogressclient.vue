@@ -659,7 +659,7 @@
                         <v-card flat height="100" width="1200" class="px-5 py-3" outlined>
                             <p class=" body-2 ">
                               
-                               {{ InProgress.comments}}
+                               {{ this.comments}}
                             </p>
                         </v-card>
                         </v-col>  
@@ -707,6 +707,8 @@ export default {
         tender:[],
 
         InProgress:[],
+
+        comments:'',
 
         transporting_progress:[],
 
@@ -831,6 +833,11 @@ export default {
                                         this.cargo_loading.completed_date = tender_progress[i].completed_date;
                                         this.cargo_loading.comments = tender_progress[i].comments;
 
+                                        if(tender_progress[i].comments !== null){
+                                            
+                                            this.comments = tender_progress[i].comments;
+                                        }
+
 
                                         break;
 
@@ -842,6 +849,11 @@ export default {
                                         this.cargo_in_transmit.expected_date = tender_progress[i].expected_date;
                                         this.cargo_in_transmit.completed_date = tender_progress[i].completed_date;
                                         this.cargo_in_transmit.comments = tender_progress[i].comments;
+                                         
+                                        if(tender_progress[i].comments !== null){
+                                            
+                                            this.comments = tender_progress[i].comments;
+                                        }
 
                                         break;
 
@@ -854,6 +866,11 @@ export default {
                                         this.cargo_offloading.completed_date = tender_progress[i].completed_date;
                                         this.cargo_offloading.comments = tender_progress[i].comments;
 
+                                        if(tender_progress[i].comments !== null){
+                                            
+                                            this.comments = tender_progress[i].comments;
+                                        }
+
                                         break;
                     
                                     case "Cargo delivered":
@@ -864,6 +881,11 @@ export default {
                                         this.cargo_delivered.expected_date = tender_progress[i].expected_date;
                                         this.cargo_delivered.completed_date = tender_progress[i].completed_date;
                                         this.cargo_delivered.comments = tender_progress[i].comments;
+
+                                        if(tender_progress[i].comments !== null){
+
+                                            this.comments = tender_progress[i].comments;
+                                        }
 
                                         break;
 
@@ -902,6 +924,11 @@ export default {
                                         this.port_processing.completed_date = tender_progress[i].completed_date;
                                         this.port_processing.comments = tender_progress[i].comments;
 
+                                        if(tender_progress[i].comments !== null){
+
+                                            this.comments = tender_progress[i].comments;
+                                        }
+
                                         break;
 
                                     case "TRA":
@@ -913,6 +940,11 @@ export default {
                                         this.tcra_processing.completed_date = tender_progress[i].completed_date;
                                         this.tcra_processing.comments = tender_progress[i].comments;
 
+                                        if(tender_progress[i].comments !== null){
+
+                                            this.comments = tender_progress[i].comments;
+                                        }
+
                                         break;
                                     case "Other processes":
 
@@ -922,6 +954,12 @@ export default {
                                         this.other_processes.expected_date = tender_progress[i].expected_date;
                                         this.other_processes.completed_date = tender_progress[i].completed_date;
                                         this.other_processes.comments = tender_progress[i].comments;
+
+                                        if(tender_progress[i].comments !== null){
+
+                                            this.comments = tender_progress[i].comments;
+                                        }
+                                        
 
                                         break;
 
@@ -933,6 +971,11 @@ export default {
                                         this.completion.expected_date = tender_progress[i].expected_date;
                                         this.completion.completed_date = tender_progress[i].completed_date;
                                         this.completion.comments = tender_progress[i].comments;
+
+                                        if(tender_progress[i].comments !== null){
+
+                                            this.comments = tender_progress[i].comments;
+                                        }
 
                                         break;
                                     default:
@@ -1001,7 +1044,7 @@ export default {
                                 
                                 vm.setTransportingProgress(response.data.objects);
 
-                                vm.setTransportingInProgress(response.data.objects);
+                                //vm.setTransportingInProgress(response.data.objects);
                                  //eslint-disable-next-line no-console
                                  //console.log(response.data.objects);
                             }).catch(()=>{
@@ -1060,7 +1103,7 @@ export default {
                                 
                                 vm.setClearingProgress(response.data.objects);
 
-                                vm.setClearingInProgress(response.data.objects);
+                                //vm.setClearingInProgress(response.data.objects);
 
                                  //eslint-disable-next-line no-console
                                  //console.log(response.data.objects);
@@ -1105,12 +1148,12 @@ export default {
     }
     
      .waiting {
-        opacity: 0.3 ;
+        opacity: 0.3;
         
     }
 
      .completed {
-        opacity: 0.3 ;
+        opacity: 0.3;
     }
 
 </style>
