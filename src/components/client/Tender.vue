@@ -63,7 +63,7 @@
                                 </v-flex>
 
                                 <v-flex row class="mt-10 mb-4" >
-                                    <v-flex column class="pl-3">
+                                    <v-flex column class="pl-3" v-if="tender.cargo_photo != null">
                                         <p class="primary--text body-1 mb-2"> CARGO PHOTO </p>
                                         <v-card flat width="200" height="155" outlined>
                                             <v-img 
