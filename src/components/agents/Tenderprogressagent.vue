@@ -229,8 +229,10 @@
                 width="550"
                 class=" py-2 pb-3 " 
                 :elevation="hover ? 15 : 3">
-                <v-flex row class="px-1 py-2" >
-                <v-flex xsm4 sm4 md4 lg4 class="pl-5 pt-1">
+                <center>
+                <v-flex row class="pl-1 py-2" >
+
+                <v-flex xsm3 sm3 md3 lg3 class="pl-6 pt-1" >
                 <v-progress-circular
                 :rotate="-90"
                 :size="100"
@@ -242,25 +244,44 @@
                 </p>
                 </v-progress-circular>
                 </v-flex>
-                <v-flex xsm7 sm7 md7 lg7 class="px-6 pt-7" style="background-color:;">
+
+                <v-flex xsm8 sm8 md8 lg8 class="pl-10 pt-4" >
+
                 <v-flex row class="px-1" >
                 <P xsm6 sm6 md6 lg6 
-                class="text--text body-1 font-weight-medium mb-0">First instalment</P>
-                <v-chip color="primary" small xsm6 sm6 md6 lg6 class="ml-4 ">not received</v-chip>
+                class="text--text body-1 font-weight-medium mb-0">Instalment status</P>
+                <v-chip color="primary" small xsm6 sm6 md6 lg6 class="ml-4 ">{{chip1}}</v-chip>
                 </v-flex>
-                <v-flex row>
-                <p class="text--text mb-0 px-1">Received on Date...</p>
+
+                 <v-flex row class="px-1 pt-2" >
+                <P xsm6 sm6 md6 lg6 
+                class="text--text body-1  mb-0">Amount :</P>
+               <p 
+               color="primary"  
+               xsm6 
+               sm6 
+               md6 
+               lg6 
+               class="text--text body-1 ml-2 font-weight-bold mb-0"> 
+               {{LOAD_PAYMENT_PROGRESS.objects.amount}}
+               </p>
                 </v-flex>
+
+                 <v-flex row class="px-1 pt-2" >
+                <P xsm4 sm4 md4 lg4 
+                class="text--text body-1  mb-0">Date received :</P>
+                <p color="primary"  xsm8 sm8 md8 lg8 class="text--text body-1 pl-1 font-weight-bold mb-0"> {{LOAD_PAYMENT_PROGRESS.objects.created_at}} </p>
+
                 </v-flex>
-                <!-- <v-flex xsm12 sm12 md12 lg3 class="">
-                <p class="title text--text text-center mb-0 my-4">
-                1000001 USD
-                </p>
-                </v-flex> -->
+               
                 </v-flex>
+
+                </v-flex>
+                </center>
                 </v-card>
                 </template>
                 </v-hover>
+
                 </v-flex>
                 </v-flex>
                 </v-card>
@@ -323,7 +344,7 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">1. Port processing</p>
+                                   <p class="mb-0">1. Port processed</p>
                                    <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[0].expected_date}}</p>
                                    </v-card>
                                 </template>
@@ -366,7 +387,7 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">2. TRA</p>
+                                   <p class="mb-0">2. TRA complited</p>
                                    <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[1].expected_date}}</p>
                                    </v-card>
                                 </template>
@@ -452,7 +473,7 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">4. Complete</p>
+                                   <p class="mb-0">4. Cargo cleared</p>
                                    <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[3].expected_date}}</p>
                                    </v-card>
                                 </template>
@@ -586,7 +607,7 @@
                 <v-card width="1300" class="mx-auto pa-3">
                     <v-row class="pa-3">
                         <v-col class="">
-                        <p class="primary--text body-2 text-uppercase"> oxoafrica commented </p>
+                        <p class="primary--text body-2 text-uppercase"> comments </p>
                         <v-card flat height="100" width="1200" class="px-5 py-3" outlined>
                             <v-text class="" outlined>
                                No comment
@@ -718,6 +739,7 @@ export default {
             loading:false,
             show:true,
             wait:false, 
+            chip1:'not received',
             comment:'',
             extension:false,
             placeholder: 1,
@@ -749,7 +771,11 @@ export default {
                     //console.log(data.message);
 
                 }else{
+                
                     vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                    if ( vm.LOAD_PAYMENT_PROGRESS.objects.is_full_amount_paid == false){
+                            vm.chip1 = 'partial payment'
+                    }
                     
                 }
             })
