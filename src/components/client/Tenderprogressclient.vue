@@ -128,9 +128,9 @@
                                                     width="210" 
                                                     class="px-5 py-3" 
                                                     outlined 
-                                                    :class="{   InProgress: clearing_started.InProgress, 
-                                                                waiting: clearing_started.waiting, 
-                                                                completed: clearing_started.completed
+                                                    :class="{   InProgress: port_processing.InProgress, 
+                                                                waiting: port_processing.waiting, 
+                                                                completed: port_processing.completed
                                                             }"
                                                 >
 
@@ -139,12 +139,12 @@
                                                             <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
                                                                
 
-                                                                <v-icon large color="white" v-show="clearing_started.completed">
+                                                                <v-icon large color="white" v-show="port_processing.completed">
                                                                     mdi-check-outline
 
                                                                 </v-icon>
 
-                                                                 <v-icon large color="white" v-show="clearing_started.InProgress">
+                                                                 <v-icon large color="white" v-show="port_processing.InProgress">
                                                                     mdi-reload
                                                                 </v-icon>
                                                                 
@@ -153,11 +153,11 @@
                                                    
                                                     <v-flex row xs12 class="">
                                                         <!--<p>{{ transporting_progress[0].name}} </p>-->
-                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Border clearing</span></v-flex>
+                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Port processing</span></v-flex>
                                                         <v-flex row xs12>
 
-                                                            <span v-show="!clearing_started.completed" class="font-weight-regular body-2">Expected on {{ clearing_started.expected_date}}</span>
-                                                            <span v-show="clearing_started.completed" class="font-weight- body-2">Completed on {{ clearing_started.completed_date}}</span>
+                                                            <span v-show="!port_processing.completed" class="font-weight-regular body-2">Expected on {{ port_processing.expected_date}}</span>
+                                                            <span v-show="port_processing.completed" class="font-weight- body-2">Completed on {{ port_processing.completed_date}}</span>
                                                             
                                                         </v-flex>
                                                     </v-flex>
@@ -194,11 +194,97 @@
                                                    
                                                     <v-flex row xs12 class="">
                                                         <!--<p>{{ transporting_progress[1].name}} </p>-->
-                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">TRA processing</span></v-flex>
+                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">TRA</span></v-flex>
                                                         <v-flex row xs12>
 
                                                            <span v-show="!tcra_processing.completed" class="font-weight-regular body-2">Expected on {{ tcra_processing.expected_date}}</span>
                                                             <span v-show="tcra_processing.completed" class="font-weight- body-2">Completed on {{ tcra_processing.completed_date}}</span>
+
+                                                        </v-flex>
+                                                        <!--<p class="font-weight-bold blue--text text--darken-2">Cargo in transit</p>-->
+                                                       
+                                                    </v-flex>
+
+                                                </v-card>
+
+                                            </v-flex>
+
+                                            <v-flex column>
+                                                    
+                                                <v-card 
+                                                    flat height="150"  
+                                                    width="210" 
+                                                    class="px-5 py-3" 
+                                                    outlined 
+                                                    :class="{   InProgress: other_processes.InProgress, 
+                                                                waiting: other_processes.waiting, 
+                                                                completed: other_processes.completed
+                                                            }"
+                                                >
+
+                                                    <v-flex row xs12 class="mb-3" offset-1>
+
+                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
+                                                                <v-icon large color="white" v-show="other_processes.completed">
+                                                                    mdi-check-outline
+                                                                </v-icon>
+
+                                                                 <v-icon large color="white" v-show="other_processes.InProgress">
+                                                                    mdi-reload
+                                                                </v-icon>
+                                                            </v-card>
+                                                    </v-flex>
+                                                   
+                                                    <v-flex row xs12 class="">
+                                                        <!--<p>{{ transporting_progress[1].name}} </p>-->
+                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Other processes</span></v-flex>
+                                                        <v-flex row xs12>
+
+                                                           <span v-show="!other_processes.completed" class="font-weight-regular body-2">Expected on {{ other_processes.expected_date}}</span>
+                                                           <span v-show="other_processes.completed" class="font-weight- body-2">Completed on {{ other_processes.completed_date}}</span>
+
+                                                        </v-flex>
+                                                        <!--<p class="font-weight-bold blue--text text--darken-2">Cargo in transit</p>-->
+                                                       
+                                                    </v-flex>
+
+                                                </v-card>
+
+                                            </v-flex>
+
+                                            <v-flex column>
+                                                    
+                                                <v-card 
+                                                    flat height="150"  
+                                                    width="210" 
+                                                    class="px-5 py-3" 
+                                                    outlined 
+                                                    :class="{   InProgress: completion.InProgress, 
+                                                                waiting: completion.waiting, 
+                                                                completed: completion.completed
+                                                            }"
+                                                >
+
+                                                    <v-flex row xs12 class="mb-3" offset-1>
+
+                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
+                                                                <v-icon large color="white" v-show="completion.completed">
+                                                                    mdi-check-outline
+                                                                </v-icon>
+
+                                                                 <v-icon large color="white" v-show="completion.InProgress">
+                                                                    mdi-reload
+                                                                </v-icon>
+                                                            </v-card>
+                                                    </v-flex>
+                                                   
+                                                    <v-flex row xs12 class="">
+                                                        <!--<p>{{ transporting_progress[1].name}} </p>-->
+                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Completion</span></v-flex>
+                                                        <v-flex row xs12>
+
+                                                           <span v-show="!completion.completed" class="font-weight-regular body-2">Expected on {{ completion.expected_date}}</span>
+                                                           <span v-show="completion.completed" class="font-weight- body-2">Completed on {{ completion.completed_date}}</span>
 
                                                         </v-flex>
                                                         <!--<p class="font-weight-bold blue--text text--darken-2">Cargo in transit</p>-->
@@ -573,7 +659,7 @@
                         <v-card flat height="100" width="1200" class="px-5 py-3" outlined>
                             <p class=" body-2 ">
                               
-                               {{ InProgress.comments}}
+                               {{ this.comments}}
                             </p>
                         </v-card>
                         </v-col>  
@@ -621,6 +707,8 @@ export default {
         tender:[],
 
         InProgress:[],
+
+        comments:'',
 
         transporting_progress:[],
 
@@ -671,7 +759,6 @@ export default {
         },
 
 
-
          tcra_processing:{
 
             InProgress:false,
@@ -682,7 +769,27 @@ export default {
             comments:''
         },
 
-        clearing_started:{
+        port_processing:{
+
+            InProgress:false,
+            completed:false,
+            waiting: true,
+            expected_date:'',
+            completed_date:'',
+            comments:''
+        },
+
+        other_processes:{
+
+            InProgress:false,
+            completed:false,
+            waiting: true,
+            expected_date:'',
+            completed_date:'',
+            comments:''
+        },
+
+        completion:{
 
             InProgress:false,
             completed:false,
@@ -726,6 +833,11 @@ export default {
                                         this.cargo_loading.completed_date = tender_progress[i].completed_date;
                                         this.cargo_loading.comments = tender_progress[i].comments;
 
+                                        if(tender_progress[i].comments !== null){
+                                            
+                                            this.comments = tender_progress[i].comments;
+                                        }
+
 
                                         break;
 
@@ -737,6 +849,11 @@ export default {
                                         this.cargo_in_transmit.expected_date = tender_progress[i].expected_date;
                                         this.cargo_in_transmit.completed_date = tender_progress[i].completed_date;
                                         this.cargo_in_transmit.comments = tender_progress[i].comments;
+                                         
+                                        if(tender_progress[i].comments !== null){
+                                            
+                                            this.comments = tender_progress[i].comments;
+                                        }
 
                                         break;
 
@@ -749,6 +866,11 @@ export default {
                                         this.cargo_offloading.completed_date = tender_progress[i].completed_date;
                                         this.cargo_offloading.comments = tender_progress[i].comments;
 
+                                        if(tender_progress[i].comments !== null){
+                                            
+                                            this.comments = tender_progress[i].comments;
+                                        }
+
                                         break;
                     
                                     case "Cargo delivered":
@@ -759,6 +881,11 @@ export default {
                                         this.cargo_delivered.expected_date = tender_progress[i].expected_date;
                                         this.cargo_delivered.completed_date = tender_progress[i].completed_date;
                                         this.cargo_delivered.comments = tender_progress[i].comments;
+
+                                        if(tender_progress[i].comments !== null){
+
+                                            this.comments = tender_progress[i].comments;
+                                        }
 
                                         break;
 
@@ -788,19 +915,23 @@ export default {
                                //console.log(response.data.objects);
                                 switch(response.data.objects.name){
 
-                                    case "Border clearing":
+                                    case "Port processing":
 
-                                        this.clearing_started.InProgress = tender_progress[i].InProgress;
-                                        this.clearing_started.completed = tender_progress[i].completed;
-                                        this.clearing_started.waiting = tender_progress[i].waiting;
-                                        this.clearing_started.expected_date = tender_progress[i].expected_date;
-                                        this.clearing_started.completed_date = tender_progress[i].completed_date;
-                                         this.clearing_started.comments = tender_progress[i].comments;
+                                        this.port_processing.InProgress = tender_progress[i].InProgress;
+                                        this.port_processing.completed = tender_progress[i].completed;
+                                        this.port_processing.waiting = tender_progress[i].waiting;
+                                        this.port_processing.expected_date = tender_progress[i].expected_date;
+                                        this.port_processing.completed_date = tender_progress[i].completed_date;
+                                        this.port_processing.comments = tender_progress[i].comments;
 
+                                        if(tender_progress[i].comments !== null){
+
+                                            this.comments = tender_progress[i].comments;
+                                        }
 
                                         break;
 
-                                    case "TRA processing":
+                                    case "TRA":
 
                                         this.tcra_processing.InProgress = tender_progress[i].InProgress;
                                         this.tcra_processing.completed = tender_progress[i].completed;
@@ -808,6 +939,43 @@ export default {
                                         this.tcra_processing.expected_date = tender_progress[i].expected_date;
                                         this.tcra_processing.completed_date = tender_progress[i].completed_date;
                                         this.tcra_processing.comments = tender_progress[i].comments;
+
+                                        if(tender_progress[i].comments !== null){
+
+                                            this.comments = tender_progress[i].comments;
+                                        }
+
+                                        break;
+                                    case "Other processes":
+
+                                        this.other_processes.InProgress = tender_progress[i].InProgress;
+                                        this.other_processes.completed = tender_progress[i].completed;
+                                        this.other_processes.waiting = tender_progress[i].waiting;
+                                        this.other_processes.expected_date = tender_progress[i].expected_date;
+                                        this.other_processes.completed_date = tender_progress[i].completed_date;
+                                        this.other_processes.comments = tender_progress[i].comments;
+
+                                        if(tender_progress[i].comments !== null){
+
+                                            this.comments = tender_progress[i].comments;
+                                        }
+                                        
+
+                                        break;
+
+                                    case "Completion":
+
+                                        this.completion.InProgress = tender_progress[i].InProgress;
+                                        this.completion.completed = tender_progress[i].completed;
+                                        this.completion.waiting = tender_progress[i].waiting;
+                                        this.completion.expected_date = tender_progress[i].expected_date;
+                                        this.completion.completed_date = tender_progress[i].completed_date;
+                                        this.completion.comments = tender_progress[i].comments;
+
+                                        if(tender_progress[i].comments !== null){
+
+                                            this.comments = tender_progress[i].comments;
+                                        }
 
                                         break;
                                     default:
@@ -876,7 +1044,7 @@ export default {
                                 
                                 vm.setTransportingProgress(response.data.objects);
 
-                                vm.setTransportingInProgress(response.data.objects);
+                                //vm.setTransportingInProgress(response.data.objects);
                                  //eslint-disable-next-line no-console
                                  //console.log(response.data.objects);
                             }).catch(()=>{
@@ -935,7 +1103,7 @@ export default {
                                 
                                 vm.setClearingProgress(response.data.objects);
 
-                                vm.setClearingInProgress(response.data.objects);
+                                //vm.setClearingInProgress(response.data.objects);
 
                                  //eslint-disable-next-line no-console
                                  //console.log(response.data.objects);
@@ -980,12 +1148,12 @@ export default {
     }
     
      .waiting {
-        opacity: 0.3 ;
+        opacity: 0.3;
         
     }
 
      .completed {
-        opacity: 0.3 ;
+        opacity: 0.3;
     }
 
 </style>
