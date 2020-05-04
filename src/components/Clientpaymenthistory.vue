@@ -265,7 +265,7 @@
                    <center>
                         <h4 
                         class=" subtitle-1 font-weight-regular text--text mb-1 text-center"  > 
-                        ----------    NO PAYMENT MADE YET    ----------
+                        ---------- c   NO PAYMENT MADE YET    ----------
                         </h4>
                    </center>
                    </v-flex>
@@ -309,15 +309,15 @@ export default {
           vm.loading = true
 
 // Agent payment history
-          if (localStorage.category == 1) {  
+          if (localStorage.category == 3) {  
 
             console.log('Agent payment history')
             
-              vm.GET_AGENT(localStorage.client).then(()=>{
+              vm.GET_CUSTOMER(localStorage.client).then(()=>{
 
                   console.log(vm.LOAD_AGENT)
 
-                            if (!vm.LOAD_AGENT.objects.agent_id == '') {
+                            if (!vm.LOAD_AGENT.objects.customer_id == '') {
 
                                         if (vm.LOAD_AGENT.objects.is_verified == 0) {
 
@@ -329,7 +329,7 @@ export default {
 
                                         }else{
 
-                                            vm.GET_PAYMENT_HISTORY(vm.LOAD_AGENT.objects.agent_id).then(()=>{
+                                              vm.C_GET_PAYMENT_HISTORY(vm.LOAD_AGENT.objects.customer_id).then(()=>{
                                                         
                                                         console.log(vm.LOAD_PAYMENT_HISTORY);
 
@@ -367,138 +367,17 @@ export default {
                         }
                  })
 
-          } else if(localStorage.category == 2){
-// Transporter payment history
-
-            console.log('Transporter payment history');
-            
-              vm.T_GET_AGENT(localStorage.client).then(()=>{
-
-                  console.log(vm.LOAD_AGENT.objects.agent_id)
-
-                                if (!vm.LOAD_AGENT.objects.agent_id == '') {
-
-                                                if (vm.LOAD_AGENT.objects.is_verified == 0) {
-
-                                                        setTimeout(()=>{
-                                                            vm.loading = false
-                                                            vm.verify = true;
-                                                            vm.history = false
-                                                        }, 500)
-
-                                                }else{
-
-                                                    vm.T_GET_PAYMENT_HISTORY(vm.LOAD_AGENT.objects.agent_id).then(()=>{
-                                                        
-                                                        console.log(vm.LOAD_PAYMENT_HISTORY);
-
-                                                        if (vm.LOAD_PAYMENT_HISTORY.data.objects.length == 0) {
-
-                                                            console.log('no payment made yeat');
-
-                                                              setTimeout(()=>{
-                                                                    vm.loading = false
-                                                                    vm.verify = false
-                                                                    vm.nopayments = true
-                                                                }, 500)
-                                                            
-                                                            
-                                                        } else {
-
-                                                            setTimeout(()=>{
-                                                                    vm.loading = false
-                                                                    vm.verify = false;
-                                                                    vm.history = true
-                                                                }, 500)
-                                                            
-                                                        }
-                                                
-                                                    })
-
-                                                }
-
-                                }else{
-
-                                    setTimeout(()=>{
-                                        vm.loading = false
-                                        vm.profile = true;
-                                        vm.history = false 
-                                    }, 500) 
-                                
-                                }
-                  
-                    })
-
-          }      
+          } 
                            
       })
 
   },
 
-//   created (){
-          
-    
-//     console.log();
-//     console.log();
-//     console.log();
-    
-    
-    
-    
-     
 
-//           this.T_GET_AGENT(localStorage.client).then(()=>{
-
-//               console.log('transporter details below');
-//               console.log(this.LOAD_AGENT);
-
-//               this.T_GET_PAYMENT_HISTORY(this.LOAD_AGENT.objects.agent_id).then(()=>{
-
-//                   console.log('transporter payment terms');
-//                   console.log(this.LOAD_PAYMENT_HISTORY);
-                 
-//               })
-//           })
-
-//           this.GET_AGENT(localStorage.client).then(()=>{
-
-//               console.log('Agent details below');
-//               console.log(this.LOAD_AGENT);
-
-//               this.GET_PAYMENT_HISTORY(this.LOAD_AGENT.objects.agent_id).then(()=>{
-
-//                   console.log('Agent payment histoiry');
-//                   console.log(this.LOAD_PAYMENT_HISTORY);
-                  
-//               })
-//           })
-
-//           this.GET_CUSTOMER(localStorage.client).then(()=>{
-
-//               console.log('Agent details below');
-//               console.log(this.LOAD_AGENT);
-
-//               this.C_GET_PAYMENT_HISTORY(this.LOAD_AGENT.objects.agent_id).then(()=>{
-
-//                   console.log('Agent payment histoiry');
-//                   console.log(this.LOAD_PAYMENT_HISTORY);
-                  
-//               })
-//           })
-     
-      
-//       //eslint-disable-next-line no-console
-
-      
-//   },
   
   methods:{
       ...mapActions([
-          'T_GET_PAYMENT_HISTORY',
-          'GET_PAYMENT_HISTORY',
           'C_GET_PAYMENT_HISTORY',
-          'T_GET_AGENT',
-          'GET_AGENT', 
           'GET_CUSTOMER'
       ]),
 

@@ -627,7 +627,7 @@ export default {
                                     this.edited= true;
                                      this.$router.push('/agent/tenders/open') 
                                      this.$router.go('/agent/tenders/open')
-                                },2000)
+                                },1000)
                                 console.log(this.email);
                                 console.log(this.LOAD_PROFILE);
                             }else{

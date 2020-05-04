@@ -182,7 +182,7 @@ export default {
                     this.loading = false
                     this.verify = true;
                  this.verification = false
-                 },1000)
+                 },500)
                 }else{
                      tab = this.tab
                  this.T_GET_TENDERS(tab);
@@ -190,14 +190,14 @@ export default {
                      this.loading = false
                   this.verify = false;
                  this.verification = true
-                 },1000)
+                 },500)
                 }
              }else{
                 setTimeout(()=>{
                      this.loading = false
                   this.profile = true;
                  this.verification = false
-                 },1000) 
+                 },500) 
              }
              // eslint-disable-next-line no-console
             console.log(this.LOAD_AGENT);   

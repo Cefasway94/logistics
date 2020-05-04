@@ -292,8 +292,7 @@
         <!-- payment -->
         <v-list-item
           router
-          :to="{name: this.items[2].router.name, 
-          params: {id:this.items[2].router.params.id}}"
+          :to="{name: this.items[2].router.name}"
           link
         >
           <v-list-item-icon>
@@ -399,8 +398,7 @@
         <!-- payment -->
         <v-list-item
           router
-          :to="{name: this.items[1].router.name, 
-          params: {id:this.items[1].router.params.id}}"
+          :to="{name: this.items[1].router.name}"
           link
         >
           <v-list-item-icon>
@@ -560,13 +558,9 @@ export default {
         {
           title: "Payments",
           icon: "gavel",
-          router: { name: "Paymenthistory", params: { id: "null" } }
+          router: { name: "Clientpaymenthistory" }
         },
-        {
-          title: "Payments",
-          icon: "gavel",
-          router: { name: "Paymenthistory", params: { id: "null" } }
-        },
+        
        ];
       return client;
     },
@@ -586,7 +580,7 @@ export default {
         {
           title: "Payments",
           icon: "gavel",
-          router: { name: "Paymenthistory", params: { id: "null" } }
+          router: { name: "Paymenthistory" }
         }
       ];
       return agent;
@@ -607,7 +601,7 @@ export default {
         {
           title: "Payments",
           icon: "gavel",
-          router: { name: "Paymenthistory", params: { id: "null" } }
+          router: { name: "Paymenthistory" }
         }
       ];
       return transporter;

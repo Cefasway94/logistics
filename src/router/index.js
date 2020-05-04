@@ -42,6 +42,7 @@ import Payment from '../components/client/Payment.vue'
 import Aboutbid from '../components/client/Aboutbid.vue'
 import Paymenthistory from '../components/Paymenthistory.vue';
 import AboutTenderBids from '../components/client/AboutTenderBids.vue'
+import Clientpaymenthistory from '../components/Clientpaymenthistory.vue'
 
 //admin routes
 import AdminHome from '../components/admin/AdminHome.vue'
@@ -124,6 +125,12 @@ const routes = [
     name:'editTender',
     components:{editTender}
   },
+  {
+    path:'/client/payments/history',
+    name:'Clientpaymenthistory',
+    components:{Clientpaymenthistory}
+  },
+  
 
 //----------------------------------------- Agent routes  
   { // Agent editing profile
