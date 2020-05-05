@@ -329,7 +329,8 @@ export default {
 
                                         }else{
 
-                                              vm.C_GET_PAYMENT_HISTORY(vm.LOAD_AGENT.objects.customer_id).then(()=>{
+                                                                    // vm.LOAD_AGENT.objects.customer_id
+                                              vm.C_GET_PAYMENT_HISTORY(vm.LOAD_AGENT.objects.id).then(()=>{
                                                         
                                                         console.log(vm.LOAD_PAYMENT_HISTORY);
 
