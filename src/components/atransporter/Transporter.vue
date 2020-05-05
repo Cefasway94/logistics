@@ -2,7 +2,9 @@
     <v-app class=" pa-auto"  style="background-color:#F5FAFF;">
 
             <v-container  class=" mt-10 mx-auto" style="background-color:#F5FAFF;">
+
                 <v-card flat width="1300" class=" mx-auto mt-12" color="#F5FAFF">
+
                 <v-card flat width="700" class=" mx-auto mt-12" color="#F5FAFF">
                 
                 <!-- loading -->
@@ -321,7 +323,7 @@ export default {
                     this.loading = false
                     this.verify = true;
                  this.verification = false
-                 },1000)
+                 },500)
                 }else{
                      tab = this.tab
                  this.T_GET_DASHBOARD(tab).then(()=>{
@@ -345,7 +347,7 @@ export default {
                          this.loading = false
                       this.verify = false;
                      this.verification = true
-                     },1000)
+                     },500)
                  })
                 }
              }else{
@@ -353,7 +355,7 @@ export default {
                      this.loading = false
                   this.profile = true;
                  this.verification = false
-                 },1000) 
+                 },500) 
              }
                    
         }).catch(error=>{
@@ -399,7 +401,7 @@ export default {
                      setTimeout(()=>{
                          this.loadingbiding = false
                          this.bidlist=true
-                     },1000)
+                     },500)
                  }).catch(error=>{
              // eslint-disable-next-line no-console
             console.log(error);
@@ -426,7 +428,7 @@ export default {
                      setTimeout(()=>{
                          this.loadingbiding = false
                          this.onprogressliast=true
-                     },1000)
+                     },500)
                  }).catch(error=>{
              // eslint-disable-next-line no-console
             console.log(error);

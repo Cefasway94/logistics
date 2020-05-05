@@ -47,7 +47,9 @@
     <router-view name="AboutTenderBids"></router-view>
     <router-view name="Aboutbid"></router-view>
     <router-view name="Payment"></router-view>
-    <router-view name="Clientupdateprofile"></router-view>
+    <router-view name="Clientupdateprofile"></router-view> 
+    <router-view name="Clientpaymenthistory"></router-view>
+    
 
     <!--admin-->
     <router-view name="AdminHome"></router-view>

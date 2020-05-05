@@ -628,7 +628,7 @@ export default {
                                     this.edited= true;
                                      this.$router.push('/transporter/tenders/open')
                                      this.$router.go('/transporter/tenders/open')
-                                },2000)
+                                },1000)
                                 console.log(this.email);
                                 console.log(this.LOAD_PROFILE);
                             }else{

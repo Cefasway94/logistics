@@ -307,7 +307,7 @@ export default {
                     this.loading = false
                     this.verify = true;
                  this.verification = false
-                 },1000)
+                 },500)
                 }else{
                      tab = this.tab
                  this.GET_DASHBOARD(tab).then(()=>{
@@ -331,7 +331,7 @@ export default {
                          this.loading = false
                       this.verify = false;
                      this.verification = true
-                     },1000)
+                     },500)
                  })
                 }
              }else{
@@ -339,7 +339,7 @@ export default {
                      this.loading = false
                   this.profile = true;
                  this.verification = false
-                 },1000) 
+                 },500) 
              }
                    
         }).catch(error=>{
@@ -385,7 +385,7 @@ export default {
                      setTimeout(()=>{
                          this.loadingbiding = false
                          this.bidlist=true
-                     },1000)
+                     },500)
                  }).catch(error=>{
              // eslint-disable-next-line no-console
             console.log(error);
@@ -412,7 +412,7 @@ export default {
                      setTimeout(()=>{
                          this.loadingbiding = false
                          this.onprogressliast=true
-                     },1000)
+                     },500)
                  }).catch(error=>{
              // eslint-disable-next-line no-console
             console.log(error);
