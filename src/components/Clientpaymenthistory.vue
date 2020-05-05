@@ -110,7 +110,7 @@
                         <h4 class=" body-1 font-weight-regular mb-1 text-center " style="color:#4169E1;" >Client</h4>
                    </v-flex>
 
-                   <v-flex wrap xs12 sm4 md4 lg4  class=" ">
+                   <v-flex wrap xs12 sm3 md3 lg3  class=" ">
                         <h4 class=" body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Description</h4>
                    </v-flex>
 
@@ -123,7 +123,7 @@
                     </v-flex>
 
                     <v-flex wrap xs12 sm4 md4 lg4 class="pr-2">
-                        <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Client</h4>                        
+                        <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Invoice</h4>                        
                    </v-flex>
 
                 </v-layout>
@@ -132,6 +132,7 @@
         </v-card>
 
 <!-- Content card -->
+    
         <v-hover class="">
         <template v-slot="{ hover }">
 
@@ -143,38 +144,38 @@
                    <v-flex 
                    wrap xs12 sm4 md4 lg4 
                    class=" pt-5 pb-3 " >
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center"  >Cargo details</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center"  >{{LOAD_PAYMENT_HISTORY.data.objects.transaction_ID}}</h4>
                    </v-flex>
 
                     <v-flex 
                     wrap xs12 sm4 md4 lg4  
-                    class="pt-5 pb-3 ">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">Destination</h4>
+                    class="pt-5 pb-3 " >
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{LOAD_PAYMENT_HISTORY.data.objects.created_at}}</h4>
                    </v-flex>
 
                    <v-flex 
                    wrap xs12 sm4 md4 lg4  
                    class=" pt-5 pb-3 ">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center ">Destination</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center ">{{LOAD_PAYMENT_HISTORY.data.objects.depositors_name}}</h4>
                    </v-flex>
 
                    <v-flex 
-                   wrap xs12 sm4 md4 lg4  
+                   wrap xs12 sm3 md3 lg3  
                    class="  pt-5 pb-3">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">Destination</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{description}}</h4>
                    </v-flex>
 
                     <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class="  pt-5 pb-3">
-                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">Client</h4>
+                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{LOAD_PAYMENT_HISTORY.data.objects.amount}}</h4>
                    </v-flex>
                    
                     <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class=" justify-center pt-5 pb-3">
                     <center>
-                         <v-chip small class="light-green white--text  font-weight-light caption "  >2000 usd</v-chip>                    
+                         <v-chip small class="light-green white--text  font-weight-light caption "  >{{LOAD_PAYMENT_HISTORY.data.objects.percentage_deposited}} %</v-chip>                    
                     </center>
                     </v-flex>
 
@@ -196,7 +197,85 @@
         </v-card>
         </template>
         </v-hover>
+
+
+     <!-- for aray data -->
+                        <!-- 
+                            <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
+             v-for="(history, i) in LOAD_PAYMENT_HISTORY.data.objects.length" :key="i"  >
+
+        <v-hover class="">
+        <template v-slot="{ hover }">
+
+        <v-card
+                class="mb-4 px-3"
+                :elevation="hover ? 15 : 3">
+          <v-layout row wrap  class=" pl-2 ">
+               <v-layout sm11 md11   >       
+                   <v-flex 
+                   wrap xs12 sm4 md4 lg4 
+                   class=" pt-5 pb-3 " >
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center"  >{{history.transaction_ID}}</h4>
+                   </v-flex>
+
+                    <v-flex 
+                    wrap xs12 sm4 md4 lg4  
+                    class="pt-5 pb-3 " >
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{history.created_at}}</h4>
+                   </v-flex>
+
+                   <v-flex 
+                   wrap xs12 sm4 md4 lg4  
+                   class=" pt-5 pb-3 ">
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center ">{{history.depositors_name}}</h4>
+                   </v-flex>
+
+                   <v-flex 
+                   wrap xs12 sm3 md3 lg3  
+                   class="  pt-5 pb-3">
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{description}}</h4>
+                   </v-flex>
+
+                    <v-flex 
+                    wrap xs12 sm4 md4 lg4 
+                    class="  pt-5 pb-3">
+                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{history.amount}}</h4>
+                   </v-flex>
+                   
+                    <v-flex 
+                    wrap xs12 sm4 md4 lg4 
+                    class=" justify-center pt-5 pb-3">
+                    <center>
+                         <v-chip small class="light-green white--text  font-weight-light caption "  >{{history.percentage_deposited}} %</v-chip>                    
+                    </center>
+                    </v-flex>
+
+                    <v-flex 
+                    wrap xs12 sm4 md4 lg4
+                    class=""  style="background-color:white;">
+                    <v-btn elevation="flat" height="50" class="mt-2 pt-3" color="transparent"  >
+                        <h4  
+                        class="font-weight-bold mb-3 text-center " 
+                        style="color:#4169E1;">
+                        View Invoice
+                        </h4>
+                    </v-btn>
+                   </v-flex>
+
+                </v-layout>
+                
+          </v-layout >
         </v-card>
+        </template>
+        </v-hover>
+
+     </v-flex>
+                         -->
+
+        </v-card>
+
+
+
 
         <v-card
                 v-show="nopayments"
@@ -236,7 +315,7 @@
                     </v-flex>
 
                     <v-flex wrap xs12 sm4 md4 lg4 class="pr-2">
-                        <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Client</h4>                        
+                        <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Invoice</h4>                        
                    </v-flex>
 
                 </v-layout>
@@ -298,7 +377,10 @@ export default {
           profile:false,
           history: false,
           nopayments:false,
-          history2:false
+          history2:false,
+          status: 'null',
+          color:'orange',
+          description: ''
           
       }
   },
@@ -327,12 +409,12 @@ export default {
                                                     vm.history = false
                                                 }, 500)
 
-                                        }else{
+                                        }else{ 
 
                                                                     // vm.LOAD_AGENT.objects.customer_id
                                               vm.C_GET_PAYMENT_HISTORY(vm.LOAD_AGENT.objects.id).then(()=>{
                                                         
-                                                        console.log(vm.LOAD_PAYMENT_HISTORY);
+                                                        console.log(vm.LOAD_PAYMENT_HISTORY)
 
                                                         if (vm.LOAD_PAYMENT_HISTORY.data.objects.length == 0) {
 
@@ -346,12 +428,16 @@ export default {
                                                             
                                                             
                                                         } else {
-
+                                          
                                                             setTimeout(()=>{
                                                                     vm.loading = false
                                                                     vm.verify = false;
                                                                     vm.history = true
                                                                 }, 500)
+
+                                                                if (vm.LOAD_PAYMENT_HISTORY.data.objects.is_full_amount_paid == false ){
+                                                                    vm.description = 'partial paid'
+                                                                }
                                                             
                                                         }
                                                 

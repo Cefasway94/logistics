@@ -123,7 +123,7 @@
                     </v-flex>
 
                     <v-flex wrap xs12 sm4 md4 lg4 class="pr-2">
-                        <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Client</h4>                        
+                        <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Invoices</h4>                        
                    </v-flex>
 
                 </v-layout>
@@ -236,7 +236,7 @@
                     </v-flex>
 
                     <v-flex wrap xs12 sm4 md4 lg4 class="pr-2">
-                        <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Client</h4>                        
+                        <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Invoices</h4>                        
                    </v-flex>
 
                 </v-layout>
@@ -265,7 +265,7 @@
                    <center>
                         <h4 
                         class=" subtitle-1 font-weight-regular text--text mb-1 text-center"  > 
-                        ----------    NO PAYMENT MADE YET    ----------
+                          NO PAYMENT MADE YET   
                         </h4>
                    </center>
                    </v-flex>
