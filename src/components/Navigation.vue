@@ -103,7 +103,16 @@
               <v-list-item
                 v-for="(item, i) in itemes"
                 :key="i"
-                :to="{name:'Teditprofile', params: {id:LOAD_AGENT.id}}">
+                :to="{name: items[3].router.name}">
+
+
+<!--  {
+          title: "My profile",  
+          icon: "mdi-account-multiple",
+          router: { name: "AgentProfile" }
+        } -->
+
+
                 <v-list-item-icon>
                   <v-icon v-text="item.icon"></v-icon>
                 </v-list-item-icon>
@@ -395,7 +404,7 @@
           </v-list-item-content>
         </v-list-item> -->
 
-        <!-- payment -->
+        <!-- payment history -->
         <v-list-item
           router
           :to="{name: this.items[1].router.name}"
@@ -581,6 +590,11 @@ export default {
           title: "Payments",
           icon: "gavel",
           router: { name: "Paymenthistory" }
+        },
+        {
+          title: "My profile",  
+          icon: "mdi-account-multiple",
+          router: { name: "AgentProfile" }
         }
       ];
       return agent;
@@ -602,6 +616,11 @@ export default {
           title: "Payments",
           icon: "gavel",
           router: { name: "Paymenthistory" }
+        },
+        {
+          title: "My profile",  
+          icon: "mdi-account-multiple",
+          router: { name: "Teditprofile" }
         }
       ];
       return transporter;

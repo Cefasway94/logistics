@@ -76,7 +76,7 @@
 
         <v-card flat width="900" class="mt-12 mx-auto mb-7" color="#F5FAFF">
             <v-flex row class="px-3 ">
-                <h1 class=" font-weight-regular headline mb-0 ">Profile info</h1>
+                <h1 class=" font-weight-regular headline mb-0 ">Agents Profile info</h1>
                 <v-chip 
                 color="orange" 
                 class="mx-auto" 
@@ -89,7 +89,7 @@
         <v-card flat width="900" class="mt-5 mx-auto " color="#F5FAFF">
             <v-flex row class="px-3">
             <v-icon color="#4169E1" class="mr-5">person_outline</v-icon>
-            <h1 style="color:#4169E1;" class=" font-weight-regular title ">Transporter details</h1>
+            <h1 style="color:#4169E1;" class=" font-weight-regular title ">Agent details</h1>
              <v-spacer></v-spacer>
                 <v-btn
                 color="#4169E1" 
@@ -119,14 +119,47 @@
                 absolute
                 color="#4169E1">
                 </v-progress-linear>
-                
+               
 
             <v-flex column class="pt-3">
+
             <v-flex class="px-3">
             <h1 style="color:#4169E1;" class=" font-weight-bold body-1 my-5">ABOUT AGENT</h1>
             </v-flex>
 
-            <v-flex row class="px">
+             
+                <v-flex row class="pb-5 pl-2" style="background-color:;">
+                        <v-flex>
+                        <p class="bondy-2 mb-0 ml-3 mb-1">Profile Image</p>
+                        <v-card
+                        flat 
+                        color="#F5FAFF" 
+                        width="200" 
+                        height="150" 
+                        outlined 
+                        class="mx-3"
+                        style="bo">
+                            <v-flex class="" >
+                                <v-file-input
+                                id="profile_image"
+                                ref="other"
+                                type="file" 
+                                flat 
+                                dropzone 
+                                class="mb-0 pb-0" 
+                                height="150" 
+                                width="100" 
+                                outlined 
+                                prepend-icon=""
+                                @change="uploadprofile()" 
+                                ></v-file-input>
+                            </v-flex>
+                        </v-card>
+                        </v-flex>
+                </v-flex> 
+            
+
+            <v-flex row class="">
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Name</p>
                     <v-text-field
@@ -283,6 +316,8 @@
                          <v-flex class="" >
                             <v-file-input 
                             id="certificate"
+                            ref="certificate"
+                            type="file"
                             flat 
                             dropzone 
                             class="mb-0 pb-0" 
@@ -290,7 +325,7 @@
                             width="100" 
                             outlined 
                             prepend-icon=""
-                            @change="updatecertificatie()">
+                            @change="updatecertificate()">
                             </v-file-input>
                          </v-flex>
                     </v-card>
@@ -307,6 +342,8 @@
                          <v-flex class="" >
                             <v-file-input 
                             id="insurance"
+                            ref="insurance"
+                            type="file"
                             flat 
                             dropzone 
                             class="mb-0 pb-0" 
@@ -331,7 +368,9 @@
                      class="mx-3">
                          <v-flex class="" >
                             <v-file-input
-                            id="other" 
+                            id="other"
+                            ref="other"
+                            type="file" 
                             flat 
                             dropzone 
                             class="mb-0 pb-0" 
@@ -466,6 +505,12 @@ export default {
            aname:'',
            acnumber:'',
 
+           // files
+           certificate:[],
+           insurance:[],     
+           other:[],
+           profile_image:[],
+
            //others 
            edited:false,
            verification:false,
@@ -499,7 +544,9 @@ export default {
     created (){
          
         this.GET_AGENT(localStorage.client).then(()=>{
+
             console.log(this.LOAD_AGENT);
+
             if (
                 !this.LOAD_AGENT.objects.agent_id == '' && 
                 this.LOAD_AGENT.objects.is_verified == 0 ){
@@ -578,64 +625,102 @@ export default {
                 this.acnumber = this.LOAD_AGENT.objects.account_number
            },
 
+
+           updateinsurance(){
+               this.insurance.push(document.getElementById("insurance").files[0])
+               },
+
+           updatecertificate(){
+               this.certificate.push(document.getElementById("certificate").files[0])
+           },
+            
+            uploadother(){ 
+               this.other.push(document.getElementById("other").files[0])
+            },
+
+            uploadprofile(){
+                this.profile_image.push(document.getElementById("profile_image").files[0])
+                //this.profile_image = 'profile image'
+            },
+
+            dataobject(){
+
+                const formdata = new FormData()
+
+                formdata.append('profile_image',this.profile_image)
+                formdata.append('certificate', this.certificate[0])
+                formdata.append('insurance', this.insurance[0])
+                formdata.append('company_name', this.name)
+                formdata.append('email', this.mail)
+                formdata.append('tin_number', this.tin)
+                formdata.append('phone', this.phone)
+                formdata.append('fax', this.faxnumber)
+                formdata.append('p_o_box', this.box)
+                formdata.append('country', this.country)
+                formdata.append('city', this.pcity)
+                formdata.append('region', this.pregion)
+                formdata.append('terms_of_payment', this.terms_of_payment) 
+                formdata.append('bank_name', this.bname)
+                formdata.append('account_name', this.aname)
+                formdata.append('account_number', this.acnumber)
+
+                return formdata;
+                
+            },
+
        
 
        savechanges(){
-           console.log(this.terms_of_payment);
-           
-           const profile_image = 'profile image url';
-           const certificate = 'certificate image url';
-           const insurance = 'insurance image url'
 
-           //const company_name= this.company_name T_POST_PAYMENT_TERMS
+           this.loading = true
+
+           console.log(this.terms_of_payment);
+
+           const dataobject = this.dataobject()
+
+           console.log(dataobject.get('profile_image'));
+           
+
            this.$store.dispatch('POST_PAYMENT_TERMS',{
+
                email : this.mail,
                installment_desc:this.terms_of_payment,
-           }).then(()=>{
+               
+            }).then(()=>{
+
                console.log('sent payment terms with email');
+
 
                if ( this.LOAD_POST_PAYMENT_TERMS){
                                     
-                       this.$store.dispatch('EDIT_PROFILE',{
-                            profile_image,certificate,insurance,
-                            company_name:this.name,
-                            email : this.mail,
-                            tin_number: this.tin,
-                            phone: this.phone,
-                            fax:this.faxnumber,
-                            p_o_box:this.box,
-                            country:this.country,
-                            city:this.pcity,
-                            region:this.pregion,
-                            terms_of_payment:this.terms_of_payment,
-                            bank_name:this.bname,
-                            account_name:this.aname,
-                            account_number:this.acnumber
-                            }).then((data) => {
-                                console.log('load profile....');
-                                console.log(status);
-                                console.log(data);                    
-                                console.log(this.LOAD_PROFILE);
-                                
-                                
+                       this.$store.dispatch('EDIT_PROFILE',{dataobject, email: this.mail} ).then(() => {
+
+                                    console.log('load profile....');           
+                                    console.log(this.LOAD_PROFILE);
                                 
                                 if (this.LOAD_PROFILE.errorCount == 0 && this.LOAD_PROFILE.genralErrorCode == 8000) {
-                                //console.log(this.LOAD_PROFILE);
-                                this.loading = true;
-                                setTimeout(()=>{
-                                    this.loading= false;
-                                    this.edited= true;
-                                     this.$router.push('/agent/tenders/open') 
-                                     this.$router.go('/agent/tenders/open')
-                                },1000)
-                                console.log(this.email);
-                                console.log(this.LOAD_PROFILE);
-                            }else{
-                                console.log('profile failed');
-                                
-                            }
+
+                                    //console.log(this.LOAD_PROFILE);
+                                    this.loading = true;
+                                    
+                                    setTimeout(()=>{
+                                        this.loading= false;
+                                        this.edited= true;
+                                        this.$router.push('/agent/tenders/open') 
+                                        this.$router.go('/agent/tenders/open')
+                                    },1000)
+
+                                    console.log(this.email);
+                                    console.log(this.LOAD_PROFILE);
+
+                                }else{
+
+                                    console.log('profile failed');
+                                    
+                                }
                                 
                         }).catch((error)=>{
+
                             console.log(error);
                             
                         })                   
