@@ -426,7 +426,7 @@ actions: {
         },
 
 // agent edit profile ====================================================================>>>>        
-        EDIT_PROFILE: ({ commit }, {profile_image,certificate,insurance,company_name,email, tin_number, phone, fax, p_o_box, country, city, region, bank_name, account_name, account_number}) => {
+        EDIT_PROFILE: ({ commit }, {dataobject, email}) => {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -435,33 +435,22 @@ actions: {
             }
             return new Promise((resolve, reject) => {
               axios
-                .post(`http://207.180.215.239:8000/api/v1/agents/`+email, {
-                    profile_image,
-                    certificate,
-                    insurance,
-                    company_name, 
-                    tin_number, 
-                    phone, 
-                    fax,  
-                    p_o_box,  
-                    country, 
-                    city, 
-                    region,
-                    bank_name, 
-                    account_name, 
-                    account_number
-                },config)
+                .post(`http://207.180.215.239:8000/api/v1/agents/`+email, dataobject, config)
                 .then(({ data, status }) => {
+
                  if ((status == 200 && data.errorCount == 0) && (data.genralErrorCode == 8000)) {
                     console.log(data);
                     console.log('HERE DATA');
                     resolve(true)
                     commit('SET_PROFILE',data);
                         // commit doesn't point to the mutation
+
                 }else{
+
                     console.log('failed if');
                     console.log(data);
                 }
+                
                 })
                 .catch(error => {
                   reject (error);
@@ -855,7 +844,7 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
         },
 
 // agent edit profile ------------------------------------------------------------------------------------------        
-        T_EDIT_PROFILE: ({ commit }, {profile_image,certificate,insurance,company_name,email, tin_number, phone, fax, p_o_box, country, city, region, bank_name, account_name, account_number}) => {
+        T_EDIT_PROFILE: ({ commit }, {dataobject , email}) => {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -864,22 +853,7 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
             }
             return new Promise((resolve, reject) => {
               axios
-                .post(`http://207.180.215.239:9000/api/v1/transporters/`+email, {
-                    profile_image,
-                    certificate,
-                    insurance,
-                    company_name, 
-                    tin_number, 
-                    phone, 
-                    fax,  
-                    p_o_box,  
-                    country, 
-                    city, 
-                    region, 
-                    bank_name, 
-                    account_name, 
-                    account_number
-                },config)
+                .post(`http://207.180.215.239:9000/api/v1/transporters/`+email, dataobject, config)
                 .then(({ data, status }) => {
                  if ((status == 200 && data.errorCount == 0) && (data.genralErrorCode == 8000)) {
                     console.log(data);

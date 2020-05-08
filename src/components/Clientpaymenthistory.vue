@@ -468,6 +468,11 @@ export default {
           'GET_CUSTOMER'
       ]),
 
+     editprofile(){
+          this.verify = false
+          this.$router.push('/Client/editprofile/'+localStorage.client)
+      },  
+
   },
 
   computed: {

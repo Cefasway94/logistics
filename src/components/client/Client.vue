@@ -426,7 +426,6 @@ export default {
       editprofile(){
           this.verify = false
           this.$router.push('/Client/editprofile/'+localStorage.client)
-          this.$router.go('/Client/editprofile/'+localStorage.client)
       },  
 
       fetch(tab){
@@ -511,6 +510,9 @@ export default {
             let tab = localStorage.client
             vm.GET_CUSTOMER(tab).then(()=>{
             
+            console.log(vm.LOAD_AGENT.objects);
+            
+
                 if (!vm.LOAD_AGENT.objects.customer_id == '') {
                     if (vm.LOAD_AGENT.objects.is_verified == 0) {
                         setTimeout(()=>{

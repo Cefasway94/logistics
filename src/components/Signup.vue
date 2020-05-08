@@ -15,6 +15,46 @@
                 <p class="text-center font-weight-regular body-1 mb-0">Welcome, please register to create your account</p>
             </v-card-text>
 
+            <!-- confirmation dialogues ---------------------------->
+            
+              <template>
+                <v-row justify="center">
+                  <v-dialog
+                    v-model="dialog"
+                    max-width="290">
+                    <v-card>
+                      <v-card-title class="headline">Use Google's location service?</v-card-title>
+
+                      <v-card-text>
+                        Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
+                      </v-card-text>
+
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+
+                        <v-btn
+                          color="primary darken-1"
+                          text
+                          @click="dialog = false">
+                          Disagree
+                        </v-btn>
+
+                        <v-spacer></v-spacer>
+
+                        <v-btn
+                          color="primary darken-1"
+                          text
+                          @click.prevent=" Register()">
+                          Agree
+                        </v-btn>
+
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-row>
+              </template>
+            <!--  -------------------------------------------------->
+
             
             <v-form class="px-7">
               
@@ -352,7 +392,7 @@
                     <v-btn color="#4169E1" 
                     height="47" 
                     block 
-                    @click.prevent=" Register()">
+                    @click.stop="confirm()">
                     <span class="white--text">Signup</span>
                     </v-btn>
                     </v-card>
@@ -393,12 +433,18 @@ export default {
   
   data (){
       return{
+
+        //confirmation dialogue
+          dialog: false,
+
+        //-------------
           be1: '5',
           be2: '0',
           be3: '0',
           btn1:"#4169E1", 
           btn2:"transparent", 
           btn3:"transparent",
+
          //match: false,                // used to chcek if passwords match, 
          invalid: false,             // togle fields
          //invalidemail : false,      // check if email is valid
@@ -434,23 +480,51 @@ methods:{
       //'GET_TENDERSDETAIL'
     ]),
 
+    confirm(){
+
+      if (this.validate()) {
+
+        this.dialog = true
+
+        if (this.category == 1) {
+
+          console.log('agent');
+          
+          
+        } else if(this.category == 2) {
+
+          console.log('transporter');
+          
+        } else if (this.category ==3 ){
+
+          console.log('client');
+          
+        }
+
+
+      }
+
+    },
+
     Register(){
       
-            
-  if (this.validate()) {
+      if (this.validate()) {
 
-            this.loading = true;
+        this.dialog = false
+
+        this.loading = true
 
             setTimeout(()=>{
-                if (this.success === false && this.invalid == true) {
-                  this.invalid == true
+              if (this.success === false && this.invalid == true) {
+                this.invalid == true
                 } else if (this.success === false && this.invalid == false){
                   this.loading = false;
                   //this.timeout = true;
                 }
               },6000)
 
-          console.log('here register');
+          console.log('here register')
+
           this.$store.dispatch('REGISTER', {
           name: this.name,
           email: this.email,

@@ -502,6 +502,23 @@ export default {
           'GET_CUSTOMER'
       ]),
 
+       editprofile(){
+           if (localStorage.category == 1) {
+
+               console.log('Agent');
+               this.verify = false
+               this.$router.push('/agent/editprofile')
+
+           } else if (localStorage.category == 2) {
+
+               console.log('transporter');
+               this.verify = false
+               this.$router.push('/transporter/editprofile')
+               
+           }
+          
+      },
+
   },
 
   computed: {
