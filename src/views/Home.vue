@@ -55,6 +55,7 @@
     <router-view name="AdminHome"></router-view>
     <router-view name="CustomerVerifying"></router-view>
     <router-view name="AgentVerifying"></router-view>
+    <router-view name="PaymentVerifying"></router-view>
 </transition>
       
   </v-content>

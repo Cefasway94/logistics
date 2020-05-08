@@ -716,7 +716,7 @@ export default {
 
         transporting:false,
 
-        payment_value:80,
+        payment_value:0,
 
         cargo_loading:{
             
@@ -1057,16 +1057,21 @@ export default {
                         .then((response) => 
                             {
 
-                                if(response.data.objects.length === 0)
-                                    vm.payment_value = 0;
-                                else
-                                    vm.payment_value = response.data.objects.percentage_deposited;
+                                if(response.data.objects.verify == 1){
+
+                                    if(response.data.objects.length === 0)
+                                        vm.payment_value = 0;
+                                    else
+                                        vm.payment_value = response.data.objects.percentage_deposited;
+                                
                                 //eslint-disable-next-line no-console
                                  //console.log(response.data.objects);
 
                                 //vm.payment_value = response.data.objects.percentage_deposited;
                                  //eslint-disable-next-line no-console
                                  //console.log(response.data.objects);
+                                }
+                                
 
                             }).catch(()=>{
 
