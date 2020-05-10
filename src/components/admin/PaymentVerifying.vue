@@ -66,7 +66,7 @@
                             >
                               Yes
                             </v-btn>
-                                </v-card-actions>
+                      </v-card-actions>
                               </v-card>
                             </v-dialog>
                           </td>

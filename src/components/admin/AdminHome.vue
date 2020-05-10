@@ -35,7 +35,7 @@
                           <th class="text-left">Email</th>
                           <th class="text-left">Country</th>
                           <th></th>
-                          <th></th>
+                          <!--<th></th>-->
                         </tr>
                       </thead>
 
@@ -55,7 +55,7 @@
                               Verify
                             </v-btn>
                           </td>
-                          <td>
+                          <!--<td>
                             <v-dialog              
                               v-model="dialog"
                               width="600"
@@ -103,7 +103,7 @@
                                 </v-card-actions>
                               </v-card>
                             </v-dialog>
-                          </td>
+                          </td>-->
                           <td>
                             <v-btn
                               small 
@@ -141,7 +141,7 @@
                           <th class="text-left">Email</th>
                           <th class="text-left">Country</th>
                           <th></th>
-                          <th></th>
+                          <!--<th></th>-->
                         </tr>
                       </thead>
 
@@ -161,7 +161,7 @@
                               Verify
                             </v-btn>
                           </td>
-                          <td>
+                          <!--<td>
                             <v-dialog              
                               v-model="dialog"
                               width="600"
@@ -209,7 +209,7 @@
                                 </v-card-actions>
                               </v-card>
                             </v-dialog>
-                          </td>
+                          </td>-->
                           <td>
                             <v-btn
                               small 
@@ -246,7 +246,7 @@
                           <th class="text-left">Email</th>
                           <th class="text-left">Country</th>
                           <th></th>
-                          <th></th>
+                          <!--<th></th>-->
                         </tr>
                       </thead>
 
@@ -267,7 +267,7 @@
                             </v-btn>
                           </td>
 
-                          <td>
+                          <!--<td>
                            
                             <v-dialog              
                               v-model="dialog"
@@ -285,6 +285,7 @@
                                 >
                                   Deny
                                 </v-btn>
+                                
                               </template>
 
                               <v-card>
@@ -316,7 +317,7 @@
                                 </v-card-actions>
                               </v-card>
                             </v-dialog>
-                          </td>
+                          </td>-->
                           
                           <td>
                             <v-btn
