@@ -1056,6 +1056,8 @@ export default {
                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
                         .then((response) => 
                             {
+                                 //eslint-disable-next-line no-console
+                                 console.log("**************"+response.data.objects.length);
 
                                 if(response.data.objects.verify == 1){
 
@@ -1070,6 +1072,9 @@ export default {
                                 //vm.payment_value = response.data.objects.percentage_deposited;
                                  //eslint-disable-next-line no-console
                                  //console.log(response.data.objects);
+                                } else {
+                                    
+                                    vm.payment_value = response.data.objects.percentage_deposited;
                                 }
                                 
 
