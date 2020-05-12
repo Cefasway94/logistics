@@ -35,7 +35,7 @@
                           <th class="text-left">Email</th>
                           <th class="text-left">Country</th>
                           <th></th>
-                          <!--<th></th>-->
+                          <th></th>
                         </tr>
                       </thead>
 
@@ -55,9 +55,10 @@
                               Verify
                             </v-btn>
                           </td>
-                          <!--<td>
+                          <td>
                             <v-dialog              
                               v-model="dialog"
+                              :retain-focus="false"
                               width="600"
                             >
                               <template v-slot:activator="{ on }">
@@ -79,7 +80,7 @@
                                   class="body-3 grey lighten-2"
                               
                                   >
-                                  Are you want to cancel verification for this Agent?
+                                  Are you want to cancel verification for this Customer?
                                 </v-card-title>
 
                                 <v-divider></v-divider>
@@ -103,7 +104,7 @@
                                 </v-card-actions>
                               </v-card>
                             </v-dialog>
-                          </td>-->
+                          </td>
                           <td>
                             <v-btn
                               small 
@@ -141,7 +142,7 @@
                           <th class="text-left">Email</th>
                           <th class="text-left">Country</th>
                           <th></th>
-                          <!--<th></th>-->
+                          <th></th>
                         </tr>
                       </thead>
 
@@ -161,9 +162,10 @@
                               Verify
                             </v-btn>
                           </td>
-                          <!--<td>
+                          <td>
                             <v-dialog              
                               v-model="dialog"
+                              :retain-focus="false"
                               width="600"
                             >
                               <template v-slot:activator="{ on }">
@@ -209,7 +211,7 @@
                                 </v-card-actions>
                               </v-card>
                             </v-dialog>
-                          </td>-->
+                          </td>
                           <td>
                             <v-btn
                               small 
@@ -246,7 +248,7 @@
                           <th class="text-left">Email</th>
                           <th class="text-left">Country</th>
                           <th></th>
-                          <!--<th></th>-->
+                          <th></th>
                         </tr>
                       </thead>
 
@@ -267,10 +269,11 @@
                             </v-btn>
                           </td>
 
-                          <!--<td>
+                          <td>
                            
                             <v-dialog              
                               v-model="dialog"
+                              :retain-focus="false"
                               width="600"
                             >
                               <template v-slot:activator="{ on }">
@@ -317,7 +320,7 @@
                                 </v-card-actions>
                               </v-card>
                             </v-dialog>
-                          </td>-->
+                          </td>
                           
                           <td>
                             <v-btn
