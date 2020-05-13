@@ -58,6 +58,7 @@
                           <td>
                             <v-dialog              
                               v-model="dialog"
+                              :retain-focus="false"
                               width="600"
                             >
                               <template v-slot:activator="{ on }">
@@ -79,7 +80,7 @@
                                   class="body-3 grey lighten-2"
                               
                                   >
-                                  Are you want to cancel verification for this Agent?
+                                  Are you want to cancel verification for this Customer?
                                 </v-card-title>
 
                                 <v-divider></v-divider>
@@ -164,6 +165,7 @@
                           <td>
                             <v-dialog              
                               v-model="dialog"
+                              :retain-focus="false"
                               width="600"
                             >
                               <template v-slot:activator="{ on }">
@@ -271,6 +273,7 @@
                            
                             <v-dialog              
                               v-model="dialog"
+                              :retain-focus="false"
                               width="600"
                             >
                               <template v-slot:activator="{ on }">
@@ -285,6 +288,7 @@
                                 >
                                   Deny
                                 </v-btn>
+                                
                               </template>
 
                               <v-card>
