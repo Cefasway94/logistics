@@ -10,7 +10,7 @@
                 <h1 class="primary--text text-center py-2 font-weight-medium  " >UBALORI</h1>
             </v-card-title>
             <v-card-text>
-                <p class="text-center font-weight-regular body-1 mb-0">Welcome, please register to create your account</p>
+                <p class="text-center font-weight-regular body-1 mb-0">Welcome, please Login to access your account</p>
             </v-card-text>
 
             <v-form class="px-7">

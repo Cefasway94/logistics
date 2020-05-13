@@ -134,9 +134,15 @@
                     <v-row row class="px-3 mb-1">
                         <h4  class=" title ">{{tender.customer_offer_amount}} USD</h4>
                         <v-spacer></v-spacer>
-                        <v-btn small elevation="flat" 
-                        color="#4169E1" class="white--text" @click="gettenderdetails(tender.id)" :to="{name:'AgentAbouttender', 
-                        params: {id:tender.id}}" >View Details</v-btn>
+                        <v-btn 
+                        small 
+                        elevation="flat" 
+                        color="#4169E1" 
+                        class="white--text" 
+                        @click="gettenderdetails(tender.id)" 
+                        :to="{name:'Tabouttender', params: {id:tender.id}}" >
+                        View Details
+                        </v-btn>
                         
                     </v-row>
                     
