@@ -2,7 +2,39 @@
 
         <v-container class=" mt-10 px-5">
 
-            <v-card row flat width="1300" class="mt-10 mx-auto mb-5" color="#F5FAFF">
+            <v-progress-linear
+                v-model="percentage"
+                class="mt-5 teal lighten-5"
+                :rounded="true"
+                height="40"
+                
+            >
+            <v-row :align="end" :align-content="end">
+                <v-col 
+                    cols="5" 
+                    class="white--text font-weight-bold  pr-3 pl-5" 
+                > 
+                    <span>Step 1 </span>
+                </v-col>
+
+                <v-col 
+                    cols="3" 
+                    class="white--text font-weight-bold pr-3 pl-5"
+                > 
+                    <span>Step 2 </span>
+                </v-col>
+
+                <v-col 
+                    cols="4" 
+                    class="white--text font-weight-bold pr-3 pl-5"
+                >
+                    <span>Step 3 </span>
+                </v-col>
+            </v-row>
+               
+            </v-progress-linear>
+
+            <v-card row flat width="1300" class="mt-10 mx-auto mb-5" v-if="(client_details && percentage == 0)" color="#F5FAFF">
                 <v-flex row class="px-3">
                     <h3 class="headline mt-1 font-weight-regular">Profile info</h3>
 
@@ -12,14 +44,14 @@
                 </v-flex>
             </v-card>
 
-             <v-card row flat width="1300" class="mt-10 mx-auto" color="#F5FAFF" v-if="client_details">
+             <v-card row flat width="1300" class="mt-10 mx-auto" color="#F5FAFF" v-if="client_details && percentage == 0">
                 <v-flex row class="">
                     <v-icon color="grey" class="mb-4 ml-3 mr-5">person_outline</v-icon>
                     <p class="grey--text title ">Client type  <span class="red--text"><strong>* </strong></span></p>
                 </v-flex>
             </v-card>
 
-            <v-card width="1300" class="mx-auto mb-5 d-flex pa-3" color="" v-if="client_details">
+            <v-card width="1300" class="mx-auto mb-5 d-flex pa-3" color="" v-if="client_details && percentage == 0">
                 <v-flex row xs12>
                      <v-select 
                         class="mx-6" 
@@ -36,14 +68,14 @@
                 </v-flex>
             </v-card>
 
-             <v-card row flat width="1300" class="mt-10 mx-auto" color="#F5FAFF" v-if="client_details">
+             <v-card row flat width="1300" class="mt-10 mx-auto" color="#F5FAFF" v-if="client_details && percentage == 0">
                 <v-flex row class="">
                     <v-icon color="grey" class="mb-4 ml-3 mr-5">person_outline</v-icon>
                     <p class="grey--text title ">Client details</p>
                 </v-flex>
             </v-card>
             
-            <v-card class="mx-auto mb-5 d-flex pa-3" color="" v-if="client_details">
+            <v-card class="mx-auto mb-5 d-flex pa-3" color="" v-if="client_details && percentage == 0">
                 
                 <v-flex column>
 
@@ -53,6 +85,7 @@
 
                     <v-flex row class="pr-3 pl-5">
 
+                        <v-flex row>
                         <v-flex column xs12 sm6 class="px-2" v-show="client_type == 'Personal'">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">First Name </p>
                             <v-text-field 
@@ -112,6 +145,8 @@
                                     </template>
                             </v-text-field>
                         </v-flex>
+                        </v-flex>
+                        
 
                         <!--<v-flex column xs12 sm4 class="px-2">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> location </p>
@@ -297,14 +332,14 @@
                 </v-flex>
             </v-card>
 
-            <v-card row flat width="1300" class="mt-12 mx-auto" color="#F5FAFF" v-if="bank_details">
+            <v-card row flat width="1300" class="mt-12 mx-auto" color="#F5FAFF" v-if="client_details && percentage == 40">
                 <v-flex row class="">
                     <v-icon color="grey" large class=" ml-3 mr-5 pb-3">supervisor_account</v-icon>
                     <p class="grey--text title ">Bank Details</p>
                 </v-flex>
             </v-card>
 
-            <v-card class="mx-auto mb-5 d-flex pa-3" color="" v-if="bank_details">
+            <v-card class="mx-auto mb-5 d-flex pa-3" color="" v-if="client_details &&  percentage == 40">
                 
                 <v-flex column>
 
@@ -397,14 +432,14 @@
                 </v-flex>
             </v-card>
 
-           <v-card row flat width="1300" class="mt-12 mx-auto" color="#F5FAFF" v-show="documents">
+           <v-card row flat width="1300" class="mt-12 mx-auto" color="#F5FAFF" v-if="bank_details">
                 <v-flex row class="">
                     <v-icon color="grey" large class=" ml-3 mr-5 pb-3">supervisor_account</v-icon>
                     <p class="grey--text title ">Attachments</p>
                 </v-flex>
             </v-card>
 
-            <v-card  class="mx-auto pa-3" v-show="documents">
+            <v-card  class="mx-auto pa-3" v-if="bank_details">
 
                     <v-row class="pa-3" v-if="client_type == 'Personal'">
                         <v-col cols=12 sm=4 class="">
@@ -606,6 +641,7 @@
 
 <script>
 import axios from 'axios'
+import {mapActions} from 'vuex'
 export default {
 
     data: ()=>({
@@ -613,11 +649,15 @@ export default {
 
         client_type:'Personal',
 
-        client_details: true,
+        client_details: false,
 
         bank_details: false,
 
         documents: false,
+
+        percentage: 0,
+
+        have_customer_id: false,
 
         first_name:'',
         last_name:'',
@@ -660,12 +700,17 @@ export default {
         
         isValid(){
             
-            if(this.client_type == "Personal"){
+            if(this.client_type === "Personal"){
 
                 if(this.client_details){
 
-                    if(this.first_name == '' || this.last_name == '' || this.mobile_number == ''
-                        || this.country == '' || this.city == '' || this.region == '' || this.address == ''
+                    if((this.first_name === '' || this.first_name === null)
+                        || (this.last_name === '' || this.last_name === null)
+                        || (this.mobile_number === '' || this.mobile_number === null)
+                        || (this.country === '' || this.country === null)
+                        || (this.city === '' || this.city === null)
+                        || (this.region === '' || this.region === null)
+                        || (this.address === '' || this.address === null)
                     )
 
                         return false
@@ -674,8 +719,11 @@ export default {
 
                 } else if(this.bank_details)
                 {
-                    if(this.bank_acount_name == '' || this.bank_account_number == '' || this.bank_swift_code == ''
-                        || this.bank_address == '')
+                    if((this.bank_acount_name === '' ||  this.bank_acount_name === null)
+                        || (this.bank_account_number === '' ||  this.bank_account_number === null)
+                        || (this.bank_swift_code === ''||  this.bank_swift_code === null)
+                        || (this.bank_address === '' ||  this.bank_address === null)
+                    )
 
                         return false
                     else 
@@ -683,20 +731,28 @@ export default {
 
                 } else if(this.documents){
 
-                    if(this.copy_of_identity_card.length == 0 || this.copy_of_tax_identification_number_certificate.length == 0)
+                    if(this.copy_of_identity_card.length === 0 || this.copy_of_tax_identification_number_certificate.length === 0)
 
                         return false
                     else 
                         return true;
                 }
 
-            } else if(this.client_type == "Company"){
+            } else if(this.client_type === "Company"){
 
                  if(this.client_details){
 
-                     if(this.company_name === '' || this.company_sector === '' || this.mobile_number === ''
-                        || this.office_mobile === '' || this.contact_person_names ==='' || this.Contact_person_phone_number === '' 
-                        || this.country === '' || this.city === '' || this.region === '' || this.address === '')
+                     if((this.company_name === '' || this.company_name === null)
+                        || (this.company_sector === ''  || this.company_sector === null)
+                        || (this.mobile_number === '' || this.mobile_number === null)
+                        || (this.office_mobile === ''  || this.office_mobile === null)
+                        || (this.contact_person_names ==='' || this.contact_person_names === null)
+                        || (this.Contact_person_phone_number === ''  || this.Contact_person_phone_number === null)
+                        || (this.country === ''  || this.country === null)
+                        || (this.city === ''  || this.city === null)
+                        || (this.region === ''  || this.region === null)
+                        || (this.address === '' || this.address === null)
+                        )
 
                         return false
                     else 
@@ -704,8 +760,11 @@ export default {
 
                 } else if(this.bank_details)
                 {
-                    if(this.bank_acount_name == '' || this.bank_account_number == '' || this.bank_swift_code == ''
-                        || this.bank_address == '')
+                    if((this.bank_acount_name === '' ||  this.bank_acount_name === null)
+                        || (this.bank_account_number === '' ||  this.bank_account_number === null)
+                        || (this.bank_swift_code === ''||  this.bank_swift_code === null)
+                        || (this.bank_address === '' ||  this.bank_address === null)
+                    )
 
                         return false
                     else 
@@ -713,9 +772,9 @@ export default {
 
                 } else if(this.documents){
 
-                    if(this.certificate_of_registration.length == 0 || this.tax_payer_identification_document.length == 0
-                        || this.vat_certificate.length == 0 || this.business_licence_document == 0 
-                        || this.three_months_bank_statement ==0)
+                    if(this.certificate_of_registration.length === 0 || this.tax_payer_identification_document.length === 0
+                        || this.vat_certificate.length === 0 || this.business_licence_document === 0 
+                        || this.three_months_bank_statement ===0)
 
                         return false
                     else 
@@ -724,6 +783,7 @@ export default {
             }
         },
 
+        ...mapActions(['setAlert']),
 
         bankStatementUpdated(){
             this.three_months_bank_statement.push(document.getElementById("bank_statement").files[0]);
@@ -764,11 +824,76 @@ export default {
             this.profile_photo.push(document.getElementById("profilePhoto").files[0]);
         },
 
+        updatePercentage(percent){
+
+            let formData = new FormData();
+
+            //let updated = false;
+
+            formData.append('email',this.$route.params.id);
+            formData.append('percentage',percent);
+
+            let url = "http://207.180.215.239:8181/api/v1/customers/update-percentage";
+
+            axios.post(url,
+                formData
+               ).
+                then((response) => {
+
+                    if(response.data.genralErrorCode == 8004){
+
+                        //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
+                        //this.alert = response.data.message;
+                        //eslint-disable-next-line no-console
+
+                            console.log(response.data.message);
+
+                       
+                    }
+                    else if(response.data.genralErrorCode == 8000){
+
+                        //this.AddTender(response.data.objects);
+
+                        //this.setAlert(response.data.message);
+
+                        //this.$router.push('/client');
+
+                        //eslint-disable-next-line no-console
+                        console.log(response.data);
+
+                        this.percentage = response.data.objects.percentage;
+
+                        
+                       
+                    }
+
+                    //eslint-disable-next-line no-console
+                    //console.log(response.data);
+
+                }).catch(()=>{
+
+                    //eslint-disable-next-line no-console
+                    console.log("Error occured, please try again");
+
+                    /*this.setAlert("Erro occured. Please try again");
+
+                    this.alert = this.getAlert();
+
+                    this.$router.push('/client/createtender');*/
+                }); 
+
+            
+        },
+
         createData(){
 
-            if(this.bank_details){
+            if(this.client_details && this.percentage == 40){
 
                 let formData = new FormData();
+
+                if(this.have_customer_id == false)
+                    formData.append('percentage',this.percentage);
+
 
                 if(this.client_type == "Personal"){
 
@@ -803,7 +928,7 @@ export default {
                
                 return formData;
 
-            } else if(this.client_details){
+            } else if(this.client_details && this.percentage == 0){
 
                 let formData = new FormData();
 
@@ -833,7 +958,7 @@ export default {
                return formData;
               
 
-            } else if(this.documents){
+            } else if(this.bank_details){
 
                 let formData = new FormData();
 
@@ -869,7 +994,8 @@ export default {
 
             let formData = this.createData();
 
-            if(this.documents){
+            if(this.bank_details){
+                console.log("Document is here");
 
                 const url = `http://207.180.215.239:8181/api/v1/customers/upload/${this.$route.params.id}`;
 
@@ -898,7 +1024,14 @@ export default {
 
                                     //this.setAlert(response.data.message);
 
+                                   
+                                    this.updatePercentage(30);
+
+                                    this.setAlert("Profile updating is completed");
+                                
                                     this.$router.push('/client');
+                                    
+                                    
 
                                     //eslint-disable-next-line no-console
                                     console.log(response.data);
@@ -922,6 +1055,8 @@ export default {
                             }); 
 
             } else {
+
+                console.log("Not document");
 
                 const url = `http://207.180.215.239:8181/api/v1/customers/${this.$route.params.id}`;
                 //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
@@ -957,11 +1092,37 @@ export default {
                                     //eslint-disable-next-line no-console
                                     console.log(response.data);
 
-                                    if(this.client_details){
+                                    if(response.data.objects.client_details && this.percentage == 0){
+
+                
+                                        this.updatePercentage(40);
+
+                                            
+                                        this.client_details = response.data.objects.client_details;
+
+                                        document.getElementById('app').scrollIntoView();
+                                         
+                                    } 
+                                    else if(response.data.objects.client_details && this.percentage == 40){
+
+
+                                        this.updatePercentage(30)
+
+                                        this.bank_details = response.data.objects.bank_details;
+
+                                        document.getElementById('app').scrollIntoView();
+         
+                                         
+                                    }
+                                           
+
+                                    /*if(this.client_details){
 
                                         this.client_details = false;
 
                                         this.bank_details = true;
+
+                                        this.updatePercentage(40);
 
                                     } else if(this.bank_details){
 
@@ -969,7 +1130,9 @@ export default {
 
                                         this.documents = true;
 
-                                    } 
+                                        this.updatePercentage(30);
+
+                                    }*/
                                 }
 
                                 //eslint-disable-next-line no-console
@@ -1052,6 +1215,19 @@ export default {
                                vm.company_name = response.data.objects.company_name;
                                vm.city = response.data.objects.city;
                                vm.region = response.data.objects.region;
+                               vm.percentage = response.data.objects.percentage;
+
+                               vm.client_details = response.data.objects.client_details;
+                               vm.bank_details = response.data.objects.bank_details;
+                               vm.documents = response.data.objects.documents;
+
+                               /*if(response.data.objects.client_details == 1)
+                                    vm.client_details = true;*/
+
+                                //eslint-disable-next-line no-console
+                                console.log("client details *** " + response.data.objects.client_details);
+
+                               vm.have_customer_id = response.data.objects.customer_id == null? false:true;
 
                                /*vm.company_logo = response.data.objects.company_logo;
                                vm.certificate_of_registration = response.data.objects.certificate_of_registration;
