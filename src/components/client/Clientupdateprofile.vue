@@ -267,7 +267,7 @@
                
                         <v-flex column xs12 sm4 class="px-2">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> country </p>
-                            <v-text-field 
+                            <!--<v-text-field 
                                 clearable 
                                 outlined 
                                 v-model="country"
@@ -279,7 +279,11 @@
                                     <span class="red--text"><strong>* </strong></span>
                                 </template>
 
-                            </v-text-field>
+                            </v-text-field>-->
+                            <template>
+                                <country-select v-model="country" :country="country" topCountry="US" />
+                                <!--<region-select v-model="region" :country="country" :region="region" />-->
+                            </template>
                         </v-flex>
 
                         <v-flex column xs12 sm4 class="px-2">
@@ -427,24 +431,6 @@
             <v-card  class="mx-auto pa-3" v-if="bank_details">
 
                     <v-row class="pa-3" v-if="client_type == 'Personal'">
-                        <v-col cols=12 sm=4 class="">
-
-                            <p class="primary--text body-2 text-uppercase mb-0"> PROFILE PHOTO </p>
-
-                            <v-card flat width="200" height="150" outlined >
-
-                                <v-file-input 
-                                    label="Photo input" 
-                                    id="profilePhoto" 
-                                    @change="updateProfilePhoto()"
-                                    prepend-icon ="mdi-cloud-upload"
-                                   
-                                >
-
-                                </v-file-input>
-                            </v-card>
-                       
-                        </v-col> 
 
                         <v-col cols=12 sm=4 class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> COPY OF IDENTITY CARD  <span class="red--text"><strong>* </strong></span></p>
@@ -466,7 +452,26 @@
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> COPY OF TIN CERTIFICATE <span class="red--text"><strong>* </strong></span></p>
+
+                            <p class="primary--text body-2 text-uppercase mb-0"> PROFILE PHOTO </p>
+
+                            <v-card flat width="200" height="150" outlined >
+
+                                <v-file-input 
+                                    label="Photo input" 
+                                    id="profilePhoto" 
+                                    @change="updateProfilePhoto()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                   
+                                >
+
+                                </v-file-input>
+                            </v-card>
+                       
+                        </v-col> 
+
+                        <v-col cols=12 sm=4 class="">
+                            <p class="primary--text body-2 text-uppercase mb-0"> COPY OF TIN CERTIFICATE </p>
                             <v-card flat width="200" height="150" outlined >
 
                                 <v-file-input 
@@ -474,9 +479,6 @@
                                     id="personal_tin"
                                     @change="personalTinUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
-                                    :rules="[v => !!v || 'tin certificate is required']"
-                                    required
-                                   
                                 >
                                 </v-file-input>
                             </v-card>
@@ -685,7 +687,7 @@ export default {
             
             if(this.client_type === "Personal"){
 
-                if(this.client_details){
+                if(this.client_details && this.percentage == 0){
 
                     if((this.first_name === '' || this.first_name === null)
                         || (this.last_name === '' || this.last_name === null)
@@ -699,7 +701,7 @@ export default {
                     else 
                         return true;
 
-                } else if(this.bank_details)
+                } else if(this.client_details && this.percentage == 40)
                 {
                     if((this.bank_acount_name === '' ||  this.bank_acount_name === null)
                         || (this.bank_account_number === '' ||  this.bank_account_number === null)
@@ -711,9 +713,9 @@ export default {
                     else 
                         return true;
 
-                } else if(this.documents){
+                } else if(this.bank_details){
 
-                    if(this.copy_of_identity_card.length === 0 || this.copy_of_tax_identification_number_certificate.length === 0)
+                    if(this.copy_of_identity_card.length === 0)
 
                         return false
                     else 
@@ -722,7 +724,7 @@ export default {
 
             } else if(this.client_type === "Company"){
 
-                 if(this.client_details){
+                 if(this.client_details && this.percentage == 0){
 
                      if((this.company_name === '' || this.company_name === null)
                         || (this.company_sector === ''  || this.company_sector === null)
@@ -739,7 +741,7 @@ export default {
                     else 
                         return true;
 
-                } else if(this.bank_details)
+                } else if(this.client_details && this.percentage == 40)
                 {
                     if((this.bank_acount_name === '' ||  this.bank_acount_name === null)
                         || (this.bank_account_number === '' ||  this.bank_account_number === null)
@@ -751,7 +753,7 @@ export default {
                     else 
                         return true;
 
-                } else if(this.documents){
+                } else if(this.bank_details){
 
                     if(this.certificate_of_registration.length === 0 || this.tax_payer_identification_document.length === 0
                         || this.vat_certificate.length === 0 || this.business_licence_document === 0 
