@@ -43,7 +43,8 @@
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card flat width="200" height="150" outlined>
-                            <v-img class="ma-auto">
+                            <v-img
+                            class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
@@ -97,29 +98,82 @@
                 </v-flex>
             </v-card>
 
-             <v-card flat width="750" class=" mt-5 px-5 mx-auto" color="#F5FAFF" v-model="tender" >
-             <v-alert
-                text
-                outlined
-                class=""
-                :value="bided"
-                color="orange"
-                type="error"
-                row
-                clearable
-                >
-                <v-flex row>
-                <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
-                <v-icon large color="orange" class="">notification_important</v-icon>    
-                </v-flex> -->
-                <v-flex xms11 sm11 md11 lg11 class="pl-3">
-                <p class="text--text body-1 mb-0">
-                You have already bid on  tender. Not allowed to bid on a 
-                same tender twice
-                </p>
-                </v-flex>
-                </v-flex>
+<!--  Alerts shown after bid -->
+
+              <v-card flat width="700" class=" mt-5 mx-auto px-3" color="#F5FAFF" v-model="tender" >
+
+                <v-alert
+                    text
+                    outlined
+                    class=""
+                    :value="bided"
+                    color="orange"
+                    type="error"
+                    row
+                    clearable
+                    >
+                    <v-flex row>
+                    <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                    <v-icon large color="orange" class="">notification_important</v-icon>    
+                    </v-flex> -->
+                    <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                    <p class="text--text body-1 mb-0">
+                    You have already bided this tender before, click the button bellow to view list of
+                    active tenders
+                    </p>
+
+                    <v-flex row>
+                        <v-spacer></v-spacer>
+                         <v-btn 
+                         elevation="falt"
+                         color="#4169E1" 
+                         small
+                         class="white--text mt-1"
+                         @click="activetenders()">
+                         Active tenders
+                         </v-btn>
+                    </v-flex>
+
+                    </v-flex>
+                    </v-flex>
                 </v-alert>
+
+                <v-alert
+                    text
+                    outlined
+                    class=""
+                    :value="bidsent"
+                    color="green"
+                    type="error"
+                    row
+                    clearable
+                    >
+                    <v-flex row>
+                    <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                    <v-icon large color="orange" class="">notification_important</v-icon>    
+                    </v-flex> -->
+                    <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                    <p class="text--text body-1 mb-0">
+                    Your bid have been sent succefully, click the button bellow to
+                     view list of active tenders
+                    </p>
+
+                    <v-flex row>
+                        <v-spacer></v-spacer>
+                         <v-btn
+                         elevation="falt" 
+                         color="#4169E1" 
+                         small
+                         class="white--text mt-1"
+                         @click="activetenders()">
+                         Active tenders
+                         </v-btn>
+                    </v-flex>
+
+                    </v-flex>
+                    </v-flex>
+                </v-alert>
+
              </v-card>
 
             
@@ -240,6 +294,7 @@ export default {
   data () {
       return{
           bided: false,
+           bidsent: false,
           loading: false,
           payment_terms_and_conditions:'',
           //bid terms
@@ -249,9 +304,9 @@ export default {
           notless: new Date().toISOString().substr(0, 10),
           menu: false,
           //rest of data--------
+          showbid: false,
           btnvisibility:'visible',
           visibility: 'hidden',
-          showbid: false,
            onbiding: 'false',         
            tender:'',
            agent_id:'',
@@ -264,19 +319,13 @@ export default {
   },
 
   created (tab){
+
             tab = this.$route.params.id;
-    
-    console.log();
-    console.log();
-    console.log();
-    
-    
-    
     
       this.T_GET_TENDERSDETAILs(tab).then(()=>{
 
           console.log('tender details bellowww');
-          console.log(this.LOAD_TENDER);
+          console.log(this.LOAD_TENDER.bill_of_lading[0]);
 
           this.T_GET_AGENT(localStorage.client).then(()=>{
 
@@ -325,10 +374,14 @@ export default {
             this.btnvisibility = "visible"
             this.showbid = false
         },
-        
-        bidtender() {
 
-                   
+      activetenders(){
+            this.$router.push('/transporter/active/' + this.LOAD_AGENT.objects.agent_id)
+            this.$router.go('/transporter/active/' + this.LOAD_AGENT.objects.agent_id)
+        },
+        
+      bidtender() {
+  
             this.loading = true
 
             this.T_BID_TENDER({
@@ -343,19 +396,25 @@ export default {
             .then(()=>{
                 
                 console.log(this.LOAD_POST_BID);
-                if(this.LOAD_POST_BID.errors[0] == "You can not bid more than once on the same tender" ) {
+                if(this.LOAD_POST_BID.genralErrorCode == 8004  ) {
 
                     this.loading = false
+                    this.showbid = false
                     this.bided = true
+
                 }else{
-                     this.loading = false
+
+                     setTimeout(()=>{
+                         this.loading = false
+                         this.showbid = false
+                         this.bidsent = true
+                     },600)
                     
-                    this.$router.push('/transporter/tenders/open')
-                    this.$router.go('/transporter/tenders/open')
                 }
                 
             })
             .catch(error=>{
+                
                 console.log('error');
                 console.log(error.response.data);
                 console.log(this.LOAD_POST_BID);

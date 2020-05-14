@@ -96,6 +96,7 @@
                 </v-flex>
             </v-card>
 
+<!-- Alert shown after bid -->
             <v-card flat width="700" class=" mt-5 mx-auto px-3" color="#F5FAFF" v-model="tender" >
 
                 <v-alert
@@ -114,13 +115,14 @@
                     </v-flex> -->
                     <v-flex xms11 sm11 md11 lg11 class="pl-3">
                     <p class="text--text body-1 mb-0">
-                    You have already bided this tender, click the button bellow to view list of
+                    You have already bided this tender before, click the button bellow to view list of
                     active tenders
                     </p>
 
                     <v-flex row>
                         <v-spacer></v-spacer>
-                         <v-btn 
+                         <v-btn
+                         elevation="falt" 
                          color="#4169E1" 
                          small
                          class="white--text mt-1"
@@ -156,6 +158,7 @@
                     <v-flex row>
                         <v-spacer></v-spacer>
                          <v-btn 
+                         elevation="falt"
                          color="#4169E1" 
                          small
                          class="white--text mt-1"
@@ -312,14 +315,8 @@ export default {
   },
 
   created (tab){
+    
             tab = this.$route.params.id;
-    
-    console.log();
-    console.log();
-    console.log();
-    
-    
-    
     
       this.GET_TENDERSDETAILs(tab).then(()=>{
 
@@ -409,11 +406,11 @@ export default {
                          this.bidsent = true
                      },600)
                     
-                    
                 }
                 
             })
             .catch(error=>{
+                
                 console.log('error');
                 console.log(error.response.data);
                 console.log(this.LOAD_POST_BID);
