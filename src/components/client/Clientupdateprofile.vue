@@ -283,7 +283,7 @@
                         </v-flex>
 
                         <v-flex column xs12 sm4 class="px-2">
-                            <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> city </p>
+                            <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> state/region/city </p>
                             <v-text-field 
                                 clearable 
                                 outlined 
@@ -298,21 +298,6 @@
                         </v-flex>
 
                         <v-flex column xs12 sm4 class="px-2">
-                            <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> region </p>
-                            <v-text-field 
-                                clearable 
-                                outlined 
-                                v-model="region"
-                                :rules="[v => !!v || 'region is required']"
-                                required>
-
-                                    <template #label>
-                                        <span class="red--text"><strong>* </strong></span>
-                                    </template>
-                            </v-text-field>
-                        </v-flex>
-
-                        <v-flex column xs12 class="px-2">
                             <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">P.o box </p>
                             <v-text-field 
                                 clearable 
@@ -678,8 +663,6 @@ export default {
         company_sector:'',
         company_name:'',
         city:'',
-        region:'',
-
         company_logo:[],
         certificate_of_registration:[],
         tax_payer_identification_document:[],
@@ -709,7 +692,6 @@ export default {
                         || (this.mobile_number === '' || this.mobile_number === null)
                         || (this.country === '' || this.country === null)
                         || (this.city === '' || this.city === null)
-                        || (this.region === '' || this.region === null)
                         || (this.address === '' || this.address === null)
                     )
 
@@ -750,7 +732,6 @@ export default {
                         || (this.Contact_person_phone_number === ''  || this.Contact_person_phone_number === null)
                         || (this.country === ''  || this.country === null)
                         || (this.city === ''  || this.city === null)
-                        || (this.region === ''  || this.region === null)
                         || (this.address === '' || this.address === null)
                         )
 
@@ -903,7 +884,6 @@ export default {
                 
                 formData.append('country',this.country);
                 formData.append('city',this.city);
-                formData.append('region',this.region);
                 formData.append('mobile_number',this.mobile_number);
                 formData.append('office_mobile',this.office_mobile);
                 formData.append('address',this.address);
@@ -940,7 +920,6 @@ export default {
                 
                 formData.append('country',this.country);
                 formData.append('city',this.city);
-                formData.append('region',this.region);
                 formData.append('mobile_number',this.mobile_number);
                 formData.append('office_mobile',this.office_mobile);
                 formData.append('address',this.address);
@@ -1214,7 +1193,7 @@ export default {
                                vm.company_sector = response.data.objects.company_sector;
                                vm.company_name = response.data.objects.company_name;
                                vm.city = response.data.objects.city;
-                               vm.region = response.data.objects.region;
+                              
                                vm.percentage = response.data.objects.percentage;
 
                                vm.client_details = response.data.objects.client_details;
