@@ -427,11 +427,15 @@ methods:{
     },
 
     validate() {
-           if (this.email === null ){
+           if (this.email === null || this.email === '' ){
              this.loading = false
              this.error = true;
              return true
-           } 
+           } else if (this.secret === null || this.secret === '' ) {
+             this.loading = false
+             this.error = true;
+             return true
+           }
            
     },
 

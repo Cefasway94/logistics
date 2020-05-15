@@ -49,12 +49,13 @@ mutations: {
 actions: {
 
 // Registration action =========================================>>>>>>
-      REGISTER: ({ commit }, { name, email, password, password_confirmation, category, phone }) => {
+      REGISTER: ({ commit }, { name, email, country, password, password_confirmation, category, phone }) => {
         return new Promise((resolve, reject) => {
           axios
             .post(`http://164.68.113.159:2000/api/v1/profiles/register`, {
               name,
               email,
+              country,
               password,
               password_confirmation,
               phone,

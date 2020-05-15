@@ -51,32 +51,48 @@
                       
                       <p class="mb-3 text-center grey--text body-1">Agent</p>
 
-                      <v-flex row class="px-9">
-                      <p class="grey--text"> Email :  </p>
-                      <p class="px-3 text--text">
+                      <v-flex row class="pl-9 " >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Email :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" text--text" >
                        {{email}}
                       </p>
                       </v-flex>
+                      </v-flex>
 
-                      <v-flex row class="px-9">
-                      <p class="grey--text"> Country :  </p>
-                      <p class="px-3 text--text">
+                      <v-flex row class="pl-9 " >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Country :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" text--text" >
                        {{country}}
                       </p>
                       </v-flex>
+                      </v-flex>
 
-                      <v-flex row class="px-9">
-                      <p class="grey--text"> Name :  </p>
-                      <p class="px-3 text--text" >
+                     <v-flex row class="pl-9 " >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Name :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" text--text" >
                        {{name}}
                       </p>
                       </v-flex>
+                      </v-flex>
 
-                      <v-flex row class="px-9">
-                      <p class="grey--text"> Phone number :  </p>
-                      <p class="px-3 text--text">
+                      <v-flex row class="pl-9 " >
+                      <v-flex xs5 sm5 md5 lg5  >
+                      <p class="grey--text mb-0"  > Phone number :  </p>
+                      </v-flex>
+                      <v-flex xs6 sm6 md6 >
+                      <p class=" text--text" >
                        {{phone_number}}
                       </p>
+                      </v-flex>
                       </v-flex>
                       
                       <v-card-actions>
@@ -142,32 +158,48 @@
                       
                       <p class="mb-3 text-center grey--text body-1">Transporter</p>
 
-                      <v-flex row class="px-9">
-                      <p class="grey--text"> Email :  </p>
-                      <p class="px-3 text--text">
+                      <v-flex row class="pl-9 " >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Email :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" text--text" >
                        {{email}}
                       </p>
                       </v-flex>
+                      </v-flex>
 
-                      <v-flex row class="px-9">
-                      <p class="grey--text"> Country :  </p>
-                      <p class="px-3 text--text">
+                      <v-flex row class="pl-9 " >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Country :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" text--text" >
                        {{country}}
                       </p>
                       </v-flex>
+                      </v-flex>
 
-                      <v-flex row class="px-9">
-                      <p class="grey--text"> Name :  </p>
-                      <p class="px-3 text--text" >
+                     <v-flex row class="pl-9 " >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Name :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" text--text" >
                        {{name}}
                       </p>
                       </v-flex>
+                      </v-flex>
 
-                      <v-flex row class="px-9">
-                      <p class="grey--text"> Phone number :  </p>
-                      <p class="px-3 text--text">
+                      <v-flex row class="pl-9 " >
+                      <v-flex xs5 sm5 md5 lg5  >
+                      <p class="grey--text mb-0"  > Phone number :  </p>
+                      </v-flex>
+                      <v-flex xs6 sm6 md6 >
+                      <p class=" text--text" >
                        {{phone_number}}
                       </p>
+                      </v-flex>
                       </v-flex>
                       
                       <v-card-actions>
@@ -233,32 +265,48 @@
                       
                       <p class="mb-3 text-center grey--text body-1">Client</p>
 
-                      <v-flex row class="px-9">
-                      <p class="grey--text"> Email :  </p>
-                      <p class="px-3 text--text">
+                     <v-flex row class="pl-9 " >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Email :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" text--text" >
                        {{email}}
                       </p>
                       </v-flex>
+                      </v-flex>
 
-                      <v-flex row class="px-9">
-                      <p class="grey--text"> Country :  </p>
-                      <p class="px-3 text--text">
+                      <v-flex row class="pl-9 " >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Country :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" text--text" >
                        {{country}}
                       </p>
                       </v-flex>
+                      </v-flex>
 
-                      <v-flex row class="px-9">
-                      <p class="grey--text"> Name :  </p>
-                      <p class="px-3 text--text" >
+                     <v-flex row class="pl-9 " >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Name :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" text--text" >
                        {{name}}
                       </p>
                       </v-flex>
+                      </v-flex>
 
-                      <v-flex row class="px-9">
-                      <p class="grey--text"> Phone number :  </p>
-                      <p class="px-3 text--text">
+                      <v-flex row class="pl-9 " >
+                      <v-flex xs5 sm5 md5 lg5  >
+                      <p class="grey--text mb-0"  > Phone number :  </p>
+                      </v-flex>
+                      <v-flex xs6 sm6 md6 >
+                      <p class=" text--text" >
                        {{phone_number}}
                       </p>
+                      </v-flex>
                       </v-flex>
                       
                       <v-card-actions>
@@ -473,7 +521,7 @@
                     </v-flex>
                     </v-flex>    
 
-                    <v-flex row class="mb-4 ">
+                    <!-- <v-flex row class="mb-4 ">
                     <v-flex column xs12 sm12 md12 lg12  class="">
                       <p class="font-weight-regular subtitle-2 grey--text mb-0" >COUNTRY</p>
                     <v-hover>
@@ -500,7 +548,34 @@
                     </template>
                     </v-hover>
                     </v-flex>
-                    </v-flex>         
+                    </v-flex>     -->
+                    
+                    <v-flex row class="mb-4 ">
+                    <v-flex column xs12 sm12 md12 lg12  class="">
+                      <p class="font-weight-regular subtitle-2 grey--text mb-0" >SELECT COUNTRY</p>
+                    <v-hover>
+                    <template v-slot="{ hover }">
+                    <v-card
+                    outlined
+                    color="#f5faff" 
+                    height="40" 
+                    :elevation="hover ? 6 : 2"
+                    class="card mt-1"
+                    style="border-color:#babdc2;">
+                    
+                      <country-select 
+                      v-model="country" 
+                      :country="country" 
+                      topCountry="Tanzania, United Republic of" 
+                      height="40"
+                      :countryName="true"
+                      :removePlaceholder="true"
+                      class="selectcountry"/>
+                    </v-card>
+                    </template>
+                    </v-hover>
+                    </v-flex>
+                    </v-flex>
                     
 
                     <v-flex row class="" >
@@ -733,6 +808,11 @@ methods:{
       //'GET_TENDERSDETAIL'
     ]),
 
+    cs(){
+      console.log(this.country);
+      
+    },
+
     confirm(){
 
       if (this.validate()) {
@@ -788,6 +868,7 @@ methods:{
           name: this.name,
           email: this.email,
           password: this.secret,
+          country: this.country,
           password_confirmation:this.confirm_secret,
           phone: this.phone_number,
           category: this.category
@@ -841,50 +922,54 @@ methods:{
 
 
     validate() {
-      if(this.email == '') {
+      if(this.email === '' || this.email === null ) {
 
         console.log('how1');
          this.emptyfilds= true;
          return false
       
-      }else if(this.secret==''){
+      }else if(this.secret=='' || this.secret === null ){
 
         console.log('how1');
          this.emptyfilds= true;
          return false
 
-      }else if(this.name == ''){
+      }else if(this.name == '' || this.name === null ){
 
         console.log('how1');
          this.emptyfilds= true;
          return false
 
-      }else if( this.phone_number == ''){
+      }else if( this.phone_number == '' || this.phone_number === null ){
          
          console.log('how1');
          this.emptyfilds= true;
          return false
 
-      }else if(this.confirm_secret == ''){
+      }else if(this.confirm_secret == '' || this.confirm_secret === null ){
 
         console.log('how1');
          this.emptyfilds= true;
          return false
 
-      }else if(this.country == ''){
+      }else if(this.country == '' || this.country === null ){
 
         console.log('how1');
          this.emptyfilds= true;
          return false
       }
 
-      if( this.secret !== this.confirm_secret){
+      if( this.secret !== this.confirm_secret){ 
+
            this.dontmatch = true;
           return false
+
       } else {       
+
         console.log('how');       
            return this.secret === this.confirm_secret
-           }
+
+      }
     },
 
     clear_alert() {
@@ -948,3 +1033,23 @@ methods:{
     
 }
 </script>
+<style scoped>
+
+.selectcountry{
+          height:103%; 
+          width:100%; 
+          padding-left: 2%;
+          border-color: black ;
+          margin-bottom: 0%;
+           
+  }
+
+.selectcountry:hover {
+  border-color:black;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+}
+
+
+</style>
