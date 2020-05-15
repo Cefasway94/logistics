@@ -14,21 +14,28 @@
                     cols="5" 
                     class="white--text font-weight-bold  pr-3 pl-5" 
                 > 
-                    <span>Step 1 </span>
+                <v-row justify="center">
+                     <span>Step 1 </span>
+                </v-row>
+                   
                 </v-col>
 
                 <v-col 
                     cols="3" 
                     class="white--text font-weight-bold pr-3 pl-5"
                 > 
-                    <span>Step 2 </span>
+                     <v-row justify="center">
+                        <span>Step 2 </span>
+                    </v-row>
                 </v-col>
 
                 <v-col 
                     cols="4" 
                     class="white--text font-weight-bold pr-3 pl-5"
                 >
-                    <span>Step 3 </span>
+                     <v-row justify="center">
+                        <span>Step 3 </span>
+                    </v-row>
                 </v-col>
             </v-row>
                
@@ -280,10 +287,15 @@
                                 </template>
 
                             </v-text-field>-->
-                            <template>
-                                <country-select v-model="country" :country="country" topCountry="US" />
-                                <!--<region-select v-model="region" :country="country" :region="region" />-->
-                            </template>
+                            <v-card :outlined="true" height="57">
+
+                                <template>
+                                    <country-select v-model="country" :country="country" topCountry="US" className="pl-3 select-control"/>
+                                    <!--<region-select v-model="region" :country="country" :region="region" />-->
+                                </template>
+
+                            </v-card>
+                           
                         </v-flex>
 
                         <v-flex column xs12 sm4 class="px-2">
@@ -1239,3 +1251,13 @@ export default {
     }
 }
 </script>
+<style scoped>
+
+ .select-control{
+     width:100%;
+     height:100%;
+     cursor: pointer;
+     
+ }
+ 
+</style>
