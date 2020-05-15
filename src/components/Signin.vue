@@ -10,7 +10,7 @@
                 <h1 class="primary--text text-center py-2 font-weight-medium  " >UBALORI</h1>
             </v-card-title>
             <v-card-text>
-                <p class="text-center font-weight-regular body-1 mb-0">Welcome, please register to create your account</p>
+                <p class="text-center font-weight-regular body-1 mb-0">Welcome, please Login to access your account</p>
             </v-card-text>
 
             <v-form class="px-7">
@@ -101,19 +101,19 @@
                     <v-hover>
                     <template v-slot="{ hover }">
                     <v-card color="transparent" height="55" :elevation="hover ? 6 : 0">
-                    <v-text-field 
-                    light
-                    solo 
-                    outlined
-                    class="mt-1 text-center" 
-                    color="#4169E1" 
-                    background-color="transparent" 
-                    clearable 
-                    v-model="email"
-                    @input="clear_alert()"
-                    :rules="[rules.required, rules.email]" 
-                    > 
-                    </v-text-field>
+                        <v-text-field 
+                        light
+                        solo 
+                        outlined
+                        class="mt-1 text-center" 
+                        color="#4169E1" 
+                        background-color="transparent" 
+                        clearable 
+                        v-model="email"
+                        @input="clear_alert()"
+                        :rules="[rules.required, rules.email]" 
+                        > 
+                        </v-text-field>
                     </v-card>
                     </template>
                     </v-hover>
@@ -157,21 +157,21 @@
                     <v-card color="transparent" 
                     height="55" 
                     :elevation="hover ? 6 : 0">
-                    <v-text-field 
-                    solo 
-                    outlined
-                    class="mt-1" 
-                    color="#4169E1" 
-                    background-color="transparent" 
-                    v-model="secret"
-                    @input="clear_alert()" 
-                    :rules="[rules.required]"
-                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    @click:append="show = !show"
-                    :type="show ? 'text' : 'password'"
-                    v-on:keyup.enter="Login()"
-                    > 
-                    </v-text-field>
+                        <v-text-field 
+                        solo 
+                        outlined
+                        class="mt-1" 
+                        color="#4169E1" 
+                        background-color="transparent" 
+                        v-model="secret"
+                        @input="clear_alert()" 
+                        :rules="[rules.required]"
+                        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                        @click:append="show = !show"
+                        :type="show ? 'text' : 'password'"
+                        v-on:keyup.enter="Login()"
+                        > 
+                        </v-text-field>
                     </v-card>
                     </template>
                     </v-hover>

@@ -1,8 +1,8 @@
 <template>
-    <v-container class=" mt-12 px-5 pt-12">
+    <v-container class=" mt-5 px-5 pt-12">
 
-            <v-card flat width="1300" class="mt-12 mx-auto mb-5" color="#F5FAFF">
-                <v-flex row class="px-3 ">
+            <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
+                <v-flex row class="px-1">
                 <v-flex>
                 <v-row class="pl-2 mb-1">
                 <h1 class=" font-weight-regular headline ">{{LOAD_TENDER.cargo_details}}</h1>
@@ -13,10 +13,10 @@
                 </v-flex>
             </v-card>
 
-            <v-card flat width="1300" class=" mx-auto px-5" color="#F5FAFF" v-model="tender" >
+            <v-card flat width="900" class=" mx-auto " color="#F5FAFF" v-model="tender" >
                 
                 <v-flex row >
-                <v-flex sm12 md9 lg9 xlg9 >
+                <v-flex sm12 md12 lg12 xlg12 >
                     <v-card width="" class="pt-6 pb-3 pl-8" >
                         <v-flex column>
                         <v-flex row >
@@ -43,7 +43,8 @@
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card flat width="200" height="150" outlined>
-                            <v-img class="ma-auto">
+                            <v-img
+                            class="ma-auto">
                                 <v-icon x-large class="mx-12 mt-12">
                                     cloud_upload
                                 </v-icon>
@@ -94,84 +95,97 @@
 
                 </v-flex>
 
-                <v-flex sm12 md3 lg3 xlg3 class="px-3">
-
-                    <v-card color="#4169E1" width="" class="py-4 px-5">
-                        <v-flex row >
-                            <v-flex column class="px-3" >
-                            <p  class="white--text body-1 font-weight-bold" > {{LOAD_TENDER.id}} </p>
-                            <v-flex column>
-                            <v-flex row class="px-3 ">
-                            <v-icon class="mb-3 white--text" >mail_outline</v-icon>
-                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
-                            </v-flex>
-                            <v-flex class="pl-8">
-                            <p class="white--text ">Lorem@gamil.com</p>
-                            </v-flex>
-                            </v-flex>
-
-                            <v-flex column>
-                            <v-flex row class="px-3 ">
-                            <v-icon class="mb-3 white--text"  >room</v-icon>
-                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
-                            </v-flex>
-                            <v-flex class="pl-8">
-                            <p class="white--text ">Street location, st</p>
-                            </v-flex>
-                            </v-flex>
-
-                            <v-flex column>
-                            <v-flex row class="px-3 ">
-                            <v-icon class="mb-3 white--text" >local_phone</v-icon>
-                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
-                            </v-flex>
-                             <v-flex class="pl-8">
-                            <p class="white--text ">Lorem@gamil.com</p>
-                            </v-flex>
-                            </v-flex>
-                            </v-flex>
-
-                        </v-flex>
-
-                    </v-card>
-                </v-flex>
                 </v-flex>
             </v-card>
 
-             <v-card flat width="750" class=" mt-5 px-5" color="#F5FAFF" v-model="tender" >
-             <v-alert
-                text
-                outlined
-                class=""
-                :value="bided"
-                color="orange"
-                type="error"
-                row
-                clearable
-                >
-                <v-flex row>
-                <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
-                <v-icon large color="orange" class="">notification_important</v-icon>    
-                </v-flex> -->
-                <v-flex xms11 sm11 md11 lg11 class="pl-3">
-                <p class="text--text body-1 mb-0">
-                You have already bid on  tender. Not allowed to bid on a 
-                same tender twice
-                </p>
-                </v-flex>
-                </v-flex>
+<!--  Alerts shown after bid -->
+
+              <v-card flat width="700" class=" mt-5 mx-auto px-3" color="#F5FAFF" v-model="tender" >
+
+                <v-alert
+                    text
+                    outlined
+                    class=""
+                    :value="bided"
+                    color="orange"
+                    type="error"
+                    row
+                    clearable
+                    >
+                    <v-flex row>
+                    <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                    <v-icon large color="orange" class="">notification_important</v-icon>    
+                    </v-flex> -->
+                    <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                    <p class="text--text body-1 mb-0">
+                    You have already bided this tender before, click the button bellow to view list of
+                    active tenders
+                    </p>
+
+                    <v-flex row>
+                        <v-spacer></v-spacer>
+                         <v-btn 
+                         elevation="falt"
+                         color="#4169E1" 
+                         small
+                         class="white--text mt-1"
+                         @click="activetenders()">
+                         Active tenders
+                         </v-btn>
+                    </v-flex>
+
+                    </v-flex>
+                    </v-flex>
                 </v-alert>
+
+                <v-alert
+                    text
+                    outlined
+                    class=""
+                    :value="bidsent"
+                    color="green"
+                    type="error"
+                    row
+                    clearable
+                    >
+                    <v-flex row>
+                    <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                    <v-icon large color="orange" class="">notification_important</v-icon>    
+                    </v-flex> -->
+                    <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                    <p class="text--text body-1 mb-0">
+                    Your bid have been sent succefully, click the button bellow to
+                     view list of active tenders
+                    </p>
+
+                    <v-flex row>
+                        <v-spacer></v-spacer>
+                         <v-btn
+                         elevation="falt" 
+                         color="#4169E1" 
+                         small
+                         class="white--text mt-1"
+                         @click="activetenders()">
+                         Active tenders
+                         </v-btn>
+                    </v-flex>
+
+                    </v-flex>
+                    </v-flex>
+                </v-alert>
+
              </v-card>
 
             
 
 <!-- biding---------------------------- -->
-            <v-flex sm12 md9 lg9 xlg9 >
             <v-card 
-            width="1300" 
-            class=" mb-5 mx-auto pl-8 pb-5" 
-            v-bind:style="{ visibility: computedVisibility }">
+            width="900" 
+            class=" mb-5 mx-auto pl-4 pb-5" 
+            v-show="showbid">
 
+            <v-flex sm12 md12 lg12 xlg12 >
+            
             <!-- loading -->
             <v-progress-linear
                 :active="loading"
@@ -181,7 +195,7 @@
                 </v-progress-linear>
             <!-- loading -->
                         <v-flex class="pt-5">
-                            <p class="body-1" style="color:#4169E1;" color="#4169E1">Biding details</p>
+                            <p class="body-1" style="color:#4169E1;" color="#4169E1">Biding on tender</p>
                         </v-flex>
                         <v-flex row class="pl-2">
                         <v-flex column class="sm3 md3 px-2">
@@ -265,8 +279,8 @@
                             bid tender
                             </v-btn>
                         </v-flex>
-                    </v-card>
-            </v-flex>
+                    </v-flex>
+                </v-card>
 
     </v-container>
 </template>
@@ -280,6 +294,7 @@ export default {
   data () {
       return{
           bided: false,
+           bidsent: false,
           loading: false,
           payment_terms_and_conditions:'',
           //bid terms
@@ -289,6 +304,7 @@ export default {
           notless: new Date().toISOString().substr(0, 10),
           menu: false,
           //rest of data--------
+          showbid: false,
           btnvisibility:'visible',
           visibility: 'hidden',
            onbiding: 'false',         
@@ -303,19 +319,13 @@ export default {
   },
 
   created (tab){
+
             tab = this.$route.params.id;
-    
-    console.log();
-    console.log();
-    console.log();
-    
-    
-    
     
       this.T_GET_TENDERSDETAILs(tab).then(()=>{
 
           console.log('tender details bellowww');
-          console.log(this.LOAD_TENDER);
+          console.log(this.LOAD_TENDER.bill_of_lading[0]);
 
           this.T_GET_AGENT(localStorage.client).then(()=>{
 
@@ -354,18 +364,24 @@ export default {
       },
 
       Showbid() {
-            this.visibility = "visible";
-            this.btnvisibility = "hidden";
+            this.visibility = "visible"
+            this.btnvisibility = "hidden"
+            this.showbid = true
         },
 
       cancelbid() {
-            this.visibility = "hidden";
-            this.btnvisibility = "visible";
+            this.visibility = "hidden"
+            this.btnvisibility = "visible"
+            this.showbid = false
+        },
+
+      activetenders(){
+            this.$router.push('/transporter/active/' + this.LOAD_AGENT.objects.agent_id)
+            this.$router.go('/transporter/active/' + this.LOAD_AGENT.objects.agent_id)
         },
         
-        bidtender() {
-
-                   
+      bidtender() {
+  
             this.loading = true
 
             this.T_BID_TENDER({
@@ -380,19 +396,25 @@ export default {
             .then(()=>{
                 
                 console.log(this.LOAD_POST_BID);
-                if(this.LOAD_POST_BID.errors[0] == "You can not bid more than once on the same tender" ) {
+                if(this.LOAD_POST_BID.genralErrorCode == 8004  ) {
 
                     this.loading = false
+                    this.showbid = false
                     this.bided = true
+
                 }else{
-                     this.loading = false
+
+                     setTimeout(()=>{
+                         this.loading = false
+                         this.showbid = false
+                         this.bidsent = true
+                     },600)
                     
-                    this.$router.push('/transporter/tenders/open')
-                    this.$router.go('/transporter/tenders/open')
                 }
                 
             })
             .catch(error=>{
+                
                 console.log('error');
                 console.log(error.response.data);
                 console.log(this.LOAD_POST_BID);

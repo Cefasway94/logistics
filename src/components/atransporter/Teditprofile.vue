@@ -647,9 +647,9 @@ export default {
 
                 const formdata = new FormData()
 
-                formdata.append('profile_image',this.profile_image)
-                formdata.append('certificate', this.certificate[0])
-                formdata.append('insurance', this.insurance[0])
+                formdata.append('profile_image[0]',this.profile_image)
+                formdata.append('certificate[0]', this.certificate[0])
+                formdata.append('insurance[0]', this.insurance[0])
                 formdata.append('company_name', this.name)
                 formdata.append('email', this.mail)
                 formdata.append('tin_number', this.tin)

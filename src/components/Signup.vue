@@ -9,7 +9,7 @@
             
 
             <v-card-title  class="justify-center">
-                <h1 class="primary--text text-center py-2 font-weight-medium  " >UBALORI</h1>
+                <h1 class="primary--text text-center pt-2 pb-1 font-weight-medium  " >UBALORI</h1>
             </v-card-title>
             <v-card-text>
                 <p class="text-center font-weight-regular body-1 mb-0">Welcome, please register to create your account</p>
@@ -18,26 +18,77 @@
             <!-- confirmation dialogues ---------------------------->
             
               <template>
-                <v-row justify="center">
+                <v-row justify="center" >
                   <v-dialog
-                    v-model="dialog"
-                    max-width="290">
+                    v-model="dialog1"
+                    max-width="350">
                     <v-card>
-                      <v-card-title class="headline">Use Google's location service?</v-card-title>
+                      <p class="title font-weight-regular text-center pt-3 mb-3">
+                        You are about to signup as
+                      </p>
 
-                      <v-card-text>
-                        Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
-                      </v-card-text>
+                      <v-card 
+                      class="mx-auto mb-2"
+                      color="primary" 
+                      height="60"
+                      width="70">
+                      <v-btn 
+                      append-icon="account" 
+                      height="60"
+                      width="70"
+                      elevation="10"
+                      color="primary"
+                      class="white--text pb-2">
+                      <v-img
+                      :src="require('../assets/box.png')"
+                      class="mt-2"
+                      contain
+                      width=""
+                      height="43">
+                      </v-img>
+                      </v-btn>
+                      </v-card>
+                      
+                      <p class="mb-3 text-center grey--text body-1">Agent</p>
 
+                      <v-flex row class="px-9">
+                      <p class="grey--text"> Email :  </p>
+                      <p class="px-3 text--text">
+                       {{email}}
+                      </p>
+                      </v-flex>
+
+                      <v-flex row class="px-9">
+                      <p class="grey--text"> Country :  </p>
+                      <p class="px-3 text--text">
+                       {{country}}
+                      </p>
+                      </v-flex>
+
+                      <v-flex row class="px-9">
+                      <p class="grey--text"> Name :  </p>
+                      <p class="px-3 text--text" >
+                       {{name}}
+                      </p>
+                      </v-flex>
+
+                      <v-flex row class="px-9">
+                      <p class="grey--text"> Phone number :  </p>
+                      <p class="px-3 text--text">
+                       {{phone_number}}
+                      </p>
+                      </v-flex>
+                      
                       <v-card-actions>
                         <v-spacer></v-spacer>
 
                         <v-btn
                           color="primary darken-1"
                           text
-                          @click="dialog = false">
+                          @click="dialog1 = false">
                           Disagree
                         </v-btn>
+                        
 
                         <v-spacer></v-spacer>
 
@@ -54,6 +105,189 @@
                 </v-row>
               </template>
             <!--  -------------------------------------------------->
+
+            <!-- confirmation dialogues Transporter---------------------------->
+            
+              <template>
+                <v-row justify="center" >
+                  <v-dialog
+                    v-model="dialog2"
+                    max-width="350">
+                    <v-card>
+                      <p class="title font-weight-regular text-center pt-3 mb-3">
+                        You are about to signup as
+                      </p>
+
+                      <v-card 
+                      class="mx-auto mb-2"
+                      color="primary" 
+                      height="60"
+                      width="70">
+                      <v-btn 
+                      append-icon="account" 
+                      height="60"
+                      width="70"
+                      elevation="10"
+                      color="primary"
+                      class="white--text pb-2">
+                      <v-img
+                      :src="require('../assets/truck.png')"
+                      class="mt-2"
+                      contain
+                      width=""
+                      height="43">
+                      </v-img>
+                      </v-btn>
+                      </v-card>
+                      
+                      <p class="mb-3 text-center grey--text body-1">Transporter</p>
+
+                      <v-flex row class="px-9">
+                      <p class="grey--text"> Email :  </p>
+                      <p class="px-3 text--text">
+                       {{email}}
+                      </p>
+                      </v-flex>
+
+                      <v-flex row class="px-9">
+                      <p class="grey--text"> Country :  </p>
+                      <p class="px-3 text--text">
+                       {{country}}
+                      </p>
+                      </v-flex>
+
+                      <v-flex row class="px-9">
+                      <p class="grey--text"> Name :  </p>
+                      <p class="px-3 text--text" >
+                       {{name}}
+                      </p>
+                      </v-flex>
+
+                      <v-flex row class="px-9">
+                      <p class="grey--text"> Phone number :  </p>
+                      <p class="px-3 text--text">
+                       {{phone_number}}
+                      </p>
+                      </v-flex>
+                      
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+
+                        <v-btn
+                          color="primary darken-1"
+                          text
+                          @click="dialog2 = false">
+                          Disagree
+                        </v-btn>
+                        
+
+                        <v-spacer></v-spacer>
+
+                        <v-btn
+                          color="primary darken-1"
+                          text
+                          @click.prevent=" Register()">
+                          Agree
+                        </v-btn>
+
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-row>
+              </template>
+            <!--  -------------------------------------------------->
+
+               <!-- confirmation dialogues ---------------------------->
+            
+              <template>
+                <v-row justify="center" >
+                  <v-dialog
+                    v-model="dialog3"
+                    max-width="350">
+                    <v-card>
+                      <p class="title font-weight-regular text-center pt-3 mb-3">
+                        You are about to signup as
+                      </p>
+
+                      <v-card 
+                      class="mx-auto mb-2"
+                      color="primary" 
+                      height="60"
+                      width="70">
+                      <v-btn 
+                      append-icon="account" 
+                      height="60"
+                      width="70"
+                      elevation="10"
+                      color="primary"
+                      class="white--text pb-2">
+                      <v-img
+                      :src="require('../assets/list.png')"
+                      class="mt-2"
+                      contain
+                      width=""
+                      height="43">
+                      </v-img>
+                      </v-btn>
+                      </v-card>
+                      
+                      <p class="mb-3 text-center grey--text body-1">Client</p>
+
+                      <v-flex row class="px-9">
+                      <p class="grey--text"> Email :  </p>
+                      <p class="px-3 text--text">
+                       {{email}}
+                      </p>
+                      </v-flex>
+
+                      <v-flex row class="px-9">
+                      <p class="grey--text"> Country :  </p>
+                      <p class="px-3 text--text">
+                       {{country}}
+                      </p>
+                      </v-flex>
+
+                      <v-flex row class="px-9">
+                      <p class="grey--text"> Name :  </p>
+                      <p class="px-3 text--text" >
+                       {{name}}
+                      </p>
+                      </v-flex>
+
+                      <v-flex row class="px-9">
+                      <p class="grey--text"> Phone number :  </p>
+                      <p class="px-3 text--text">
+                       {{phone_number}}
+                      </p>
+                      </v-flex>
+                      
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+
+                        <v-btn
+                          color="primary darken-1"
+                          text
+                          @click="dialog3 = false">
+                          Disagree
+                        </v-btn>
+                        
+
+                        <v-spacer></v-spacer>
+
+                        <v-btn
+                          color="primary darken-1"
+                          text
+                          @click.prevent=" Register()">
+                          Agree
+                        </v-btn>
+
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-row>
+              </template>
+            <!--  -------------------------------------------------->
+
 
             
             <v-form class="px-7">
@@ -96,7 +330,8 @@
 
                   <v-flex class="">
             
-                    <v-flex row class="mx-2 mb-5 mt-3" >
+                    <v-flex row class="mx-2 mb-4 mt-3" >
+
                     <v-flex column xs4 sm4 lg4 class="px-2">
                     <center>
                     <v-hover class="">
@@ -193,6 +428,7 @@
                     </v-flex>
                     </center>
                     </v-flex>
+
                     </v-flex>      
 
 
@@ -207,81 +443,90 @@
             </v-card>      
                     
                   <v-flex column class="pl-4">
-                    <v-flex row class="mb-6 ">
+
+                    <v-flex row class="mb-4 ">
                     <v-flex column xs12 sm12 md12 lg12  class="">
                       <p class="font-weight-regular subtitle-2 grey--text mb-0" >EMAIL</p>
                     <v-hover>
                     <template v-slot="{ hover }">
-                    <v-card color="transparent" height="55" :elevation="hover ? 6 : 0">
-                    <v-text-field 
-                    light
-                    solo 
-                    outlined
-                    class="mt-1 text-center" 
-                    color="#4169E1" 
-                    background-color="transparent" 
-                    clearable
-                    @input="clear_alert()" 
-                    v-model="email" 
-                    :rules="[rules.required, rules.email]" 
-                    > 
-                    </v-text-field>
+                    <v-card 
+                    color="transparent" 
+                    height="40" 
+                    :elevation="hover ? 6 : 0">
+                        <v-text-field
+                        dense 
+                        light
+                        solo 
+                        outlined
+                        class="mt-1 text-center" 
+                        color="#4169E1" 
+                        background-color="transparent" 
+                        clearable
+                        @input="clear_alert()" 
+                        v-model="email" 
+                        :rules="[rules.required, rules.email]" 
+                        > 
+                        </v-text-field>
                     </v-card>
                     </template>
                     </v-hover>
                     </v-flex>
-                    <!-- <v-flex row>
-                    <v-spacer></v-spacer>
-                    <v-alert
-                      xs6 sm6 md6 lg6
-                      class=""
-                      :value="invalidemail"
-                      color="error"
-                      icon="error_outline"
-                      >
-                      Invalid email
-                      </v-alert>
-                      </v-flex> -->
-                    </v-flex>            
+                    </v-flex>    
+
+                    <v-flex row class="mb-4 ">
+                    <v-flex column xs12 sm12 md12 lg12  class="">
+                      <p class="font-weight-regular subtitle-2 grey--text mb-0" >COUNTRY</p>
+                    <v-hover>
+                    <template v-slot="{ hover }">
+                    <v-card 
+                    color="transparent" 
+                    height="40" 
+                    :elevation="hover ? 6 : 0">
+                        <v-text-field
+                        dense 
+                        light
+                        solo 
+                        outlined
+                        class="mt-1 text-center" 
+                        color="#4169E1" 
+                        background-color="transparent" 
+                        clearable
+                        @input="clear_alert()" 
+                        v-model="country" 
+                        :rules="[rules.required]" 
+                        > 
+                        </v-text-field>
+                    </v-card>
+                    </template>
+                    </v-hover>
+                    </v-flex>
+                    </v-flex>         
                     
-                        
-                    <!-- <v-flex column xs12 sm12 md12 lg12  class="">
-                    <p class="font-weight-regular body-1 grey--text  mb-0" >EMAIL</p>
-                    <v-text-field 
-                    light
-                    solo 
-                    outlined
-                    class="mt-1 " 
-                    color="#4169E1" 
-                    background-color="transparent" 
-                    clearable 
-                    v-model="email" 
-                    :rules="[rules.required, rules.email]" 
-                    > 
-                    </v-text-field>
-                    </v-flex> -->
 
                     <v-flex row class="" >
+                      
                     <v-flex column xs12 sm12 md6 lg6  class="px-1 ">
                     <p class="font-weight-regular subtitle-2 grey--text  mb-0" >NAME</p>
-                    <v-hover class="mb-6">
+                    <v-hover class="mb-4">
                     <template v-slot="{ hover }">
-                    <v-card color="transparent" 
-                    height="55" 
+                    <v-card 
+                    color="transparent" 
+                    height="40" 
                     :elevation="hover ? 6 : 0">
-                    <v-text-field 
-                    light
-                    solo 
-                    outlined
-                    class="mt-1 text-center" 
-                    color="#4169E1" 
-                    background-color="transparent" 
-                    clearable 
-                    @input="clear_alert()"
-                    v-model="name" 
-                    :rules="[rules.required]"
-                    > 
-                    </v-text-field>
+                        <v-text-field
+                        dense 
+                        light
+                        solo 
+                        outlined
+                        class="mt-1 text-center" 
+                        color="#4169E1" 
+                        background-color="transparent" 
+                        clearable 
+                        @input="clear_alert()"
+                        v-model="name" 
+                        :rules="[rules.required]"
+                        > 
+                        </v-text-field>
                     </v-card>
                     </template>
                     </v-hover>
@@ -290,24 +535,25 @@
                     
                     <v-flex column xs12 sm12 md6 lg6 class="px-1">
                     <p class="font-weight-regular subtitle-2 grey--text  mb-0" >PHONE NUMBER</p>
-                    <v-hover class="mb-6">
+                    <v-hover class="mb-4">
                     <template v-slot="{ hover }">
                     <v-card color="transparent" 
-                    height="55" 
+                    height="40" 
                     :elevation="hover ? 6 : 0">
-                    <v-text-field 
-                    light
-                    solo 
-                    outlined
-                    class="mt-1 text-center" 
-                    color="#4169E1" 
-                    background-color="transparent" 
-                    clearable 
-                    @input="clear_alert()"
-                    v-model="phone_number"
-                    :rules="[rules.required]" 
-                    > 
-                    </v-text-field>
+                        <v-text-field 
+                        dense
+                        light
+                        solo 
+                        outlined
+                        class="mt-1 text-center" 
+                        color="#4169E1" 
+                        background-color="transparent" 
+                        clearable 
+                        @input="clear_alert()"
+                        v-model="phone_number"
+                        :rules="[rules.required]" 
+                        > 
+                        </v-text-field>
                     </v-card>
                     </template>
                     </v-hover>
@@ -320,22 +566,23 @@
                     <v-hover class="mb-7">
                     <template v-slot="{ hover }">
                     <v-card color="transparent" 
-                    height="55" 
+                    height="40" 
                     :elevation="hover ? 6 : 0">
-                    <v-text-field 
-                    solo 
-                    outlined
-                    class="mt-1" 
-                    color="#4169E1" 
-                    background-color="transparent" 
-                    v-model="secret"
-                    @input="clear_alert()" 
-                    :rules="[rules.required]"
-                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    @click:append="show = !show"
-                    :type="show ? 'text' : 'password'"
-                    > 
-                    </v-text-field>
+                        <v-text-field 
+                        dense
+                        solo 
+                        outlined
+                        class="mt-1" 
+                        color="#4169E1" 
+                        background-color="transparent" 
+                        v-model="secret"
+                        @input="clear_alert()" 
+                        :rules="[rules.required]"
+                        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                        @click:append="show = !show"
+                        :type="show ? 'text' : 'password'"
+                        > 
+                        </v-text-field>
                     </v-card>
                     </template>
                     </v-hover>
@@ -346,25 +593,27 @@
                     <v-hover class="mb-7">
                     <template v-slot="{ hover }">
                     <v-card color="transparent" 
-                    height="55" 
+                    height="40" 
                     :elevation="hover ? 6 : 0">
-                    <v-text-field 
-                    solo
-                    outlined
-                    class="mt-1" 
-                    color="#4169E1" 
-                    background-color="transparent" 
-                    v-model="confirm_secret" 
-                    :rules="[rules.required]"
-                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    @click:append="show = !show"
-                    @input="clear_alert()"
-                    :type="show ? 'text' : 'password'"
-                    v-on:keyup.enter="Register()">
-                    </v-text-field>
+                        <v-text-field 
+                        dense
+                        solo
+                        outlined
+                        class="mt-1" 
+                        color="#4169E1" 
+                        background-color="transparent" 
+                        v-model="confirm_secret" 
+                        :rules="[rules.required]"
+                        :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                        @click:append="show = !show"
+                        @input="clear_alert()"
+                        :type="show ? 'text' : 'password'"
+                        v-on:keyup.enter="confirm()">
+                        </v-text-field>
                     </v-card>
                     </template>
                     </v-hover>
+
                     <v-alert
                     :value="dontmatch"
                     color="error"
@@ -373,6 +622,7 @@
                     password don't match.
                     </v-alert>
                     </v-flex>
+
                     </v-flex>
 
                     <!-- <v-flex class="py-2 ">
@@ -435,7 +685,9 @@ export default {
       return{
 
         //confirmation dialogue
-          dialog: false,
+          dialog1: false,
+          dialog2: false,
+          dialog3: false,
 
         //-------------
           be1: '5',
@@ -460,6 +712,7 @@ export default {
           name:'',
           phone_number:'',
           email:'',
+          country:'',
           secret:'',
           confirm_secret:'',
           rules: {
@@ -484,19 +737,21 @@ methods:{
 
       if (this.validate()) {
 
-        this.dialog = true
-
+        
         if (this.category == 1) {
-
+          
+          this.dialog1 = true
           console.log('agent');
           
           
         } else if(this.category == 2) {
 
+          this.dialog2 = true
           console.log('transporter');
           
         } else if (this.category ==3 ){
 
+          this.dialog3 = true
           console.log('client');
           
         }
@@ -507,6 +762,10 @@ methods:{
     },
 
     Register(){
+
+      this.dialog1 = false
+      this.dialog2 = false
+      this.dialog3 = false
       
       if (this.validate()) {
 
@@ -607,6 +866,12 @@ methods:{
          return false
 
       }else if(this.confirm_secret == ''){
+
+        console.log('how1');
+         this.emptyfilds= true;
+         return false
+
+      }else if(this.country == ''){
 
         console.log('how1');
          this.emptyfilds= true;
