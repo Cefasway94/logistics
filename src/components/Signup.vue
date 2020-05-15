@@ -15,8 +15,66 @@
                 <p class="text-center font-weight-regular body-1 mb-0">Welcome, please register to create your account</p>
             </v-card-text>
 
-            <!-- confirmation dialogues ---------------------------->
+<!-- signup success dialogues ---------------------------->
             
+              <template>
+                <v-row justify="center" >
+                  <v-dialog
+                    v-model="signedup_successively"
+                    max-width="300"
+                    color="#f5faff">
+                    <v-card 
+                    class="pt-5 px-3"
+                    color="#f5faff">
+
+                      <v-card 
+                      flat=""
+                      class="mx-auto "
+                      color="transparent" 
+                      height="75"
+                      width="75">
+                      <v-btn 
+                      fab
+                      append-icon="account" 
+                      height="70"
+                      width="70"
+                      elevation="10"
+                      color="green"
+                      class="white--text pa-2">
+                      <v-icon size="70">
+                        done
+                      </v-icon>
+                      </v-btn>
+                      </v-card>
+
+                      <p class=" font-weight-regular text--text text-center pt-3 mb-1 body-1">
+                        signedup successively,
+                      </p>
+                      
+                      <p class="mb-2 text-center text--text body-1">
+                        Open your <a style="color:blue;"> Email </a> to verify your account
+                        </p>
+
+                      <v-card-actions>
+                
+                        <v-btn
+                          color="primary darken-1"
+                          width="100"
+                          text
+                          elevation="flat"
+                          class="mx-auto"
+                          @click.prevent="signin()">
+                          close
+                        </v-btn>
+
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-row>
+              </template>
+            <!--  -------------------------------------------------->
+
+<!-- confirmation dialogues ---------------------------->           
               <template>
                 <v-row justify="center" >
                   <v-dialog
@@ -763,6 +821,7 @@ export default {
           dialog1: false,
           dialog2: false,
           dialog3: false,
+          signedup_successively:false,
 
         //-------------
           be1: '5',
@@ -858,9 +917,9 @@ methods:{
                 this.invalid == true
                 } else if (this.success === false && this.invalid == false){
                   this.loading = false;
-                  //this.timeout = true;
+                 // this.timeout = true;
                 }
-              },6000)
+              },30000)
 
           console.log('here register')
 
@@ -881,9 +940,9 @@ methods:{
             this.invalid = true
             this.success = false
           }
-          this.loading = false;
-          this.success = true;
-          this.$router.push('/')
+          this.loading = false
+          this.success = true
+          this.signedup_successively = true
           //return data;
           data = this.LOAD_RESPONSE;
           console.log('success');
@@ -1020,6 +1079,7 @@ methods:{
 
     signin() {
       this.$router.push('/')
+      this.signedup_successively = false
     }
 
   },

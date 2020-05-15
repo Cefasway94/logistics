@@ -309,7 +309,7 @@ methods:{
                 this.Connectionerror = true;
                 this.loading = false;
               }
-            },6000)
+            },30000)
           this.$store.dispatch('LOGIN', {
           email: this.email,
           password: this.secret,
