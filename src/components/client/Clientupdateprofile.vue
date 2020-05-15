@@ -2,6 +2,35 @@
 
         <v-container class=" mt-10 px-5">
 
+            <div v-if="overlay" class="large-preview">
+                
+                <v-row justify= "center">
+                    <v-col cols=12>
+                        <img  id="large_thumbnail" width="500px" height="500px">
+                    </v-col>
+
+                    <v-col class="mt-0" offset="4">
+                        <v-btn
+                            large
+                            color="primary white--text"
+                            @click="overlay = false"
+                        >
+                            <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                        </v-btn>
+                    </v-col>
+                </v-row>
+
+                <!--<v-col>
+                    <v-btn
+                        icon
+                        @click="overlay = false"
+                    >
+                        <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                </v-col>-->
+                
+            </div>
+
             <v-progress-linear
                 v-model="percentage"
                 class="mt-5 teal lighten-5"
@@ -290,7 +319,7 @@
                             <v-card :outlined="true" height="57">
 
                                 <template>
-                                    <country-select v-model="country" :country="country" topCountry="US" className="pl-3 select-control"/>
+                                    <country-select v-model="country" :countryName="true" :country="country" topCountry="US" className="pl-3 select-control"/>
                                     <!--<region-select v-model="region" :country="country" :region="region" />-->
                                 </template>
 
@@ -345,38 +374,40 @@
                 <v-flex column>
 
                     <v-flex row class="pr-3 pl-5">
+                        
+                        <v-flex row>
+                            <v-flex column xs12 sm6 class="px-2">
+                                <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">Bank account name </p>
+                                <v-text-field 
+                                    clearable 
+                                    outlined 
+                                    v-model="bank_acount_name"
+                                    :rules="[v => !!v || 'account name is required']"
+                                    required>
 
-                        <v-flex column xs12 sm6 class="px-2">
-                            <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">Bank account name </p>
-                            <v-text-field 
-                                clearable 
-                                outlined 
-                                v-model="bank_acount_name"
-                                :rules="[v => !!v || 'account name is required']"
-                                required>
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
 
+                                </v-text-field>
+                            </v-flex>
+
+                            <v-flex column xs12 sm6 class="px-2">
+                                    <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">Bank account number </p>
+                                <v-text-field 
+                                    clearable 
+                                    outlined 
+                                    v-model="bank_account_number"
+                                    :rules="[v => !!v || 'account number is required']"
+                                    required
+                                >
                                     <template #label>
-                                        <span class="red--text"><strong>* </strong></span>
+                                            <span class="red--text"><strong>* </strong></span>
                                     </template>
-
-                            </v-text-field>
+                                </v-text-field>
+                            </v-flex>
                         </v-flex>
-
-                        <v-flex column xs12 sm6 class="px-2">
-                            <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0">Bank account number </p>
-                            <v-text-field 
-                                clearable 
-                                outlined 
-                                v-model="bank_account_number"
-                                :rules="[v => !!v || 'account number is required']"
-                                required
-                            >
-                                <template #label>
-                                        <span class="red--text"><strong>* </strong></span>
-                                </template>
-                            </v-text-field>
-                        </v-flex>
-
+                        
                     </v-flex>
 
                     <v-flex row class="pr-3 pl-5">
@@ -384,7 +415,7 @@
                         <v-flex row>
                             <v-flex column xs12 sm6 class="px-2">
                                 <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Second bank account name </p>
-                                <v-text-field clearable outlined v-model="second_bank_account_name"></v-text-field>
+                                <v-text-field  clearable outlined v-model="second_bank_account_name"></v-text-field>
                             </v-flex>
 
                             <v-flex column xs12 sm6 class="px-2">
@@ -418,6 +449,7 @@
                                 <v-text-field 
                                     clearable 
                                     outlined 
+                                    placeholder="Enter city or region for this bank"
                                     v-model="bank_address"
                                     :rules="[v => !!v || 'address is required']"
                                     required
@@ -446,7 +478,7 @@
 
                         <v-col cols=12 sm=4 class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> COPY OF IDENTITY CARD  <span class="red--text"><strong>* </strong></span></p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     label="ID" 
@@ -459,6 +491,11 @@
                                 >
 
                                 </v-file-input>
+
+                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('copy_of_id')">
+                                    <img  id="copy_of_id_thumb" class="preview">
+                                </v-card>
+
                             </v-card>
                        
                         </v-col> 
@@ -467,7 +504,7 @@
 
                             <p class="primary--text body-2 text-uppercase mb-0"> PROFILE PHOTO </p>
 
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     label="Photo input" 
@@ -478,13 +515,18 @@
                                 >
 
                                 </v-file-input>
+
+                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('profilePhoto')">
+                                    <img  id="profilePhoto_thumb" class="preview">
+                                </v-card>
+
                             </v-card>
                        
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> COPY OF TIN CERTIFICATE </p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     label="Tin certificate" 
@@ -493,7 +535,13 @@
                                     prepend-icon ="mdi-cloud-upload"
                                 >
                                 </v-file-input>
+
+                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('personal_tin')">
+                                    <img  id="personal_tin_thumb" class="preview">
+                                </v-card>
                             </v-card>
+
+                           
                        
                         </v-col>               
                     </v-row>
@@ -501,7 +549,7 @@
                     <v-row class="pa-3" v-if="client_type == 'Company'">
                         <v-col cols=12 sm=4 class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> COMPANY LOGO </p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     label="company logo" 
@@ -511,13 +559,17 @@
                                 >
 
                                 </v-file-input>
+
+                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('company_logo')">
+                                    <img  id="company_logo_thumb" class="preview">
+                                </v-card>
                             </v-card>
                        
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> CERTIFICATE OF REGISTRATION <span class="red--text"><strong>* </strong></span></p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     label="Registration certificate" 
@@ -529,13 +581,18 @@
                                    
                                 >
                                 </v-file-input>
+
+                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('registration_certificate')">
+                                    <img  id="registration_certificate_thumb" class="preview">
+                                </v-card>
+
                             </v-card>
                        
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
                             <p class="primary--text body-2 text-uppercase mb-0">TIN DOCUMENT <span class="red--text"><strong>* </strong></span></p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     label="Tin document" 
@@ -547,6 +604,9 @@
                                    
                                 >
                                 </v-file-input>
+                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('tin_document')">
+                                    <img  id="tin_document_thumb" class="preview">
+                                </v-card>
                             </v-card>
                        
                         </v-col>              
@@ -555,7 +615,7 @@
                     <v-row class="pa-3" v-if="client_type == 'Company'">
                         <v-col cols=12 sm=4 class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> VAT CERTIFICATE <span class="red--text"><strong>* </strong></span></p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     label="vat certificate" 
@@ -569,13 +629,17 @@
                                 >
 
                                 </v-file-input>
+
+                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('vat_certificate')">
+                                    <img  id="vat_certificate_thumb" class="preview">
+                                </v-card>
                             </v-card>
                        
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> BUSINESS LICENCE <span class="red--text"><strong>* </strong></span></p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     label="Business licence" 
@@ -587,13 +651,17 @@
                                    
                                 >
                                 </v-file-input>
+
+                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('business_licence')">
+                                    <img  id="business_licence_thumb" class="preview">
+                                </v-card>
                             </v-card>
                        
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> THREE MONTHS BANK STATEMENT <span class="red--text"><strong>* </strong></span></p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     label="Bank statement" 
@@ -605,11 +673,13 @@
                                    
                                 >
                                 </v-file-input>
+                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('bank_statement')">
+                                    <img  id="bank_statement_thumb" class="preview">
+                                </v-card>
                             </v-card>
                        
                         </v-col>              
                     </v-row>
-
                 </v-card>
 
             <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
@@ -690,11 +760,31 @@ export default {
 
         loading: false,
 
-    }),
+        overlay: false,
+
+     }),
 
     methods: {
 
-        
+        showLargeThumbnail(id){
+
+            this.overlay = !this.overlay
+
+            var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+               
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+            reader.readAsDataURL(document.getElementById(id).files[0]);
+        },
+
         isValid(){
             
             if(this.client_type === "Personal"){
@@ -781,42 +871,243 @@ export default {
         ...mapActions(['setAlert']),
 
         bankStatementUpdated(){
-            this.three_months_bank_statement.push(document.getElementById("bank_statement").files[0]);
+            
+
+            if(document.getElementById("bank_statement").files[0]){
+
+                this.three_months_bank_statement.push(document.getElementById("bank_statement").files[0]);
+
+                var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var output = document.getElementById('bank_statement_thumb');
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+                    
+                    output.src = dataURL;
+
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+                reader.readAsDataURL(document.getElementById("bank_statement").files[0]);
+            }
         },
 
         businessLicenceUpdated(){
-            this.business_licence_document.push(document.getElementById("business_licence").files[0]);
+
+            if(document.getElementById("business_licence").files[0]){
+
+                this.business_licence_document.push(document.getElementById("business_licence").files[0]);
+
+                var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var output = document.getElementById('business_licence_thumb');
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+                    
+                    output.src = dataURL;
+
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+                reader.readAsDataURL(document.getElementById("business_licence").files[0]);
+            }
         },
 
         vatCertificateUploaded(){
-            this.vat_certificate.push(document.getElementById("vat_certificate").files[0]);
+
+            if(document.getElementById("vat_certificate").files[0]){
+
+                this.vat_certificate.push(document.getElementById("vat_certificate").files[0]);
+
+                var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var output = document.getElementById('vat_certificate_thumb');
+
+                   var large_thumbnail = document.getElementById('large_thumbnail');
+                    
+                    output.src = dataURL;
+
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+                reader.readAsDataURL(document.getElementById("vat_certificate").files[0]);
+            }
         },
 
         tinDocumentUpdated(){
-            this.tax_payer_identification_document.push(document.getElementById("tin_document").files[0]);
+
+            if(document.getElementById("tin_document").files[0]){
+
+                this.tax_payer_identification_document.push(document.getElementById("tin_document").files[0]);
+
+                var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var output = document.getElementById('tin_document_thumb');
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+                    
+                    output.src = dataURL;
+
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+                reader.readAsDataURL(document.getElementById("tin_document").files[0]);
+            }
         },
 
         registrationCertificateUpdated(){
-            this.certificate_of_registration.push(document.getElementById("registration_certificate").files[0]);
+
+            
+
+            if(document.getElementById("registration_certificate").files[0]){
+
+               this.certificate_of_registration.push(document.getElementById("registration_certificate").files[0]);
+
+                var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var output = document.getElementById('registration_certificate_thumb');
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+                    
+                    output.src = dataURL;
+
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+                reader.readAsDataURL(document.getElementById("registration_certificate").files[0]);
+            }
         },
 
         companyLogoUpdated(){
-            this.company_logo.push(document.getElementById("company_logo").files[0]);
+
+            if(document.getElementById("company_logo").files[0]){
+
+               this.company_logo.push(document.getElementById("company_logo").files[0]);
+
+                var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var output = document.getElementById('company_logo_thumb');
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+                    
+                    output.src = dataURL;
+
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+                reader.readAsDataURL(document.getElementById("company_logo").files[0]);
+            }
         },
 
         personalTinUpdated(){
 
-            this.copy_of_tax_identification_number_certificate.push(document.getElementById("personal_tin").files[0]);
+           if(document.getElementById("personal_tin").files[0]){
+
+               this.copy_of_tax_identification_number_certificate.push(document.getElementById("personal_tin").files[0]);
+
+                var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var output = document.getElementById('personal_tin_thumb');
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+                    
+                    output.src = dataURL;
+
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+                reader.readAsDataURL(document.getElementById("personal_tin").files[0]);
+            }
         },
 
         updateID(){
 
-            this.copy_of_identity_card.push(document.getElementById("copy_of_id").files[0]);
+            if(document.getElementById("copy_of_id").files[0]){
+
+                this.copy_of_identity_card.push(document.getElementById("copy_of_id").files[0]);
+
+                var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var output = document.getElementById('copy_of_id_thumb');
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+                    
+                    output.src = dataURL;
+
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+                reader.readAsDataURL(document.getElementById("copy_of_id").files[0]);
+            }
+                
         },
 
         updateProfilePhoto(){
 
-            this.profile_photo.push(document.getElementById("profilePhoto").files[0]);
+            if(document.getElementById("profilePhoto").files[0]){
+
+                this.profile_photo.push(document.getElementById("profilePhoto").files[0]);
+
+                var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var output = document.getElementById('profilePhoto_thumb');
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+                    
+                    output.src = dataURL;
+
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+                reader.readAsDataURL(document.getElementById("profilePhoto").files[0]);
+            }
+
+
         },
 
         updatePercentage(percent){
@@ -1260,4 +1551,24 @@ export default {
      
  }
  
+ img.preview{
+     width: 248px;
+     height: 200px
+ }
+
+ .large-preview{
+
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    
+ }
+
+ img.preview:hover{
+     cursor: pointer;
+ }
 </style>
