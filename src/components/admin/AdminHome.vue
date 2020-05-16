@@ -3,7 +3,9 @@
 
       <v-card class="mx-auto mt-12" color="#F5FAFF">
 
-          <AlertError v-if="display_alert" v-bind:message="alert"/>
+          <AlertError v-if="display_alert" v-bind:message="alert_error"/>
+
+          <Alert v-if="alert" v-bind:message="alert"/>
 
           <v-tabs
               right
@@ -360,6 +362,8 @@
 <script>
 import axios from 'axios'
 import AlertError from '@/components/AlertError.vue'
+import Alert from '@/components/Alert.vue'
+import{mapActions,mapGetters} from 'vuex'
 
 export default {
   name: 'AdminHome',
@@ -380,17 +384,27 @@ export default {
 
       dialog: false,
 
-      alert:'',
+      alert_error:'',
       display_alert: false,
+
+      alert:'',
 
       email:''
 
     }
   },
 
-  components: {AlertError},
+  components: {AlertError,Alert},
+
+  computed:{
+
+    ...mapGetters(['getAdminAlert'])
+  },
 
   methods: {
+
+    ...mapActions(['setAdminAlert']),
+
     fetch(title)
     {
       switch(title)
@@ -655,8 +669,6 @@ export default {
 
   },
 
-  
-
   beforeRouteEnter(to, from, next){
     next(vm => {
 
@@ -667,6 +679,8 @@ export default {
       vm.fetchAgents();
 
       vm.fetchTransporters();
+
+      vm.alert = vm.$store.getters.getAdminAlert;
 
       next();
     })

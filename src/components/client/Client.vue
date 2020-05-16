@@ -566,8 +566,6 @@ export default {
 
         vm.alert = vm.$store.getters.getAlert;
 
-        
-
          //eslint-disable-next-line no-console
          //console.log(this.ClearingBidedTenders);
 

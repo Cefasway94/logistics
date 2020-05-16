@@ -5,6 +5,7 @@ import Vuex from 'vuex';
 import tender from './modules/agent';
 import accounts from './modules/accounts'
 import client from './modules/client'
+import admin from './modules/admin'
 
 
 Vue.use(Vuex)
@@ -13,7 +14,8 @@ const store = new Vuex.Store({
     modules: {
         tender,
         accounts,
-        client
+        client,
+        admin
          
     }
 });

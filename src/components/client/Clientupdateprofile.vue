@@ -19,15 +19,6 @@
                         </v-btn>
                     </v-col>
                 </v-row>
-
-                <!--<v-col>
-                    <v-btn
-                        icon
-                        @click="overlay = false"
-                    >
-                        <v-icon>mdi-close</v-icon>
-                    </v-btn>
-                </v-col>-->
                 
             </div>
 
@@ -38,7 +29,7 @@
                 height="40"
                 
             >
-            <v-row :align="end" :align-content="end">
+            <v-row>
                 <v-col 
                     cols="5" 
                     class="white--text font-weight-bold  pr-3 pl-5" 
@@ -70,7 +61,7 @@
                
             </v-progress-linear>
 
-            <v-card row flat width="1300" class="mt-10 mx-auto mb-5" v-if="(client_details && percentage == 0)" color="#F5FAFF">
+            <v-card row flat width="1300" class="mt-10 mx-auto mb-5" v-if="(client_details && percentage == 0) || stage1" color="#F5FAFF">
                 <v-flex row class="px-3">
                     <h3 class="headline mt-1 font-weight-regular">Profile info</h3>
 
@@ -80,14 +71,14 @@
                 </v-flex>
             </v-card>
 
-             <v-card row flat width="1300" class="mt-10 mx-auto" color="#F5FAFF" v-if="client_details && percentage == 0">
+             <v-card row flat width="1300" class="mt-10 mx-auto" color="#F5FAFF" v-if="(client_details && percentage == 0) || stage1">
                 <v-flex row class="">
                     <v-icon color="grey" class="mb-4 ml-3 mr-5">person_outline</v-icon>
                     <p class="grey--text title ">Client type  <span class="red--text"><strong>* </strong></span></p>
                 </v-flex>
             </v-card>
 
-            <v-card width="1300" class="mx-auto mb-5 d-flex pa-3" color="" v-if="client_details && percentage == 0">
+            <v-card width="1300" class="mx-auto mb-5 d-flex pa-3" color="" v-if="(client_details && percentage == 0) || stage1">
                 <v-flex row xs12>
                      <v-select 
                         class="mx-6" 
@@ -104,14 +95,14 @@
                 </v-flex>
             </v-card>
 
-             <v-card row flat width="1300" class="mt-10 mx-auto" color="#F5FAFF" v-if="client_details && percentage == 0">
+             <v-card row flat width="1300" class="mt-10 mx-auto" color="#F5FAFF" v-if="(client_details && percentage == 0) || stage1">
                 <v-flex row class="">
                     <v-icon color="grey" class="mb-4 ml-3 mr-5">person_outline</v-icon>
                     <p class="grey--text title ">Client details</p>
                 </v-flex>
             </v-card>
             
-            <v-card class="mx-auto mb-5 d-flex pa-3" color="" v-if="client_details && percentage == 0">
+            <v-card class="mx-auto mb-5 d-flex pa-3" color="" v-if="(client_details && percentage == 0) || stage1">
                 
                 <v-flex column>
 
@@ -362,14 +353,14 @@
                 </v-flex>
             </v-card>
 
-            <v-card row flat width="1300" class="mt-12 mx-auto" color="#F5FAFF" v-if="client_details && percentage == 40">
+            <v-card row flat width="1300" class="mt-12 mx-auto" color="#F5FAFF" v-if="(client_details && percentage == 40) || stage2">
                 <v-flex row class="">
                     <v-icon color="grey" large class=" ml-3 mr-5 pb-3">supervisor_account</v-icon>
                     <p class="grey--text title ">Bank Details</p>
                 </v-flex>
             </v-card>
 
-            <v-card class="mx-auto mb-5 d-flex pa-3" color="" v-if="client_details &&  percentage == 40">
+            <v-card class="mx-auto mb-5 d-flex pa-3" color="" v-if="(client_details && percentage == 40) || stage2">
                 
                 <v-flex column>
 
@@ -445,7 +436,7 @@
                             </v-flex>
 
                             <v-flex column xs12 sm6 class="px-2">
-                                <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Bank address</p>
+                                <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> BANK ADDRESS(CITY/REGION)</p>
                                 <v-text-field 
                                     clearable 
                                     outlined 
@@ -685,6 +676,10 @@
             <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row class=" pa-3">
 
+                    <v-col cols="3">
+                        <v-btn color="primary white--text" :disabled="(client_details && percentage == 0) || stage1" @click="setStages()">BACK</v-btn>
+                    </v-col>
+
                     <v-col cols="6"
                         class="fill-height"
                         align-content="center"
@@ -759,12 +754,38 @@ export default {
         copy_of_tax_identification_number_certificate:[],
 
         loading: false,
-
         overlay: false,
+
+        stage1: false,
+        stage2: false,
+        stage3: false
 
      }),
 
     methods: {
+
+        setStages(){
+
+            if(this.bank_details){
+
+                this.stage2 = true;
+
+                this.bank_details = false;
+
+                this.stage1 = false;
+
+                this.stage3 = false;
+
+            } else if(this.stage2 || (this.client_details && this.percentage == 40)){
+
+                this.stage1 = true;
+
+                this.stage2 = false;
+
+                this.client_details = false;
+
+            }
+        },
 
         showLargeThumbnail(id){
 
@@ -789,7 +810,7 @@ export default {
             
             if(this.client_type === "Personal"){
 
-                if(this.client_details && this.percentage == 0){
+                if((this.client_details && this.percentage == 0) || this.stage1){
 
                     if((this.first_name === '' || this.first_name === null)
                         || (this.last_name === '' || this.last_name === null)
@@ -803,7 +824,7 @@ export default {
                     else 
                         return true;
 
-                } else if(this.client_details && this.percentage == 40)
+                } else if((this.client_details && this.percentage == 40) || this.stage2)
                 {
                     if((this.bank_acount_name === '' ||  this.bank_acount_name === null)
                         || (this.bank_account_number === '' ||  this.bank_account_number === null)
@@ -1173,37 +1194,15 @@ export default {
 
         createData(){
 
-            if(this.client_details && this.percentage == 40){
+            if((this.client_details && this.percentage == 40) || this.stage2){
 
                 let formData = new FormData();
 
                 if(this.have_customer_id == false)
                     formData.append('percentage',this.percentage);
 
-
-                if(this.client_type == "Personal"){
-
-                    formData.append('first_name',this.first_name);
-                    formData.append('last_name',this.last_name);
-                }
-                
-                formData.append('country',this.country);
-                formData.append('city',this.city);
-                formData.append('mobile_number',this.mobile_number);
-                formData.append('office_mobile',this.office_mobile);
-                formData.append('address',this.address);
                 formData.append('customer_type',this.client_type);
 
-                if(this.client_type == "Company"){
-
-                    formData.append('contact_person_names',this.contact_person_names);
-                    formData.append('Contact_person_phone_number',this.Contact_person_phone_number);
-                    formData.append('Contact_person_designation',this.Contact_person_designation);
-                    formData.append('company_sector',this.company_sector);
-                    formData.append('company_name',this.company_name);
-                }
-
-                formData.append('customer_type',this.client_type);
                 formData.append('bank_acount_name',this.bank_acount_name);
                 formData.append('bank_account_number',this.bank_account_number);
                 formData.append('second_bank_account_name',this.second_bank_account_name);
@@ -1213,7 +1212,7 @@ export default {
                
                 return formData;
 
-            } else if(this.client_details && this.percentage == 0){
+            } else if((this.client_details && this.percentage == 0) || this.stage1){
 
                 let formData = new FormData();
 
@@ -1387,7 +1386,7 @@ export default {
                                         document.getElementById('app').scrollIntoView();
                                          
                                     } 
-                                    else if(response.data.objects.client_details && this.percentage == 40){
+                                    else if((response.data.objects.client_details && this.percentage == 40) && this.stage1 == false){
 
 
                                         this.updatePercentage(30)
@@ -1397,9 +1396,30 @@ export default {
                                         document.getElementById('app').scrollIntoView();
          
                                          
+                                    } else if(this.stage2){
+
+                                         //eslint-disable-next-line no-console
+                                         //console.log("STAGE22222222222222222"+response.data.objects.bank_details);
+
+                                        this.bank_details = response.data.objects.bank_details;
+
+                                        this.stage2 = false;
+
+                                        this.stage1 = false;
+
+                                        document.getElementById('app').scrollIntoView();
+
+                                    } else if(this.stage1){
+
+                                        this.client_details = response.data.objects.client_details;
+
+                                        this.stage1 = false;
+
+                                        this.stage2 = true;
+
+                                        document.getElementById('app').scrollIntoView();
                                     }
                                            
-
                                     /*if(this.client_details){
 
                                         this.client_details = false;
@@ -1509,7 +1529,7 @@ export default {
                                     vm.client_details = true;*/
 
                                 //eslint-disable-next-line no-console
-                                console.log("client details *** " + response.data.objects.client_details);
+                                console.log("client details *** bank details " + response.data.objects.client_details + response.data.objects.bank_details);
 
                                vm.have_customer_id = response.data.objects.customer_id == null? false:true;
 

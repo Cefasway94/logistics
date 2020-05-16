@@ -110,7 +110,7 @@
                 </v-col>
 
                  <v-col cols=6 md=3>
-                    <p class="primary--text body-1 mb-2">BANK ADDRESS</p>
+                    <p class="primary--text body-1 mb-2">BANK ADDRESS(CITY/REGION)</p>
                     <p class="body-1">{{ customer.bank_address}}</p>
                 </v-col>
             </v-row>
@@ -296,6 +296,7 @@
 <script>
 import axios from 'axios'
 import AlertError from '@/components/AlertError.vue'
+import {mapActions} from 'vuex'
 
 export default {
     name: 'AgentVerifying',
@@ -325,6 +326,8 @@ export default {
 
     methods:{
 
+        ...mapActions(['setAdminAlert']),
+
         getFileName(url){
 
             let position = url.lastIndexOf('/');
@@ -350,6 +353,8 @@ export default {
                     if(response.data.genralErrorCode === 8000)
                     {
                        this.display_alert = false;
+
+                       this.setAdminAlert("This is for test");
 
                        this.$router.push('/admin');
 
