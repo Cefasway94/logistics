@@ -24,7 +24,7 @@
 
             <v-progress-linear
                 v-model="percentage"
-                class="mt-5 teal lighten-5"
+                class="mt-5 teal lighten-5 progress"
                 :rounded="true"
                 height="40"
                 
@@ -46,7 +46,7 @@
                                     mdi-check-outline
                                 </v-icon>
 
-                                <v-icon small color="white" v-show="percentage == 0">
+                                <v-icon small color="red" v-show="percentage == 0">
                                     mdi-close
                                 </v-icon>
                             </v-btn>
@@ -72,7 +72,7 @@
                                     mdi-check-outline
                                 </v-icon>
 
-                                <v-icon small color="white" v-show="percentage < 70">
+                                <v-icon small color="red" v-show="percentage < 70">
                                     mdi-close
                                 </v-icon>
                             </v-btn>
@@ -1661,9 +1661,11 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1;
+    z-index: 2;
     
  }
+
+ .progress { z-index: 1;}
 
  img.preview:hover{
      cursor: pointer;
