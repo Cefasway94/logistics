@@ -40,6 +40,7 @@ import Tender from '../components/client/Tender.vue'
 import editTender from '../components/client/editTender.vue'
 import Payment from '../components/client/Payment.vue'
 import Aboutbid from '../components/client/Aboutbid.vue'
+import Profile from '../components/client/Profile.vue'
 import Paymenthistory from '../components/Paymenthistory.vue';
 import AboutTenderBids from '../components/client/AboutTenderBids.vue'
 import Clientpaymenthistory from '../components/Clientpaymenthistory.vue'
@@ -90,6 +91,11 @@ const routes = [
     path:'/client/AboutTenderBids/:id/:tender_type',
     name:'AboutTenderBids',
     components: {AboutTenderBids}
+  },
+  {
+    path:'/client/profile',
+    name:'Profile',
+    components: {Profile}
   },
   {
     path:'/Client/editprofile/:id',
