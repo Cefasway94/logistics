@@ -420,11 +420,10 @@
                 color="error"
                 icon="error_outline"
                 >
-                Please check your internet connetction or try again with the 
-                right credentials
+                Connection is taking too long, Please check your internet connetction or try again.
                 </v-alert>
 
-
+               
                 <v-alert
                 :value="invalid"
                 color="error"
@@ -576,6 +575,40 @@
                     </v-card>
                     </template>
                     </v-hover>
+                    <v-alert
+                    :value="invalidemail"
+                    xsmall
+                    text
+                    class="my-1 py-0"
+                    color="red"
+                    icon="null">
+                    <v-row>
+                    <v-icon color="red" small class="mx-2">
+                      error
+                    </v-icon>
+                    <p class="body-2 mb-0">
+                    invalid e-mail
+                    </p>
+                    </v-row>
+                    </v-alert>
+                    <v-alert
+                    :value="requiredemail"
+                    xsmall
+                    text
+                    class="my-1 py-0"
+                    color="red"
+                    icon="null">
+                    <p class="body-2 mb-0">
+                    <v-row>
+                    <v-icon color="red" small class="mx-2">
+                      error
+                    </v-icon>
+                    <p class="body-2 mb-0">
+                    e-mail is required
+                    </p>
+                    </v-row>
+                    </p>
+                    </v-alert>
                     </v-flex>
                     </v-flex>    
 
@@ -657,7 +690,7 @@
                         clearable 
                         @input="clear_alert()"
                         v-model="name" 
-                        :rules="[rules.required]"
+                        :rules="[rules.required, rules.min]"
                         > 
                         </v-text-field>
                     </v-card>
@@ -684,7 +717,7 @@
                         clearable 
                         @input="clear_alert()"
                         v-model="phone_number"
-                        :rules="[rules.required]" 
+                        :rules="[rules.required, rules.number, rules.min]" 
                         > 
                         </v-text-field>
                     </v-card>
@@ -694,6 +727,7 @@
                     </v-flex>
 
                     <v-flex row class="">
+
                     <v-flex column xs6 sm6 md6 lg6 class="px-1">
                     <p class="font-weight-regular subtitle-2 grey--text mb-0" >PASSWORD</p>
                     <v-hover class="mb-7">
@@ -710,7 +744,7 @@
                         background-color="transparent" 
                         v-model="secret"
                         @input="clear_alert()" 
-                        :rules="[rules.required]"
+                        :rules="[rules.required, rules.min, rules.mixed]"
                         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                         @click:append="show = !show"
                         :type="show ? 'text' : 'password'"
@@ -736,7 +770,7 @@
                         color="#4169E1" 
                         background-color="transparent" 
                         v-model="confirm_secret" 
-                        :rules="[rules.required]"
+                        :rules="[rules.required, rules.match]"
                         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                         @click:append="show = !show"
                         @input="clear_alert()"
@@ -831,6 +865,10 @@ export default {
           btn2:"transparent", 
           btn3:"transparent",
 
+          // invalid email field
+          invalidemail:false,
+          requiredemail: false,
+
          //match: false,                // used to chcek if passwords match, 
          invalid: false,             // togle fields
          //invalidemail : false,      // check if email is valid
@@ -851,10 +889,34 @@ export default {
           confirm_secret:'',
           rules: {
             required: value => !!value || "Required",
-            //number:value => {},
+            number: value => {
+              const pattern = /^\d+$/;
+              return pattern.test(value) || "Number only required"
+            },
+
+            min: v => v.length >= 8 || 'Min 8 characters',
+
+            mixed: value =>{   if (value.length < 8) {
+                                    return("password too short");
+                                } else if (value.length > 12) {
+                                    return("password too long");
+                                } else if (value.search(/\d/) == -1) {
+                                    return("atleast one number required");
+                                } else if (value.search(/[a-zA-Z]/) == -1) {
+                                    return("atleast one letter required");
+                                }  
+                                return true
+                            },
+
+            match: value =>{   if ( value !== this.secret) {
+                                    return("password dont amtch");
+                                } 
+                                return true
+                            },
+                            
             email: value => {
              const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-             return pattern.test(value) || "Invalid e-mail.";
+             return pattern.test(value) || "invalid email";
             }
            }
       }
@@ -874,6 +936,66 @@ methods:{
 
     confirm(){
 
+      this.clear_alert()
+
+      if(this.rules.required(this.email) == 'Required'){
+        
+        console.log(11);
+        this.requiredemail = true  
+        this.invalidemail = false
+        return false
+
+      }else if (this.rules.email(this.email) == 'invalid email') {
+        
+        this.validate()
+        console.log(12);
+        this.requiredemail = false
+        this.invalidemail = true
+        return false
+
+      }else if (this.rules.mixed(this.secret) == 'password too short' ) {
+        
+        console.log(13);
+        this.validate()
+        return this.rules.mixed(this.secret) 
+
+      }else if (this.rules.mixed(this.secret) == 'atleast one number required' ) {
+
+        console.log(14);
+        this.validate()
+        return this.rules.mixed(this.secret)
+
+      }else if (this.rules.mixed(this.secret) == 'atleast one letter required' ) {
+
+        console.log(15);
+        this.validate()
+        return this.rules.mixed(this.secret) 
+
+      }else if (this.rules.min(this.name) == 'Min 8 characters' ) {
+
+        console.log(16);
+        this.validate()
+        return this.rules.min(this.name)
+
+      }else if (this.rules.min(this.phone_number) == 'Min 8 characters' ) {
+
+        console.log(17);
+        this.validate()
+        return this.rules.min(this.phone_number)
+
+      }else if (this.rules.number(this.phone_number) == 'Number only required' ) {
+
+        console.log(18);
+        this.validate()
+        return this.rules.number(this.phone_number)
+
+      }
+
+      console.log(this.rules.mixed(this.secret));
+      
+      // console.log(this.rules.email(this.email));
+      
+      
       if (this.validate()) {
 
         
@@ -894,13 +1016,13 @@ methods:{
           console.log('client');
           
         }
-
-
       }
 
     },
 
     Register(){
+
+      this.clear_alert()
 
       this.dialog1 = false
       this.dialog2 = false
@@ -917,9 +1039,9 @@ methods:{
                 this.invalid == true
                 } else if (this.success === false && this.invalid == false){
                   this.loading = false;
-                 // this.timeout = true;
+                 this.timeout = true;
                 }
-              },30000)
+              },10000)
 
           console.log('here register')
 
@@ -936,13 +1058,19 @@ methods:{
           console.log(this.LOAD_REGISTER.email);
           
           if(this.LOAD_REGISTER.email){
+
             this.abouterror = 'User Already exist. Please try other datails or log in with appropriate credentials'
             this.invalid = true
             this.success = false
-          }
+
+          }          
+
+          this.clear_alert()
+          
           this.loading = false
           this.success = true
           this.signedup_successively = true
+          
           //return data;
           data = this.LOAD_RESPONSE;
           console.log('success');
@@ -954,23 +1082,44 @@ methods:{
         })
         .catch (error => {
 
-          console.log(error.response.data)
+          if(error.response.status == 404){
+            this.clear_alert()
+            this.invalid = true
+            this.abouterror = 'Connection error, Please contact admin for support'
+            this.loading = false
+          }
+          
+
+          // if (error.response == 'undefined') {
+          //   this.clear_alert()
+          // console.log(error.response)
+          //  return this.timeout = true
+          // }
 
           if (error.response.data.email) {
+
+            this.clear_alert()
             this.abouterror = error.response.data.email[0]
             this.invalid = true
             this.success = false
             this.loading = false
+
           }else if (error.response.data.phone){
+
+            this.clear_alert()
             this.abouterror = error.response.data.phone[0]
             this.invalid = true
             this.success = false
             this.loading = false
+
           }else if (error.response.data.name){
+
+            this.clear_alert()
             this.abouterror = error.response.data.name[0]
             this.invalid = true
             this.success = false
             this.loading = false
+            
           }
           
          //  ======================== continue from here
@@ -983,8 +1132,8 @@ methods:{
     validate() {
       if(this.email === '' || this.email === null ) {
 
-        console.log('how1');
-         this.emptyfilds= true;
+        console.log('how1')
+         this.emptyfilds = true
          return false
       
       }else if(this.secret=='' || this.secret === null ){
@@ -1037,6 +1186,8 @@ methods:{
       this.error = false
       this.timeout = false
       this.dontmatch = false
+      this.requiredemail = false
+      this.invalidemail = false
     }, 
    
     // Transporter select
@@ -1089,7 +1240,8 @@ methods:{
           //'LOAD_DIBTENDERS'
       ]),
       
-  }
+  },
+
     
 }
 </script>

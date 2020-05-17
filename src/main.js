@@ -6,6 +6,7 @@ import store from './stores/store'
 import vuelidate from './plugins/vulidate'
 import vueCountryRegionSelect from 'vue-country-region-select'
 
+
 // const Vue = () => import('vue')
 // const App = () => import('./App.vue')
 // const router = () => import('./router')
@@ -18,7 +19,6 @@ import vueCountryRegionSelect from 'vue-country-region-select'
 
 Vue.config.productionTip = false
 Vue.use(vueCountryRegionSelect)
-
 
 new Vue({
   router,

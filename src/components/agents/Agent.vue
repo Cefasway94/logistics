@@ -429,6 +429,7 @@ export default {
         this.ACCEPT_BID(bid_id).then(()=>{
             // eslint-disable-next-line no-console
             console.log(this.LOAD_ACCEPT_BID);
+            this.get_dashboard()
             
         })
     },

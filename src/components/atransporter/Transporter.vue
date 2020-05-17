@@ -266,8 +266,13 @@
                         <h4  class=" title ">{{tender.customer_offer_amount}} USD </h4>
                         <v-spacer></v-spacer>
                         <v-btn small elevation="flat" 
-                        color="#4169E1" class="white--text" @click="getbiddetails(tender.bid_id)" :to="{name:'Tenderprogress', 
-                        params: {id:tender.id}}" >View Details</v-btn>
+                        color="#4169E1" 
+                        class="white--text" 
+                        @click="getbiddetails(tender.bid_id)" 
+                        :to="{name:'Tenderprogress', 
+                        params: {id:tender.id}}" >
+                        View Details
+                        </v-btn>
                         
                     </v-row>
                     
@@ -445,8 +450,8 @@ export default {
         
         this.T_ACCEPT_BID(bid_id).then(()=>{
             // eslint-disable-next-line no-console
-            console.log(this.LOAD_ACCEPT_BID);
-            return this.get_dashboard();
+            console.log(this.LOAD_ACCEPT_BID)
+            return this.get_dashboard()
             
         })
     },
