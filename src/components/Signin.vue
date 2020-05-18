@@ -51,8 +51,9 @@
                 </v-alert>
 
                 <v-alert
+                text
                 :value="Verror"
-                color="#DC493A"
+                color="deep-orange"
                 icon="error_outline"
                 >
                 Kindly check your email and verify your account

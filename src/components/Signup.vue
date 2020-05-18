@@ -941,8 +941,9 @@ methods:{
       if(this.rules.required(this.email) == 'Required'){
         
         console.log(11);
-        this.requiredemail = true  
-        this.invalidemail = false
+        this.validate()
+       // this.requiredemail = true  
+       // this.invalidemail = false
         return false
 
       }else if (this.rules.email(this.email) == 'invalid email') {
@@ -1041,7 +1042,7 @@ methods:{
                   this.loading = false;
                  this.timeout = true;
                 }
-              },10000)
+              },15000)
 
           console.log('here register')
 
