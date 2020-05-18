@@ -148,21 +148,21 @@
                         <v-flex row >
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BID ID </p>
-                            <p class="body-1">{{LOAD_DASHBOARD.objects.bid_id}}</p>
+                            <p class="body-1">{{LOAD_DASHBOARD.objects && LOAD_DASHBOARD.objects.bid_id}}</p>
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> DELIVER ON </p>
-                            <p class="body-1">{{LOAD_DASHBOARD.objects.bid_delivery_timeline}}</p>
+                            <p class="body-1">{{LOAD_DASHBOARD.objects && LOAD_DASHBOARD.objects.bid_delivery_timeline}}</p>
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> BID AMOUNT </p>
-                            <p class="body-1 ">{{LOAD_DASHBOARD.objects.bid_amount}}  USD</p>
+                            <p class="body-1 ">{{LOAD_DASHBOARD.objects && LOAD_DASHBOARD.objects.bid_amount}}  USD</p>
                             </v-flex>
                         </v-flex>
 
                         <v-flex column class="mt-7 pr-4">
                             <p class="primary--text body-1 mb-0">BID TERMS AND CONDITIIONS </p>
-                            <p class="body-1">{{LOAD_DASHBOARD.objects.bid_terms_and_conditions}}</p>
+                            <p class="body-1">{{LOAD_DASHBOARD.objects && LOAD_DASHBOARD.objects.bid_terms_and_conditions}}</p>
                         </v-flex>
                         </v-flex>
                 </v-flex>

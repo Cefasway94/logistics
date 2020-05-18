@@ -25,7 +25,7 @@
       <v-spacer></v-spacer>
 
       
-   <v-menu transition="slide-y-transition">
+   <!-- <v-menu transition="slide-y-transition">
       <template v-slot:activator="{ on }">
         
         <v-badge 
@@ -46,7 +46,7 @@
           <v-list-item-title v-text="'Item ' + n"></v-list-item-title>
         </v-list-item>
       </v-list>
-    </v-menu>
+    </v-menu> -->
 
     
       <v-divider class="mx-5 hidden-sm-and-down" vertical></v-divider>
@@ -103,7 +103,7 @@
               <v-list-item
                 v-for="(item, i) in itemes"
                 :key="i"
-                :to="{name: items[3].router.name}">
+                :to="{name: items[3] && items[3].router.name }">
 
 
 <!--  {
@@ -114,7 +114,7 @@
 
 
                 <v-list-item-icon>
-                  <v-icon v-text="item.icon"></v-icon>
+                  <v-icon v-text="item && item.icon"></v-icon>
                 </v-list-item-icon>
 
                 <v-list-item-content>
@@ -198,7 +198,7 @@
                 :key="i"
                 @click="clienteditprofile()">
                 <v-list-item-icon>
-                  <v-icon v-text="item.icon"></v-icon>
+                  <v-icon v-text="item && item.icon"></v-icon>
                 </v-list-item-icon>
 
                 <v-list-item-content>
@@ -266,46 +266,46 @@
 
         <!-- tender -->
         <v-list-item
-          :to="{name:this.items[0].router.name, 
-            params:{id: this.items[0].router.params.id} }"
+          :to="{name:this.items[0] && this.items[0].router.name, 
+            params:{id: this.items[0] && this.items[0].router.params.id} }"
           link
           @click="tenders()"
         >
           <v-list-item-icon>
-            <v-icon>{{items[0].icon}}</v-icon>
+            <v-icon>{{items[0] && items[0].icon}}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{items[0].title}}</v-list-item-title>
+            <v-list-item-title>{{items[0] && items[0].title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
         <!-- dashboard -->
         <v-list-item
-          :to="{name: this.items[1].router.name, 
-          params: {id:this.LOAD_AGENT.objects.agent_id}}"
+          :to="{name: this.items[1] && this.items[1].router.name, 
+          params: {id:this.LOAD_AGENT.objects && this.LOAD_AGENT.objects.agent_id}}"
           link
         >
           <v-list-item-icon>
-            <v-icon>{{items[1].icon}}</v-icon>
+            <v-icon>{{items[1] && items[1].icon}}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{items[1].title}}</v-list-item-title>
+            <v-list-item-title>{{items[1] && items[1].title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
         <!-- payment -->
         <v-list-item
-          :to="{name: this.items[2].router.name}"
+          :to="{name: this.items[2] && this.items[2].router.name}"
           link
         >
           <v-list-item-icon>
-            <v-icon>{{items[2].icon}}</v-icon>
+            <v-icon>{{items[2] && items[2].icon}}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{items[2].title}}</v-list-item-title>
+            <v-list-item-title>{{items[2] && items[2].title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -369,17 +369,17 @@
 
         <!-- tender -->
         <v-list-item
-          :to="{name:this.items[0].router.name, 
-            params:{id: this.items[0].router.params.id} }"
+          :to="{name:this.items[0] && this.items[0].router.name, 
+            params:{id: this.items[0] && this.items[0].router.params.id} }"
           link
           @click="tenders()"
         >
           <v-list-item-icon>
-            <v-icon>{{items[0].icon}}</v-icon>
+            <v-icon>{{items[0] && items[0].icon}}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{items[0].title}}</v-list-item-title>
+            <v-list-item-title>{{items[0] && items[0].title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
@@ -401,15 +401,15 @@
 
         <!-- payment history -->
         <v-list-item
-          :to="{name: this.items[1].router.name}"
+          :to="{name: this.items[1] && this.items[1].router.name}"
           link
         >
           <v-list-item-icon>
-            <v-icon>{{items[1].icon}}</v-icon>
+            <v-icon>{{items[1] && items[1].icon}}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{items[1].title}}</v-list-item-title>
+            <v-list-item-title>{{items[1] && items[1].title}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>

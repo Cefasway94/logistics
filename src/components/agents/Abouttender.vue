@@ -199,6 +199,7 @@
                              color="#4169E1"
                              clearable
                              v-model="bid_amount"
+                             :suffix="currency"
                              label="Bid amount">
                             </v-text-field>
                         </v-flex>
@@ -292,6 +293,7 @@ export default {
           bided: false,
           bidsent: false,
           loading: false,
+          currency:'',
           payment_terms_and_conditions:'',
           //bid terms
           items:[],
@@ -321,7 +323,9 @@ export default {
       this.GET_TENDERSDETAILs(tab).then(()=>{
 
           console.log('tender details bellowwwwwwww');
-          console.log(this.LOAD_TENDER);
+          console.log(this.LOAD_TENDER.currency)
+
+           this.currency = this.LOAD_TENDER.currency
 
           this.GET_AGENT(localStorage.client).then(()=>{
 
