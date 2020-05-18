@@ -31,7 +31,8 @@
             >
             <v-row>
                 <v-col 
-                    cols="5" 
+                    cols="12"
+                    md=5 
                     class="white--text font-weight-bold  pr-3 pl-5" 
                 > 
                 <v-row justify="center">
@@ -57,7 +58,8 @@
                 </v-col>
 
                 <v-col 
-                    cols="3" 
+                    md=3
+                    cols=12
                     class="white--text font-weight-bold pr-3 pl-5"
                 > 
                      <v-row justify="center">
@@ -81,7 +83,8 @@
                 </v-col>
 
                 <v-col 
-                    cols="4" 
+                    md=4
+                    cols=12 
                     class="white--text font-weight-bold pr-3 pl-5"
                 >
                      <v-row justify="center">
