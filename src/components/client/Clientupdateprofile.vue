@@ -42,11 +42,11 @@
                                 rounded
                                 color="teal lighten-3"
                             >
-                                <v-icon small color="white" v-show="percentage == 40 || percentage > 40">
+                                <v-icon small color="white" v-show="percentage == stage1_percent || percentage > stage1_percent">
                                     mdi-check-outline
                                 </v-icon>
 
-                                <v-icon small color="red" v-show="percentage == 0">
+                                <v-icon small color="red" v-show="percentage == initial_percent">
                                     mdi-close
                                 </v-icon>
                             </v-btn>
@@ -68,11 +68,11 @@
                                 rounded
                                 color="teal lighten-3"
                             >
-                                <v-icon small color="white" v-show="percentage == 70 || percentage > 70">
+                                <v-icon small color="white" v-show="percentage == stage2_percent || percentage > stage2_percent">
                                     mdi-check-outline
                                 </v-icon>
 
-                                <v-icon small color="red" v-show="percentage < 70">
+                                <v-icon small color="red" v-show="percentage < stage2_percent">
                                     mdi-close
                                 </v-icon>
                             </v-btn>
@@ -92,11 +92,11 @@
                                 rounded
                                 color="teal lighten-3"
                             >
-                                <v-icon small color="white" v-show="percentage === 100">
+                                <v-icon small color="white" v-show="percentage === stage3_percent">
                                     mdi-check-outline
                                 </v-icon>
 
-                                <v-icon small color="red" v-show="percentage < 100">
+                                <v-icon small color="red" v-show="percentage < stage3_percent">
                                     mdi-close
                                 </v-icon>
                             </v-btn>
@@ -821,21 +821,26 @@ export default {
 
         stage1: false,
         stage2: false,
-        stage3: false
+        stage3: false,
+
+        initial_percent: 0,
+        stage1_percent: 40,
+        stage2_percent: 70,
+        stage3_percent: 100,
 
      }),
 
     methods: {
 
         showStageTwo(){
-            if((this.client_details && this.percentage === 40) || this.stage2)
+            if((this.client_details && this.percentage === this.stage1_percent) || this.stage2)
                 return true;
             else 
                 return false;
         },
 
         showStageOne(){
-            if((this.client_details && this.percentage === 0) || this.stage1)
+            if((this.client_details && this.percentage === this.initial_percent) || this.stage1)
                 return true;
             else 
                 return false;
@@ -853,7 +858,7 @@ export default {
 
                 this.stage3 = false;
 
-            } else if(this.stage2 || (this.client_details && this.percentage == 40)){
+            } else if(this.stage2 || (this.client_details && this.percentage == this.stage1_percent)){
 
                 this.stage1 = true;
 
@@ -887,7 +892,7 @@ export default {
             
             if(this.client_type === "Personal"){
 
-                if((this.client_details && this.percentage == 0) || this.stage1){
+                if((this.client_details && this.percentage == this.initial_percent) || this.stage1){
 
                     if((this.first_name === '' || this.first_name === null)
                         || (this.last_name === '' || this.last_name === null)
@@ -901,7 +906,7 @@ export default {
                     else 
                         return true;
 
-                } else if((this.client_details && this.percentage == 40) || this.stage2)
+                } else if((this.client_details && this.percentage == this.stage1_percent) || this.stage2)
                 {
                     if((this.bank_acount_name === '' ||  this.bank_acount_name === null)
                         || (this.bank_account_number === '' ||  this.bank_account_number === null)
@@ -927,7 +932,7 @@ export default {
 
             } else if(this.client_type === "Company"){
 
-                 if(this.client_details && this.percentage == 0){
+                 if(this.client_details && this.percentage == this.initial_percent){
 
                      if((this.company_name === '' || this.company_name === null)
                         || (this.company_sector === ''  || this.company_sector === null)
@@ -944,7 +949,7 @@ export default {
                     else 
                         return true;
 
-                } else if(this.client_details && this.percentage == 40)
+                } else if(this.client_details && this.percentage == this.stage1_percent)
                 {
                     if((this.bank_acount_name === '' ||  this.bank_acount_name === null)
                         || (this.bank_account_number === '' ||  this.bank_account_number === null)
@@ -1308,7 +1313,7 @@ export default {
 
         createData(){
 
-            if((this.client_details && this.percentage == 40) || this.stage2){
+            if((this.client_details && this.percentage == this.stage1_percent) || this.stage2){
 
                 let formData = new FormData();
 
@@ -1326,7 +1331,7 @@ export default {
                
                 return formData;
 
-            } else if((this.client_details && this.percentage == 0) || this.stage1){
+            } else if((this.client_details && this.percentage == this.initial_percent) || this.stage1){
 
                 let formData = new FormData();
 
@@ -1489,7 +1494,7 @@ export default {
                                     //eslint-disable-next-line no-console
                                     console.log(response.data);
 
-                                    if(response.data.objects.client_details && this.percentage == 0){
+                                    if(response.data.objects.client_details && this.percentage == this.initial_percent){
 
                 
                                         this.updatePercentage(40);
@@ -1500,7 +1505,7 @@ export default {
                                         document.getElementById('app').scrollIntoView();
                                          
                                     } 
-                                    else if((response.data.objects.client_details && this.percentage == 40) && this.stage1 == false){
+                                    else if((response.data.objects.client_details && this.percentage == this.stage1_percent) && this.stage1 == false){
 
 
                                         this.updatePercentage(30)
@@ -1640,7 +1645,7 @@ export default {
                                vm.documents = response.data.objects.documents;
 
                                /*if(response.data.objects.client_details == 1)
-                                    vm.client_details = true;*/
+                                vm.client_details = true;*/
 
                                 //eslint-disable-next-line no-console
                                 console.log("Bank details " + vm.bank_details);
