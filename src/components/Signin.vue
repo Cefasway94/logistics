@@ -261,7 +261,6 @@ export default {
           Verror:false,
           Cerror:false,
           Connectionerror:false,
-          timeout:true,
           servererror:false,
           Displayservererror:'',
           DisplayCerror:'',
@@ -297,31 +296,41 @@ methods:{
 // =====================================================================>>>
     Login() {
               
-        this.clear_alert()
+      this.clear_alert()
+      
+      this.loading = true
 
           if (!this.validate()) {
+
             this.Perror= false,
             this.Eerror= false,
-            this.loading = true;
             this.servererror =false;
+
             setTimeout (()=>{
               if (this.timeout === true) {
                 this.Connectionerror = true;
                 this.loading = false;
               }
-            },6000)
+            },30000)
+
           this.$store.dispatch('LOGIN', {
           email: this.email,
           password: this.secret,
+
         })
         .then(( data) => {
+
           console.log(data);
-          console.log(this.LOAD_LOGIN);          
+          console.log(this.LOAD_LOGIN);  
+
           if(this.LOAD_LOGIN.genralErrorCode === 8000 && this.LOAD_LOGIN.errorCount === 0){
+
             this.timeout=false; // server timeout false
             setTimeout(() => {
               this.loading = false;
+
               if (this.LOAD_LOGIN.objects[1]==1 && localStorage.category ==1) {
+
                 this.$router.push('/agent/tenders/open')
                 this.$router.go('/agent/tenders/open')
               //return data;
@@ -340,14 +349,19 @@ methods:{
               //return data;
               // data = this.LOAD_LOGIN;
               console.log('Opened as client');
+
               }else {
+
                 this.$router.push('/Signin')
                 this.$router.go('/Signin')
               }
               }, 2000)     //============ kill load
+
           console.log('success');
           console.log(this.LOAD_LOGIN.objects[1]);
+
           }else{
+
             if (this.LOAD_LOGIN === "Kindly check your email") {
                     this.timeout=false; // server timeout false
                     console.log("whataaat");
@@ -365,6 +379,7 @@ methods:{
                     this.loading = false
                     this.Verror=true;
                     }, 2000)     //============ kill load
+
             }else{
               this.timeout=false; // server timeout false
               console.log('incorrect password');
@@ -379,8 +394,21 @@ methods:{
         })
         .catch (error => {
           
-          console.log('am here');
-          console.log(error.response.data);
+          console.log(error.request);
+          console.log(error.response);
+
+          if (error.response == undefined) {
+            console.log('try');
+                //  this.Displayservererror = "unable to connect to server. please check your internet 😔";
+                //  this.servererror = true;
+                setTimeout(() => {
+            this.loading = false;
+                 this.loading = false;
+                this.Connectionerror = true
+                 }, 6000) 
+                
+          }
+
            if (error.response.data.password) {
              this.timeout=false; // server timeout false
               console.log('require password');
@@ -400,7 +428,7 @@ methods:{
                  this.DisplayCerror = this.LOAD_LOGIN.email[0];
                  this.Cerror = true;
                  }, 2000)   //============ kill load
-           }else {
+           }else if(error) {
              console.log('server error');
              this.timeout=false
               setTimeout(() => {
@@ -410,8 +438,8 @@ methods:{
                  }, 2000)   //============ kill load
            }
           
-          
           this.userExists = true;
+
           if (error.email) {
             this.abouterror = 'User Already exist. Please try other datails or log in with appropriate credentials'
           } else {
@@ -427,11 +455,15 @@ methods:{
     },
 
     validate() {
-           if (this.email === null ){
+           if (this.email === null || this.email === '' ){
              this.loading = false
              this.error = true;
              return true
-           } 
+           } else if (this.secret === null || this.secret === '' ) {
+             this.loading = false
+             this.error = true;
+             return true
+           }
            
     },
 

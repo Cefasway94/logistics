@@ -91,18 +91,22 @@
             <v-icon color="#4169E1" class="mr-5">person_outline</v-icon>
             <h1 style="color:#4169E1;" class=" font-weight-regular title ">Transporter details</h1>
              <v-spacer></v-spacer>
-                <v-btn
+                <!-- <v-btn
                 color="#4169E1" 
                 class="white--text" 
                 width="100"
                 v-show="editaccounts" 
-                @click="editaccount()">EDIT</v-btn>
+                @click="editaccount()">
+                EDIT
+                </v-btn>
                 <v-btn
                 color="#4169E1" 
                 class="white--text" 
                 width="100"
                 v-show="canceledits" 
-                @click="canceledit()">CANCEL</v-btn>
+                @click="canceledit()">
+                CANCEL
+                </v-btn> -->
             </v-flex>
         </v-card>
 
@@ -517,26 +521,9 @@ export default {
            loading:false,
            editaccounts:true,
            canceledits:false,
-           edit:true,
+           edit:false,
            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
           
-          // fields
-        //    certificates:'',
-        //    insurances:'',
-        //    others:'',
-        //    company_name:'',
-        //    tin_number:'',
-        //    phone_number:'',
-        //    fax:'',
-        //    email:localStorage.client,
-        //    pobox:'',
-        //    city:'',
-        //    region:'',
-        //    terms_of_payment:[],
-        //    bank_name:'',
-        //    account_name:'',
-        //    account_number:'',
-
     }
    },
 
@@ -583,47 +570,36 @@ export default {
       //'GET_TENDERSDETAIL'
     ]),
       
-       editaccount(){
-           console.log(this.terms_of_payment);
-           this.editaccounts = false
-           this.canceledits = true
-           
-               this.edit=false
-               this.btnedit= "cancel"    
-                // this.name = ''
-                // this.faxnumber = ''
-                // this.tin = ''
-                // this.phone = ''
-                // this.mail = ''
-                // this.box = ''
-                // this.nation = ''
-                // this.pcity = ''
-                // this.pregion = ''
-                // this.bname = ''
-                // this.aname = ''
-                // this.acnumber = ''
-               
-           },
-
-           canceledit(){
-
-                 this.editaccounts = true
-                 this.canceledits = false
-                 this.edit = true
+            editaccount(){
+                console.log(this.terms_of_payment);
+                this.editaccounts = false
+                this.canceledits = true
                 
-               this.name = this.LOAD_AGENT.objects.company_name
-                this.faxnumber = this.LOAD_AGENT.objects.fax
-                this.tin = this.LOAD_AGENT.objects.tin_number
-                this.phone = this.LOAD_AGENT.objects.phone
-                this.mail = this.LOAD_AGENT.objects.email
-                this.box = this.LOAD_AGENT.objects.p_o_box
-                this.country = this.LOAD_AGENT.objects.country
-                this.pcity = this.LOAD_AGENT.objects.city
-                this.pregion = this.LOAD_AGENT.objects.city
-                this.bname = this.LOAD_AGENT.objects.bank_name
-                this.aname = this.LOAD_AGENT.objects.account_name
-                this.acnumber = this.LOAD_AGENT.objects.account_number
-           },
+                    this.edit=false
+                    this.btnedit= "cancel"    
+                    
+                    
+                },
+
+                canceledit(){
+
+                        this.editaccounts = true
+                        this.canceledits = false
+                        this.edit = true
+                        
+                    this.name = this.LOAD_AGENT.objects.company_name
+                        this.faxnumber = this.LOAD_AGENT.objects.fax
+                        this.tin = this.LOAD_AGENT.objects.tin_number
+                        this.phone = this.LOAD_AGENT.objects.phone
+                        this.mail = this.LOAD_AGENT.objects.email
+                        this.box = this.LOAD_AGENT.objects.p_o_box
+                        this.country = this.LOAD_AGENT.objects.country
+                        this.pcity = this.LOAD_AGENT.objects.city
+                        this.pregion = this.LOAD_AGENT.objects.city
+                        this.bname = this.LOAD_AGENT.objects.bank_name
+                        this.aname = this.LOAD_AGENT.objects.account_name
+                        this.acnumber = this.LOAD_AGENT.objects.account_number
+                },
 
 
            updateinsurance(){

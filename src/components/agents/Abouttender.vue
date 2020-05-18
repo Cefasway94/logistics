@@ -21,12 +21,12 @@
                         <v-flex column>
                         <v-flex row >
                             <v-flex column class="pl-3">
-                            <p class="primary--text body-1 mb-2"> DESTINATION </p>
-                            <p class="body-1">{{LOAD_TENDER.destination}}</p>
+                            <p class="primary--text body-1 mb-2"> TENDER ID </p>
+                            <p class="body-1">{{LOAD_TENDER.tender_id}}</p>
                             </v-flex>
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> ORIGIN </p>
-                            <p class="body-1">{{LOAD_TENDER.origin}}</p>
+                            <p class="primary--text body-1 mb-2"> TENDER TYPE </p>
+                            <p class="body-1">{{LOAD_TENDER.tender_type}}</p>
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
@@ -325,7 +325,7 @@ export default {
 
           this.GET_AGENT(localStorage.client).then(()=>{
 
-              console.log('transporter details below');
+              console.log('Agent details below');
               console.log(this.LOAD_AGENT);
 
               this.GET_AGENT_PAYMENT_TERMS(this.LOAD_AGENT.objects.email).then(()=>{

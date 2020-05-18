@@ -1,7 +1,7 @@
 <template>
     <v-container class=" mt-12 px-5 pt-12">
 
-            <v-card flat width="1300" class="mt-12 mx-auto mb-5" color="#F5FAFF">
+            <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                 <v-flex class="px-3" >
                 <v-row class="pl-2 mb-1">
@@ -24,9 +24,9 @@
                 </v-flex>
             </v-card>
 
-            <v-card flat width="1300" class=" mx-auto px-5" color="#F5FAFF"  >
+            <v-card flat width="900" class=" mx-auto px-5" color="#F5FAFF"  >
                 <v-flex row >
-                <v-flex sm12 md9 lg9 xlg9 >
+                <v-flex sm12 md12 lg12 xlg12 >
                     <v-card width="" class="pt-6 pb-3 pl-8" >
                         <v-flex column>
                         <v-flex row >
@@ -89,7 +89,7 @@
 
                 </v-flex>
 
-                <v-flex sm12 md3 lg3 xlg3 class="px-3 ">
+                <!-- <v-flex sm12 md3 lg3 xlg3 class="px-3 ">
 
                     <v-card color="#4169E1" width="" class="py-4 px-5">
                         <v-flex row >
@@ -129,7 +129,7 @@
                         </v-flex>
 
                     </v-card>
-                </v-flex>
+                </v-flex> -->
                 </v-flex>
             </v-card>
 
@@ -137,11 +137,11 @@
 
         
 
-         <v-card flat width="1300" class=" mx-auto px-2 mt-10" color="#F5FAFF" >
+         <v-card flat width="900" class=" mx-auto px-2 mt-10" color="#F5FAFF" >
           <v-flex>
           <p class="title mb-0 primary--text font-weight-regular" color="#4169E1">Biding details</p>
           </v-flex>
-            <v-card width="830" class="mt-5 mb-5 pl-8 pb-5 mt-0">
+            <v-card width="870" class="mt-5 mb-5 pl-8 pb-5 mt-0">
                 <v-flex class="pt-5">
                         <v-flex column>
                         <v-flex row >

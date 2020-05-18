@@ -91,18 +91,22 @@
             <v-icon color="#4169E1" class="mr-5">person_outline</v-icon>
             <h1 style="color:#4169E1;" class=" font-weight-regular title ">Agent details</h1>
              <v-spacer></v-spacer>
-                <v-btn
+                <!-- <v-btn
                 color="#4169E1" 
                 class="white--text" 
                 width="100"
                 v-show="editaccounts" 
-                @click="editaccount()">EDIT</v-btn>
+                @click="editaccount()">
+                EDIT
+                </v-btn>
                 <v-btn
                 color="#4169E1" 
                 class="white--text" 
                 width="100"
                 v-show="canceledits" 
-                @click="canceledit()">CANCEL</v-btn>
+                @click="canceledit()">
+                CANCEL
+                </v-btn> -->
             </v-flex>
         </v-card>
 
@@ -517,26 +521,9 @@ export default {
            loading:false,
            editaccounts:true,
            canceledits:false,
-           edit:true,
+           edit:false,
            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
           
-          // fields
-        //    certificates:'',
-        //    insurances:'',
-        //    others:'',
-        //    company_name:'',
-        //    tin_number:'',
-        //    phone_number:'',
-        //    fax:'',
-        //    email:localStorage.client,
-        //    pobox:'',
-        //    city:'',
-        //    region:'',
-        //    terms_of_payment:[],
-        //    bank_name:'',
-        //    account_name:'',
-        //    account_number:'',
-
     }
    },
 
@@ -589,20 +576,7 @@ export default {
            this.canceledits = true
            
                this.edit=false
-               this.btnedit= "cancel"    
-                // this.name = ''
-                // this.faxnumber = ''
-                // this.tin = ''
-                // this.phone = ''
-                // this.mail = ''
-                // this.box = ''
-                // this.nation = ''
-                // this.pcity = ''
-                // this.pregion = ''
-                // this.bname = ''
-                // this.aname = ''
-                // this.acnumber = ''
-               
+               this.btnedit= "cancel"                   
            },
 
            canceledit(){

@@ -1,7 +1,7 @@
  <template>
   <nav>
     <!-- nav bar -->
-    <v-app-bar scroll-target="#scrolling-techniques" absolute color="white"  >
+    <v-app-bar absolute color="white"  >
       <v-app-bar-nav-icon  @click="drawer = !drawer" color="#394361"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="grey--text hidden-md-and-down">Dashboard</v-toolbar-title>
@@ -85,8 +85,8 @@
 
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title class="title" >{{LOAD_AGENT.objects.company_name}}</v-list-item-title>
-                <v-list-item-subtitle>{{LOAD_AGENT.objects.email}}</v-list-item-subtitle>
+                <v-list-item-title class="title" >{{company_name}}</v-list-item-title>
+                <v-list-item-subtitle>{{email}}</v-list-item-subtitle>
               </v-list-item-content>
 
               <v-list-item-action>
@@ -178,8 +178,8 @@
 
             <v-list-item link>
               <v-list-item-content>
-                <v-list-item-title class="title" >{{LOAD_AGENT.objects.company_name}}</v-list-item-title>
-                <v-list-item-subtitle>{{LOAD_AGENT.objects.email}}</v-list-item-subtitle>
+                <v-list-item-title class="title" >{{company_name}}</v-list-item-title>
+                <v-list-item-subtitle>{{email}}</v-list-item-subtitle>
               </v-list-item-content>
 
               <v-list-item-action>
@@ -223,7 +223,6 @@
          </v-btn>
         </div>
              
-
       </v-card>
      </v-menu>
      <!--  ------------------------------>
@@ -267,7 +266,6 @@
 
         <!-- tender -->
         <v-list-item
-          router
           :to="{name:this.items[0].router.name, 
             params:{id: this.items[0].router.params.id} }"
           link
@@ -284,7 +282,6 @@
 
         <!-- dashboard -->
         <v-list-item
-          router
           :to="{name: this.items[1].router.name, 
           params: {id:this.LOAD_AGENT.objects.agent_id}}"
           link
@@ -300,7 +297,6 @@
 
         <!-- payment -->
         <v-list-item
-          router
           :to="{name: this.items[2].router.name}"
           link
         >
@@ -373,7 +369,6 @@
 
         <!-- tender -->
         <v-list-item
-          router
           :to="{name:this.items[0].router.name, 
             params:{id: this.items[0].router.params.id} }"
           link
@@ -406,7 +401,6 @@
 
         <!-- payment history -->
         <v-list-item
-          router
           :to="{name: this.items[1].router.name}"
           link
         >
@@ -477,6 +471,7 @@ export default {
     return {
       
       user:'',
+      company_name:'',
       activator:'',
       email:'',
       name:'',
@@ -511,6 +506,8 @@ export default {
       this.GET_CUSTOMER(localStorage.client).then(() => {
       console.log('get client------');
       console.log(this.LOAD_AGENT)
+      this.email = this.LOAD_AGENT.objects.email 
+      this.company_name = this.LOAD_AGENT.objects.company_name
       this.category = 'Customer'      
       this.items = this.client();
      return this.client();
@@ -522,6 +519,8 @@ export default {
       this.T_GET_AGENT(localStorage.client).then(() => {
       console.log('get transporter------');
       console.log(this.LOAD_AGENT)
+      this.email = this.LOAD_AGENT.objects.email 
+      this.company_name = this.LOAD_AGENT.objects.company_name
       this.category = 'Transporter'
       this.items = this.transporter();
       return this.transporter();
@@ -533,6 +532,8 @@ export default {
       this.GET_AGENT(localStorage.client).then(() => {
       console.log('get agent------');
       console.log(this.LOAD_AGENT)
+      this.email = this.LOAD_AGENT.objects.email 
+      this.company_name = this.LOAD_AGENT.objects.company_name
       this.category = 'Agent'     
       this.items = this.agent();
       return this.agent();
