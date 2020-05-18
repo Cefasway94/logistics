@@ -23,7 +23,7 @@
             </div>
 
             <v-progress-linear
-                v-model="percentage"
+                :value="percentage"
                 class="mt-5 teal lighten-5 progress"
                 :rounded="true"
                 height="40"
@@ -915,7 +915,10 @@ export default {
 
                 } else if(this.bank_details){
 
-                    if(this.copy_of_identity_card.length === 0)
+                     //eslint-disable-next-line no-console
+                        console.log("length "+this.copy_of_identity_card.length);
+
+                    if(this.copy_of_identity_card.length == 0)
 
                         return false
                     else 
@@ -973,6 +976,9 @@ export default {
 
             if(document.getElementById("bank_statement").files[0]){
 
+
+                this.three_months_bank_statement = [];
+
                 this.three_months_bank_statement.push(document.getElementById("bank_statement").files[0]);
 
                 var reader = new FileReader();
@@ -985,9 +991,11 @@ export default {
 
                     var large_thumbnail = document.getElementById('large_thumbnail');
                     
-                    output.src = dataURL;
+                    if(output !== null)
+                        output.src = dataURL;
 
-                    large_thumbnail.src = dataURL;
+                    if(large_thumbnail !== null)
+                        large_thumbnail.src = dataURL;
                    
                 }
 
@@ -998,6 +1006,8 @@ export default {
         businessLicenceUpdated(){
 
             if(document.getElementById("business_licence").files[0]){
+
+                this.business_licence_document = [];
 
                 this.business_licence_document.push(document.getElementById("business_licence").files[0]);
 
@@ -1011,9 +1021,11 @@ export default {
 
                     var large_thumbnail = document.getElementById('large_thumbnail');
                     
-                    output.src = dataURL;
+                    if(output !== null)
+                        output.src = dataURL;
 
-                    large_thumbnail.src = dataURL;
+                    if(large_thumbnail !== null)
+                        large_thumbnail.src = dataURL;
                    
                 }
 
@@ -1024,6 +1036,8 @@ export default {
         vatCertificateUploaded(){
 
             if(document.getElementById("vat_certificate").files[0]){
+
+                this.vat_certificate = [];
 
                 this.vat_certificate.push(document.getElementById("vat_certificate").files[0]);
 
@@ -1037,9 +1051,11 @@ export default {
 
                    var large_thumbnail = document.getElementById('large_thumbnail');
                     
-                    output.src = dataURL;
+                    if(output !== null)
+                        output.src = dataURL;
 
-                    large_thumbnail.src = dataURL;
+                    if(large_thumbnail !== null)
+                        large_thumbnail.src = dataURL;
                    
                 }
 
@@ -1050,6 +1066,8 @@ export default {
         tinDocumentUpdated(){
 
             if(document.getElementById("tin_document").files[0]){
+
+                this.tax_payer_identification_document = [];
 
                 this.tax_payer_identification_document.push(document.getElementById("tin_document").files[0]);
 
@@ -1063,9 +1081,11 @@ export default {
 
                     var large_thumbnail = document.getElementById('large_thumbnail');
                     
-                    output.src = dataURL;
+                    if(output !== null)
+                        output.src = dataURL;
 
-                    large_thumbnail.src = dataURL;
+                    if(large_thumbnail !== null)
+                        large_thumbnail.src = dataURL;
                    
                 }
 
@@ -1075,11 +1095,11 @@ export default {
 
         registrationCertificateUpdated(){
 
-            
-
             if(document.getElementById("registration_certificate").files[0]){
 
-               this.certificate_of_registration.push(document.getElementById("registration_certificate").files[0]);
+                this.certificate_of_registration = [];
+
+                this.certificate_of_registration.push(document.getElementById("registration_certificate").files[0]);
 
                 var reader = new FileReader();
 
@@ -1091,9 +1111,11 @@ export default {
 
                     var large_thumbnail = document.getElementById('large_thumbnail');
                     
-                    output.src = dataURL;
+                    if(output !== null)
+                        output.src = dataURL;
 
-                    large_thumbnail.src = dataURL;
+                    if(large_thumbnail !== null)
+                        large_thumbnail.src = dataURL;
                    
                 }
 
@@ -1104,6 +1126,8 @@ export default {
         companyLogoUpdated(){
 
             if(document.getElementById("company_logo").files[0]){
+
+                this.company_logo = [];
 
                this.company_logo.push(document.getElementById("company_logo").files[0]);
 
@@ -1117,9 +1141,11 @@ export default {
 
                     var large_thumbnail = document.getElementById('large_thumbnail');
                     
-                    output.src = dataURL;
+                    if(output !== null)
+                        output.src = dataURL;
 
-                    large_thumbnail.src = dataURL;
+                    if(large_thumbnail !== null)
+                        large_thumbnail.src = dataURL;
                    
                 }
 
@@ -1130,6 +1156,8 @@ export default {
         personalTinUpdated(){
 
            if(document.getElementById("personal_tin").files[0]){
+
+               this.copy_of_tax_identification_number_certificate = [];
 
                this.copy_of_tax_identification_number_certificate.push(document.getElementById("personal_tin").files[0]);
 
@@ -1143,9 +1171,11 @@ export default {
 
                     var large_thumbnail = document.getElementById('large_thumbnail');
                     
-                    output.src = dataURL;
+                    if(output !== null)
+                        output.src = dataURL;
 
-                    large_thumbnail.src = dataURL;
+                    if(large_thumbnail !== null)
+                        large_thumbnail.src = dataURL;
                    
                 }
 
@@ -1154,8 +1184,9 @@ export default {
         },
 
         updateID(){
-
             if(document.getElementById("copy_of_id").files[0]){
+
+                this.copy_of_identity_card = [];
 
                 this.copy_of_identity_card.push(document.getElementById("copy_of_id").files[0]);
 
@@ -1169,9 +1200,11 @@ export default {
 
                     var large_thumbnail = document.getElementById('large_thumbnail');
                     
-                    output.src = dataURL;
+                    if(output !== null)
+                        output.src = dataURL;
 
-                    large_thumbnail.src = dataURL;
+                    if(large_thumbnail !== null)
+                        large_thumbnail.src = dataURL;
                    
                 }
 
@@ -1183,6 +1216,8 @@ export default {
         updateProfilePhoto(){
 
             if(document.getElementById("profilePhoto").files[0]){
+
+                this.profile_photo = [];
 
                 this.profile_photo.push(document.getElementById("profilePhoto").files[0]);
 
@@ -1196,9 +1231,11 @@ export default {
 
                     var large_thumbnail = document.getElementById('large_thumbnail');
                     
-                    output.src = dataURL;
+                    if(output !== null)
+                        output.src = dataURL;
 
-                    large_thumbnail.src = dataURL;
+                    if(large_thumbnail !== null)
+                        large_thumbnail.src = dataURL;
                    
                 }
 
@@ -1606,7 +1643,7 @@ export default {
                                     vm.client_details = true;*/
 
                                 //eslint-disable-next-line no-console
-                                //console.log("showStageTwo " + vm.showStageTwo);
+                                console.log("Bank details " + vm.bank_details);
 
                                vm.have_customer_id = response.data.objects.customer_id == null? false:true;
 
