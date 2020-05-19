@@ -549,9 +549,12 @@
 
                                 </v-file-input>
 
-                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('copy_of_id')">
-                                    <img  id="copy_of_id_thumb" class="preview">
-                                </v-card>
+                                <div v-show="id_extension === 'jpg' || id_extension === 'jpeg' || id_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="showLargeThumbnail('copy_of_id')">
+                                        <img  id="copy_of_id_thumb" class="preview">
+                                    </v-card>
+                                </div>
+                                
 
                             </v-card>
                     
@@ -574,9 +577,12 @@
 
                                 </v-file-input>
 
-                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('profilePhoto')">
-                                    <img  id="profilePhoto_thumb" class="preview">
-                                </v-card>
+                                <div v-show="profile_photo_extension === 'jpg' || profile_photo_extension === 'jpeg' || profile_photo_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="showLargeThumbnail('profilePhoto')">
+                                        <img  id="profilePhoto_thumb" class="preview">
+                                    </v-card>
+                                </div>
+                                
 
                             </v-card>
                     
@@ -595,9 +601,12 @@
                                 >
                                 </v-file-input>
 
-                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('personal_tin')">
-                                    <img  id="personal_tin_thumb" class="preview">
-                                </v-card>
+                                <div v-show="tin_extension === 'jpg' || tin_extension === 'jpeg' || tin_extension === 'png'">
+                                     <v-card height="200" width="250" outlined @click="showLargeThumbnail('personal_tin')">
+                                        <img  id="personal_tin_thumb" class="preview">
+                                    </v-card>
+                                </div>
+                               
                             </v-card>
 
                         
@@ -619,10 +628,12 @@
                                 >
 
                                 </v-file-input>
-
-                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('company_logo')">
-                                    <img  id="company_logo_thumb" class="preview">
-                                </v-card>
+                                
+                                <div v-show="logo_extension === 'jpg' || logo_extension === 'jpeg' ||  logo_extension === 'png' ">
+                                    <v-card height="200" width="250" outlined @click="showLargeThumbnail('company_logo')">
+                                        <img  id="company_logo_thumb" class="preview">
+                                    </v-card>
+                                </div>
                             </v-card>
                     
                         </v-col> 
@@ -643,9 +654,12 @@
                                 >
                                 </v-file-input>
 
-                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('registration_certificate')">
-                                    <img  id="registration_certificate_thumb" class="preview">
-                                </v-card>
+                                <div v-show="copy_of_registration_extension === 'jpg' || copy_of_registration_extension === 'jpeg' || copy_of_registration_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="showLargeThumbnail('registration_certificate')">
+                                        <img  id="registration_certificate_thumb" class="preview">
+                                    </v-card>
+                                </div>
+                                
 
                             </v-card>
                     
@@ -666,9 +680,12 @@
                                 
                                 >
                                 </v-file-input>
-                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('tin_document')">
-                                    <img  id="tin_document_thumb" class="preview">
-                                </v-card>
+                                <div v-show="tax_payer_extension === 'jpg' || tax_payer_extension === 'jpeg' || tax_payer_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="showLargeThumbnail('tin_document')">
+                                        <img  id="tin_document_thumb" class="preview">
+                                    </v-card>
+                                </div>
+                                
                             </v-card>
                     
                         </v-col>              
@@ -692,9 +709,12 @@
 
                                 </v-file-input>
 
-                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('vat_certificate')">
-                                    <img  id="vat_certificate_thumb" class="preview">
-                                </v-card>
+                                <div v-show="vat_extension === 'jpg' || vat_extension === 'jpeg' || vat_extension === 'png'">
+                                     <v-card height="200" width="250" outlined @click="showLargeThumbnail('vat_certificate')">
+                                        <img  id="vat_certificate_thumb" class="preview">
+                                    </v-card>
+                                </div>
+    
                             </v-card>
                     
                         </v-col> 
@@ -716,9 +736,12 @@
                                 >
                                 </v-file-input>
 
-                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('business_licence')">
-                                    <img  id="business_licence_thumb" class="preview">
-                                </v-card>
+                                <div v-show="licence_extension === 'jpg' || licence_extension === 'jpeg' || licence_extension === 'png'">
+                                     <v-card height="200" width="250" outlined @click="showLargeThumbnail('business_licence')">
+                                        <img  id="business_licence_thumb" class="preview">
+                                    </v-card>
+                                </div>
+                               
                             </v-card>
                     
                         </v-col> 
@@ -739,9 +762,13 @@
                                 
                                 >
                                 </v-file-input>
-                                <v-card height="200" width="250" outlined @click="showLargeThumbnail('bank_statement')">
-                                    <img  id="bank_statement_thumb" class="preview">
-                                </v-card>
+
+                                <div v-show="bank_statement_extension === 'jpg' || bank_statement_extension === 'jpeg' || bank_statement_extension === 'png'">
+                                     <v-card height="200" width="250" outlined @click="showLargeThumbnail('bank_statement')">
+                                        <img  id="bank_statement_thumb" class="preview">
+                                    </v-card>
+                                </div>
+                               
                             </v-card>
                     
                         </v-col>              
@@ -829,6 +856,17 @@ export default {
         copy_of_identity_card:[],
         copy_of_tax_identification_number_certificate:[],
 
+        tin_extension:'',
+        profile_photo_extension:'',
+        id_extension:'',
+
+        copy_of_registration_extension:'',
+        tax_payer_extension:'',
+        vat_extension:'',
+        licence_extension:'',
+        bank_statement_extension:'',
+        logo_extension:'',
+
         loading: false,
         overlay: false,
 
@@ -850,6 +888,17 @@ export default {
                 return true;
             else 
                 return false;
+        },
+
+        getFileExtension(url){
+
+            let position = url.lastIndexOf('.');
+
+            let extracted_string = url.slice(position + 1, url.length + 1);
+
+            return extracted_string;
+
+
         },
 
         showStageOne(){
@@ -999,25 +1048,32 @@ export default {
 
                 this.three_months_bank_statement.push(document.getElementById("bank_statement").files[0]);
 
-                var reader = new FileReader();
+                this.bank_statement_extension = this.getFileExtension(document.getElementById("bank_statement").files[0].name);
 
-                reader.onload = function(){
+                if(this.bank_statement_extension === 'jpg' || this.bank_statement_extension === 'jpeg' || this.bank_statement_extension === 'png')
+                {
+                    var reader = new FileReader();
 
-                    var dataURL = reader.result;
+                    reader.onload = function(){
 
-                    var output = document.getElementById('bank_statement_thumb');
+                        var dataURL = reader.result;
 
-                    var large_thumbnail = document.getElementById('large_thumbnail');
+                        var output = document.getElementById('bank_statement_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
                     
-                    if(output !== null)
-                        output.src = dataURL;
+                    }
 
-                    if(large_thumbnail !== null)
-                        large_thumbnail.src = dataURL;
-                   
+                    reader.readAsDataURL(document.getElementById("bank_statement").files[0]);
                 }
 
-                reader.readAsDataURL(document.getElementById("bank_statement").files[0]);
+                
             }
         },
 
@@ -1029,25 +1085,31 @@ export default {
 
                 this.business_licence_document.push(document.getElementById("business_licence").files[0]);
 
-                var reader = new FileReader();
+                this.licence_extension = this.getFileExtension(document.getElementById("business_licence").files[0].name);
 
-                reader.onload = function(){
+                if(this.licence_extension === 'jpg' || this.licence_extension === 'jpeg' || this.licence_extension === 'png')
+                {
+                    var reader = new FileReader();
 
-                    var dataURL = reader.result;
+                    reader.onload = function(){
 
-                    var output = document.getElementById('business_licence_thumb');
+                        var dataURL = reader.result;
 
-                    var large_thumbnail = document.getElementById('large_thumbnail');
+                        var output = document.getElementById('business_licence_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
                     
-                    if(output !== null)
-                        output.src = dataURL;
+                    }
 
-                    if(large_thumbnail !== null)
-                        large_thumbnail.src = dataURL;
-                   
+                    reader.readAsDataURL(document.getElementById("business_licence").files[0]);
                 }
-
-                reader.readAsDataURL(document.getElementById("business_licence").files[0]);
+                
             }
         },
 
@@ -1059,25 +1121,32 @@ export default {
 
                 this.vat_certificate.push(document.getElementById("vat_certificate").files[0]);
 
-                var reader = new FileReader();
+                this.vat_extension = this.getFileExtension(document.getElementById("vat_certificate").files[0].name);
 
-                reader.onload = function(){
+                if(this.vat_extension === 'jpg' || this.vat_extension === 'jpeg' || this.vat_extension === 'png')
+                {
+                    var reader = new FileReader();
+
+                    reader.onload = function(){
 
                     var dataURL = reader.result;
 
                     var output = document.getElementById('vat_certificate_thumb');
 
-                   var large_thumbnail = document.getElementById('large_thumbnail');
-                    
-                    if(output !== null)
-                        output.src = dataURL;
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
 
-                    if(large_thumbnail !== null)
-                        large_thumbnail.src = dataURL;
-                   
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
+                    
+                    }
+
+                    reader.readAsDataURL(document.getElementById("vat_certificate").files[0]);
                 }
 
-                reader.readAsDataURL(document.getElementById("vat_certificate").files[0]);
+                
             }
         },
 
@@ -1089,25 +1158,31 @@ export default {
 
                 this.tax_payer_identification_document.push(document.getElementById("tin_document").files[0]);
 
-                var reader = new FileReader();
+                this.tax_payer_extension = this.getFileExtension(document.getElementById("tin_document").files[0].name);
 
-                reader.onload = function(){
+                if(this.tax_payer_extension === 'jpg' || this.tax_payer_extension === 'jpeg' || this.tax_payer_extension === 'png')
+                {
+                    var reader = new FileReader();
 
-                    var dataURL = reader.result;
+                    reader.onload = function(){
 
-                    var output = document.getElementById('tin_document_thumb');
+                        var dataURL = reader.result;
 
-                    var large_thumbnail = document.getElementById('large_thumbnail');
+                        var output = document.getElementById('tin_document_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
                     
-                    if(output !== null)
-                        output.src = dataURL;
+                    }
 
-                    if(large_thumbnail !== null)
-                        large_thumbnail.src = dataURL;
-                   
+                    reader.readAsDataURL(document.getElementById("tin_document").files[0]);
                 }
-
-                reader.readAsDataURL(document.getElementById("tin_document").files[0]);
+                
             }
         },
 
@@ -1119,25 +1194,31 @@ export default {
 
                 this.certificate_of_registration.push(document.getElementById("registration_certificate").files[0]);
 
-                var reader = new FileReader();
+                this.copy_of_registration_extension = this.getFileExtension(document.getElementById("registration_certificate").files[0].name);
 
-                reader.onload = function(){
+                if(this.copy_of_registration_extension === 'jpg' ||this.copy_of_registration_extension === 'jpeg' || this.copy_of_registration_extension === 'png')
+                {
+                    var reader = new FileReader();
 
-                    var dataURL = reader.result;
+                    reader.onload = function(){
 
-                    var output = document.getElementById('registration_certificate_thumb');
+                        var dataURL = reader.result;
 
-                    var large_thumbnail = document.getElementById('large_thumbnail');
+                        var output = document.getElementById('registration_certificate_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
                     
-                    if(output !== null)
-                        output.src = dataURL;
+                    }
 
-                    if(large_thumbnail !== null)
-                        large_thumbnail.src = dataURL;
-                   
+                    reader.readAsDataURL(document.getElementById("registration_certificate").files[0]);
                 }
-
-                reader.readAsDataURL(document.getElementById("registration_certificate").files[0]);
+                
             }
         },
 
@@ -1149,25 +1230,31 @@ export default {
 
                this.company_logo.push(document.getElementById("company_logo").files[0]);
 
-                var reader = new FileReader();
+               this.logo_extension = this.getFileExtension(document.getElementById("company_logo").files[0].name);
 
-                reader.onload = function(){
+                if(this.logo_extension === 'jpg' || this.logo_extension === 'jpeg' || this.logo_extension === 'png')
+                {
+                    var reader = new FileReader();
 
-                    var dataURL = reader.result;
+                    reader.onload = function(){
 
-                    var output = document.getElementById('company_logo_thumb');
+                        var dataURL = reader.result;
 
-                    var large_thumbnail = document.getElementById('large_thumbnail');
+                        var output = document.getElementById('company_logo_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
                     
-                    if(output !== null)
-                        output.src = dataURL;
+                    }
 
-                    if(large_thumbnail !== null)
-                        large_thumbnail.src = dataURL;
-                   
+                    reader.readAsDataURL(document.getElementById("company_logo").files[0]);
                 }
-
-                reader.readAsDataURL(document.getElementById("company_logo").files[0]);
+                
             }
         },
 
@@ -1179,25 +1266,32 @@ export default {
 
                this.copy_of_tax_identification_number_certificate.push(document.getElementById("personal_tin").files[0]);
 
-                var reader = new FileReader();
+               this.tin_extension = this.getFileExtension(document.getElementById("personal_tin").files[0].name);
 
-                reader.onload = function(){
+               if(this.tin_extension === 'jpg' || this.tin_extension === 'jpeg' || this.tin_extension === 'png' )
+               {
+                   var reader = new FileReader();
 
-                    var dataURL = reader.result;
+                    reader.onload = function(){
 
-                    var output = document.getElementById('personal_tin_thumb');
+                        var dataURL = reader.result;
 
-                    var large_thumbnail = document.getElementById('large_thumbnail');
+                        var output = document.getElementById('personal_tin_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
                     
-                    if(output !== null)
-                        output.src = dataURL;
+                    }
 
-                    if(large_thumbnail !== null)
-                        large_thumbnail.src = dataURL;
-                   
-                }
+                    reader.readAsDataURL(document.getElementById("personal_tin").files[0]);
+               }
 
-                reader.readAsDataURL(document.getElementById("personal_tin").files[0]);
+                
             }
         },
 
@@ -1207,26 +1301,34 @@ export default {
                 this.copy_of_identity_card = [];
 
                 this.copy_of_identity_card.push(document.getElementById("copy_of_id").files[0]);
+                
+                this.id_extension = this.getFileExtension(document.getElementById("copy_of_id").files[0].name);
 
-                var reader = new FileReader();
+                if(this.id_extension === 'jpg' || this.id_extension === 'jpeg' || this.id_extension === 'png')
+                {
 
-                reader.onload = function(){
+                    var reader = new FileReader();
 
-                    var dataURL = reader.result;
+                    reader.onload = function(){
 
-                    var output = document.getElementById('copy_of_id_thumb');
+                        var dataURL = reader.result;
 
-                    var large_thumbnail = document.getElementById('large_thumbnail');
+                        var output = document.getElementById('copy_of_id_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
                     
-                    if(output !== null)
-                        output.src = dataURL;
+                    }
 
-                    if(large_thumbnail !== null)
-                        large_thumbnail.src = dataURL;
-                   
+                    reader.readAsDataURL(document.getElementById("copy_of_id").files[0]);
                 }
 
-                reader.readAsDataURL(document.getElementById("copy_of_id").files[0]);
+                
             }
                 
         },
@@ -1239,25 +1341,32 @@ export default {
 
                 this.profile_photo.push(document.getElementById("profilePhoto").files[0]);
 
-                var reader = new FileReader();
 
-                reader.onload = function(){
+                this.profile_photo_extension = this.getFileExtension(document.getElementById("profilePhoto").files[0].name);
 
-                    var dataURL = reader.result;
+                if(this.profile_photo_extension === 'jpg' || this.profile_photo_extension === 'jpeg' || this.profile_photo_extension === 'png')
+                {
+                    var reader = new FileReader();
 
-                    var output = document.getElementById('profilePhoto_thumb');
+                    reader.onload = function(){
 
-                    var large_thumbnail = document.getElementById('large_thumbnail');
+                        var dataURL = reader.result;
+
+                        var output = document.getElementById('profilePhoto_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
                     
-                    if(output !== null)
-                        output.src = dataURL;
+                    }
 
-                    if(large_thumbnail !== null)
-                        large_thumbnail.src = dataURL;
-                   
+                    reader.readAsDataURL(document.getElementById("profilePhoto").files[0]);
                 }
-
-                reader.readAsDataURL(document.getElementById("profilePhoto").files[0]);
+                
             }
 
 
