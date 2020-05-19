@@ -64,9 +64,9 @@
              <v-btn
                 color="#4169E1" 
                 class="white--text" 
-                width="100"
+                width="130"
                 @click="editaccount()">
-                EDIT
+                EDIT PROFILE
                 </v-btn>
                 
             </v-flex>
