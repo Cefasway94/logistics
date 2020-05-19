@@ -32,7 +32,7 @@
                 </v-flex>
             </v-card>
 
-            <div v-show="stageOne">
+            <div>
                 <v-card row flat width="1300" class="mt-10 mx-auto" color="#F5FAFF">
                     <v-flex row class="">
                         <v-icon color="grey" class="mb-4 ml-3 mr-5">person_outline</v-icon>
@@ -398,7 +398,7 @@
             </div>
             
         
-            <div v-show="stageTwo">
+            <div>
 
                 <v-card row flat width="1300" class="mt-12 mx-auto" color="#F5FAFF">
                     <v-flex row class="">
@@ -764,10 +764,6 @@
             <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row class=" pa-3">
 
-                    <v-col cols="3">
-                        <v-btn color="primary white--text" :disabled="stageOne" @click="setStages()">BACK</v-btn>
-                    </v-col>
-
                     <v-col cols="6"
                         class="fill-height"
                         align-content="center"
@@ -784,7 +780,7 @@
                     </v-col>
                
                     <v-spacer></v-spacer>
-                   <v-btn color="primary white--text" :disabled="!isValid()" @click="save"><span v-show="stageTwo">Save</span><span v-show="stageOne">Next</span></v-btn>
+                   <v-btn color="primary white--text" :disabled="!isValid()" @click="save">Save</v-btn>
                 </v-row>
             </v-card>
 
@@ -870,9 +866,6 @@ export default {
         licence_url:'',
         bank_statement_url:'',
 
-        stageOne: true,
-
-        stageTwo: false,
         display_alert : false,
 
         alert:''
@@ -885,11 +878,6 @@ export default {
         openTab(url){
 
             window.open(url);
-        },
-
-        setStages(){
-            this.stageTwo = false;
-            this.stageOne = true;
         },
 
         largePreview(src){
@@ -908,20 +896,6 @@ export default {
 
             return extracted_string;
 
-        },
-
-        showStageTwo(){
-            if((this.client_details && this.percentage === this.stage1_percent) || this.stage2)
-                return true;
-            else 
-                return false;
-        },
-
-        showStageOne(){
-            if((this.client_details && this.percentage === this.initial_percent) || this.stage1)
-                return true;
-            else 
-                return false;
         },
 
         showLargeThumbnail(id){
@@ -962,66 +936,43 @@ export default {
             
             if(this.client_type === "Personal"){
 
-                if(this.stageOne){
-
-                    if((this.first_name === '' || this.first_name === null)
-                        || (this.last_name === '' || this.last_name === null)
-                        || (this.mobile_number === '' || this.mobile_number === null)
-                        || (this.country === '' || this.country === null)
-                        || (this.city === '' || this.city === null)
-                        || (this.address === '' || this.address === null)
-                        || (this.bank_acount_name === '' ||  this.bank_acount_name === null)
-                        || (this.bank_account_number === '' ||  this.bank_account_number === null)
-                        || (this.bank_swift_code === ''||  this.bank_swift_code === null)
-                        || (this.bank_address === '' ||  this.bank_address === null)
-                    )
-
-                        return false
-                    else 
-                        return true;
-
-                } else if(this.stageTwo){
-
-                    if(this.copy_of_identity_card.length == 0)
-
-                        return false
-                    else 
-                        return true;
-                }
+            
+                if((this.first_name === '' || this.first_name === null)
+                    || (this.last_name === '' || this.last_name === null)
+                    || (this.mobile_number === '' || this.mobile_number === null)
+                    || (this.country === '' || this.country === null)
+                    || (this.city === '' || this.city === null)
+                    || (this.address === '' || this.address === null)
+                    || (this.bank_acount_name === '' ||  this.bank_acount_name === null)
+                    || (this.bank_account_number === '' ||  this.bank_account_number === null)
+                    || (this.bank_swift_code === ''||  this.bank_swift_code === null)
+                    || (this.bank_address === '' ||  this.bank_address === null)
+                )
+                    return false
+                else 
+                    return true;
 
             } else if(this.client_type === "Company"){
 
-                 if(this.stageOne){
+                if((this.company_name === '' || this.company_name === null)
+                || (this.company_sector === ''  || this.company_sector === null)
+                || (this.mobile_number === '' || this.mobile_number === null)
+                || (this.office_mobile === ''  || this.office_mobile === null)
+                || (this.contact_person_names ==='' || this.contact_person_names === null)
+                || (this.Contact_person_phone_number === ''  || this.Contact_person_phone_number === null)
+                || (this.country === ''  || this.country === null)
+                || (this.city === ''  || this.city === null)
+                || (this.address === '' || this.address === null)
+                || (this.bank_acount_name === '' ||  this.bank_acount_name === null)
+                || (this.bank_account_number === '' ||  this.bank_account_number === null)
+                || (this.bank_swift_code === ''||  this.bank_swift_code === null)
+                || (this.bank_address === '' ||  this.bank_address === null)
+                )
 
-                     if((this.company_name === '' || this.company_name === null)
-                        || (this.company_sector === ''  || this.company_sector === null)
-                        || (this.mobile_number === '' || this.mobile_number === null)
-                        || (this.office_mobile === ''  || this.office_mobile === null)
-                        || (this.contact_person_names ==='' || this.contact_person_names === null)
-                        || (this.Contact_person_phone_number === ''  || this.Contact_person_phone_number === null)
-                        || (this.country === ''  || this.country === null)
-                        || (this.city === ''  || this.city === null)
-                        || (this.address === '' || this.address === null)
-                        || (this.bank_acount_name === '' ||  this.bank_acount_name === null)
-                        || (this.bank_account_number === '' ||  this.bank_account_number === null)
-                        || (this.bank_swift_code === ''||  this.bank_swift_code === null)
-                        || (this.bank_address === '' ||  this.bank_address === null)
-                        )
-
-                        return false
-                    else 
-                        return true;
-
-                }else if(this.stageTwo){
-
-                    if(this.certificate_of_registration.length === 0 || this.tax_payer_identification_document.length === 0
-                        || this.vat_certificate.length === 0 || this.business_licence_document === 0 
-                        || this.three_months_bank_statement ===0)
-
-                        return false
-                    else 
-                        return true;
-                }
+                    return false
+                else 
+                    return true;
+                
             }
         },
 
@@ -1413,16 +1364,13 @@ export default {
 
         createData(){
 
-            if(this.stageOne){
+            if(this.client_type == "Personal"){
 
                 let formData = new FormData();
 
-                if(this.client_type == "Personal"){
-
-                        formData.append('first_name',this.first_name);
-                        formData.append('last_name',this.last_name);
-                }
-                
+                formData.append('email',localStorage.client);
+                formData.append('first_name',this.first_name);
+                formData.append('last_name',this.last_name);
                 formData.append('country',this.country);
                 formData.append('city',this.city);
                 formData.append('mobile_number',this.mobile_number);
@@ -1430,14 +1378,41 @@ export default {
                 formData.append('address',this.address);
                 formData.append('customer_type',this.client_type);
                
-                if(this.client_type == "Company"){
+                formData.append('bank_acount_name',this.bank_acount_name);
+                formData.append('bank_account_number',this.bank_account_number);
+                formData.append('second_bank_account_name',this.second_bank_account_name);
+                formData.append('second_bank_account_number',this.second_bank_account_number);
+                formData.append('bank_swift_code',this.bank_swift_code);
+                formData.append('bank_address',this.bank_address);
 
-                    formData.append('contact_person_names',this.contact_person_names);
-                    formData.append('Contact_person_phone_number',this.Contact_person_phone_number);
-                    formData.append('Contact_person_designation',this.Contact_person_designation);
-                    formData.append('company_sector',this.company_sector);
-                    formData.append('company_name',this.company_name);
-                }
+                if(this.copy_of_identity_card.length > 0)
+                    formData.append('copy_of_identity_card[0]',this.copy_of_identity_card[0]);
+
+                if(this.copy_of_tax_identification_number_certificate.length > 0)
+                    formData.append('copy_of_tax_identification_number_certificate[0]',this.copy_of_tax_identification_number_certificate[0]);
+
+                if(this.profile_photo.length > 0)
+                    formData.append('profile_photo[0]',this.profile_photo[0]);
+               
+                return formData;
+
+            } else if(this.client_type == "Company")
+            {
+
+                let formData = new FormData();
+
+                formData.append('email',localStorage.client);
+                formData.append('contact_person_names',this.contact_person_names);
+                formData.append('Contact_person_phone_number',this.Contact_person_phone_number);
+                formData.append('Contact_person_designation',this.Contact_person_designation);
+                formData.append('company_sector',this.company_sector);
+                formData.append('company_name',this.company_name);
+                formData.append('country',this.country);
+                formData.append('city',this.city);
+                formData.append('mobile_number',this.mobile_number);
+                formData.append('office_mobile',this.office_mobile);
+                formData.append('address',this.address);
+                formData.append('customer_type',this.client_type);
 
                 formData.append('bank_acount_name',this.bank_acount_name);
                 formData.append('bank_account_number',this.bank_account_number);
@@ -1445,34 +1420,26 @@ export default {
                 formData.append('second_bank_account_number',this.second_bank_account_number);
                 formData.append('bank_swift_code',this.bank_swift_code);
                 formData.append('bank_address',this.bank_address);
-               
-                return formData;
 
-            } else if(this.stageTwo)
-            {
-
-                let formData = new FormData();
-
-                if(this.client_type == "Company"){
-
-                   
+                if(this.certificate_of_registration.length > 0)
                     formData.append('certificate_of_registration[0]',this.certificate_of_registration[0]);
+
+                if(this.tax_payer_identification_document.length > 0)
                     formData.append('tax_payer_identification_document[0]',this.tax_payer_identification_document[0]);
+                
+                if(this.vat_certificate.length > 0)
                     formData.append('vat_certificate[0]',this.vat_certificate[0]);
+                
+                if(this.business_licence_document.length > 0)
                     formData.append('business_licence_document[0]',this.business_licence_document[0]);
+                  
+                if(this.three_months_bank_statement.length > 0)
                     formData.append('three_months_bank_statement[0]',this.three_months_bank_statement[0]);
+
+                if(this.company_logo.length > 0)
                     formData.append('company_logo[0]',this.company_logo[0]);
 
-
-                } else if(this.client_type == "Personal"){
-
-                    formData.append('copy_of_identity_card[0]',this.copy_of_identity_card[0]);
-                    formData.append('copy_of_tax_identification_number_certificate[0]',this.copy_of_tax_identification_number_certificate[0]);
-                    formData.append('profile_photo[0]',this.profile_photo[0]);
-   
-                }
-               
-               return formData;
+                return formData;
             }
         },
 
@@ -1482,120 +1449,59 @@ export default {
 
             let formData = this.createData();
 
-            if(this.stageTwo){
-                console.log("Document is here");
+            const url = "http://207.180.215.239:8181/api/v1/customers/editprofile";
 
-                const url = `http://207.180.215.239:8181/api/v1/customers/upload/${localStorage.client}`;
+            axios.post(url,
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }).
+                    then((response) => {
 
-                axios.post(url,
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }).
-                            then((response) => {
+                        
+                        this.loading = false;
 
-                             
-                                this.loading = false;
+                        if(response.data.genralErrorCode == 8004){
 
-                                if(response.data.genralErrorCode == 8004){
+                            //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
+                            //this.alert = response.data.message;
 
-                                    //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
-                                    //this.alert = response.data.message;
-                                    //eslint-disable-next-line no-console
-                                        console.log("There is an error");
-                                }
-                                else if(response.data.genralErrorCode == 8000){
+                            //eslint-disable-next-line no-console
+                            console.log("Operation failed");
+                        }
+                        else if(response.data.genralErrorCode == 8000){
 
-                                    //this.AddTender(response.data.objects);
+                            //this.AddTender(response.data.objects);
 
-                                    //this.setAlert(response.data.message);
+                            //this.setAlert(response.data.message);
 
-                                    this.setAlert("Profile updating is completed");
-                                
-                                    //this.$router.push('/client');
-                                    
-                                    //eslint-disable-next-line no-console
-                                    //console.log(response.data);
+                            this.setAlert("Profile updating is completed");
+                        
+                            //this.$router.push('/client');
+                            
+                            //eslint-disable-next-line no-console
+                            //console.log(response.data);
+                        }
 
-                                    
-                                }
+                        //eslint-disable-next-line no-console
+                        //console.log(response.data);
 
-                                //eslint-disable-next-line no-console
-                                //console.log(response.data);
+                    }).catch(()=>{
 
-                            }).catch(()=>{
+                        //eslint-disable-next-line no-console
+                        console.log("error occured");
 
-                                //eslint-disable-next-line no-console
-                                console.log("error occured");
+                        /*this.setAlert("Erro occured. Please try again");
 
-                                /*this.setAlert("Erro occured. Please try again");
+                        this.alert = this.getAlert();
 
-                                this.alert = this.getAlert();
+                        this.$router.push('/client/createtender');*/
+                    }); 
 
-                                this.$router.push('/client/createtender');*/
-                            }); 
-
-            } else if(this.stageOne){
-
-                const url = `http://207.180.215.239:8181/api/v1/customers/${localStorage.client}`;
-                //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
-
-                axios.post(url,
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }).
-                            then((response) => {
-
-                             
-                                this.loading = false;
-
-                                if(response.data.genralErrorCode == 8004){
-
-                                    //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
-                                    //this.alert = response.data.message;
-                                    //eslint-disable-next-line no-console
-                                        console.log("There is an error");
-                                }
-                                else if(response.data.genralErrorCode == 8000)
-                                {
-
-                                    this.stageOne = false;
-
-                                    this.stageTwo = true;
-
-                                    //this.setAlert("Details updated successfully");
-
-                                    this.display_alert = true;
-
-                                    document.getElementById('app').scrollIntoView();
-                                }
-
-                                //eslint-disable-next-line no-console
-                                //console.log(response.data);
-
-                            }).catch(()=>{
-
-                                //eslint-disable-next-line no-console
-                                console.log("error occured");
-
-                                /*this.setAlert("Erro occured. Please try again");
-
-                                this.alert = this.getAlert();
-
-                                this.$router.push('/client/createtender');*/
-                            }); 
-
-            }
             
-
-
         }
-
     },
 
 
@@ -1707,8 +1613,6 @@ export default {
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
                             });
-
-                            
 
             next();
         });
