@@ -49,6 +49,74 @@
                 
                 </v-dialog>   
 
+                
+                  <v-dialog
+                    v-model="field_required"
+                    max-width="350"
+                    color="#f5faff"
+                    transition="scale-transition"
+                    :hide-overlay="true">
+                    <v-card 
+                    height="80" 
+                    color="#f64f51" 
+                    class="pt-2">
+    
+                    <v-alert  
+                    height="" 
+                    type="error">
+                      <p class="font-weight-strong mb-0">{{field}}</p>
+                    </v-alert>
+
+                    </v-card>
+                  </v-dialog>
+
+
+                 
+                    <v-dialog
+                    v-model="update_success"
+                    max-width="350"
+                    color="#f5faff"
+                    transition="scale-transition">
+                  <v-alert
+                    prominent
+                    type="success"
+                    >
+                    <v-row align="center">
+                        <v-col class="grow">
+                            {{success_alert}}
+                        </v-col>
+                        <v-col class="shrink">
+                        <v-btn color="primary" to="/transporter/previewprofile">
+                            Take action
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    </v-alert>
+                    </v-dialog>
+                
+
+                  <v-dialog
+                    v-model="field_required"
+                    max-width="350"
+                    color="#f5faff"
+                    transition="scale-transition"
+                    :hide-overlay="true">
+                    <v-card 
+                    height="80" 
+                    color="#f64f51" 
+                    class="pt-2">
+    
+                    <v-alert  
+                    height="" 
+                    type="error">
+                      <p class="font-weight-strong mb-0">{{field}}</p>
+                    </v-alert>
+
+                    </v-card>
+                  </v-dialog>
+                
+                
+
 
                 <!-- <v-alert
                 text
@@ -126,13 +194,8 @@
                
 
             <v-flex column class="pt-3">
-
-            <v-flex class="px-3">
-            <h1 style="color:#4169E1;" class=" font-weight-bold body-1 my-5">ABOUT TRANSPORTER</h1>
-            </v-flex>
-
-             
-                <v-flex row class="pb-5 pl-2" style="background-color:;">
+           
+                <v-flex row class="pb-5 pl-2 mt-3" style="background-color:;">
                         <v-flex>
                         <p class="bondy-2 mb-0 ml-3 mb-1">Profile Image</p>
                         <v-card
@@ -171,7 +234,11 @@
                     outlined 
                     class="" 
                     clearable 
-                    color="#4169E1">
+                    color="#4169E1"
+                    :rules="[rules.required]">
+                        <template #label>
+                            <span class="deep-orange--text"><strong>* </strong></span>
+                        </template>
                     </v-text-field>
                 </v-flex>
                 <v-flex row sm4 mb4 justify-center>
@@ -194,7 +261,10 @@
                     outlined 
                     color="#4169E1" 
                     clearable 
-                    >
+                    :rules="[rules.required]">
+                         <template #label>
+                            <span class="deep-orange--text"><strong>* </strong></span>
+                        </template>
                     </v-text-field>
                 </v-flex>
                 </v-flex>
@@ -206,6 +276,7 @@
             <h1 style="color:#4169E1;" class=" font-weight-bold body-1 my-5">CONTACTS</h1>
             </v-flex>
             <v-flex row class="px">
+
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Phone number</p>
                     <v-text-field 
@@ -213,8 +284,14 @@
                     outlined 
                     class="" 
                     clearable 
-                    color="#4169E1"></v-text-field>
+                    color="#4169E1"
+                    :rules="[rules.required, rules.number]" >
+                            <template #label>
+                              <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                    </v-text-field>
                 </v-flex>
+
                 <v-flex row sm6 mb6 justify-center>
                 <v-flex>
                     <p class="bondy-2 mb-0">Fax</p>
@@ -222,28 +299,45 @@
                     v-model="faxnumber"
                     outlined 
                     color="#4169E1" 
-                    clearable ></v-text-field>
+                    clearable 
+                     :rules="[rules.required]">
+                            <template #label>
+                                <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                     </v-text-field>
                 </v-flex>
                 </v-flex>
             </v-flex>
+
             <v-flex row class="px">
-                <v-flex column sm6 mb6 class="px-6">
+                <!-- <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Email</p>
                     <v-text-field
                     v-model="mail"
                     outlined 
                     class="" 
                     clearable 
-                    color="#4169E1"></v-text-field>
-                </v-flex>
-                <v-flex row sm6 mb6 justify-center>
+                    color="#4169E1"
+                    :rules="[rules.required, rules.email]">
+                            <template #label>
+                                <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                    </v-text-field>
+                </v-flex> -->
+
+                 <v-flex column sm6 mb6 class="px-6">
                 <v-flex>
                     <p class="bondy-2 mb-0">P.O.Box</p>
                     <v-text-field 
                     v-model="box"
                     outlined 
                     color="#4169E1" 
-                    clearable ></v-text-field>
+                    clearable 
+                    :rules="[rules.required]">
+                            <template #label>
+                                <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                    </v-text-field>
                 </v-flex>
                 </v-flex>
             </v-flex>
@@ -261,8 +355,13 @@
                     outlined 
                     class="" 
                     clearable 
-                    color="#4169E1"></v-text-field>
+                    color="#4169E1">
+                            <template #label>
+                                <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                    </v-text-field>
                 </v-flex>
+
                 <v-flex row sm6 mb6 justify-center>
                 <v-flex>
                     <p class="bondy-2 mb-0">City</p>
@@ -270,10 +369,16 @@
                     v-model="pcity"
                     outlined 
                     color="#4169E1" 
-                    clearable ></v-text-field>
+                    clearable 
+                     :rules="[rules.required]">
+                            <template #label>
+                                <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                    </v-text-field>
                 </v-flex>
                 </v-flex>
             </v-flex>
+
             <v-flex row class="px">
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Region</p>
@@ -282,7 +387,12 @@
                     outlined 
                     class="" 
                     clearable 
-                    color="#4169E1"></v-text-field>
+                    color="#4169E1"
+                     :rules="[rules.required]">
+                            <template #label>
+                                <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                     </v-text-field>
                 </v-flex>
                 
             </v-flex>
@@ -329,7 +439,11 @@
                             width="100" 
                             outlined 
                             prepend-icon=""
-                            @change="updatecertificate()">
+                            @change="updatecertificate()" 
+                            :rules="[rules.required]">
+                                     <template #label>
+                                        <span class="deep-orange--text"><strong>* </strong></span>
+                                    </template>
                             </v-file-input>
                          </v-flex>
                     </v-card>
@@ -356,7 +470,10 @@
                             outlined 
                             prepend-icon="" 
                             @change="updateinsurance()"
-                            >
+                            :rules="[rules.required]">
+                                     <template #label>
+                                        <span class="deep-orange--text"><strong>* </strong></span>
+                                    </template>
                             </v-file-input>
                          </v-flex>
                     </v-card>
@@ -383,7 +500,11 @@
                             outlined 
                             prepend-icon=""
                             @change="uploadother()" 
-                            ></v-file-input>
+                           :rules="[rules.required]">
+                                     <template #label>
+                                        <span class="deep-orange--text"><strong>* </strong></span>
+                                    </template>
+                            </v-file-input>
                          </v-flex>
                     </v-card>
                 </v-col>         
@@ -419,8 +540,15 @@
               color="#4169E1"
               clearable
               v-model="terms_of_payment"
-            >
+               :rules="[rules.required]">
+
+                    <template #label>
+                    <span class="red--text"><strong>{{terms_required}}</strong></span>
+                    </template>
+
             </v-select>
+            
+            
             </v-flex>
         </v-card>
 
@@ -448,9 +576,14 @@
             outlined 
             class="" 
             clearable 
-            color="#4169E1">
+            color="#4169E1"
+             :rules="[rules.required]">
+                        <template #label>
+                        <span class="deep-orange--text"><strong>* </strong></span>
+                        </template>
             </v-text-field>
             </v-flex>
+
             <v-flex column class="px-3">
             <p class="bondy-2 mb-0 mb-0">Account name</p>
             <v-text-field 
@@ -458,9 +591,14 @@
             outlined 
             class="" 
             clearable 
-            color="#4169E1">
+            color="#4169E1"
+             :rules="[rules.required]">
+                        <template #label>
+                        <span class="deep-orange--text"><strong>* </strong></span>
+                        </template>
             </v-text-field>
             </v-flex>
+
             <v-flex column class="px-3">
             <p class="bondy-2 mb-0 mb-0">Acount number</p>
             <v-text-field
@@ -468,7 +606,11 @@
             outlined 
             class="" 
             clearable 
-            color="#4169E1">
+            color="#4169E1"
+             :rules="[rules.required]">
+                        <template #label>
+                        <span class="deep-orange--text"><strong>* </strong></span>
+                        </template>
             </v-text-field>
             </v-flex>
         </v-card>
@@ -485,6 +627,7 @@
             </v-btn>
             </v-flex>
         </v-card>
+
     </v-container>
 </template>
 <script>
@@ -500,7 +643,6 @@ export default {
            pcity:'',
            tin:'',
            phone:'',
-           mail:'',
            box:'',
            country:'',
            pregion:'',
@@ -508,6 +650,35 @@ export default {
            bname:'',
            aname:'',
            acnumber:'',
+
+           // temrs and condition field
+           terms_required:'*',
+           field_required:false,
+           field:'',
+
+           // connection error
+           connectio_error:'',
+           error:'',
+
+           // Update success
+           update_success:false,
+           success_alert:'',
+
+
+           rules: {
+            required: value => !!value || "Required",
+            number: value => {
+              const pattern = /^\d+$/;
+              return pattern.test(value) || "Number only required"
+            },
+
+            min: v => v.length >= 8 || 'Min 8 characters',
+
+            email: value => {
+             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+             return pattern.test(value) || "invalid email";
+            }
+           },
 
            // files
            certificate:[],
@@ -566,42 +737,98 @@ export default {
    methods: {
 
        ...mapActions([
-        "T_GET_AGENT","T_POST_PAYMENT_TERMS"
-      //'GET_TENDERSDETAIL'
+        "T_GET_AGENT",
+        "T_POST_PAYMENT_TERMS"
     ]),
       
-            editaccount(){
-                console.log(this.terms_of_payment);
-                this.editaccounts = false
-                this.canceledits = true
-                
-                    this.edit=false
-                    this.btnedit= "cancel"    
-                    
-                    
-                },
+            validate(){
 
-                canceledit(){
+                if(this.rules.required(this.name) == 'Required'){
+        
+                        console.log(3);
+                        this.field = 'name field is required'
+                        this.field_required = true
+                    // this.requiredemail = true  
+                    // this.invalidemail = false
+                        return false
 
-                        this.editaccounts = true
-                        this.canceledits = false
-                        this.edit = true
-                        
-                    this.name = this.LOAD_AGENT.objects.company_name
-                        this.faxnumber = this.LOAD_AGENT.objects.fax
-                        this.tin = this.LOAD_AGENT.objects.tin_number
-                        this.phone = this.LOAD_AGENT.objects.phone
-                        this.mail = this.LOAD_AGENT.objects.email
-                        this.box = this.LOAD_AGENT.objects.p_o_box
-                        this.country = this.LOAD_AGENT.objects.country
-                        this.pcity = this.LOAD_AGENT.objects.city
-                        this.pregion = this.LOAD_AGENT.objects.city
-                        this.bname = this.LOAD_AGENT.objects.bank_name
-                        this.aname = this.LOAD_AGENT.objects.account_name
-                        this.acnumber = this.LOAD_AGENT.objects.account_number
-                },
+                }else if (this.rules.required(this.tin) == 'Required') {
 
+                        console.log(2);
+                        this.field = 'Tin number field is required'
+                        this.field_required = true
+                        return false
 
+                }else if(this.rules.required(this.phone) == 'Required'){
+
+                        console.log(1);
+                        this.field = 'Phone number field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.number(this.phone) === 'Number only required'){
+
+                        console.log(1);
+                        this.field = 'Phone number field accept numbers only'
+                        this.field_required = true
+                        return false
+
+                }else if (this.rules.required(this.faxnumber) == 'Required') {
+
+                        console.log(4);
+                        this.field = 'fax number is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.required(this.pcity) == 'Required'){
+
+                        console.log(7);
+                        this.field = 'City name field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.required(this.pregion) == 'Required'){
+
+                        console.log(8);
+                        this.field = 'Region field is required'
+                        this.field_required = true
+                        return false
+
+                }else if((this.terms_of_payment) == '' || (this.terms_of_payment) == 'null'){
+
+                        console.log(9);
+                        this.terms_required = "Required"
+                        this.field = 'Payment terms field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.required(this.bname) == 'Required'){
+
+                        console.log(10);
+                        this.field = 'Bank name field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.required(this.aname) == 'Required'){
+
+                        console.log(11);
+                        this.field = 'Account name field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.required(this.acnumber) == 'Required'){
+
+                        console.log(13);
+                        this.field = 'Account number field is required'
+                        this.field_required = true
+                        return false
+
+                }else{
+                    return true
+                }
+               
+            },
+               
            updateinsurance(){
                this.insurance.push(document.getElementById("insurance").files[0])
                },
@@ -621,26 +848,30 @@ export default {
 
             dataobject(){
 
-                const formdata = new FormData()
+                if (this.validate()){
 
-                formdata.append('profile_image[0]',this.profile_image)
-                formdata.append('certificate[0]', this.certificate[0])
-                formdata.append('insurance[0]', this.insurance[0])
-                formdata.append('company_name', this.name)
-                formdata.append('email', this.mail)
-                formdata.append('tin_number', this.tin)
-                formdata.append('phone', this.phone)
-                formdata.append('fax', this.faxnumber)
-                formdata.append('p_o_box', this.box)
-                formdata.append('country', this.country)
-                formdata.append('city', this.pcity)
-                formdata.append('region', this.pregion)
-                formdata.append('terms_of_payment', this.terms_of_payment) 
-                formdata.append('bank_name', this.bname)
-                formdata.append('account_name', this.aname)
-                formdata.append('account_number', this.acnumber)
+                    const formdata = new FormData()
 
-                return formdata;
+                    formdata.append('profile_image[0]',this.profile_image)
+                    formdata.append('certificate[0]', this.certificate[0])
+                    formdata.append('insurance[0]', this.insurance[0])
+                    formdata.append('company_name', this.name)
+                    formdata.append('email', this.mail)
+                    formdata.append('tin_number', this.tin)
+                    formdata.append('phone', this.phone)
+                    formdata.append('fax', this.faxnumber)
+                    formdata.append('p_o_box', this.box)
+                    formdata.append('country', this.country)
+                    formdata.append('city', this.pcity)
+                    formdata.append('region', this.pregion)
+                    formdata.append('terms_of_payment', this.terms_of_payment) 
+                    formdata.append('bank_name', this.bname)
+                    formdata.append('account_name', this.aname)
+                    formdata.append('account_number', this.acnumber)
+
+                    return formdata;
+
+                }
                 
             },
 
@@ -648,19 +879,22 @@ export default {
 
        savechanges(){
 
-           this.loading = true
-
-           console.log(this.terms_of_payment);
-
-           const dataobject = this.dataobject()
-
-           console.log(dataobject.get('profile_image'));
+           console.log(this.validate());
            
 
-           this.$store.dispatch('T_POST_PAYMENT_TERMS',{
+        //    console.log(dataobject.get('profile_image'));
 
-               email : this.mail,
-               installment_desc:this.terms_of_payment,
+                    this.loading = true
+
+                    const dataobject = this.dataobject()
+
+
+           if (this.validate()){
+
+               this.$store.dispatch('T_POST_PAYMENT_TERMS',{
+
+                    email : this.mail,
+                    installment_desc:this.terms_of_payment,
                
             }).then(()=>{
 
@@ -681,9 +915,8 @@ export default {
                                     
                                     setTimeout(()=>{
                                         this.loading= false;
-                                        this.edited= true;
-                                        this.$router.push('/transporter/tenders/open') 
-                                        this.$router.go('/transporter/tenders/open')
+                                        this.update_success = true,
+                                        this.success_alert = 'Profile Updated successfully'
                                     },1000)
 
                                     console.log(this.email);
@@ -697,14 +930,26 @@ export default {
                                 
                         }).catch((error)=>{
 
-                            console.log(error);
+                            console.log(error.response.status);
                             
                         })                   
                }
                
                
+           }).catch((error)=>{
+
+               this.loading = false
+               this.error = 'Cant update profile please check internet connection and try again'
+                this.connectio_error = true
+
+                console.log(error.response.data);
+                
            })
-           
+
+           }else {
+               this.loading = false
+           }
+                    
         
         console.log(this.company_name);
         

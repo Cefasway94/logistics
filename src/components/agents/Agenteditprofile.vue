@@ -26,7 +26,7 @@
                 </v-flex> -->
                 <v-flex xms11 sm11 md11 lg11 class="pl-3">
                 <p class="text--text title mb-0">
-                Welcome to ubalori, this your working desk.
+                Welcome to ubalori.
                 </p>
                 <p class="text--text subtitle-1 mb-0">
                 Please edit your profile to complete registration
@@ -126,13 +126,8 @@
                
 
             <v-flex column class="pt-3">
-
-            <v-flex class="px-3">
-            <h1 style="color:#4169E1;" class=" font-weight-bold body-1 my-5">ABOUT AGENT</h1>
-            </v-flex>
-
              
-                <v-flex row class="pb-5 pl-2" style="background-color:;">
+                <v-flex row class="pb-5 pl-2 mt-3" style="background-color:;">
                         <v-flex>
                         <p class="bondy-2 mb-0 ml-3 mb-1">Profile Image</p>
                         <v-card
@@ -253,16 +248,43 @@
             <v-flex class="px-3">
             <h1 style="color:#4169E1;" class=" font-weight-bold body-1 my-5">LOCATION</h1>
             </v-flex>
+
             <v-flex row class="px">
+
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Country</p>
-                    <v-text-field 
+
+                    <template >
+                    <v-card
+                    outlined
+                    color="" 
+                    height="55" 
+                    class="card"
+                    style="border-color:#babdc2;">
+                      <country-select 
+                      v-model="countrys"
+                      
+                      
+                      :topCountry="countrys" 
+                      height="40"
+                      :countryName="true"
+                      :removePlaceholder="true"
+                      class="selectcountry"/>
+                    </v-card>
+                    </template>
+
+
+                    <!-- <v-text-field 
                     v-model="country"
                     outlined 
                     class="" 
                     clearable 
-                    color="#4169E1"></v-text-field>
+                    color="#4169E1">
+                    </v-text-field> -->
+
+
                 </v-flex>
+
                 <v-flex row sm6 mb6 justify-center>
                 <v-flex>
                     <p class="bondy-2 mb-0">City</p>
@@ -274,6 +296,7 @@
                 </v-flex>
                 </v-flex>
             </v-flex>
+
             <v-flex row class="px">
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Region</p>
@@ -487,7 +510,9 @@
         </v-card>
     </v-container>
 </template>
+
 <script>
+
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
 /* eslint-disable no-console */
@@ -502,7 +527,7 @@ export default {
            phone:'',
            mail:'',
            box:'',
-           country:'',
+           countrys:'',
            pregion:'',
            terms_of_payment:[],
            bname:'',
@@ -550,7 +575,7 @@ export default {
                 this.phone = this.LOAD_AGENT.objects.phone
                 this.mail = this.LOAD_AGENT.objects.email
                 this.box = this.LOAD_AGENT.objects.p_o_box
-                this.country = this.LOAD_AGENT.objects.country
+                this.countrys = this.LOAD_AGENT.objects.country
                 this.pcity = this.LOAD_AGENT.objects.city
                 this.pregion = this.LOAD_AGENT.objects.city
                 this.bname = this.LOAD_AGENT.objects.bank_name
@@ -591,7 +616,7 @@ export default {
                 this.phone = this.LOAD_AGENT.objects.phone
                 this.mail = this.LOAD_AGENT.objects.email
                 this.box = this.LOAD_AGENT.objects.p_o_box
-                this.country = this.LOAD_AGENT.objects.country
+                this.countrys = this.LOAD_AGENT.objects.country
                 this.pcity = this.LOAD_AGENT.objects.city
                 this.pregion = this.LOAD_AGENT.objects.city
                 this.bname = this.LOAD_AGENT.objects.bank_name
@@ -630,7 +655,7 @@ export default {
                 formdata.append('phone', this.phone)
                 formdata.append('fax', this.faxnumber)
                 formdata.append('p_o_box', this.box)
-                formdata.append('country', this.country)
+                formdata.append('country', this.countrys)
                 formdata.append('city', this.pcity)
                 formdata.append('region', this.pregion)
                 formdata.append('terms_of_payment', this.terms_of_payment) 
@@ -719,3 +744,23 @@ export default {
 
 }
 </script>
+<style scoped>
+
+.selectcountry{
+          height:103%; 
+          width:100%; 
+          padding-left: 2%;
+          border-color: black ;
+          margin-bottom: 0%;
+           
+  }
+
+.selectcountry:hover {
+  border-color:black;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+}
+
+
+</style>
