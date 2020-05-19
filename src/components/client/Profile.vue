@@ -37,7 +37,14 @@
         </v-card>
 
         <v-card flat class="mt-3 mx-auto mb-3" color="white">
-            <v-row class="mt-3 mx-auto mb-3">
+
+            <v-flex row class="">
+                <v-icon color="grey" class="mb-4 ml-3 mr-5">person_outline</v-icon>
+                <p class="grey--text title ">Client details</p>
+            </v-flex>
+
+            <v-row class="mt-0 mx-auto mb-3">
+               
                 <v-col cols=6 md=3>
                      <p class="primary--text body-1 mb-2">CUSTOMER TYPE</p>
                      <p class="body-1">{{ customer_type }}</p>
@@ -93,7 +100,12 @@
                 </v-col>
             </v-row>
     
-            <v-row  class="mt-3 mx-auto mb-3" v-show="customer_type === 'Company'">
+            <v-flex row class="">
+                <v-icon color="grey" class="mb-4 ml-3 mr-5">mdi-bank</v-icon>
+                <p class="grey--text title ">Bank details</p>
+            </v-flex>
+
+            <v-row  class="mt-2 mx-auto mb-3" v-show="customer_type === 'Company'">
                 <v-col cols=6 md=3>
                     <p class="primary--text body-1 mb-2">CONTACT PERSON NAME</p>
                     <p class="body-1">{{ customer.contact_person_names}}</p>
@@ -138,11 +150,10 @@
             </v-row>
         </v-card>
 
-        <v-card flat class="mt-3 mx-auto mb-3" color="#F5FAFF">
-            <v-row  class="px-3">
-                <p class="grey--text title ">Attachments</p>
-            </v-row>
-        </v-card>
+       <v-flex row class="">
+            <v-icon color="grey" class="mb-4 ml-3 mr-5">mdi-attachment</v-icon>
+            <p class="grey--text title ">Attachments</p>
+        </v-flex>
 
         <v-card flat class="mt-3 mx-auto mb-3" color="white">
 
@@ -332,7 +343,7 @@
 
             <v-row v-show="customer_type === 'Company'">
 
-                <v-col cols=12 md=6 >
+                <v-col cols=12 md=4 >
                     <p class="primary--text body-1 mb-2">VAT CERTIFICATE</p>
                     <v-card flat width="200" height="150" outlined>
                         <v-row>
@@ -359,8 +370,35 @@
                         </v-row>
                     </v-card>
                 </v-col>
+                <v-col cols=12 md=4 >
+                    <p class="primary--text body-1 mb-2">COMPANY LOGO</p>
+                    <v-card flat width="200" height="150" outlined>
+                        <v-row>
+                            <v-col >
+                                <div 
+                                    v-show="(logo_extension === 'jpg') || (logo_extension === 'png')" 
+                                    @click="largePreview(logo_url)"
+                                >
+                                    <img :src="vat_url" width=200 height=150/>
+                                </div>
+                            
+                                <div v-show="logo_extension === 'pdf'">
 
-                <v-col cols=12 md=6>
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(logo_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-card>
+                </v-col>
+
+                <v-col cols=12 md=4>
 
                     <p class="primary--text body-1 mb-2"> BANK STATEMENT</p>
                     <v-card flat width="200" height="150" outlined>
@@ -401,7 +439,7 @@
                     elevation="flat" 
                     color="#4169E1" 
                     class="white--text"
-                    :to="'/client/updateprofile'"
+                    :to="'/client/updateprofile/'+customer_type"
                  >
                     EDIT
                 </v-btn>
@@ -452,8 +490,10 @@ export default {
            vat_extension:'',
            licence_extension:'',
            bank_statement_extension:'',
+           logo_extension:'',
 
            tin_url:'',
+           logo_url:'',
            profile_photo_url:'',
            id_url:'',
            copy_of_registration_url:'',
@@ -698,6 +738,12 @@ export default {
                                             vm.licence_url = vm.customer.business_licence_document[0];
                                         }
                                             
+                                        if(vm.customer.company_logo !== null || vm.customer.company_logo !== "null")
+                                        {
+                                            vm.logo_extension = vm.getFileExtension(vm.customer.company_logo[0]);
+
+                                            vm.logo_url = vm.customer.business_licence_document[0];
+                                        }
 
                                          if(vm.customer.three_months_bank_statement !== null ||  vm.customer.three_months_bank_statement !== "null")
                                          {

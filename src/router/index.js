@@ -99,7 +99,7 @@ const routes = [
     components: {Profile}
   },
   {
-    path:'/client/updateprofile',
+    path:'/client/updateprofile/:type',
     name:'ClientEditProfile',
     components: {ClientEditProfile}
   },
