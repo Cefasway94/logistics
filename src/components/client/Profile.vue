@@ -2,25 +2,27 @@
 
     <v-container class="mt-12 px-5" color="#F5FAFF" fluid>
 
-        <div v-if="overlay" class="large-preview">
-                
-                <v-row justify= "center">
-                    <v-col cols=12>
-                        <img  id="large_thumbnail" width="500px" height="500px">
-                    </v-col>
+        <v-overlay :value="overlay">
+            <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                        </v-col>
 
-                    <v-col class="mt-0" offset="4">
-                        <v-btn
-                            large
-                            color="primary white--text"
-                            @click="overlay = false"
-                        >
-                            <v-icon large class="font-weight-bold">mdi-close</v-icon>
-                        </v-btn>
-                    </v-col>
-                </v-row>
-                
-        </div>
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                large
+                                color="primary white--text"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    
+            </div>
+        </v-overlay>
 
         <AlertError v-if="display_alert" v-bind:message="alert"/>
 
@@ -439,6 +441,8 @@ export default {
 
            overlay:false,
 
+           large_preview_url:'',
+
            tin_extension:'',
            profile_photo_extension:'',
            id_extension:'',
@@ -468,23 +472,13 @@ export default {
             window.open(url);
         },
 
+
         largePreview(src){
 
-            this.overlay = !this.overlay
+            this.large_preview_url = src;
 
-            var reader = new FileReader();
+            this.overlay = !this.overlay;
 
-                reader.onload = function(){
-
-                    var dataURL = reader.result;
-
-                    var large_thumbnail = document.getElementById('large_thumbnail');
-               
-                    large_thumbnail.src = dataURL;
-                   
-                }
-
-            reader.readAsDataURL(src);
         },
 
         getFileExtension(url){

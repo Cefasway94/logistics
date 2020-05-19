@@ -2,25 +2,28 @@
 
         <v-container class=" mt-10 px-5">
 
-            <div v-if="overlay" class="large-preview">
-                
-                <v-row justify= "center">
-                    <v-col cols=12>
-                        <img  id="large_thumbnail" width="500px" height="500px">
-                    </v-col>
+            <v-overlay :value="overlay">
 
-                    <v-col class="mt-0" offset="4">
-                        <v-btn
-                            large
-                            color="primary white--text"
-                            @click="overlay = false"
-                        >
-                            <v-icon large class="font-weight-bold">mdi-close</v-icon>
-                        </v-btn>
-                    </v-col>
-                </v-row>
+                <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" height="500px">
+                        </v-col>
+
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                large
+                                color="primary white--text"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </div>
                 
-            </div>
+            </v-overlay>
 
             <v-progress-linear
                 :value="percentage"
