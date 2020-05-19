@@ -50,8 +50,9 @@
     <router-view name="Profile"></router-view>
     <router-view name="Clientupdateprofile"></router-view> 
     <router-view name="Clientpaymenthistory"></router-view>
+    <router-view name="ClientEditProfile"></router-view>
     
-
+    
     <!--admin-->
     <router-view name="AdminHome"></router-view>
     <router-view name="CustomerVerifying"></router-view>

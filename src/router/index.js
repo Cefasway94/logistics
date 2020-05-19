@@ -45,6 +45,7 @@ import Paymenthistory from '../components/Paymenthistory.vue';
 import AboutTenderBids from '../components/client/AboutTenderBids.vue'
 import Clientpaymenthistory from '../components/Clientpaymenthistory.vue'
 
+import ClientEditProfile from '../components/client/ClientEditProfile.vue'
 //admin routes
 import AdminHome from '../components/admin/AdminHome.vue'
 import CustomerVerifying from '../components/admin/CustomerVerifying'
@@ -96,6 +97,11 @@ const routes = [
     path:'/client/profile',
     name:'Profile',
     components: {Profile}
+  },
+  {
+    path:'/client/updateprofile',
+    name:'ClientEditProfile',
+    components: {ClientEditProfile}
   },
   {
     path:'/Client/editprofile/:id',
