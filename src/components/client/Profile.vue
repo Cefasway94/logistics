@@ -2,25 +2,27 @@
 
     <v-container class="mt-12 px-5" color="#F5FAFF" fluid>
 
-        <div v-if="overlay" class="large-preview">
-                
-                <v-row justify= "center">
-                    <v-col cols=12>
-                        <img  id="large_thumbnail" width="500px" height="500px">
-                    </v-col>
+        <v-overlay :value="overlay">
+            <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                        </v-col>
 
-                    <v-col class="mt-0" offset="4">
-                        <v-btn
-                            large
-                            color="primary white--text"
-                            @click="overlay = false"
-                        >
-                            <v-icon large class="font-weight-bold">mdi-close</v-icon>
-                        </v-btn>
-                    </v-col>
-                </v-row>
-                
-        </div>
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                large
+                                color="primary white--text"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    
+            </div>
+        </v-overlay>
 
         <AlertError v-if="display_alert" v-bind:message="alert"/>
 
@@ -35,7 +37,14 @@
         </v-card>
 
         <v-card flat class="mt-3 mx-auto mb-3" color="white">
-            <v-row class="mt-3 mx-auto mb-3">
+
+            <v-flex row class="">
+                <v-icon color="grey" class="mb-4 ml-3 mr-5">person_outline</v-icon>
+                <p class="grey--text title ">Client details</p>
+            </v-flex>
+
+            <v-row class="mt-0 mx-auto mb-3">
+               
                 <v-col cols=6 md=3>
                      <p class="primary--text body-1 mb-2">CUSTOMER TYPE</p>
                      <p class="body-1">{{ customer_type }}</p>
@@ -91,7 +100,12 @@
                 </v-col>
             </v-row>
     
-            <v-row  class="mt-3 mx-auto mb-3" v-show="customer_type === 'Company'">
+            <v-flex row class="">
+                <v-icon color="grey" class="mb-4 ml-3 mr-5">mdi-bank</v-icon>
+                <p class="grey--text title ">Bank details</p>
+            </v-flex>
+
+            <v-row  class="mt-2 mx-auto mb-3" v-show="customer_type === 'Company'">
                 <v-col cols=6 md=3>
                     <p class="primary--text body-1 mb-2">CONTACT PERSON NAME</p>
                     <p class="body-1">{{ customer.contact_person_names}}</p>
@@ -136,11 +150,10 @@
             </v-row>
         </v-card>
 
-        <v-card flat class="mt-3 mx-auto mb-3" color="#F5FAFF">
-            <v-row  class="px-3">
-                <p class="grey--text title ">Attachments</p>
-            </v-row>
-        </v-card>
+       <v-flex row class="">
+            <v-icon color="grey" class="mb-4 ml-3 mr-5">mdi-attachment</v-icon>
+            <p class="grey--text title ">Attachments</p>
+        </v-flex>
 
         <v-card flat class="mt-3 mx-auto mb-3" color="white">
 
@@ -154,7 +167,7 @@
 
                                     <div 
                                         v-show="(profile_photo_extension === 'jpg') || (profile_photo_extension === 'png')"
-                                        @click="openTab(profile_photo_url)"
+                                        @click="largePreview(profile_photo_url)"
                                     >
                                         <img :src="profile_photo_url" width=200 height=150/>
                                     </div>
@@ -182,7 +195,7 @@
                             <v-col>
                                 <div 
                                     v-show="(id_extension === 'jpg') || (id_extension === 'png')" 
-                                    @click="openTab(id_url)"
+                                    @click="largePreview(id_url)"
                                 >
                                     <img :src="id_url" width=200 height=150/>
                                 </div>
@@ -211,7 +224,7 @@
                             <v-col>
                                 <div 
                                     v-show="(tin_extension === 'jpg') || (tin_extension === 'png')" 
-                                    @click="openTab(tin_url)"
+                                    @click="largePreview(tin_url)"
                                 >
                                     <img :src="tin_url" width=200 height=150/>
                                 </div>
@@ -244,7 +257,7 @@
                             <v-col>
                                 <div 
                                     v-show="(copy_of_registration_extension === 'jpg') || (copy_of_registration_extension === 'png')" 
-                                    @click="openTab(copy_of_registration_url)"
+                                    @click="largePreview(copy_of_registration_url)"
                                 >
                                     <img :src="copy_of_registration_url" width=200 height=150/>
                                 </div>
@@ -273,7 +286,7 @@
                             <v-col >
                                 <div 
                                     v-show="(tax_payer_extension === 'jpg') || (tax_payer_extension === 'png')" 
-                                    @click="openTab(tax_payer_url)"
+                                    @click="largePreview(tax_payer_url)"
                                 >
                                     <img :src="tax_payer_url" width=200 height=150/>
                                 </div>
@@ -304,7 +317,7 @@
                             <v-col >
                                 <div 
                                     v-show="(licence_extension === 'jpg') || (licence_extension === 'png')" 
-                                    @click="openTab(licence_url)"
+                                    @click="largePreview(licence_url)"
                                 >
                                     <img :src="licence_url" width=200 height=150/>
                                 </div>
@@ -330,14 +343,14 @@
 
             <v-row v-show="customer_type === 'Company'">
 
-                <v-col cols=12 md=6 >
+                <v-col cols=12 md=4 >
                     <p class="primary--text body-1 mb-2">VAT CERTIFICATE</p>
                     <v-card flat width="200" height="150" outlined>
                         <v-row>
                             <v-col >
                                 <div 
                                     v-show="(vat_extension === 'jpg') || (vat_extension === 'png')" 
-                                    @click="openTab(vat_url)"
+                                    @click="largePreview(vat_url)"
                                 >
                                     <img :src="vat_url" width=200 height=150/>
                                 </div>
@@ -357,8 +370,35 @@
                         </v-row>
                     </v-card>
                 </v-col>
+                <v-col cols=12 md=4 >
+                    <p class="primary--text body-1 mb-2">COMPANY LOGO</p>
+                    <v-card flat width="200" height="150" outlined>
+                        <v-row>
+                            <v-col >
+                                <div 
+                                    v-show="(logo_extension === 'jpg') || (logo_extension === 'png')" 
+                                    @click="largePreview(logo_url)"
+                                >
+                                    <img :src="vat_url" width=200 height=150/>
+                                </div>
+                            
+                                <div v-show="logo_extension === 'pdf'">
 
-                <v-col cols=12 md=6>
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(logo_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-card>
+                </v-col>
+
+                <v-col cols=12 md=4>
 
                     <p class="primary--text body-1 mb-2"> BANK STATEMENT</p>
                     <v-card flat width="200" height="150" outlined>
@@ -366,7 +406,7 @@
                             <v-col >
                                 <div 
                                     v-show="(bank_statement_extension === 'jpg') || (bank_statement_extension === 'png')" 
-                                    @click="openTab(bank_statement_url)"
+                                    @click="largePreview(bank_statement_url)"
                                 >
                                     <img :src="bank_statement_url" width=200 height=150/>
                                 </div>
@@ -399,7 +439,7 @@
                     elevation="flat" 
                     color="#4169E1" 
                     class="white--text"
-                    :to="'/client/updateprofile'"
+                    :to="'/client/updateprofile/'+customer_type"
                  >
                     EDIT
                 </v-btn>
@@ -439,6 +479,8 @@ export default {
 
            overlay:false,
 
+           large_preview_url:'',
+
            tin_extension:'',
            profile_photo_extension:'',
            id_extension:'',
@@ -448,8 +490,10 @@ export default {
            vat_extension:'',
            licence_extension:'',
            bank_statement_extension:'',
+           logo_extension:'',
 
            tin_url:'',
+           logo_url:'',
            profile_photo_url:'',
            id_url:'',
            copy_of_registration_url:'',
@@ -468,23 +512,13 @@ export default {
             window.open(url);
         },
 
-        large(src){
 
-            this.overlay = !this.overlay
+        largePreview(src){
 
-            var reader = new FileReader();
+            this.large_preview_url = src;
 
-                reader.onload = function(){
+            this.overlay = !this.overlay;
 
-                    var dataURL = reader.result;
-
-                    var large_thumbnail = document.getElementById('large_thumbnail');
-               
-                    large_thumbnail.src = dataURL;
-                   
-                }
-
-            reader.readAsDataURL(src);
         },
 
         getFileExtension(url){
@@ -704,6 +738,12 @@ export default {
                                             vm.licence_url = vm.customer.business_licence_document[0];
                                         }
                                             
+                                        if(vm.customer.company_logo !== null || vm.customer.company_logo !== "null")
+                                        {
+                                            vm.logo_extension = vm.getFileExtension(vm.customer.company_logo[0]);
+
+                                            vm.logo_url = vm.customer.business_licence_document[0];
+                                        }
 
                                          if(vm.customer.three_months_bank_statement !== null ||  vm.customer.three_months_bank_statement !== "null")
                                          {

@@ -2,25 +2,28 @@
 
         <v-container class=" mt-10 px-5">
 
-            <div v-if="overlay" class="large-preview">
-                
-                <v-row justify= "center">
-                    <v-col cols=12>
-                        <img  id="large_thumbnail" width="500px" height="500px">
-                    </v-col>
+            <v-overlay :value="overlay">
 
-                    <v-col class="mt-0" offset="4">
-                        <v-btn
-                            large
-                            color="primary white--text"
-                            @click="overlay = false"
-                        >
-                            <v-icon large class="font-weight-bold">mdi-close</v-icon>
-                        </v-btn>
-                    </v-col>
-                </v-row>
+                <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" height="500px">
+                        </v-col>
+
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                large
+                                color="primary white--text"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </div>
                 
-            </div>
+            </v-overlay>
 
             <v-progress-linear
                 :value="percentage"
@@ -872,7 +875,7 @@ export default {
 
         stage1: false,
         stage2: false,
-        stage3: false,
+     
 
         initial_percent: 0,
         stage1_percent: 40,
@@ -884,6 +887,7 @@ export default {
     methods: {
 
         showStageTwo(){
+
             if((this.client_details && this.percentage === this.stage1_percent) || this.stage2)
                 return true;
             else 
@@ -898,7 +902,6 @@ export default {
 
             return extracted_string;
 
-
         },
 
         showStageOne(){
@@ -912,6 +915,11 @@ export default {
 
             if(this.bank_details){
 
+                //eslint-disable-next-line no-console
+                            console.log("bankdetails true.....stage1. stage2"+this.stage1, this.stage2);
+
+                           
+
                 this.stage2 = true;
 
                 this.bank_details = false;
@@ -922,6 +930,9 @@ export default {
 
             } else if(this.stage2 || (this.client_details && this.percentage == this.stage1_percent)){
 
+                 //eslint-disable-next-line no-console
+                            console.log("stage2.....percent"+this.stage2, this.percentage);
+
                 this.stage1 = true;
 
                 this.stage2 = false;
@@ -929,6 +940,8 @@ export default {
                 this.client_details = false;
 
             }
+
+            
         },
 
         showLargeThumbnail(id){
@@ -1619,7 +1632,13 @@ export default {
                                     if(response.data.objects.client_details && this.percentage == this.initial_percent){
 
                 
+                                        //eslint-disable-next-line no-console
+                                        console.log("Updating client details ..stage1,....stage2....bankdetails "+this.stage1, this.stage2, this.bank_details);
+                                     
+
                                         this.updatePercentage(40);
+
+                                        
 
                                             
                                         this.client_details = response.data.objects.client_details;
@@ -1629,10 +1648,17 @@ export default {
                                     } 
                                     else if((response.data.objects.client_details && this.percentage == this.stage1_percent) && this.stage1 == false){
 
+                                        //eslint-disable-next-line no-console
+                                        console.log("percentage is "+this.percentage);
+
+                                         //eslint-disable-next-line no-console
+                                        console.log("Updating bank details ..stage1,....stage2....bankdetails "+this.stage1, this.stage2, this.bank_details);
 
                                         this.updatePercentage(30)
 
                                         this.bank_details = response.data.objects.bank_details;
+
+                                        this.stage2 = false;
 
                                         document.getElementById('app').scrollIntoView();
          
@@ -1641,6 +1667,9 @@ export default {
 
                                          //eslint-disable-next-line no-console
                                          //console.log("STAGE22222222222222222"+response.data.objects.bank_details);
+
+                                         //eslint-disable-next-line no-console
+                                        console.log("Updating when stage2 is true ..stage1,....stage2....bankdetails "+this.stage1, this.stage2, this.bank_details);
 
                                         this.bank_details = response.data.objects.bank_details;
 
@@ -1651,6 +1680,9 @@ export default {
                                         document.getElementById('app').scrollIntoView();
 
                                     } else if(this.stage1){
+
+                                        //eslint-disable-next-line no-console
+                                        console.log("Updating when stage1 is true ..stage1,....stage2....bankdetails "+this.stage1, this.stage2, this.bank_details);
 
                                         this.client_details = response.data.objects.client_details;
 
@@ -1764,27 +1796,6 @@ export default {
 
                                vm.client_details = response.data.objects.client_details;
                                vm.bank_details = response.data.objects.bank_details;
-                               vm.documents = response.data.objects.documents;
-
-                               /*if(response.data.objects.client_details == 1)
-                                vm.client_details = true;*/
-
-                                //eslint-disable-next-line no-console
-                                console.log("Bank details " + vm.bank_details);
-
-                               vm.have_customer_id = response.data.objects.customer_id == null? false:true;
-
-                               /*vm.company_logo = response.data.objects.company_logo;
-                               vm.certificate_of_registration = response.data.objects.certificate_of_registration;
-                               vm.tax_payer_identification_document = response.data.objects.tax_payer_identification_document;
-                               vm.vat_certificate = response.data.objects.vat_certificate;
-                               vm.business_licence_document = response.data.objects.business_licence_document;
-                               vm.three_months_bank_statement = response.data.objects.three_months_bank_statement;
-                               vm.profile_photo = response.data.objects.profile_photo;
-                               vm.copy_of_identity_card = response.data.objects.copy_of_identity_card;
-                               vm.copy_of_tax_identification_number_certificate = response.data.objects.copy_of_tax_identification_number_certificate;*/
-                               
-                               //vm.client_types = response.data.objects;
 
                             }).catch(()=>{
 
