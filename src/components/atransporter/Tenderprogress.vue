@@ -1,7 +1,7 @@
 <template>
     <v-container id="scrolling-techniques" class=" mt-12 px-5">
 
-            <v-card flat width="1300" class="mt-12 mx-auto mb-5" color="#F5FAFF">
+            <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                 <v-flex>
                 <v-row class="pl-2 mb-1">
@@ -14,9 +14,10 @@
                 <h2 style="colo:#4169E1;">$ 500.0</h2>
                 </v-flex>
             </v-card>
-            <v-card flat width="1300" class="mx-auto mb-10 px-5" color="#F5FAFF">
+
+            <v-card flat width="900" class="mx-auto mb-10 px-5" color="#F5FAFF">
                 <v-flex row>
-                <v-flex sm12 md9 lg9 xlg9 >
+                <v-flex sm12 md12 lg12 xlg12 >
                     <v-card width="" class="pt-6 pb-3 pl-8">
                         <v-flex column>
                         <v-flex row >
@@ -43,7 +44,7 @@
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-img class="ma-auto" :src="LOAD_TENDER.bill_of_lading">
+                            <v-img class="ma-auto" :src="bill_of_lading">
                                 <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
@@ -54,7 +55,7 @@
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> LETTER </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-img class="ma-auto" :src="LOAD_TENDER.authorization_letter">
+                            <v-img class="ma-auto" :src="authorization_letter">
                                 <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
@@ -65,7 +66,7 @@
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> OTEHER </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-img class="ma-auto" :src="LOAD_TENDER.cargo_photo">
+                            <v-img class="ma-auto" :src="cargo_photo">
                                 <v-icon color="primary" x-large class="mx-12 mt-10">
                                     cloud_upload
                                 </v-icon>
@@ -77,7 +78,7 @@
                     </v-card>
                 </v-flex>
 
-                <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2">
+                <!-- <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2">
                     <v-card color="#4169E1" width="" class="py-4 px-5">
                         <v-flex row >
                             <v-flex column class="px-3">
@@ -116,7 +117,8 @@
                         </v-flex>
 
                     </v-card>
-                </v-flex>
+                </v-flex> -->
+
                 </v-flex>
             </v-card>
 
@@ -196,9 +198,7 @@
                 Payment confirmation
                 </p>
                 <p class="text--text subtitle-1 mb-0">
-                Vestibulum ullamcorper mauris at ligula. Nulla porta dolor. Vestibulum facilisis, 
-                purus nec pulvinar iaculis, ligula mi congue nunc, vitae euismod ligula urna in 
-                dolor. Curabitur at lacus ac velit ornare lobortis.
+                confirm Payment
                 </p>
                 </v-flex>
                 </v-flex>
@@ -263,14 +263,19 @@
                md6 
                lg6 
                class="text--text body-1 ml-2 font-weight-bold mb-0"> 
-               {{LOAD_PAYMENT_PROGRESS.objects.amount}}
+               {{amount}}
                </p>
                 </v-flex>
 
                  <v-flex row class="px-1 pt-2" >
                 <P xsm4 sm4 md4 lg4 
                 class="text--text body-1  mb-0">Date received :</P>
-                <p color="primary"  xsm8 sm8 md8 lg8 class="text--text body-1 pl-1 font-weight-bold mb-0"> {{LOAD_PAYMENT_PROGRESS.objects.created_at}} </p>
+                <p 
+                color="primary"  
+                xsm8 sm8 md8 lg8 
+                class="text--text body-1 pl-1 font-weight-bold mb-0">
+                 {{created_at}} 
+                 </p>
 
                 </v-flex>
                
@@ -323,7 +328,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Cargo loading</p>
-                                   <p class="mt-1">Dated {{LOAD_PROGRESS_STAGES.objects[0].expected_date}}</p>
+                                   <p class="mt-1">Dated {{date0}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -334,7 +339,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Cargo loading</p>
-                                   <p class="mt-1">Dated {{LOAD_PROGRESS_STAGES.objects[0].expected_date}}</p>
+                                   <p class="mt-1">Dated {{date0}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -345,7 +350,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Cargo loaded</p>
-                                   <p class="mt-1">Dated {{LOAD_PROGRESS_STAGES.objects[0].expected_date}}</p>
+                                   <p class="mt-1">Dated {{date0}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -366,7 +371,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. Cargo in transit</p>
-                                   <p class="mt-1">Dated {{LOAD_PROGRESS_STAGES.objects[1].expected_date}}</p>
+                                   <p class="mt-1">Dated {{date1}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -377,7 +382,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. Cargo in transit</p>
-                                   <p class="mt-1">Dated {{LOAD_PROGRESS_STAGES.objects[1].expected_date}}</p>
+                                   <p class="mt-1">Dated {{date1}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -388,7 +393,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. Cargo in transit</p>
-                                   <p class="mt-1">Dated {{LOAD_PROGRESS_STAGES.objects[1].expected_date}}</p>
+                                   <p class="mt-1">Dated {{date1}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -409,7 +414,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Cargo offloading</p>
-                                   <p class="mt-1">Dated {{LOAD_PROGRESS_STAGES.objects[2].expected_date}}</p>
+                                   <p class="mt-1">Dated {{date2}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -420,7 +425,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Cargo offloading</p>
-                                   <p class="mt-1">Dated {{LOAD_PROGRESS_STAGES.objects[2].expected_date}}</p>
+                                   <p class="mt-1">Dated {{date2}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -431,7 +436,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Cargo offloaded</p>
-                                   <p class="mt-1">Dated {{LOAD_PROGRESS_STAGES.objects[2].expected_date}}</p>
+                                   <p class="mt-1">Dated {{date2}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -452,7 +457,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">4. Delivery service</p>
-                                   <p class="mt-1 ">Date : {{LOAD_PROGRESS_STAGES.objects[3].expected_date}}</p>
+                                   <p class="mt-1 ">Date : {{date3}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -463,7 +468,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">4. Cargo on delivery</p>
-                                   <p class="mt-1 ">Date : {{LOAD_PROGRESS_STAGES.objects[3].expected_date}}</p>
+                                   <p class="mt-1 ">Date : {{date3}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -474,7 +479,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">4. Cargo delivered</p>
-                                   <p class="mt-1 ">Date : {{LOAD_PROGRESS_STAGES.objects[3].expected_date}}</p>
+                                   <p class="mt-1 ">Date : {{date3}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -576,7 +581,7 @@
                                     small 
                                     elevation="flat" 
                                     class=" primary "
-                                    @click="submiteProgress()" > 
+                                    @click.capture="submiteProgress()" > 
                                     Submite progress
                                     </v-btn>
                                 </v-flex>
@@ -609,9 +614,9 @@
                         <v-col class="">
                         <p class="primary--text body-2 text-uppercase"> comments </p>
                         <v-card flat height="100" width="1200" class="px-5 py-3" outlined>
-                            <v-text class="" outlined>
+                            <p class="" outlined>
                                No comment
-                            </v-text>
+                            </p>
                         </v-card>
                         </v-col>  
                                       
@@ -704,6 +709,11 @@ export default {
 
     data(){
         return{
+            //files ------------
+            bill_of_lading:'',
+            authorization_letter:'',
+            cargo_photo:'',
+
             //---- stage 1 ---
                         // state1:false,
                         // state2:false,
@@ -715,6 +725,13 @@ export default {
             stage3:'A',
             //--- stage 4 ---
             stage4: 'A',
+
+            //Date stages -----
+            date0:'',
+            date1:'',
+            date2:'',
+            date3:'',
+
             //----- steper---
             icon:'',
             step:'',
@@ -734,6 +751,8 @@ export default {
 
             //------ PAYMENT PROGRESS ------------
             payment_percentage:'',
+            amount:'',
+            created_at:'',
 
             //----------------
             loading:false,
@@ -749,12 +768,18 @@ export default {
 
      beforeRouteEnter (to, from, next){
     next(vm =>{  vm.T_GET_TENDERSDETAILs(to.params.id).then(()=>{
+
+           vm.bill_of_lading = vm.LOAD_TENDER.bill_of_lading[0]
+           vm.authorization_letter = vm.LOAD_TENDER.authorization_letter[0]
+           vm.authorization_letter = vm.LOAD_TENDER.cargo_photo[0]
+           
           // eslint-disable-next-line no-console
               console.log('the onprogress outpost');
               // eslint-disable-next-line no-console
               console.log(to.params.id);
               // eslint-disable-next-line no-console
               console.log(vm.LOAD_TENDER);
+
           vm.T_GET_AGENT(localStorage.client).then(()=>{
               console.log(vm.LOAD_AGENT)
 
@@ -771,7 +796,11 @@ export default {
                     //console.log(data.message);
 
                 }else{
+
                     vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                    vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount
+                    vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at
+                    
                     if ( vm.LOAD_PAYMENT_PROGRESS.objects.is_full_amount_paid == false){
                             vm.chip1 = 'partial payment'
                     }
@@ -784,6 +813,12 @@ export default {
                   
 
               vm.T_GET_PROGRESS_STAGES(to.params.id).then(()=>{
+
+                  vm.date0 = vm.LOAD_PROGRESS_STAGES.objects[0].expected_date
+                   vm.date1 = vm.LOAD_PROGRESS_STAGES.objects[1].expected_date
+                    vm.date2 = vm.LOAD_PROGRESS_STAGES.objects[2].expected_date
+                     vm.date3 = vm.LOAD_PROGRESS_STAGES.objects[3].expected_date
+
                   console.log(vm.LOAD_PROGRESS_STAGES);
 
     // stage One --------------------------------
@@ -916,6 +951,11 @@ methods :{
     submiteProgress(){
 
             this.loading = true
+
+            console.log(this.feedstage);
+            console.log(this.LOAD_TIMELINE_STAGES.objects[0].id);
+            
+            
 
         if (this.feedstage === '1. Cargo loading') {
             this.progress_id = this.LOAD_TIMELINE_STAGES.objects[0].id

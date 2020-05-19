@@ -33,7 +33,7 @@
                 </v-flex> -->
                 <v-flex xms11 sm11 md11 lg11 class="pl-3">
                 <p class="text--text title mb-0">
-                Welcome to ubalori, this your working desk.
+                Welcome to ubalori.
                 </p>
                 <p class="text--text subtitle-1 mb-0">
                 Please edit your profile to complete registration
@@ -71,8 +71,8 @@
                 </v-flex> -->
                 <v-flex xms11 sm11 md11 lg11 class="pl-3">
                 <p class="text--text title mb-0">
-                Your account has been registered, please stay put for it
-                to be verified
+                Your account has been successfully updated. 
+                Please wait for your account to be Verified by the Administrator
                 </p>
                 </v-flex>
                 </v-flex>
@@ -120,7 +120,24 @@
                         </v-flex>
                     </v-row>
                    
-                        <p class=" body-2 grey--text mb-1">{{tender.customer_id}}</p>
+                    
+                    <v-row class="pl-3 mt-2 mb-2">
+                        <v-flex xs4 sm4 md4 lg4>
+                        <p class=" body-2 mb-0">Cargo size : </p>
+                        </v-flex>
+                        <v-flex xs8 sm8 md8 lg8>
+                        <p  class=" body-2 primary--text mb-0 ">{{tender.cargo_size}}</p>
+                        </v-flex>
+                    </v-row>
+
+                    <!-- <v-row class="pl-3 mt-1 mb-2">
+                        <v-flex xs5 sm5 md5 lg5>
+                        <p class=" body-2 mb-0">Cargo description :</p>
+                        </v-flex>
+                        <v-flex xs7 sm7 md7 lg7>
+                        <p  class=" body-2 primary--text mb-0 mx-3">{{tender.description}}</p>
+                        </v-flex>
+                    </v-row> -->
                     
                     <v-row class="px-3">
                         <p class="body-2  pt-1 ">{{tender.origin}}</p>
@@ -132,7 +149,7 @@
                     </v-row>
 
                     <v-row row class="px-3 mb-1">
-                        <h4  class=" title ">{{tender.customer_offer_amount}} USD</h4>
+                        <h4  class=" title ">{{tender.customer_offer_amount}} {{tender.currency}}</h4>
                         <v-spacer></v-spacer>
                         <v-btn 
                         small 

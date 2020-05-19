@@ -48,11 +48,11 @@
                       </v-card>
 
                       <p class=" font-weight-regular text--text text-center pt-3 mb-1 body-1">
-                        signedup successively,
+                         Account Sign Up Successful.
                       </p>
                       
                       <p class="mb-2 text-center text--text body-1">
-                        Open your <a style="color:blue;"> Email </a> to verify your account
+                        Kindly check your <a style="color:blue;"> Email </a> to verify your account
                         </p>
 
                       <v-card-actions>

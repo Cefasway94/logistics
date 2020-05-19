@@ -34,7 +34,7 @@
                 </v-flex> -->
                 <v-flex xms11 sm11 md11 lg11 class="pl-3">
                 <p class="text--text title mb-0">
-                Welcome to ubalori, this your working desk.
+                Welcome to ubalori.
                 </p>
                 <p class="text--text subtitle-1 mb-0">
                 Please edit your profile to complete registration
@@ -72,7 +72,8 @@
                 </v-flex> -->
                 <v-flex xms11 sm11 md11 lg11 class="pl-3">
                 <p class="text--text title mb-0">
-                Hang on for verification
+                Your account has been successfully updated. 
+                Please wait for your account to be Verified by the Administrator
                 </p>
                 </v-flex>
                 </v-flex>
@@ -136,6 +137,7 @@
                 class="pl-3 pr-2 pb-2 pt-1 mx-auto"
                 :elevation="hover ? 15 : 3">
                    <v-card  :to="{name:'AgentAboutbid', params: {id:tender.id}}" flat>
+
                     <v-row  row class="pl-3 pt-3 mb-1 justify-space-between">
                         <v-flex class="mb-1" wrap xs7 sm8>
                         <h4  class="subtitle-1 font-weight-bold mb-0">{{tender.bid_id}}</h4>
@@ -150,47 +152,60 @@
                         </v-chip>
                         </v-flex>
                     </v-row>
+
+                     <v-row class="pl-3 mt-1 mb-2">
+                        <v-flex xs4 sm4 md4 lg4>
+                        <p class=" body-2 mb-0">Bided terms </p>
+                        </v-flex>
+                        <v-flex xs8 sm8 md8 lg8>
+                        <p  class=" body-2 primary--text mb-0 mx-3">{{tender.bid_terms_and_conditions}}</p>
+                        </v-flex>
+                    </v-row>
+
+                    <v-row class="pl-3 mt-1 mb-2">
+                        <v-flex xs4 sm4 md4 lg4>
+                        <p class=" body-2 mb-0">Time line </p>
+                        </v-flex>
+                        <v-flex xs8 sm8 md8 lg8>
+                        <p  class=" body-2 primary--text mb-0 mx-3">{{tender.bid_delivery_timeline}}</p>
+                        </v-flex>
+                    </v-row>
                     
-                    <v-row class="pl-3">
-                        <p xs12 sm7 md7 class=" body-2 grey--text mb-1">{{tender.bid_terms_and_conditions}}</p>
-                        <v-spacer></v-spacer>
-                    </v-row>
-                    <v-row class="px-3">
-                        <p class="body-1  pt-2 mb-2">Time line</p>
-                        
-                         <!-- <v-icon small color="#4169E1" class="px-2 pb-2">
-                        remove
-                        </v-icon>  -->
-                
-                        <p  class="  pt-2 primary--text mx-3 mb-2">{{tender.bid_delivery_timeline}}</p>
-                    </v-row>
                     </v-card>
 
                     <v-row row class="mb-1 ">
+
                         <v-flex xsm12 sm12 md6 lg6 class="px-3">
                         <h4  class=" title ">{{tender.bid_amount}} USD</h4>
                         </v-flex>
-                        <v-flex row xsm12 sm12 md12 lg6 class="px-3 pt-1">
+
+                    <v-flex row xsm12 sm12 md12 lg6 class="px-3 pt-1">
+
                         <v-flex xsm6 sm6 md6 class="px-1">
-                        
-                         <v-btn
-                        :to="{name:'AgentAboutbid', params: {id:tender.id}}"
-                         small 
-                         elevation="flat" 
-                        color="#4169E1" class="white--text" >
-                        view bid
-                        </v-btn>
-                        
+                            <center>
+                            <v-btn v-if="showaccept == LOAD_DASHBOARDS.objects[i].bid_status" 
+                            small 
+                            elevation="flat" 
+                            color="green" 
+                            class="white--text" 
+                            @click="acceptbid(tender.id)">
+                            accept
+                            </v-btn>
+                            </center>
                         </v-flex>
+
                         <v-flex xsm6 sm6 md6 class="px-1">
-                        <center>
-                        <v-btn v-if="showaccept == LOAD_DASHBOARDS.objects[i].bid_status" small elevation="flat" 
-                        color="#4169E1" class="white--text" @click="acceptbid(tender.id)">
-                        accept
-                        </v-btn>
-                        </center>
+                            <v-btn
+                            :to="{name:'AgentAboutbid', params: {id:tender.id}}"
+                            small 
+                            elevation="flat" 
+                            color="#4169E1" class="white--text" >
+                            view bid
+                            </v-btn>
                         </v-flex>
-                        </v-flex>
+
+
+                    </v-flex>
                         
                     </v-row>
                     
@@ -216,12 +231,12 @@
                 :elevation="hover ? 15 : 3">
                    
                     <v-row  row class="px-3 pt-2 mb-1 justify-space-between">
+
                         <v-flex wrap xs7 sm8>
-                        <h4  class="subtitle-1 font-weight-bold">{{tender.bid_id}}</h4>
+                        <h4  class="subtitle-1 font-weight-bold">{{tender.cargo_details}}</h4>
                         </v-flex>
                         
                         <v-flex xs5 sm4 class="pl-2">
-                            
                         <!-- <v-icon color="#E9E9F0" class="" @click="true">clear</v-icon> -->
                         <v-chip 
                         small
@@ -230,23 +245,29 @@
                         {{tender.tender_progress}}
                         </v-chip>
                         </v-flex>
+
                     </v-row>
-                    <v-row class="pl-3">
-                        <p xs12 sm7 md7 class=" body-2 grey--text">{{tender.description}}</p>
-                        <v-spacer></v-spacer>
+
+                    <v-row class="pl-3 mb-2 mt-1">
+                        <v-flex xs4 sm4 md4 lg4>
+                        <p class=" body-2 mb-0">Customer terms </p>
+                        </v-flex>
+                        <v-flex xs8 sm8 md8 lg8>
+                        <p  class=" body-2 primary--text mb-0 mx-3">{{tender.customer_terms_and_conditions}}</p>
+                        </v-flex>
                     </v-row>
-                    <v-row class="px-3">
-                        <p class="body-1  pt-2 ">Time line</p>
-                        
-                         <!-- <v-icon small color="#4169E1" class="px-2 pb-2">
-                        remove
-                        </v-icon>  -->
-                
-                        <p  class="  pt-2 primary--text mx-3">{{tender.customer_delivery_timeline}}</p>
+
+                    <v-row class="pl-3 mt-1 mb-2">
+                        <v-flex xs4 sm4 md4 lg4>
+                        <p class=" body-2 mb-0">Time line </p>
+                        </v-flex>
+                        <v-flex xs8 sm8 md8 lg8>
+                        <p  class=" body-2 primary--text mb-0 mx-3">{{tender.customer_delivery_timeline}}</p>
+                        </v-flex>
                     </v-row>
 
                     <v-row row class="px-3 mb-1">
-                        <h4  class=" title ">{{tender.customer_offer_amount}} USD </h4>
+                        <h4  class=" title ">{{tender.customer_offer_amount}} {{tender.currency}} </h4>
                         <v-spacer></v-spacer>
                         <v-btn small elevation="flat" 
                         color="#4169E1" class="white--text" 

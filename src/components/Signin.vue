@@ -186,12 +186,15 @@
                     label="remember me">
                     </v-checkbox>
                     <v-spacer></v-spacer>
-                    <v-btn 
+
+   <!-- Forgot password button
+                       <v-btn 
                     elevation="false" 
                     color="transparent" 
                     class="mt-4 font-weight-regular body-1 text-capitalize" 
                     style="color:#4169E1;"> Forgot password
-                    </v-btn>
+                    </v-btn> -->
+
                     </v-flex >
 
                     <v-flex class="px-5 justify-center ">
