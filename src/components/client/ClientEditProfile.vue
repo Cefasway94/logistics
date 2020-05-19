@@ -412,7 +412,7 @@
                     <v-row class="pa-3" v-show="client_type == 'Personal'">
 
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> COPY OF IDENTITY CARD  <span class="red--text"><strong>* </strong></span></p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> COPY OF IDENTITY CARD </p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -421,9 +421,6 @@
                                     id="copy_of_id" 
                                     @change="updateID()"
                                     prepend-icon ="mdi-cloud-upload"
-                                    :rules="[v => !!v || 'identity card is required']"
-                                    required
-                                
                                 >
 
                                 </v-file-input>
@@ -564,7 +561,7 @@
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> CERTIFICATE OF REGISTRATION <span class="red--text"><strong>* </strong></span></p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> CERTIFICATE OF REGISTRATION</p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -573,9 +570,6 @@
                                     id="registration_certificate"
                                     @change="registrationCertificateUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
-                                    :rules="[v => !!v || 'Registration certificate is required']"
-                                    required
-                                
                                 >
                                 </v-file-input>
 
@@ -602,7 +596,7 @@
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0">TIN DOCUMENT <span class="red--text"><strong>* </strong></span></p>
+                            <p class="primary--text body-2 text-uppercase mb-0">TIN DOCUMENT</p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -611,8 +605,7 @@
                                     id="tin_document"
                                     @change="tinDocumentUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
-                                    :rules="[v => !!v || 'Tin document is required']"
-                                    required
+                                  
                                 
                                 >
                                 </v-file-input>
@@ -640,7 +633,7 @@
 
                     <v-row class="pa-3" v-show="client_type == 'Company'">
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> VAT CERTIFICATE <span class="red--text"><strong>* </strong></span></p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> VAT CERTIFICATE </p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -649,9 +642,7 @@
                                     id="vat_certificate" 
                                     @change="vatCertificateUploaded()"
                                     prepend-icon ="mdi-cloud-upload"
-                                    :rules="[v => !!v || 'vat certificate is required']"
-                                    required
-                                
+                                   
                                 >
 
                                 </v-file-input>
@@ -679,7 +670,7 @@
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> BUSINESS LICENCE <span class="red--text"><strong>* </strong></span></p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> BUSINESS LICENCE </p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -689,8 +680,7 @@
                                     id="business_licence"
                                     @change="businessLicenceUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
-                                    :rules="[v => !!v || 'Business licence is required']"
-                                    required
+                                   
                                 
                                 >
                                 </v-file-input>
@@ -718,7 +708,7 @@
                         </v-col> 
 
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> THREE MONTHS BANK STATEMENT <span class="red--text"><strong>* </strong></span></p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> THREE MONTHS BANK STATEMENT</p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -728,9 +718,6 @@
                                     id="bank_statement"
                                     @change="bankStatementUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
-                                    :rules="[v => !!v || 'statement is required']"
-                                    required
-                                
                                 >
                                 </v-file-input>
 
