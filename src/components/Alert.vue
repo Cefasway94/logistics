@@ -1,17 +1,22 @@
 <template>
-  <v-alert 
-    type="success"
-    dismissible
-    color="cyan darken-3"
-    border="left"
-    elevation="3"
-    @input="onClickAlert">
 
-    {{ message }}
+   <v-overlay :value="overlay">
+     <v-alert 
+        type="success"
+        dismissible
+        color="cyan darken-3"
+        border="left"
+        elevation="3"
+        @input="onClickAlert"
+      >
+
+      {{ message }}
 
     
 
-    </v-alert>
+      </v-alert>
+   </v-overlay>
+  
 </template>
 
 <script>
@@ -27,6 +32,12 @@ export default {
 
       onClickAlert(){
         this.setAlert('');
+        this.overlay = false
+      }
+    },
+    data(){
+      return {
+        overlay: true,
       }
     }
 }
