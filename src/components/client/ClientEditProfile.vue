@@ -2,7 +2,7 @@
 
         <v-container class=" mt-10 px-5">
 
-            <Alert v-if="display_alert" v-bind:message="alert"/>
+            <AlertError v-if="display_alert" v-bind:message="alert"/>
 
             <v-overlay :value="overlay">
 
@@ -777,7 +777,7 @@
 <script>
 import axios from 'axios'
 import {mapActions} from 'vuex'
-import Alert from '@/components/Alert.vue'
+import AlertError from '@/components/AlertError.vue'
 export default {
 
     data: ()=>({
@@ -859,7 +859,8 @@ export default {
 
      }),
 
-    components:{Alert},
+    components:{AlertError},
+
     methods: {
 
         openTab(url){
@@ -1447,29 +1448,29 @@ export default {
                     }).
                     then((response) => {
 
-                        
                         this.loading = false;
 
                         if(response.data.genralErrorCode == 8004){
 
-                            //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
-                            //this.alert = response.data.message;
+                            this.alert = response.data.message;
 
-                            //eslint-disable-next-line no-console
-                            console.log("Operation failed");
+                            this.display_alert = true;
+
+                            document.getElementById('app').scrollIntoView();
                         }
                         else if(response.data.genralErrorCode == 8000){
 
-                            //this.AddTender(response.data.objects);
-
-                            //this.setAlert(response.data.message);
-
-                            this.setAlert("Profile updating is completed");
+                            this.setAlert(response.data.message);
                         
-                            //this.$router.push('/client');
-                            
-                            //eslint-disable-next-line no-console
-                            //console.log(response.data);
+                            this.$router.push('/client/profile');
+
+                        }else {
+
+                            this.alert = response.data.message;
+
+                            this.display_alert = true;
+
+                            document.getElementById('app').scrollIntoView();
                         }
 
                         //eslint-disable-next-line no-console
@@ -1477,14 +1478,11 @@ export default {
 
                     }).catch(()=>{
 
-                        //eslint-disable-next-line no-console
-                        console.log("error occured");
+                        this.alert = "Error occured. Please try again";
 
-                        /*this.setAlert("Erro occured. Please try again");
+                        this.display_alert = true;
 
-                        this.alert = this.getAlert();
-
-                        this.$router.push('/client/createtender');*/
+                        document.getElementById('app').scrollIntoView();
                     }); 
 
             

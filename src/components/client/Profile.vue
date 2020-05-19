@@ -2,6 +2,8 @@
 
     <v-container class="mt-12 px-5" color="#F5FAFF" fluid>
 
+        <Alert v-if="alert" v-bind:message="alert"/>
+
         <v-overlay :value="overlay">
             <div class="large-preview">
                     
@@ -456,11 +458,14 @@
 <script>
 import axios from 'axios'
 import AlertError from '@/components/AlertError.vue'
+import Alert from '@/components/Alert.vue'
+import {mapGetters} from 'vuex'
+
 
 export default {
     name: 'Profile',
 
-    components:{AlertError},
+    components:{AlertError,Alert},
 
     data () {
         return {
@@ -503,6 +508,11 @@ export default {
            bank_statement_url:''
       }
       
+    },
+
+    computed:{
+
+        ...mapGetters(['getAlert'])    
     },
 
     methods:{
@@ -775,6 +785,10 @@ export default {
                         }
                     }).catch();
               
+            vm.alert = vm.$store.getters.getAlert;
+            
+            document.getElementById('app').scrollIntoView();
+
             next();
         });
     }
