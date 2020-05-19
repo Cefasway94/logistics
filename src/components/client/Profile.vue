@@ -154,7 +154,7 @@
 
                                     <div 
                                         v-show="(profile_photo_extension === 'jpg') || (profile_photo_extension === 'png')"
-                                        @click="openTab(profile_photo_url)"
+                                        @click="largePreview(profile_photo_url)"
                                     >
                                         <img :src="profile_photo_url" width=200 height=150/>
                                     </div>
@@ -182,7 +182,7 @@
                             <v-col>
                                 <div 
                                     v-show="(id_extension === 'jpg') || (id_extension === 'png')" 
-                                    @click="openTab(id_url)"
+                                    @click="largePreview(id_url)"
                                 >
                                     <img :src="id_url" width=200 height=150/>
                                 </div>
@@ -211,7 +211,7 @@
                             <v-col>
                                 <div 
                                     v-show="(tin_extension === 'jpg') || (tin_extension === 'png')" 
-                                    @click="openTab(tin_url)"
+                                    @click="largePreview(tin_url)"
                                 >
                                     <img :src="tin_url" width=200 height=150/>
                                 </div>
@@ -244,7 +244,7 @@
                             <v-col>
                                 <div 
                                     v-show="(copy_of_registration_extension === 'jpg') || (copy_of_registration_extension === 'png')" 
-                                    @click="openTab(copy_of_registration_url)"
+                                    @click="largePreview(copy_of_registration_url)"
                                 >
                                     <img :src="copy_of_registration_url" width=200 height=150/>
                                 </div>
@@ -273,7 +273,7 @@
                             <v-col >
                                 <div 
                                     v-show="(tax_payer_extension === 'jpg') || (tax_payer_extension === 'png')" 
-                                    @click="openTab(tax_payer_url)"
+                                    @click="largePreview(tax_payer_url)"
                                 >
                                     <img :src="tax_payer_url" width=200 height=150/>
                                 </div>
@@ -304,7 +304,7 @@
                             <v-col >
                                 <div 
                                     v-show="(licence_extension === 'jpg') || (licence_extension === 'png')" 
-                                    @click="openTab(licence_url)"
+                                    @click="largePreview(licence_url)"
                                 >
                                     <img :src="licence_url" width=200 height=150/>
                                 </div>
@@ -337,7 +337,7 @@
                             <v-col >
                                 <div 
                                     v-show="(vat_extension === 'jpg') || (vat_extension === 'png')" 
-                                    @click="openTab(vat_url)"
+                                    @click="largePreview(vat_url)"
                                 >
                                     <img :src="vat_url" width=200 height=150/>
                                 </div>
@@ -366,7 +366,7 @@
                             <v-col >
                                 <div 
                                     v-show="(bank_statement_extension === 'jpg') || (bank_statement_extension === 'png')" 
-                                    @click="openTab(bank_statement_url)"
+                                    @click="largePreview(bank_statement_url)"
                                 >
                                     <img :src="bank_statement_url" width=200 height=150/>
                                 </div>
@@ -468,7 +468,7 @@ export default {
             window.open(url);
         },
 
-        large(src){
+        largePreview(src){
 
             this.overlay = !this.overlay
 
