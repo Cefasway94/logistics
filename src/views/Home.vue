@@ -7,6 +7,7 @@
   
     <!-- transporter -->
     <router-view name="Teditprofile"></router-view>
+    <router-view name="Tpreviewprofile"></router-view>
     <router-view name="Ttenders"></router-view>
     <router-view name="Tabouttender"></router-view>
     <router-view name="Tbiding"></router-view>
@@ -16,6 +17,7 @@
 
     <!-- agent -->
     <router-view name="Agenteditprofile"></router-view>
+    <router-view name="Apreviewprofile"></router-view>
     <router-view name="Tenders"></router-view>
     <router-view name="Abouttender"></router-view>
     <router-view name="Biding"></router-view>

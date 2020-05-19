@@ -187,7 +187,9 @@
               </v-list-item-action>
             </v-list-item>
           </v-list>
-          <v-divider></v-divider>
+
+              <v-divider></v-divider>
+          
           <v-list
             nav
             dense >
@@ -196,7 +198,7 @@
               <v-list-item
                 v-for="(item, i) in itemes"
                 :key="i"
-                @click="clienteditprofile()">
+                @click="clientpreviewprofile()">
                 <v-list-item-icon>
                   <v-icon v-text="item && item.icon"></v-icon>
                 </v-list-item-icon>
@@ -550,10 +552,10 @@ export default {
     ]),
 
     // Client edit profile ---------------------
-    clienteditprofile(){
+    clientpreviewprofile(){
           this.verify = false
-          this.$router.push('/Client/editprofile/'+localStorage.client)
-          this.$router.go('/Client/editprofile/'+localStorage.client)
+          this.$router.push('/client/profile')
+          this.$router.go('/client/profile')
       }, 
 
 
@@ -595,7 +597,7 @@ export default {
         {
           title: "My profile",  
           icon: "mdi-account-multiple",
-          router: { name: "AgentProfile" }
+          router: { name: "Apreviewprofile" }
         }
       ];
       return agent;
@@ -621,7 +623,7 @@ export default {
         {
           title: "My profile",  
           icon: "mdi-account-multiple",
-          router: { name: "Teditprofile" }
+          router: { name: "Tpreviewprofile" }
         }
       ];
       return transporter;

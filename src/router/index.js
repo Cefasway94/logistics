@@ -7,6 +7,7 @@ import login from '../views/Login.vue';
 
 //agent routes
 import Agenteditprofile from '../components/agents/Agenteditprofile.vue';
+import Apreviewprofile from '../components/agents/Apreviewprofile.vue'
 import Tenders from '../components/agents/Tenders.vue';
 import Abouttender from '../components/agents/Abouttender';
 import ABiding from '../components/agents/Biding.vue';
@@ -16,6 +17,7 @@ import AgentTenderprogress from '../components/agents/Tenderprogressagent.vue';
 
 //transporter routes
 import Teditprofile from '../components/atransporter/Teditprofile.vue';
+import Tpreviewprofile from '../components/atransporter/Tpreviewprofile.vue'
 import Ttenders from '../components/atransporter/Ttenders.vue'
 import Tabouttender from '../components/atransporter/Tabouttender.vue'
 import Tbiding from '../components/atransporter/Tbiding.vue'
@@ -151,6 +153,11 @@ const routes = [
     name:'AgentProfile',
     components: {Agenteditprofile}
   },
+  { // Agent priview profile
+    path:'/agent/previewprofile',
+    name:'Apreviewprofile',
+    components: {Apreviewprofile}
+  },
   { // Agent list of open tenders
     path:'/agent/tenders/:id',
     name:'AgentTenders',
@@ -219,17 +226,22 @@ const routes = [
     name:'Teditprofile',
     components: {Teditprofile}
   },
-  { // Agent list of open tenders
+  { // Transporter preview profile
+    path:'/transporter/previewprofile',
+    name:'Tpreviewprofile',
+    components: {Tpreviewprofile}
+  },
+  { // Transporter list of open tenders
     path:'/transporter/tenders/:id',
     name:'Ttenders',
     components: {Ttenders}
   },
-  { // Agent About open tender
+  { // Transporter About open tender
     path:'/transporter/Abouttender/:id',
     name:'Tabouttender',
     components:{Tabouttender}
   },
-  { // Agent Biding
+  { // Transporter Biding
     path:'/transporter/biding/:id',
     name:'Tbiding',
     components: {Tbiding}
@@ -239,18 +251,18 @@ const routes = [
     name:'Transporter',
     components:{Transporter}
   },
-  { // Agent Aboutbid
+  { // Transporter Aboutbid
     path:'/transporter/aboutbid/:id',
     name:'Taboutbid',
     components:{Taboutbid}
   },
-  { // Agent Tender progress
+  { // Transporter Tender progress
     path:'/transporter/tenderprogress/:id',
     name:'Tenderprogress',
     components:{Tenderprogress}
   },
 
-  //---------------------------------------- Admin routes
+  //---------------------------------------- Admin routes 
   { 
     path:'/admin',
     name:'AdminHome',
