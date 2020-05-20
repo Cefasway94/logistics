@@ -829,20 +829,28 @@ export default {
             },
                
            updateinsurance(){
+                this.insurance = []
                this.insurance.push(document.getElementById("insurance").files[0])
                },
 
            updatecertificate(){
+                this.certificate = []
                this.certificate.push(document.getElementById("certificate").files[0])
            },
             
             uploadother(){ 
+                this.other = []
                this.other.push(document.getElementById("other").files[0])
             },
 
             uploadprofile(){
+                this.profile_image = []
                 this.profile_image.push(document.getElementById("profile_image").files[0])
                 //this.profile_image = 'profile image'
+
+                console.log(this.profile_image);
+                
+                
             },
 
             dataobject(){
@@ -851,7 +859,7 @@ export default {
 
                     const formdata = new FormData()
 
-                    formdata.append('profile_image[0]',this.profile_image)
+                    formdata.append('profile_image[0]',this.profile_image[0])
                     formdata.append('certificate[0]', this.certificate[0])
                     formdata.append('insurance[0]', this.insurance[0])
                     formdata.append('company_name', this.name)
@@ -886,12 +894,12 @@ export default {
            console.log(this.validate());        
            
 
-        //    console.log(dataobject.get('profile_image'));                  
 
                     this.loading = true
 
                     const dataobject = this.dataobject()
 
+            console.log(dataobject.get('profile_image[0]'));                  
 
            if (this.validate()){
 

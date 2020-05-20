@@ -186,27 +186,62 @@
                         <p class="bondy-2 mb-0 ml-3 mb-1">Profile Image</p>
                         <v-card
                         flat 
-                        color="#F5FAFF" 
                         width="200" 
-                        height="150" 
-                        outlined 
-                        class="mx-3"
-                        style="bo">
-                            <v-flex class="" >
+                        height="220"  
+                        class="mx-3">
+
+                            <v-card
+                            width="200" 
+                            height="150" 
+                            outlined 
+                            class="mx-auto"
+                            >
+                        
+                            <v-flex v-if="profileimage !== '' || profileimage !== 'null'  " 
+                            class="" 
+                            style="background-color:#F5FAFF;" >
+                            <v-img 
+                            :src="profileimage"
+                            class="mb-0 pb-0" 
+                            height="150" 
+                            width="200" 
+                            >
+                            </v-img>
+                         </v-flex>
+
+                         <v-flex v-else class="" style="background-color:#F5FAFF;" >
+                            <v-img 
+                            :src="profileimage"
+                            class="mb-0 pb-0" 
+                            height="147" 
+                            width="100" 
+                            >
+                            
+                            </v-img>
+                         </v-flex>
+                        </v-card>
+
+                        <v-flex class=" mt-2" >
                                 <v-file-input
+                                dense
                                 id="profile_image"
                                 ref="other"
                                 type="file" 
                                 flat 
-                                dropzone 
                                 class="mb-0 pb-0" 
-                                height="150" 
-                                width="100" 
-                                outlined 
+                                height="" 
+                                width="100"
                                 prepend-icon=""
-                                @change="uploadprofile()" 
-                                ></v-file-input>
+                                prepend-inner-icon="cloud_download"
+                                outlined 
+                                @change="uploadprofile()">
+                                        <template #label>
+                                            <span class="text--text body-2 ml-4">select image </span>
+                                        </template>
+                                                                
+                                </v-file-input>
                             </v-flex>
+                            
                         </v-card>
                         </v-flex>
                 </v-flex> 
@@ -621,6 +656,10 @@ import { mapActions } from 'vuex';
 export default {
    data() {
        return{
+
+           // thumb nails
+           profileimage:'',
+
            //place holders
            name:'',
            faxnumber:'',
@@ -648,8 +687,10 @@ export default {
            update_success:false,
            success_alert:'',
 
-           // confirm edit profiile
+// confirm edit profiile -------------------
            confirm_edit_profile:'',
+
+            overlay: false,
 
 
            rules: {
@@ -681,6 +722,9 @@ export default {
            canceledits:false,
            edit:false,
            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
+
+           // Priview thumb nails
+           large_preview_url:'',
           
     }
    },
@@ -714,6 +758,8 @@ export default {
                 this.bname = this.LOAD_AGENT.objects.bank_name
                 this.aname = this.LOAD_AGENT.objects.account_name
                 this.acnumber = this.LOAD_AGENT.objects.account_number
+                this.profileimage = this.LOAD_AGENT.objects.profile_image[0]
+
            }else{
                 this.mail = localStorage.client
            }
@@ -727,7 +773,25 @@ export default {
         "T_GET_AGENT",
         "T_POST_PAYMENT_TERMS"
     ]),
-      
+            
+            // largePreview(src){
+
+            //     this.large_preview_url = src;
+
+            //     this.overlay = !this.overlay;
+
+            // },
+
+            // getFileExtension(url){
+
+            //     let position = url.lastIndexOf('.');
+
+            //     let extracted_string = url.slice(position + 1, url.length + 1);
+
+            //     return extracted_string;
+
+            // },
+
             validate(){
 
                 if(this.rules.required(this.name) == 'Required'){
@@ -826,19 +890,41 @@ export default {
             },
                
            updateinsurance(){
+               this.insurance = []
                this.insurance.push(document.getElementById("insurance").files[0])
+               
                },
 
            updatecertificate(){
+               this.certificate = []
                this.certificate.push(document.getElementById("certificate").files[0])
            },
             
             uploadother(){ 
+                this.other = []
                this.other.push(document.getElementById("other").files[0])
             },
 
             uploadprofile(){
-                this.profile_image.push(document.getElementById("profile_image").files[0])
+
+                // if(document.getElementById("profile_image").files[0]){
+                    
+                //     this.profile_image = []
+                //     this.profileimage = ''
+                //     this.profile_image.push(document.getElementById("profile_image").files[0])
+
+                //     FileReader.re
+
+                //     console.log(document.getElementById("profile_image").files[0]);
+                    
+
+                //     this.profileimage = document.getElementById("profile_image").files[0].name
+                                                        
+                // }
+
+
+               console.log(document.getElementById("profile_image").files[0]);
+                
                 //this.profile_image = 'profile image'
             },
 
@@ -848,7 +934,7 @@ export default {
 
                     const formdata = new FormData()
 
-                    formdata.append('profile_image[0]',this.profile_image)
+                    formdata.append('profile_image[0]',this.profile_image[0])
                     formdata.append('certificate[0]', this.certificate[0])
                     formdata.append('insurance[0]', this.insurance[0])
                     formdata.append('company_name', this.name)

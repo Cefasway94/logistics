@@ -62,7 +62,12 @@
         v-on="on"
         color="transparent hidden-sm-and-down">
         <v-avatar >
+          <img 
+          v-if="!profile_image == ''" 
+          size="35" :src="profile_image" alt=""/>
+
         <v-icon 
+        v-else
         size="35" 
         color="grey" >
         mdi-account-circle
@@ -79,7 +84,16 @@
           <v-list>
             <v-list-item>
               <v-list-item-avatar>
-                <v-img src="../assets/newasset/truck.svg"></v-img>
+                <img 
+                v-if="!profile_image == ''" 
+                size="35" :src="profile_image" alt=""/>
+
+              <v-icon 
+              v-else
+              size="35" 
+              color="grey" >
+              mdi-account-circle
+              </v-icon>
               </v-list-item-avatar>
             </v-list-item>
 
@@ -155,7 +169,12 @@
         v-on="on"
         color="transparent hidden-sm-and-down">
         <v-avatar >
+        <img 
+          v-if="!profile_image == ''" 
+          size="35" :src="profile_image" alt=""/>
+
         <v-icon 
+        v-else
         size="35" 
         color="grey" >
         mdi-account-circle
@@ -172,7 +191,16 @@
           <v-list>
             <v-list-item>
               <v-list-item-avatar>
-                <v-img src="../assets/newasset/truck.svg"></v-img>
+                <img 
+                  v-if="!profile_image == ''" 
+                  size="35" :src="profile_image" alt=""/>
+
+                <v-icon 
+                v-else
+                size="35" 
+                color="grey" >
+                mdi-account-circle
+                </v-icon>
               </v-list-item-avatar>
             </v-list-item>
 
@@ -477,6 +505,7 @@ export default {
       activator:'',
       email:'',
       name:'',
+      profile_image:'',
       messages: 0,
       color: "#394361",
       colors: ["primary", "accent", "warning lighten-2", "teal", "orange"],
@@ -503,6 +532,7 @@ export default {
     const type = localStorage.category;
 
     if (type == 3) {
+
       //this.category = 'Client'
       console.log("client");
       this.GET_CUSTOMER(localStorage.client).then(() => {
@@ -510,12 +540,19 @@ export default {
       console.log(this.LOAD_AGENT)
       this.email = this.LOAD_AGENT.objects.email 
       this.company_name = this.LOAD_AGENT.objects.company_name
+
+      if(!this.LOAD_AGENT.objects.profile_photo == ''){
+        this.profile_image = this.LOAD_AGENT.objects.profile_photo[0]
+      }
+
       this.category = 'Customer'      
       this.items = this.client();
      return this.client();
+
      })
 
     } else if (type == 2) {
+
       this.user = 1
       console.log("transporter");
       this.T_GET_AGENT(localStorage.client).then(() => {
@@ -523,12 +560,19 @@ export default {
       console.log(this.LOAD_AGENT)
       this.email = this.LOAD_AGENT.objects.email 
       this.company_name = this.LOAD_AGENT.objects.company_name
+
+      if(!this.LOAD_AGENT.objects.profile_image == ''){
+        this.profile_image = this.LOAD_AGENT.objects.profile_image[0]
+      }
+      
       this.category = 'Transporter'
       this.items = this.transporter();
       return this.transporter();
+
     })
 
     } else if (type == 1) {
+
       this.user = 1
       console.log("Agennt");
       this.GET_AGENT(localStorage.client).then(() => {
@@ -536,9 +580,15 @@ export default {
       console.log(this.LOAD_AGENT)
       this.email = this.LOAD_AGENT.objects.email 
       this.company_name = this.LOAD_AGENT.objects.company_name
+
+       if(!this.LOAD_AGENT.objects.profile_image == ''){
+        this.profile_image = this.LOAD_AGENT.objects.profile_image[0]
+      }
+
       this.category = 'Agent'     
       this.items = this.agent();
       return this.agent();
+
     })
     }
   },
