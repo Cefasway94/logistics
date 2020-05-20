@@ -1,6 +1,28 @@
 <template>
     <v-container class=" mt-12 px-5 pt-12">
 
+            <v-overlay :value="overlay">
+                <div class="large-preview">
+                        
+                        <v-row justify= "center">
+                            <v-col cols=12>
+                                <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                            </v-col>
+
+                            <v-col class="mt-0" offset="4">
+                                <v-btn
+                                    large
+                                    color="primary white--text"
+                                    @click="overlay = false"
+                                >
+                                    <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+                        
+                </div>
+            </v-overlay>
+
             <v-card flat width="1300" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                     <v-flex>
@@ -65,14 +87,26 @@
                                 <v-flex row class="mt-10 mb-4" >
                                     <v-flex column class="pl-3" v-if="tender.cargo_photo != null">
                                         <p class="primary--text body-1 mb-2"> CARGO PHOTO </p>
+
                                         <v-card flat width="200" height="155" outlined>
-                                            <v-img 
-                                                class="ma-auto" 
-                                                :src="`${tender.cargo_photo[0]}`"
-                                                height="148"
-                                                width= "198"
+                                            <div 
+                                                v-show="(photo_extension === 'jpg') || (photo_extension === 'png')" 
+                                                @click="largePreview(photo_url)"
                                             >
-                                            </v-img>
+                                                <img :src="photo_url" width=200 height=150/>
+                                            </div>
+                               
+                                            <div v-show="photo_extension === 'pdf'">
+
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="openTab(photo_url)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                </v-btn>
+
+                                            </div>
                         
                                         </v-card>
                                     </v-flex>
@@ -80,18 +114,49 @@
                                     <v-flex column >
                                         <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                                         <v-card flat width="200" height="150" outlined>
-                                            <v-img class="ma-auto">
-                                                
-                                            </v-img>
+                                            <div 
+                                                v-show="(bill_of_lading_extension === 'jpg') || (bill_of_lading_extension === 'png')" 
+                                                @click="largePreview(bill_of_lading_url)"
+                                            >
+                                                <img :src="bill_of_lading_url" width=200 height=150/>
+                                            </div>
+                               
+                                            <div v-show="bill_of_lading_extension === 'pdf'">
+
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="openTab(bill_of_lading_url)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                </v-btn>
+
+                                            </div>
                                         </v-card>
                                     </v-flex>
 
                                     <v-flex column >
                                         <p class="primary--text body-1 mb-2"> AUTHORIZATION LETTER </p>
                                             <v-card flat width="200" height="150" outlined>
-                                                <v-img class="ma-auto">
-                                                    
-                                                </v-img>
+                                                
+                                                <div 
+                                                    v-show="(letter_extension === 'jpg') || (letter_extension === 'png')" 
+                                                    @click="largePreview(letter_url)"
+                                                >
+                                                    <img :src="letter_url" width=200 height=150/>
+                                                </div>
+                               
+                                                <div v-show="letter_extension === 'pdf'">
+
+                                                    <v-btn 
+                                                        :block="true"
+                                                        icon class="mt-7" 
+                                                        @click="openTab(letter_url)"
+                                                        >
+                                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                    </v-btn>
+
+                                                </div>
                                             </v-card>
                                     </v-flex>
                                 </v-flex>
@@ -178,6 +243,16 @@ export default {
     data: ()=>({
         
         tender:[], 
+
+        photo_extension:'',
+        photo_url:'',
+        bill_of_lading_extension:'',
+        bill_of_lading_url:'',
+        letter_extension:'',
+        letter_url:'',
+
+        overlay:false,
+
     }),
     computed: {
 
@@ -190,6 +265,33 @@ export default {
 
          return ((this.tender.awarded_agent_id == null && this.tender.tender_progress == 'accepted'))
      }
+    },
+
+    methods:
+    {
+        getFileExtension(url){
+
+        let position = url.lastIndexOf('.');
+
+        let extracted_string = url.slice(position + 1, url.length + 1);
+
+        return extracted_string;
+
+        },
+
+         openTab(url){
+
+            window.open(url);
+        },
+
+
+        largePreview(src){
+
+            this.large_preview_url = src;
+
+            this.overlay = !this.overlay;
+
+        },
     },
 
      beforeRouteEnter (to, from, next) { 
@@ -209,18 +311,37 @@ export default {
               axios.get(url).then((response) => 
                             {
                                
-                                //eslint-disable-next-line no-console
-                               //console.log(response.data.objects[i].industry_name);
-                               //eslint-disable-next-line no-console
-                                     console.log(response.data.genralErrorCode);
-
+    
                                 if(response.data.genralErrorCode === 8000)
+                                {
+                                    vm.tender = response.data.objects;
+
+                                    if(vm.tender.cargo_photo !== null)
                                     {
-                                         //eslint-disable-next-line no-console
-                                     console.log("Error code 8000");
+                                        vm.photo_extension = vm.getFileExtension(vm.tender.cargo_photo[0]);
+
+                                        vm.photo_url = vm.tender.cargo_photo[0];
                                     }
 
-                               vm.tender = response.data.objects;
+                                     if(vm.tender.bill_of_lading !== null)
+                                    {
+                                        vm.bill_of_lading_extension = vm.getFileExtension(vm.tender.bill_of_lading[0]);
+
+                                        vm.bill_of_lading_url = vm.tender.bill_of_lading[0];
+                                    }
+
+                                     if(vm.tender.authorization_letter !== null)
+                                    {
+                                        vm.letter_extension = vm.getFileExtension(vm.tender.authorization_letter[0]);
+
+                                        vm.letter_url = vm.tender.authorization_letter[0];
+                                    }
+
+                                }
+
+                                 
+
+                              
 
                                 //eslint-disable-next-line no-console
                                 //console.log(vm.tender.tender_progress);
@@ -244,7 +365,41 @@ export default {
                                 //eslint-disable-next-line no-console
                                //console.log(response.data.objects[i].industry_name);
 
-                                vm.tender = response.data.objects;
+                                if(response.data.genralErrorCode === 8000)
+                                {
+                                    vm.tender = response.data.objects;
+
+                                    if(vm.tender.cargo_photo !== null)
+                                    {
+                                         //eslint-disable-next-line no-console
+                               console.log(vm.tender.cargo_photo[0]);
+
+                                        vm.photo_extension = vm.getFileExtension(vm.tender.cargo_photo[0]);
+
+                                                //eslint-disable-next-line no-console
+                               console.log("ext "+vm.photo_extension );
+
+                                        vm.photo_url = vm.tender.cargo_photo[0];
+
+                                          //eslint-disable-next-line no-console
+                               console.log("ext "+vm.photo_url );
+                                    }
+
+                                     if(vm.tender.bill_of_lading !== null)
+                                    {
+                                        vm.bill_of_lading_extension = vm.getFileExtension(vm.tender.bill_of_lading[0]);
+
+                                        vm.bill_of_lading_url = vm.tender.bill_of_lading[0];
+                                    }
+
+                                     if(vm.tender.authorization_letter !== null)
+                                    {
+                                        vm.letter_extension = vm.getFileExtension(vm.tender.authorization_letter[0]);
+
+                                        vm.letter_url = vm.tender.authorization_letter[0];
+                                    }
+
+                                }
 
                                 //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
@@ -265,9 +420,24 @@ export default {
 </script>
 
 <style scoped>
+
 .pa-auto{
     font-family :"Roboto",sans-serif !important;
 }
 
+.large-preview{
 
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
+
+ img:hover{
+     cursor: pointer;
+ }
 </style>
