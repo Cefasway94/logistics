@@ -185,22 +185,21 @@
                         <v-flex>
                         <p class="bondy-2 mb-0 ml-3 mb-1">Profile Image</p>
                         <v-card
-                        elevation="10"
-                        color="#F5FAFF" 
+                        flat 
                         width="200" 
-                        height="200" 
-                        outlined 
+                        height="220"  
                         class="mx-3">
 
                             <v-card
-                            elevation="10"
                             width="200" 
                             height="150" 
                             outlined 
                             class="mx-auto"
-                            style="bo">
+                            >
                         
-                            <v-flex v-if="profileimage !== '' || profileimage !== 'null'  " class="" style="background-color:#F5FAFF;" >
+                            <v-flex v-if="profileimage !== '' || profileimage !== 'null'  " 
+                            class="" 
+                            style="background-color:#F5FAFF;" >
                             <v-img 
                             :src="profileimage"
                             class="mb-0 pb-0" 
@@ -222,22 +221,24 @@
                          </v-flex>
                         </v-card>
 
-                        <v-flex class=" mt-1" >
+                        <v-flex class=" mt-2" >
                                 <v-file-input
                                 dense
                                 id="profile_image"
                                 ref="other"
                                 type="file" 
                                 flat 
-                                dropzone 
                                 class="mb-0 pb-0" 
-                                height="10" 
-                                width="100" 
-                                outlined 
+                                height="" 
+                                width="100"
                                 prepend-icon=""
-                                @change="uploadprofile()" 
-                                >
-                                
+                                prepend-inner-icon="cloud_download"
+                                outlined 
+                                @change="uploadprofile()">
+                                        <template #label>
+                                            <span class="text--text body-2 ml-4">select image </span>
+                                        </template>
+                                                                
                                 </v-file-input>
                             </v-flex>
                             
@@ -655,6 +656,10 @@ import { mapActions } from 'vuex';
 export default {
    data() {
        return{
+
+           // thumb nails
+           profileimage:'',
+
            //place holders
            name:'',
            faxnumber:'',
@@ -753,6 +758,8 @@ export default {
                 this.bname = this.LOAD_AGENT.objects.bank_name
                 this.aname = this.LOAD_AGENT.objects.account_name
                 this.acnumber = this.LOAD_AGENT.objects.account_number
+                this.profileimage = this.LOAD_AGENT.objects.profile_image[0]
+
            }else{
                 this.mail = localStorage.client
            }
@@ -899,8 +906,25 @@ export default {
             },
 
             uploadprofile(){
-                this.profile_image = []
-                this.profile_image.push(document.getElementById("profile_image").files[0])
+
+                // if(document.getElementById("profile_image").files[0]){
+                    
+                //     this.profile_image = []
+                //     this.profileimage = ''
+                //     this.profile_image.push(document.getElementById("profile_image").files[0])
+
+                //     FileReader.re
+
+                //     console.log(document.getElementById("profile_image").files[0]);
+                    
+
+                //     this.profileimage = document.getElementById("profile_image").files[0].name
+                                                        
+                // }
+
+
+               console.log(document.getElementById("profile_image").files[0]);
+                
                 //this.profile_image = 'profile image'
             },
 
