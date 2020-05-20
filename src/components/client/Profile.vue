@@ -539,7 +539,6 @@ export default {
 
             return extracted_string;
 
-
         },
 
         getFileName(url){
@@ -698,64 +697,62 @@ export default {
 
                                     if(vm.customer_type === "Personal"){
 
-                                         if(vm.customer.copy_of_identity_card !== null || vm.customer.copy_of_identity_card !== "null")
+                                         if(vm.customer.profile_photo !== null)
+                                         {
+                                             vm.profile_photo_extension = vm.getFileExtension(vm.customer.profile_photo[0]);
+                                             vm.profile_photo_url = vm.customer.profile_photo[0];
+                                         }
+
+                                         if(vm.customer.copy_of_identity_card !== null)
                                          {
                                              vm.id_extension = vm.getFileExtension(vm.customer.copy_of_identity_card[0]);
                                              vm.id_url = vm.customer.copy_of_identity_card[0];
                                          }
                                             
 
-                                         if(vm.customer.copy_of_tax_identification_number_certificate !== null ||  vm.customer.copy_of_tax_identification_number_certificate !== "null")
+                                         if(vm.customer.copy_of_tax_identification_number_certificate !== null)
                                          {
                                              vm.tin_extension = vm.getFileExtension(vm.customer.copy_of_tax_identification_number_certificate[0]);
                                              vm.tin_url = vm.customer.copy_of_tax_identification_number_certificate[0];
                                          }
                                             
-
-                                         if(vm.customer.profile_photo !== null ||  vm.customer.profile_photo !== "null")
-                                         {
-                                             vm.profile_photo_extension = vm.getFileExtension(vm.customer.profile_photo[0]);
-                                             vm.profile_photo_url = vm.customer.profile_photo[0];
-                                         }
-                                             
-
                                     } 
                                     else if(vm.customer_type === "Company"){
 
-                                        if(vm.customer.certificate_of_registration !== null || vm.customer.certificate_of_registration !== "null")
+                                        if(vm.customer.certificate_of_registration !== null)
                                         {
                                             vm.copy_of_registration_extension = vm.getFileExtension(vm.customer.certificate_of_registration[0]);
                                             vm.copy_of_registration_url = vm.customer.certificate_of_registration[0];
                                         }
                                             
-                                         if(vm.customer.tax_payer_identification_document !== null ||  vm.customer.tax_payer_identification_document !== "null")
+                                         if(vm.customer.tax_payer_identification_document !== null)
                                          {
                                              vm.tax_payer_extension = vm.getFileExtension(vm.customer.tax_payer_identification_document[0]);
                                              vm.tax_payer_url = vm.customer.tax_payer_identification_document[0];
                                          }
                                             
-                                         if(vm.customer.vat_certificate !== null ||  vm.customer.vat_certificate !== "null")
+                                         if(vm.customer.vat_certificate !== null)
                                          {
                                              vm.vat_extension = vm.getFileExtension(vm.customer.vat_certificate[0]);
                                              vm.vat_url = vm.customer.vat_certificate[0];
                                          }
                                              
                                         
-                                        if(vm.customer.business_licence_document !== null || vm.customer.business_licence_document !== "null")
+                                        if(vm.customer.business_licence_document !== null)
                                         {
                                             vm.licence_extension = vm.getFileExtension(vm.customer.business_licence_document[0]);
 
                                             vm.licence_url = vm.customer.business_licence_document[0];
                                         }
                                             
-                                        if(vm.customer.company_logo !== null || vm.customer.company_logo !== "null")
+                                        if(vm.customer.company_logo !== null)
                                         {
                                             vm.logo_extension = vm.getFileExtension(vm.customer.company_logo[0]);
 
                                             vm.logo_url = vm.customer.business_licence_document[0];
                                         }
 
-                                         if(vm.customer.three_months_bank_statement !== null ||  vm.customer.three_months_bank_statement !== "null")
+                                         if(vm.customer.three_months_bank_statement !== null)
                                          {
                                              vm.bank_statement_url = vm.customer.three_months_bank_statement[0];
                                              vm.bank_statement_extension = vm.getFileExtension(vm.customer.three_months_bank_statement[0]);
