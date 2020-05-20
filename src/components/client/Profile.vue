@@ -168,7 +168,7 @@
                             <v-col>
 
                                     <div 
-                                        v-show="(profile_photo_extension === 'jpg') || (profile_photo_extension === 'png')"
+                                        v-show="(profile_photo_extension === 'jpg') || (profile_photo_extension === 'jpeg') || (profile_photo_extension === 'png')"
                                         @click="largePreview(profile_photo_url)"
                                     >
                                         <img :src="profile_photo_url" width=200 height=150/>
@@ -196,7 +196,7 @@
                         <v-row>
                             <v-col>
                                 <div 
-                                    v-show="(id_extension === 'jpg') || (id_extension === 'png')" 
+                                    v-show="(id_extension === 'jpg') || (id_extension === 'jpeg') || (id_extension === 'png')" 
                                     @click="largePreview(id_url)"
                                 >
                                     <img :src="id_url" width=200 height=150/>
@@ -225,7 +225,7 @@
                         <v-row>
                             <v-col>
                                 <div 
-                                    v-show="(tin_extension === 'jpg') || (tin_extension === 'png')" 
+                                    v-show="(tin_extension === 'jpg') || (tin_extension === 'jpeg')|| (tin_extension === 'png')" 
                                     @click="largePreview(tin_url)"
                                 >
                                     <img :src="tin_url" width=200 height=150/>
@@ -258,7 +258,7 @@
                         <v-row>
                             <v-col>
                                 <div 
-                                    v-show="(copy_of_registration_extension === 'jpg') || (copy_of_registration_extension === 'png')" 
+                                    v-show="(copy_of_registration_extension === 'jpg') || (copy_of_registration_extension === 'jpeg')|| (copy_of_registration_extension === 'png')" 
                                     @click="largePreview(copy_of_registration_url)"
                                 >
                                     <img :src="copy_of_registration_url" width=200 height=150/>
@@ -287,7 +287,7 @@
                         <v-row>
                             <v-col >
                                 <div 
-                                    v-show="(tax_payer_extension === 'jpg') || (tax_payer_extension === 'png')" 
+                                    v-show="(tax_payer_extension === 'jpg') || (tax_payer_extension === 'jpeg') || (tax_payer_extension === 'png')" 
                                     @click="largePreview(tax_payer_url)"
                                 >
                                     <img :src="tax_payer_url" width=200 height=150/>
@@ -318,7 +318,7 @@
                         <v-row>
                             <v-col >
                                 <div 
-                                    v-show="(licence_extension === 'jpg') || (licence_extension === 'png')" 
+                                    v-show="(licence_extension === 'jpg') || (licence_extension === 'jpeg') || (licence_extension === 'png')" 
                                     @click="largePreview(licence_url)"
                                 >
                                     <img :src="licence_url" width=200 height=150/>
@@ -351,7 +351,7 @@
                         <v-row>
                             <v-col >
                                 <div 
-                                    v-show="(vat_extension === 'jpg') || (vat_extension === 'png')" 
+                                    v-show="(vat_extension === 'jpg') || (vat_extension === 'jpeg') || (vat_extension === 'png')" 
                                     @click="largePreview(vat_url)"
                                 >
                                     <img :src="vat_url" width=200 height=150/>
@@ -378,7 +378,7 @@
                         <v-row>
                             <v-col >
                                 <div 
-                                    v-show="(logo_extension === 'jpg') || (logo_extension === 'png')" 
+                                    v-show="(logo_extension === 'jpg') || (logo_extension === 'jpeg') || (logo_extension === 'png')" 
                                     @click="largePreview(logo_url)"
                                 >
                                     <img :src="vat_url" width=200 height=150/>
@@ -407,7 +407,7 @@
                         <v-row>
                             <v-col >
                                 <div 
-                                    v-show="(bank_statement_extension === 'jpg') || (bank_statement_extension === 'png')" 
+                                    v-show="(bank_statement_extension === 'jpg') || (bank_statement_extension === 'jpeg') || (bank_statement_extension === 'png')" 
                                     @click="largePreview(bank_statement_url)"
                                 >
                                     <img :src="bank_statement_url" width=200 height=150/>
@@ -551,7 +551,7 @@ export default {
 
         },
 
-        forceFileDownload(response){
+        /*forceFileDownload(response){
 
             let filename = this.getFileName(this.url);
 
@@ -660,7 +660,7 @@ export default {
         }).then((response) => {
             this.forceFileDownload(response);
         });
-    },
+    },*/
 },
 
     beforeRouteEnter(to,from,next){

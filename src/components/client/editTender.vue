@@ -1,6 +1,29 @@
 <template>
     <v-container class="pa-3 mt-10 mx-auto">
 
+        <v-overlay :value="overlay">
+
+            <div class="large-preview">
+
+                <v-row justify= "center">
+                    <v-col cols=12>
+                        <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                    </v-col>
+
+                    <v-col class="mt-0" offset="4">
+                        <v-btn
+                            large
+                            color="primary white--text"
+                            @click="overlay = false"
+                        >
+                            <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                        </v-btn>
+                    </v-col>
+                </v-row>
+
+            </div>
+        </v-overlay>
+
         <v-layout class="pa-3 mt-10">
             <v-card row flat class="mx-auto" width="1300" color="#F5FAFF" >
                 <v-row>
@@ -171,6 +194,113 @@
                                 </v-textarea>
                             </v-col>
                         </v-row>
+
+                        <v-row>
+                            <v-col cols=12 md=4>
+                                <p class="primary--text body-2 text-uppercase mb-0">CARGO PHOTO </p>
+                                <v-card flat width="250" height="270" outlined >
+                                    <v-file-input 
+
+                                        :clearable="false"
+                                        placeholder="Choose a file"
+                                        id="photo"
+                                        @change="photoUpdated()"
+                                        prepend-icon ="mdi-cloud-upload"
+                                    
+                                    
+                                    >
+                                    </v-file-input>
+
+                                    <div v-show="photo_extension === 'jpg' || photo_extension === 'jpeg' || photo_extension === 'png'">
+                                        <v-card height="200" width="250" outlined @click="handleClick('photo',photo_url)">
+                                            <img  id="photo_thumb" :src="photo_url" class="preview">
+                                        </v-card>
+                                    </div>
+
+                                    <div v-show="photo_extension === 'pdf'">
+
+                                        <v-btn 
+                                            :block="true"
+                                            icon class="mt-7" 
+                                            @click="openTab(photo_url)"
+                                            >
+                                            CLICK TO PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        </v-btn>
+
+                                    </div>
+                                </v-card>
+                            </v-col>
+
+                            <v-col cols=12 md=4>
+                                <p class="primary--text body-2 text-uppercase mb-0">BILL OF LADING </p>
+                                <v-card flat width="250" height="270" outlined >
+                                    <v-file-input 
+
+                                        :clearable="false"
+                                        placeholder="Choose a file"
+                                        id="bill"
+                                        @change="billOfLadingUpdated()"
+                                        prepend-icon ="mdi-cloud-upload"
+                                    
+                                    
+                                    >
+                                    </v-file-input>
+
+                                    <div v-show="bill_of_lading_extension === 'jpg' || bill_of_lading_extension === 'jpeg' || bill_of_lading_extension === 'png'">
+                                        <v-card height="200" width="250" outlined @click="handleClick('bill',bill_of_lading_url)">
+                                            <img  id="bill_thumb" :src="bill_of_lading_url" class="preview">
+                                        </v-card>
+                                    </div>
+
+                                    <div v-show="bill_of_lading_extension === 'pdf'">
+
+                                        <v-btn 
+                                            :block="true"
+                                            icon class="mt-7" 
+                                            @click="openTab(bill_of_lading_url)"
+                                            >
+                                            CLICK TO PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        </v-btn>
+
+                                    </div>
+                                </v-card>
+                            </v-col>
+
+                            <v-col cols=12 md=4>
+                                <p class="primary--text body-2 text-uppercase mb-0">AUTHORIZATION LETTER </p>
+                                <v-card flat width="250" height="270" outlined >
+                                    <v-file-input 
+
+                                        :clearable="false"
+                                        placeholder="Choose a file"
+                                        id="letter"
+                                        @change="letterUpdated()"
+                                        prepend-icon ="mdi-cloud-upload"
+                                    
+                                    
+                                    >
+                                    </v-file-input>
+
+                                    <div v-show="letter_extension === 'jpg' || letter_extension === 'jpeg' || letter_extension === 'png'">
+                                        <v-card height="200" width="250" outlined @click="handleClick('letter',letter_url)">
+                                            <img  id="letter_thumb" :src="letter_url" class="preview">
+                                        </v-card>
+                                    </div>
+
+                                    <div v-show="letter_extension === 'pdf'">
+
+                                        <v-btn 
+                                            :block="true"
+                                            icon class="mt-7" 
+                                            @click="openTab(letter_url)"
+                                            >
+                                            CLICK TO PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        </v-btn>
+
+                                    </div>
+                                </v-card>
+                            </v-col>
+                        </v-row>
                         
                     </v-container>
                     </v-form>
@@ -299,6 +429,21 @@
 
             <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row class=" pa-3">
+                    <v-col cols="6"
+                        class="fill-height"
+                        align-content="center"
+                        justify="center"
+                        v-show="loading"
+                    >
+                        <v-progress-linear
+                            color="deep-purple accent-4"
+                            indeterminate
+                            rounded
+                            height="6"
+                        >
+                        </v-progress-linear>
+                    </v-col>
+
                     <v-spacer></v-spacer>
                     <v-btn outlined color="primary" class="mx-4" router to="/client">Cancel</v-btn>
                     <v-btn color="primary white--text"  @click="editTender($event)" :disabled="!isValid()">SAVE</v-btn>
@@ -325,6 +470,22 @@ export default {
         customer:[],
 
         time: new Date().toISOString().substr(0, 10),
+
+        photo_extension:'',
+        photo_url:'',
+        bill_of_lading_extension:'',
+        bill_of_lading_url:'',
+        letter_extension:'',
+        letter_url:'',
+
+        overlay:false,
+        loading: false,
+
+        photo:[],
+        bill_of_lading:[],
+        letter:[],
+
+        large_preview_url:'',
        
     }),
 
@@ -338,6 +499,60 @@ export default {
 
         setCustomerDetails(){
             //this.tender = this.getTender;
+        },
+
+        openTab(url){
+
+            window.open(url);
+        },
+
+        largePreview(src){
+
+            this.large_preview_url = src;
+
+            this.overlay = !this.overlay;
+
+        },
+
+        getFileExtension(url){
+
+            let position = url.lastIndexOf('.');
+
+            let extracted_string = url.slice(position + 1, url.length + 1);
+
+            return extracted_string;
+
+        },
+
+        showLargeThumbnail(id){
+
+            this.overlay = !this.overlay
+
+            var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+               
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+            reader.readAsDataURL(document.getElementById(id).files[0]);
+        },
+
+        handleClick(id,src){
+
+            if(document.getElementById(id).files[0]){
+
+                this.showLargeThumbnail(id);
+
+            }else {
+                
+                this.largePreview(src);
+            }
         },
 
         //allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
@@ -365,28 +580,179 @@ export default {
                     return true;
             }     
         },
+        
+        letterUpdated()
+        {
+            if(document.getElementById("letter").files[0]){
+
+
+                this.letter = [];
+
+                this.letter.push(document.getElementById("letter").files[0]);
+
+                let extension = this.getFileExtension(document.getElementById("letter").files[0].name);
+
+                if(extension === 'jpg' || extension === 'jpeg' || extension === 'png')
+                {
+                    this.letter_extension = extension;
+
+                    var reader = new FileReader();
+
+                    reader.onload = function(){
+
+                        var dataURL = reader.result;
+
+                        var output = document.getElementById('letter_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
+                    
+                    }
+
+                    reader.readAsDataURL(document.getElementById("letter").files[0]);
+                } 
+                else
+                {
+                    this.letter_extension = '';
+                }
+   
+            }
+        }, 
+
+        photoUpdated()
+        {
+            if(document.getElementById("photo").files[0]){
+
+
+                this.photo = [];
+
+                this.photo.push(document.getElementById("photo").files[0]);
+
+                let extension = this.getFileExtension(document.getElementById("photo").files[0].name);
+
+                if(extension === 'jpg' || extension === 'jpeg' || extension === 'png')
+                {
+                    this.photo_extension = extension;
+
+                    var reader = new FileReader();
+
+                    reader.onload = function(){
+
+                        var dataURL = reader.result;
+
+                        var output = document.getElementById('photo_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
+                    
+                    }
+
+                    reader.readAsDataURL(document.getElementById("photo").files[0]);
+
+                } 
+                else
+                {
+                    this.photo_extension = '';
+                }
+   
+            }
+        },
+
+        billOfLadingUpdated()
+        {
+            if(document.getElementById("bill").files[0]){
+
+
+                this.bill_of_lading = [];
+
+                this.bill_of_lading.push(document.getElementById("bill").files[0]);
+
+                let extension = this.getFileExtension(document.getElementById("bill").files[0].name);
+
+                if(extension === 'jpg' || extension === 'jpeg' || extension === 'png')
+                {
+                    this.bill_of_lading_extension = extension;
+
+                    var reader = new FileReader();
+
+                    reader.onload = function(){
+
+                        var dataURL = reader.result;
+
+                        var output = document.getElementById('bill_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
+                    
+                    }
+
+                    reader.readAsDataURL(document.getElementById("bill").files[0]);
+
+                } 
+                else
+                {
+                    this.bill_of_lading_extension = '';
+                }
+   
+            }
+        },
+
+        createData(tender_type){
+
+            let formData = new FormData();
+            
+            if(tender_type === "Transporting")
+            {
+                formData.append('origin',this.tender.origin);
+                formData.append('destination',this.tender.destination);
+            }
+
+            formData.append('cargo_details',this.tender.cargo_details);
+            formData.append('currency',this.tender.currency);
+            formData.append('cargo_size',this.tender.cargo_size);
+            formData.append('description',this.tender.description);
+            formData.append('customer_offer_amount',this.tender.customer_offer_amount);
+            formData.append('customer_terms_and_conditions',this.tender.customer_terms_and_conditions);
+            formData.append('customer_delivery_timeline',this.tender.customer_delivery_timeline);
+            formData.append('customer_id',this.customer.id);
+
+            if(this.photo.length > 0)
+                formData.append('cargo_photo[0]',this.photo[0]);
+                
+            if(this.letter.length > 0)
+                formData.append('bill_of_lading[0]',this.letter[0]);
+
+            if(this.bill_of_lading.length > 0)
+                formData.append('authorization_letter[0]',this.bill_of_lading[0]);
+
+           return formData;
+        },
 
         editTender(event){
+
+            this.loading = true;
 
             if(event)
                 event.preventDefault();
 
-            
-            if(this.$route.params.tender_type == "Transporting") {
+            if(this.$route.params.tender_type === "Transporting") {
 
-                let formData = new FormData();
-
-                formData.append('cargo_details',this.tender.cargo_details);
-                formData.append('currency',this.tender.currency);
-                formData.append('cargo_size',this.tender.cargo_size);
-                formData.append('description',this.tender.description);
-                formData.append('customer_offer_amount',this.tender.customer_offer_amount);
-                formData.append('customer_terms_and_conditions',this.tender.customer_terms_and_conditions);
-                formData.append('customer_delivery_timeline',this.tender.customer_delivery_timeline);
-                formData.append('origin',this.tender.origin);
-                formData.append('destination',this.tender.destination);
-                formData.append('customer_id',this.customer.id);
-
+                let formData = this.createData("Transporting")
 
                 axios.post(`http://207.180.215.239:9000/api/v1/tenders/${this.tender.id}`,formData,
                         {
@@ -405,29 +771,33 @@ export default {
 
                         //this.$router.push({path:'/client',query:{alert:response.data.message}});
 
-                        this.setAlert(response.data.message);
+                        if(response.data.genralErrorCode === 8000)
+                        {
+                            this.setAlert(response.data.message);
 
-                        this.$router.push('/client');
+                            this.$router.push('/client');
+
+                        } else if(response.data.genralErrorCode === 8004){
+
+                            //eslint-disable-next-line no-console
+                            console.log("operation failed");
+
+                            this.loading = false;
+                        }
+
+                      
 
                     }).catch(()=>{
 
                         //eslint-disable-next-line no-console
                         console.log("Error occured");
+
+                        this.loading = false;
                     });
 
             } else if(this.$route.params.tender_type == "Clearing"){
 
-                let formData = new FormData();
-
-                formData.append('cargo_details',this.tender.cargo_details);
-                formData.append('currency',this.tender.currency);
-                formData.append('cargo_size',this.tender.cargo_size);
-                formData.append('description',this.tender.description);
-                formData.append('customer_offer_amount',this.tender.customer_offer_amount);
-                formData.append('customer_terms_and_conditions',this.tender.customer_terms_and_conditions);
-                formData.append('customer_delivery_timeline',this.tender.customer_delivery_timeline);
-                formData.append('customer_id',this.customer.id);
-
+                let formData = this.createData("Clearing");
 
                 axios.post(`http://207.180.215.239:8000/api/v1/tenders/${this.tender.id}`,
 
@@ -449,14 +819,26 @@ export default {
 
                         //this.$router.push({path:'/client',query:{alert:response.data.message}});
 
-                        this.setAlert(response.data.message);
+                        if(response.data.genralErrorCode === 8000)
+                        {
+                            this.setAlert(response.data.message);
 
-                        this.$router.push('/client');
+                            this.$router.push('/client');
+                            
+                        } else if(response.data.genralErrorCode === 8004){
+
+                            //eslint-disable-next-line no-console
+                            console.log("operation failed");
+
+                             this.loading = false;
+                        }
 
                     }).catch(()=>{
 
                         //eslint-disable-next-line no-console
                         console.log("Error occured");
+
+                         this.loading = false;
                     });
             }
             
@@ -513,7 +895,33 @@ export default {
                         //this.setAlert(response.data.message);
 
                         //this.$router.push('/client');
-                        vm.tender = response.data.objects;
+                        //vm.tender = response.data.objects;
+                        if(response.data.genralErrorCode === 8000)
+                        {
+                            vm.tender = response.data.objects;
+
+                            if(vm.tender.cargo_photo !== null)
+                            {
+                                vm.photo_extension = vm.getFileExtension(vm.tender.cargo_photo[0]);
+
+                                vm.photo_url = vm.tender.cargo_photo[0];
+                            }
+
+                                if(vm.tender.bill_of_lading !== null)
+                            {
+                                vm.bill_of_lading_extension = vm.getFileExtension(vm.tender.bill_of_lading[0]);
+
+                                vm.bill_of_lading_url = vm.tender.bill_of_lading[0];
+                            }
+
+                                if(vm.tender.authorization_letter !== null)
+                            {
+                                vm.letter_extension = vm.getFileExtension(vm.tender.authorization_letter[0]);
+
+                                vm.letter_url = vm.tender.authorization_letter[0];
+                            }
+
+                        }
 
                      
 
@@ -542,9 +950,34 @@ export default {
                         //this.$router.push('/client');
 
                          //eslint-disable-next-line no-console
-                        console.log(response.data.objects);
+                        //console.log(response.data.objects);
 
-                         vm.tender = response.data.objects;
+                        if(response.data.genralErrorCode === 8000)
+                        {
+                            vm.tender = response.data.objects;
+
+                            if(vm.tender.cargo_photo !== null)
+                            {
+                                vm.photo_extension = vm.getFileExtension(vm.tender.cargo_photo[0]);
+
+                                vm.photo_url = vm.tender.cargo_photo[0];
+                            }
+
+                                if(vm.tender.bill_of_lading !== null)
+                            {
+                                vm.bill_of_lading_extension = vm.getFileExtension(vm.tender.bill_of_lading[0]);
+
+                                vm.bill_of_lading_url = vm.tender.bill_of_lading[0];
+                            }
+
+                                if(vm.tender.authorization_letter !== null)
+                            {
+                                vm.letter_extension = vm.getFileExtension(vm.tender.authorization_letter[0]);
+
+                                vm.letter_url = vm.tender.authorization_letter[0];
+                            }
+
+                        }
 
                          
 
@@ -561,3 +994,29 @@ export default {
 
 }
 </script>
+<style scoped>
+
+ img.preview{
+     width: 248px;
+     height: 200px
+ }
+
+ .large-preview{
+
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
+
+ .progress { z-index: 1;}
+
+ img.preview:hover{
+     cursor: pointer;
+ }
+
+</style>

@@ -90,7 +90,7 @@
 
                                         <v-card flat width="200" height="155" outlined>
                                             <div 
-                                                v-show="(photo_extension === 'jpg') || (photo_extension === 'png')" 
+                                                v-show="(photo_extension === 'jpg') || (photo_extension === 'jpeg') || (photo_extension === 'png')" 
                                                 @click="largePreview(photo_url)"
                                             >
                                                 <img :src="photo_url" width=200 height=150/>
@@ -115,7 +115,7 @@
                                         <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                                         <v-card flat width="200" height="150" outlined>
                                             <div 
-                                                v-show="(bill_of_lading_extension === 'jpg') || (bill_of_lading_extension === 'png')" 
+                                                v-show="(bill_of_lading_extension === 'jpg') || (bill_of_lading_extension === 'jpeg') || (bill_of_lading_extension === 'png')" 
                                                 @click="largePreview(bill_of_lading_url)"
                                             >
                                                 <img :src="bill_of_lading_url" width=200 height=150/>
@@ -140,7 +140,7 @@
                                             <v-card flat width="200" height="150" outlined>
                                                 
                                                 <div 
-                                                    v-show="(letter_extension === 'jpg') || (letter_extension === 'png')" 
+                                                    v-show="(letter_extension === 'jpg') || (letter_extension === 'jpeg') || (letter_extension === 'png')" 
                                                     @click="largePreview(letter_url)"
                                                 >
                                                     <img :src="letter_url" width=200 height=150/>
@@ -252,6 +252,7 @@ export default {
         letter_url:'',
 
         overlay:false,
+        large_preview_url:''
 
     }),
     computed: {
@@ -371,19 +372,13 @@ export default {
 
                                     if(vm.tender.cargo_photo !== null)
                                     {
-                                         //eslint-disable-next-line no-console
-                               console.log(vm.tender.cargo_photo[0]);
-
+                              
                                         vm.photo_extension = vm.getFileExtension(vm.tender.cargo_photo[0]);
-
-                                                //eslint-disable-next-line no-console
-                               console.log("ext "+vm.photo_extension );
 
                                         vm.photo_url = vm.tender.cargo_photo[0];
 
-                                          //eslint-disable-next-line no-console
-                               console.log("ext "+vm.photo_url );
-                                    }
+                                    }           //eslint-disable-next-line no-console
+                               console.log(vm.tender.cargo_photo[0]);
 
                                      if(vm.tender.bill_of_lading !== null)
                                     {
