@@ -377,14 +377,14 @@ export default {
 
                                         vm.photo_url = vm.tender.cargo_photo[0];
 
-                                    }           //eslint-disable-next-line no-console
-                               console.log(vm.tender.cargo_photo[0]);
-
+                                    }          
+                                 
                                      if(vm.tender.bill_of_lading !== null)
                                     {
                                         vm.bill_of_lading_extension = vm.getFileExtension(vm.tender.bill_of_lading[0]);
 
                                         vm.bill_of_lading_url = vm.tender.bill_of_lading[0];
+                                      
                                     }
 
                                      if(vm.tender.authorization_letter !== null)

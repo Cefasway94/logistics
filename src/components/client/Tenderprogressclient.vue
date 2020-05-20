@@ -54,8 +54,8 @@
                 color="#4169E1">
                 
                 <v-tab class="text-capitalize body-1">Tender progress</v-tab>
-                <v-tab class="text-capitalize body-1">Negotiation history</v-tab>
-                <v-tab class="text-capitalize body-1" >Despute</v-tab>
+                <!--<v-tab class="text-capitalize body-1">Negotiation history</v-tab>
+                <v-tab class="text-capitalize body-1" >Despute</v-tab>-->
 
                 
                 
@@ -63,16 +63,16 @@
 
                     <v-divider></v-divider>
 
-                    <v-card row flat width="1300" class="mt-7 mx-auto" color="#F5FAFF">
+                    <!--<v-card row flat width="1300" class="mt-7 mx-auto" color="#F5FAFF">
                         <v-flex row class="">
                             <v-icon color="grey" large class="mb-4 ml-3 mr-5">timeline</v-icon>
                                 <p class="grey--text headline ">Timeline</p>
                         </v-flex>
-                    </v-card>
+                    </v-card>-->
 
                     <v-card width="1300" class="mx-auto mb-10 d-flex pa-3" color="">
                         <v-col>
-                            <v-flex row class="px-3">
+                            <!--<v-flex row class="px-3">
                                 <v-col class="">
                                     <v-card flat  width="1200" class="px-5 py-3" >
                                         <v-flex column>
@@ -88,7 +88,7 @@
                                         </v-flex>
                                     </v-card>
                                 </v-col>            
-                            </v-flex>
+                            </v-flex>-->
 
                             <v-flex row class="mt-6" v-show="clearing">
 
@@ -647,54 +647,53 @@
                         </v-col>                    
                     </v-card>
 
-            <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
-                <v-row>
-                <v-icon color="grey" class="mb-4 ml-3 ">message</v-icon>
-                <p class="grey--text title ml-6">Comment and updates</p>
-                </v-row>
-                <v-card width="1300" class="mx-auto pa-3">
-                    <v-row class="pa-3">
-                        <v-col class="">
-                        <p class=" body-2 text-uppercase" style="color:#4169E1;"> {{ tender.awarded_agent_id}} commented</p>
-                        <v-card flat height="100" width="1200" class="px-5 py-3" outlined>
-                            <p class=" body-2 ">
-                              
-                               {{ this.comments}}
-                            </p>
+                    <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
+                        <v-row>
+                        <v-icon color="grey" class="mb-4 ml-3 ">message</v-icon>
+                        <p class="grey--text title ml-6">Comment and updates</p>
+                        </v-row>
+                        <v-card width="1300" class="mx-auto pa-3">
+                            <v-row class="pa-3">
+                                <v-col class="">
+                                <p class=" body-2 text-uppercase" style="color:#4169E1;"> {{ tender.awarded_agent_id}} commented</p>
+                                <v-card flat height="100" width="1200" class="px-5 py-3" outlined>
+                                    <p class=" body-2 ">
+                                    
+                                    {{ this.comments}}
+                                    </p>
+                                </v-card>
+                                </v-col>  
+                                            
+                            </v-row>
                         </v-card>
-                        </v-col>  
-                                      
-                    </v-row>
-                </v-card>
-            </v-card>
+                    </v-card>
 
-            <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
-                <v-row>
-                <v-icon color="grey" class="mb-4 ml-3 ">attachments</v-icon>
-                <p class="grey--text title">Attachments</p>
-                </v-row>
-                <v-card width="1300" class="mx-auto pa-3">
-                    <v-row class="pa-3">
-                        <v-col class="">
-                        <p class=" body-2 text-uppercase" style="color:#4169E1;"> BILL OF LADING </p>
-                        <v-card flat width="200" height="150" outlined>
-                            <v-img class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
+                    <!--<v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
+                        <v-row>
+                        <v-icon color="grey" class="mb-4 ml-3 ">attachments</v-icon>
+                        <p class="grey--text title">Attachments</p>
+                        </v-row>
+                        <v-card width="1300" class="mx-auto pa-3">
+                            <v-row class="pa-3">
+                                <v-col class="">
+                                <p class=" body-2 text-uppercase" style="color:#4169E1;"> BILL OF LADING </p>
+                                <v-card flat width="200" height="150" outlined>
+                                    <v-img class="ma-auto">
+                                        <v-icon x-large class="mx-12 mt-12">
+                                            cloud_upload
+                                        </v-icon>
+                                    </v-img>
+                                </v-card>
+                                </v-col>  
+                                            
+                            </v-row>
                         </v-card>
-                        </v-col>  
-                                      
-                    </v-row>
-                </v-card>
-            </v-card>
+                    </v-card>-->
 
             
                 </v-tab-item>
             </v-tabs>
-            </v-card>
-
+        </v-card>
     </v-container>
 </template>
 
