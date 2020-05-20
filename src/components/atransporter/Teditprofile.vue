@@ -34,15 +34,7 @@
                 </v-flex>
                 </v-flex>
                 <v-flex  xsm3 sm3 md3 lg3>
-                <!-- <v-btn  
-                width="200" 
-                large="" 
-                elevation="flat" 
-                color="primary" 
-                class="mx-5 mt-2"
-                @click="editprofile()">
-                edit profile
-                </v-btn> -->
+                
                 </v-flex>
                 </v-flex>
                 </v-alert>    
@@ -52,16 +44,17 @@
                 
                   <v-dialog
                     v-model="field_required"
-                    max-width="350"
+                    max-width="400"
                     color="#f5faff"
                     transition="scale-transition"
                     :hide-overlay="true">
                     <v-card 
-                    height="80" 
+                    height="105" 
                     color="#f64f51" 
                     class="pt-2">
     
                     <v-alert  
+                    prominent=""
                     height="" 
                     type="error">
                       <p class="font-weight-strong mb-0">{{field}}</p>
@@ -71,12 +64,47 @@
                   </v-dialog>
 
 
+                    <v-dialog
+                    v-model="confirm_edit_profile"
+                    max-width="450"
+                    color="#2296f3"
+                    transition="scale-transition"
+                    :hide-overlay="true">
+                        <v-card 
+                    height="100" 
+                    color="#2296f3" 
+                    clas>
+                  <v-alert
+                  prominent
+                    type="info"
+                    >
+                    <v-row align="center">
+                        <v-col class="grow">
+                            Confirm profile update
+                        </v-col>
+                        <v-col class="shrink">
+                        <v-btn 
+                        outlined
+                        small
+                         @click="savechanges()">
+                            Confirm update
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    </v-alert>
+                        </v-card>
+                    </v-dialog>
+
                  
                     <v-dialog
                     v-model="update_success"
-                    max-width="350"
+                    max-width="430"
                     color="#f5faff"
                     transition="scale-transition">
+                        <v-card 
+                    height="100" 
+                    color="#4bae50" 
+                    clas>
                   <v-alert
                     prominent
                     type="success"
@@ -86,62 +114,21 @@
                             {{success_alert}}
                         </v-col>
                         <v-col class="shrink">
-                        <v-btn color="primary" to="/transporter/previewprofile">
-                            Take action
+                        <v-btn 
+                        color="green"
+                        small
+                        flat
+                        elevation="flat"
+                        @click="previewprofile()">
+                            profile
                             </v-btn>
                         </v-col>
                     </v-row>
                     </v-alert>
+                        </v-card>
                     </v-dialog>
+                               
                 
-
-                  <v-dialog
-                    v-model="field_required"
-                    max-width="350"
-                    color="#f5faff"
-                    transition="scale-transition"
-                    :hide-overlay="true">
-                    <v-card 
-                    height="80" 
-                    color="#f64f51" 
-                    class="pt-2">
-    
-                    <v-alert  
-                    height="" 
-                    type="error">
-                      <p class="font-weight-strong mb-0">{{field}}</p>
-                    </v-alert>
-
-                    </v-card>
-                  </v-dialog>
-                
-                
-
-
-                <!-- <v-alert
-                text
-                outlined
-                class=""
-                :value="verification"
-                color="green"
-                type="error"
-                row
-                clearable
-                >
-                <v-flex row>
-                <v-flex xms11 sm11 md11 lg11 class="pl-3">
-                <p class="text--text title mb-0">
-                Your account has been registered, please stay put for it
-                to be verified
-                </p>
-                </v-flex>
-                </v-flex>
-                </v-alert> -->
-                                
-                    <!-- alert ----------------------------- -->
-
-
-
         <v-card flat width="900" class="mt-12 mx-auto mb-7" color="#F5FAFF">
             <v-flex row class="px-3 ">
                 <h1 class=" font-weight-regular headline mb-0 ">Transporter Profile info</h1>
@@ -179,7 +166,6 @@
         </v-card>
 
         <v-card 
-        :disabled="edit" 
         width="900" 
         class="mt-5 mx-auto mb-5 pl-3 pb-3 pr-3">
 
@@ -519,7 +505,6 @@
         </v-card>
 
         <v-card :disabled="edit"  width="900" class="mt-5 mx-auto px-3 " >
-
              <!-- loading -----  -->
             <v-progress-linear
                 :active="loading"
@@ -547,8 +532,6 @@
                     </template>
 
             </v-select>
-            
-            
             </v-flex>
         </v-card>
 
@@ -622,7 +605,7 @@
             :disabled="edit" 
             class="primary" 
             flat 
-            @click="savechanges()">
+            @click="validate()">
             save changes
             </v-btn>
             </v-flex>
@@ -630,6 +613,7 @@
 
     </v-container>
 </template>
+
 <script>
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
@@ -663,6 +647,9 @@ export default {
            // Update success
            update_success:false,
            success_alert:'',
+
+           // confirm edit profiile
+           confirm_edit_profile:'',
 
 
            rules: {
@@ -780,6 +767,13 @@ export default {
                         this.field_required = true
                         return false
 
+                }else if (this.rules.required(this.box) == 'Required') {
+
+                        console.log(4);
+                        this.field = 'Box address field is required'
+                        this.field_required = true
+                        return false
+
                 }else if(this.rules.required(this.pcity) == 'Required'){
 
                         console.log(7);
@@ -824,6 +818,8 @@ export default {
                         return false
 
                 }else{
+
+                    this.confirm_edit_profile = true
                     return true
                 }
                
@@ -875,7 +871,12 @@ export default {
                 
             },
 
-       
+       previewprofile(){
+
+           this.$router.push('/transporter/previewprofile')
+           this.$router.go('/transporter/previewprofile')
+
+       },
 
        savechanges(){
 
@@ -916,6 +917,7 @@ export default {
                                     setTimeout(()=>{
                                         this.loading= false;
                                         this.update_success = true,
+                                        this.confirm_edit_profile = false
                                         this.success_alert = 'Profile Updated successfully'
                                     },1000)
 
