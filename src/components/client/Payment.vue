@@ -210,10 +210,10 @@
                 </v-row>
 
                 <v-flex row align-self-center justify-center class="mt-3">
-                    <v-btn elevation="flat" color="#F5FAFF"> 
+                    <!--<v-btn elevation="flat" color="#F5FAFF"> 
                         <v-icon color="#4169E1">keyboard_arrow_left</v-icon>
                         <p class=" body-1 mb-0 text-upercase pt-1" style="color:#4169E1;"> go back </p>
-                    </v-btn>
+                    </v-btn>-->
                     <v-spacer></v-spacer>
                     <v-btn color="primary white--text" class="" @click="confirmPayment($event)" :disabled="!isValid()"> Confirm payment</v-btn>
                 </v-flex>
