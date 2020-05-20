@@ -350,6 +350,7 @@
                                 <v-file-input 
                                     label="Photo input" 
                                     id="files" 
+                                    :clearable="false"
                                     @change="updateFilesUploaded()"
                                     prepend-icon ="mdi-cloud-upload"
                                     @click:clear="removeFile()"
@@ -368,12 +369,13 @@
 
                         <v-col class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> BILL OF LADING</p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input  
                                     id="bill"
                                     :rules="[v => !!v || 'Bill of lading is required']"
                                     required
+                                    :clearable="false"
                                     @change="billUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
                                    
@@ -383,13 +385,20 @@
                                     </template>
 
                                 </v-file-input>
+
+                                <div v-show="bill_of_lading_extension === 'jpg' || bill_of_lading_extension === 'jpeg' ||  bill_of_lading_extension === 'png' ">
+                                    <v-card height="200" width="250" outlined @click="showLargeThumbnail('bill')">
+                                        <img  id="bill_thumb" class="preview">
+                                    </v-card>
+                                </div>
+
                             </v-card>
                        
                         </v-col>   
 
                         <v-col class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> AUTHORIZATION LETTER</p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     id="letter"
@@ -397,12 +406,20 @@
                                     required
                                     @change="letterUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
+                                    :clearable="false"
                                 >
                                     <template #label>
                                         <span class="red--text"><strong>* </strong></span> Authorization letter
                                     </template>
 
                                 </v-file-input>
+
+                                <div v-show="letter_extension === 'jpg' || letter_extension === 'jpeg' ||  letter_extension === 'png' ">
+                                    <v-card height="200" width="250" outlined @click="showLargeThumbnail('letter')">
+                                        <img  id="letter_thumb" class="preview">
+                                    </v-card>
+                                </div>
+
                             </v-card>
                        
                         </v-col>   
@@ -466,6 +483,9 @@ export default {
         display_alert: false,
 
         photos_extension:'',
+        bill_of_lading_extension:'',
+        letter_extension:'',
+        
         overlay: false,
 
     }),
@@ -592,11 +612,78 @@ export default {
         },
 
         billUpdated(){
-            this.bill_of_lading.push(document.getElementById("bill").files[0]);
+            //this.bill_of_lading.push(document.getElementById("bill").files[0]);
+            if(document.getElementById("bill").files[0]){
+
+                this.bill_of_lading = [];
+                
+                this.bill_of_lading.push(document.getElementById("bill").files[0]);
+
+                this.bill_of_lading_extension = this.getFileExtension(document.getElementById("bill").files[0].name);
+
+                if(this.bill_of_lading_extension === 'jpg' || this.bill_of_lading_extension === 'jpeg' || this.bill_of_lading_extension === 'png')
+                {
+                    var reader = new FileReader();
+
+                    reader.onload = function(){
+
+                        var dataURL = reader.result;
+
+                        var output = document.getElementById('bill_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
+                    
+                    }
+
+                    reader.readAsDataURL(document.getElementById("bill").files[0]);
+                }
+
+            }
         },
 
         letterUpdated(){
-            this.authorization_letter.push(document.getElementById("letter").files[0]);
+            //this.authorization_letter.push(document.getElementById("letter").files[0]);
+
+            if(document.getElementById("letter").files[0]){
+
+                this.authorization_letter = [];
+                
+                this.authorization_letter.push(document.getElementById("letter").files[0]);
+
+                this.letter_extension = this.getFileExtension(document.getElementById("letter").files[0].name);
+
+                if(this.letter_extension === 'jpg' || this.letter_extension === 'jpeg' || this.letter_extension === 'png')
+                {
+                    var reader = new FileReader();
+
+                    reader.onload = function(){
+
+                        var dataURL = reader.result;
+
+                        var output = document.getElementById('letter_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
+                    
+                    }
+
+                    reader.readAsDataURL(document.getElementById("letter").files[0]);
+                }
+
+            }
+
+            
         },
 
         createData(){

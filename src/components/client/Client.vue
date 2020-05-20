@@ -387,11 +387,7 @@ export default {
           profile:false,
           verify:false,
           loading:false,
-<<<<<<< HEAD
-          verification:false,
-=======
           verification:true,
->>>>>>> 4c0a0b99e4e5638ba6962e59890cdf46b067aead
           tabs: [
               {title:'All'},
               {title:'Biding'},
