@@ -135,6 +135,7 @@
                             >
                                 <v-date-picker 
                                     v-model="tender.customer_delivery_timeline"
+                                    :min="time"
                                     full-width>
                                 </v-date-picker>
                             </v-col>
@@ -321,7 +322,9 @@ export default {
 
         tender:[],
 
-        customer:[]
+        customer:[],
+
+        time: new Date().toISOString().substr(0, 10),
        
     }),
 

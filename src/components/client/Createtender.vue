@@ -265,8 +265,6 @@
                                     :min= time
                                     required
                                     full-width>
-
-
                                 </v-date-picker>
                              
                             </v-col>
