@@ -387,6 +387,7 @@ export default {
           profile:false,
           verify:false,
           loading:false,
+          verification:true,
           tabs: [
               {title:'All'},
               {title:'Biding'},

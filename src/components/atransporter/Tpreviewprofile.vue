@@ -100,15 +100,29 @@
                         outlined 
                         class="mx-3"
                         style="bo">
-                            <v-flex class="" style="background-color:#F5FAFF;" >
+                        
+                            <v-flex v-if="profileimage !== '' || profileimage !== 'null'  " class="" style="background-color:#F5FAFF;" >
+                            <v-img 
+                            :src="profileimage"
+                            class="mb-0 pb-0" 
+                            height="150" 
+                            width="200" 
+                            >
+                            </v-img>
+                         </v-flex>
+
+                         <v-flex v-else class="" style="background-color:#F5FAFF;" >
                             <v-img 
                             :src="profileimage"
                             class="mb-0 pb-0" 
                             height="147" 
                             width="100" 
                             >
+                            
                             </v-img>
                          </v-flex>
+
+
                         </v-card>
                         </v-flex>
                 </v-flex> 
@@ -466,6 +480,7 @@ export default {
                 this.bname = this.LOAD_AGENT.objects.bank_name
                 this.aname = this.LOAD_AGENT.objects.account_name
                 this.acnumber = this.LOAD_AGENT.objects.account_number
+                this.profileimage = this.LOAD_AGENT.objects.profile_image[0]
            }else{
                 this.mail = localStorage.client
            }
