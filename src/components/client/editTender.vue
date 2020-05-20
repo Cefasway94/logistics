@@ -300,7 +300,7 @@
                 <v-row class=" pa-3">
                     <v-spacer></v-spacer>
                     <v-btn outlined color="primary" class="mx-4" router to="/client">Cancel</v-btn>
-                    <v-btn color="primary white--text"  @click="editTender($event)" :disabled="!isValid()">Edit tender</v-btn>
+                    <v-btn color="primary white--text"  @click="editTender($event)" :disabled="!isValid()">SAVE</v-btn>
                 </v-row>
             </v-card>
 
