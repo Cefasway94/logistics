@@ -127,6 +127,28 @@
                     </v-alert>
                         </v-card>
                     </v-dialog>
+<!-- overlay -->
+            <v-overlay :value="overlay">
+
+                <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                        </v-col>
+
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                large
+                                color="primary white--text"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </div>
+            </v-overlay>
                 
 
                   <!-- <v-dialog
@@ -204,7 +226,7 @@
             <v-flex column class="pt-3">
            
                 <v-flex row class="pb-5 pl-2 mt-3" style="background-color:;">
-                        <v-flex>
+                        <!--<v-flex>
                         <p class="bondy-2 mb-0 ml-3 mb-1">Profile Image</p>
                         <v-card
                         flat 
@@ -230,7 +252,46 @@
                                 ></v-file-input>
                             </v-flex>
                         </v-card>
-                        </v-flex>
+                        </v-flex>-->
+                        <v-col cols=12 sm=4 class="">
+                            <p class="primary--text body-2 text-uppercase mb-0"> PROFILE  <span class="red--text"><strong>* </strong></span></p>
+                            <v-card flat width="250" height="270" outlined >
+
+                                <v-file-input 
+                                    :clearable="false"
+                                    placeholder="Choose a file"
+                                    id="profile_image" 
+                                    @change="uploadprofile()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'profile image is required']"
+                                    required
+                                
+                                >
+
+                                </v-file-input>
+
+                                <div v-show="profile_image_extension === 'jpg' || profile_image_extension === 'jpeg' || profile_image_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="handleClick('profile_image',profile_image_url)">
+                                        <img  id="profile_image_thumb" :src="profile_image_url" class="preview">
+                                    </v-card>
+                                </div>
+
+                                <div v-show="profile_image_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(profile_image_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+                                
+
+                            </v-card>
+                    
+                        </v-col>
                 </v-flex> 
             
 
@@ -432,7 +493,7 @@
                 </v-progress-linear>
 
             <v-row class="pt-3">
-                <v-col>
+                <!--<v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Certificate</p>
                      <v-card 
                      flat 
@@ -457,9 +518,45 @@
                             </v-file-input>
                          </v-flex>
                     </v-card>
-                </v-col>
+                </v-col>-->
+                <v-col cols=12 sm=4 class="">
+                            <p class="primary--text body-2 text-uppercase mb-0"> Certificate  <span class="red--text"><strong>* </strong></span></p>
+                            <v-card flat width="250" height="270" outlined >
 
-                <v-col>
+                                <v-file-input 
+                                    :clearable="false"
+                                    placeholder="Choose a file"
+                                    id="certificate" 
+                                    @change="updatecertificate()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'identity card is required']"
+                                    required
+                                
+                                >
+
+                                </v-file-input>
+
+                                <div v-show="certificate_extension === 'jpg' || certificate_extension === 'jpeg' || certificate_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="handleClick('certificate',certificate_url)">
+                                        <img  id="certificate_thumb" :src="certificate_url" class="preview">
+                                    </v-card>
+                                </div>
+
+                                <div v-show="certificate_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(certificate_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+                            </v-card>
+                        </v-col> 
+
+                <!--<v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Insurance</p>
                      <v-card 
                      flat color="#F5FAFF" 
@@ -484,9 +581,45 @@
                             </v-file-input>
                          </v-flex>
                     </v-card>
-                </v-col>
+                </v-col>-->
 
-                <v-col>
+                <v-col cols=12 sm=4 class="">
+                            <p class="primary--text body-2 text-uppercase mb-0"> Insurance  <span class="red--text"><strong>* </strong></span></p>
+                            <v-card flat width="250" height="270" outlined >
+
+                                <v-file-input 
+                                    :clearable="false"
+                                    placeholder="Choose a file"
+                                    id="insurance" 
+                                    @change="updateinsurance()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'Insurance is required']"
+                                    required
+                                >
+
+                                </v-file-input>
+
+                                <div v-show="insurance_extension === 'jpg' || insurance_extension === 'jpeg' || insurance_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="handleClick('insurance',insurance_url)">
+                                        <img  id="insurance_thumb" :src="insurance_url" class="preview">
+                                    </v-card>
+                                </div>
+
+                                <div v-show="insurance_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(insurance_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+                            </v-card>
+                        </v-col> 
+
+                <!--<v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Other</p>
                      <v-card 
                      flat color="#F5FAFF" 
@@ -510,7 +643,7 @@
                             ></v-file-input>
                          </v-flex>
                     </v-card>
-                </v-col>         
+                </v-col>-->     
             </v-row>
         </v-card>
 
@@ -567,7 +700,7 @@
                 indeterminate
                 absolute
                 color="#4169E1">
-                </v-progress-linear>
+            </v-progress-linear>
 
             <v-flex column class="px-3 pt-7">
             <p class="bondy-2 mb-0 mb-0">Bank name</p>
@@ -698,6 +831,20 @@ export default {
            edit:false,
            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
           
+           // Priview thumb nails
+           large_preview_url:'',
+           overlay: false,
+
+           startswith:false,
+           
+           profile_image_extension:'',
+           profile_image_url:'',
+
+           certificate_extension:'',
+           certificate_url:'',
+
+           insurance_extension:'',
+           insurance_url:''
     }
    },
 
@@ -718,6 +865,50 @@ export default {
 
             if (!this.LOAD_AGENT.objects.agent_id == ''){
                 
+                 if(this.LOAD_AGENT.objects.certificate !== null)
+                {
+                    
+                    this.certificate_url = this.LOAD_AGENT.objects.certificate[0]
+
+                    this.certificate_extension = this.getFileExtension(this.certificate_url);
+
+                    console.log(this.certificate_extension);
+                    
+
+                }
+
+                if(this.LOAD_AGENT.objects.profile_image !== null)
+                {
+                    
+                    this.profile_image_url = this.LOAD_AGENT.objects.profile_image[0]
+
+                    this.profile_image_extension = this.getFileExtension(this.profile_image_url);
+
+                    console.log(this.certificate_extension);
+                    
+
+                }
+
+                if(this.LOAD_AGENT.objects.insurance !== null)
+                {
+                    
+                    this.insurance_url = this.LOAD_AGENT.objects.insurance[0]
+
+                    this.insurance_extension = this.getFileExtension(this.insurance_url);
+
+                    console.log(this.insurance_extension);
+                }
+
+                 /*if(this.LOAD_AGENT.objects.insurance !== null)
+                {
+                    
+                    this.insurance_url = this.LOAD_AGENT.objects.insurance[0]
+
+                    this.insurance_extension = this.getFileExtension(this.insurance_url);
+
+                    console.log(this.insurance_extension);
+                }*/
+
                 this.name = this.LOAD_AGENT.objects.company_name
                 this.faxnumber = this.LOAD_AGENT.objects.fax
                 this.tin = this.LOAD_AGENT.objects.tin_number
@@ -744,6 +935,57 @@ export default {
         "POST_PAYMENT_TERMS"
     ]),
       
+      handleClick(id,src){
+
+            //eslint-disable-next-line no-console
+                        console.log("source "+src);
+
+            if(document.getElementById(id).files[0]){
+
+                this.showLargeThumbnail(id);
+
+            }else {
+                
+                this.largePreview(src);
+            }
+        },
+
+            largePreview(src){
+
+                this.large_preview_url = src;
+
+                this.overlay = !this.overlay;
+
+            },
+
+            getFileExtension(url){
+
+                let position = url.lastIndexOf('.');
+
+                let extracted_string = url.slice(position + 1, url.length + 1);
+
+                return extracted_string;
+
+            },
+
+            showLargeThumbnail(id){
+
+            this.overlay = !this.overlay
+
+            var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+               
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+            reader.readAsDataURL(document.getElementById(id).files[0]);
+        },
             validate(){
 
                 if(this.rules.required(this.name) == 'Required'){
@@ -835,13 +1077,88 @@ export default {
             },
                
            updateinsurance(){
-                this.insurance = []
-               this.insurance.push(document.getElementById("insurance").files[0])
+                //this.insurance = []
+                //this.insurance.push(document.getElementById("insurance").files[0])
+                if(document.getElementById("insurance").files[0]){
+
+                    this.insurance = [];
+
+                    this.insurance.push(document.getElementById("insurance").files[0]);
+                    
+                    this.insurance_extension = this.getFileExtension(document.getElementById("insurance").files[0].name);
+
+                    if(this.insurance_extension === 'jpg' || this.insurance_extension === 'jpeg' || this.insurance_extension === 'png')
+                    {
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('insurance_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("insurance").files[0]);
+                    } else {
+                        this.insurance_extension = '';
+                    }
+
+                
+                }
                },
 
            updatecertificate(){
-                this.certificate = []
-               this.certificate.push(document.getElementById("certificate").files[0])
+                //this.certificate = []
+               //this.certificate.push(document.getElementById("certificate").files[0])
+
+                if(document.getElementById("certificate").files[0]){
+
+                    this.certificate = [];
+
+                    this.certificate.push(document.getElementById("certificate").files[0]);
+                    
+                    this.certificate_extension = this.getFileExtension(document.getElementById("certificate").files[0].name);
+
+                    if(this.certificate_extension === 'jpg' || this.certificate_extension === 'jpeg' || this.certificate_extension === 'png')
+                    {
+
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('certificate_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("certificate").files[0]);
+                    }
+                    else {
+                        this.certificate_extension = '';
+                    }
+
+                
+                }
            },
             
             uploadother(){ 
@@ -850,11 +1167,48 @@ export default {
             },
 
             uploadprofile(){
-                this.profile_image = []
-                this.profile_image.push(document.getElementById("profile_image").files[0])
+                //this.profile_image = []
+                //this.profile_image.push(document.getElementById("profile_image").files[0])
                 //this.profile_image = 'profile image'
 
-                console.log(this.profile_image);
+                //console.log(this.profile_image);
+                if(document.getElementById("profile_image").files[0]){
+
+                    this.profile_image = [];
+
+                    this.profile_image.push(document.getElementById("profile_image").files[0]);
+                    
+                    this.profile_image_extension = this.getFileExtension(document.getElementById("profile_image").files[0].name);
+
+                    if(this.profile_image_extension === 'jpg' || this.profile_image_extension === 'jpeg' || this.profile_image_extension === 'png')
+                    {
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('profile_image_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("profile_image").files[0]);
+                    }
+                    else {
+                        this.profile_image_extension = '';
+                    }
+
+                
+                }
                 
                 
             },
@@ -865,9 +1219,15 @@ export default {
 
                     const formdata = new FormData()
 
-                    formdata.append('profile_image[0]',this.profile_image[0])
-                    formdata.append('certificate[0]', this.certificate[0])
-                    formdata.append('insurance[0]', this.insurance[0])
+                    if(this.profile_image.length > 0)
+                         formdata.append('profile_image[0]',this.profile_image[0]);
+
+                    if(this.certificate.length > 0)
+                        formdata.append('certificate[0]', this.certificate[0]);
+
+                    if(this.insurance.length > 0)
+                        formdata.append('insurance[0]', this.insurance[0])
+
                     formdata.append('company_name', this.name)
                     formdata.append('email', this.mail)
                     formdata.append('tin_number', this.tin)
@@ -898,12 +1258,10 @@ export default {
        savechanges(){
 
            console.log(this.validate());        
-           
 
+            this.loading = true
 
-                    this.loading = true
-
-                    const dataobject = this.dataobject()
+            const dataobject = this.dataobject()
 
             console.log(dataobject.get('profile_image[0]'));                  
 
@@ -1005,6 +1363,53 @@ export default {
   border-width: 1px;
   margin-bottom: 0%;
 }
+
+.selectcountry{
+          height:103%; 
+          width:100%; 
+          padding-left: 2%;
+          border-color: black ;
+          margin-bottom: 0%;
+           
+  }
+
+.selectcountry:hover {
+  border-color:black;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+}
+
+
+ .select-control{
+     width:100%;
+     height:100%;
+     cursor: pointer;
+     
+ }
+ 
+ img.preview{
+     width: 248px;
+     height: 200px
+ }
+
+ .large-preview{
+
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
+
+ .progress { z-index: 1;}
+
+ img.preview:hover{
+     cursor: pointer;
+ }
 
 
 </style>

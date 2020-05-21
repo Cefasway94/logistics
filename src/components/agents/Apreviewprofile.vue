@@ -41,7 +41,28 @@
                 
                 </v-dialog>   
 
+<!-- overlay -->
+            <v-overlay :value="overlay">
 
+                <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                        </v-col>
+
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                large
+                                color="primary white--text"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </div>
+            </v-overlay>
 
         <v-card flat width="900" class="mt-12 mx-auto mb-7" color="#F5FAFF">
             <v-flex row class="px-3 ">
@@ -101,25 +122,24 @@
                         outlined 
                         class="mx-3"
                         style="bo">
-                            <v-flex v-if="profileimage !== '' || profileimage !== 'null'  " class="" style="background-color:#F5FAFF;" >
-                            <v-img 
-                            :src="profileimage"
-                            class="mb-0 pb-0" 
-                            height="147" 
-                            width="200" 
-                            >
-                            </v-img>
-                         </v-flex>
+                             <div 
+                                    v-show="(profile_image_extension === 'jpg') || (profile_image_extension === 'jpeg')|| (profile_image_extension === 'png')" 
+                                    @click="largePreview(profile_image_url)"
+                                >
+                                    <img :src="profile_image_url" width=200 height=150/>
+                                </div>
+                               
+                                <div v-show="profile_image_extension === 'pdf'">
 
-                         <v-flex v-else class="" style="background-color:#F5FAFF;" >
-                            <v-img 
-                            :src="profileimage"
-                            class="mb-0 pb-0" 
-                            height="147" 
-                            width="100" 
-                            >
-                            </v-img>
-                         </v-flex>
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(profile_image_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
                         </v-card>
                         </v-flex>
                 </v-flex> 
@@ -256,15 +276,24 @@
                      height="150" 
                      outlined 
                      class="mx-3">
-                         <v-flex class="" style="background-color:#F5FAFF;" >
-                            <v-img 
-                            :src="certificate"
-                            class="mb-0 pb-0" 
-                            height="147" 
-                            width="100" 
+                    <div 
+                            v-show="(certificate_extension === 'jpg') || (certificate_extension === 'jpeg')|| (certificate_extension === 'png')" 
+                            @click="largePreview(certificate_url)"
+                        >
+                        <img :src="certificate_url" width=200 height=150/>
+                    </div>
+                    
+                    <div v-show="certificate_extension === 'pdf'">
+
+                        <v-btn 
+                            :block="true"
+                            icon class="mt-7" 
+                            @click="openTab(certificate_url)"
                             >
-                            </v-img>
-                         </v-flex>
+                            PREVIEW<v-icon x-large>mdi-file</v-icon>
+                        </v-btn>
+
+                    </div>
                     </v-card>
                 </v-col>
 
@@ -276,19 +305,28 @@
                      height="150" 
                      outlined 
                      class="mx-3 ">
-                         <v-flex class="" style="background-color:#F5FAFF;" >
-                            <v-img 
-                            :src="insurance"
-                            class="mb-0 pb-0" 
-                            height="147" 
-                            width="100" 
+                        <div 
+                            v-show="(insurance_extension === 'jpg') || (insurance_extension === 'jpeg')|| (insurance_extension === 'png')" 
+                            @click="largePreview(insurance_url)"
+                        >
+                            <img :src="insurance_url" width=200 height=150/>
+                        </div>
+                    
+                    <div v-show="insurance_extension === 'pdf'">
+
+                        <v-btn 
+                            :block="true"
+                            icon class="mt-7" 
+                            @click="openTab(insurance_url)"
                             >
-                            </v-img>
-                         </v-flex>
+                            PREVIEW<v-icon x-large>mdi-file</v-icon>
+                        </v-btn>
+
+                    </div>
                     </v-card>
                 </v-col>
 
-                <v-col>
+                <!--<v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-2">Other</p>
                      <v-card 
                      flat
@@ -306,7 +344,7 @@
                             </v-img>
                          </v-flex>
                     </v-card>
-                </v-col>         
+                </v-col> -->        
 
             </v-row>
         </v-card>
@@ -441,6 +479,16 @@ export default {
            loading:false,
            edit:false,
            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
+
+           //preview urls:
+           profile_image_url:'',
+           profile_image_extension:'',
+           insurance_url:'',
+           insurance_extension:'',
+           certificate_url:'',
+           certificate_extension:'',
+           large_preview_url:'',
+           overlay: false,
           
     }
    },
@@ -461,6 +509,25 @@ export default {
             }
 
             if (!this.LOAD_AGENT.objects.agent_id == ''){
+
+
+                if(this.LOAD_AGENT.objects.profile_image !== null)
+                {
+                    this.profile_image_url = this.LOAD_AGENT.objects.profile_image[0];
+                    this.profile_image_extension = this.getFileExtension(this.profile_image_url);
+                }
+
+                 if(this.LOAD_AGENT.objects.insurance !== null)
+                {
+                    this.insurance_url = this.LOAD_AGENT.objects.insurance[0];
+                    this.insurance_extension = this.getFileExtension(this.insurance_url);
+                }
+
+                 if(this.LOAD_AGENT.objects.certificate !== null)
+                {
+                    this.certificate_url = this.LOAD_AGENT.objects.certificate[0];
+                    this.certificate_extension = this.getFileExtension(this.certificate_url);
+                }
                 
                 this.name = this.LOAD_AGENT.objects.company_name
                 this.faxnumber = this.LOAD_AGENT.objects.fax
@@ -474,7 +541,7 @@ export default {
                 this.bname = this.LOAD_AGENT.objects.bank_name
                 this.aname = this.LOAD_AGENT.objects.account_name
                 this.acnumber = this.LOAD_AGENT.objects.account_number
-                this.profileimage = this.LOAD_AGENT.objects.profile_image[0]
+                
 
            }else{
                 this.mail = localStorage.client
@@ -494,6 +561,24 @@ export default {
                 this.$router.push('/agent/editprofile')
                 //this.$router.go('/transporter/editprofile')   
               },
+
+        largePreview(src){
+
+                this.large_preview_url = src;
+
+                this.overlay = !this.overlay;
+
+            },
+
+            getFileExtension(url){
+
+                let position = url.lastIndexOf('.');
+
+                let extracted_string = url.slice(position + 1, url.length + 1);
+
+                return extracted_string;
+
+            },
    },
 
 
@@ -510,4 +595,18 @@ export default {
 <style scoped>
 
 
+</style>
+<style scoped>
+
+.large-preview{
+
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
 </style>
