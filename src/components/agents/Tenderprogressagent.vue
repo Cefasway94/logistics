@@ -1234,13 +1234,14 @@ ul li{
 .divider{
     margin-bottom: 70px;
 }
-#line{
-    ;
+
+/*:is#line{
+    
 }
 ul li .x-large{
     
     
-}
+}*/
 
 .large-preview{
 
