@@ -135,7 +135,7 @@
                     
                     <v-row justify= "center">
                         <v-col cols=12>
-                            <img  id="large_thumbnail" width="500px" height="500px">
+                            <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
                         </v-col>
 
                         <v-col class="mt-0" offset="4">
@@ -149,7 +149,6 @@
                         </v-col>
                     </v-row>
                 </div>
-                
             </v-overlay>
 
 
@@ -542,50 +541,41 @@
                     </v-card>
                 </v-col> -->
 
-                 <v-col cols=12 sm=4 class="">
-                    <p class="bondy-2 mb-0 ml-3 mb-0">Certificate</p>
-                    <v-card flat width="250" height="270" outlined >
+                     <v-col cols=12 sm=4 class="">
+                            <p class="primary--text body-2 text-uppercase mb-0"> COPY OF IDENTITY CARD </p>
+                            <v-card flat width="250" height="270" outlined >
 
-                        <v-file-input 
-                            :clearable="false"
-                            placeholder="Choose a file"
-                            id="certificate" 
-                            @change="updatecertificate()"
-                            prepend-icon ="mdi-cloud-upload"
-                            :rules="[v => !!v || 'identity card is required']"
-                            required
-                        
-                        >
-
-                        </v-file-input>
-
-                        <v-flex v-if="certificate_extension === 'jpg' || certificate_extension === 'jpeg' || certificate_extension === 'png'">
-                            <v-card v-if="startswith == true" height="200" width="250" outlined @click="showLargeThumbnail('certificate')">
-                                <img  id="certificate_thumb"  class="preview">
-                            </v-card>
-
-                            <v-card height="230" width="250" outlined @click="largePreview(certificate)">
-                                <img  id="certificate_thumb"  class="preview">
-                            <p>uihgidfhg</p>
-                            </v-card>
-                        </v-flex>
-
-                        <v-flex v-else>
-
-                             <v-btn 
-                                :block="true"
-                                icon class="mt-7" 
-                                @click="openTab(id_url)"
+                                <v-file-input 
+                                    :clearable="false"
+                                    placeholder="Choose a file"
+                                    id="certificate" 
+                                    @change="updatecertificate()"
+                                    prepend-icon ="mdi-cloud-upload"
                                 >
-                                PREVIEW<v-icon x-large>mdi-file</v-icon>
-                            </v-btn>
 
-                        </v-flex>
-                        
+                                </v-file-input>
 
-                    </v-card>
+                                <div v-show="certificate_extension === 'jpg' || certificate_extension === 'jpeg' || certificate_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="handleClick('certificate',certificate_url)">
+                                        <img  id="certificate_thumb" :src="certificate_url" class="preview">
+                                    </v-card>
+                                </div>
+
+                                <div v-show="id_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(certificate_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                            </v-card>
                     
-                </v-col> 
+                        </v-col> 
 
                 <v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Insurance</p>
@@ -881,8 +871,7 @@ export default {
 
                     console.log(this.certificate_extension);
                     
-                    
-                    
+
                 }
                 
                 this.name = this.LOAD_AGENT.objects.company_name
@@ -920,18 +909,20 @@ export default {
         "T_POST_PAYMENT_TERMS"
     ]),
             
-            http(){
-                
-                if(this.certificate_url.startsWith('http')){
+            handleClick(id,src){
 
-                    this.startswith = true
-                }
+            //eslint-disable-next-line no-console
+                        console.log("source "+src);
 
-                console.log(this.certificate_url);
-                
+            if(document.getElementById(id).files[0]){
 
+                this.showLargeThumbnail(id);
+
+            }else {
                 
-            },
+                this.largePreview(src);
+            }
+        },
 
             largePreview(src){
 
