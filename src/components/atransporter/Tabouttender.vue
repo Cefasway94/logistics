@@ -368,11 +368,11 @@ export default {
 
           this.T_GET_AGENT(localStorage.client).then(()=>{
 
-              if(this.LOAD_TENDER.bill_of_lading[0] !== ''){
-                  console.log();
-                    this.bill = this.LOAD_AGENT.objects.certificate[0]
+              if(!this.LOAD_TENDER.bill_of_lading[0] == ''){
+                  this.bill = this.LOAD_AGENT.objects.certificate[0]
 
                     this.bill_extension = this.getFileExtension(this.bill);
+                  console.log(this.bill)
                 }
 
               console.log('transporter details below');
@@ -403,6 +403,16 @@ export default {
           'T_GET_AGENT'
 
       ]),
+
+       getFileExtension(url){
+
+            let position = url.lastIndexOf('.');
+
+            let extracted_string = url.slice(position + 1, url.length + 1);
+
+            return extracted_string;
+
+        },
 
       
       theid(id){
