@@ -1,6 +1,29 @@
 <template>
     <v-container class="pa-3 mt-10 mx-auto">
 
+            <v-overlay :value="overlay">
+
+                <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" height="500px">
+                        </v-col>
+
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                large
+                                color="primary white--text"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </div>
+                
+            </v-overlay>
+
         <AlertError v-if="display_alert" v-bind:message="alert"/>
 
         <v-layout class="pa-3 mt-10">
@@ -14,6 +37,8 @@
                 </v-row>
             </v-card>
         </v-layout>
+
+
 
          <!--<v-container style="height: 400px;">
             <v-row
@@ -240,8 +265,6 @@
                                     :min= time
                                     required
                                     full-width>
-
-
                                 </v-date-picker>
                              
                             </v-col>
@@ -320,30 +343,37 @@
                     <v-row class="pa-3">
                         <v-col class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> CARGO PHOTO </p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     label="Photo input" 
-                                    multiple
                                     id="files" 
+                                    :clearable="false"
                                     @change="updateFilesUploaded()"
                                     prepend-icon ="mdi-cloud-upload"
                                     @click:clear="removeFile()"
                                 >
 
                                 </v-file-input>
+
+                                 <div v-show="photos_extension === 'jpg' || photos_extension === 'jpeg' ||  photos_extension === 'png' ">
+                                    <v-card height="200" width="250" outlined @click="showLargeThumbnail('files')">
+                                        <img  id="files_thumb" class="preview">
+                                    </v-card>
+                                </div>
                             </v-card>
                        
                         </v-col> 
 
                         <v-col class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> BILL OF LADING</p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input  
                                     id="bill"
                                     :rules="[v => !!v || 'Bill of lading is required']"
                                     required
+                                    :clearable="false"
                                     @change="billUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
                                    
@@ -353,13 +383,20 @@
                                     </template>
 
                                 </v-file-input>
+
+                                <div v-show="bill_of_lading_extension === 'jpg' || bill_of_lading_extension === 'jpeg' ||  bill_of_lading_extension === 'png' ">
+                                    <v-card height="200" width="250" outlined @click="showLargeThumbnail('bill')">
+                                        <img  id="bill_thumb" class="preview">
+                                    </v-card>
+                                </div>
+
                             </v-card>
                        
                         </v-col>   
 
                         <v-col class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> AUTHORIZATION LETTER</p>
-                            <v-card flat width="200" height="150" outlined >
+                            <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     id="letter"
@@ -367,12 +404,20 @@
                                     required
                                     @change="letterUpdated()"
                                     prepend-icon ="mdi-cloud-upload"
+                                    :clearable="false"
                                 >
                                     <template #label>
                                         <span class="red--text"><strong>* </strong></span> Authorization letter
                                     </template>
 
                                 </v-file-input>
+
+                                <div v-show="letter_extension === 'jpg' || letter_extension === 'jpeg' ||  letter_extension === 'png' ">
+                                    <v-card height="200" width="250" outlined @click="showLargeThumbnail('letter')">
+                                        <img  id="letter_thumb" class="preview">
+                                    </v-card>
+                                </div>
+
                             </v-card>
                        
                         </v-col>   
@@ -435,6 +480,12 @@ export default {
         alert:'',
         display_alert: false,
 
+        photos_extension:'',
+        bill_of_lading_extension:'',
+        letter_extension:'',
+        
+        overlay: false,
+
     }),
 
     computed:{
@@ -442,6 +493,35 @@ export default {
     },
 
     methods: {
+
+        getFileExtension(url){
+
+            let position = url.lastIndexOf('.');
+
+            let extracted_string = url.slice(position + 1, url.length + 1);
+
+            return extracted_string;
+
+        },
+
+        showLargeThumbnail(id){
+
+            this.overlay = !this.overlay
+
+            var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+               
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+            reader.readAsDataURL(document.getElementById(id).files[0]);
+        },
 
         isValid(){
 
@@ -481,7 +561,7 @@ export default {
 
         updateFilesUploaded(){
 
-            let uploadedfiles = document.getElementById("files").files;
+            /*let uploadedfiles = document.getElementById("files").files;
 
             for(var i=0; i < uploadedfiles.length; i++){
 
@@ -489,6 +569,39 @@ export default {
 
                  //eslint-disable-next-line no-console
                  //console.log(response.data); 
+            }*/
+
+            if(document.getElementById("files").files[0]){
+
+                this.photos = [];
+                
+                this.photos.push(document.getElementById("files").files[0]);
+
+                this.photos_extension = this.getFileExtension(document.getElementById("files").files[0].name);
+
+                if(this.photos_extension === 'jpg' || this.photos_extension === 'jpeg' || this.photos_extension === 'png')
+                {
+                    var reader = new FileReader();
+
+                    reader.onload = function(){
+
+                        var dataURL = reader.result;
+
+                        var output = document.getElementById('files_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
+                    
+                    }
+
+                    reader.readAsDataURL(document.getElementById("files").files[0]);
+                }
+
             }
         },
 
@@ -497,11 +610,78 @@ export default {
         },
 
         billUpdated(){
-            this.bill_of_lading.push(document.getElementById("bill").files[0]);
+            //this.bill_of_lading.push(document.getElementById("bill").files[0]);
+            if(document.getElementById("bill").files[0]){
+
+                this.bill_of_lading = [];
+                
+                this.bill_of_lading.push(document.getElementById("bill").files[0]);
+
+                this.bill_of_lading_extension = this.getFileExtension(document.getElementById("bill").files[0].name);
+
+                if(this.bill_of_lading_extension === 'jpg' || this.bill_of_lading_extension === 'jpeg' || this.bill_of_lading_extension === 'png')
+                {
+                    var reader = new FileReader();
+
+                    reader.onload = function(){
+
+                        var dataURL = reader.result;
+
+                        var output = document.getElementById('bill_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
+                    
+                    }
+
+                    reader.readAsDataURL(document.getElementById("bill").files[0]);
+                }
+
+            }
         },
 
         letterUpdated(){
-            this.authorization_letter.push(document.getElementById("letter").files[0]);
+            //this.authorization_letter.push(document.getElementById("letter").files[0]);
+
+            if(document.getElementById("letter").files[0]){
+
+                this.authorization_letter = [];
+                
+                this.authorization_letter.push(document.getElementById("letter").files[0]);
+
+                this.letter_extension = this.getFileExtension(document.getElementById("letter").files[0].name);
+
+                if(this.letter_extension === 'jpg' || this.letter_extension === 'jpeg' || this.letter_extension === 'png')
+                {
+                    var reader = new FileReader();
+
+                    reader.onload = function(){
+
+                        var dataURL = reader.result;
+
+                        var output = document.getElementById('letter_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
+                    
+                    }
+
+                    reader.readAsDataURL(document.getElementById("letter").files[0]);
+                }
+
+            }
+
+            
         },
 
         createData(){
@@ -689,3 +869,28 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+
+img.preview{
+     width: 248px;
+     height: 200px
+ }
+
+ .large-preview{
+
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
+
+ img.preview:hover{
+     cursor: pointer;
+ }
+
+</style>
