@@ -291,7 +291,7 @@
 
                             </v-card>
                     
-                        </v-col> 
+                        </v-col>
                 </v-flex> 
             
 
@@ -619,7 +619,7 @@
                             </v-card>
                         </v-col> 
 
-                <v-col>
+                <!--<v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Other</p>
                      <v-card 
                      flat color="#F5FAFF" 
@@ -643,7 +643,7 @@
                             ></v-file-input>
                          </v-flex>
                     </v-card>
-                </v-col>         
+                </v-col>-->     
             </v-row>
         </v-card>
 
