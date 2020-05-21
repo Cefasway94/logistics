@@ -272,7 +272,7 @@
 
                         <!--  -->
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> PROFILE  <span class="red--text"><strong>* </strong></span></p>
+                            <p class="body-2 mb-0 primary--text"> Profile image  <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -289,8 +289,8 @@
                                 </v-file-input>
 
                                 <div v-show="profile_extension === 'jpg' || profile_extension === 'jpeg' || profile_extension === 'png'">
-                                    <v-card height="200" width="250" outlined @click="showLargeThumbnail('profile')">
-                                        <img  id="profile_thumb" class="preview">
+                                    <v-card height="200" width="250" outlined @click="handleClick('profile',profile_url)">
+                                        <img  id="profile_thumb" :src="profile_url" class="preview">
                                     </v-card>
                                 </div>
                                 
@@ -542,7 +542,7 @@
                 </v-col> -->
 
                      <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> COPY OF IDENTITY CARD </p>
+                            <p class="primary--text body-1  mb-0"> Certificate </p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -561,7 +561,7 @@
                                     </v-card>
                                 </div>
 
-                                <div v-show="id_extension === 'pdf'">
+                                <div v-show="certificate_extension === 'pdf'">
 
                                     <v-btn 
                                         :block="true"
@@ -577,37 +577,43 @@
                     
                         </v-col> 
 
-                <v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-0">Insurance</p>
-                     <v-card 
-                     flat color="#F5FAFF" 
-                     width="200" 
-                     height="150" 
-                     outlined 
-                     class="mx-3">
-                         <v-flex class="" >
-                            <v-file-input 
-                            id="insurance"
-                            ref="insurance"
-                            type="file"
-                            flat 
-                            dropzone 
-                            class="mb-0 pb-0" 
-                            height="150" 
-                            width="100" 
-                            outlined 
-                            prepend-icon="" 
-                            @change="updateinsurance()"
-                            :rules="[rules.required]">
-                                     <template #label>
-                                        <span class="deep-orange--text"><strong>* </strong></span>
-                                    </template>
-                            </v-file-input>
-                         </v-flex>
-                    </v-card>
-                </v-col>
+                <v-col cols=12 sm=4 class="">
+                            <p class="primary--text body-1  mb-0"> Insurance </p>
+                            <v-card flat width="250" height="270" outlined >
 
-                <v-col>
+                                <v-file-input 
+                                    :clearable="false"
+                                    placeholder="Choose a file"
+                                    id="insurance" 
+                                    @change="updateinsurance()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                >
+
+                                </v-file-input>
+
+                                <div v-show="insurance_extension === 'jpg' || insurance_extension === 'jpeg' || insurance_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="handleClick('insurance',insurance_url)">
+                                        <img  id="insurance_thumb" :src="insurance_url" class="preview">
+                                    </v-card>
+                                </div>
+
+                                <div v-show="insurance_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(insurance_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                            </v-card>
+                    
+                        </v-col>
+
+                <!-- <v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Other</p>
                      <v-card 
                      flat color="#F5FAFF" 
@@ -635,7 +641,8 @@
                             </v-file-input>
                          </v-flex>
                     </v-card>
-                </v-col>         
+                </v-col>   -->
+
             </v-row>
         </v-card>
 
@@ -837,9 +844,16 @@ export default {
            startswith:false,
            
            profile_extension:'',
+           profile_url:'',
 
            certificate_extension:'',
            certificate_url:'',
+
+           insurance_extension:'',
+           insurance_url:'',
+
+           other_extension:'',
+           other_url:''
            
           
     }
@@ -862,14 +876,35 @@ export default {
 
             if (!this.LOAD_AGENT.objects.agent_id == ''){
 
-                if(this.LOAD_AGENT.objects.certificate !== null)
-                {
+                if(this.LOAD_AGENT.objects.certificate !== null){
                     
-                    this.certificate_url = this.LOAD_AGENT.objects.certificate[0]
+                        this.certificate_url = this.LOAD_AGENT.objects.certificate[0]
 
-                    this.certificate_extension = this.getFileExtension(this.certificate_url);
+                        this.certificate_extension = this.getFileExtension(this.certificate_url);
 
-                    console.log(this.certificate_extension);
+                        console.log(this.certificate_extension);
+                    
+
+                }
+
+                if(this.LOAD_AGENT.objects.insurance !== null){
+                    
+                        this.insurance_url = this.LOAD_AGENT.objects.insurance[0]
+
+                        this.insurance_extension = this.getFileExtension(this.insurance_url);
+
+                        console.log(this.certificate_extension);
+                    
+
+                }
+
+                 if(this.LOAD_AGENT.objects.profile_image !== null){
+                    
+                        this.profile_url = this.LOAD_AGENT.objects.profile_image[0]
+
+                        this.profile_extension = this.getFileExtension(this.profile_url);
+
+                        console.log(this.certificate_extension);
                     
 
                 }
@@ -891,14 +926,7 @@ export default {
            }else{
                 this.mail = localStorage.client
            }
-        })
-
-         this.http()
-
-         console.log(this.startswith);
-         
-
-        
+        })  
 
     },
 
@@ -1061,6 +1089,40 @@ export default {
            updateinsurance(){
                //this.insurance = []
                //this.insurance.push(document.getElementById("insurance").files[0])
+               if(document.getElementById("insurance").files[0]){
+
+                    this.insurance = [];
+
+                    this.insurance.push(document.getElementById("insurance").files[0]);
+                    
+                    this.insurance_extension = this.getFileExtension(document.getElementById("insurance").files[0].name);
+
+                    if(this.insurance_extension === 'jpg' || this.insurance_extension === 'jpeg' || this.insurance_extension === 'png')
+                    {
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('insurance_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("insurance").files[0]);
+                    }
+
+                
+                }
                
                     
                },
@@ -1111,25 +1173,7 @@ export default {
 
             uploadprofile(){
 
-                // if(document.getElementById("profile_image").files[0]){
-                    
-                //     this.profile_image = []
-                //     this.profileimage = ''
-                //     this.profile_image.push(document.getElementById("profile_image").files[0])
-
-                //     FileReader.re
-
-                //     console.log(document.getElementById("profile_image").files[0]);
-                    
-
-                //     this.profileimage = document.getElementById("profile_image").files[0].name
-                                                        
-                // }
-
-
-              // console.log(document.getElementById("profile_image").files[0]);
                 
-                //this.profile_image = 'profile image'
                 if(document.getElementById("profile").files[0]){
 
                     this.profile_image = [];
