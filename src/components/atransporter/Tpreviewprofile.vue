@@ -52,8 +52,8 @@
 
                         <v-col class="mt-0" offset="4">
                             <v-btn
-                                large
-                                color="primary white--text"
+                                
+                                color="primary"
                                 @click="overlay = false"
                             >
                                 <v-icon large class="font-weight-bold">mdi-close</v-icon>
@@ -115,7 +115,7 @@
              
                 <v-flex row class="pb-7 pl-2" style="background-color:;">
                         <v-flex>
-                        <p class="bondy-2 mb-0 ml-3 mb-2">Profile Image</p>
+                        <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Profile Image</p>
                         <v-card
                         flat  
                         width="200" 
@@ -277,7 +277,7 @@
 
             <v-row class="pt-3">
                 <v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-2">Certificate</p>
+                    <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Certificate</p>
                      <v-card 
                      flat 
                      width="200" 
@@ -290,11 +290,12 @@
                          v-show="(certificate_extension === 'jpg') || (certificate_extension === 'jpg') || (certificate_extension === 'png')" 
                          @click="largePreview(certificate)">
                             <v-img 
-                            :src="certificate"
+                            :src="certificate"  
                             class="mb-0 pb-0" 
                             height="147" 
                             width="200" 
                             >
+                            
                             </v-img>
                          </v-flex>
                          <v-flex v-show="certificate_extension === 'pdf'">
@@ -312,44 +313,76 @@
                 </v-col>
 
                 <v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-2">Insurance</p>
+                    <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Insurance</p>
                      <v-card 
-                     flat
-                     width="200" 
-                     height="150" 
-                     outlined 
-                     class="mx-3 ">
-                         <v-flex class="" style="background-color:#F5FAFF;" >
-                            <v-img 
-                            :src="insurance"
-                            class="mb-0 pb-0" 
-                            height="147" 
-                            width="100" 
-                            >
-                            </v-img>
-                         </v-flex>
-                    </v-card>
-                </v-col>
-
-                <v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-2">Other</p>
-                     <v-card 
-                     flat
+                     flat 
                      width="200" 
                      height="150" 
                      outlined 
                      class="mx-3">
-                         <v-flex class="" style="background-color:#F5FAFF;" >
+                         <v-flex 
+                         class="" 
+                         style="background-color:#F5FAFF;" 
+                         v-show="(insurance_extension === 'jpg') || (insurance_extension === 'jpg') || (insurance_extension === 'png')" 
+                         @click="largePreview(insurance)">
                             <v-img 
-                            :src="other"
+                            :src="insurance"  
                             class="mb-0 pb-0" 
                             height="147" 
-                            width="100" 
+                            width="200" 
                             >
+                            
                             </v-img>
                          </v-flex>
+                         <v-flex v-show="insurance_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(insurance)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                        </v-flex>
                     </v-card>
-                </v-col>         
+                </v-col>
+
+               <!-- <v-col>
+                    <p class="bondy-2 mb-0 ml-3 mb-2">Other</p>
+                     <v-card 
+                     flat 
+                     width="200" 
+                     height="150" 
+                     outlined 
+                     class="mx-3">
+                         <v-flex 
+                         class="" 
+                         style="background-color:#F5FAFF;" 
+                         v-show="(other_extension === 'jpg') || (other_extension === 'jpg') || (other_extension === 'png')" 
+                         @click="largePreview(other)">
+                            <v-img 
+                            :src="other"  
+                            class="mb-0 pb-0" 
+                            height="147" 
+                            width="200" 
+                            >
+                            
+                            </v-img>
+                         </v-flex>
+                         <v-flex v-show="insurance_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(other)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                        </v-flex>
+                    </v-card>
+                </v-col>        -->
 
             </v-row>
         </v-card>
@@ -480,6 +513,12 @@ export default {
            other:'',
            profileimage:'',
 
+           certificate_extension:'',
+           insurance_extension:'',
+           other_extension:'',
+
+           large_preview_url:'',
+
            //others 
            edited:false,
            verification:false,
@@ -509,12 +548,18 @@ export default {
 
             if (!this.LOAD_AGENT.objects.agent_id == ''){
 
-                 if(this.LOAD_AGENT.objects.certificate !== null)
-                {
+                 if(this.LOAD_AGENT.objects.certificate !== null){
                     
                     this.certificate = this.LOAD_AGENT.objects.certificate[0]
 
                     this.certificate_extension = this.getFileExtension(this.certificate);
+                }
+
+                 if(this.LOAD_AGENT.objects.insurance !== null){
+                    
+                    this.insurance = this.LOAD_AGENT.objects.insurance[0]
+
+                    this.insurance_extension = this.getFileExtension(this.insurance);
                 }
                 
                 this.name = this.LOAD_AGENT.objects.company_name
