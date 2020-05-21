@@ -84,15 +84,46 @@
                                 </v-card>
                             </v-flex>
 
+                            <!-- authorization_letter_extension:'',
+           authorization_letter:'',
+           authorization_letter_extension_url:'' -->
+
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> AUTHORITY LETTER </p>
-                            <v-card flat width="200" height="150" outlined>
-                            <v-img class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
-                        </v-card>
+                            <v-card 
+                                flat 
+                                width="200" 
+                                height="150" 
+                                outlined 
+                                class="mx-3">
+                                    <v-flex 
+                                    class="" 
+                                    style="background-color:#F5FAFF;" 
+                                    v-show="(authorization_letter_extension === 'jpg') 
+                                    || (authorization_letter_extension === 'jpg') 
+                                    || (authorization_letter_extension === 'png')" 
+                                    @click="largePreview(authorization_letter)">
+                                        <v-img 
+                                        :src="authorization_letter"  
+                                        class="mb-0 pb-0" 
+                                        height="147" 
+                                        width="200" 
+                                        >
+                                        
+                                        </v-img>
+                                    </v-flex>
+                                    <v-flex v-show="authorization_letter_extension === 'pdf'">
+
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="openTab(authorization_letter)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                </v-btn>
+
+                                    </v-flex>
+                                </v-card>
                             </v-flex>
 
                             <v-flex column >
@@ -353,6 +384,11 @@ export default {
            bill_extension:'',
            bill_url:'',
 
+           // letter thumbnail
+           authorization_letter_extension:'',
+           authorization_letter:'',
+           authorization_letter_extension_url:''
+
       }
   },
 
@@ -373,6 +409,13 @@ export default {
 
                     this.bill_extension = this.getFileExtension(this.bill);
                   console.log(this.bill)
+                }
+
+                if(!this.LOAD_TENDER.authorization_letter[0] == ''){
+                  this.authorization_letter = this.LOAD_AGENT.objects.authorization_letter[0]
+
+                    this.authorization_letter_extension = this.getFileExtension(this.authorization_letter);
+                  console.log(this.authorization_letter)
                 }
 
               console.log('transporter details below');
