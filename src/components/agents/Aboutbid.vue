@@ -1,6 +1,28 @@
 <template>
     <v-container class=" mt-12 px-5 pt-12">
 
+            <v-overlay :value="overlay">
+                <div class="large-preview">
+                        
+                        <v-row justify= "center">
+                            <v-col cols=12>
+                                <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                            </v-col>
+
+                            <v-col class="mt-0" offset="4">
+                                <v-btn
+                                    large
+                                    color="primary white--text"
+                                    @click="overlay = false"
+                                >
+                                    <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+                        
+                </div>
+            </v-overlay>
+
             <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                 <v-flex class="px-3" >
@@ -59,11 +81,24 @@
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card flat width="200" height="150" outlined>
-                            <v-img class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
+                            <div 
+                                v-show="(bill_of_lading_extension === 'jpg') || (bill_of_lading_extension === 'jpeg') || (bill_of_lading_extension === 'png')" 
+                                @click="largePreview(bill_of_lading_url)"
+                            >
+                                <img :src="photo_url" width=200 height=150/>
+                            </div>
+                
+                            <div v-show="bill_of_lading_extension === 'pdf'">
+
+                                <v-btn 
+                                    :block="true"
+                                    icon class="mt-7" 
+                                    @click="openTab(bill_of_lading_url)"
+                                    >
+                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                </v-btn>
+
+                            </div>
                         
                         </v-card>
                             </v-flex>
@@ -71,22 +106,48 @@
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> AUTHORITY LETTER </p>
                             <v-card flat width="200" height="150" outlined>
-                            <v-img class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
+                                <div 
+                                    v-show="(letter_extension === 'jpg') || (letter_extension === 'jpeg') || (letter_extension === 'png')" 
+                                    @click="largePreview(letter_url)"
+                                >
+                                    <img :src="letter_url" width=200 height=150/>
+                                </div>
+                    
+                                <div v-show="letter_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(letter_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
                         </v-card>
                             </v-flex>
 
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> OTHER </p>
+                            <p class="primary--text body-1 mb-2"> CARGO PHOTO</p>
                             <v-card flat width="200" height="150" outlined>
-                            <v-img class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
+                                <div 
+                                    v-show="(photo_extension === 'jpg') || (photo_extension === 'jpeg') || (photo_extension === 'png')" 
+                                    @click="largePreview(photo_url)"
+                            >
+                                    <img :src="photo_url" width=200 height=150/>
+                                </div>
+                        
+                                <div v-show="photo_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(photo_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
                         </v-card>
                             </v-flex>
                         </v-flex>
@@ -203,6 +264,17 @@ export default {
   
   data () {
       return{
+
+            //preview 
+            photo_extension:'',
+            photo_url:'',
+            bill_of_lading_extension:'',
+            bill_of_lading_url:'',
+            letter_extension:'',
+            letter_url:'',
+
+            overlay:false,
+            large_preview_url:''
          
   }
 
@@ -223,6 +295,28 @@ export default {
               console.log('tender detail beloow');
               // eslint-disable-next-line no-console
               console.log(vm.LOAD_TENDER);
+
+               if(vm.LOAD_TENDER.cargo_photo !== null)
+                {
+                    vm.photo_extension = vm.getFileExtension(vm.LOAD_TENDER.cargo_photo[0]);
+
+                    vm.photo_url = vm.LOAD_TENDER.cargo_photo[0];
+                }
+
+                if(vm.LOAD_TENDER.bill_of_lading !== null)
+                {
+                    vm.bill_of_lading_extension = vm.getFileExtension(vm.LOAD_TENDER.bill_of_lading[0]);
+
+                    vm.bill_of_lading_url = vm.LOAD_TENDER.bill_of_lading[0];
+                }
+
+                if(vm.LOAD_TENDER.authorization_letter !== null)
+                {
+                    vm.letter_extension = vm.getFileExtension(vm.LOAD_TENDER.authorization_letter[0]);
+
+                    vm.letter_url = vm.LOAD_TENDER.authorization_letter[0];
+                }
+
               next({name:'AgentAboutbid'})
               })
           })
@@ -243,7 +337,31 @@ export default {
 
       ]),
 
-      
+      //preview
+       getFileExtension(url){
+
+        let position = url.lastIndexOf('.');
+
+        let extracted_string = url.slice(position + 1, url.length + 1);
+
+        return extracted_string;
+
+        },
+
+         openTab(url){
+
+            window.open(url);
+        },
+
+
+        largePreview(src){
+
+            this.large_preview_url = src;
+
+            this.overlay = !this.overlay;
+
+        },
+
       theid(id){
           // eslint-disable-next-line no-console
          // console.log(id);
@@ -311,5 +429,19 @@ export default {
     font-family :"Roboto",sans-serif !important;
 }
 
+.large-preview{
 
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
+
+ img:hover{
+     cursor: pointer;
+ }
 </style>
