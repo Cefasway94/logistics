@@ -1,7 +1,7 @@
 
 export default {
     state:{
-        Alert:'TESTING',      
+        Alert:'',      
     },
 
     getters:{

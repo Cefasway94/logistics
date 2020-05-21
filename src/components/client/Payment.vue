@@ -3,6 +3,28 @@
        
             <AlertError v-if="display_alert" v-bind:message="alert"/>
           
+            <v-overlay :value="overlay">
+
+                <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" height="500px">
+                        </v-col>
+
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                large
+                                color="primary white--text"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </div>
+                
+            </v-overlay>
 
              <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
@@ -120,7 +142,7 @@
                             v-model="amount"
                             :rules="[v => !!v || 'Amount is required']"
                             required>
-
+                            
                             <template #label>
                                 <span class="red--text"><strong>* </strong></span>
                             </template>
@@ -159,23 +181,32 @@
                         </v-text-field>
                     </v-flex>
 
-                    <v-flex column xs12 sm6 class=" pl-2">
+                    <v-flex column xs12 sm6 class="pl-10">
+
                         <p class=" body-1 mb-0 text-capitalize"> Receipt </p>
-                        
-                         <v-file-input 
-                                    label="Upload file here" 
-                                    id="slip"
-                                    @change="slipUpdated()"
-                                    prepend-icon ="mdi-cloud-upload"
-                                    :rules="[v => !!v || 'Receipt is required']"
-                                    required
+                         <v-card flat width="358" height="270"  outlined >
+
+                            <v-file-input 
+                                label="upload a slip" 
+                                id="slip" 
+                                :clearable="false"
+                                @change="slipUpdated()"
+                                prepend-icon ="mdi-cloud-upload"
+                                :rules="[v => !!v || 'Receipt is required']"
+                                required
                             >
+                                <template #label>
+                                    <span class="red--text"><strong>* </strong></span>
+                                </template>
+                            </v-file-input>
 
-                            <template #label>
-                                <span class="red--text"><strong>* </strong></span>
-                            </template>
+                            <div v-show="slip_extension === 'jpg' || slip_extension === 'jpeg' ||  slip_extension === 'png' ">
+                                <v-card height="200" width="358" outlined @click="showLargeThumbnail('slip')">
+                                    <img  id="slip_thumb" class="preview">
+                                </v-card>
+                            </div>
 
-                         </v-file-input>
+                        </v-card>
                     
                     </v-flex> 
             
@@ -252,6 +283,8 @@ export default {
 
             loading: false,
             display_alert: false,
+            overlay:false,
+            slip_extension:''
 
         }
     },
@@ -274,7 +307,69 @@ export default {
         },*/
 
          slipUpdated(){
-            this.depositors_slip.push(document.getElementById("slip").files[0]);
+            //this.depositors_slip.push(document.getElementById("slip").files[0]);
+
+            if(document.getElementById("slip").files[0]){
+
+                this.depositors_slip = [];
+                
+                this.depositors_slip.push(document.getElementById("slip").files[0]);
+
+                this.slip_extension = this.getFileExtension(document.getElementById("slip").files[0].name);
+
+                if(this.slip_extension === 'jpg' || this.slip_extension === 'jpeg' || this.slip_extension === 'png')
+                {
+                    var reader = new FileReader();
+
+                    reader.onload = function(){
+
+                        var dataURL = reader.result;
+
+                        var output = document.getElementById('slip_thumb');
+
+                        var large_thumbnail = document.getElementById('large_thumbnail');
+                        
+                        if(output !== null)
+                            output.src = dataURL;
+
+                        if(large_thumbnail !== null)
+                            large_thumbnail.src = dataURL;
+                    
+                    }
+
+                    reader.readAsDataURL(document.getElementById("slip").files[0]);
+                }
+
+            }
+        },
+
+         getFileExtension(url){
+
+            let position = url.lastIndexOf('.');
+
+            let extracted_string = url.slice(position + 1, url.length + 1);
+
+            return extracted_string;
+
+        },
+
+        showLargeThumbnail(id){
+
+            this.overlay = !this.overlay
+
+            var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+               
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+            reader.readAsDataURL(document.getElementById(id).files[0]);
         },
 
         isValid(){
@@ -601,3 +696,26 @@ export default {
 
 }
 </script>
+<style scoped>
+
+    img.preview{
+     width: 358px;
+     height: 200px
+     }
+
+ .large-preview{
+
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
+
+ img.preview:hover{
+     cursor: pointer;
+ }
+</style>
