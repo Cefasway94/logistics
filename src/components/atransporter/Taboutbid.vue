@@ -14,12 +14,12 @@
                             <v-spacer></v-spacer>
                             <!-- Removed router to and added the 'listId' function that consologs the id passed from New tenders page
                                 <v-btn color="#4169E1" @click="listId ()" large class="white--text" rauter to="/agent/biding">Bid on tender</v-btn> -->
-                            <v-btn 
+                            <!-- <v-btn 
                             color="#4169E1" 
                             large class="white--text"
                             @click="terminatebid()">
                             termianate bid
-                            </v-btn>
+                            </v-btn> -->
                         </v-flex>
                 </v-flex>
             </v-card>
@@ -44,9 +44,16 @@
                             </v-flex>
                         </v-flex>
 
-                        <v-flex column class="mt-7 pr-4">
-                            <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
+                        <v-flex row>
+                        <v-flex column class="mt-7 pl-3 pr-4">
+                            <p class="primary--text body-1 mb-2"> TERMS AND CONDITIIONS </p>
                             <p class="body-1">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
+                        </v-flex>
+
+                        <v-flex column class="mt-7 ">
+                            <p class="primary--text body-1 mb-2"> AMOUNT </p>
+                            <p class="body-1">{{LOAD_TENDER.customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
+                        </v-flex>
                         </v-flex>
 
                         <v-flex row class="mt-10 mb-4" >
@@ -156,7 +163,7 @@
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> BID AMOUNT </p>
-                            <p class="body-1 ">{{LOAD_DASHBOARD.objects && LOAD_DASHBOARD.objects.bid_amount}}  USD</p>
+                            <p class="body-1 ">{{LOAD_DASHBOARD.objects && LOAD_DASHBOARD.objects.bid_amount}} {{LOAD_DASHBOARD.objects.currency}}</p>
                             </v-flex>
                         </v-flex>
 

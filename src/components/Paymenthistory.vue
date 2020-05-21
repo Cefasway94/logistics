@@ -122,9 +122,6 @@
                         <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1; background-color:;" >Status</h4>                                             
                     </v-flex>
 
-                    <v-flex wrap xs12 sm4 md4 lg4 class="pr-2">
-                        <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Invoices</h4>                        
-                   </v-flex>
 
                 </v-layout>
                 
@@ -178,7 +175,7 @@
                     </center>
                     </v-flex>
 
-                    <v-flex 
+                    <!-- <v-flex 
                     wrap xs12 sm4 md4 lg4
                     class=""  style="background-color:white;">
                     <v-btn elevation="flat" height="50" class="mt-2 pt-3" color="transparent"  >
@@ -188,7 +185,7 @@
                         View Invoice
                         </h4>
                     </v-btn>
-                   </v-flex>
+                   </v-flex> -->
 
                 </v-layout>
                 
@@ -198,6 +195,9 @@
         </v-hover>
         </v-card>
 
+
+
+<!-- Transporter History -->
         <v-card
                 v-show="nopayments"
                 color="transparent"
@@ -234,10 +234,6 @@
                     <v-flex wrap xs12 sm4 md4 lg4 class=" justify-center"  >
                         <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1; background-color:;" >Status</h4>                                             
                     </v-flex>
-
-                    <v-flex wrap xs12 sm4 md4 lg4 class="pr-2">
-                        <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Invoices</h4>                        
-                   </v-flex>
 
                 </v-layout>
                 

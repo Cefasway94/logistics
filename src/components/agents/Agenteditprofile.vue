@@ -358,16 +358,22 @@
             <v-flex row class="px">
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Country</p>
-                    <v-text-field 
-                    v-model="country"
-                    outlined 
-                    class="" 
-                    clearable 
-                    color="#4169E1">
-                            <template #label>
-                                <span class="deep-orange--text"><strong>* </strong></span>
-                            </template>
-                    </v-text-field>
+                    <v-card
+                    outlined
+                    color="" 
+                    height="55" 
+                    class="card "
+                    style="border-color:#babdc2;">
+                    
+                      <country-select 
+                      v-model="country" 
+                      :country="country" 
+                      topCountry="Tanzania, United Republic of" 
+                      height="55"
+                      :countryName="true"
+                      :removePlaceholder="true"
+                      class="selectcountry"/>
+                    </v-card>
                 </v-flex>
 
                 <v-flex row sm6 mb6 justify-center>
@@ -981,3 +987,24 @@ export default {
 
 }
 </script>
+
+<style scoped>
+
+.selectcountry{
+          height:103%; 
+          width:100%; 
+          padding-left: 2%;
+          border-color: black ;
+          margin-bottom: 0%;
+           
+  }
+
+.selectcountry:hover {
+  border-color:black;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+}
+
+
+</style>

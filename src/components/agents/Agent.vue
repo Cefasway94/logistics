@@ -176,7 +176,7 @@
                     <v-row row class="mb-1 ">
 
                         <v-flex xsm12 sm12 md6 lg6 class="px-3">
-                        <h4  class=" title ">{{tender.bid_amount}} USD</h4>
+                        <h4  class=" title ">{{tender.bid_amount}} {{tender.currency}}</h4>
                         </v-flex>
 
                     <v-flex row xsm12 sm12 md12 lg6 class="px-3 pt-1">

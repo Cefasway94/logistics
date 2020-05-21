@@ -14,12 +14,12 @@
                             <v-spacer></v-spacer>
                             <!-- Removed router to and added the 'listId' function that consologs the id passed from New tenders page
                                 <v-btn color="#4169E1" @click="listId ()" large class="white--text" rauter to="/agent/biding">Bid on tender</v-btn> -->
-                            <v-btn 
+                            <!-- <v-btn 
                             color="#4169E1" 
                             large class="white--text"
                             @click="terminatebid()">
                             termianate bid
-                            </v-btn>
+                            </v-btn> -->
                         </v-flex>
                 </v-flex>
             </v-card>
@@ -42,8 +42,8 @@
                             </v-flex>
 
                             <v-flex column >
-                            <p class="primary--text body-1 mb-2"> CURRENCY </p>
-                            <p class="body-1">{{LOAD_TENDER.currency}}</p>
+                            <p class="primary--text body-1 mb-2"> AMOUNT </p>
+                            <p class="body-1">{{LOAD_TENDER.customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
                             </v-flex>
 
                             
@@ -161,7 +161,7 @@
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> BID AMOUNT </p>
-                            <p class="body-1 ">{{LOAD_DASHBOARD.objects.bid_amount}}  USD</p>
+                            <p class="body-1 ">{{LOAD_DASHBOARD.objects.bid_amount}}  {{LOAD_DASHBOARD.objects.currency}}</p>
                             </v-flex>
                         </v-flex>
 

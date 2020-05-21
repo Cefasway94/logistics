@@ -127,7 +127,32 @@
                     </v-alert>
                         </v-card>
                     </v-dialog>
-                               
+
+<!-- overlay -->
+            <v-overlay :value="overlay">
+
+                <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" height="500px">
+                        </v-col>
+
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                large
+                                color="primary white--text"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </div>
+                
+            </v-overlay>
+
+
                 
         <v-card flat width="900" class="mt-12 mx-auto mb-7" color="#F5FAFF">
             <v-flex row class="px-3 ">
@@ -182,7 +207,7 @@
             <v-flex column class="pt-3">
            
                 <v-flex row class="pb-5 pl-2 mt-3" style="background-color:;">
-                        <v-flex>
+                        <!-- <v-flex>
                         <p class="bondy-2 mb-0 ml-3 mb-1">Profile Image</p>
                         <v-card
                         flat 
@@ -243,7 +268,43 @@
                             </v-flex>
                             
                         </v-card>
-                        </v-flex>
+                        </v-flex> -->
+
+
+                        <!--  -->
+                        <v-col cols=12 sm=4 class="">
+                            <p class="primary--text body-2 text-uppercase mb-0"> PROFILE  <span class="red--text"><strong>* </strong></span></p>
+                            <v-card flat width="250" height="270" outlined >
+
+                                <v-file-input 
+                                    :clearable="false"
+                                    placeholder="Choose a file"
+                                    id="profile" 
+                                    @change="uploadprofile()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'identity card is required']"
+                                    required
+                                
+                                >
+
+                                </v-file-input>
+
+                                <div v-show="profile_extension === 'jpg' || profile_extension === 'jpeg' || profile_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="showLargeThumbnail('profile')">
+                                        <img  id="profile_thumb" class="preview">
+                                    </v-card>
+                                </div>
+                                
+
+                            </v-card>
+                    
+                        </v-col> 
+
+                        <!--  -->
+
+
+
+
                 </v-flex> 
             
 
@@ -371,16 +432,26 @@
             <v-flex row class="px">
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Country</p>
-                    <v-text-field 
-                    v-model="country"
-                    outlined 
-                    class="" 
-                    clearable 
-                    color="#4169E1">
-                            <template #label>
+                    <v-card
+                    outlined
+                    color="" 
+                    height="55" 
+                    class="card "
+                    style="border-color:#babdc2;">
+                    
+                      <country-select 
+                      v-model="country" 
+                      :country="country" 
+                      topCountry="Tanzania, United Republic of" 
+                      height="55"
+                      :countryName="true"
+                      :removePlaceholder="true"
+                      class="selectcountry"/>
+                    </v-card>
+                            <!-- <template #label>
                                 <span class="deep-orange--text"><strong>* </strong></span>
-                            </template>
-                    </v-text-field>
+                            </template> -->
+                    
                 </v-flex>
 
                 <v-flex row sm6 mb6 justify-center>
@@ -439,7 +510,8 @@
                 </v-progress-linear>
 
             <v-row class="pt-3">
-                <v-col>
+
+                <!-- <v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Certificate</p>
                      <v-card 
                      flat 
@@ -468,7 +540,52 @@
                             </v-file-input>
                          </v-flex>
                     </v-card>
-                </v-col>
+                </v-col> -->
+
+                 <v-col cols=12 sm=4 class="">
+                    <p class="bondy-2 mb-0 ml-3 mb-0">Certificate</p>
+                    <v-card flat width="250" height="270" outlined >
+
+                        <v-file-input 
+                            :clearable="false"
+                            placeholder="Choose a file"
+                            id="certificate" 
+                            @change="updatecertificate()"
+                            prepend-icon ="mdi-cloud-upload"
+                            :rules="[v => !!v || 'identity card is required']"
+                            required
+                        
+                        >
+
+                        </v-file-input>
+
+                        <v-flex v-if="certificate_extension === 'jpg' || certificate_extension === 'jpeg' || certificate_extension === 'png'">
+                            <v-card v-if="startswith == true" height="200" width="250" outlined @click="showLargeThumbnail('certificate')">
+                                <img  id="certificate_thumb"  class="preview">
+                            </v-card>
+
+                            <v-card height="230" width="250" outlined @click="largePreview(certificate)">
+                                <img  id="certificate_thumb"  class="preview">
+                            <p>uihgidfhg</p>
+                            </v-card>
+                        </v-flex>
+
+                        <v-flex v-else>
+
+                             <v-btn 
+                                :block="true"
+                                icon class="mt-7" 
+                                @click="openTab(id_url)"
+                                >
+                                PREVIEW<v-icon x-large>mdi-file</v-icon>
+                            </v-btn>
+
+                        </v-flex>
+                        
+
+                    </v-card>
+                    
+                </v-col> 
 
                 <v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Insurance</p>
@@ -690,7 +807,7 @@ export default {
 // confirm edit profiile -------------------
            confirm_edit_profile:'',
 
-            overlay: false,
+            
 
 
            rules: {
@@ -725,6 +842,15 @@ export default {
 
            // Priview thumb nails
            large_preview_url:'',
+           overlay: false,
+
+           startswith:false,
+           
+           profile_extension:'',
+
+           certificate_extension:'',
+           certificate_url:'',
+           
           
     }
    },
@@ -745,6 +871,19 @@ export default {
             }
 
             if (!this.LOAD_AGENT.objects.agent_id == ''){
+
+                if(this.LOAD_AGENT.objects.certificate !== null)
+                {
+                    
+                    this.certificate_url = this.LOAD_AGENT.objects.certificate[0]
+
+                    this.certificate_extension = this.getFileExtension(this.certificate_url);
+
+                    console.log(this.certificate_extension);
+                    
+                    
+                    
+                }
                 
                 this.name = this.LOAD_AGENT.objects.company_name
                 this.faxnumber = this.LOAD_AGENT.objects.fax
@@ -765,6 +904,13 @@ export default {
            }
         })
 
+         this.http()
+
+         console.log(this.startswith);
+         
+
+        
+
     },
 
    methods: {
@@ -774,23 +920,55 @@ export default {
         "T_POST_PAYMENT_TERMS"
     ]),
             
-            // largePreview(src){
+            http(){
+                
+                if(this.certificate_url.startsWith('http')){
 
-            //     this.large_preview_url = src;
+                    this.startswith = true
+                }
 
-            //     this.overlay = !this.overlay;
+                console.log(this.certificate_url);
+                
 
-            // },
+                
+            },
 
-            // getFileExtension(url){
+            largePreview(src){
 
-            //     let position = url.lastIndexOf('.');
+                this.large_preview_url = src;
 
-            //     let extracted_string = url.slice(position + 1, url.length + 1);
+                this.overlay = !this.overlay;
 
-            //     return extracted_string;
+            },
 
-            // },
+            getFileExtension(url){
+
+                let position = url.lastIndexOf('.');
+
+                let extracted_string = url.slice(position + 1, url.length + 1);
+
+                return extracted_string;
+
+            },
+
+            showLargeThumbnail(id){
+
+            this.overlay = !this.overlay
+
+            var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+               
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+            reader.readAsDataURL(document.getElementById(id).files[0]);
+        },
 
             validate(){
 
@@ -890,14 +1068,49 @@ export default {
             },
                
            updateinsurance(){
-               this.insurance = []
-               this.insurance.push(document.getElementById("insurance").files[0])
+               //this.insurance = []
+               //this.insurance.push(document.getElementById("insurance").files[0])
                
+                    
                },
 
            updatecertificate(){
-               this.certificate = []
-               this.certificate.push(document.getElementById("certificate").files[0])
+               //this.certificate = []
+               //this.certificate.push(document.getElementById("certificate").files[0])
+                if(document.getElementById("certificate").files[0]){
+
+                    this.certificate = [];
+
+                    this.certificate.push(document.getElementById("certificate").files[0]);
+                    
+                    this.certificate_extension = this.getFileExtension(document.getElementById("certificate").files[0].name);
+
+                    if(this.certificate_extension === 'jpg' || this.certificate_extension === 'jpeg' || this.certificate_extension === 'png')
+                    {
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('certificate_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("certificate").files[0]);
+                    }
+
+                
+                }
            },
             
             uploadother(){ 
@@ -923,9 +1136,43 @@ export default {
                 // }
 
 
-               console.log(document.getElementById("profile_image").files[0]);
+              // console.log(document.getElementById("profile_image").files[0]);
                 
                 //this.profile_image = 'profile image'
+                if(document.getElementById("profile").files[0]){
+
+                    this.profile_image = [];
+
+                    this.profile_image.push(document.getElementById("profile").files[0]);
+                    
+                    this.profile_extension = this.getFileExtension(document.getElementById("profile").files[0].name);
+
+                    if(this.profile_extension === 'jpg' || this.profile_extension === 'jpeg' || this.profile_extension === 'png')
+                    {
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('profile_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("profile").files[0]);
+                    }
+
+                
+                }
             },
 
             dataobject(){
@@ -1054,3 +1301,54 @@ export default {
 
 }
 </script>
+
+<style scoped>
+
+.selectcountry{
+          height:103%; 
+          width:100%; 
+          padding-left: 2%;
+          border-color: black ;
+          margin-bottom: 0%;
+           
+  }
+
+.selectcountry:hover {
+  border-color:black;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+}
+
+
+ .select-control{
+     width:100%;
+     height:100%;
+     cursor: pointer;
+     
+ }
+ 
+ img.preview{
+     width: 248px;
+     height: 200px
+ }
+
+ .large-preview{
+
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
+
+ .progress { z-index: 1;}
+
+ img.preview:hover{
+     cursor: pointer;
+ }
+
+</style>

@@ -42,6 +42,29 @@
                 </v-dialog>   
 
 
+                 <v-overlay :value="overlay">
+            <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                        </v-col>
+
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                large
+                                color="primary white--text"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    
+            </div>
+        </v-overlay>
+
+
                 
         <v-card flat width="900" class="mt-12 mx-auto mb-7" color="#F5FAFF">
             <v-flex row class="px-3 ">
@@ -261,15 +284,30 @@
                      height="150" 
                      outlined 
                      class="mx-3">
-                         <v-flex class="" style="background-color:#F5FAFF;" >
+                         <v-flex 
+                         class="" 
+                         style="background-color:#F5FAFF;" 
+                         v-show="(certificate_extension === 'jpg') || (certificate_extension === 'jpg') || (certificate_extension === 'png')" 
+                         @click="largePreview(certificate)">
                             <v-img 
                             :src="certificate"
                             class="mb-0 pb-0" 
                             height="147" 
-                            width="100" 
+                            width="200" 
                             >
                             </v-img>
                          </v-flex>
+                         <v-flex v-show="certificate_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="openTab(certificate)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                        </v-flex>
                     </v-card>
                 </v-col>
 
@@ -448,6 +486,9 @@ export default {
            loading:false,
            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
           
+          overlay:false,
+
+
     }
    },
 
@@ -467,6 +508,14 @@ export default {
             }
 
             if (!this.LOAD_AGENT.objects.agent_id == ''){
+
+                 if(this.LOAD_AGENT.objects.certificate !== null)
+                {
+                    
+                    this.certificate = this.LOAD_AGENT.objects.certificate[0]
+
+                    this.certificate_extension = this.getFileExtension(this.certificate);
+                }
                 
                 this.name = this.LOAD_AGENT.objects.company_name
                 this.faxnumber = this.LOAD_AGENT.objects.fax
@@ -481,6 +530,7 @@ export default {
                 this.aname = this.LOAD_AGENT.objects.account_name
                 this.acnumber = this.LOAD_AGENT.objects.account_number
                 this.profileimage = this.LOAD_AGENT.objects.profile_image[0]
+               
            }else{
                 this.mail = localStorage.client
            }
@@ -500,6 +550,29 @@ export default {
                 //this.$router.go('/transporter/editprofile')   
               },
 
+        openTab(url){
+
+            window.open(url);
+        },
+
+        largePreview(src){
+
+            this.large_preview_url = src;
+
+            this.overlay = !this.overlay;
+
+        },
+
+        getFileExtension(url){
+
+            let position = url.lastIndexOf('.');
+
+            let extracted_string = url.slice(position + 1, url.length + 1);
+
+            return extracted_string;
+
+        },
+
             
    },
 
@@ -512,3 +585,17 @@ export default {
 
 }
 </script>
+<style scoped>
+
+.large-preview{
+
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
+</style>

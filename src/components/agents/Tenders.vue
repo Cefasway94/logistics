@@ -109,7 +109,7 @@
                 @click="gettenderdetails(tender.id)"
                 :elevation="hover ? 15 : 3">
                    
-                    <v-row  row class="pl-3 pt-1 mb-1 justify-space-between">
+                    <v-row  row class="pl-3 pt-2 mb-1 justify-space-between">
                         <v-flex wrap xs9 sm9>
                         <h4  class="subtitle-1 font-weight-bold">{{tender.cargo_details}}</h4>
                         </v-flex>
