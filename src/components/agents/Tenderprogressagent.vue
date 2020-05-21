@@ -74,7 +74,7 @@
                                 v-show="(bill_of_lading_extension === 'jpg') || (bill_of_lading_extension === 'jpeg') || (bill_of_lading_extension === 'png')" 
                                 @click="largePreview(bill_of_lading_url)"
                             >
-                                <img :src="photo_url" width=200 height=150/>
+                                <img :src="bill_of_lading_url" width=200 height=150/>
                             </div>
                 
                             <div v-show="bill_of_lading_extension === 'pdf'">
