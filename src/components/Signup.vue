@@ -79,7 +79,7 @@
                 <v-row justify="center" >
                   <v-dialog
                     v-model="dialog1"
-                    max-width="350">
+                    max-width="360">
                     <v-card>
                       <p class="title font-weight-regular text-center pt-3 mb-3">
                         You are about to signup as
@@ -152,22 +152,35 @@
                       </p>
                       </v-flex>
                       </v-flex>
+
+                       <v-card flat width="400"  class="pl-2 pa-1 mb-5">
+              
+                        <v-flex row class="pl-5">
+                          
+                          <v-flex xs11 sm11 md11 class="pl-1" style="background-color:;">
+                            <center>
+                          <p class="mb-0 body-1 primary--text">
+                            Agent deals with Clearing and forwarding 
+                          </p>
+                          </center>
+                          </v-flex>
+                        </v-flex>
+                        </v-card> 
                       
-                      <v-card-actions>
+                      <v-card-actions class="mt-2" style="background-color:#4069e2;">
                         <v-spacer></v-spacer>
 
                         <v-btn
-                          color="primary darken-1"
+                          color="white "
                           text
                           @click="dialog1 = false">
                           Disagree
                         </v-btn>
-                        
-
+                                            
                         <v-spacer></v-spacer>
 
                         <v-btn
-                          color="primary darken-1"
+                          color="white darken-1"
                           text
                           @click.prevent=" Register()">
                           Agree
@@ -186,7 +199,7 @@
                 <v-row justify="center" >
                   <v-dialog
                     v-model="dialog2"
-                    max-width="350">
+                    max-width="360">
                     <v-card>
                       <p class="title font-weight-regular text-center pt-3 mb-3">
                         You are about to signup as
@@ -259,27 +272,37 @@
                       </p>
                       </v-flex>
                       </v-flex>
+
+                      <v-card flat width="400"  class="pl-2 pa-1 mb-5">
+                        <v-flex row class="pl-5">
+                          <v-flex xs11 sm11 md11 class="pl-1" style="background-color:;">
+                            <center>
+                          <p class="mb-0 body-1 primary--text">
+                            Transporter deals with transportation 
+                          </p>
+                          </center>
+                          </v-flex>
+                        </v-flex>
+                        </v-card> 
                       
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
+                      <v-card-actions class="mt-2" style="background-color:#4069e2;">
+                          <v-spacer></v-spacer>
 
-                        <v-btn
-                          color="primary darken-1"
-                          text
-                          @click="dialog2 = false">
-                          Disagree
-                        </v-btn>
-                        
+                            <v-btn
+                              color="white "
+                              text
+                              @click="dialog1 = false">
+                              Disagree
+                            </v-btn>
+                                                
+                            <v-spacer></v-spacer>
 
-                        <v-spacer></v-spacer>
-
-                        <v-btn
-                          color="primary darken-1"
-                          text
-                          @click.prevent=" Register()">
-                          Agree
-                        </v-btn>
-
+                            <v-btn
+                              color="white darken-1"
+                              text
+                              @click.prevent=" Register()">
+                              Agree
+                            </v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
@@ -366,27 +389,37 @@
                       </p>
                       </v-flex>
                       </v-flex>
+
+                      <v-card flat width="400"  class="pl-2 pa-1 mb-5">
+                        <v-flex row class="pl-5">
+                          <v-flex xs11 sm11 md11 class="pl-1" style="background-color:;">
+                            <center>
+                          <p class="mb-0 body-1 primary--text">
+                            Client is a regular customer  
+                          </p>
+                          </center>
+                          </v-flex>
+                        </v-flex>
+                        </v-card> 
                       
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
+                      <v-card-actions class="mt-2" style="background-color:#4069e2;">
+                         <v-spacer></v-spacer>
 
-                        <v-btn
-                          color="primary darken-1"
-                          text
-                          @click="dialog3 = false">
-                          Disagree
-                        </v-btn>
-                        
+                            <v-btn
+                              color="white "
+                              text
+                              @click="dialog1 = false">
+                              Disagree
+                            </v-btn>
+                                                
+                            <v-spacer></v-spacer>
 
-                        <v-spacer></v-spacer>
-
-                        <v-btn
-                          color="primary darken-1"
-                          text
-                          @click.prevent=" Register()">
-                          Agree
-                        </v-btn>
-
+                            <v-btn
+                              color="white darken-1"
+                              text
+                              @click.prevent=" Register()">
+                              Agree
+                            </v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-dialog>
@@ -495,7 +528,7 @@
                     </v-card>
                     </template>
                     </v-hover>
-                    <v-flex class="pl-4 justify-center">
+                    <v-flex class="pl justify-center">
                     <p class="mt-1  mb-0 caption">Agent</p>
                     </v-flex>
                     </center>
@@ -528,7 +561,7 @@
                     </v-card>
                     </template>
                     </v-hover>
-                    <v-flex class="pl-4 ">
+                    <v-flex class=" ">
                     <p class="mt-1  mb-0 caption">Client</p>
                     </v-flex>
                     </center>
@@ -545,8 +578,9 @@
             height="6"
             color="#4169E1">
             </v-progress-linear>
-            </v-card>      
-                    
+            </v-card>     
+
+                               
                   <v-flex column class="pl-4">
 
                     <v-flex row class="mb-4 ">

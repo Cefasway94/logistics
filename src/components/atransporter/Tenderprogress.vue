@@ -1,6 +1,28 @@
 <template>
     <v-container id="scrolling-techniques" class=" mt-12 px-5">
 
+            <v-overlay :value="overlay">
+                <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                        </v-col>
+
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                
+                                color="primary"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    
+                </div>
+            </v-overlay>
+
             <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                 <v-flex>
@@ -11,7 +33,7 @@
                 <p class="grey--text">{{LOAD_TENDER.description}}</p>
                 </v-flex>
                 <v-spacer></v-spacer>
-                <h2 style="colo:#4169E1;">500.0 {{LOAD_TENDER.currency}}</h2>
+                <h2 class="primary--text" style="colo:#4169E1;">- - -  {{LOAD_TENDER.currency}}</h2>
                 </v-flex>
             </v-card>
 
@@ -41,38 +63,130 @@
                         </v-flex>
 
                         <v-flex row class="mt-7 mb-4" >
-                            <v-flex column class="pl-3">
-                            <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
-                            <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-img class="ma-auto" :src="bill_of_lading">
-                                <v-icon color="primary" x-large class="mx-12 mt-10">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
-                        </v-card>
-                            </v-flex>
 
-                            <v-flex column >
-                            <p class="primary--text body-1 mb-2"> LETTER </p>
-                            <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-img class="ma-auto" :src="authorization_letter">
-                                <v-icon color="primary" x-large class="mx-12 mt-10">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
-                        </v-card>
-                            </v-flex>
+                            <v-flex column class="px-3">
+                                    <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
+                                    <v-card 
+                                        flat 
+                                        width="200" 
+                                        height="150" 
+                                        outlined 
+                                        class="">
+                                            <v-flex 
+                                            class="" 
+                                            style="background-color:#F5FAFF;" 
+                                            v-show="(bill_extension === 'jpg') || (bill_extension === 'jpg') || (bill_extension === 'png')" 
+                                            @click="largePreview(bill)">
+                                                <v-img 
+                                                :src="bill"  
+                                                class="mb-0 pb-0" 
+                                                height="147" 
+                                                width="200" 
+                                                >
+                                                
+                                                </v-img>
+                                            </v-flex>
+                                            <v-flex v-show="bill_extension === 'pdf'">
 
-                            <v-flex column >
-                            <p class="primary--text body-1 mb-2"> OTEHER </p>
-                            <v-card color="lblue" flat width="150" height="130" outlined>
-                            <v-img class="ma-auto" :src="cargo_photo">
-                                <v-icon color="primary" x-large class="mx-12 mt-10">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
-                        </v-card>
-                            </v-flex>
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="openTab(bill)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                </v-btn>
+
+                                                </v-flex>
+                                            </v-card>
+                                        </v-flex>                                            
+
+                            
+                                    <v-flex column class="px-3">
+                                                <p class="primary--text body-1 mb-2"> AUTHORITY LETTER </p>
+                                        <v-card 
+                                            flat 
+                                            width="200" 
+                                            height="150" 
+                                            outlined 
+                                            class="">
+                                                <v-flex 
+                                                class="" 
+                                                style="background-color:#F5FAFF;" 
+                                                v-show="(authorization_letter_extension === 'jpg') 
+                                                || (authorization_letter_extension === 'jpg') 
+                                                || (authorization_letter_extension === 'png')" 
+                                                @click="largePreview(authorization_letter)">
+                                                    <v-img 
+                                                    :src="authorization_letter"  
+                                                    class="mb-0 pb-0" 
+                                                    height="147" 
+                                                    width="200" 
+                                                    >
+                                                    
+                                                    </v-img>
+                                                </v-flex>
+                                                <v-flex v-show="authorization_letter_extension === 'pdf'">
+
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="openTab(authorization_letter)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                              </v-btn>
+                                            </v-flex>
+                                        </v-card>
+                                    </v-flex> 
+
+                                    <v-flex column class="px-3">
+                                                <p class="primary--text body-1 mb-2"> CARGO PHOTO </p>
+                                        <v-card 
+                                            flat 
+                                            width="200" 
+                                            height="150" 
+                                            outlined 
+                                            class="">
+                                                <v-flex 
+                                                class="" 
+                                                style="background-color:#F5FAFF;" 
+                                                v-show="(cargo_photo_extension === 'jpg') 
+                                                || (cargo_photo_extension === 'jpg') 
+                                                || (cargo_photo_extension === 'png')" 
+                                                @click="largePreview(cargo_photo)">
+                                                    <v-img 
+                                                    :src="cargo_photo"  
+                                                    class="mb-0 pb-0" 
+                                                    height="147" 
+                                                    width="200" 
+                                                    >
+                                                    
+                                                    </v-img>
+                                                </v-flex>
+                                                <v-flex v-show="cargo_photo_extension === 'pdf'">
+
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="openTab(cargo_photo)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                              </v-btn>
+                                            </v-flex>
+                                        </v-card>
+                                        </v-flex>
+
+                                
+                                    <!-- <v-flex column >
+                                    <p class="primary--text body-1 mb-2"> OTEHER </p>
+                                    <v-card color="lblue" flat width="150" height="130" outlined>
+                                    <v-img class="ma-auto" :src="cargo_photo">
+                                        <v-icon color="primary" x-large class="mx-12 mt-10">
+                                            cloud_upload
+                                        </v-icon>
+                                    </v-img>
+                                     </v-card>
+                                    </v-flex> -->
+
                         </v-flex>
                         </v-flex>
                     </v-card>
@@ -710,7 +824,7 @@ export default {
     data(){
         return{
             //files ------------
-            bill_of_lading:'',
+            bill:'',
             authorization_letter:'',
             cargo_photo:'',
 
@@ -762,26 +876,58 @@ export default {
             comment:'',
             extension:false,
             placeholder: 1,
-            value:''
+            value:'',
+
+            // Thumbnails  -------
+            bill_extension:'',
+            authorization_letter_extension:'',
+            cargo_photo_extension:'',
+            
+            large_preview_url:'',
+
+            overlay:false,
         }
     },
 
      beforeRouteEnter (to, from, next){
     next(vm =>{  vm.T_GET_TENDERSDETAILs(to.params.id).then(()=>{
 
-           vm.bill_of_lading = vm.LOAD_TENDER.bill_of_lading[0]
-           vm.authorization_letter = vm.LOAD_TENDER.authorization_letter[0]
-           vm.authorization_letter = vm.LOAD_TENDER.cargo_photo[0]
-           
-          // eslint-disable-next-line no-console
-              console.log('the onprogress outpost');
-              // eslint-disable-next-line no-console
-              console.log(to.params.id);
-              // eslint-disable-next-line no-console
-              console.log(vm.LOAD_TENDER);
+                vm.bill = vm.LOAD_TENDER.bill_of_lading[0]
+                vm.authorization_letter = vm.LOAD_TENDER.authorization_letter[0]
+                
+                vm.cargo_photo = vm.LOAD_TENDER.cargo_photo[0]
+                
+                // eslint-disable-next-line no-console
+                    console.log('the onprogress outpost');
+                    // eslint-disable-next-line no-console
+                    console.log(to.params.id);
+                    // eslint-disable-next-line no-console
+                    console.log(vm.LOAD_TENDER);
+
+                    if(vm.LOAD_TENDER.bill_of_lading !== null){
+                            
+                            vm.bill = vm.LOAD_TENDER.bill_of_lading[0]
+
+                            vm.bill_extension = vm.getFileExtension(vm.bill);
+                        }
+
+                        if(vm.LOAD_TENDER.authorization_letter !== null){
+                            
+                            vm.authorization_letter = vm.LOAD_TENDER.authorization_letter[0]
+
+                            vm.authorization_letter_extension = vm.getFileExtension(vm.authorization_letter);
+                        }
+
+                        if(vm.LOAD_TENDER.cargo_photo !== null){
+                            
+                            vm.cargo_photo = vm.LOAD_TENDER.cargo_photo[0]
+
+                            vm.cargo_photo_extension = vm.getFileExtension(vm.cargo_photo);
+                        }
 
           vm.T_GET_AGENT(localStorage.client).then(()=>{
-              console.log(vm.LOAD_AGENT)
+
+                console.log(vm.LOAD_AGENT)
 
             vm.T_GET_PAYMENT_PROGRESS(to.params.id).then(()=>{
                 console.log(vm.LOAD_PAYMENT_PROGRESS)
@@ -946,6 +1092,29 @@ methods :{
       'T_GET_PAYMENT_PROGRESS',
       'T_GET_TIMELINE_STAGES'
     ]),
+
+     openTab(url){
+
+            window.open(url);
+        },
+
+        largePreview(src){
+
+            this.large_preview_url = src;
+
+            this.overlay = !this.overlay;
+
+        },
+
+        getFileExtension(url){
+
+            let position = url.lastIndexOf('.');
+
+            let extracted_string = url.slice(position + 1, url.length + 1);
+
+            return extracted_string;
+
+        },
 
 
     submiteProgress(){
