@@ -7,7 +7,7 @@
         <!--<canvas id="canvas">
 
         </canvas>-->
-        <PDFDocument v-bind="{url}" v-if="pdf"/>
+        <!-- <PDFDocument v-bind="{url}" v-if="pdf"/> -->
 
         <v-overlay :value="overlay">
             <div class="large-preview">
@@ -464,7 +464,7 @@ import axios from 'axios'
 import AlertError from '@/components/AlertError.vue'
 import Alert from '@/components/Alert.vue'
 import {mapGetters} from 'vuex'
-import PDFDocument from '@/components/PDFDocument.vue'
+// import PDFDocument from '@/components/PDFDocument.vue'
  /*import('pdfjs-dist/webpack').then(pdfjs=>{
 
         pdfjs.getDocument('http://oxobucket.s3-us-west-1.amazonaws.com/1590166088_0357-microsoft-excel-2010-level-2.pdf').then(doc=>{
@@ -493,7 +493,7 @@ import PDFDocument from '@/components/PDFDocument.vue'
 export default {
     name: 'Profile',
 
-    components:{AlertError,Alert,PDFDocument},
+    components:{AlertError,Alert},
 
     data () {
         return {
