@@ -493,7 +493,6 @@ export default {
     }
    },
 
-
     created (){
          
         this.GET_AGENT(localStorage.client).then(()=>{
