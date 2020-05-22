@@ -42,7 +42,7 @@
                 </v-dialog>   
 
 
-                 <v-overlay :value="overlay">
+        <v-overlay :value="overlay">
             <div class="large-preview">
                     
                     <v-row justify= "center">
@@ -406,20 +406,17 @@
                 color="#4169E1">
                 </v-progress-linear>
 
-            <v-flex column class="px-3 pt-5">
+            <v-flex row column class="px-3 pt-5">
             <p class="bondy-2 mb-0  mb-0">Payment terms</p>
-            <v-select
-              attach
-              chips
-              multiple
-              class=""
-              style="color:#4169E1;"
-              :items="payment_terms"
-              color="#4169E1"
-              clearable
-              v-model="terms_of_payment"
+            <v-flex xs6 sm3 md3 lg3 xl3 class="py-3 px-1 justify-center" 
+             v-for="(tender, i) in payment_terms" :key="i"  >
+             <v-chip
+            class="ma-2"
             >
-            </v-select>
+            {{tender}}
+            </v-chip>
+
+            </v-flex>
             </v-flex>
         </v-card>
 
@@ -523,7 +520,7 @@ export default {
            edited:false,
            verification:false,
            loading:false,
-           payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
+           payment_terms:[],
           
           overlay:false,
 
@@ -533,8 +530,10 @@ export default {
 
 
     created (){
+
          
         this.T_GET_AGENT(localStorage.client).then(()=>{
+
 
             console.log(this.LOAD_AGENT);
 
@@ -579,6 +578,19 @@ export default {
            }else{
                 this.mail = localStorage.client
            }
+        }).then(()=>{
+            this.T_GET_AGENT_PAYMENT_TERMS(localStorage.client).then(()=>{
+
+                  console.log('transporter payment terms');
+                  console.log(this.LOAD_AGENT_PAYMENT_TERMS.length);
+
+                  for (let index = 0; index < this.LOAD_AGENT_PAYMENT_TERMS.length; index++) {
+
+                      this.payment_terms.push( this.LOAD_AGENT_PAYMENT_TERMS[index].installment_desc)                      
+                  }
+                  console.log(this.payment_terms);
+                  
+              })
         })
 
     },
@@ -586,7 +598,7 @@ export default {
    methods: {
 
        ...mapActions([
-        "T_GET_AGENT","T_POST_PAYMENT_TERMS"
+        "T_GET_AGENT","T_POST_PAYMENT_TERMS","T_GET_AGENT_PAYMENT_TERMS"
     ]),
       
             editaccount(){
@@ -623,7 +635,7 @@ export default {
 
    computed: {
       ...mapGetters([
-          'LOAD_AGENT','LOAD_PROFILE','LOAD_POST_PAYMENT_TERMS'
+          'LOAD_AGENT','LOAD_PROFILE','LOAD_POST_PAYMENT_TERMS', 'LOAD_AGENT_PAYMENT_TERMS'
           //'LOAD_DIBTENDERS'
       ])
   }

@@ -88,7 +88,7 @@
                                 width="200" 
                                 height="150" 
                                 outlined 
-                                class="mx-3">
+                                class="">
                                     <v-flex 
                                     class="" 
                                     style="background-color:#F5FAFF;" 
@@ -117,18 +117,15 @@
                                 </v-card>
                             </v-flex>
 
-                            <!-- authorization_letter_extension:'',
-           authorization_letter:'',
-           authorization_letter_extension_url:'' -->
-
-                            <v-flex column >
+                
+                            <v-flex column class="px-3" >
                             <p class="primary--text body-1 mb-2"> AUTHORITY LETTER </p>
                             <v-card 
                                 flat 
                                 width="200" 
                                 height="150" 
                                 outlined 
-                                class="mx-3">
+                                class="">
                                     <v-flex 
                                     class="" 
                                     style="background-color:#F5FAFF;" 
@@ -158,6 +155,43 @@
                                     </v-flex>
                                 </v-card>
                             </v-flex>
+
+                            <v-flex column class="px-3" >
+                                    <p class="primary--text body-1 mb-2"> CARGO PHOTO </p>
+                                        <v-card 
+                                            flat 
+                                            width="200" 
+                                            height="150" 
+                                            outlined 
+                                            class="">
+                                                <v-flex 
+                                                class="" 
+                                                style="background-color:#F5FAFF;" 
+                                                v-show="(cargo_photo_extension === 'jpg') 
+                                                || (cargo_photo_extension === 'jpg') 
+                                                || (cargo_photo_extension === 'png')" 
+                                                @click="largePreview(cargo_photo)">
+                                                    <v-img 
+                                                    :src="cargo_photo"  
+                                                    class="mb-0 pb-0" 
+                                                    height="147" 
+                                                    width="200" 
+                                                    >
+                                                    
+                                                    </v-img>
+                                                </v-flex>
+                                                <v-flex v-show="cargo_photo_extension === 'pdf'">
+
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="openTab(cargo_photo)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                              </v-btn>
+                                            </v-flex>
+                                        </v-card>
+                             </v-flex>
 
                             <!-- <v-flex column >
                             <p class="primary--text body-1 mb-2"> OTHER </p>
@@ -243,7 +277,7 @@
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> BID AMOUNT </p>
-                            <p class="body-1 ">{{LOAD_DASHBOARD.objects && LOAD_DASHBOARD.objects.bid_amount}} {{LOAD_DASHBOARD.objects.currency}}</p>
+                            <p class="body-1 ">{{LOAD_DASHBOARD.objects && LOAD_DASHBOARD.objects.bid_amount}} {{ LOAD_DASHBOARD.objects.currency}}</p>
                             </v-flex>
                         </v-flex>
 
@@ -291,13 +325,19 @@ export default {
            bill_extension:'',
            bill_url:'',
 
-           overlay: false,
-           large_preview_url:'',
-
+           cargo_photo_extension:'',
+           cargo_photo:'',
+           cargo_photo_url:'',
+           
            // letter thumbnail
            authorization_letter_extension:'',
            authorization_letter:'',
-           authorization_letter_extension_url:''
+           authorization_letter_extension_url:'',
+
+
+           overlay: false,
+           large_preview_url:'',
+
          
   }
 
@@ -327,17 +367,25 @@ export default {
 
                         if(!vm.LOAD_TENDER.bill_of_lading[0] == ''){
 
-                            vm.bill = vm.LOAD_TENDER.bill_of_lading[0]
-                            vm.bill_extension = vm.getFileExtension(vm.bill);
-                            console.log(vm.bill)
+                                    vm.bill = vm.LOAD_TENDER.bill_of_lading[0]
+                                    vm.bill_extension = vm.getFileExtension(vm.bill);
+                                    console.log(vm.bill)
 
                             }
 
                             if(!vm.LOAD_TENDER.authorization_letter[0] == ''){
 
-                            vm.authorization_letter = vm.LOAD_TENDER.authorization_letter[0]
-                            vm.authorization_letter_extension = vm.getFileExtension(vm.authorization_letter);
-                            console.log(vm.authorization_letter)
+                                    vm.authorization_letter = vm.LOAD_TENDER.authorization_letter[0]
+                                    vm.authorization_letter_extension = vm.getFileExtension(vm.authorization_letter);
+                                    console.log(vm.authorization_letter)
+
+                            }
+
+                            if(!vm.LOAD_TENDER.cargo_photo[0] == ''){
+
+                                    vm.cargo_photo = vm.LOAD_TENDER.cargo_photo[0]
+                                    vm.cargo_photo_extension = vm.getFileExtension(vm.cargo_photo);
+                                    console.log(vm.cargo_photo)
 
                             }
 
