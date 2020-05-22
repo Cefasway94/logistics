@@ -4,6 +4,11 @@
 
         <Alert v-if="alert" v-bind:message="alert"/>
 
+        <!--<canvas id="canvas">
+
+        </canvas>-->
+        <PDFDocument v-bind="{url}" v-if="pdf"/>
+
         <v-overlay :value="overlay">
             <div class="large-preview">
                     
@@ -236,11 +241,10 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(tin_url)"
+                                        @click="previewPdf(tin_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
-
                                 </div>
                             </v-col>
                         </v-row>
@@ -460,12 +464,36 @@ import axios from 'axios'
 import AlertError from '@/components/AlertError.vue'
 import Alert from '@/components/Alert.vue'
 import {mapGetters} from 'vuex'
+import PDFDocument from '@/components/PDFDocument.vue'
+ /*import('pdfjs-dist/webpack').then(pdfjs=>{
+
+        pdfjs.getDocument('http://oxobucket.s3-us-west-1.amazonaws.com/1590166088_0357-microsoft-excel-2010-level-2.pdf').then(doc=>{
+          doc.getPage(1).then(page=>{
+
+            var viewport = page.getViewport(1);
+          
+            const canvas =document.getElementById('canvas');
+            canvas.height = viewport.height
+            canvas.width = viewport.width
+
+            const context = canvas.getContext('2d');
+
+            page.render({
+                canvasContext: context,
+                viewport: viewport
+              });
+
+    });
+  }
+
+  );
+});*/
 
 
 export default {
     name: 'Profile',
 
-    components:{AlertError,Alert},
+    components:{AlertError,Alert,PDFDocument},
 
     data () {
         return {
@@ -505,7 +533,10 @@ export default {
            tax_payer_url:'',
            vat_url:'',
            licence_url:'',
-           bank_statement_url:''
+           bank_statement_url:'',
+
+           url:'',
+           pdf:false
       }
       
     },
@@ -522,6 +553,11 @@ export default {
             window.open(url);
         },
 
+        previewPdf(url){
+
+            this.url = url;
+            this.pdf = true;
+        },
 
         largePreview(src){
 

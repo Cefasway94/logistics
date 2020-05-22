@@ -1,5 +1,4 @@
 <template>
- 
     <div class="pdf-document">
 
       <canvas id="canvas">
@@ -7,7 +6,6 @@
       </canvas>
 
     </div>
-
 </template>
 
 <script>
@@ -29,7 +27,9 @@ export default {
   methods: {
    
     fetchPDF() {
-     import('pdfjs-dist/webpack').then(pdfjs=>{
+    
+    if(this.url !==''){
+        import('pdfjs-dist/webpack').then(pdfjs=>{
 
         pdfjs.getDocument(this.url).then(doc=>{
           doc.getPage(1).then(page=>{
@@ -52,6 +52,8 @@ export default {
 
   );
 });
+    }
+     
     }
   },
   created() {
