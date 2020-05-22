@@ -97,14 +97,13 @@
                                     >
                                     PREVIEW<v-icon x-large>mdi-file</v-icon>
                                 </v-btn>-->
-                                <embed 
+                                <!--<embed 
                                     type="application/pdf"
                                     :src="bill_of_lading_url"
                                     width="200"
-                                    height="150">
+                                    height="150">-->
 
                             </div>
-                        
                         </v-card>
                             </v-flex>
 
