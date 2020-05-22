@@ -7,7 +7,7 @@
         <!--<canvas id="canvas">
 
         </canvas>-->
-        <!-- <PDFDocument v-bind="{url}" v-if="pdf"/> -->
+        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
         <v-overlay :value="overlay">
             <div class="large-preview">
@@ -243,7 +243,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(tin_url)"
                                         >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        CLICK TO PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
                                 </div>
                             </v-col>
@@ -464,7 +464,7 @@ import axios from 'axios'
 import AlertError from '@/components/AlertError.vue'
 import Alert from '@/components/Alert.vue'
 import {mapGetters} from 'vuex'
-// import PDFDocument from '@/components/PDFDocument.vue'
+import PDFDocument from '@/components/PDFDocument.vue'
  /*import('pdfjs-dist/webpack').then(pdfjs=>{
 
         pdfjs.getDocument('http://oxobucket.s3-us-west-1.amazonaws.com/1590166088_0357-microsoft-excel-2010-level-2.pdf').then(doc=>{
@@ -493,7 +493,7 @@ import {mapGetters} from 'vuex'
 export default {
     name: 'Profile',
 
-    components:{AlertError,Alert},
+    components:{AlertError,Alert,PDFDocument},
 
     data () {
         return {
@@ -536,7 +536,8 @@ export default {
            bank_statement_url:'',
 
            url:'',
-           pdf:false
+           pdf:false,
+           pdfOverlay:false
       }
       
     },
@@ -556,7 +557,14 @@ export default {
         previewPdf(url){
 
             this.url = url;
+            this.pdfOverlay = true;
             this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
         },
 
         largePreview(src){
