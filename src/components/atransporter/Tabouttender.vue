@@ -1,6 +1,28 @@
 <template>
     <v-container class=" mt-5 px-5 pt-12">
 
+             <v-overlay :value="overlay">
+            <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                        </v-col>
+
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                
+                                color="primary"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    
+            </div>
+        </v-overlay>
+
             <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-1">
                 <v-flex>
@@ -35,8 +57,8 @@
                         </v-flex>
 
                         <v-flex row>
-                        <v-flex column class="mt-7 pr-4">
-                            <p class="primary--text body-1 mb-2"> TERMS AND CONDITIIONS </p>
+                        <v-flex column class="mt-7 pl-3 pr-4">
+                            <p class="primary--text body-1  mb-2"> TERMS AND CONDITIIONS </p>
                             <p class="body-1">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
 
@@ -126,7 +148,7 @@
                                 </v-card>
                             </v-flex>
 
-                            <v-flex column >
+                            <!-- <v-flex column >
                             <p class="primary--text body-1 mb-2"> OTHER </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-img class="ma-auto">
@@ -135,7 +157,8 @@
                                 </v-icon>
                             </v-img>
                         </v-card>
-                            </v-flex>
+                            </v-flex> -->
+
                         </v-flex>
                         </v-flex>
                     </v-card>
@@ -384,6 +407,9 @@ export default {
            bill_extension:'',
            bill_url:'',
 
+           overlay: false,
+           large_preview_url:'',
+
            // letter thumbnail
            authorization_letter_extension:'',
            authorization_letter:'',
@@ -398,25 +424,28 @@ export default {
     
       this.T_GET_TENDERSDETAILs(tab).then(()=>{
 
-          console.log('tender details bellowww');
-          console.log(this.LOAD_TENDER.bill_of_lading[0])
-          this.currency = this.LOAD_TENDER.currency
+          if(!this.LOAD_TENDER.bill_of_lading[0] == ''){
 
-          this.T_GET_AGENT(localStorage.client).then(()=>{
-
-              if(!this.LOAD_TENDER.bill_of_lading[0] == ''){
-                  this.bill = this.LOAD_AGENT.objects.certificate[0]
-
-                    this.bill_extension = this.getFileExtension(this.bill);
+                  this.bill = this.LOAD_TENDER.bill_of_lading[0]
+                  this.bill_extension = this.getFileExtension(this.bill);
                   console.log(this.bill)
+
                 }
 
                 if(!this.LOAD_TENDER.authorization_letter[0] == ''){
-                  this.authorization_letter = this.LOAD_AGENT.objects.authorization_letter[0]
 
-                    this.authorization_letter_extension = this.getFileExtension(this.authorization_letter);
+                  this.authorization_letter = this.LOAD_TENDER.authorization_letter[0]
+                  this.authorization_letter_extension = this.getFileExtension(this.authorization_letter);
                   console.log(this.authorization_letter)
+
                 }
+
+        //   console.log('tender details bellowww');
+        //   console.log(this.LOAD_TENDER.bill_of_lading[0])
+
+          this.currency = this.LOAD_TENDER.currency
+
+          this.T_GET_AGENT(localStorage.client).then(()=>{
 
               console.log('transporter details below');
               console.log(this.LOAD_AGENT);
@@ -447,6 +476,11 @@ export default {
 
       ]),
 
+      openTab(url){
+
+            window.open(url);
+        },
+
        getFileExtension(url){
 
             let position = url.lastIndexOf('.');
@@ -456,6 +490,15 @@ export default {
             return extracted_string;
 
         },
+
+        largePreview(src){
+
+            this.large_preview_url = src;
+
+            this.overlay = !this.overlay;
+
+        },
+
 
       
       theid(id){
@@ -549,9 +592,22 @@ export default {
 </script>
 
 <style scoped>
+
 .pa-auto{
     font-family :"Roboto",sans-serif !important;
 }
+
+.large-preview{
+
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
 
 
 </style>

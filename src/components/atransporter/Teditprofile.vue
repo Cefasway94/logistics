@@ -936,6 +936,12 @@ export default {
         "T_GET_AGENT",
         "T_POST_PAYMENT_TERMS"
     ]),
+
+            openTab(url){
+
+            window.open(url);
+            
+            },
             
             handleClick(id,src){
 

@@ -1,6 +1,28 @@
 <template>
     <v-container class=" mt-12 px-5 pt-12">
 
+        <v-overlay :value="overlay">
+            <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                        </v-col>
+
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                
+                                color="primary"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    
+            </div>
+        </v-overlay>
+
             <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                 <v-flex class="px-3" >
@@ -28,6 +50,7 @@
                 <v-flex row >
                 <v-flex sm12 md12 lg12 xlg12 >
                     <v-card width="" class="pt-6 pb-3 pl-8" >
+
                         <v-flex column>
                         <v-flex row >
                             <v-flex column class="pl-3">
@@ -57,30 +80,86 @@
                         </v-flex>
 
                         <v-flex row class="mt-10 mb-4" >
+
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
-                            <v-card flat width="200" height="150" outlined>
-                            <v-img class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
-                        
-                        </v-card>
+                            <v-card 
+                                flat 
+                                width="200" 
+                                height="150" 
+                                outlined 
+                                class="mx-3">
+                                    <v-flex 
+                                    class="" 
+                                    style="background-color:#F5FAFF;" 
+                                    v-show="(bill_extension === 'jpg') || (bill_extension === 'jpg') || (bill_extension === 'png')" 
+                                    @click="largePreview(bill)">
+                                        <v-img 
+                                        :src="bill"  
+                                        class="mb-0 pb-0" 
+                                        height="147" 
+                                        width="200" 
+                                        >
+                                        
+                                        </v-img>
+                                    </v-flex>
+                                    <v-flex v-show="bill_extension === 'pdf'">
+
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="openTab(bill)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                </v-btn>
+
+                                    </v-flex>
+                                </v-card>
                             </v-flex>
+
+                            <!-- authorization_letter_extension:'',
+           authorization_letter:'',
+           authorization_letter_extension_url:'' -->
 
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> AUTHORITY LETTER </p>
-                            <v-card flat width="200" height="150" outlined>
-                            <v-img class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
-                        </v-card>
+                            <v-card 
+                                flat 
+                                width="200" 
+                                height="150" 
+                                outlined 
+                                class="mx-3">
+                                    <v-flex 
+                                    class="" 
+                                    style="background-color:#F5FAFF;" 
+                                    v-show="(authorization_letter_extension === 'jpg') 
+                                    || (authorization_letter_extension === 'jpg') 
+                                    || (authorization_letter_extension === 'png')" 
+                                    @click="largePreview(authorization_letter)">
+                                        <v-img 
+                                        :src="authorization_letter"  
+                                        class="mb-0 pb-0" 
+                                        height="147" 
+                                        width="200" 
+                                        >
+                                        
+                                        </v-img>
+                                    </v-flex>
+                                    <v-flex v-show="authorization_letter_extension === 'pdf'">
+
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="openTab(authorization_letter)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                </v-btn>
+
+                                    </v-flex>
+                                </v-card>
                             </v-flex>
 
-                            <v-flex column >
+                            <!-- <v-flex column >
                             <p class="primary--text body-1 mb-2"> OTHER </p>
                             <v-card flat width="200" height="150" outlined>
                             <v-img class="ma-auto">
@@ -89,7 +168,8 @@
                                 </v-icon>
                             </v-img>
                         </v-card>
-                            </v-flex>
+                            </v-flex> -->
+
                         </v-flex>
                         </v-flex>
                     </v-card>
@@ -205,6 +285,19 @@ export default {
   
   data () {
       return{
+
+             // bill thumbnail
+           bill:'',
+           bill_extension:'',
+           bill_url:'',
+
+           overlay: false,
+           large_preview_url:'',
+
+           // letter thumbnail
+           authorization_letter_extension:'',
+           authorization_letter:'',
+           authorization_letter_extension_url:''
          
   }
 
@@ -212,20 +305,48 @@ export default {
   },
 
    beforeRouteEnter (to, from, next){
-    next(vm =>{  vm.T_GET_DASHBOARDDETAILs(to.params.id).then(()=>{
+    next(vm =>{
+        
+        vm.T_GET_DASHBOARDDETAILs(to.params.id).then(()=>{
+
           // eslint-disable-next-line no-console
               console.log('the bid outpost');
               // eslint-disable-next-line no-console
               console.log(to.params.id);
               // eslint-disable-next-line no-console
               console.log(vm.LOAD_DASHBOARD);
+
           vm.T_GET_AGENT(localStorage.client).then(()=>{
-              vm.T_GET_TENDERSDETAILs(vm.LOAD_DASHBOARD.objects.tender_id).then(()=>{
-                    // eslint-disable-next-line no-console
-              console.log('tender detail beloow');
-              // eslint-disable-next-line no-console
-              console.log(vm.LOAD_TENDER);
-              next({name:'Taboutbid'})
+
+               vm.T_GET_TENDERSDETAILs(vm.LOAD_DASHBOARD.objects.tender_id).then(()=>{
+
+                                // eslint-disable-next-line no-console
+                        console.log('tender detail beloow');
+                        // eslint-disable-next-line no-console
+                        console.log(vm.LOAD_TENDER);
+
+                        if(!vm.LOAD_TENDER.bill_of_lading[0] == ''){
+
+                            vm.bill = vm.LOAD_TENDER.bill_of_lading[0]
+                            vm.bill_extension = vm.getFileExtension(vm.bill);
+                            console.log(vm.bill)
+
+                            }
+
+                            if(!vm.LOAD_TENDER.authorization_letter[0] == ''){
+
+                            vm.authorization_letter = vm.LOAD_TENDER.authorization_letter[0]
+                            vm.authorization_letter_extension = vm.getFileExtension(vm.authorization_letter);
+                            console.log(vm.authorization_letter)
+
+                            }
+
+                    //   console.log('tender details bellowww');
+                    //   console.log(vm.LOAD_TENDER.bill_of_lading[0])
+
+
+                        next({name:'Taboutbid'})
+
               })
           })
       })
@@ -251,6 +372,29 @@ export default {
          // console.log(id);
          return id;
       },
+
+      openTab(url){
+
+            window.open(url);
+        },
+
+       getFileExtension(url){
+
+            let position = url.lastIndexOf('.');
+
+            let extracted_string = url.slice(position + 1, url.length + 1);
+
+            return extracted_string;
+
+        },
+
+        largePreview(src){
+
+            this.large_preview_url = src;
+
+            this.overlay = !this.overlay;
+
+        },
 
     //   terminatebid() {
     //         this.visibility = "visible";
