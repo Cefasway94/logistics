@@ -607,13 +607,22 @@
 
                                 <div v-show="insurance_extension === 'pdf'">
 
-                                    <v-btn 
+                                    <!--<v-btn 
                                         :block="true"
                                         icon class="mt-7" 
                                         @click="openTab(insurance_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                    </v-btn>
+                                    </v-btn>-->
+                                    
+
+                                     <v-card height="200" width="250" outlined @click="handlePdfClick()">
+                                        <embed  
+                                            @click="handlePdfClick()"
+                                            id="insurance_pdf"
+                                            width="250"
+                                            height="200">
+                                    </v-card>
 
                                 </div>
                             </v-card>
@@ -935,6 +944,11 @@ export default {
         "POST_PAYMENT_TERMS"
     ]),
       
+      handlePdfClick(){
+
+          alert('test pdf clicking');
+      },
+
       handleClick(id,src){
 
             //eslint-disable-next-line no-console
@@ -1110,7 +1124,18 @@ export default {
 
                         reader.readAsDataURL(document.getElementById("insurance").files[0]);
                     } else {
-                        this.insurance_extension = '';
+
+                        var src = URL.createObjectURL(document.getElementById("insurance").files[0])
+
+                        var output = document.getElementById("insurance_pdf");
+
+                        output.src = src;
+
+                        /*console.log(src);
+                        console.log(output);*/
+
+                      
+                        //this.insurance_extension = '';
                     }
 
                 
