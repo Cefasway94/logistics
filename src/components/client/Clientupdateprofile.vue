@@ -1,11 +1,6 @@
 <template>
 
         <v-container class=" mt-10 px-5">
-
-            <div id="pdfPreview">
-
-            </div>
-            
             <v-overlay :value="overlay">
 
                 <div class="large-preview">

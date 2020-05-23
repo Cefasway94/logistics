@@ -61,6 +61,11 @@ export default {
       type: String,
       required: true,
     },
+    
+    pdfOverlay:{
+      type: Boolean,
+      required: true
+    }
   },
   data() {
     return {

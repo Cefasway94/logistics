@@ -4,6 +4,8 @@
 
             <AlertError v-if="display_alert" v-bind:message="alert"/>
 
+             <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
+
             <v-overlay :value="overlay">
 
                 <div class="large-preview">
@@ -510,7 +512,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(tin_url)"
+                                        @click="previewPdf(tin_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -778,6 +780,7 @@
 import axios from 'axios'
 import {mapActions} from 'vuex'
 import AlertError from '@/components/AlertError.vue'
+import PDFDocument from '@/components/PDFDocument'
 export default {
 
     data: ()=>({
@@ -855,17 +858,34 @@ export default {
 
         display_alert : false,
 
-        alert:''
+        alert:'',
+
+        url:'',
+        pdf:false,
+        pdfOverlay:false
 
      }),
 
-    components:{AlertError},
+    components:{AlertError,PDFDocument},
 
     methods: {
 
         openTab(url){
 
             window.open(url);
+        },
+
+        previewPdf(url){
+
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
         },
 
         largePreview(src){
