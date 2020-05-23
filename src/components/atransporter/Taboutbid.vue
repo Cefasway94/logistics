@@ -75,7 +75,7 @@
 
                         <v-flex column class="mt-7 ">
                             <p class="primary--text body-1 mb-2"> AMOUNT </p>
-                            <p class="body-1">{{LOAD_TENDER.customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
+                            <p class="body-1">{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
                         </v-flex>
                         </v-flex>
 
@@ -320,6 +320,9 @@ export default {
   data () {
       return{
 
+          //
+          customer_offer_amount:'',
+
              // bill thumbnail
            bill:'',
            bill_extension:'',
@@ -387,6 +390,14 @@ export default {
                                     vm.cargo_photo_extension = vm.getFileExtension(vm.cargo_photo);
                                     console.log(vm.cargo_photo)
 
+                            }
+
+                            if (!vm.LOAD_TENDER.customer_offer_amount == '') {
+
+                                vm.customer_offer_amount = vm.LOAD_TENDER.customer_offer_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                                    
+                            } else {
+                                    vm.customer_offer_amount;
                             }
 
                     //   console.log('tender details bellowww');

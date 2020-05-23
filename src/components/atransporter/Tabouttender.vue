@@ -41,7 +41,7 @@
                 <p class="font-weight-strong mb-0">{{field}}</p>
             </v-alert>
             </v-card>
-            </v-dialog>
+        </v-dialog>
 
              <v-dialog
                     v-model="confirm_edit_profile"
@@ -50,14 +50,14 @@
                     transition="scale-transition"
                     >
                         <v-card 
-                    height="130" 
-                    color="#2296f3" 
-                    clas>
-                    <v-flex>
-                        <v-alert
-                        prominent
-                            type="info"
-                            >
+                        height="130" 
+                        color="#2296f3" 
+                        clas>
+                        <v-flex>
+                            <v-alert
+                            prominent
+                                type="info"
+                                >
                             <v-flex align="center" class=" px-3">
                                 
                                   <p class="grow title mb-0">
@@ -87,7 +87,7 @@
                                 </center>
                         </v-flex>
                         </v-card>
-                    </v-dialog>
+                </v-dialog>
 
             <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-1">
@@ -129,8 +129,8 @@
                         </v-flex>
 
                          <v-flex column class=" mt-7 pl-3">
-                            <p class="primary--text body-1 mb-2"> AMOUNT </p>
-                            <p class="body-1">{{LOAD_TENDER.customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
+                            <p class="primary--text body-1 mb-2" > AMOUNT </p>
+                            <p class="body-1" >{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
                             </v-flex>
                         </v-flex>
 
@@ -293,16 +293,14 @@
                 <v-dialog
                  v-model="bided"
                 max-width="600"
-                color="deep-orange"
+                color="#fb8d28"
                 transition="scale-transition">
-                <v-card color="orange" width="600" height="150">
+                <v-card color="#fb8d28" width="600" height="130">
                 <v-alert
-                    text
-                    outlined
+                     prominent
                     class=""
                     :value="bided"
-                    color="orange"
-                    type="error"
+                    type="warning"
                     row
                     clearable
                     >
@@ -310,65 +308,69 @@
                     <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
                     <v-icon large color="orange" class="">notification_important</v-icon>    
                     </v-flex> -->
-                    <v-flex xms11 sm11 md11 lg11 class="pl-3">
-                    <p class="text--text body-1 mb-0">
-                    You have already bided this tender before, click the button bellow to view list of
+                   <v-flex xms12 sm12 md12 lg12 class="pl-3 ">
+                    <p class="white--text body-1 font-weight-strong mb-0">
+                    You have already bided this tender, click the button bellow to view list of
                     active tenders
                     </p>
-
-                    <v-flex row>
+                    </v-flex>
+                     <v-flex row xms12 sm12 md12 lg12 class="" >
                         <v-spacer></v-spacer>
                          <v-btn 
+                        outlined
                          elevation="falt"
                          color="#4169E1" 
                          small
-                         class="white--text mt-1"
+                         class="white--text  "
                          @click="activetenders()">
                          Active tenders
                          </v-btn>
-                    </v-flex>
-
                     </v-flex>
                     </v-flex>
                 </v-alert>
                  </v-card>
                 </v-dialog>
 
+                 <v-dialog
+                 v-model="bidsent"
+                max-width="500"
+                color="#fb8d28"
+                transition="scale-transition">
+                <v-card color="#4bae50" width="500" height="130">
                 <v-alert
-                    text
-                    outlined
+                     prominent
                     class=""
                     :value="bidsent"
-                    color="green"
-                    type="error"
+                    type="success"
                     row
                     clearable
                     >
-                    <v-flex row>
-                    <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                    <v-flex >
+                    <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;"  >
                     <v-icon large color="orange" class="">notification_important</v-icon>    
                     </v-flex> -->
-                    <v-flex xms11 sm11 md11 lg11 class="pl-3">
-                    <p class="text--text body-1 mb-0">
-                    Your bid have been sent succefully, click the button bellow to
+                    <v-flex xms12 sm12 md12 lg12 class="pl-3 ">
+                    <p class="white--text body-1 font-weight-strong mb-0">
+                     Your bid have been sent succefully, click the button to
                      view list of active tenders
                     </p>
-
-                    <v-flex row>
+                    </v-flex>
+                    <v-flex row xms12 sm12 md12 lg12 class="" >
                         <v-spacer></v-spacer>
-                         <v-btn
+                        <v-btn
                          elevation="falt" 
                          color="#4169E1" 
                          small
-                         class="white--text mt-1"
+                         outlined
+                         class="white--text mt-1 "
                          @click="activetenders()">
                          Active tenders
                          </v-btn>
                     </v-flex>
-
-                    </v-flex>
                     </v-flex>
                 </v-alert>
+                 </v-card>
+                </v-dialog>
 
              </v-card>
 
@@ -390,22 +392,26 @@
                 color="#4169E1">
                 </v-progress-linear>
             <!-- loading -->
+
                         <v-flex class="pt-5">
-                            <p class="body-1" style="color:#4169E1;" color="#4169E1">Biding on tender</p>
+                            <p class="body-1 mb-0" style="color:#4169E1;" color="#4169E1">Biding on tender</p>
                         </v-flex>
+
                         <v-flex row class="pl-2">
-                        <v-flex column class="sm3 md3 px-2">
+
+                        <v-flex column class="sm4 md4 px-2 mt-3">
                             <v-text-field
                              color="#4169E1"
                              clearable
                              v-model="bid_amount"
                              :suffix="currency"
                              label="Bid amount"
+                             type="number"
                              :rules="[rules.required]">
                             </v-text-field>
                         </v-flex>
 
-                        <v-flex column class="sm3 md3 px-2">
+                        <v-flex column class="sm3 md3 px-2 mt-3">
                             
                             <v-menu
                                 ref="menu"
@@ -436,7 +442,7 @@
                             <!--  -->
                         </v-flex>
 
-                        <v-flex column class="sm6 md6 px-2">
+                        <v-flex column class="sm5 md5 px-2">
                         <v-select
                             v-model="payment_terms_and_conditions"
                             :items="items"
@@ -448,7 +454,7 @@
                             :rules="[rules.required]">
 
                                         <template #label>
-                                            <span class="red--text"><strong>{{terms_required}}</strong></span>
+                                            <span class="red--text mb-0"><strong>{{terms_required}}</strong></span>
                                         </template>
                             </v-select>
                         </v-flex>
@@ -520,19 +526,26 @@ export default {
            bid_delivery_timeline:new Date().toISOString().substr(0, 10), // ----------
            bid_terms_and_conditions:'',// -------
 
+           // tender detail fields -----
+           customer_offer_amount:'',
+
            rules: {
-            required: value => !!value || "Required",
-            number: value => {
-              const pattern = /^\d+$/;
-              return pattern.test(value) || "Number only required"
-            },
+                required: value => !!value || "Required",
+                separator: value => {
+                    const pattern = /[1-9]?\.[0-9]*/;
+                    return pattern(value)
+                },
+                number: value => {
+                const pattern = /^\d+$/;
+                return pattern.test(value) || "Number only required"
+                },
 
-            min: v => v.length >= 8 || 'Min 8 characters',
+                min: v => v.length >= 8 || 'Min 8 characters',
 
-            email: value => {
-             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-             return pattern.test(value) || "invalid email";
-            }
+                email: value => {
+                const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return pattern.test(value) || "invalid email";
+                }
            },
 
             // Validation aletrs
@@ -548,7 +561,7 @@ export default {
            bill_extension:'',
            bill_url:'',
         
-
+            // Cargo photo thumbnail
            cargo_photo_extension:'',
            cargo_photo:'',
            cargo_photo_url:'',
@@ -595,6 +608,14 @@ export default {
                   console.log(this.cargo_photo)
 
                 }
+
+                if (!this.LOAD_TENDER.customer_offer_amount == '') {
+
+                     this.customer_offer_amount =this.LOAD_TENDER.customer_offer_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                        
+                } else {
+                         this.customer_offer_amount;
+                    }
 
         //   console.log('tender details bellowww');
         //   console.log(this.LOAD_TENDER.bill_of_lading[0])

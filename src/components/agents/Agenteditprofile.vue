@@ -536,9 +536,7 @@
                                     @change="updatecertificate()"
                                     prepend-icon ="mdi-cloud-upload"
                                     :rules="[v => !!v || 'identity card is required']"
-                                    required
-                                
-                                >
+                                    required>
 
                                 </v-file-input>
 

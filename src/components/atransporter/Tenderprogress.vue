@@ -57,9 +57,16 @@
                             </v-flex>
                         </v-flex>
 
-                        <v-flex column class="mt-5 pr-4">
+                        <v-flex row>
+                        <v-flex column class="pl-3 mt-5 pr-4">
                             <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
                             <p class="body-1 ">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
+                        </v-flex>
+
+                        <v-flex column class="mt-5 ">
+                            <p class="primary--text body-1 mb-2"> AMOUNT </p>
+                            <p class="body-1">{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
+                        </v-flex>
                         </v-flex>
 
                         <v-flex row class="mt-7 mb-4" >
@@ -738,7 +745,7 @@
                 </v-card>
             </v-card>
 
-            <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
+            <!-- <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row>
                 <v-icon color="grey" class="mb-4 ml-3 ">attachments</v-icon>
                 <p class="grey--text title">Attachments</p>
@@ -791,7 +798,7 @@
                                       
                     </v-row>
                 </v-card>
-            </v-card> 
+            </v-card>  -->
         
         </v-card>
             
@@ -823,6 +830,10 @@ export default {
 
     data(){
         return{
+
+            // tender details fied
+            customer_offer_amount:'',
+            
             //files ------------
             bill:'',
             authorization_letter:'',
@@ -924,6 +935,14 @@ export default {
 
                             vm.cargo_photo_extension = vm.getFileExtension(vm.cargo_photo);
                         }
+
+                        if (!vm.LOAD_TENDER.customer_offer_amount == '') {
+
+                                vm.customer_offer_amount = vm.LOAD_TENDER.customer_offer_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                                    
+                            } else {
+                                    vm.customer_offer_amount;
+                            }
 
           vm.T_GET_AGENT(localStorage.client).then(()=>{
 

@@ -65,7 +65,7 @@
 
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> AMOUNT </p>
-                            <p class="body-1">{{LOAD_TENDER.customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
+                            <p class="body-1">{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
                             </v-flex>
 
                             
@@ -268,6 +268,8 @@ export default {
   
   data () {
       return{
+          // tender datail fields
+          customer_offer_amount:'',
 
             //preview 
             photo_extension:'',
@@ -319,6 +321,14 @@ export default {
                     vm.letter_extension = vm.getFileExtension(vm.LOAD_TENDER.authorization_letter[0]);
 
                     vm.letter_url = vm.LOAD_TENDER.authorization_letter[0];
+                }
+
+                if (!vm.LOAD_TENDER.customer_offer_amount == '') {
+
+                    vm.customer_offer_amount = vm.LOAD_TENDER.customer_offer_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                        
+                } else {
+                        vm.customer_offer_amount;
                 }
 
               next({name:'AgentAboutbid'})
