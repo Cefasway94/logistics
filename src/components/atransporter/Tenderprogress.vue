@@ -865,7 +865,7 @@ export default {
             //------- STAGE COMMENTING------
             //---- Stages and states ---
             stageitems:['1. Cargo loading', '2. Cargo in transit', '3. Cargo offloading', '4. Cargo delivered'],
-            stateitems:['InProgress', 'completed'],
+            stateitems:['InProgress', 'delivered'],
             feedstage:'',
             feedstate:'',
             progress_id:'',
@@ -1147,11 +1147,14 @@ methods :{
 
         if (this.feedstage === '1. Cargo loading') {
             this.progress_id = this.LOAD_TIMELINE_STAGES.objects[0].id
-        } else if (this.feedstage === '2. Cargo in transit') {
+        } 
+        if (this.feedstage === '2. Cargo in transit') {
             this.progress_id = this.LOAD_TIMELINE_STAGES.objects[1].id
-        } else if (this.feedstage === '3. Cargo offloading') {
+        }
+         if (this.feedstage === '3. Cargo offloading') {
             this.progress_id = this.LOAD_TIMELINE_STAGES.objects[2].id
-        } else if (this.feedstage == '4. Cargo delivered') {
+        } 
+         if (this.feedstage == '4. Cargo delivered') {
             this.progress_id = this.LOAD_TIMELINE_STAGES.objects[3].id
         }
 
@@ -1181,6 +1184,21 @@ methods :{
                     this.T_GET_PROGRESS_STAGES(this.$route.params.id).then(()=>{
                             
                             this.loading = false
+
+                            for (let index = 0; index <= this.LOAD_PROGRESS_STAGES.objects.length; index++) {
+                                                                
+
+                                if ((this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 0) &&
+                                (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.progress_id) ) {
+                                    console.log(this.LOAD_PROGRESS_STAGES.objects);
+
+                                    
+                                    
+                                }
+                                console.log(this.LOAD_PROGRESS_STAGES.objects[index].InProgress)
+                                
+                                
+                            }
 
                             console.log(this.LOAD_PROGRESS_STAGES.objects)
 

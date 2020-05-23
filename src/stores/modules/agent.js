@@ -19,7 +19,8 @@ export default {
         payment_progress:[],
         post_payment_terms:'',
         timeline_stages:[],
-        payment_history:[]
+        payment_history:[],
+        tender_payment_history:[]
     },
 
 getters:{
@@ -134,6 +135,12 @@ getters:{
         LOAD_TIMELINE_STAGES: state=> {
             const timeline_stages = state.timeline_stages
             return timeline_stages
+        },
+
+// load tender payment history
+        LOAD_TENDER_PAYMENT_HISTORY: state=> {
+            const tender_payment_history = state.tender_payment_history
+            return tender_payment_history
         }
 
     },
@@ -223,7 +230,12 @@ mutations: {
 // get timeline stages ============================>>>
         SET_TIMELINE_STAGES: (state, payload)=>{
             state.timeline_stages = payload
-        }
+        },
+
+// get tender payment history =======================>>>
+        SET_TENDER_PAYMENT_HISTORY: (state, payload)=>{
+            state.tender_payment_history = payload
+        },
 
     },
 
@@ -1095,6 +1107,23 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
                 console.log(error);
                 
                 commit('SET_PAYMENT_HISTORY', error.response.status);
+            }); 
+                            
+        },
+
+// Tender payment details ------------------------------------------------------
+        TENDER_PAYMENT_DETAILS: async ({commit},payload) => {
+            const url= 'http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/'+payload;
+            await axios.get(url).then((res)=>{
+                // eslint-disable-next-line no-console
+                    console.log(res);
+                commit('SET_TENDER_PAYMENT_HISTORY', res);
+                    //console.log(data.message);
+            }).catch((error)=>{
+                //eslint-disable-next-line no-console
+                console.log(error.response.data);
+                
+                commit('SET_TENDER_PAYMENT_HISTORY', error.response.data);
             }); 
                             
         },

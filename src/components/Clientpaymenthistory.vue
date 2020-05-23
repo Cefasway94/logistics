@@ -111,16 +111,16 @@
                    </v-flex>
 
                    <v-flex wrap xs12 sm3 md3 lg3  class=" ">
-                        <h4 class=" body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Percentage</h4>
+                        <h4 class=" body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Customer ID</h4>
                    </v-flex>
 
                     <v-flex wrap xs12 sm4 md4 lg4 class=" ">
                         <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Amount</h4>
                    </v-flex>
                    
-                    <v-flex wrap xs12 sm4 md4 lg4 class=" justify-center"  >
+                    <!-- <v-flex wrap xs12 sm4 md4 lg4 class=" justify-center"  >
                         <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1; background-color:;" >Status</h4>                                             
-                    </v-flex>
+                    </v-flex> -->
 
                     
 
@@ -164,7 +164,7 @@
                    <v-flex 
                    wrap xs12 sm3 md3 lg3  
                    class="  pt-5 pb-3">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{detail && detail.percentage_deposited}} %</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{detail && detail.customer_ID}} %</h4>
                    </v-flex>
 
                     <v-flex 
@@ -173,7 +173,7 @@
                         <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{detail && detail.amount}}</h4>
                    </v-flex>
                    
-                    <v-flex 
+                    <!-- <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class=" justify-center pt-5 pb-3">
                     <center>
@@ -181,7 +181,7 @@
                          <v-chip small class="primary white--text  font-weight-regular body-2 "  >{{detail && detail.percentage_deposited}} %</v-chip> 
                         
                     </center>
-                    </v-flex>
+                    </v-flex> -->
 
                 </v-layout>
                 
@@ -223,7 +223,7 @@
                    <v-flex 
                    wrap xs12 sm3 md3 lg3  
                    class="  pt-5 pb-3">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{LOAD_PAYMENT_HISTORY.data && LOAD_PAYMENT_HISTORY.data.objects.percentage_deposited}} %</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{LOAD_PAYMENT_HISTORY.data && LOAD_PAYMENT_HISTORY.data.objects.customer_ID}}</h4>
                    </v-flex>
 
                     <v-flex 
@@ -232,7 +232,7 @@
                         <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{LOAD_PAYMENT_HISTORY.data && LOAD_PAYMENT_HISTORY.data.objects.amount}}</h4>
                    </v-flex>
                    
-                    <v-flex 
+                    <!-- <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class=" justify-center pt-5 pb-3">
                     <center>
@@ -240,7 +240,7 @@
                          <v-chip v-show="chipblue" small class="primary white--text  font-weight-regular body-2 "  >{{description}}</v-chip> 
                         
                     </center>
-                    </v-flex>
+                    </v-flex> -->
 
                 </v-layout>
                 
@@ -362,13 +362,13 @@
                         <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Amount</h4>
                    </v-flex>
                    
-                    <v-flex wrap xs12 sm4 md4 lg4 class=" justify-center"  >
+                    <!-- <v-flex wrap xs12 sm4 md4 lg4 class=" justify-center"  >
                         <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1; background-color:;" >Status</h4>                                             
-                    </v-flex>
+                    </v-flex> -->
 
-                    <v-flex wrap xs12 sm4 md4 lg4 class="pr-2">
+                    <!-- <v-flex wrap xs12 sm4 md4 lg4 class="pr-2">
                         <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Invoice</h4>                        
-                   </v-flex>
+                   </v-flex> -->
 
                 </v-layout>
                 
@@ -435,7 +435,7 @@ export default {
           description: '',
           datas:true,
           chiporange: false,
-          chipblue: false
+          chipblue: false,
           
       }
   },
@@ -535,7 +535,8 @@ export default {
   methods:{
       ...mapActions([
           'C_GET_PAYMENT_HISTORY',
-          'GET_CUSTOMER'
+          'GET_CUSTOMER',
+          'TENDER_PAYMENT_DETAILS'
       ]),
 
      editprofile(){
@@ -543,11 +544,21 @@ export default {
           this.$router.push('/Client/editprofile/'+localStorage.client)
       },  
 
+      tender_payment_history(tender_id){
+          this.TENDER_PAYMENT_DETAILS(tender_id).then(()=>{
+              console.log(this.LOAD_TENDER_PAYMENT_HISTORY);
+              
+          })
+
+      }
+
   },
 
   computed: {
       ...mapGetters([
-          'LOAD_PAYMENT_HISTORY', 'LOAD_AGENT', 
+          'LOAD_PAYMENT_HISTORY',
+           'LOAD_AGENT', 
+           'LOAD_TENDER_PAYMENT_HISTORY'
       ]),
 
   }
