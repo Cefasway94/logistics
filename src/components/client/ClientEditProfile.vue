@@ -438,7 +438,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(id_url)"
+                                        @click="previewPdf(id_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -477,7 +477,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(profile_photo_url)"
+                                        @click="previewPdf(profile_photo_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -552,7 +552,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(tin_url)"
+                                        @click="previewPdf(logo_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -586,7 +586,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(copy_of_registration_url)"
+                                        @click="previewPdf(copy_of_registration_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -622,7 +622,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(tax_payer_url)"
+                                        @click="previewPdf(tax_payer_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -660,7 +660,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(vat_url)"
+                                        @click="previewPdf(vat_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -698,7 +698,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(licence_url)"
+                                        @click="previewPdf(licence_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -734,7 +734,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(bank_statement_url)"
+                                        @click="previewPdf(bank_statement_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -869,11 +869,6 @@ export default {
     components:{AlertError,PDFDocument},
 
     methods: {
-
-        openTab(url){
-
-            window.open(url);
-        },
 
         previewPdf(url){
 
@@ -1022,9 +1017,11 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("bank_statement").files[0]);
                 } 
-                else
+                else if(extension === 'pdf')
                 {
-                    this.bank_statement_extension = '';
+                    this.bank_statement_url = URL.createObjectURL(document.getElementById("bank_statement").files[0]);
+
+                    this.previewPdf(this.bank_statement_url);
                 }
    
             }
@@ -1064,9 +1061,11 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("business_licence").files[0]);
                 }
-                else 
+                else if(extension === 'pdf')
                 {
-                    this.licence_extension = "";
+                    this.licence_url = URL.createObjectURL(document.getElementById("business_licence").files[0]);
+
+                    this.previewPdf(this.licence_url);
                 }
                 
             }
@@ -1107,9 +1106,11 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("vat_certificate").files[0]);
                 }
-                else
+                else if(extension === 'pdf')
                 {
-                    this.vat_extension = extension;
+                    this.vat_url = URL.createObjectURL(document.getElementById("vat_certificate").files[0]);
+
+                    this.previewPdf(this.vat_url);
                 }
 
                 
@@ -1150,9 +1151,11 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("tin_document").files[0]);
                 }
-                else
+                else if(extension === 'pdf')
                 {
-                    this.tax_payer_extension = '';
+                    this.tax_payer_url = URL.createObjectURL(document.getElementById("tin_document").files[0]);
+
+                    this.previewPdf(this.tax_payer_url);
                 }
                 
             }
@@ -1193,9 +1196,11 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("registration_certificate").files[0]);
                 }
-                else
+                else if(extension === 'pdf')
                 {
-                    this.copy_of_registration_extension = extension;
+                    this.copy_of_registration_url = URL.createObjectURL(document.getElementById("registration_certificate").files[0]);
+
+                    this.previewPdf(this.copy_of_registration_url);
                 }
                 
             }
@@ -1235,8 +1240,10 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("company_logo").files[0]);
                 }
-                else{
-                    this.logo_extension = '';
+                else if(extension === 'pdf'){
+                    this.logo_url = URL.createObjectURL(document.getElementById("company_logo").files[0]);
+
+                    this.previewPdf(this.logo_url);
                 }
                 
             }
@@ -1276,8 +1283,8 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("personal_tin").files[0]);
                }
-               else{
-                   
+               else if(extension === 'pdf'){
+
                    this.tin_url = URL.createObjectURL(document.getElementById("personal_tin").files[0]);
 
                    this.previewPdf(this.tin_url);
@@ -1322,8 +1329,11 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("copy_of_id").files[0]);
                 }
-                else {
-                    this.id_extension = '';
+                else if(extension === 'pdf'){
+
+                   this.id_url = URL.createObjectURL(document.getElementById("copy_of_id").files[0]);
+
+                   this.previewPdf(this.id_url);
                 }
 
                 
@@ -1365,8 +1375,12 @@ export default {
                     }
 
                     reader.readAsDataURL(document.getElementById("profilePhoto").files[0]);
-                } else{
-                    this.profile_photo_extension = '';
+
+                } else if(extension === 'pdf'){
+
+                    this.profile_photo_url = URL.createObjectURL(document.getElementById("profilePhoto").files[0]);
+
+                    this.previewPdf(this.profile_photo_url);
                 }
                 
             }
