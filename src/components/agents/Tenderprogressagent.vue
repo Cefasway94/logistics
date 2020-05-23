@@ -33,7 +33,7 @@
                 <p class="grey--text">{{LOAD_TENDER.description}}</p>
                 </v-flex>
                 <v-spacer></v-spacer>
-                <h2 style="colo:#4169E1;">--- {{LOAD_TENDER.currency}}</h2>
+                <!-- <h2 style="colo:#4169E1;">--- {{LOAD_TENDER.currency}}</h2> -->
                 </v-flex>
             </v-card>
 
