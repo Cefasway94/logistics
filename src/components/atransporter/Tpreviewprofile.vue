@@ -398,13 +398,6 @@
           width="900" 
           class="mt-5 mx-auto px-3 " >
 
-             <!-- loading -----  -->
-            <v-progress-linear
-                :active="loading"
-                indeterminate
-                absolute
-                color="#4169E1">
-                </v-progress-linear>
 
             <v-flex row column class="px-3 pt-5">
             <p class="bondy-2 mb-0  mb-0">Payment terms</p>
@@ -635,8 +628,12 @@ export default {
 
    computed: {
       ...mapGetters([
-          'LOAD_AGENT','LOAD_PROFILE','LOAD_POST_PAYMENT_TERMS', 'LOAD_AGENT_PAYMENT_TERMS'
-          //'LOAD_DIBTENDERS'
+
+          'LOAD_AGENT',
+          'LOAD_PROFILE',
+          'LOAD_POST_PAYMENT_TERMS',
+          'LOAD_AGENT_PAYMENT_TERMS'
+          
       ])
   }
 

@@ -66,39 +66,54 @@
 
                    <v-dialog
                     v-model="confirm_edit_profile"
-                    max-width="450"
                     color="#2296f3"
+                    max-width="350"
                     transition="scale-transition"
-                    :hide-overlay="true">
+                    >
                         <v-card 
-                    height="100" 
+                    height="130" 
                     color="#2296f3" 
                     clas>
-                  <v-alert
-                  prominent
-                    type="info"
-                    >
-                    <v-row align="center">
-                        <v-col class="grow">
-                            Confirm profile update
-                        </v-col>
-                        <v-col class="shrink">
-                        <v-btn 
-                        outlined
-                        small
-                         @click="savechanges()">
-                            Confirm update
-                            </v-btn>
-                        </v-col>
-                    </v-row>
-                    </v-alert>
+                    <v-flex>
+                        <v-alert
+                        prominent
+                            type="info"
+                            >
+                            <v-flex align="center" class=" px-3">
+                                
+                                  <p class="grow title mb-0">
+                                      Confirm Profile Update
+                                </p>   
+                            </v-flex>
+                            </v-alert>
+
+                            <center>
+                            <v-flex class="shrink px-5">
+                                
+                                    <v-btn 
+                                    class="white--text"
+                                    color="red"
+                                    small
+                                    @click=" confirm_edit_profile = false">
+                                        NO
+                                    </v-btn>
+                                    <v-btn
+                                    class="ml-10 white--text" 
+                                    color="success"
+                                    small
+                                    @click="savechanges()">
+                                        YES 
+                                    </v-btn>
+                                </v-flex>
+                                </center>
+                        </v-flex>
                         </v-card>
                     </v-dialog>
 
                  
                     <v-dialog
                     v-model="update_success"
-                    max-width="430"
+                    max-width="330"
                     color="#f5faff"
                     transition="scale-transition">
                         <v-card 
@@ -112,16 +127,6 @@
                     <v-row align="center">
                         <v-col class="grow">
                             {{success_alert}}
-                        </v-col>
-                        <v-col class="shrink">
-                        <v-btn 
-                        color="green"
-                        small
-                        flat
-                        elevation="flat"
-                        @click="previewprofile()">
-                            profile
-                            </v-btn>
                         </v-col>
                     </v-row>
                     </v-alert>
@@ -808,7 +813,7 @@ export default {
            success_alert:'',
 
            // confirm edit profiile
-           confirm_edit_profile:'',
+           confirm_edit_profile:false,
 
 
            rules: {
@@ -1083,6 +1088,20 @@ export default {
                         this.field_required = true
                         return false
 
+                }else if(this.certificate_url == '' && this.certificate == ''){
+
+                        console.log(13);
+                        this.field = 'kindly attach certificate'
+                        this.field_required = true
+                        return false
+
+                }else if(this.insurance_url == '' && this.insurance == ''){
+
+                        console.log(13);
+                        this.field = 'kindly attach Insurance'
+                        this.field_required = true
+                        return false
+
                 }else{
 
                     this.confirm_edit_profile = true
@@ -1275,15 +1294,20 @@ export default {
             },
 
        previewprofile(){
-           
+
+           setTimeout(()=>{
+                this.update_success = false,
            this.$router.push('/agent/previewprofile')
            this.$router.go('/agent/previewprofile')
-      
+            },1000)
+                 
       },
 
        savechanges(){
 
-           console.log(this.validate());        
+           console.log(this.validate());  
+           
+           this.confirm_edit_profile = false
 
             this.loading = true
 
@@ -1320,6 +1344,7 @@ export default {
                                         this.update_success = true,
                                         this.confirm_edit_profile = false
                                         this.success_alert = 'Profile Updated successfully'
+                                        this.previewprofile()
                                     },1000)
 
                                     console.log(this.email);
