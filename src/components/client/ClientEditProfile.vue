@@ -1277,9 +1277,10 @@ export default {
                     reader.readAsDataURL(document.getElementById("personal_tin").files[0]);
                }
                else{
-
-                   //this.tin_extension = '';
+                   
                    this.tin_url = URL.createObjectURL(document.getElementById("personal_tin").files[0]);
+
+                   this.previewPdf(this.tin_url);
 
                }
 
