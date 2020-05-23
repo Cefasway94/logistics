@@ -807,7 +807,7 @@ export default {
            success_alert:'',
 
 // confirm edit profiile -------------------
-           confirm_edit_profile:'',
+           confirm_edit_profile:false,
 
             
 
@@ -1284,16 +1284,15 @@ export default {
                 this.update_success = false,
            this.$router.push('/transporter/previewprofile')
            this.$router.go('/transporter/previewprofile')
-            },2000)
+            },1000)
        },
 
        savechanges(){
 
            console.log(this.validate());
-           
 
-        //    console.log(dataobject.get('profile_image'));
-
+                    this.confirm_edit_profile = false
+                    
                     this.loading = true
 
                     const dataobject = this.dataobject()

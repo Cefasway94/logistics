@@ -23,6 +23,72 @@
                 </div>
             </v-overlay>
 
+            <v-dialog
+                v-model="field_required"
+                max-width="400"
+                color="#f5faff"
+                transition="scale-transition"
+                :hide-overlay="true">
+                <v-card 
+                height="105" 
+                color="#f64f51" 
+                class="pt-2">
+
+                <v-alert  
+                prominent=""
+                height="" 
+                type="error">
+                    <p class="font-weight-strong mb-0">{{field}}</p>
+                </v-alert>
+                </v-card>
+            </v-dialog>
+
+            <v-dialog
+                    v-model="confirm_edit_profile"
+                    color="#2296f3"
+                    max-width="350"
+                    transition="scale-transition"
+                    >
+                        <v-card 
+                        height="130" 
+                        color="#2296f3" 
+                        clas>
+                        <v-flex>
+                            <v-alert
+                            prominent
+                                type="info"
+                                >
+                            <v-flex align="center" class=" px-3">
+                                
+                                  <p class="grow title mb-0">
+                                      Confirm Biding tender
+                                </p>   
+                            </v-flex>
+                            </v-alert>
+
+                            <center>
+                            <v-flex class="shrink px-5">
+                                
+                                    <v-btn 
+                                    class="white--text"
+                                    color="red"
+                                    small
+                                    @click=" confirm_edit_profile = false">
+                                        NO
+                                    </v-btn>
+                                    <v-btn
+                                    class="ml-10 white--text" 
+                                    color="success"
+                                    small
+                                    @click="bidtender()">
+                                        YES 
+                                    </v-btn>
+                                </v-flex>
+                                </center>
+                        </v-flex>
+                        </v-card>
+                </v-dialog>
+
             <v-card flat width="900" class="mt-12 mx-auto mb-5 " color="#F5FAFF">
                 <v-flex row class="px-5 ">
                 <v-flex>
@@ -64,7 +130,7 @@
 
                          <v-flex column class=" mt-7 pl-3">
                             <p class="primary--text body-1 mb-2"> AMOUNT </p>
-                            <p class="body-1">{{LOAD_TENDER.customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
+                            <p class="body-1">{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
                             </v-flex>
                         </v-flex>
 
@@ -167,13 +233,17 @@
 <!-- Alert shown after bid -->
             <v-card flat width="700" class=" mt-5 mx-auto px-3" color="#F5FAFF" v-model="tender" >
 
+                 <v-dialog
+                 v-model="bided"
+                max-width="600"
+                color="#fb8d28"
+                transition="scale-transition">
+                <v-card color="#fb8d28" width="600" height="130">
                 <v-alert
-                    text
-                    outlined
+                     prominent
                     class=""
                     :value="bided"
-                    color="orange"
-                    type="error"
+                    type="warning"
                     row
                     clearable
                     >
@@ -181,63 +251,69 @@
                     <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
                     <v-icon large color="orange" class="">notification_important</v-icon>    
                     </v-flex> -->
-                    <v-flex xms11 sm11 md11 lg11 class="pl-3">
-                    <p class="text--text body-1 mb-0">
-                    You have already bided this tender before, click the button bellow to view list of
+                   <v-flex xms12 sm12 md12 lg12 class="pl-3 ">
+                    <p class="white--text body-1 font-weight-strong mb-0">
+                    You have already bided this tender, click the button bellow to view list of
                     active tenders
                     </p>
-
-                    <v-flex row>
-                        <v-spacer></v-spacer>
-                         <v-btn
-                         elevation="falt" 
-                         color="#4169E1" 
-                         small
-                         class="white--text mt-1"
-                         @click="activetenders()">
-                         Active tenders
-                         </v-btn>
                     </v-flex>
-
-                    </v-flex>
-                    </v-flex>
-                </v-alert>
-
-                <v-alert
-                    text
-                    outlined
-                    class=""
-                    :value="bidsent"
-                    color="green"
-                    type="error"
-                    row
-                    clearable
-                    >
-                    <v-flex row>
-                    <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
-                    <v-icon large color="orange" class="">notification_important</v-icon>    
-                    </v-flex> -->
-                    <v-flex xms11 sm11 md11 lg11 class="pl-3">
-                    <p class="text--text body-1 mb-0">
-                    Your bid have been sent succefully, click the button bellow to
-                     view list of active tenders
-                    </p>
-
-                    <v-flex row>
+                     <v-flex row xms12 sm12 md12 lg12 class="" >
                         <v-spacer></v-spacer>
                          <v-btn 
+                        outlined
                          elevation="falt"
                          color="#4169E1" 
                          small
-                         class="white--text mt-1"
+                         class="white--text  "
                          @click="activetenders()">
                          Active tenders
                          </v-btn>
                     </v-flex>
+                    </v-flex>
+                </v-alert>
+                 </v-card>
+                </v-dialog>
 
+                 <v-dialog
+                 v-model="bidsent"
+                max-width="500"
+                color="#fb8d28"
+                transition="scale-transition">
+                <v-card color="#4bae50" width="500" height="130">
+                <v-alert
+                     prominent
+                    class=""
+                    :value="bidsent"
+                    type="success"
+                    row
+                    clearable
+                    >
+                    <v-flex >
+                    <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;"  >
+                    <v-icon large color="orange" class="">notification_important</v-icon>    
+                    </v-flex> -->
+                    <v-flex xms12 sm12 md12 lg12 class="pl-3 ">
+                    <p class="white--text body-1 font-weight-strong mb-0">
+                     Your bid have been sent succefully, click the button to
+                     view list of active tenders
+                    </p>
+                    </v-flex>
+                    <v-flex row xms12 sm12 md12 lg12 class="" >
+                        <v-spacer></v-spacer>
+                        <v-btn
+                         elevation="falt" 
+                         color="#4169E1" 
+                         small
+                         outlined
+                         class="white--text mt-1 "
+                         @click="activetenders()">
+                         Active tenders
+                         </v-btn>
                     </v-flex>
                     </v-flex>
                 </v-alert>
+                 </v-card>
+                </v-dialog>
 
              </v-card>
 
@@ -259,20 +335,22 @@
                 </v-progress-linear>
             <!-- loading -->
                         <v-flex class="pt-5">
-                            <p class="body-1" style="color:#4169E1;" color="#4169E1">Bidi on tender</p>
+                            <p class="body-1 mb-0" style="color:#4169E1;" color="#4169E1">Bidi on tender</p>
                         </v-flex>
                         <v-flex row class="pl-2">
-                        <v-flex column class="sm3 md3 px-2">
+                        <v-flex column class="sm4 md4 px-2 mt-3">
                             <v-text-field
                              color="#4169E1"
                              clearable
                              v-model="bid_amount"
                              :suffix="currency"
-                             label="Bid amount">
+                             label="Bid amount"
+                             type="number"
+                             :rules="[rules.required]">
                             </v-text-field>
                         </v-flex>
 
-                        <v-flex column class="sm3 md3 px-2">
+                        <v-flex column class="sm3 md3 px-2 mt-3">
                             
                             <v-menu
                                 ref="menu"
@@ -303,7 +381,7 @@
                             <!--  -->
                         </v-flex>
 
-                        <v-flex column class="sm6 md6 px-2">
+                        <v-flex column class="sm5 md5 px-2">
                         <v-select
                             v-model="payment_terms_and_conditions"
                             :items="items"
@@ -311,7 +389,12 @@
                             chips 
                             color="#4169E1" 
                             clearable
-                            label="Select payment terms">
+                            label="Select payment terms"
+                            :rules="[rules.required]">
+
+                                        <template #label>
+                                            <span class="red--text"><strong>{{terms_required}}</strong></span>
+                                        </template>
                             </v-select>
                         </v-flex>
                         </v-flex>
@@ -322,7 +405,8 @@
                             color="#4169E1" 
                             clearable
                             v-model="bid_terms_and_conditions"
-                            label="Terms and conditions">
+                            label="Terms and conditions"
+                            :rules="[rules.required]">
                             </v-text-field>
                         </v-flex>    
                         </v-flex>
@@ -339,7 +423,7 @@
                             color="#4169E1" 
                             class="white--text"
                             elevation="flat"
-                            @click="bidtender()"
+                            @click="validate()"
                             >
                             bid tender
                             </v-btn>
@@ -381,6 +465,32 @@ export default {
            bid_delivery_timeline:new Date().toISOString().substr(0, 10), // ----------
            bid_terms_and_conditions:'',// -------
 
+           // tender detail fields -----
+           customer_offer_amount:'',
+
+           rules: {
+                required: value => !!value || "Required",
+                number: value => {
+                const pattern = /^\d+$/;
+                return pattern.test(value) || "Number only required"
+                },
+
+                min: v => v.length >= 8 || 'Min 8 characters',
+
+                email: value => {
+                const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return pattern.test(value) || "invalid email";
+                }
+            },
+
+             // Validation aletrs
+           field_required:false,
+           field:'',
+           terms_required:'*',
+
+           // Confirm bid 
+           confirm_edit_profile:false,
+
            //preview 
             photo_extension:'',
             photo_url:'',
@@ -410,18 +520,28 @@ export default {
 
                 this.photo_url = this.LOAD_TENDER.cargo_photo[0];
            }
+
             if(this.LOAD_TENDER.bill_of_lading !== null)
            {
                this.bill_of_lading_extension = this.getFileExtension(this.LOAD_TENDER.bill_of_lading[0]);
 
                this.bill_of_lading_url = this.LOAD_TENDER.bill_of_lading[0];
            }
+
             if(this.LOAD_TENDER.authorization_letter !== null)
            {
                this.letter_extension = this.getFileExtension(this.LOAD_TENDER.authorization_letter[0]);
 
                this.letter_url = this.LOAD_TENDER.authorization_letter[0];
            }
+
+           if (!this.LOAD_TENDER.customer_offer_amount == '') {
+
+                     this.customer_offer_amount =this.LOAD_TENDER.customer_offer_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                        
+                } else {
+                         this.customer_offer_amount;
+                }
 
            this.currency = this.LOAD_TENDER.currency
 
@@ -485,6 +605,40 @@ export default {
          return id;
       },
 
+      validate(){
+
+          if(this.rules.required(this.bid_amount) == 'Required'){
+        
+                        console.log(3);
+                        this.field = 'Biding amount is required'
+                        this.field_required = true
+                    // this.requiredemail = true  
+                    // this.invalidemail = false
+                        return false
+
+                }else if (this.rules.required(this.bid_terms_and_conditions) == 'Required') {
+
+                        console.log(2);
+                        this.field = 'Biding terms and condition is required'
+                        this.field_required = true
+                        return false
+
+                }else if (this.rules.required(this.payment_terms_and_conditions) == 'Required') {
+
+                        console.log(2);
+                        this.field = 'Kindly select payment terms'
+                        this.field_required = true
+                        this.terms_required = 'Requied'
+                        return false
+
+                }else{
+
+                    this.confirm_edit_profile = true
+                    return true
+                }
+
+      },
+
       Showbid() {
             this.visibility = "visible"
             this.btnvisibility = "hidden"
@@ -505,6 +659,8 @@ export default {
         bidtender() {           
 
             this.loading = true
+            this.confirm_edit_profile = false
+
 
             this.BID_TENDER({
                 agent_id:this.LOAD_AGENT.objects.agent_id,

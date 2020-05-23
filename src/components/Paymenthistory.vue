@@ -339,7 +339,6 @@ export default {
                                                                     vm.nopayments = true
                                                                 }, 500)
                                                             
-                                                            
                                                         } else {
 
                                                             setTimeout(()=>{
@@ -347,11 +346,8 @@ export default {
                                                                     vm.verify = false;
                                                                     vm.history = true
                                                                 }, 500)
-                                                            
                                                         }
-                                                
                                                     })
-
                                         }
 
                         }else{
