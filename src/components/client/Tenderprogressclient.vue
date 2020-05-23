@@ -803,7 +803,7 @@ export default {
 
         fullPaid(){
 
-            return (this.payment_value == "100.00");
+            return (this.payment_value >= "100.00");
         },
 
         setTransportingProgress(tender_progress){
