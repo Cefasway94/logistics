@@ -440,7 +440,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(id_url)"
                                         >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -479,7 +479,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(profile_photo_url)"
                                         >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -514,7 +514,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(tin_url)"
                                         >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -554,7 +554,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(logo_url)"
                                         >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -588,7 +588,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(copy_of_registration_url)"
                                         >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -624,7 +624,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(tax_payer_url)"
                                         >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -662,7 +662,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(vat_url)"
                                         >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -700,7 +700,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(licence_url)"
                                         >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -736,7 +736,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(bank_statement_url)"
                                         >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
