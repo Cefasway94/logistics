@@ -629,7 +629,7 @@
                                                 elevation="flat"
                                                 class="white--text"
                                                 :to="'/client/payment/'+tender.id+'/'+tender.tender_type"
-                                                :disabled="fullPaid()"
+                                                :disabled="full_paid"
                                             >
                                                 Pay
                                             </v-btn>
@@ -704,6 +704,8 @@ export default {
     data: ()=>({
 
         tender:[],
+
+        full_paid:false,
 
         InProgress:[],
 
@@ -1055,28 +1057,43 @@ export default {
                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
                         .then((response) => 
                             {
+                                if(response.data.genralErrorCode === 8000){
+                                  
                                  //eslint-disable-next-line no-console
-                                 console.log("**************"+response.data.objects.length);
+                                                console.log("is paid full " +response.data.objects.is_full_amount_paid);
+                                     if(response.data.objects.verify == 1){
 
-                                if(response.data.objects.verify == 1){
+                                         //eslint-disable-next-line no-console
+                                                console.log("**************is verified");
 
-                                    if(response.data.objects.length === 0)
+                                            if(response.data.objects.is_full_amount_paid == 1)
+                                            {
+                                                  //eslint-disable-next-line no-console
+                                                console.log("**************Full paid");
+
+
+                                                vm.full_paid = true;
+
+                                                //eslint-disable-next-line no-console
+                                                console.log("**************Full paid");
+
+                                                vm.payment_value = 100;
+                                            }
+                                                
+                                            else
+                                            {
+                                                 //eslint-disable-next-line no-console
+                                                    console.log("**************Not full paid");
+                                                vm.payment_value = response.data.objects.percentage_deposited;
+                                            }
+                                                
+                                        
+                                    } else {
+                                        
                                         vm.payment_value = 0;
-                                    else
-                                        vm.payment_value = response.data.objects.percentage_deposited;
-                                
-                                //eslint-disable-next-line no-console
-                                 //console.log(response.data.objects);
-
-                                //vm.payment_value = response.data.objects.percentage_deposited;
-                                 //eslint-disable-next-line no-console
-                                 //console.log(response.data.objects);
-                                } else {
-                                    
-                                    vm.payment_value = response.data.objects.percentage_deposited;
+                                    }
                                 }
                                 
-
                             }).catch(()=>{
 
                                 // response = null;
@@ -1126,10 +1143,43 @@ export default {
                         .then((response) => 
                             {
 
-                                if(response.data.objects.length === 0)
-                                    vm.payment_value = 0;
-                                else
-                                    vm.payment_value = response.data.objects.percentage_deposited;
+                                if(response.data.genralErrorCode === 8000){
+                                  
+                                 //eslint-disable-next-line no-console
+                                                console.log("is paid full " +response.data.objects.is_full_amount_paid);
+                                     if(response.data.objects.verify == 1){
+
+                                         //eslint-disable-next-line no-console
+                                                console.log("**************is verified");
+
+                                            if(response.data.objects.is_full_amount_paid == 1)
+                                            {
+                                                  //eslint-disable-next-line no-console
+                                                console.log("**************Full paid");
+
+
+                                                vm.full_paid = true;
+
+                                                //eslint-disable-next-line no-console
+                                                console.log("**************Full paid");
+
+                                                vm.payment_value = 100;
+                                            }
+                                                
+                                            else
+                                            {
+                                                 //eslint-disable-next-line no-console
+                                                    console.log("**************Not full paid");
+                                                vm.payment_value = response.data.objects.percentage_deposited;
+                                            }
+                                                
+                                        
+                                    } else {
+                                        
+                                        vm.payment_value = 0;
+                                    }
+                                }
+
                                 //eslint-disable-next-line no-console
                                  //console.log(response.data.objects);
 
