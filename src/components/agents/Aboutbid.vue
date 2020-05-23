@@ -1,6 +1,6 @@
 <template>
     <v-container class=" mt-12 px-5 pt-12">
-
+        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
             <v-overlay :value="overlay">
                 <div class="large-preview">
                         
@@ -90,13 +90,13 @@
                 
                             <div v-show="bill_of_lading_extension === 'pdf'">
 
-                                <!--<v-btn 
+                                <v-btn 
                                     :block="true"
                                     icon class="mt-7" 
-                                    @click="openTab(bill_of_lading_url)"
+                                    @click="previewPdf(bill_of_lading_url)"
                                     >
                                     PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                </v-btn>-->
+                                </v-btn>
                                 <!--<embed 
                                     type="application/pdf"
                                     :src="bill_of_lading_url"
@@ -122,7 +122,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(letter_url)"
+                                        @click="previewPdf(letter_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -146,7 +146,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(photo_url)"
+                                        @click="previewPdf(photo_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -263,6 +263,7 @@
 <script>
 /* eslint-disable no-console */
 import {mapGetters, mapActions} from 'vuex';
+import PDFDocument from '@/components/PDFDocument'
 export default {
         
   
@@ -280,7 +281,10 @@ export default {
             letter_url:'',
 
             overlay:false,
-            large_preview_url:''
+            large_preview_url:'',
+            url:'',
+            pdf:false,
+            pdfOverlay:false
          
   }
 
@@ -343,13 +347,26 @@ export default {
     console.log(from);
     console.log(next);
     },
-  
+  components:{PDFDocument},
   methods:{
       ...mapActions([
           'GET_TENDERSDETAILs', 'GET_DASHBOARDDETAILs',
           'GET_AGENT'
 
       ]),
+
+      previewPdf(url){
+
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
+        },
 
       //preview
        getFileExtension(url){
@@ -360,11 +377,6 @@ export default {
 
         return extracted_string;
 
-        },
-
-         openTab(url){
-
-            window.open(url);
         },
 
 

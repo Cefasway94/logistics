@@ -1,6 +1,7 @@
 <template>
     <v-container class=" mt-12 px-5 pt-12">
 
+            <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
             <v-overlay :value="overlay">
                 <div class="large-preview">
                         
@@ -101,7 +102,7 @@
                                                 <v-btn 
                                                     :block="true"
                                                     icon class="mt-7" 
-                                                    @click="openTab(photo_url)"
+                                                    @click="previewPdf(photo_url)"
                                                     >
                                                     PREVIEW<v-icon x-large>mdi-file</v-icon>
                                                 </v-btn>
@@ -126,7 +127,7 @@
                                                 <v-btn 
                                                     :block="true"
                                                     icon class="mt-7" 
-                                                    @click="openTab(bill_of_lading_url)"
+                                                    @click="previewPdf(bill_of_lading_url)"
                                                     >
                                                     PREVIEW<v-icon x-large>mdi-file</v-icon>
                                                 </v-btn>
@@ -151,7 +152,7 @@
                                                     <v-btn 
                                                         :block="true"
                                                         icon class="mt-7" 
-                                                        @click="openTab(letter_url)"
+                                                        @click="previewPdf(letter_url)"
                                                         >
                                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                                     </v-btn>
@@ -237,6 +238,7 @@
 <script>
 import {mapGetters} from 'vuex';
 import axios from 'axios'
+import PDFDocument from '@/components/PDFDocument'
 
 export default {
   
@@ -252,9 +254,16 @@ export default {
         letter_url:'',
 
         overlay:false,
-        large_preview_url:''
+        large_preview_url:'',
+
+         url:'',
+        pdf:false,
+        pdfOverlay:false
 
     }),
+
+     components:{PDFDocument},
+
     computed: {
 
     ...mapGetters(['getTender']),
@@ -270,6 +279,18 @@ export default {
 
     methods:
     {
+         previewPdf(url){
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
+        },
+
         getFileExtension(url){
 
         let position = url.lastIndexOf('.');
@@ -280,10 +301,7 @@ export default {
 
         },
 
-         openTab(url){
-
-            window.open(url);
-        },
+      
 
 
         largePreview(src){

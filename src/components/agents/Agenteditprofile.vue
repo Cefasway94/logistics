@@ -1,7 +1,7 @@
 
 <template>
     <v-container class="my-12 px-5">
-
+<PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
         
                     <!-- alert ----------------------------- -->
                                 
@@ -286,7 +286,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(profile_image_url)"
+                                        @click="previewPdf(profile_image_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -551,7 +551,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(certificate_url)"
+                                        @click="previewPdf(certificate_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -611,22 +611,22 @@
 
                                 <div v-show="insurance_extension === 'pdf'">
 
-                                    <!--<v-btn 
+                                    <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(insurance_url)"
+                                        @click="previewPdf(insurance_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                    </v-btn>-->
+                                    </v-btn>
                                     
 
-                                     <v-card height="200" width="250" outlined @click="handlePdfClick()">
+                                     <!-- <v-card height="200" width="250" outlined @click="handlePdfClick()">
                                         <embed  
                                             @click="handlePdfClick()"
                                             id="insurance_pdf"
                                             width="250"
                                             height="200">
-                                    </v-card>
+                                    </v-card> -->
 
                                 </div>
                             </v-card>
@@ -779,6 +779,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
+import PDFDocument from '@/components/PDFDocument'
 /* eslint-disable no-console */
 export default {
    data() {
@@ -812,6 +813,10 @@ export default {
 
            // confirm edit profiile
            confirm_edit_profile:false,
+
+           url:'',
+            pdf:false,
+            pdfOverlay:false,
 
 
            rules: {
@@ -940,14 +945,26 @@ export default {
         })
 
     },
-
+    components:{PDFDocument},
    methods: {
 
        ...mapActions([
         "GET_AGENT",
         "POST_PAYMENT_TERMS"
     ]),
-      
+      previewPdf(url){
+
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
+        },
+
       handlePdfClick(){
 
           alert('test pdf clicking');
@@ -1141,13 +1158,12 @@ export default {
                         }
 
                         reader.readAsDataURL(document.getElementById("insurance").files[0]);
-                    } else {
+                    } else if(this.insurance_extension === 'pdf') {
 
-                        var src = URL.createObjectURL(document.getElementById("insurance").files[0])
+                        this.insurance_url = URL.createObjectURL(document.getElementById("insurance").files[0]);
 
-                        var output = document.getElementById("insurance_pdf");
+                        this.previewPdf(this.insurance_url);
 
-                        output.src = src;
 
                         /*console.log(src);
                         console.log(output);*/
@@ -1196,8 +1212,10 @@ export default {
 
                         reader.readAsDataURL(document.getElementById("certificate").files[0]);
                     }
-                    else {
-                        this.certificate_extension = '';
+                    else if(this.certificate_extension === 'pdf'){
+                        this.certificate_url = URL.createObjectURL(document.getElementById("certificate").files[0]);
+
+                        this.previewPdf(this.certificate_url);
                     }
 
                 
@@ -1246,8 +1264,10 @@ export default {
 
                         reader.readAsDataURL(document.getElementById("profile_image").files[0]);
                     }
-                    else {
-                        this.profile_image_extension = '';
+                    else if(this.profile_image_extension === 'pdf') {
+                        this.profile_image_url = URL.createObjectURL(document.getElementById("profile_image").files[0]);
+
+                        this.previewPdf(this.profile_image_url);
                     }
 
                 

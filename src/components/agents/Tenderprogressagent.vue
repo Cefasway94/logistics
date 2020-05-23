@@ -1,6 +1,6 @@
 <template>
     <v-container id="scrolling-techniques" class=" mt-12 px-5">
-
+            <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
             <v-overlay :value="overlay">
                 <div class="large-preview">
                         
@@ -82,7 +82,7 @@
                                 <v-btn 
                                     :block="true"
                                     icon class="mt-7" 
-                                    @click="openTab(bill_of_lading_url)"
+                                    @click="previewPdf(bill_of_lading_url)"
                                     >
                                     PREVIEW<v-icon x-large>mdi-file</v-icon>
                                 </v-btn>
@@ -106,7 +106,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(letter_url)"
+                                        @click="previewPdf(letter_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -130,7 +130,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(photo_url)"
+                                        @click="previewPdf(photo_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -770,6 +770,7 @@
 /* eslint-disable no-console */
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
+import PDFDocument from '@/components/PDFDocument'
 export default {
 
     data(){
@@ -834,7 +835,11 @@ export default {
             comment:'',
             extension:false,
             placeholder: 1,
-            value:''
+            value:'',
+
+            url:'',
+            pdf:false,
+            pdfOverlay:false
         }
     },
 
@@ -1043,7 +1048,7 @@ export default {
       'LOAD_TIMELINE_STAGES'
       ])
   },
-
+components:{PDFDocument},
    
 methods :{
     ...mapActions([
@@ -1054,6 +1059,19 @@ methods :{
       'GET_PAYMENT_PROGRESS',
       'GET_TIMELINE_STAGES'
     ]),
+
+    previewPdf(url){
+
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
+        },
 
     //preview
        getFileExtension(url){
@@ -1066,10 +1084,7 @@ methods :{
 
         },
 
-         openTab(url){
-
-            window.open(url);
-        },
+       
 
         largePreview(src){
 
