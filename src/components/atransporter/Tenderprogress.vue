@@ -33,7 +33,7 @@
                 <p class="grey--text">{{LOAD_TENDER.description}}</p>
                 </v-flex>
                 <v-spacer></v-spacer>
-                <h2 class="primary--text" style="colo:#4169E1;">- - -  {{LOAD_TENDER.currency}}</h2>
+                <!-- <h2 class="primary--text" style="colo:#4169E1;">- - -  {{LOAD_TENDER.currency}}</h2> -->
                 </v-flex>
             </v-card>
 
@@ -1177,12 +1177,14 @@ methods :{
         //        const   expected_date = this.date
             
 
-           this.$store.dispatch('T_UPGRADE_PROGRESS',{
+           this.T_UPGRADE_PROGRESS({
+
                   agent_id : this.LOAD_AGENT.objects.agent_id,
                   progress_status : this.feedstate,
                   tender_id : this.LOAD_TENDER.id,
                   progress_id : this.progress_id,
                   expected_date : this.date, 
+                  
                 }).then(()=>{
                     console.log(this.progress_id);
                     

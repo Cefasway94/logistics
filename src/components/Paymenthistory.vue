@@ -140,38 +140,38 @@
                    <v-flex 
                    wrap xs12 sm4 md4 lg4 
                    class=" pt-5 pb-3 " >
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center"  >Cargo details</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center"  >{{transaction_id}}</h4>
                    </v-flex>
 
                     <v-flex 
                     wrap xs12 sm4 md4 lg4  
                     class="pt-5 pb-3 ">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">Destination</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{date}}</h4>
                    </v-flex>
 
                    <v-flex 
                    wrap xs12 sm4 md4 lg4  
                    class=" pt-5 pb-3 ">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center ">Destination</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center ">{{client}}</h4>
                    </v-flex>
 
                    <v-flex 
                    wrap xs12 sm4 md4 lg4  
                    class="  pt-5 pb-3">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">Destination</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{percentage}}</h4>
                    </v-flex>
 
                     <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class="  pt-5 pb-3">
-                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">Client</h4>
+                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{amount}}</h4>
                    </v-flex>
                    
                     <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class=" justify-center pt-5 pb-3">
                     <center>
-                         <v-chip small class="light-green white--text  font-weight-light caption "  >2000 usd</v-chip>                    
+                         <v-chip small class="light-green white--text  font-weight-light caption ">{chipdata}</v-chip>                    
                     </center>
                     </v-flex>
 
@@ -294,7 +294,17 @@ export default {
           profile:false,
           history: false,
           nopayments:false,
-          history2:false
+          history2:false,
+
+          // data ------
+          transaction_id:'',
+          date:'',
+          percentage:'',
+          amount:'',
+          client:'',
+          chipdata:'',
+          
+          datas:true
           
       }
   },
@@ -345,6 +355,20 @@ export default {
                                                                     vm.loading = false
                                                                     vm.verify = false;
                                                                     vm.history = true
+
+                                                                    if (typeof vm.LOAD_PAYMENT_HISTORY.data.objects.isArray === 'undefined') {
+
+                                                                        this.transaction_id = vm.LOAD_PAYMENT_HISTORY.data.objects
+                                                                        this.date = vm.LOAD_PAYMENT_HISTORY.data.objects
+                                                                        this.percentage = vm.LOAD_PAYMENT_HISTORY.data.objects
+                                                                        this.amount = vm.LOAD_PAYMENT_HISTORY.data.objects
+                                                                        this.client = vm.LOAD_PAYMENT_HISTORY.data.objects
+                                                                        this.chipdata = vm.LOAD_PAYMENT_HISTORY.data.objects
+          
+
+                                                                            vm.datas = false                                                             
+                                                                        }
+
                                                                 }, 500)
                                                         }
                                                     })

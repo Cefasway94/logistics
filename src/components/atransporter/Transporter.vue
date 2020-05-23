@@ -184,7 +184,7 @@
 
                     <v-row row class="mb-1 ">
                         <v-flex xsm12 sm12 md6 lg6 class="px-3">
-                        <h4  class=" title ">{{tender.bid_amount}} {{tender.currency}}</h4>
+                        <p  class=" title mb-0 ">{{Number(tender.bid_amount).toLocaleString()}} {{tender.currency}}</p>
                         </v-flex>
                         <v-flex row xsm12 sm12 md12 lg6 class="px-3 pt-1">
 
@@ -268,8 +268,8 @@
                     </v-row>
 
 
-                    <v-row row class="px-3 mb-1">
-                        <h4  class=" title ">{{tender.customer_offer_amount}} {{tender.currency}}</h4>
+                    <v-row row class="px-3 ">
+                        <p  class=" title mb-0 ">{{Number(tender.customer_offer_amount).toLocaleString()}} {{tender.currency}}</p>
                         <v-spacer></v-spacer>
                         <v-btn small elevation="flat" 
                         color="#4169E1" 
