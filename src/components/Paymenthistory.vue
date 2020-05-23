@@ -83,7 +83,116 @@
                 </v-flex>
                 </v-alert>
                 </v-card>
-                </v-card>   
+            </v-card> 
+
+
+            <template>
+                <v-row justify="center" >
+                  <v-dialog
+                    v-model="dialog3"
+                    max-width="350">
+                    <v-card>
+                      
+                      <p class="mb-3 text-center grey--text pt-3 body-1">Payment details</p>
+
+                     <v-flex row class="pl-9 mt-1" >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Agent :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" primary--text" >
+                       {{agent}}
+                      </p>
+                      </v-flex>
+                      </v-flex>
+
+                      <v-flex row class="pl-9 mt-1" >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Amount :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" primary--text" >
+                       {{amount}}
+                      </p>
+                      </v-flex>
+                      </v-flex>
+
+                     <v-flex row class="pl-9 mt-1" >
+                      <v-flex xs4 sm4 md4 lg4  >
+                      <p class="grey--text mb-0"  > Commission :  </p>
+                      </v-flex>
+                      <v-flex xs8 sm8 md8 >
+                      <p class=" primary--text" >
+                       {{commission}}
+                      </p>
+                      </v-flex>
+                      </v-flex>
+
+                      <v-flex row class="pl-9 mt-1" >
+                      <v-flex xs4 sm4 md4 lg4  >
+                      <p class="grey--text mb-0"  > Date :  </p>
+                      </v-flex>
+                      <v-flex xs8 sm8 md8 >
+                      <p class=" primary--text" >
+                       {{date}}
+                      </p>
+                      </v-flex>
+                      </v-flex>
+
+                      <v-flex row class="pl-9 mt-1" >
+                      <v-flex xs4 sm4 md4 lg4  >
+                      <p class="grey--text mb-0"  > Curency ID :  </p>
+                      </v-flex>
+                      <v-flex xs8 sm8 md8 >
+                      <p class=" primary--text" >
+                       {{curency_id}}
+                      </p>
+                      </v-flex>
+                      </v-flex>
+
+                      <v-flex row class="pl-9 mt-1" >
+                      <v-flex xs4 sm4 md4 lg4  >
+                      <p class="grey--text mb-0"  > Agent account number :  </p>
+                      </v-flex>
+                      <v-flex xs8 sm8 md8 >
+                      <p class=" primary--text pl-2" >
+                       {{agent_account_number}}
+                      </p>
+                      </v-flex>
+                      </v-flex>
+
+                      <v-card flat width="400"  class="pl-2 pa-1 mb-5">
+                        <v-flex row class="pl-5">
+                          <v-flex xs11 sm11 md11 class="pl-1" style="background-color:;">
+                            <center>
+                          <p class="mb-0 body-1 primary--text">
+                            
+                          </p>
+                          </center>
+                          </v-flex>
+                        </v-flex>
+                        </v-card> 
+                      
+                      <v-card-actions class="mt-2" style="background-color:#4069e2;">
+                         
+                          
+                            <v-btn
+                              class=""
+                              width="400"
+                              height=""
+                              color="white "
+                              text
+                              @click="dialog3 = false">
+                              Cancel
+                            </v-btn>
+                                                
+                            
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-row>
+              </template>
+
         
         <v-card
                 v-show="history"
@@ -111,16 +220,16 @@
                    </v-flex>
 
                    <v-flex wrap xs12 sm4 md4 lg4  class=" ">
-                        <h4 class=" body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Description</h4>
+                        <h4 class=" body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Customer ID</h4>
                    </v-flex>
 
                     <v-flex wrap xs12 sm4 md4 lg4 class=" ">
                         <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Amount</h4>
                    </v-flex>
                    
-                    <v-flex wrap xs12 sm4 md4 lg4 class=" justify-center"  >
+                    <!-- <v-flex wrap xs12 sm4 md4 lg4 class=" justify-center"  >
                         <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1; background-color:;" >Status</h4>                                             
-                    </v-flex>
+                    </v-flex> -->
 
 
                 </v-layout>
@@ -129,63 +238,60 @@
         </v-card>
 
 <!-- Content card -->
-        <v-hover class="">
+         <v-flex 
+            class=" px-1 justify-center" 
+             v-for="(detail, i) in LOAD_PAYMENT_HISTORY.data && LOAD_PAYMENT_HISTORY.data.objects " :key="i">
+
+              <v-hover 
+              class="" >
         <template v-slot="{ hover }">
 
         <v-card
                 class="mb-4 px-3"
-                :elevation="hover ? 15 : 3">
+                :elevation="hover ? 15 : 3"
+                @click="tender_payment_history(detail.transaction_ID)">
+                
           <v-layout row wrap  class=" pl-2 ">
                <v-layout sm11 md11   >       
                    <v-flex 
                    wrap xs12 sm4 md4 lg4 
                    class=" pt-5 pb-3 " >
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center"  >{{transaction_id}}</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center"  >{{detail && detail.transaction_ID}}</h4>
                    </v-flex>
 
                     <v-flex 
                     wrap xs12 sm4 md4 lg4  
-                    class="pt-5 pb-3 ">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{date}}</h4>
+                    class="pt-5 pb-3 " >
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{detail && detail.created_at}}</h4>
                    </v-flex>
 
                    <v-flex 
                    wrap xs12 sm4 md4 lg4  
                    class=" pt-5 pb-3 ">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center ">{{client}}</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center ">{{detail && detail.depositors_name}}</h4>
                    </v-flex>
 
                    <v-flex 
-                   wrap xs12 sm4 md4 lg4  
+                   wrap xs12 sm3 md3 lg3  
                    class="  pt-5 pb-3">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{percentage}}</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{detail && detail.customer_ID}} </h4>
                    </v-flex>
 
                     <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class="  pt-5 pb-3">
-                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{amount}}</h4>
+                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{detail && detail.amount}}</h4>
                    </v-flex>
                    
-                    <v-flex 
+                    <!-- <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class=" justify-center pt-5 pb-3">
                     <center>
-                         <v-chip small class="light-green white--text  font-weight-light caption ">{chipdata}</v-chip>                    
+                          
+                         <v-chip small class="primary white--text  font-weight-regular body-2 "  >{{detail && detail.percentage_deposited}} %</v-chip> 
+                        
                     </center>
-                    </v-flex>
-
-                    <!-- <v-flex 
-                    wrap xs12 sm4 md4 lg4
-                    class=""  style="background-color:white;">
-                    <v-btn elevation="flat" height="50" class="mt-2 pt-3" color="transparent"  >
-                        <h4  
-                        class="font-weight-bold mb-3 text-center " 
-                        style="color:#4169E1;">
-                        View Invoice
-                        </h4>
-                    </v-btn>
-                   </v-flex> -->
+                    </v-flex> -->
 
                 </v-layout>
                 
@@ -193,6 +299,8 @@
         </v-card>
         </template>
         </v-hover>
+
+    </v-flex>
         </v-card>
 
 
@@ -224,16 +332,16 @@
                    </v-flex>
 
                    <v-flex wrap xs12 sm4 md4 lg4  class=" ">
-                        <h4 class=" body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Description</h4>
+                        <h4 class=" body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Customer ID</h4>
                    </v-flex>
 
                     <v-flex wrap xs12 sm4 md4 lg4 class=" ">
                         <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1;" >Amount</h4>
                    </v-flex>
                    
-                    <v-flex wrap xs12 sm4 md4 lg4 class=" justify-center"  >
+                    <!-- <v-flex wrap xs12 sm4 md4 lg4 class=" justify-center"  >
                         <h4 class="body-1 font-weight-regular mb-1 text-center" style="color:#4169E1; background-color:;" >Status</h4>                                             
-                    </v-flex>
+                    </v-flex> -->
 
                 </v-layout>
                 
@@ -296,15 +404,26 @@ export default {
           nopayments:false,
           history2:false,
 
-          // data ------
-          transaction_id:'',
-          date:'',
-          percentage:'',
-          amount:'',
-          client:'',
-          chipdata:'',
           
-          datas:true
+          agent:'',             
+         amount:'',  
+        commission:'',        
+        date:'',
+        curency_id:'',
+        agent_account_number:'',
+
+        
+
+          // data ------
+        //   transaction_id:'',
+        //   date:'',
+        //   percentage:'',
+        //   amount:'',
+        //   client:'',
+        //   chipdata:'',
+          
+          datas:true,
+          dialog3:false
           
       }
   },
@@ -356,15 +475,7 @@ export default {
                                                                     vm.verify = false;
                                                                     vm.history = true
 
-                                                                    if (typeof vm.LOAD_PAYMENT_HISTORY.data.objects.isArray === 'undefined') {
-
-                                                                        this.transaction_id = vm.LOAD_PAYMENT_HISTORY.data.objects
-                                                                        this.date = vm.LOAD_PAYMENT_HISTORY.data.objects
-                                                                        this.percentage = vm.LOAD_PAYMENT_HISTORY.data.objects
-                                                                        this.amount = vm.LOAD_PAYMENT_HISTORY.data.objects
-                                                                        this.client = vm.LOAD_PAYMENT_HISTORY.data.objects
-                                                                        this.chipdata = vm.LOAD_PAYMENT_HISTORY.data.objects
-          
+                                                                    if (typeof vm.LOAD_PAYMENT_HISTORY.data.objects.isArray === 'undefined') {      
 
                                                                             vm.datas = false                                                             
                                                                         }
@@ -451,63 +562,7 @@ export default {
 
   },
 
-//   created (){
-          
-    
-//     console.log();
-//     console.log();
-//     console.log();
-    
-    
-    
-    
-     
 
-//           this.T_GET_AGENT(localStorage.client).then(()=>{
-
-//               console.log('transporter details below');
-//               console.log(this.LOAD_AGENT);
-
-//               this.T_GET_PAYMENT_HISTORY(this.LOAD_AGENT.objects.agent_id).then(()=>{
-
-//                   console.log('transporter payment terms');
-//                   console.log(this.LOAD_PAYMENT_HISTORY);
-                 
-//               })
-//           })
-
-//           this.GET_AGENT(localStorage.client).then(()=>{
-
-//               console.log('Agent details below');
-//               console.log(this.LOAD_AGENT);
-
-//               this.GET_PAYMENT_HISTORY(this.LOAD_AGENT.objects.agent_id).then(()=>{
-
-//                   console.log('Agent payment histoiry');
-//                   console.log(this.LOAD_PAYMENT_HISTORY);
-                  
-//               })
-//           })
-
-//           this.GET_CUSTOMER(localStorage.client).then(()=>{
-
-//               console.log('Agent details below');
-//               console.log(this.LOAD_AGENT);
-
-//               this.C_GET_PAYMENT_HISTORY(this.LOAD_AGENT.objects.agent_id).then(()=>{
-
-//                   console.log('Agent payment histoiry');
-//                   console.log(this.LOAD_PAYMENT_HISTORY);
-                  
-//               })
-//           })
-     
-      
-//       //eslint-disable-next-line no-console
-
-      
-//   },
-  
   methods:{
       ...mapActions([
           'T_GET_PAYMENT_HISTORY',
@@ -515,7 +570,8 @@ export default {
           'C_GET_PAYMENT_HISTORY',
           'T_GET_AGENT',
           'GET_AGENT', 
-          'GET_CUSTOMER'
+          'GET_CUSTOMER',
+          'TENDER_PAYMENT_DETAILS'
       ]),
 
        editprofile(){
@@ -535,11 +591,45 @@ export default {
           
       },
 
+      tender_payment_history(tender_id){
+
+              this.dialog3 = true
+
+          this.TENDER_PAYMENT_DETAILS(tender_id).then(()=>{
+
+              if (this.LOAD_TENDER_PAYMENT_HISTORY.data.objects == '') {
+
+                this.agent = ''             
+                this.amount = ''  
+                this.commission=''        
+                this.date=''
+                this.curency_i=''
+                this.agent_account_number=''
+
+                  
+              }else {
+
+                this.agent = this.LOAD_TENDER_PAYMENT_HISTORY.data.objects.service_account_name            
+                this.amount = this.LOAD_TENDER_PAYMENT_HISTORY.data.objects.amount
+                this.commission= this.LOAD_TENDER_PAYMENT_HISTORY.data.objects.commission_amount
+                this.date= this.LOAD_TENDER_PAYMENT_HISTORY.data.objects.service_account_number
+                this.curency_id = this.LOAD_TENDER_PAYMENT_HISTORY.data.objects.currency_ID
+                this.agent_account_number = this.LOAD_TENDER_PAYMENT_HISTORY.data.objects.service_account_number               
+                  
+              }
+              
+              this.dialog3 = true
+              console.log(this.LOAD_TENDER_PAYMENT_HISTORY);
+              
+          })
+
+      }
+
   },
 
   computed: {
       ...mapGetters([
-          'LOAD_PAYMENT_HISTORY', 'LOAD_AGENT', 
+          'LOAD_PAYMENT_HISTORY', 'LOAD_AGENT', 'LOAD_TENDER_PAYMENT_HISTORY'
       ]),
 
   }
