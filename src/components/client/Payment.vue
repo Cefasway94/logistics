@@ -34,7 +34,7 @@
                 </v-row>
                 </v-flex>
                 <v-spacer></v-spacer>
-                <h2 style="color:#4169E1;">{{ tender.currency}} {{ tender.customer_offer_amount}}</h2>
+                <h2 style="color:#4169E1;">{{ tender.currency}} {{ Number(tender.customer_offer_amount).toLocaleString()}}</h2>
                 </v-flex>
             </v-card>
 

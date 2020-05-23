@@ -37,7 +37,7 @@
 
                         <v-row>
                           
-                            <v-col><span class=" font-weight-regular">{{ tender.currency }} {{tender.customer_offer_amount}}</span></v-col>
+                            <v-col><span class=" font-weight-regular">{{ tender.currency }} {{ Number(tender.customer_offer_amount).toLocaleString()}}</span></v-col>
                         </v-row>
 
                     </v-col>

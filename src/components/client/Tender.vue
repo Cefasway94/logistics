@@ -56,7 +56,7 @@
                                     <v-flex column class="pl-3">
 
                                          <p class="primary--text body-1 mb-2"> AMOUNT </p>
-                                         <p class="body-1">{{tender.currency}} {{ tender.customer_offer_amount }}</p>
+                                         <p class="body-1">{{tender.currency}} {{ Number(tender.customer_offer_amount).toLocaleString()}}</p>
 
                                     </v-flex>
                                 </v-flex>
