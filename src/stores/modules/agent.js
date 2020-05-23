@@ -983,7 +983,10 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
 
 
 // Transporter update progress ------------------------------------------------------->>
-                T_UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_id,expected_date }) => {
+                T_UPGRADE_PROGRESS: ({ commit }, { agent_id,
+                        progress_status,
+                        tender_id,progress_id,
+                        expected_date }) => {
                     return new Promise((resolve, reject) => {
                         const config = {
                             headers: {

@@ -140,31 +140,31 @@
                    <v-flex 
                    wrap xs12 sm4 md4 lg4 
                    class=" pt-5 pb-3 " >
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center"  >Cargo details</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center"  >{{transactio_id}}</h4>
                    </v-flex>
 
                     <v-flex 
                     wrap xs12 sm4 md4 lg4  
                     class="pt-5 pb-3 ">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">Destination</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{date}}</h4>
                    </v-flex>
 
                    <v-flex 
                    wrap xs12 sm4 md4 lg4  
                    class=" pt-5 pb-3 ">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center ">Destination</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center ">{{client}}</h4>
                    </v-flex>
 
                    <v-flex 
                    wrap xs12 sm4 md4 lg4  
                    class="  pt-5 pb-3">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">Destination</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{percentage}}</h4>
                    </v-flex>
 
                     <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class="  pt-5 pb-3">
-                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">Client</h4>
+                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{amount}}</h4>
                    </v-flex>
                    
                     <v-flex 

@@ -291,7 +291,7 @@
                             <v-btn
                               color="white "
                               text
-                              @click="dialog1 = false">
+                              @click="dialog2 = false">
                               Disagree
                             </v-btn>
                                                 
@@ -408,7 +408,7 @@
                             <v-btn
                               color="white "
                               text
-                              @click="dialog1 = false">
+                              @click="dialog3 = false">
                               Disagree
                             </v-btn>
                                                 
@@ -932,8 +932,6 @@ export default {
 
             mixed: value =>{   if (value.length < 8) {
                                     return("password too short");
-                                } else if (value.length > 12) {
-                                    return("password too long");
                                 } else if (value.search(/\d/) == -1) {
                                     return("atleast one number required");
                                 } else if (value.search(/[a-zA-Z]/) == -1) {

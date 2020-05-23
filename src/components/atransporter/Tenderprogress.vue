@@ -1164,12 +1164,14 @@ methods :{
         //        const   expected_date = this.date
             
 
-           this.$store.dispatch('T_UPGRADE_PROGRESS',{
+           this.T_UPGRADE_PROGRESS({
+
                   agent_id : this.LOAD_AGENT.objects.agent_id,
                   progress_status : this.feedstate,
                   tender_id : this.LOAD_TENDER.id,
                   progress_id : this.progress_id,
                   expected_date : this.date, 
+                  
                 }).then(()=>{
                     console.log(this.progress_id);
                     
