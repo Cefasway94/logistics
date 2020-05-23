@@ -1,8 +1,9 @@
 <template>
     <v-container class="pa-3 mt-10 mx-auto">
 
-        <v-overlay :value="overlay">
+        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
+        <v-overlay :value="overlay">
             <div class="large-preview">
 
                 <v-row justify= "center">
@@ -222,9 +223,9 @@
                                         <v-btn 
                                             :block="true"
                                             icon class="mt-7" 
-                                            @click="openTab(photo_url)"
+                                            @click="previewPdf(photo_url)"
                                             >
-                                            CLICK TO PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
                                         </v-btn>
 
                                     </div>
@@ -257,9 +258,9 @@
                                         <v-btn 
                                             :block="true"
                                             icon class="mt-7" 
-                                            @click="openTab(bill_of_lading_url)"
+                                            @click="previewPdf(bill_of_lading_url)"
                                             >
-                                            CLICK TO PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
                                         </v-btn>
 
                                     </div>
@@ -292,9 +293,9 @@
                                         <v-btn 
                                             :block="true"
                                             icon class="mt-7" 
-                                            @click="openTab(letter_url)"
+                                            @click="previewPdf(letter_url)"
                                             >
-                                            CLICK TO PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
                                         </v-btn>
 
                                     </div>
@@ -459,6 +460,7 @@
 <script>
 import {mapGetters,mapActions} from 'vuex'
 import axios from 'axios'
+import PDFDocument from '@/components/PDFDocument'
 
 export default {
     name: "createtender",
@@ -486,8 +488,14 @@ export default {
         letter:[],
 
         large_preview_url:'',
+
+        url:'',
+        pdf:false,
+        pdfOverlay:false
        
     }),
+
+     components:{PDFDocument},
 
     computed:{
         ...mapGetters(['getTender','getAlert']),
@@ -501,9 +509,17 @@ export default {
             //this.tender = this.getTender;
         },
 
-        openTab(url){
+        previewPdf(url){
 
-            window.open(url);
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
         },
 
         largePreview(src){
@@ -616,9 +632,13 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("letter").files[0]);
                 } 
-                else
+                else if(extension === 'pdf')
                 {
-                    this.letter_extension = '';
+                    this.letter_extension = extension;
+
+                    this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
+
+                    this.previewPdf(this.letter_url);
                 }
    
             }
@@ -660,9 +680,13 @@ export default {
                     reader.readAsDataURL(document.getElementById("photo").files[0]);
 
                 } 
-                else
+                else if(extension === 'pdf')
                 {
-                    this.photo_extension = '';
+                     this.photo_extension = extension;
+
+                    this.photo_url= URL.createObjectURL(document.getElementById("photo").files[0]);
+
+                    this.previewPdf(this.photo_url);
                 }
    
             }
@@ -704,9 +728,14 @@ export default {
                     reader.readAsDataURL(document.getElementById("bill").files[0]);
 
                 } 
-                else
+                else if(extension === 'pdf')
                 {
-                    this.bill_of_lading_extension = '';
+                     this.bill_of_lading_extension = extension;
+
+
+                    this.bill_of_lading_url= URL.createObjectURL(document.getElementById("bill").files[0]);
+
+                    this.previewPdf(this.bill_of_lading_url);
                 }
    
             }

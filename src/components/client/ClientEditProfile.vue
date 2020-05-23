@@ -662,7 +662,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(vat_url)"
                                         >
-                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>

@@ -184,7 +184,7 @@
                                         <v-btn 
                                             :block="true"
                                             icon class="mt-7" 
-                                            @click="openTab(profile_photo_url)"
+                                            @click="previewPdf(profile_photo_url)"
                                         >
                                             PREVIEW<v-icon x-large>mdi-file</v-icon>
                                         </v-btn>
@@ -212,7 +212,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(id_url)"
+                                        @click="previewPdf(id_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -243,7 +243,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(tin_url)"
                                         >
-                                        CLICK TO PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        Preview<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
                                 </div>
                             </v-col>
@@ -273,7 +273,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(copy_of_registration_url)"
+                                        @click="previewPdf(copy_of_registration_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -302,7 +302,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(tax_payer_url)"
+                                        @click="previewPdf(tax_payer_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -333,7 +333,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(licence_url)"
+                                        @click="previewPdf(licence_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -366,7 +366,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(vat_url)"
+                                        @click="previewPdf(vat_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -393,7 +393,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(logo_url)"
+                                        @click="previewPdf(logo_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -422,7 +422,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(bank_statement_url)"
+                                        @click="previewPdf(bank_statement_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -548,11 +548,6 @@ export default {
     },
 
     methods:{
-
-        openTab(url){
-
-            window.open(url);
-        },
 
         previewPdf(url){
 

@@ -23,7 +23,7 @@
           <div id="buttons">
             <v-row>
               <v-btn
-                large
+                small
                 elevation="flat" 
                 color="#4169E1" 
                 class="white--text"
@@ -36,7 +36,7 @@
 
               <v-spacer></v-spacer>
               <v-btn
-                large
+                small
                 elevation="flat" 
                 color="#4169E1" 
                 class="white--text"
