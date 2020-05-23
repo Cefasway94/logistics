@@ -1283,16 +1283,19 @@ export default {
 
                     const formdata = new FormData()
 
-                   
-                    if(this.profile_url == ''){
+                   this.profile_url = "";
+                   this.certificate_url = "";
+                   this.insurance_url = "";
+
+                    if(this.profile_url === ''){
                         formdata.append('profile_image[0]',this.profile_image[0]);
                     }
 
-                    if(this.certificate_url == ''){
+                    if(this.certificate_url === ''){
                         formdata.append('certificate[0]', this.certificate[0]);
                     }
 
-                    if(this.insurance_url == ''){
+                    if(this.insurance_url === ''){
                         formdata.append('insurance[0]', this.insurance[0])
                     }
                     
@@ -1320,9 +1323,9 @@ export default {
        previewprofile(){
 
            setTimeout(()=>{
-                this.update_success = false
-        //    this.$router.push('/transporter/previewprofile')
-        //    this.$router.go('/transporter/previewprofile')
+                this.update_success = false,
+            this.$router.push('/transporter/previewprofile')
+            this.$router.go('/transporter/previewprofile')
             },1000)
        },
 
