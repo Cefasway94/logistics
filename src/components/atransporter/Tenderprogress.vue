@@ -384,7 +384,7 @@
                md6 
                lg6 
                class="text--text body-1 ml-2 font-weight-bold mb-0"> 
-               {{amount}}
+               {{Number(amount).toLocaleString()}}
                </p>
                 </v-flex>
 
@@ -962,7 +962,16 @@ export default {
 
                 }else{
 
-                    vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                  
+                    if (vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited > 100) {
+
+                        vm.value = 100
+                        
+                    }else{
+                          vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+
+                    }
+
                     vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount
                     vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at
                     
