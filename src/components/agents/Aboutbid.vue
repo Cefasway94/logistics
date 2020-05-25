@@ -226,7 +226,7 @@
                             </v-flex>
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> BID AMOUNT </p>
-                            <p class="body-1 ">{{ Number(LOAD_DASHBOARD.objects.bid_amount).toLocaleString()}}  {{LOAD_DASHBOARD.objects.currency}}</p>
+                            <p class="body-1 ">{{ Number(LOAD_DASHBOARD.objects.bid_amount).toLocaleString()}}  {{LOAD_TENDER.currency}}</p>
                             </v-flex>
                         </v-flex>
 
