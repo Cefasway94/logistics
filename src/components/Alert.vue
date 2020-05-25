@@ -2,7 +2,7 @@
 
    <v-overlay :value="overlay">
      <v-alert 
-        type="success"
+        :type="type"
         dismissible
         color="cyan darken-3"
         border="left"
@@ -25,7 +25,7 @@ import {mapActions} from 'vuex'
 export default {
     name: 'alert',
 
-    props: ['message'],
+    props: ['message','type'],
 
     methods: {
       ...mapActions(['setAlert']),

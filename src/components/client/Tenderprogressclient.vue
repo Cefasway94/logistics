@@ -154,7 +154,7 @@
                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Port processing</span></v-flex>
                                                         <v-flex row xs12>
 
-                                                            <span v-show="!port_processing.completed" class="font-weight-regular body-2">Expected on {{ port_processing.expected_date}}</span>
+                                                            <span v-show="!port_processing.completed" class="font-weight-regular body-2">Started on {{ port_processing.expected_date}}</span>
                                                             <span v-show="port_processing.completed" class="font-weight- body-2">Completed on {{ port_processing.completed_date}}</span>
                                                             
                                                         </v-flex>
@@ -195,7 +195,7 @@
                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">TRA</span></v-flex>
                                                         <v-flex row xs12>
 
-                                                           <span v-show="!tcra_processing.completed" class="font-weight-regular body-2">Expected on {{ tcra_processing.expected_date}}</span>
+                                                           <span v-show="!tcra_processing.completed" class="font-weight-regular body-2">Started on {{ tcra_processing.expected_date}}</span>
                                                             <span v-show="tcra_processing.completed" class="font-weight- body-2">Completed on {{ tcra_processing.completed_date}}</span>
 
                                                         </v-flex>
@@ -238,7 +238,7 @@
                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Other processes</span></v-flex>
                                                         <v-flex row xs12>
 
-                                                           <span v-show="!other_processes.completed" class="font-weight-regular body-2">Expected on {{ other_processes.expected_date}}</span>
+                                                           <span v-show="!other_processes.completed" class="font-weight-regular body-2">Started on {{ other_processes.expected_date}}</span>
                                                            <span v-show="other_processes.completed" class="font-weight- body-2">Completed on {{ other_processes.completed_date}}</span>
 
                                                         </v-flex>
@@ -281,7 +281,7 @@
                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Completion</span></v-flex>
                                                         <v-flex row xs12>
 
-                                                           <span v-show="!completion.completed" class="font-weight-regular body-2">Expected on {{ completion.expected_date}}</span>
+                                                           <span v-show="!completion.completed" class="font-weight-regular body-2">Started on {{ completion.expected_date}}</span>
                                                            <span v-show="completion.completed" class="font-weight- body-2">Completed on {{ completion.completed_date}}</span>
 
                                                         </v-flex>
@@ -326,7 +326,7 @@
                                                          <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo offloading</span></v-flex>
                                                         <v-flex row xs12>
 
-                                                            <span v-show ="!cargo_offloading.completed" class="font-weight-regular body-2">Expected on {{ cargo_offloading.expected_date}}</span>
+                                                            <span v-show ="!cargo_offloading.completed" class="font-weight-regular body-2">Started on {{ cargo_offloading.expected_date}}</span>
                                                             <span v-show ="cargo_offloading.completed" class="font-weight- body-2">Completed on {{ cargo_offloading.completed_date}}</span>
                                                             
                                                         </v-flex>
@@ -370,7 +370,7 @@
                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo delivered</span></v-flex>
                                                         <v-flex row xs12>
 
-                                                        <span v-show="!cargo_delivered.completed" class="font-weight-regular body-2">Expected on {{ cargo_delivered.expected_date}}</span>
+                                                        <span v-show="!cargo_delivered.completed" class="font-weight-regular body-2">Started on {{ cargo_delivered.expected_date}}</span>
                                                         <span v-show="cargo_delivered.completed" class="font-weight- body-2">Completed on {{ cargo_delivered.completed_date}}</span>
                                                             
                                                         </v-flex>
@@ -453,7 +453,7 @@
                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo loading</span></v-flex>
                                                         <v-flex row xs12>
 
-                                                            <span v-show="!cargo_loading.completed" class="font-weight-regular body-2">Expected on {{ cargo_loading.expected_date}}</span>
+                                                            <span v-show="!cargo_loading.completed" class="font-weight-regular body-2">Started on {{ cargo_loading.expected_date}}</span>
                                                             <span v-show="cargo_loading.completed" class="font-weight- body-2">Completed on {{ cargo_loading.completed_date}}</span>
                                                             
                                                         </v-flex>
@@ -494,7 +494,7 @@
                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo in transit</span></v-flex>
                                                         <v-flex row xs12>
 
-                                                           <span v-show="!cargo_in_transmit.completed" class="font-weight-regular body-2">Expected on {{ cargo_in_transmit.expected_date}}</span>
+                                                           <span v-show="!cargo_in_transmit.completed" class="font-weight-regular body-2">Started on {{ cargo_in_transmit.expected_date}}</span>
                                                             <span v-show="cargo_in_transmit.completed" class="font-weight- body-2">Completed on {{ cargo_in_transmit.completed_date}}</span>
 
                                                         </v-flex>
@@ -539,7 +539,7 @@
                                                          <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo offloading</span></v-flex>
                                                         <v-flex row xs12>
 
-                                                            <span v-show ="!cargo_offloading.completed" class="font-weight-regular body-2">Expected on {{ cargo_offloading.expected_date}}</span>
+                                                            <span v-show ="!cargo_offloading.completed" class="font-weight-regular body-2">Started on {{ cargo_offloading.expected_date}}</span>
                                                             <span v-show ="cargo_offloading.completed" class="font-weight- body-2">Completed on {{ cargo_offloading.completed_date}}</span>
                                                             
                                                         </v-flex>
@@ -584,7 +584,7 @@
                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo delivered</span></v-flex>
                                                         <v-flex row xs12>
 
-                                                        <span v-show="!cargo_delivered.completed" class="font-weight-regular body-2">Expected on {{ cargo_delivered.expected_date}}</span>
+                                                        <span v-show="!cargo_delivered.completed" class="font-weight-regular body-2">Started on {{ cargo_delivered.expected_date}}</span>
                                                         <span v-show="cargo_delivered.completed" class="font-weight- body-2">Completed on {{ cargo_delivered.completed_date}}</span>
                                                             
                                                         </v-flex>

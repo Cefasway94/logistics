@@ -5,7 +5,9 @@
 
           <AlertError v-if="display_alert" v-bind:message="alert_error"/>
 
-          <Alert v-if="alert" v-bind:message="alert"/>
+          <Alert v-if="alert" v-bind="{message,type}"/> 
+
+          <Message/>
 
           <v-tabs
               right
@@ -363,6 +365,7 @@
 import axios from 'axios'
 import AlertError from '@/components/AlertError.vue'
 import Alert from '@/components/Alert.vue'
+import Message from '@/components/Message.vue'
 import{mapActions,mapGetters} from 'vuex'
 
 export default {
@@ -394,7 +397,9 @@ export default {
     }
   },
 
-  components: {AlertError,Alert},
+  //components: {Message},
+
+  components: {Message,AlertError,Alert},
 
   computed:{
 
@@ -403,7 +408,12 @@ export default {
 
   methods: {
 
-    ...mapActions(['setAdminAlert']),
+    ...mapActions(['setAdminAlert','setSnackbar']),
+
+    setAlert(alert){
+
+      this.alert = alert;
+    },
 
     fetch(title)
     {
@@ -563,6 +573,8 @@ export default {
           {
             this.display_alert = false;
 
+            this.dialog = false;
+
             this.$router.push('/admin');
                 
             this.$router.go('/admin');
@@ -605,6 +617,8 @@ export default {
               {
                 this.display_alert = false;
 
+                this.dialog = false;
+
                 this.$router.push('/admin');
                 
                 this.$router.go('/admin');
@@ -641,11 +655,31 @@ export default {
 
             if(response.data.genralErrorCode === 8000)
               {
-                this.display_alert = false;
+                this.dialog = false;
 
-                this.$router.push('/admin');
+                /*this.$store.dispatch('setSnackbar',{
+                            text: "Customer have been denied",
+                            color: 'success'
+                });*/
 
-                this.$router.go('/admin');
+              /*this.setSnackbar({
+                   text: "Customer have been denied",
+                   color: 'success'
+              });*/
+
+
+
+                //this.display_alert = true;
+
+                //this.$router.push('/admin');
+
+                this.alert ="Customer have been denied";
+
+                //this.$router.go('/admin');
+
+                document.getElementById('app').scrollIntoView();
+
+                //this.$router.push('/admin');
 
               } else if(response.data.genralErrorCode === 8004){
 

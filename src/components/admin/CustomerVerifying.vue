@@ -352,14 +352,14 @@ export default {
 
                     if(response.data.genralErrorCode === 8000)
                     {
-                         this.$store.dispatch('setSnackbar',{
-                                text: "Customer verified",
-                                color: 'success'
+                        this.$store.dispatch('setSnackbar',{
+                            text: response.data.message,
+                            color: 'success'
                         });
 
                        this.$router.push('/admin');
 
-                       this.$router.go('/admin');
+                       //this.$router.go('/admin');
 
                     } else if(response.data.genralErrorCode === 8004){
 

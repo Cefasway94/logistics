@@ -197,14 +197,16 @@
                         </v-row>
 
                         <v-row>
+                            <v-col cols=12>
+                                <v-flex class="pt-3" >
+                                    <center>
+                                    <p class="mb-0 body-1 red--text">
+                                        Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
+                                    </p>
+                                    </center>
+                                </v-flex>
+                            </v-col>
                             
-                             <v-flex class="pt-3" >
-                                <center>
-                                <p class="mb-0 body-1 red--text">
-                                    Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
-                                </p>
-                                </center>
-                            </v-flex>
 
                             <v-col cols=12 md=4>
                                 <p class="primary--text body-2 text-uppercase mb-0">CARGO PHOTO </p>
@@ -865,7 +867,7 @@ export default {
 
                         if(response.data.genralErrorCode === 8000)
                         {
-                             this.$store.dispatch('setSnackbar',{
+                            this.$store.dispatch('setSnackbar',{
                                 text: response.data.message,
                                 color: 'success'
                             });

@@ -389,7 +389,7 @@ export default {
             //eslint-disable-next-line no-console
                                
 
-            for(let i = 0; i< this.currency_object.length; i++)
+            /*for(let i = 0; i< this.currency_object.length; i++)
             {
 
                 if(this.currency_object[i].name === this.currency)
@@ -398,16 +398,15 @@ export default {
 
                      break;
                 }
-            }
+            }*/
                 
-          
             let formData = new FormData();
             
             formData.append('amount',this.amount);
             formData.append('deposit_slip[0]',this.depositors_slip[0]);
             formData.append('customers_acct_number',this.account_number);
             formData.append('depositors_name',this.depositors_name);
-            formData.append('currency_ID',this.currency_id);
+            formData.append('currency_ID',this.currency);
             
             return formData;
             
