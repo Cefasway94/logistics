@@ -602,14 +602,15 @@
                                         :items="stateitems"
                                         outlined 
                                         color="#4169E1" 
-                                        clearable >
+                                        clearable 
+                                        @change="checkstate()">
                                         </v-select>
                                     </v-flex>
                                     </v-flex>
 
                                     <v-flex row sm4 mb4 justify-center class="pl-6">
                                     <v-flex>
-                                        <p class="bondy-2 mb-0">Delivery date</p>
+                                        <p class="bondy-2 mb-0">{{datetitle}}</p>
                                         <v-menu
                                         ref="menu"
                                         v-model="menu"
@@ -839,6 +840,8 @@ export default {
             state:'',
 
             datetitle:'Started on', //date field title
+
+            complete_tender:true
         }
     },
 
