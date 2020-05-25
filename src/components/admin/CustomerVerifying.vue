@@ -2,7 +2,7 @@
 
     <v-container class="mt-12 px-5" color="#F5FAFF" fluid>
 
-        <AlertError v-if="display_alert" v-bind:message="alert"/>
+        <!-- <Message/> -->
 
         <v-card flat class="mt-10 mx-auto mb-2" color="#F5FAFF">
 
@@ -295,13 +295,13 @@
 
 <script>
 import axios from 'axios'
-import AlertError from '@/components/AlertError.vue'
+// import Message from '@/components/Message.vue'
 import {mapActions} from 'vuex'
 
 export default {
     name: 'AgentVerifying',
 
-    components:{AlertError},
+    //components:{Message},
 
     data () {
         return {
@@ -352,9 +352,10 @@ export default {
 
                     if(response.data.genralErrorCode === 8000)
                     {
-                       this.display_alert = false;
-
-                       this.setAdminAlert("This is for test");
+                         this.$store.dispatch('setSnackbar',{
+                                text: "Customer verified",
+                                color: 'success'
+                        });
 
                        this.$router.push('/admin');
 

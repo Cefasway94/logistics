@@ -503,7 +503,7 @@ export default {
     },
 
     methods:{
-        ...mapActions(['updateTender','fetchAllTenders','setAlert','setSnackbar']),
+        ...mapActions(['updateTender','fetchAllTenders','setAlert']),
 
         setCustomerDetails(){
             //this.tender = this.getTender;

@@ -3,6 +3,7 @@
     <v-container class="mt-12 px-5" color="#F5FAFF" fluid>
 
         <Alert v-if="alert" v-bind:message="alert"/>
+        <Message/>
 
         <!--<canvas id="canvas">
 
@@ -463,6 +464,7 @@
 import axios from 'axios'
 import AlertError from '@/components/AlertError.vue'
 import Alert from '@/components/Alert.vue'
+import Message from '@/components/Message.vue'
 import {mapGetters} from 'vuex'
 import PDFDocument from '@/components/PDFDocument.vue'
  /*import('pdfjs-dist/webpack').then(pdfjs=>{
@@ -493,7 +495,7 @@ import PDFDocument from '@/components/PDFDocument.vue'
 export default {
     name: 'Profile',
 
-    components:{AlertError,Alert,PDFDocument},
+    components:{AlertError,Alert,PDFDocument,Message},
 
     data () {
         return {

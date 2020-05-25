@@ -626,7 +626,7 @@ export default {
 
         } else if(vm.$route.params.tender_type == "Clearing"){
 
-            const currency = "http://207.180.215.239:8000/api/v1/configurations/currency";
+            const currency = "http://207.180.215.239:9000/api/v1/configurations/currency";
 
              axios.get(currency).then((response) => 
                             {
