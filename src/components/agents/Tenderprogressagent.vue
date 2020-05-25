@@ -834,7 +834,11 @@ export default {
             comment:'',
             extension:false,
             placeholder: 1,
-            value:''
+            value:'',
+
+            state:'',
+
+            datetitle:'Started on', //date field title
         }
     },
 
@@ -928,6 +932,128 @@ export default {
 
                   console.log(vm.LOAD_PROGRESS_STAGES)
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    for (let index = 0; index < vm.LOAD_PROGRESS_STAGES.objects.length; index++) {
+                                
+
+  // stage One --------------------------------
+                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ) {
+
+                     vm.date0 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date         
+                    console.log('Stage 1 In progress');
+                    vm.stage1 = 'B'
+                    //vm.stage2 = 'A'
+                    //vm.stage3 = 'A'
+                    //vm.stage4 = 'A'
+
+                } else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ) {
+                    
+                    vm.date0 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date 
+                    console.log('Stage 1.1 completed');
+                    vm.stage1 = 'C'
+                    //vm.stage2 = 'A'
+                    //vm.stage3 = 'A'
+                    //vm.stage4 = 'A'
+
+                }
+
+    // stage Two ----------------------------------
+
+                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
+                    
+                     vm.date1 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                    console.log('Stage 2 In progress');
+                    //vm.stage1 = 'C'
+                    vm.stage2 = 'B'
+                    //vm.stage3 = 'A'
+                    //vm.stage4 = 'A'
+
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                     
+                      vm.date1 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                     console.log('Stage 2.2 completed');
+                     //vm.stage1 = 'C'
+                     vm.stage2 = 'C'
+                     //vm.stage3 = 'A'
+                     //vm.stage4 = 'A'
+
+                    }
+
+    // stage Three -----------------------------------
+
+                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
+                    
+                    vm.date2 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                    console.log('Stage 3 In progress');
+                    //vm.stage1 = 'C'
+                    //vm.stage2 = 'C'
+                    vm.stage3 = 'B'
+                    //vm.stage4 = 'A'
+
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                     
+                     vm.date2 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                     console.log('Stage 3.3 completed');
+                     //vm.stage1 = 'C'
+                     //vm.stage2 = 'C'
+                     vm.stage3 = 'C'
+                     //vm.stage4 = 'A'
+
+                    }
+
+    // Stage Four -------------------------------------
+
+                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
+                    
+                     vm.date3 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                    console.log('Stage 4 In progress');
+                    //vm.stage1 = 'C'
+                    //vm.stage2 = 'C'
+                    //vm.stage3 = 'C'
+                    vm.stage4 = 'B'
+
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                     
+                      vm.date3 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                     console.log('Stage 4.4 completed');
+                     //vm.stage1 = 'C'
+                     //vm.stage2 = 'C'
+                     //vm.stage3 = 'C'
+                     vm.stage4 = 'C'
+
+
+                    }
+                                if ((this.stage1 == 'c' && this.stage2 == 'c') && (this.stage3 == 'c' && this.stage4=='c') ) {
+                                    this.complete_tender = false
+                                } else {
+                                    this.complete_tender = true
+                                }
+
+                                if ((vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === vm.state) &&
+                                (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.progress_id)  ) {
+                                    
+                                    console.log('sulition');
+                                    
+                                    console.log(vm.LOAD_PROGRESS_STAGES.objects);
+
+                                    
+                                    
+                                }
+                                console.log(vm.LOAD_PROGRESS_STAGES.objects[index].InProgress)
+                                
+                                
+                            }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
     // stage One --------------------------------
                 if (vm.LOAD_PROGRESS_STAGES.objects[0].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
@@ -1015,6 +1141,7 @@ export default {
                      vm.stage4 = 'C'
 
                     }
+*/
 
 
 
@@ -1079,6 +1206,16 @@ methods :{
 
         },
 
+        checkstate(){
+            if (this.feedstate == "InProgress") {
+                this.datetitle = "Started on"
+            } else {
+                 this.datetitle = "Completed on"
+                
+            }
+
+        },
+
         submiteProgress(){
 
             this.loading = true
@@ -1124,7 +1261,131 @@ methods :{
                             this.loading = false
 
                             console.log(this.LOAD_PROGRESS_STAGES.objects)
+////////////////////////////////////////////////////////////////////////////////////////////
+        for (let index = 0; index < this.LOAD_PROGRESS_STAGES.objects.length; index++) {
+                                
+                                 console.log(this.feedstate);
 
+                        if (this.feedstate == 'InProgress') {
+                                         this.state =1
+                                     
+                                 } else {
+
+                                      this.state = 0
+                                     
+                                 }
+                                
+
+                        if ((this.LOAD_PROGRESS_STAGES.objects[index].InProgress === this.state) &&
+                                (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.progress_id)  ) {
+                                    
+                                    console.log('sulition');
+                                    
+                                    console.log(this.LOAD_PROGRESS_STAGES.objects);
+                                }
+
+// stage One --------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ) {
+
+                    console.log('Stage 1 In progress');
+                    this.stage1 = 'B'
+                    // this.stage2 = 'A'
+                    // this.stage3 = 'A'
+                    // this.stage4 = 'A'
+
+                } else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ) {
+                    
+                    console.log('Stage 1 completed');
+                    this.stage1 = 'C'
+                    // this.stage2 = 'A'
+                    // this.stage3 = 'A'
+                    // this.stage4 = 'A'
+
+                }
+
+// stage Two ----------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    //this.stage1 = 'C'
+                    this.stage2 = 'B'
+                    //this.stage3 = 'A'
+                    //this.stage4 = 'A'
+
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     //this.stage1 = 'C'
+                     this.stage2 = 'C'
+                     //this.stage3 = 'A'
+                     //this.stage4 = 'A'
+
+                    }
+
+// stage Three -----------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    //this.stage1 = 'C'
+                    //this.stage2 = 'C'
+                    this.stage3 = 'B'
+                    //this.stage4 = 'A'
+
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     //this.stage1 = 'C'
+                     //this.stage2 = 'C'
+                     this.stage3 = 'C'
+                     this.stage4 = 'A'
+
+                    }
+
+// Stage Four -------------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    //this.stage1 = 'C'
+                    //this.stage2 = 'C'
+                    //this.stage3 = 'C'
+                    this.stage4 = 'B'
+
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     //this.stage1 = 'C'
+                     //this.stage2 = 'C'
+                     //this.stage3 = 'C'
+                     this.stage4 = 'C'
+
+
+                    }
+
+                    if ((this.stage1 == 'c' && this.stage2 == 'c') && (this.stage3 == 'c' && this.stage4=='c') ) {
+                                    this.complete_tender = false
+                                } else {
+                                    this.complete_tender = true
+                                }
+                            
+                                
+                                
+                            }
+///////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 // stage One --------------------------------
 
                 if (this.LOAD_PROGRESS_STAGES.objects[0].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id && 
@@ -1212,6 +1473,8 @@ methods :{
                      this.stage4 = 'C'
 
                     }
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+*/
 
 
               })
