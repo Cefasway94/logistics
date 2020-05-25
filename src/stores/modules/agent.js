@@ -312,21 +312,7 @@ actions: {
             });                   
         },
 
-// Get all AWARDED TENDER LIST tenders ============================================>>>
-        // GET_ONAWARDED: async ({commit},payload) => {
-            
-        //     const url= 'http://192.168.1.44:8000/api/v1/tenders/awarded/'+payload;
-        //         await axios.get(url).then((data)=>{
-        //             // eslint-disable-next-line no-console
-        //             //console.log(res.data);
-        //             commit('SET_DASHBOARDS', data.data);
-        //         }).catch((error)=>{
-        //             //eslint-disable-next-line no-console
-        //             console.log(error);
-        //             const res=null;
-        //             commit('SET_DASHBOARDS', res);
-        //         });                   
-        //     },
+
 
 // Get all on Progress tenders ============================================>>>
         GET_ONPROGRESS: async ({commit},payload) => {

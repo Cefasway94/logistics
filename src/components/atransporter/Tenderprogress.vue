@@ -1189,7 +1189,10 @@ methods :{
                                                                 
 
                                 if ((this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 0) &&
-                                (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.progress_id) ) {
+                                (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.progress_id)  ) {
+                                    
+                                    console.log('sulition');
+                                    
                                     console.log(this.LOAD_PROGRESS_STAGES.objects);
 
                                     
