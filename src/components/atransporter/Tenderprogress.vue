@@ -384,7 +384,8 @@
                md6 
                lg6 
                class="text--text body-1 ml-2 font-weight-bold mb-0"> 
-               {{amount}}
+               {{Number(amount).toLocaleString()}}
+               {{LOAD_TENDER.currency}}
                </p>
                 </v-flex>
 
@@ -449,7 +450,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Cargo loading</p>
-                                   <p class="mt-1">Dated {{date0}}</p>
+                                   <p class="mt-1">Date : {{date0}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -460,7 +461,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Cargo loading</p>
-                                   <p class="mt-1">Dated {{date0}}</p>
+                                   <p class="mt-1">Date : {{date0}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -471,7 +472,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Cargo loaded</p>
-                                   <p class="mt-1">Dated {{date0}}</p>
+                                   <p class="mt-1">Date : {{date0}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -492,7 +493,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. Cargo in transit</p>
-                                   <p class="mt-1">Dated {{date1}}</p>
+                                   <p class="mt-1">Date : {{date1}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -503,7 +504,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. Cargo in transit</p>
-                                   <p class="mt-1">Dated {{date1}}</p>
+                                   <p class="mt-1">Date : {{date1}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -514,7 +515,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. Cargo in transit</p>
-                                   <p class="mt-1">Dated {{date1}}</p>
+                                   <p class="mt-1">Date : {{date1}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -535,7 +536,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Cargo offloading</p>
-                                   <p class="mt-1">Dated {{date2}}</p>
+                                   <p class="mt-1">Date : {{date2}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -546,7 +547,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Cargo offloading</p>
-                                   <p class="mt-1">Dated {{date2}}</p>
+                                   <p class="mt-1">Date : {{date2}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -557,7 +558,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Cargo offloaded</p>
-                                   <p class="mt-1">Dated {{date2}}</p>
+                                   <p class="mt-1">Date : {{date2}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -658,14 +659,15 @@
                                         :items="stateitems"
                                         outlined 
                                         color="#4169E1" 
-                                        clearable >
+                                        clearable 
+                                        @change="checkstate()">
                                         </v-select>
                                     </v-flex>
                                     </v-flex>
 
                                     <v-flex row sm4 mb4 justify-center class="pl-6">
                                     <v-flex>
-                                        <p class="bondy-2 mb-0">Delivery date</p>
+                                        <p class="bondy-2 mb-0">{{datetitle}}</p>
                                         <v-menu
                                         ref="menu"
                                         v-model="menu"
@@ -703,7 +705,7 @@
                                     elevation="flat" 
                                     class=" primary "
                                     @click.capture="submiteProgress()" > 
-                                    Submite progress
+                                    Submit progress
                                     </v-btn>
                                 </v-flex>
                         </v-card>
@@ -813,7 +815,7 @@
             color="#F5FAFF">
                 <v-flex row class="">
                        <v-spacer></v-spacer>
-                       <v-btn disabled large class="primary" rauter >complete tender</v-btn>
+                       <v-btn :disabled="complete_tender" large class="primary" rauter >complete tender</v-btn>
                 </v-flex>
             </v-card>
 
@@ -866,7 +868,7 @@ export default {
             //------- STAGE COMMENTING------
             //---- Stages and states ---
             stageitems:['1. Cargo loading', '2. Cargo in transit', '3. Cargo offloading', '4. Cargo delivered'],
-            stateitems:['InProgress', 'delivered'],
+            stateitems:['InProgress', 'completed'],
             feedstage:'',
             feedstate:'',
             progress_id:'',
@@ -874,6 +876,8 @@ export default {
             date: new Date().toISOString().substr(0, 10),
             delivery_time:new Date().toISOString().substr(0, 10),
             notless:new Date().toISOString().substr(0, 10),
+
+            //validation rules
 
             //------ PAYMENT PROGRESS ------------
             payment_percentage:'',
@@ -899,6 +903,11 @@ export default {
 
             overlay:false,
 
+            state:'',
+
+            datetitle:'Started on', //date field title
+
+            complete_tender:true,
             url:'',
             pdf:false,
             pdfOverlay:false
@@ -967,7 +976,16 @@ export default {
 
                 }else{
 
-                    vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                  
+                    if (vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited > 100) {
+
+                        vm.value = 100
+                        
+                    }else{
+                          vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+
+                    }
+
                     vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount
                     vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at
                     
@@ -984,31 +1002,149 @@ export default {
 
               vm.T_GET_PROGRESS_STAGES(to.params.id).then(()=>{
 
-                  vm.date0 = vm.LOAD_PROGRESS_STAGES.objects[0].expected_date
-                   vm.date1 = vm.LOAD_PROGRESS_STAGES.objects[1].expected_date
-                    vm.date2 = vm.LOAD_PROGRESS_STAGES.objects[2].expected_date
-                     vm.date3 = vm.LOAD_PROGRESS_STAGES.objects[3].expected_date
+                 
 
                   console.log(vm.LOAD_PROGRESS_STAGES);
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    for (let index = 0; index < vm.LOAD_PROGRESS_STAGES.objects.length; index++) {
+
+                        
+  // stage One --------------------------------
+                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ) {
+
+                     vm.date0 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date         
+                    console.log('Stage 1 In progress');
+                    vm.stage1 = 'B'
+                    //vm.stage2 = 'A'
+                    //vm.stage3 = 'A'
+                    //vm.stage4 = 'A'
+
+                } else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ) {
+                    
+                    vm.date0 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date 
+                    console.log('Stage 1.1 completed');
+                    vm.stage1 = 'C'
+                    //vm.stage2 = 'A'
+                    //vm.stage3 = 'A'
+                    //vm.stage4 = 'A'
+
+                }
+
+    // stage Two ----------------------------------
+
+                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
+                    
+                     vm.date1 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                    console.log('Stage 2 In progress');
+                    //vm.stage1 = 'C'
+                    vm.stage2 = 'B'
+                    //vm.stage3 = 'A'
+                    //vm.stage4 = 'A'
+
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                     
+                      vm.date1 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                     console.log('Stage 2.2 completed');
+                     //vm.stage1 = 'C'
+                     vm.stage2 = 'C'
+                     //vm.stage3 = 'A'
+                     //vm.stage4 = 'A'
+
+                    }
+
+    // stage Three -----------------------------------
+
+                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
+                    
+                    vm.date2 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                    console.log('Stage 3 In progress');
+                    //vm.stage1 = 'C'
+                    //vm.stage2 = 'C'
+                    vm.stage3 = 'B'
+                    //vm.stage4 = 'A'
+
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                     
+                     vm.date2 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                     console.log('Stage 3.3 completed');
+                     //vm.stage1 = 'C'
+                     //vm.stage2 = 'C'
+                     vm.stage3 = 'C'
+                     //vm.stage4 = 'A'
+
+                    }
+
+    // Stage Four -------------------------------------
+
+                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id && 
+                         vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
+                    
+                     vm.date3 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                    console.log('Stage 4 In progress');
+                    //vm.stage1 = 'C'
+                    //vm.stage2 = 'C'
+                    //vm.stage3 = 'C'
+                    vm.stage4 = 'B'
+
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                     
+                      vm.date3 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                     console.log('Stage 4.4 completed');
+                     //vm.stage1 = 'C'
+                     //vm.stage2 = 'C'
+                     //vm.stage3 = 'C'
+                     vm.stage4 = 'C'
+
+
+                    }
+                                if ((this.stage1 == 'c' && this.stage2 == 'c') && (this.stage3 == 'c' && this.stage4=='c') ) {
+                                    this.complete_tender = false
+                                } else {
+                                    this.complete_tender = true
+                                }
+
+                                if ((vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === vm.state) &&
+                                (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.progress_id)  ) {
+                                    
+                                    console.log('sulition');
+                                    
+                                    console.log(vm.LOAD_PROGRESS_STAGES.objects);
+
+                                    
+                                    
+                                }
+                                console.log(vm.LOAD_PROGRESS_STAGES.objects[index].InProgress)
+                                
+                                
+                            }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // stage One --------------------------------
-                if (vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
+     /*           if (vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
 
                     console.log('Stage 1 In progress');
                     vm.stage1 = 'B'
-                    vm.stage2 = 'A'
-                    vm.stage3 = 'A'
-                    vm.stage4 = 'A'
+                    //vm.stage2 = 'A'
+                    //vm.stage3 = 'A'
+                    //vm.stage4 = 'A'
 
                 } else if( vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[0].delivered === 1 ) {
                     
                     console.log('Stage 1.1 completed');
                     vm.stage1 = 'C'
-                    vm.stage2 = 'A'
-                    vm.stage3 = 'A'
-                    vm.stage4 = 'A'
+                    //vm.stage2 = 'A'
+                    //vm.stage3 = 'A'
+                    //vm.stage4 = 'A'
 
                 }
 
@@ -1018,19 +1154,19 @@ export default {
                          vm.LOAD_PROGRESS_STAGES.objects[1].InProgress === 1 ){
                     
                     console.log('Stage 2 In progress');
-                    vm.stage1 = 'C'
+                    //vm.stage1 = 'C'
                     vm.stage2 = 'B'
-                    vm.stage3 = 'A'
-                    vm.stage4 = 'A'
+                    //vm.stage3 = 'A'
+                    //vm.stage4 = 'A'
 
                     }else if( vm.LOAD_PROGRESS_STAGES.objects[1].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[1].delivered === 1 ){
                     
                      console.log('Stage 2.2 completed');
-                     vm.stage1 = 'C'
+                     //vm.stage1 = 'C'
                      vm.stage2 = 'C'
-                     vm.stage3 = 'A'
-                     vm.stage4 = 'A'
+                     //vm.stage3 = 'A'
+                     //vm.stage4 = 'A'
 
                     }
 
@@ -1040,19 +1176,19 @@ export default {
                          vm.LOAD_PROGRESS_STAGES.objects[2].InProgress === 1 ){
                     
                     console.log('Stage 3 In progress');
-                    vm.stage1 = 'C'
-                    vm.stage2 = 'C'
+                    //vm.stage1 = 'C'
+                    //vm.stage2 = 'C'
                     vm.stage3 = 'B'
-                    vm.stage4 = 'A'
+                    //vm.stage4 = 'A'
 
                     }else if( vm.LOAD_PROGRESS_STAGES.objects[2].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[2].delivered === 1 ){
                     
                      console.log('Stage 3.3 completed');
-                     vm.stage1 = 'C'
-                     vm.stage2 = 'C'
+                     //vm.stage1 = 'C'
+                     //vm.stage2 = 'C'
                      vm.stage3 = 'C'
-                     vm.stage4 = 'A'
+                     //vm.stage4 = 'A'
 
                     }
 
@@ -1062,21 +1198,21 @@ export default {
                          vm.LOAD_PROGRESS_STAGES.objects[3].InProgress === 1 ){
                     
                     console.log('Stage 4 In progress');
-                    vm.stage1 = 'C'
-                    vm.stage2 = 'C'
-                    vm.stage3 = 'C'
+                    //vm.stage1 = 'C'
+                    //vm.stage2 = 'C'
+                    //vm.stage3 = 'C'
                     vm.stage4 = 'B'
 
                     }else if( vm.LOAD_PROGRESS_STAGES.objects[3].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[3].delivered === 1 ){
                     
                      console.log('Stage 4.4 completed');
-                     vm.stage1 = 'C'
-                     vm.stage2 = 'C'
-                     vm.stage3 = 'C'
+                     //vm.stage1 = 'C'
+                     //vm.stage2 = 'C'
+                     //vm.stage3 = 'C'
                      vm.stage4 = 'C'
 
-                    }
+                    }*/
 
 
 
@@ -1148,6 +1284,16 @@ methods :{
 
         },
 
+        checkstate(){
+            if (this.feedstate == "InProgress") {
+                this.datetitle = "Started on"
+            } else {
+                 this.datetitle = "Completed on"
+                
+            }
+
+        },
+
 
     submiteProgress(){
 
@@ -1172,6 +1318,8 @@ methods :{
         }
 
         console.log(this.$route.params.id);
+        console.log(this.feedstate);
+        
             
         //        const        agent_id = this.LOAD_AGENT.objects.agent_id
         //          const progress_status = this.feedstate
@@ -1198,23 +1346,134 @@ methods :{
                             
                             this.loading = false
 
-                            for (let index = 0; index <= this.LOAD_PROGRESS_STAGES.objects.length; index++) {
-                                                                
+                                console.log(this.LOAD_PROGRESS_STAGES.objects);
+                                console.log(this.LOAD_PROGRESS_STAGES.objects.length);
+                                
+                        for (let index = 0; index < this.LOAD_PROGRESS_STAGES.objects.length; index++) {
+                                
+                                 console.log(this.feedstate);
 
-                                if ((this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 0) &&
-                                (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.progress_id) ) {
+                        if (this.feedstate == 'InProgress') {
+                                         this.state =1
+                                     
+                                 } else {
+
+                                      this.state = 0
+                                     
+                                 }
+                                
+
+                        if ((this.LOAD_PROGRESS_STAGES.objects[index].InProgress === this.state) &&
+                                (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.progress_id)  ) {
+                                    
+                                    console.log('sulition');
+                                    
                                     console.log(this.LOAD_PROGRESS_STAGES.objects);
-
-                                    
-                                    
                                 }
-                                console.log(this.LOAD_PROGRESS_STAGES.objects[index].InProgress)
+
+// stage One --------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ) {
+
+                    console.log('Stage 1 In progress');
+                    this.stage1 = 'B'
+                    // this.stage2 = 'A'
+                    // this.stage3 = 'A'
+                    // this.stage4 = 'A'
+
+                } else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ) {
+                    
+                    console.log('Stage 1 completed');
+                    this.stage1 = 'C'
+                    // this.stage2 = 'A'
+                    // this.stage3 = 'A'
+                    // this.stage4 = 'A'
+
+                }
+
+// stage Two ----------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    //this.stage1 = 'C'
+                    this.stage2 = 'B'
+                    //this.stage3 = 'A'
+                    //this.stage4 = 'A'
+
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     //this.stage1 = 'C'
+                     this.stage2 = 'C'
+                     //this.stage3 = 'A'
+                     //this.stage4 = 'A'
+
+                    }
+
+// stage Three -----------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    //this.stage1 = 'C'
+                    //this.stage2 = 'C'
+                    this.stage3 = 'B'
+                    //this.stage4 = 'A'
+
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     //this.stage1 = 'C'
+                     //this.stage2 = 'C'
+                     this.stage3 = 'C'
+                     this.stage4 = 'A'
+
+                    }
+
+// Stage Four -------------------------------------
+
+                if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id && 
+                         this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
+                    
+                    console.log('Stage 1 In progress');
+                    //this.stage1 = 'C'
+                    //this.stage2 = 'C'
+                    //this.stage3 = 'C'
+                    this.stage4 = 'B'
+
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                    
+                     console.log('Stage 1 completed');
+                     //this.stage1 = 'C'
+                     //this.stage2 = 'C'
+                     //this.stage3 = 'C'
+                     this.stage4 = 'C'
+
+
+                    }
+
+                    if ((this.stage1 == 'c' && this.stage2 == 'c') && (this.stage3 == 'c' && this.stage4=='c') ) {
+                                    this.complete_tender = false
+                                } else {
+                                    this.complete_tender = true
+                                }
+                            
                                 
                                 
                             }
 
-                            console.log(this.LOAD_PROGRESS_STAGES.objects)
+                            
 
+/*
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 // stage One --------------------------------
 
                 if (this.LOAD_PROGRESS_STAGES.objects[0].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id && 
@@ -1222,18 +1481,18 @@ methods :{
 
                     console.log('Stage 1 In progress');
                     this.stage1 = 'B'
-                    this.stage2 = 'A'
-                    this.stage3 = 'A'
-                    this.stage4 = 'A'
+                    // this.stage2 = 'A'
+                    // this.stage3 = 'A'
+                    // this.stage4 = 'A'
 
                 } else if( this.LOAD_PROGRESS_STAGES.objects[0].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
                              this.LOAD_PROGRESS_STAGES.objects[0].delivered === 1 ) {
                     
                     console.log('Stage 1 completed');
                     this.stage1 = 'C'
-                    this.stage2 = 'A'
-                    this.stage3 = 'A'
-                    this.stage4 = 'A'
+                    // this.stage2 = 'A'
+                    // this.stage3 = 'A'
+                    // this.stage4 = 'A'
 
                 }
 
@@ -1243,19 +1502,19 @@ methods :{
                          this.LOAD_PROGRESS_STAGES.objects[1].InProgress === 1 ){
                     
                     console.log('Stage 1 In progress');
-                    this.stage1 = 'C'
+                    //this.stage1 = 'C'
                     this.stage2 = 'B'
-                    this.stage3 = 'A'
-                    this.stage4 = 'A'
+                    //this.stage3 = 'A'
+                    //this.stage4 = 'A'
 
                     }else if( this.LOAD_PROGRESS_STAGES.objects[1].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id &&
                              this.LOAD_PROGRESS_STAGES.objects[1].delivered === 1 ){
                     
                      console.log('Stage 1 completed');
-                     this.stage1 = 'C'
+                     //this.stage1 = 'C'
                      this.stage2 = 'C'
-                     this.stage3 = 'A'
-                     this.stage4 = 'A'
+                     //this.stage3 = 'A'
+                     //this.stage4 = 'A'
 
                     }
 
@@ -1265,17 +1524,17 @@ methods :{
                          this.LOAD_PROGRESS_STAGES.objects[2].InProgress === 1 ){
                     
                     console.log('Stage 1 In progress');
-                    this.stage1 = 'C'
-                    this.stage2 = 'C'
+                    //this.stage1 = 'C'
+                    //this.stage2 = 'C'
                     this.stage3 = 'B'
-                    this.stage4 = 'A'
+                    //this.stage4 = 'A'
 
                     }else if( this.LOAD_PROGRESS_STAGES.objects[2].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id &&
                              this.LOAD_PROGRESS_STAGES.objects[2].delivered === 1 ){
                     
                      console.log('Stage 1 completed');
-                     this.stage1 = 'C'
-                     this.stage2 = 'C'
+                     //this.stage1 = 'C'
+                     //this.stage2 = 'C'
                      this.stage3 = 'C'
                      this.stage4 = 'A'
 
@@ -1287,21 +1546,23 @@ methods :{
                          this.LOAD_PROGRESS_STAGES.objects[3].InProgress === 1 ){
                     
                     console.log('Stage 1 In progress');
-                    this.stage1 = 'C'
-                    this.stage2 = 'C'
-                    this.stage3 = 'C'
+                    //this.stage1 = 'C'
+                    //this.stage2 = 'C'
+                    //this.stage3 = 'C'
                     this.stage4 = 'B'
 
                     }else if( this.LOAD_PROGRESS_STAGES.objects[3].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id &&
                              this.LOAD_PROGRESS_STAGES.objects[3].delivered === 1 ){
                     
                      console.log('Stage 1 completed');
-                     this.stage1 = 'C'
-                     this.stage2 = 'C'
-                     this.stage3 = 'C'
+                     //this.stage1 = 'C'
+                     //this.stage2 = 'C'
+                     //this.stage3 = 'C'
                      this.stage4 = 'C'
 
                     }
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+*/
 
 
               })
@@ -1337,7 +1598,7 @@ ul li{
     margin-bottom: 70px;
 }
 #line{
-    ;
+    
 }
 ul li .x-large{
     
