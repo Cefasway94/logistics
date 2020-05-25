@@ -19,6 +19,12 @@ export default {
         Tenders:[],
         BidedTenders:[],
         OnProgressTenders:[],
+
+        snackbar:{
+            showing: false,
+            text:'',
+            color:''
+        }
     },
 
     getters:{
@@ -34,6 +40,8 @@ export default {
         getCurrencies: (state) => state.currencies,
 
         getAlert:(state) => state.Alert,
+
+        getSnackbar:(state) => state.snackbar,
 
         fetchTenderById: (state)=>(id)=>{
             return state.AllClearingTenders.find(tender=>tender.id === id);
@@ -65,6 +73,8 @@ export default {
 
             state.tender = tender;
         },
+
+        setSnackbar: (state,snackbar) => state.snackbar = snackbar,
 
         setCurrencies: (state,currencies) => state.currencies = currencies,
 
@@ -276,6 +286,12 @@ export default {
             commit('AddTender',tender)
         },
 
+        setSnackbar({commit},snackbar){
+
+            snackbar.showing = true;
+            snackbar.color = snackbar.color || 'success';
+            commit('setSnackbar',snackbar);
+        },
 
         setTenders: ({commit}) =>{
 

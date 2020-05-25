@@ -1568,7 +1568,12 @@ export default {
                                    
                                     this.updatePercentage(30);
 
-                                    this.setAlert("Profile updating is completed");
+                                    //.setAlert("Profile updating is completed");
+
+                                     this.$store.dispatch('setSnackbar',{
+                                        text: "Profile updating is completed",
+                                        color: 'success'
+                                    });
                                 
                                     this.$router.push('/client');
                                     

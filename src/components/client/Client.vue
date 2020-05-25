@@ -4,7 +4,7 @@
            
             <v-container  class=" mt-12 mx-auto">
 
-                 <Alert v-if="alert" v-bind:message="alert"/>
+                 <Message/>
 
                  <!-- loading -->
                 <v-card width="300" 
@@ -372,14 +372,14 @@
 <script>
 
 import { mapGetters, mapActions} from 'vuex'
-import Alert from '@/components/Alert.vue'
+import Message from '@/components/Message.vue'
 import axios from 'axios'
 
 export default {
   
   name: 'Client',
 
-  components: {Alert},
+  components: {Message},
 
   data () {
       return{

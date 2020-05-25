@@ -756,7 +756,10 @@ export default {
 
                                     //this.AddTender(response.data.objects);
 
-                                    this.setAlert(response.data.message);
+                                     this.$store.dispatch('setSnackbar',{
+                                        text: response.data.message,
+                                        color: 'success'
+                                    });
 
                                     this.$router.push('/client');
                                 }
@@ -774,7 +777,11 @@ export default {
                                 this.display_alert = true;
 
                                 document.getElementById('app').scrollIntoView();*/
-                                this.setAlert("There is a server error, Refresh a page to see your tender otherwise please create again");
+            
+                                 this.$store.dispatch('setSnackbar',{
+                                        text: "There is a server error, Refresh a page to see your tender otherwise please create again",
+                                        color: 'error'
+                                    });
 
                                 this.$router.push('/client');
                             }); 
@@ -806,7 +813,12 @@ export default {
 
                                     //this.AddTender(response.data.objects);
 
-                                    this.setAlert(response.data.message);
+                                     //this.setAlert(response.data.message);
+
+                                     this.$store.dispatch('setSnackbar',{
+                                        text: response.data.message,
+                                        color: 'error'
+                                    });
 
                                     this.$router.push('/client');
                                 }
@@ -819,7 +831,14 @@ export default {
                                 //eslint-disable-next-line no-console
                                 this.loading = false;
 
-                                this.setAlert("There is a server error, if you don't see your tender please create again");
+                                //this.setAlert("There is a server error, if you don't see your tender please create again");
+
+                                //this.setAlert(response.data.message);
+
+                                this.$store.dispatch('setSnackbar',{
+                                    text: "There is a server error, if you don't see your tender please create again",
+                                    color: 'error'
+                                });
 
                                 this.$router.push('/client');
                             }); 

@@ -495,7 +495,7 @@ export default {
     },
 
     methods:{
-        ...mapActions(['updateTender','fetchAllTenders','setAlert']),
+        ...mapActions(['updateTender','fetchAllTenders','setAlert','setSnackbar']),
 
         setCustomerDetails(){
             //this.tender = this.getTender;
@@ -773,9 +773,15 @@ export default {
 
                         if(response.data.genralErrorCode === 8000)
                         {
-                            this.setAlert(response.data.message);
+                            //this.setAlert(response.data.message);
+
+                            this.$store.dispatch('setSnackbar',{
+                                text: response.data.message,
+                                color: 'success'
+                            });
 
                             this.$router.push('/client');
+                          
 
                         } else if(response.data.genralErrorCode === 8004){
 
@@ -821,7 +827,10 @@ export default {
 
                         if(response.data.genralErrorCode === 8000)
                         {
-                            this.setAlert(response.data.message);
+                             this.$store.dispatch('setSnackbar',{
+                                text: response.data.message,
+                                color: 'success'
+                            });
 
                             this.$router.push('/client');
                             

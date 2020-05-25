@@ -1460,7 +1460,12 @@ export default {
                         }
                         else if(response.data.genralErrorCode == 8000){
 
-                            this.setAlert(response.data.message);
+                            //this.setAlert(response.data.message);
+
+                             this.$store.dispatch('setSnackbar',{
+                                text: response.data.message,
+                                color: 'success'
+                             });
                         
                             this.$router.push('/client/profile');
 
