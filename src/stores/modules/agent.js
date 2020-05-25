@@ -20,7 +20,8 @@ export default {
         post_payment_terms:'',
         timeline_stages:[],
         payment_history:[],
-        tender_payment_history:[]
+        tender_payment_history:[],
+        payment_history_currency:[]
     },
 
 getters:{
@@ -141,7 +142,13 @@ getters:{
         LOAD_TENDER_PAYMENT_HISTORY: state=> {
             const tender_payment_history = state.tender_payment_history
             return tender_payment_history
-        }
+        },
+
+// load payment history amount
+        LOAD_PAYMENT_HISTORY_CURRENCY: state=> {
+            const payment_history_currency = state.payment_history_currency
+            return payment_history_currency
+        },
 
     },
 
@@ -237,7 +244,13 @@ mutations: {
             state.tender_payment_history = payload
         },
 
+        // get payment history currency
+                SET_PAYMENT_HISTORY_CURRENCY: (state, payload)=>{
+                    state.payment_history_currency = payload
+        }
     },
+
+
 
 actions: {
         // Tender actions =========================================>>>>
@@ -1113,6 +1126,24 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
             }); 
                             
         },
+
+// get paymet history currency  -----------------------
+
+PAYMENT_HISTORY_CURRENCY: async ({commit},payload) => {
+    const url= 'http://207.180.215.239:9000/api/v1/configurations/'+payload;
+    await axios.get(url).then((res)=>{
+        // eslint-disable-next-line no-console
+            console.log(res);
+        commit('SET_PAYMENT_HISTORY_CURRENCY', res);
+            //console.log(data.message);
+    }).catch((error)=>{
+        //eslint-disable-next-line no-console
+        console.log(error.response.data);
+        
+        commit('SET_PAYMENT_HISTORY_CURRENCY', error.response.data);
+    }); 
+                    
+},
 
 }
 }

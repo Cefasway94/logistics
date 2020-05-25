@@ -513,6 +513,14 @@
                 color="#4169E1">
                 </v-progress-linear>
 
+                         <v-flex class="pt-3" >
+                             <center>
+                             <p class="mb-0 body-1 red--text">
+                                Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
+                             </p>
+                             </center>
+                         </v-flex>
+
             <v-row class="pt-3">
 
                 <!-- <v-col>
@@ -547,6 +555,7 @@
                 </v-col> -->
 
                      <v-col cols=12 sm=4 class="">
+                        
                             <p class="body-1 mb-0 primary--text"> Certificate <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="250" height="270" outlined >
 

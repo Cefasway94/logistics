@@ -498,6 +498,14 @@
                 color="#4169E1">
                 </v-progress-linear>
 
+                 <v-flex class="pt-3" >
+                             <center>
+                             <p class="mb-0 body-1 red--text">
+                                Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
+                             </p>
+                             </center>
+                         </v-flex>
+
             <v-row class="pt-3">
                 <!--<v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Certificate</p>
