@@ -410,10 +410,18 @@
                 </v-card>
             
                 <v-card  class="mx-auto pa-3">
+                    
+                     <v-flex class="pt-3" >
+                             <center>
+                             <p class="mb-0 body-1 red--text">
+                                Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
+                             </p>
+                             </center>
+                    </v-flex>
 
                     <v-row class="pa-3" v-show="client_type == 'Personal'">
-
                         <v-col cols=12 sm=4 class="">
+
                             <p class="primary--text body-2 text-uppercase mb-0"> COPY OF IDENTITY CARD </p>
                             <v-card flat width="250" height="270" outlined >
 
@@ -440,7 +448,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(id_url)"
                                         >
-                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -479,7 +487,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(profile_photo_url)"
                                         >
-                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -514,7 +522,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(tin_url)"
                                         >
-                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -554,7 +562,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(logo_url)"
                                         >
-                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -588,7 +596,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(copy_of_registration_url)"
                                         >
-                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -624,7 +632,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(tax_payer_url)"
                                         >
-                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -700,7 +708,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(licence_url)"
                                         >
-                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
@@ -736,7 +744,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(bank_statement_url)"
                                         >
-                                        PREVIEW FIRST PAGE<v-icon x-large>mdi-file</v-icon>
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>

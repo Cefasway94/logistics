@@ -340,6 +340,15 @@
                 <p class="grey--text title">Attachments</p>
                 </v-row>
                 <v-card width="1300" class="mx-auto pa-3">
+
+                    <v-flex class="pt-3" >
+                             <center>
+                             <p class="mb-0 body-1 red--text">
+                                Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
+                             </p>
+                             </center>
+                    </v-flex>
+
                     <v-row class="pa-3">
                         <v-col class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> CARGO PHOTO </p>

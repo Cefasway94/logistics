@@ -534,6 +534,14 @@
             
             <div v-show="bank_details">
                 <v-card  class="mx-auto pa-3">
+                    
+                     <v-flex class="pt-3" >
+                             <center>
+                             <p class="mb-0 body-1 red--text">
+                                Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
+                             </p>
+                             </center>
+                    </v-flex>
 
                     <v-row class="pa-3" v-show="client_type == 'Personal'">
 

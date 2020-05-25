@@ -37,7 +37,7 @@
 
                         <v-row>
                           
-                            <v-col><span class=" font-weight-regular">{{ tender.currency }} {{ Number(tender.customer_offer_amount).toLocaleString()}}</span></v-col>
+                            <v-col><span class=" font-weight-regular">{{Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency }}</span></v-col>
                         </v-row>
 
                     </v-col>
@@ -45,8 +45,6 @@
                 </v-row>
 
             </v-card>
-
-            
 
             <v-card flat width="1300" class="mx-auto mb-5" color="transparent">
             <v-tabs 
