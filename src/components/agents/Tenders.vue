@@ -85,7 +85,13 @@
     <h3 style="color:#394361;" class="title mt-10 px-2">All new tenders</h3>
     <v-divider class="mx-auto mt-3 " ></v-divider>
     </v-card>
-    <v-container row fluid class="pt-5" style="background-color:#F5FAFF;" >
+
+    <v-container 
+    v-show="tenders" 
+    row 
+    fluid 
+    class="pt-5" 
+    style="background-color:#F5FAFF;" >
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
              v-for="tender in LOAD_TENDERS.objects" :key="tender.id"  >
@@ -160,6 +166,25 @@
                 </v-hover>
             </v-flex>               
         </v-container>
+
+        <v-container 
+        v-show="notender" 
+        row 
+        fluid 
+        class="pt-5" 
+        style="background-color:#F5FAFF;" >
+
+                <v-alert
+                :value="notender"
+                dense
+                outlined
+                prominent
+                type="info"
+                >
+            No new tenders
+            </v-alert>
+        </v-container>
+
     </v-card>    
         </v-container>
     </div>
@@ -178,47 +203,82 @@ export default {
           verification:false,
           loading:false,
           tab:  this.$route.params.id,
+
+           notender:false,
+            tenders:true
       }
   },
 
   created (tab){
+
              this.loading = true
 
              console.log(tab);
             //const tend = this.$route.params.tid;
       
       tab = localStorage.client
+
         this.GET_AGENT(tab).then((data)=>{
+
              // eslint-disable-next-line no-console
             console.log(data);
+
             if (!this.LOAD_AGENT.objects.agent_id == '') {
+
                 if (this.LOAD_AGENT.objects.is_verified == 0) {
+
                     setTimeout(()=>{
                     this.loading = false
                     this.verify = true;
                  this.verification = false
                  },500)
+
                 }else{
+
                      tab = this.tab
-                 this.GET_TENDERS(tab);
-                 setTimeout(()=>{
-                     this.loading = false
-                  this.verify = false;
-                 this.verification = true
-                 },500)
+
+                   this.GET_TENDERS(tab).then(()=>{
+
+                                    if (this.LOAD_TENDERS.objectsCount == 0 ) {
+
+                                    console.log('null');
+                                    this.notender = true
+                                    this.tenders = false
+                                    
+                                    } else {
+
+                                        console.log('valuie');
+                                        this.notender = false
+                                        this.tenders = true
+                                    }
+
+                            })
+
+                        setTimeout(()=>{
+                            this.loading = false
+                        this.verify = false;
+                        this.verification = true
+                        },500)
+
                 }
+
              }else{
+
                 setTimeout(()=>{
                      this.loading = false
                   this.profile = true;
                  this.verification = false
                  },500) 
+
              }
+
              // eslint-disable-next-line no-console
             console.log(this.LOAD_AGENT);   
              // eslint-disable-next-line no-console
             console.log('here');         
+
         }).catch(error=>{
+
              // eslint-disable-next-line no-console
             console.log(error);
              // eslint-disable-next-line no-console
