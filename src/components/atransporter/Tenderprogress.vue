@@ -385,6 +385,7 @@
                lg6 
                class="text--text body-1 ml-2 font-weight-bold mb-0"> 
                {{Number(amount).toLocaleString()}}
+               {{LOAD_TENDER.currency}}
                </p>
                 </v-flex>
 
