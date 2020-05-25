@@ -1,6 +1,6 @@
 <template>
     <v-container class=" mt-5 px-5 pt-12">
-
+        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
             <v-overlay :value="overlay">
                 <div class="large-preview">
                         
@@ -150,7 +150,7 @@
                                 <v-btn 
                                     :block="true"
                                     icon class="mt-7" 
-                                    @click="openTab(bill_of_lading_url)"
+                                    @click="previewPdf(bill_of_lading_url)"
                                     >
                                     PREVIEW<v-icon x-large>mdi-file</v-icon>
                                 </v-btn>
@@ -175,7 +175,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(letter_url)"
+                                        @click="previewPdf(letter_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -199,7 +199,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(photo_url)"
+                                        @click="previewPdf(photo_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -437,6 +437,7 @@
 <script>
 /* eslint-disable no-console */
 import {mapGetters, mapActions} from 'vuex';
+import PDFDocument from '@/components/PDFDocument'
 export default {
         
   
@@ -467,6 +468,9 @@ export default {
 
            // tender detail fields -----
            customer_offer_amount:'',
+           url:'',
+            pdf:false,
+            pdfOverlay:false,
 
            rules: {
                 required: value => !!value || "Required",
@@ -565,7 +569,7 @@ export default {
       console.log('tab');
       
   },
-  
+  components:{PDFDocument},
   methods:{
       ...mapActions([
           'GET_TENDERSDETAILs', 'BID_TENDER', 
@@ -573,7 +577,18 @@ export default {
           'GET_AGENT'
 
       ]),
+    previewPdf(url){
 
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
+        },
       //preview
        getFileExtension(url){
 
@@ -583,11 +598,6 @@ export default {
 
         return extracted_string;
 
-        },
-
-         openTab(url){
-
-            window.open(url);
         },
 
 

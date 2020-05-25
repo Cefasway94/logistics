@@ -1,6 +1,6 @@
 <template>
     <v-container id="scrolling-techniques" class=" mt-12 px-5">
-
+        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
             <v-overlay :value="overlay">
                 <div class="large-preview">
                     
@@ -98,7 +98,7 @@
                                                 <v-btn 
                                                     :block="true"
                                                     icon class="mt-7" 
-                                                    @click="openTab(bill)"
+                                                    @click="previewPdf(bill)"
                                                     >
                                                     PREVIEW<v-icon x-large>mdi-file</v-icon>
                                                 </v-btn>
@@ -137,7 +137,7 @@
                                                 <v-btn 
                                                     :block="true"
                                                     icon class="mt-7" 
-                                                    @click="openTab(authorization_letter)"
+                                                    @click="previewPdf(authorization_letter)"
                                                     >
                                                     PREVIEW<v-icon x-large>mdi-file</v-icon>
                                               </v-btn>
@@ -174,7 +174,7 @@
                                                 <v-btn 
                                                     :block="true"
                                                     icon class="mt-7" 
-                                                    @click="openTab(cargo_photo)"
+                                                    @click="previewPdf(cargo_photo)"
                                                     >
                                                     PREVIEW<v-icon x-large>mdi-file</v-icon>
                                               </v-btn>
@@ -828,6 +828,7 @@
 /* eslint-disable no-console */
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
+import PDFDocument from '@/components/PDFDocument'
 export default {
 
     data(){
@@ -906,7 +907,10 @@ export default {
 
             datetitle:'Started on', //date field title
 
-            complete_tender:true
+            complete_tender:true,
+            url:'',
+            pdf:false,
+            pdfOverlay:false
         }
     },
 
@@ -1238,7 +1242,7 @@ export default {
       ])
   },
 
-   
+   components:{PDFDocument},
 methods :{
     ...mapActions([
       "T_GET_AGENT",
@@ -1249,9 +1253,17 @@ methods :{
       'T_GET_TIMELINE_STAGES'
     ]),
 
-     openTab(url){
+    previewPdf(url){
 
-            window.open(url);
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
         },
 
         largePreview(src){

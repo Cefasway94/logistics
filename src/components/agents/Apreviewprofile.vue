@@ -1,7 +1,7 @@
 
 <template>
     <v-container class="my-12 px-5">
-
+        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
         
                     <!-- alert ----------------------------- -->
                                 
@@ -134,7 +134,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(profile_image_url)"
+                                        @click="previewPdf(profile_image_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -288,7 +288,7 @@
                         <v-btn 
                             :block="true"
                             icon class="mt-7" 
-                            @click="openTab(certificate_url)"
+                            @click="previewPdf(certificate_url)"
                             >
                             PREVIEW<v-icon x-large>mdi-file</v-icon>
                         </v-btn>
@@ -317,7 +317,7 @@
                         <v-btn 
                             :block="true"
                             icon class="mt-7" 
-                            @click="openTab(insurance_url)"
+                            @click="previewPdf(insurance_url)"
                             >
                             PREVIEW<v-icon x-large>mdi-file</v-icon>
                         </v-btn>
@@ -439,6 +439,7 @@
 
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
+import PDFDocument from '@/components/PDFDocument'
 /* eslint-disable no-console */
 export default {
    data() {
@@ -480,6 +481,9 @@ export default {
            certificate_extension:'',
            large_preview_url:'',
            overlay: false,
+           url:'',
+            pdf:false,
+            pdfOverlay:false
           
     }
    },
@@ -552,6 +556,7 @@ export default {
         })
 
     },
+    components:{PDFDocument},
 
    methods: {
 
@@ -574,6 +579,18 @@ export default {
                 this.overlay = !this.overlay;
 
             },
+            previewPdf(url){
+
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
+        },
 
             getFileExtension(url){
 

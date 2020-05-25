@@ -2,7 +2,7 @@
 <template>
     <v-container class="my-12 px-5">
 
-        
+        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
                     <!-- alert ----------------------------- -->
                                 
                 <v-dialog
@@ -298,7 +298,17 @@
                                         <img  id="profile_thumb" :src="profile_url" class="preview">
                                     </v-card>
                                 </div>
-                                
+                                <div v-show="profile_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(profile_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
 
                             </v-card>
                     
@@ -580,7 +590,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(certificate_url)"
+                                        @click="previewPdf(certificate_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -616,7 +626,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(insurance_url)"
+                                        @click="previewPdf(insurance_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -780,6 +790,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
+import PDFDocument from '@/components/PDFDocument'
 /* eslint-disable no-console */
 export default {
    data() {
@@ -867,7 +878,10 @@ export default {
            insurance_url:'',
 
            other_extension:'',
-           other_url:''
+           other_url:'',
+           url:'',
+            pdf:false,
+            pdfOverlay:false
            
           
     }
@@ -943,7 +957,7 @@ export default {
         })  
 
     },
-
+    components:{PDFDocument},
    methods: {
 
        ...mapActions([
@@ -951,11 +965,18 @@ export default {
         "T_POST_PAYMENT_TERMS"
     ]),
 
-            openTab(url){
+        previewPdf(url){
 
-            window.open(url);
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
             
-            },
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
+        },
             
             handleClick(id,src){
 
@@ -1155,6 +1176,12 @@ export default {
 
                         reader.readAsDataURL(document.getElementById("insurance").files[0]);
                     }
+                     else if(this.insurance_extension === 'pdf')
+                        {
+                            this.insurance_url = URL.createObjectURL(document.getElementById("insurance").files[0]);
+
+                            this.previewPdf(this.insurance_url);
+                        }
 
                 
                 }
@@ -1197,6 +1224,12 @@ export default {
 
                         reader.readAsDataURL(document.getElementById("certificate").files[0]);
                     }
+                    else if(this.certificate_extension === 'pdf')
+                        {
+                            this.certificate_url = URL.createObjectURL(document.getElementById("certificate").files[0]);
+
+                            this.previewPdf(this.certificate_url);
+                        }
 
                 
                 }
@@ -1242,6 +1275,12 @@ export default {
 
                         reader.readAsDataURL(document.getElementById("profile").files[0]);
                     }
+                    else if(this.profile_extension === 'pdf')
+                        {
+                            this.profile_url = URL.createObjectURL(document.getElementById("profile").files[0]);
+
+                            this.previewPdf(this.profile_url);
+                        }
 
                 
                 }
@@ -1253,16 +1292,19 @@ export default {
 
                     const formdata = new FormData()
 
-                   
-                    if(this.profile_url == ''){
+                   this.profile_url = "";
+                   this.certificate_url = "";
+                   this.insurance_url = "";
+
+                    if(this.profile_url === ''){
                         formdata.append('profile_image[0]',this.profile_image[0]);
                     }
 
-                    if(this.certificate_url == ''){
+                    if(this.certificate_url === ''){
                         formdata.append('certificate[0]', this.certificate[0]);
                     }
 
-                    if(this.insurance_url == ''){
+                    if(this.insurance_url === ''){
                         formdata.append('insurance[0]', this.insurance[0])
                     }
                     
@@ -1291,8 +1333,8 @@ export default {
 
            setTimeout(()=>{
                 this.update_success = false,
-           this.$router.push('/transporter/previewprofile')
-           this.$router.go('/transporter/previewprofile')
+            this.$router.push('/transporter/previewprofile')
+            this.$router.go('/transporter/previewprofile')
             },1000)
        },
 

@@ -3,7 +3,7 @@
    <div class="text-center ma-2">
     <v-snackbar
       v-model="snackbar.showing"
-      :timeout = 4000
+      :timeout = 3000
       :top="true"
       :color="snackbar.color"
     >

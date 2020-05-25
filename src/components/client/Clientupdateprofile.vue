@@ -2,10 +2,8 @@
 
         <v-container class=" mt-10 px-5">
 
-            <div id="pdfPreview">
+            <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
-            </div>
-            
             <v-overlay :value="overlay">
 
                 <div class="large-preview">
@@ -536,6 +534,14 @@
             
             <div v-show="bank_details">
                 <v-card  class="mx-auto pa-3">
+                    
+                     <v-flex class="pt-3" >
+                             <center>
+                             <p class="mb-0 body-1 red--text">
+                                Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
+                             </p>
+                             </center>
+                    </v-flex>
 
                     <v-row class="pa-3" v-show="client_type == 'Personal'">
 
@@ -816,6 +822,7 @@
 <script>
 import axios from 'axios'
 import {mapActions} from 'vuex'
+import PDFDocument from '@/components/PDFDocument'
 export default {
 
     data: ()=>({
@@ -879,6 +886,10 @@ export default {
 
         stage1: false,
         stage2: false,
+
+        url:'',
+        pdf:false,
+        pdfOverlay:false,
      
 
         initial_percent: 0,
@@ -888,6 +899,8 @@ export default {
 
      }),
 
+    components:{PDFDocument},
+
     methods: {
 
         showStageTwo(){
@@ -896,6 +909,19 @@ export default {
                 return true;
             else 
                 return false;
+        },
+
+         previewPdf(url){
+
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
         },
 
         getFileExtension(url){
@@ -1090,6 +1116,13 @@ export default {
                     reader.readAsDataURL(document.getElementById("bank_statement").files[0]);
                 }
 
+                 else if(this.bank_statement_extension === 'pdf'){
+
+                    let url = URL.createObjectURL(document.getElementById("bank_statement").files[0]);
+
+                    this.previewPdf(url);
+                }
+
                 
             }
         },
@@ -1126,6 +1159,12 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("business_licence").files[0]);
                 }
+                else if(this.licence_extension === 'pdf'){
+
+                    let url = URL.createObjectURL(document.getElementById("business_licence").files[0]);
+
+                    this.previewPdf(url);
+                }
                 
             }
         },
@@ -1161,6 +1200,12 @@ export default {
                     }
 
                     reader.readAsDataURL(document.getElementById("vat_certificate").files[0]);
+                }
+                 else if(this.vat_extension === 'pdf'){
+
+                    let url = URL.createObjectURL(document.getElementById("vat_certificate").files[0]);
+
+                    this.previewPdf(url);
                 }
 
                 
@@ -1199,6 +1244,12 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("tin_document").files[0]);
                 }
+                else if(this.tax_payer_extension === 'pdf'){
+
+                    let url = URL.createObjectURL(document.getElementById("tin_document").files[0]);
+
+                    this.previewPdf(url);
+                }
                 
             }
         },
@@ -1234,6 +1285,12 @@ export default {
                     }
 
                     reader.readAsDataURL(document.getElementById("registration_certificate").files[0]);
+                }
+                else if(this.copy_of_registration_extension === 'pdf'){
+
+                    let url = URL.createObjectURL(document.getElementById("registration_certificate").files[0]);
+
+                    this.previewPdf(url);
                 }
                 
             }
@@ -1271,6 +1328,12 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("company_logo").files[0]);
                 }
+                 else if(this.logo_extension === 'pdf'){
+
+                    let url = URL.createObjectURL(document.getElementById("company_logo").files[0]);
+
+                    this.previewPdf(url);
+                }
                 
             }
         },
@@ -1307,6 +1370,12 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("personal_tin").files[0]);
                }
+                else if(this.tin_extension === 'pdf'){
+
+                    let url = URL.createObjectURL(document.getElementById("personal_tin").files[0]);
+
+                    this.previewPdf(url);
+                }
 
                 
             }
@@ -1344,6 +1413,12 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("copy_of_id").files[0]);
                 }
+                else if(this.id_extension === 'pdf'){
+
+                    let url = URL.createObjectURL(document.getElementById("copy_of_id").files[0]);
+
+                    this.previewPdf(url);
+                }
 
                 
             }
@@ -1357,7 +1432,6 @@ export default {
                 this.profile_photo = [];
 
                 this.profile_photo.push(document.getElementById("profilePhoto").files[0]);
-
 
                 this.profile_photo_extension = this.getFileExtension(document.getElementById("profilePhoto").files[0].name);
 
@@ -1382,6 +1456,12 @@ export default {
                     }
 
                     reader.readAsDataURL(document.getElementById("profilePhoto").files[0]);
+                }
+                else if(this.profile_photo_extension === 'pdf'){
+
+                    let url = URL.createObjectURL(document.getElementById("profilePhoto").files[0]);
+
+                    this.previewPdf(url);
                 }
                 
             }

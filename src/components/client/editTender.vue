@@ -1,8 +1,9 @@
 <template>
     <v-container class="pa-3 mt-10 mx-auto">
 
-        <v-overlay :value="overlay">
+        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
+        <v-overlay :value="overlay">
             <div class="large-preview">
 
                 <v-row justify= "center">
@@ -158,7 +159,7 @@
                             >
                                 <v-date-picker 
                                     v-model="tender.customer_delivery_timeline"
-                                    :min="time"
+                                    :min="timeline"
                                     full-width>
                                 </v-date-picker>
                             </v-col>
@@ -196,6 +197,17 @@
                         </v-row>
 
                         <v-row>
+                            <v-col cols=12>
+                                <v-flex class="pt-3" >
+                                    <center>
+                                    <p class="mb-0 body-1 red--text">
+                                        Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
+                                    </p>
+                                    </center>
+                                </v-flex>
+                            </v-col>
+                            
+
                             <v-col cols=12 md=4>
                                 <p class="primary--text body-2 text-uppercase mb-0">CARGO PHOTO </p>
                                 <v-card flat width="250" height="270" outlined >
@@ -222,9 +234,9 @@
                                         <v-btn 
                                             :block="true"
                                             icon class="mt-7" 
-                                            @click="openTab(photo_url)"
+                                            @click="previewPdf(photo_url)"
                                             >
-                                            CLICK TO PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
                                         </v-btn>
 
                                     </div>
@@ -257,9 +269,9 @@
                                         <v-btn 
                                             :block="true"
                                             icon class="mt-7" 
-                                            @click="openTab(bill_of_lading_url)"
+                                            @click="previewPdf(bill_of_lading_url)"
                                             >
-                                            CLICK TO PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
                                         </v-btn>
 
                                     </div>
@@ -292,9 +304,9 @@
                                         <v-btn 
                                             :block="true"
                                             icon class="mt-7" 
-                                            @click="openTab(letter_url)"
+                                            @click="previewPdf(letter_url)"
                                             >
-                                            CLICK TO PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
                                         </v-btn>
 
                                     </div>
@@ -459,6 +471,7 @@
 <script>
 import {mapGetters,mapActions} from 'vuex'
 import axios from 'axios'
+import PDFDocument from '@/components/PDFDocument'
 
 export default {
     name: "createtender",
@@ -469,8 +482,8 @@ export default {
 
         customer:[],
 
-        time: new Date().toISOString().substr(0, 10),
-
+        timeline:new Date().toISOString().substr(0, 10),
+       
         photo_extension:'',
         photo_url:'',
         bill_of_lading_extension:'',
@@ -486,8 +499,14 @@ export default {
         letter:[],
 
         large_preview_url:'',
+
+        url:'',
+        pdf:false,
+        pdfOverlay:false
        
     }),
+
+     components:{PDFDocument},
 
     computed:{
         ...mapGetters(['getTender','getAlert']),
@@ -495,15 +514,23 @@ export default {
     },
 
     methods:{
-        ...mapActions(['updateTender','fetchAllTenders','setAlert','setSnackbar']),
+        ...mapActions(['updateTender','fetchAllTenders','setAlert']),
 
         setCustomerDetails(){
             //this.tender = this.getTender;
         },
 
-        openTab(url){
+        previewPdf(url){
 
-            window.open(url);
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
         },
 
         largePreview(src){
@@ -616,9 +643,13 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("letter").files[0]);
                 } 
-                else
+                else if(extension === 'pdf')
                 {
-                    this.letter_extension = '';
+                    this.letter_extension = extension;
+
+                    this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
+
+                    this.previewPdf(this.letter_url);
                 }
    
             }
@@ -660,9 +691,13 @@ export default {
                     reader.readAsDataURL(document.getElementById("photo").files[0]);
 
                 } 
-                else
+                else if(extension === 'pdf')
                 {
-                    this.photo_extension = '';
+                     this.photo_extension = extension;
+
+                    this.photo_url= URL.createObjectURL(document.getElementById("photo").files[0]);
+
+                    this.previewPdf(this.photo_url);
                 }
    
             }
@@ -704,9 +739,14 @@ export default {
                     reader.readAsDataURL(document.getElementById("bill").files[0]);
 
                 } 
-                else
+                else if(extension === 'pdf')
                 {
-                    this.bill_of_lading_extension = '';
+                     this.bill_of_lading_extension = extension;
+
+
+                    this.bill_of_lading_url= URL.createObjectURL(document.getElementById("bill").files[0]);
+
+                    this.previewPdf(this.bill_of_lading_url);
                 }
    
             }
@@ -827,7 +867,7 @@ export default {
 
                         if(response.data.genralErrorCode === 8000)
                         {
-                             this.$store.dispatch('setSnackbar',{
+                            this.$store.dispatch('setSnackbar',{
                                 text: response.data.message,
                                 color: 'success'
                             });

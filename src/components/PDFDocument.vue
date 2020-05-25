@@ -23,7 +23,7 @@
           <div id="buttons">
             <v-row>
               <v-btn
-                large
+                small
                 elevation="flat" 
                 color="#4169E1" 
                 class="white--text"
@@ -36,11 +36,12 @@
 
               <v-spacer></v-spacer>
               <v-btn
-                large
+                small
                 elevation="flat" 
                 color="#4169E1" 
                 class="white--text"
-                @click="downloadPdf()">
+                @click="downloadPdf()"
+                v-show="download">
                 Download
                  <v-icon small>mdi-download</v-icon>
                 </v-btn>
@@ -61,11 +62,17 @@ export default {
       type: String,
       required: true,
     },
+    
+    pdfOverlay:{
+      type: Boolean,
+      required: true
+    }
   },
   data() {
     return {
       pdf: undefined,
       pages: {},
+      download: false,
     };
   },
  
@@ -115,6 +122,15 @@ export default {
 
      },
 
+     showDownloadButton(){
+       var splitted_string = this.url.split("//");
+       
+       if(splitted_string[1].startsWith("localhost"))
+          this.download = false
+       else
+          this.download = true;
+     },
+       
      forceFileDownload(response){
 
         let filename = this.getFileName(this.url);
@@ -143,6 +159,7 @@ export default {
   },
   created() {
     this.fetchPDF();
+    this.showDownloadButton();
   },
 };
 </script>

@@ -156,7 +156,7 @@
                                             </v-row>
 
                                             <v-row row class="px-3">
-                                                <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
+                                                <h4  class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
                                                     <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View Details</v-btn>
@@ -187,7 +187,7 @@
                                             </v-row>
 
                                             <v-row row class="px-3">
-                                                <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
+                                                <h4  class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
                                                     <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View Details</v-btn>
@@ -234,7 +234,7 @@
                                             </v-row>
 
                                             <v-row row class="px-3">
-                                                <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
+                                                <h4  class=" title ">{{Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <v-btn small elevation="flat" color="#4169E1" class="white--text"  @click="set(tender)" :to="'/client/AboutTenderBids/'+ tender.id+'/'+tender.tender_type">View Details</v-btn>
                                             </v-row>
@@ -276,7 +276,7 @@
                                             </v-row>
 
                                             <v-row row class="px-3">
-                                                <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
+                                                <h4  class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <v-btn small elevation="flat" color="#4169E1" class="white--text"  @click="set(tender)" :to="'/client/AboutTenderBids/'+ tender.id+'/'+tender.tender_type">View Details</v-btn>
                                             </v-row>
@@ -313,7 +313,7 @@
                                             </v-row>
 
                                             <v-row row class="px-3">
-                                                <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
+                                                <h4  class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>-->
                                                     <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id+'/'+tender.tender_type">View Details</v-btn>
@@ -347,7 +347,7 @@
                                             </v-row>
 
                                             <v-row row class="px-3">
-                                                <h4  class=" title ">{{ tender.currency}} {{ tender.customer_offer_amount}} </h4>
+                                                <h4  class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>-->
                                                     <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id+'/'+tender.tender_type">View Details</v-btn>

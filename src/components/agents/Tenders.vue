@@ -141,7 +141,7 @@
                     </v-row>
 
                     <v-row row class="px-3 mb-1">
-                        <h4  class=" title ">{{tender.customer_offer_amount}} {{tender.currency}}</h4>
+                        <h4  class=" title "> {{ Number(tender.customer_offer_amount).toLocaleString()}} {{tender.currency}}</h4>
                         <v-spacer></v-spacer>
                         <v-btn 
                         small

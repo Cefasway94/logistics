@@ -12,7 +12,7 @@
                     </v-flex>
 
                     <v-spacer></v-spacer>
-                    <h2 > {{tender.currency}} {{ tender.customer_offer_amount}}</h2>
+                    <h2 > {{ Number(tender.customer_offer_amount).toLocaleString()}} {{tender.currency}} </h2>
                 </v-flex>
             </v-card>
 
@@ -111,7 +111,7 @@
                                                     <v-flex row  class="px-6 pt-1">
                                                         <v-flex column><p class="primary--text body-1 font-weight-medium mb-0">BID AMOUNT: </p></v-flex>
             
-                                                        <v-flex column>{{bid.bid_amount}}</v-flex>
+                                                        <v-flex column>{{Number(bid.bid_amount).toLocaleString()}} {{tender.currency}}</v-flex>
                                                     </v-flex>
 
                                                     <v-flex row  class="px-6 pt-1">

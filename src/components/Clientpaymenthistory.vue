@@ -123,7 +123,7 @@
                       </v-flex>
                       <v-flex xs8 sm8 md8 >
                       <p class=" primary--text" >
-                       {{Number(commission).toLocaleString()}}
+                       {{Number(commission).toLocaleString()}} {{curency_id}}
                       </p>
                       </v-flex>
                       </v-flex>
@@ -273,13 +273,15 @@
                    <v-flex 
                    wrap xs12 sm3 md3 lg3  
                    class="  pt-5 pb-3">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{detail && detail.customer_ID}} %</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{detail && detail.customer_ID}}</h4>
                    </v-flex>
 
                     <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class="  pt-5 pb-3">
-                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{Number(detail && detail.amount).toLocaleString() }}</h4>
+                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">
+                            {{Number(detail && detail.amount).toLocaleString() }} 
+                            {{detail.currency_ID}}</h4>
                    </v-flex>
                    
                     <!-- <v-flex 
@@ -334,13 +336,17 @@
                    <v-flex 
                    wrap xs12 sm3 md3 lg3  
                    class="  pt-5 pb-3">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{LOAD_PAYMENT_HISTORY.data && LOAD_PAYMENT_HISTORY.data.objects.customer_ID}}</h4>
+                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">
+                            {{LOAD_PAYMENT_HISTORY.data && LOAD_PAYMENT_HISTORY.data.objects.customer_ID}}
+                            </h4>
                    </v-flex>
 
                     <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class="  pt-5 pb-3">
-                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{Number(LOAD_PAYMENT_HISTORY.data && LOAD_PAYMENT_HISTORY.data.objects.amount).toLocaleString() }}</h4>
+                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">
+                            {{Number(LOAD_PAYMENT_HISTORY.data && LOAD_PAYMENT_HISTORY.data.objects.amount).toLocaleString() }}
+                             {{LOAD_PAYMENT_HISTORY.data && LOAD_PAYMENT_HISTORY.data.objects.currency_ID}}</h4>
                    </v-flex>
                    
                 </v-layout>

@@ -1,6 +1,6 @@
 <template>
     <v-container id="scrolling-techniques" class=" mt-12 px-5">
-
+            <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
             <v-overlay :value="overlay">
                 <div class="large-preview">
                         
@@ -33,7 +33,7 @@
                 <p class="grey--text">{{LOAD_TENDER.description}}</p>
                 </v-flex>
                 <v-spacer></v-spacer>
-                <h2 style="colo:#4169E1;">--- {{LOAD_TENDER.currency}}</h2>
+                <!-- <h2 style="colo:#4169E1;">--- {{LOAD_TENDER.currency}}</h2> -->
                 </v-flex>
             </v-card>
 
@@ -82,7 +82,7 @@
                                 <v-btn 
                                     :block="true"
                                     icon class="mt-7" 
-                                    @click="openTab(bill_of_lading_url)"
+                                    @click="previewPdf(bill_of_lading_url)"
                                     >
                                     PREVIEW<v-icon x-large>mdi-file</v-icon>
                                 </v-btn>
@@ -106,7 +106,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(letter_url)"
+                                        @click="previewPdf(letter_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -130,7 +130,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(photo_url)"
+                                        @click="previewPdf(photo_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -329,7 +329,7 @@
                md6 
                lg6 
                class="text--text body-1 ml-2 font-weight-bold mb-0"> 
-               {{amount}}
+               {{amount}}  {{LOAD_TENDER.currency}}
                </p>
                 </v-flex>
 
@@ -771,6 +771,7 @@
 /* eslint-disable no-console */
 import { mapActions } from "vuex";
 import { mapGetters } from "vuex";
+import PDFDocument from '@/components/PDFDocument'
 export default {
 
     data(){
@@ -841,7 +842,10 @@ export default {
 
             datetitle:'Started on', //date field title
 
-            complete_tender:true
+            complete_tender:true,
+            url:'',
+            pdf:false,
+            pdfOverlay:false
         }
     },
 
@@ -909,9 +913,13 @@ export default {
 
                 }else{
 
-                    vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                    if(vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited >= 100)
+                      vm.value = 100;
+                    else
+                        vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+
                     vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at                
-                    vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                    //vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
                     
                     vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
@@ -1173,7 +1181,7 @@ export default {
       'LOAD_TIMELINE_STAGES'
       ])
   },
-
+components:{PDFDocument},
    
 methods :{
     ...mapActions([
@@ -1184,6 +1192,19 @@ methods :{
       'GET_PAYMENT_PROGRESS',
       'GET_TIMELINE_STAGES'
     ]),
+
+    previewPdf(url){
+
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
+        },
 
     //preview
        getFileExtension(url){
@@ -1196,10 +1217,7 @@ methods :{
 
         },
 
-         openTab(url){
-
-            window.open(url);
-        },
+       
 
         largePreview(src){
 

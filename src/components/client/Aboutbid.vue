@@ -52,7 +52,7 @@
     
                                     </v-flex>
                                     <v-flex column sm6 xs12  class="pl-3">
-                                        <p class="body-1">{{bid.bid_amount}}</p>
+                                        <p class="body-1">{{Number(bid.bid_amount).toLocaleString()}}</p>
                                     </v-flex>
                                 </v-flex>
 
@@ -71,13 +71,17 @@
                                         <p class=" body-1 mb-2" style="color:#4169E1;"> DELIVERY TIMELINE: </p>
     
                                     </v-flex>
-                                    <v-flex column md6 xs12  class="pl-3">
+                                    <!--<v-flex column md6 xs12  class="pl-3">
                                         <v-date-picker
                                             v-model="bid.bid_delivery_timeline"
                                             full-width
                                         >
                                         </v-date-picker>
+                                    </v-flex>-->
+                                      <v-flex column sm6 xs12  class="pl-3">
+                                        <p class="body-1">{{ bid.bid_delivery_timeline}}</p>
                                     </v-flex>
+
                                 </v-flex>
 
                                 

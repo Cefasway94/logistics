@@ -3,6 +3,7 @@
     <v-container class="mt-12 px-5" color="#F5FAFF" fluid>
 
         <Alert v-if="alert" v-bind:message="alert"/>
+        <Message/>
 
         <!--<canvas id="canvas">
 
@@ -184,7 +185,7 @@
                                         <v-btn 
                                             :block="true"
                                             icon class="mt-7" 
-                                            @click="openTab(profile_photo_url)"
+                                            @click="previewPdf(profile_photo_url)"
                                         >
                                             PREVIEW<v-icon x-large>mdi-file</v-icon>
                                         </v-btn>
@@ -212,7 +213,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(id_url)"
+                                        @click="previewPdf(id_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -243,7 +244,7 @@
                                         icon class="mt-7" 
                                         @click="previewPdf(tin_url)"
                                         >
-                                        CLICK TO PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        Preview<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
                                 </div>
                             </v-col>
@@ -273,7 +274,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(copy_of_registration_url)"
+                                        @click="previewPdf(copy_of_registration_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -302,7 +303,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(tax_payer_url)"
+                                        @click="previewPdf(tax_payer_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -333,7 +334,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(licence_url)"
+                                        @click="previewPdf(licence_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -366,7 +367,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(vat_url)"
+                                        @click="previewPdf(vat_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -393,7 +394,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(logo_url)"
+                                        @click="previewPdf(logo_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -422,7 +423,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="openTab(bank_statement_url)"
+                                        @click="previewPdf(bank_statement_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
@@ -463,6 +464,7 @@
 import axios from 'axios'
 import AlertError from '@/components/AlertError.vue'
 import Alert from '@/components/Alert.vue'
+import Message from '@/components/Message.vue'
 import {mapGetters} from 'vuex'
 import PDFDocument from '@/components/PDFDocument.vue'
  /*import('pdfjs-dist/webpack').then(pdfjs=>{
@@ -493,7 +495,7 @@ import PDFDocument from '@/components/PDFDocument.vue'
 export default {
     name: 'Profile',
 
-    components:{AlertError,Alert,PDFDocument},
+    components:{AlertError,Alert,PDFDocument,Message},
 
     data () {
         return {
@@ -548,11 +550,6 @@ export default {
     },
 
     methods:{
-
-        openTab(url){
-
-            window.open(url);
-        },
 
         previewPdf(url){
 

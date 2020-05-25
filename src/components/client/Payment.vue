@@ -34,7 +34,7 @@
                 </v-row>
                 </v-flex>
                 <v-spacer></v-spacer>
-                <h2 style="color:#4169E1;">{{ tender.currency}} {{ tender.customer_offer_amount}}</h2>
+                <h2 style="color:#4169E1;">{{ tender.currency}} {{ Number(tender.customer_offer_amount).toLocaleString()}}</h2>
                 </v-flex>
             </v-card>
 
@@ -389,7 +389,7 @@ export default {
             //eslint-disable-next-line no-console
                                
 
-            for(let i = 0; i< this.currency_object.length; i++)
+            /*for(let i = 0; i< this.currency_object.length; i++)
             {
 
                 if(this.currency_object[i].name === this.currency)
@@ -398,16 +398,15 @@ export default {
 
                      break;
                 }
-            }
+            }*/
                 
-          
             let formData = new FormData();
             
             formData.append('amount',this.amount);
             formData.append('deposit_slip[0]',this.depositors_slip[0]);
             formData.append('customers_acct_number',this.account_number);
             formData.append('depositors_name',this.depositors_name);
-            formData.append('currency_ID',this.currency_id);
+            formData.append('currency_ID',this.currency);
             
             return formData;
             
@@ -626,7 +625,7 @@ export default {
 
         } else if(vm.$route.params.tender_type == "Clearing"){
 
-            const currency = "http://207.180.215.239:8000/api/v1/configurations/currency";
+            const currency = "http://207.180.215.239:9000/api/v1/configurations/currency";
 
              axios.get(currency).then((response) => 
                             {
