@@ -132,6 +132,13 @@
 
                                     <template v-if='tab.title === "All"'>
 
+                                    <v-row v-if="(AllClearingTenders.length == 0 && AllTransportingTenders.length == 0)">
+                                        <v-col cols=12>
+                                            <v-card>
+                                                <v-card-title class="headline">No tenders. Click add new to create</v-card-title>
+                                            </v-card>
+                                        </v-col>
+                                    </v-row>
 
                                     <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in AllClearingTenders" :key="tender.tender_id">
                                         <v-card column width="350"  elevation="3" class="px-4 py-3">

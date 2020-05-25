@@ -3,8 +3,6 @@
 
       <v-card class="mx-auto mt-12" color="#F5FAFF">
 
-          <AlertError v-if="display_alert" v-bind:message="alert_error"/>
-
           <Alert v-if="alert" v-bind="{message,type}"/> 
 
           <Message/>
@@ -363,7 +361,7 @@
 
 <script>
 import axios from 'axios'
-import AlertError from '@/components/AlertError.vue'
+// import AlertError from '@/components/AlertError.vue'
 import Alert from '@/components/Alert.vue'
 import Message from '@/components/Message.vue'
 import{mapActions,mapGetters} from 'vuex'
@@ -387,19 +385,19 @@ export default {
 
       dialog: false,
 
-      alert_error:'',
-      display_alert: false,
+      alert: false,
+      message:'',
+      type:'',
 
-      alert:'',
-
-      email:''
+      email:'',
+     
 
     }
   },
 
   //components: {Message},
 
-  components: {Message,AlertError,Alert},
+  components: {Message,Alert},
 
   computed:{
 
@@ -410,9 +408,11 @@ export default {
 
     ...mapActions(['setAdminAlert','setSnackbar']),
 
-    setAlert(alert){
+    setAlert(message,type){
 
-      this.alert = alert;
+      this.alert = true;
+      this.message = message;
+      this.type = type;
     },
 
     fetch(title)
@@ -498,6 +498,9 @@ export default {
 
             this.display_alert = true;
 
+            this.alert = true;
+
+
             document.getElementById('app').scrollIntoView();
         }
 
@@ -571,12 +574,14 @@ export default {
 
         if(response.data.genralErrorCode === 8000)
           {
-            this.display_alert = false;
 
             this.dialog = false;
 
+            this.alert = false;
+
+            this.setAlert("The transporter verification is deleted","success");
+
             this.$router.push('/admin');
-                
             this.$router.go('/admin');
            
           } else if(response.data.genralErrorCode === 8004){
@@ -604,6 +609,7 @@ export default {
     
     denyAgentVerification(){
       
+        this.dialog = false;
 
         const url = `http://207.180.215.239:8000/api/v1/agents/deny/${this.email}`;
 
@@ -615,9 +621,9 @@ export default {
 
             if(response.data.genralErrorCode === 8000)
               {
-                this.display_alert = false;
+                this.alert = false;
 
-                this.dialog = false;
+                this.setAlert("The agent verification has been deleted","success");
 
                 this.$router.push('/admin');
                 
@@ -625,11 +631,9 @@ export default {
 
               } else if(response.data.genralErrorCode === 8004){
 
-                this.display_alert = false;
+                this.alert = false;
 
-                this.alert = response.data.message;
-
-                this.display_alert = true;
+                this.setAlert(response.data.message,"error");
 
                 document.getElementById('app').scrollIntoView();
               }
@@ -638,12 +642,17 @@ export default {
       
               {
 
-                                      
+                this.setAlert("There is internal server error","error");
+
+                document.getElementById('app').scrollIntoView();  
+
               });     
     },
     
 
     denyCustomerVerification(){
+
+        this.dialog = false;
       
         const url = `http://207.180.215.239:8181/api/v1/customers/deny/${this.email}`;
 
@@ -655,39 +664,27 @@ export default {
 
             if(response.data.genralErrorCode === 8000)
               {
-                this.dialog = false;
-
                 /*this.$store.dispatch('setSnackbar',{
                             text: "Customer have been denied",
                             color: 'success'
                 });*/
 
-              /*this.setSnackbar({
-                   text: "Customer have been denied",
-                   color: 'success'
-              });*/
+                this.alert = false;
 
-
-
-                //this.display_alert = true;
-
-                //this.$router.push('/admin');
-
-                this.alert ="Customer have been denied";
-
-                //this.$router.go('/admin');
+                this.setAlert("The transporter verification has been successfully deleted","success");
 
                 document.getElementById('app').scrollIntoView();
 
                 //this.$router.push('/admin');
+                //this.$router.go('/admin');
 
               } else if(response.data.genralErrorCode === 8004){
 
-                this.display_alert = false;
+                // this.dialog = false;
 
-                this.alert = response.data.message;
-
-                this.display_alert = true;
+                this.alert = false;
+  
+                this.setAlert(response.data.message,"error");
 
                 document.getElementById('app').scrollIntoView();
               }
@@ -696,7 +693,9 @@ export default {
       
               {
 
-                                      
+                this.setAlert("There is internal server error","error");
+                
+                document.getElementById('app').scrollIntoView();                
               });     
     },
 
