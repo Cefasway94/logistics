@@ -329,7 +329,7 @@
                md6 
                lg6 
                class="text--text body-1 ml-2 font-weight-bold mb-0"> 
-               {{amount}}
+               {{amount}}  {{LOAD_TENDER.currency}}
                </p>
                 </v-flex>
 
@@ -907,9 +907,13 @@ export default {
 
                 }else{
 
-                    vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                    if(vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited >= 100)
+                      vm.value = 100;
+                    else
+                        vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+
                     vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at                
-                    vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                    //vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
                     
                     vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
