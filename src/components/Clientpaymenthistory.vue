@@ -84,6 +84,114 @@
                 </v-alert>
                 </v-card>
                 </v-card>   
+
+
+                <template>
+                <v-row justify="center" >
+                  <v-dialog
+                    v-model="dialog3"
+                    max-width="350">
+                    <v-card>
+                      
+                      <p class="mb-3 text-center grey--text pt-3 body-1">Payment details</p>
+
+                     <v-flex row class="pl-9 mt-1" >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Agent :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" primary--text" >
+                       {{agent}}
+                      </p>
+                      </v-flex>
+                      </v-flex>
+
+                      <v-flex row class="pl-9 mt-1" >
+                      <v-flex xs3 sm3 md3 lg3  >
+                      <p class="grey--text mb-0"  > Amount :  </p>
+                      </v-flex>
+                      <v-flex xs9 sm9 md9 >
+                      <p class=" primary--text" >
+                       {{Number(amount).toLocaleString()}}
+                      </p>
+                      </v-flex>
+                      </v-flex>
+
+                     <v-flex row class="pl-9 mt-1" >
+                      <v-flex xs4 sm4 md4 lg4  >
+                      <p class="grey--text mb-0"  > Commission :  </p>
+                      </v-flex>
+                      <v-flex xs8 sm8 md8 >
+                      <p class=" primary--text" >
+                       {{Number(commission).toLocaleString()}}
+                      </p>
+                      </v-flex>
+                      </v-flex>
+
+                      <v-flex row class="pl-9 mt-1" >
+                      <v-flex xs4 sm4 md4 lg4  >
+                      <p class="grey--text mb-0"  > Date :  </p>
+                      </v-flex>
+                      <v-flex xs8 sm8 md8 >
+                      <p class=" primary--text" >
+                       {{date}}
+                      </p>
+                      </v-flex>
+                      </v-flex>
+
+                      <v-flex row class="pl-9 mt-1" >
+                      <v-flex xs4 sm4 md4 lg4  >
+                      <p class="grey--text mb-0"  > Curency ID :  </p>
+                      </v-flex>
+                      <v-flex xs8 sm8 md8 >
+                      <p class=" primary--text" >
+                       {{curency_id}}
+                      </p>
+                      </v-flex>
+                      </v-flex>
+
+                      <v-flex row class="pl-9 mt-1" >
+                      <v-flex xs4 sm4 md4 lg4  >
+                      <p class="grey--text mb-0"  > Agent account number :  </p>
+                      </v-flex>
+                      <v-flex xs8 sm8 md8 >
+                      <p class=" primary--text pl-2" >
+                       {{agent_account_number}}
+                      </p>
+                      </v-flex>
+                      </v-flex>
+
+                      <v-card flat width="400"  class="pl-2 pa-1 mb-5">
+                        <v-flex row class="pl-5">
+                          <v-flex xs11 sm11 md11 class="pl-1" style="background-color:;">
+                            <center>
+                          <p class="mb-0 body-1 primary--text">
+                            
+                          </p>
+                          </center>
+                          </v-flex>
+                        </v-flex>
+                        </v-card> 
+                      
+                      <v-card-actions class="mt-2" style="background-color:#4069e2;">
+                         
+                          
+                            <v-btn
+                              class=""
+                              width="400"
+                              height=""
+                              color="white "
+                              text
+                              @click="dialog3 = false">
+                              Cancel
+                            </v-btn>
+                                                
+                            
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-row>
+              </template>
         
         <v-card
                 v-show="history"
@@ -140,7 +248,8 @@
 
         <v-card
                 class="mb-4 px-3"
-                :elevation="hover ? 15 : 3">
+                :elevation="hover ? 15 : 3"
+                 @click="tender_payment_history(detail.transaction_ID)">
           <v-layout row wrap  class=" pl-2 ">
                <v-layout sm11 md11   >       
                    <v-flex 
@@ -170,7 +279,7 @@
                     <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class="  pt-5 pb-3">
-                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{detail && detail.amount}}</h4>
+                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{Number(detail && detail.amount).toLocaleString() }}</h4>
                    </v-flex>
                    
                     <!-- <v-flex 
@@ -199,7 +308,9 @@
 
         <v-card
                 class="mb-4 px-3"
-                :elevation="hover ? 15 : 3">
+                :elevation="hover ? 15 : 3"
+                 @click="tender_payment_history(LOAD_PAYMENT_HISTORY.data.objects.transaction_ID)">
+
           <v-layout row wrap  class=" pl-2 ">
                <v-layout sm11 md11   >       
                    <v-flex 
@@ -229,19 +340,9 @@
                     <v-flex 
                     wrap xs12 sm4 md4 lg4 
                     class="  pt-5 pb-3">
-                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{LOAD_PAYMENT_HISTORY.data && LOAD_PAYMENT_HISTORY.data.objects.amount}}</h4>
+                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{Number(LOAD_PAYMENT_HISTORY.data && LOAD_PAYMENT_HISTORY.data.objects.amount).toLocaleString() }}</h4>
                    </v-flex>
                    
-                    <!-- <v-flex 
-                    wrap xs12 sm4 md4 lg4 
-                    class=" justify-center pt-5 pb-3">
-                    <center>
-                          
-                         <v-chip v-show="chipblue" small class="primary white--text  font-weight-regular body-2 "  >{{description}}</v-chip> 
-                        
-                    </center>
-                    </v-flex> -->
-
                 </v-layout>
                 
           </v-layout >
@@ -250,79 +351,6 @@
         </v-hover>
         </v-flex>
 
-
-     <!-- for aray data -->
-                        <!-- 
-                            <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
-             v-for="(history, i) in LOAD_PAYMENT_HISTORY.data.objects.length" :key="i"  >
-
-        <v-hover class="">
-        <template v-slot="{ hover }">
-
-        <v-card
-                class="mb-4 px-3"
-                :elevation="hover ? 15 : 3">
-          <v-layout row wrap  class=" pl-2 ">
-               <v-layout sm11 md11   >       
-                   <v-flex 
-                   wrap xs12 sm4 md4 lg4 
-                   class=" pt-5 pb-3 " >
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center"  >{{history.transaction_ID}}</h4>
-                   </v-flex>
-
-                    <v-flex 
-                    wrap xs12 sm4 md4 lg4  
-                    class="pt-5 pb-3 " >
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{history.created_at}}</h4>
-                   </v-flex>
-
-                   <v-flex 
-                   wrap xs12 sm4 md4 lg4  
-                   class=" pt-5 pb-3 ">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center ">{{history.depositors_name}}</h4>
-                   </v-flex>
-
-                   <v-flex 
-                   wrap xs12 sm3 md3 lg3  
-                   class="  pt-5 pb-3">
-                        <h4 class=" subtitle-1 font-weight-regular mb-1 text-center">{{description}}</h4>
-                   </v-flex>
-
-                    <v-flex 
-                    wrap xs12 sm4 md4 lg4 
-                    class="  pt-5 pb-3">
-                        <h4 class="subtitle-1 font-weight-regular mb-1 text-center">{{history.amount}}</h4>
-                   </v-flex>
-                   
-                    <v-flex 
-                    wrap xs12 sm4 md4 lg4 
-                    class=" justify-center pt-5 pb-3">
-                    <center>
-                         <v-chip small class="light-green white--text  font-weight-light caption "  >{{history.percentage_deposited}} %</v-chip>                    
-                    </center>
-                    </v-flex>
-
-                    <v-flex 
-                    wrap xs12 sm4 md4 lg4
-                    class=""  style="background-color:white;">
-                    <v-btn elevation="flat" height="50" class="mt-2 pt-3" color="transparent"  >
-                        <h4  
-                        class="font-weight-bold mb-3 text-center " 
-                        style="color:#4169E1;">
-                        View Invoice
-                        </h4>
-                    </v-btn>
-                   </v-flex>
-
-                </v-layout>
-                
-          </v-layout >
-        </v-card>
-        </template>
-        </v-hover>
-
-     </v-flex>
-                         -->
 
         </v-card>
 
@@ -333,7 +361,7 @@
                 v-show="nopayments"
                 color="transparent"
                 flat=""
-                class="mb-4 mx-auto mt-12 pa-1"
+                class="mb-4 mx-auto  pa-1"
                 max-width="1050" >
 <!-- Header  -->
         <v-card
@@ -436,6 +464,15 @@ export default {
           datas:true,
           chiporange: false,
           chipblue: false,
+
+          agent:'',             
+         amount:'',  
+        commission:'',        
+        date:'',
+        curency_id:'',
+        agent_account_number:'',
+
+        dialog3:false
           
       }
   },
@@ -545,7 +582,33 @@ export default {
       },  
 
       tender_payment_history(tender_id){
+
+          this.dialog3 = true
+
           this.TENDER_PAYMENT_DETAILS(tender_id).then(()=>{
+              
+              if (this.LOAD_TENDER_PAYMENT_HISTORY.data.objects == '') {
+
+                this.agent = ''             
+                this.amount = ''  
+                this.commission=''        
+                this.date=''
+                this.curency_i=''
+                this.agent_account_number=''
+
+                  
+              }else {
+
+                this.agent = this.LOAD_TENDER_PAYMENT_HISTORY.data.objects.service_account_name            
+                this.amount = this.LOAD_TENDER_PAYMENT_HISTORY.data.objects.amount
+                this.commission= this.LOAD_TENDER_PAYMENT_HISTORY.data.objects.commission_amount
+                this.date= this.LOAD_TENDER_PAYMENT_HISTORY.data.objects.service_account_number
+                this.curency_id = this.LOAD_TENDER_PAYMENT_HISTORY.data.objects.currency_ID
+                this.agent_account_number = this.LOAD_TENDER_PAYMENT_HISTORY.data.objects.service_account_number               
+                  
+              }
+              
+              this.dialog3 = true
               console.log(this.LOAD_TENDER_PAYMENT_HISTORY);
               
           })
