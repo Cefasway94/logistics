@@ -1115,7 +1115,6 @@ export default {
             } else if(vm.$route.params.tender_type == "Clearing"){
 
                 
-
                 let url = `http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`;
 
                 let clearing = `http://207.180.215.239:8000/api/v1/clearing-progress/tender/${vm.$route.params.id}`;

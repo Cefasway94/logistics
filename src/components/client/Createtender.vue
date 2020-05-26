@@ -24,6 +24,91 @@
                 
             </v-overlay>
 
+            <v-overlay
+                :value="choose_tender"
+                >
+
+                <v-card color="white">
+                    <v-card-title>
+                        <p class="primary--text font-weight-bold">Choose the type of tender you want to create</p>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-row>
+                                <!-- <v-col cols=6 v-for="category in tender_categories" :key="category.id">
+                                    <v-card class="pl-5" :hover="true" @click="setTenderCategory(category.industry_name)">
+                                        <v-card-title>{{ category.id }}</v-card-title>
+                                        <v-btn 
+                                            height="60"
+                                            width="70"
+                                            elevation="10"
+                                            color="primary"
+                                            class="white--text pb-2"
+                                        >
+                                            <v-img
+                                                :src="require('../../assets/truck.png')"
+                                                class="mt-2"
+                                                contain
+                                                width=""
+                                                height="43"
+                                            >
+                                            </v-img>
+                                       </v-btn>
+                                    </v-card>
+                                    <p class="mt-3 ml-3 body-1 font-weight-bold primary--text">To Transport goods </p>
+                                </v-col> -->
+                                <v-col cols=6>
+                                    <v-card class="pl-5" :hover="true" @click="setTenderCategory('Transporting')">
+                                        <v-card-title>Transporting</v-card-title>
+                                        <v-btn 
+                                            height="60"
+                                            width="70"
+                                            elevation="10"
+                                            color="primary"
+                                            class="white--text pb-2"
+                                        >
+                                            <v-img
+                                                :src="require('../../assets/truck.png')"
+                                                class="mt-2"
+                                                contain
+                                                width=""
+                                                height="43"
+                                            >
+                                            </v-img>
+                                       </v-btn>
+                                    </v-card>
+                                    <p class="mt-3 ml-3 body-1 font-weight-bold primary--text">To Transport goods </p>
+                                </v-col>
+
+                                <v-col cols=6 >
+                                    <v-card class="pl-5" :hover="true" @click="setTenderCategory('Clearing')">
+                                        <v-card-title>Clearing</v-card-title>
+                                        <v-btn 
+                                            height="60"
+                                            width="70"
+                                            elevation="10"
+                                            color="primary"
+                                            class="white--text pb-2"
+                                        >
+                                            <v-img
+                                                :src="require('../../assets/truck.png')"
+                                                class="mt-2"
+                                                contain
+                                                width=""
+                                                height="43"
+                                            >
+                                            </v-img>
+                                       </v-btn>
+                                    </v-card>
+                                    <p class="mt-3 ml-3 body-1 font-weight-bold primary--text">To Transport goods </p>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                    </v-card-text>
+                </v-card>
+
+            </v-overlay>
+
         <AlertError v-if="display_alert" v-bind:message="alert"/>
 
         <v-layout class="pa-3 mt-10">
@@ -76,7 +161,7 @@
                     <v-container>
                         <v-row>
                             <v-col>
-                                <v-select 
+                                <!--<v-select 
                                     class="mx-6" 
                                     style="color:#4169E1;"
                                     v-model = "tender_category" 
@@ -89,7 +174,19 @@
                                     <template #label>
                                         <span class="red--text"><strong>* </strong></span>Tender category
                                     </template>
-                                </v-select>
+                                </v-select>-->
+                                 <p class="primary--text mb-1 body-2 text-uppercase mb-0">TENDER CATEGORY</p>
+                                <v-text-field 
+                                    v-model="tender_category" 
+                                    outlined
+                                    @click="choose_tender = true"
+                                >
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+
+                                </v-text-field>
+
                             </v-col>
                         </v-row>
                         <v-row>
@@ -495,13 +592,29 @@ export default {
         
         overlay: false,
 
+        choose_tender:true,
+
     }),
 
     computed:{
       ...mapGetters(['tenderCreated','getCurrencies'])
     },
 
+
+
     methods: {
+
+        setTenderCategory(name){
+
+            this.choose_tender = false;
+
+            if(name === 'Transporting')
+                this.tender_category = 'Transporting';
+
+            else if(name === 'Clearing')
+                this.tender_category = 'Clearing';
+
+        },
 
         getFileExtension(url){
 
