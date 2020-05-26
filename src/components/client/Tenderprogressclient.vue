@@ -1058,9 +1058,15 @@ export default {
                         .then((response) => 
                             {
                                 if(response.data.genralErrorCode === 8000){
+
+                                    if(response.data.objects.verify == null)    
+                                            vm.is_verified = false;
+                                        else
+                                            vm.is_verified = true;
                                   
                                  //eslint-disable-next-line no-console
-                                                console.log("is paid full " +response.data.objects.is_full_amount_paid);
+                                    console.log("is paid full " +response.data.objects.is_full_amount_paid);
+
                                      if(response.data.objects.verify == 1){
 
                                          //eslint-disable-next-line no-console
@@ -1092,6 +1098,10 @@ export default {
                                         
                                         vm.payment_value = 0;
                                     }
+                                }
+                                else if(response.data.genralErrorCode === 8001){
+
+                                    vm.is_verified = true;
                                 }
                                 
                             }).catch(()=>{
