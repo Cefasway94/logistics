@@ -51,7 +51,7 @@
                               elevation="flat" 
                               color="#4169E1" 
                               class="white--text"
-                              :to="'admin/verify/'+customer.id"
+                              :to="'/admin/verify/'+customer.id"
                               :disabled="customer.is_verified == 1"
                             >
                               Verify
@@ -158,7 +158,7 @@
                               elevation="flat" 
                               color="#4169E1" 
                               class="white--text"
-                              :to="'admin/verify/Clearing/'+agent.id"
+                              :to="'/admin/verify/Clearing/'+agent.id"
                               :disabled="agent.is_verified == 1"
                             >
                               Verify
@@ -166,7 +166,7 @@
                           </td>
                           <td>
                             <v-dialog              
-                              v-model="dialog"
+                              v-model="dialogAgent"
                               :retain-focus="false"
                               width="600"
                             >
@@ -199,7 +199,7 @@
                                     <v-btn
                                       color="primary"
                                       text
-                                      @click="dialog = false"
+                                      @click="dialogAgent = false"
                                     >
                                     No
                                   </v-btn>
@@ -264,7 +264,7 @@
                               elevation="flat" 
                               color="#4169E1" 
                               class="white--text"
-                              :to="'admin/verify/Transporting/'+transporter.id"
+                              :to="'/admin/verify/Transporting/'+transporter.id"
                               :disabled="transporter.is_verified == 1"
                             >
                               Verify
@@ -274,7 +274,7 @@
                           <td>
                            
                             <v-dialog              
-                              v-model="dialog"
+                              v-model="dialogTransporter"
                               :retain-focus="false"
                               width="600"
                             >
@@ -308,7 +308,7 @@
                                     <v-btn
                                       color="primary"
                                       text
-                                      @click="dialog = false"
+                                      @click="dialogTransporter = false"
                                     >
                                     No
                                   </v-btn>
@@ -384,6 +384,10 @@ export default {
       transporters:[],
 
       dialog: false,
+
+      dialogAgent: false,
+
+      dialogTransporter: false,
 
       alert: false,
       message:'',
@@ -560,7 +564,7 @@ export default {
 
   denyVerification(){
 
-    this.dialog = false;
+    this.dialogTransporter = false;
 
   
     const url = `http://207.180.215.239:9000/api/v1/transporters/deny/${this.email}`;
@@ -575,7 +579,7 @@ export default {
         if(response.data.genralErrorCode === 8000)
           {
 
-            this.dialog = false;
+            this.dialogTransporter = false;
 
             this.alert = false;
 
@@ -609,7 +613,7 @@ export default {
     
     denyAgentVerification(){
       
-        this.dialog = false;
+        this.dialogAgent = false;
 
         const url = `http://207.180.215.239:8000/api/v1/agents/deny/${this.email}`;
 
