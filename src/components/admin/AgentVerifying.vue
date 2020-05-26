@@ -2,6 +2,30 @@
 
     <v-container class="mt-12 px-5" color="#F5FAFF" fluid>
 
+        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
+
+         <v-overlay :value="overlay">
+            <div class="large-preview">
+                    
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" :src="large_preview_url" style="width:auto;height:auto;max-width:500px;max-height:500px;" >
+                        </v-col>
+
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                large
+                                color="primary white--text"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                    
+            </div>
+        </v-overlay>
+
         <AlertError v-if="display_alert" v-bind:message="alert"/>
 
         <v-card flat class="mt-10 mx-auto mb-2" color="#F5FAFF">
@@ -95,29 +119,55 @@
         <v-card flat class="mt-3 mx-auto mb-3" color="white">
 
             <v-row>
-                <v-col cols=12 md=4>
+                <!-- <v-col cols=12 md=4>
                 <p class="primary--text body-1 mb-2"> PROFILE PHOTO</p>
                 <v-card flat width="200" height="150" outlined>
                     <v-row>
-                        <v-col offset="4">
-                            <v-btn v-if="has_photo" x-large icon class="mt-7" @click="downloadPhoto()">
-                                <v-icon x-large>mdi-file-download</v-icon>
-                            </v-btn>
-                        </v-col>
+                        <div 
+                                    v-show="( === 'jpg') || (id_extension === 'jpeg')|| (id_extension === 'png')" 
+                                    @click="largePreview(id_url)"
+                                >
+                                    <img :src="id_url" width=200 height=150/>
+                                </div>
+                               
+                                <div v-show="id_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(id_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
                     </v-row>
                 </v-card>
-            </v-col>
+            </v-col> -->
 
             <v-col cols=12 md=4>
 
                 <p class="primary--text body-1 mb-2"> CERTIFICATE</p>
                 <v-card flat width="200" height="150" outlined>
                     <v-row>
-                        <v-col offset="4">
-                            <v-btn x-large icon class="mt-7" @click="downloadCertificate()">
-                                <v-icon x-large>mdi-file-download</v-icon>
-                            </v-btn>
-                        </v-col>
+                        <div 
+                                    v-show="(certificate_extension === 'jpg') || (certificate_extension === 'jpeg')|| (certificate_extension === 'png')" 
+                                    @click="largePreview(certificate_url)"
+                                >
+                                    <img :src="certificate_url" width=200 height=150/>
+                                </div>
+                               
+                                <div v-show="certificate_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(certificate_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
                     </v-row>
                    
                 </v-card>
@@ -128,11 +178,24 @@
                 <p class="primary--text body-1 mb-2"> INSURANCE</p>
                 <v-card flat width="200" height="150" outlined>
                    <v-row>
-                        <v-col offset="4">
-                            <v-btn x-large icon class="mt-7" @click ="downloadInsurance()">
-                                <v-icon x-large>mdi-file-download</v-icon>
-                            </v-btn>
-                        </v-col>
+                        <div 
+                                    v-show="(insurance_extension === 'jpg') || (insurance_extension === 'jpeg')|| (insurance_extension === 'png')" 
+                                    @click="largePreview(insurance_url)"
+                                >
+                                    <img :src="insurance_url" width=200 height=150/>
+                                </div>
+                               
+                                <div v-show="insurance_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(insurance_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
                     </v-row>
                 </v-card>
 
@@ -223,11 +286,11 @@
 <script>
 import axios from 'axios'
 import AlertError from '@/components/AlertError.vue'
-
+import PDFDocument from '@/components/PDFDocument'
 export default {
     name: 'AgentVerifying',
 
-    components:{AlertError},
+    components:{AlertError, PDFDocument},
 
     data () {
         return {
@@ -275,8 +338,18 @@ export default {
            scheme_value:'',
            class_value:'',
 
-           url:'https://78.media.tumblr.com/tumblr_m39nv7PcCU1r326q7o1_500.png',
+           url:'',
+            pdf:false,
+            pdfOverlay:false,
 
+            overlay:false,
+
+            large_preview_url:'',
+
+            certificate_extension:'',
+            insurance_extension:'',
+            certificate_url:'',
+            insurance_url:'',
       }
       
     },
@@ -286,6 +359,37 @@ export default {
         getFileName(url){
 
             let position = url.lastIndexOf('/');
+
+            let extracted_string = url.slice(position + 1, url.length + 1);
+
+            return extracted_string;
+
+        },
+
+        largePreview(src){
+
+            this.large_preview_url = src;
+
+            this.overlay = !this.overlay;
+
+        },
+
+        previewPdf(url){
+
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
+        },
+
+          getFileExtension(url){
+
+            let position = url.lastIndexOf('.');
 
             let extracted_string = url.slice(position + 1, url.length + 1);
 
@@ -495,12 +599,28 @@ export default {
 
                     if(response.data.genralErrorCode === 8000)
                     {
-                        vm.display_alert = false;
+                        /*vm.display_alert = false;
 
                         vm.agent = response.data.objects;
 
                         if(vm.agent.profile_image.length > 0)
-                            vm.has_photo = true;
+                            vm.has_photo = true;*/
+
+                        vm.agent = response.data.objects;
+
+                        if(vm.agent.certificate !== null)
+                        {
+                            vm.certificate_extension = vm.getFileExtension(vm.agent.certificate[0]);
+
+                            vm.certificate_url = vm.agent.certificate[0];
+                        }
+
+                         if(vm.agent.insurance !== null)
+                        {
+                            vm.insurance_extension = vm.getFileExtension(vm.agent.insurance[0]);
+
+                            vm.insurance_url = vm.agent.insurance[0];
+                        }
 
                     } else if(response.data.genralErrorCode === 8004){
 
@@ -542,9 +662,19 @@ export default {
 
                         vm.agent = response.data.objects;
 
+                        if(vm.agent.certificate !== null)
+                        {
+                            vm.certificate_extension = vm.getFileExtension(vm.agent.certificate[0]);
 
-                         if(vm.agent.profile_image.length > 0)
-                            vm.has_photo = true;
+                            vm.certificate_url = vm.agent.certificate[0];
+                        }
+
+                        if(vm.agent.insurance !== null)
+                        {
+                            vm.insurance_extension = vm.getFileExtension(vm.agent.insurance[0]);
+
+                            vm.insurance_url = vm.agent.insurance[0];
+                        }
 
                     } else if(response.data.genralErrorCode === 8004){
 
