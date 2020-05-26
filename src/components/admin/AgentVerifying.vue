@@ -162,6 +162,7 @@
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
+                                        style="position:absolute;"
                                         @click="previewPdf(certificate_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
@@ -189,7 +190,8 @@
 
                                     <v-btn 
                                         :block="true"
-                                        icon class="mt-7" 
+                                        icon class="mt-7"
+                                        style="position:absolute;" 
                                         @click="previewPdf(insurance_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
