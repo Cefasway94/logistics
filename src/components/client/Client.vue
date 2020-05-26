@@ -84,8 +84,7 @@
                         </v-flex> -->
                         <v-flex xms11 sm11 md11 lg11 class="pl-3">
                             <p class="text--text title mb-0">
-                                Your account has been registered, please stay put for it
-                                to be verified
+                                Your account has been registered, it will take few hours to be verified.
                             </p>
                         </v-flex>
                     </v-flex>
