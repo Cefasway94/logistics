@@ -182,10 +182,14 @@
                     </v-flex>
 
                     <v-flex column xs12 sm6 class="pl-10">
-
+                        
                         <p class=" body-1 mb-0 text-capitalize"> Receipt </p>
                          <v-card flat width="358" height="270"  outlined >
-
+                             <center>
+                             <p class="mb-0 body-1 red--text">
+                                Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
+                             </p>
+                             </center>
                             <v-file-input 
                                 label="upload a slip" 
                                 id="slip" 
@@ -486,9 +490,6 @@ export default {
 
                             });  
 
-                }else {
-
-                     alert("Tender is paid under full payment term");
                 }
 
             } else {
