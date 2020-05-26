@@ -221,7 +221,7 @@
                 </v-flex>
                 <v-flex xms11 sm11 md11 lg11>
                 <p class="text--text title mb-0">
-                Waiting on payment for tender to start
+                Waiting on payment for tender to start <v-chip v-show="wait == true" class="green white--text">Waiting for payment Verification</v-chip>
                 </p>
                 </v-flex>
                 </v-flex>
@@ -900,7 +900,7 @@ export default {
 
             vm.GET_PAYMENT_PROGRESS(to.params.id).then(()=>{
                 
-                console.log(vm.LOAD_PAYMENT_PROGRESS)
+                console.log(vm.LOAD_PAYMENT_PROGRESS.objects)
 
                 if (vm.LOAD_PAYMENT_PROGRESS.objects.length === 0 && 
                         vm.LOAD_PAYMENT_PROGRESS.genralErrorCode == 8001 ) {
@@ -913,19 +913,27 @@ export default {
 
                 }else{
 
-                    if(vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited >= 100)
-                      vm.value = 100;
-                    else
-                        vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                    console.log(vm.LOAD_PAYMENT_PROGRESS.objects.verify);
 
-                    vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at                
-                    //vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
-                    
-                    vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                    if (vm.LOAD_PAYMENT_PROGRESS.objects.verify == null){
+                        vm.wait = true
+                        vm.show = false
+                    }else{
+                        if(vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited >= 100)
+                        vm.value = 100;
+                        else
+                            vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
 
-                    if ( vm.LOAD_PAYMENT_PROGRESS.objects.is_full_amount_paid == false){
-                            vm.chip1 = 'partial payment'
+                        vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at                
+                        //vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                        
+                        vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+                        if ( vm.LOAD_PAYMENT_PROGRESS.objects.is_full_amount_paid == false){
+                                vm.chip1 = 'partial payment'
+                        }
                     }
+                    
                     
                 }
             })

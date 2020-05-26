@@ -618,7 +618,7 @@
                                     <v-row
                                     >
                                         <v-col :offset="5">
-                                            <span class="font-weight-regular black--text text--darken-2">You have paid {{ payment_value }}%</span>
+                                            <span class="font-weight-regular black--text text--darken-2">You have paid {{ payment_value }}% </span><v-chip v-show="is_verified == false" class="green white--text">Waiting for payment verification</v-chip>
                                         </v-col>
                                        
                                         <v-col :offset="10">
@@ -716,6 +716,8 @@ export default {
         transporting:false,
 
         payment_value:0,
+
+        is_verified:0,
 
         cargo_loading:{
             
@@ -1146,6 +1148,12 @@ export default {
                                 if(response.data.genralErrorCode === 8000){
                                   
                                  //eslint-disable-next-line no-console
+                                        if(response.data.objects.verify == null)    
+                                            vm.is_verified = false;
+                                        else
+                                            vm.is_verified = true;
+
+
                                                 console.log("is paid full " +response.data.objects.is_full_amount_paid);
                                      if(response.data.objects.verify == 1){
 
@@ -1178,6 +1186,10 @@ export default {
                                         
                                         vm.payment_value = 0;
                                     }
+                                }
+                                else if(response.data.genralErrorCode === 8001){
+
+                                    vm.is_verified = true;
                                 }
 
                                 //eslint-disable-next-line no-console

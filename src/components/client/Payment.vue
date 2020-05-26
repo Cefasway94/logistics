@@ -1,7 +1,7 @@
 <template>
     <v-container class="mt-12 pa-3">
        
-            <AlertError v-if="display_alert" v-bind:message="alert"/>
+            <!-- <AlertError v-if="display_alert" v-bind:message="alert"/> -->
           
             <v-overlay :value="overlay">
 
@@ -260,7 +260,7 @@
 <script>
 import axios from 'axios'
 import {mapGetters,mapActions} from 'vuex'
-import AlertError from '@/components/AlertError.vue'
+// import AlertError from '@/components/AlertError.vue'
 
 
 export default {
@@ -293,7 +293,7 @@ export default {
         }
     },
 
-    components: {AlertError},
+    // components: {AlertError},
 
     computed:{
         ...mapGetters(['getCurrencies']),

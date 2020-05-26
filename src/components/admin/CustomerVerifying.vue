@@ -9,17 +9,27 @@
                     <v-row justify= "center">
                         <v-col cols=12>
                             <img  id="large_thumbnail" :src="large_preview_url" style="width:auto;height:auto;max-width:500px;max-height:500px;" >
-                        </v-col>
-
-                        <v-col class="mt-0" offset="4">
-                            <v-btn
-                                large
+                             <v-btn
+                                small
                                 color="primary white--text"
                                 @click="overlay = false"
-                            >
-                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            > Close
+                                <v-icon small class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                            
+                             <v-btn
+                                small
+                                elevation="flat" 
+                                color="#4169E1" 
+                                style="float:right;"
+                                class="white--text"
+                                @click="downloadPdf()"
+                                >
+                                Download
+                                <v-icon small>mdi-download</v-icon>
                             </v-btn>
                         </v-col>
+                        
                     </v-row>
                     
             </div>
@@ -568,7 +578,7 @@ export default {
 
         forceFileDownload(response){
 
-            let filename = this.getFileName(this.url);
+            let filename = this.getFileName(this.large_preview_url);
 
             const url = window.URL.createObjectURL(new Blob([response.data]))
             const link = document.createElement('a')
@@ -577,105 +587,20 @@ export default {
             document.body.appendChild(link)
             link.click()
       },
+        downloadPdf(){
+            axios({
+                    //url: this.agent.profile_image[0],
+                    url: this.large_preview_url,
+                    method: 'GET',
+                    responseType: 'blob' // important
 
-      downloadIdentityCard(){
-          
-        axios({
-            //url: this.agent.profile_image[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
+                }).then((response) => {
 
-        }).then((response) => {
+                    this.forceFileDownload(response);
+                    this.$emit('clicked')
+                });
+            }
 
-            this.forceFileDownload(response);
-        });
-    },
-
-    downloadVATCertificate(){
-          
-        axios({
-            //url: this.agent.profile_image[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-
-    downloadBusinessLicence(){
-          
-        axios({
-            //url: this.agent.profile_image[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-
-    downloadTaxPayerDocument(){
-          
-        axios({
-            //url: this.agent.profile_image[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-    
-    downloadCertificate(){
-          
-        axios({
-            //url: this.agent.certificate[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-
-    downloadRegistrationCertificate(){
-          
-        axios({
-            //url: this.agent.certificate[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-    
-    downloadBankStatement(){
-          
-        axios({
-             url: this.url,
-            //url: this.agent.insurance[0],
-
-            method: 'GET',
-
-            responseType: 'blob' // important
-
-        }).then((response) => {
-            this.forceFileDownload(response);
-        });
-    },
 },
 
     beforeRouteEnter(to,from,next){
