@@ -464,7 +464,7 @@ export default {
 
 // accept bid ============================>>>
     acceptbid(bid_id){
-        acceptDialog = false;
+        this.acceptDialog = false;
         // eslint-disable-next-line no-console
         console.log(bid_id);
         
