@@ -132,6 +132,11 @@
                             <p class="primary--text body-1 mb-2"> AMOUNT </p>
                             <p class="body-1">{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
                             </v-flex>
+
+                            <v-flex column class=" mt-7 pl-3">
+                            <p class="primary--text body-1 mb-2"> DELIVERY TIMELINE </p>
+                            <p class="body-1">{{LOAD_TENDER.customer_delivery_timeline}}</p>
+                            </v-flex>
                         </v-flex>
 
                         <v-flex row class="mt-10 mb-4" >
@@ -335,7 +340,7 @@
                 </v-progress-linear>
             <!-- loading -->
                         <v-flex class="pt-5">
-                            <p class="body-1 mb-0" style="color:#4169E1;" color="#4169E1">Bidi on tender</p>
+                            <p class="body-1 mb-0" style="color:#4169E1;" color="#4169E1">Bid on tender</p>
                         </v-flex>
                         <v-flex row class="pl-2">
                         <v-flex column class="sm4 md4 px-2 mt-3">
@@ -389,7 +394,7 @@
                             chips 
                             color="#4169E1" 
                             clearable
-                            label="Select payment terms"
+                            placeholder="Select payment terms"
                             :rules="[rules.required]">
 
                                         <template #label>

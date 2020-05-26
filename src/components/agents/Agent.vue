@@ -185,13 +185,33 @@
                             <v-btn v-if="showaccept == LOAD_DASHBOARDS.objects[i].bid_status" 
                             small 
                             elevation="flat" 
-                            color="green" 
+                            color="green"
                             class="white--text" 
-                            @click="acceptbid(tender.id)">
+                            @click="acceptDialog = true">
                             accept
                             </v-btn>
                             </center>
                         </v-flex>
+
+                         <v-dialog v-model="acceptDialog" max-width="500" >
+                                    <v-card>
+                                        <v-card-title>Are you sure you want to accept this tender?</v-card-title>
+                                        <v-card-actions row>
+ 
+                                            <v-btn 
+                                                color="green"
+                                                @click="acceptbid(tender.id)" 
+                                                class="white--text"
+                                                small 
+                                                elevation="flat" 
+                                             >
+                                             YES
+                                             </v-btn>
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="#4169E1" text @click="acceptDialog = false" class="mt-2 ml-2">NO</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                        </v-dialog>
 
                         <v-flex xsm6 sm6 md6 class="px-1">
                             <v-btn
@@ -310,6 +330,7 @@ export default {
           loading:false,
           tab: this.$route.params.id,
           componemtkey: 0,
+          acceptDialog: false,
           
       }
   },
@@ -443,6 +464,7 @@ export default {
 
 // accept bid ============================>>>
     acceptbid(bid_id){
+        acceptDialog = false;
         // eslint-disable-next-line no-console
         console.log(bid_id);
         
