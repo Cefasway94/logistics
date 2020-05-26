@@ -38,7 +38,7 @@
                 color="#DC493A"
                 icon="error_outline"
                 >
-                Could not log you in, Invalid Password
+                Kindly check your email and password and try again
                 </v-alert>
 
                 
@@ -47,7 +47,7 @@
                 color="#DC493A"
                 icon="error_outline"
                 >
-                Kindly check your email and try again
+                Kindly check your email and password and try again
                 </v-alert>
 
                 <v-alert
