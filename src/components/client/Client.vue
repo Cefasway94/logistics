@@ -161,7 +161,7 @@
                                                 <p  class="body-2  pt-1 ">{{ tender.destination }}</p>
                                             </v-row>
 
-                                            <v-row row class="px-3">
+                                            <v-row class="px-3">
                                                 <h4  class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
@@ -183,7 +183,7 @@
                    
                                             <p class=" body-2 grey--text">{{ tender.description}}</p>
                     
-                                            <v-row class="px-3" v-show="tender.tender_type == 2">
+                                            <v-row class="px-3" v-show="tender.tender_type == 'Transporting'">
                                                 <p class="body-2  pt-1 ">{{  tender.origin }}</p>
                         
                                                 <v-icon small color="#4169E1" class="px-2 pb-3">
@@ -192,7 +192,7 @@
                                                 <p  class="body-2  pt-1 ">{{ tender.destination }}</p>
                                             </v-row>
 
-                                            <v-row row class="px-3">
+                                            <v-row class="px-3">
                                                 <h4  class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </h4>
                                                     <v-spacer></v-spacer>
                                                     <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
