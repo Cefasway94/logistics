@@ -462,9 +462,9 @@
 
                                 </v-file-input>
 
-                                 <div v-show="photos_extension === 'jpg' || photos_extension === 'jpeg' ||  photos_extension === 'png' ">
+                                 <div v-show="photo_extension === 'jpg' || photo_extension === 'jpeg' ||  photo_extension === 'png' ">
                                     <v-card height="200" width="250" outlined @click="showLargeThumbnail('files')">
-                                        <img  id="files_thumb" class="preview">
+                                        <img  id="files_thumb" :src="photo_url" class="preview">
                                     </v-card>
                                 </div>
                                 <div v-show="photo_extension === 'pdf'">
@@ -585,13 +585,13 @@
 <script>
 import {mapActions,mapGetters} from 'vuex'
 import AlertError from '@/components/AlertError.vue'
-
+import PDFDocument from '@/components/PDFDocument'
 import axios from 'axios'
 
 export default {
     name: "createtender",
 
-    components: {AlertError},
+    components: {AlertError, PDFDocument},
 
     data: ()=>({
         details:'',
@@ -628,7 +628,7 @@ export default {
         overlay:false,
         large_preview_url:'',
 
-         url:'',
+        url:'',
         pdf:false,
         pdfOverlay:false,
 
@@ -643,6 +643,19 @@ export default {
 
 
     methods: {
+
+        previewPdf(url){
+
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
+        },
 
         setTenderCategory(name){
 
@@ -739,9 +752,9 @@ export default {
                 
                 this.photos.push(document.getElementById("files").files[0]);
 
-                this.photos_extension = this.getFileExtension(document.getElementById("files").files[0].name);
+                this.photo_extension = this.getFileExtension(document.getElementById("files").files[0].name);
 
-                if(this.photos_extension === 'jpg' || this.photos_extension === 'jpeg' || this.photos_extension === 'png')
+                if(this.photo_extension === 'jpg' || this.photo_extension === 'jpeg' || this.photo_extension === 'png')
                 {
                     var reader = new FileReader();
 
@@ -762,6 +775,12 @@ export default {
                     }
 
                     reader.readAsDataURL(document.getElementById("files").files[0]);
+                }
+                else if(this.photo_extension === 'pdf')
+                {
+                    this.photo_url = URL.createObjectURL(document.getElementById("files").files[0]);
+
+                    this.previewPdf(this.photo_url);
                 }
 
             }
@@ -803,6 +822,12 @@ export default {
 
                     reader.readAsDataURL(document.getElementById("bill").files[0]);
                 }
+                else if(this.bill_of_lading_extension === 'pdf')
+                {
+                    this.bill_of_lading_url = URL.createObjectURL(document.getElementById("bill").files[0]);
+
+                    this.previewPdf(this.bill_of_lading_url);
+                }
 
             }
         },
@@ -839,6 +864,13 @@ export default {
                     }
 
                     reader.readAsDataURL(document.getElementById("letter").files[0]);
+                }
+
+                 else if(this.letter_extension === 'pdf')
+                {
+                    this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
+
+                    this.previewPdf(this.letter_url);
                 }
 
             }
