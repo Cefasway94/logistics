@@ -856,6 +856,7 @@ export default {
            canceledits:false,
            edit:false,
            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
+           agent_payment_terms:[],
           
            // Priview thumb nails
            large_preview_url:'',
@@ -950,6 +951,23 @@ export default {
            }else{
                 this.mail = localStorage.client
            }
+        }).then(()=>{
+
+             console.log('entering here');
+
+            this.GET_AGENT_PAYMENT_TERMS(localStorage.client).then(()=>{
+
+                  console.log('transporter payment terms');
+                  console.log(this.LOAD_AGENT_PAYMENT_TERMS.length);
+
+                  for (let index = 0; index < this.LOAD_AGENT_PAYMENT_TERMS.length; index++) {
+
+                      this.agent_payment_terms.push( this.LOAD_AGENT_PAYMENT_TERMS[index].installment_desc)                      
+                  }
+                  console.log(this.payment_terms);
+                  this.terms_of_payment = this.agent_payment_terms;
+                  
+              })
         })
 
     },
@@ -958,7 +976,8 @@ export default {
 
        ...mapActions([
         "GET_AGENT",
-        "POST_PAYMENT_TERMS"
+        "POST_PAYMENT_TERMS",
+        "GET_AGENT_PAYMENT_TERMS"
     ]),
       previewPdf(url){
 
@@ -1415,7 +1434,8 @@ export default {
       ...mapGetters([
           'LOAD_AGENT',
           'LOAD_PROFILE',
-          'LOAD_POST_PAYMENT_TERMS'
+          'LOAD_POST_PAYMENT_TERMS',
+          'LOAD_AGENT_PAYMENT_TERMS'
           
       ])
   }

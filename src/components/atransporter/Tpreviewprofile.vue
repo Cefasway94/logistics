@@ -287,11 +287,11 @@
                          <v-flex 
                          class="" 
                          style="background-color:#F5FAFF;" 
-                         v-show="(certificate_extension === 'jpg') || (certificate_extension === 'jpg') || (certificate_extension === 'png')" 
+                         v-show="(certificate_extension === 'jpg') || (certificate_extension === 'jpeg') || (certificate_extension === 'png')" 
                          @click="largePreview(certificate)">
                             <v-img 
                             :src="certificate"  
-                            class="mb-0 pb-0" 
+                            class="mb-0 pb-0 oxoImg" 
                             height="147" 
                             width="200" 
                             >
@@ -323,11 +323,11 @@
                          <v-flex 
                          class="" 
                          style="background-color:#F5FAFF;" 
-                         v-show="(insurance_extension === 'jpg') || (insurance_extension === 'jpg') || (insurance_extension === 'png')" 
+                         v-show="(insurance_extension === 'jpg') || (insurance_extension === 'jpeg') || (insurance_extension === 'png')" 
                          @click="largePreview(insurance)">
                             <v-img 
                             :src="insurance"  
-                            class="mb-0 pb-0" 
+                            class="mb-0 pb-0 oxoImg" 
                             height="147" 
                             width="200" 
                             >
@@ -507,6 +507,7 @@ export default {
            certificate_extension:'',
            insurance_extension:'',
            other_extension:'',
+           profile_image_extension:'',
 
            large_preview_url:'',
 
@@ -545,18 +546,20 @@ export default {
 
             if (!this.LOAD_AGENT.objects.agent_id == ''){
 
-                 if(this.LOAD_AGENT.objects.certificate !== null){
-                    
-                    this.certificate = this.LOAD_AGENT.objects.certificate[0]
-
-                    this.certificate_extension = this.getFileExtension(this.certificate);
-                }
-
-                 if(this.LOAD_AGENT.objects.insurance !== null){
-                    
-                    this.insurance = this.LOAD_AGENT.objects.insurance[0]
-
-                    this.insurance_extension = this.getFileExtension(this.insurance);
+                if(this.LOAD_AGENT.objects.profile_image !== null)	
+                {	
+                    this.profileimage = this.LOAD_AGENT.objects.profile_image[0];	
+                    this.profile_image_extension = this.getFileExtension(this.profileimage);	
+                }	
+                 if(this.LOAD_AGENT.objects.insurance !== null)	
+                {	
+                    this.insurance = this.LOAD_AGENT.objects.insurance[0];	
+                    this.insurance_extension = this.getFileExtension(this.insurance);	
+                }	
+                 if(this.LOAD_AGENT.objects.certificate !== null)	
+                {	
+                    this.certificate = this.LOAD_AGENT.objects.certificate[0];	
+                    this.certificate_extension = this.getFileExtension(this.certificate);	
                 }
                 
                 this.name = this.LOAD_AGENT.objects.company_name
@@ -571,12 +574,15 @@ export default {
                 this.bname = this.LOAD_AGENT.objects.bank_name
                 this.aname = this.LOAD_AGENT.objects.account_name
                 this.acnumber = this.LOAD_AGENT.objects.account_number
-                this.profileimage = this.LOAD_AGENT.objects.profile_image[0]
+                // this.profileimage = this.LOAD_AGENT.objects.profile_image[0]
                
            }else{
                 this.mail = localStorage.client
            }
         }).then(()=>{
+
+             console.log('entering here');
+
             this.T_GET_AGENT_PAYMENT_TERMS(localStorage.client).then(()=>{
 
                   console.log('transporter payment terms');

@@ -152,11 +152,11 @@
                                     <v-flex 
                                     class="" 
                                     style="background-color:#F5FAFF;" 
-                                    v-show="(bill_extension === 'jpg') || (bill_extension === 'jpg') || (bill_extension === 'png')" 
+                                    v-show="(bill_extension === 'jpg') || (bill_extension === 'jpeg') || (bill_extension === 'png')" 
                                     @click="largePreview(bill)">
                                         <v-img 
                                         :src="bill"  
-                                        class="mb-0 pb-0" 
+                                        class="mb-0 pb-0 oxoImg" 
                                         height="147" 
                                         width="200" 
                                         >
@@ -193,12 +193,12 @@
                                     class="" 
                                     style="background-color:#F5FAFF;" 
                                     v-show="(authorization_letter_extension === 'jpg') 
-                                    || (authorization_letter_extension === 'jpg') 
+                                    || (authorization_letter_extension === 'jpeg') 
                                     || (authorization_letter_extension === 'png')" 
                                     @click="largePreview(authorization_letter)">
                                         <v-img 
                                         :src="authorization_letter"  
-                                        class="mb-0 pb-0" 
+                                        class="mb-0 pb-0 oxoImg" 
                                         height="147" 
                                         width="200" 
                                         >
@@ -231,12 +231,12 @@
                                                 class="" 
                                                 style="background-color:#F5FAFF;" 
                                                 v-show="(cargo_photo_extension === 'jpg') 
-                                                || (cargo_photo_extension === 'jpg') 
+                                                || (cargo_photo_extension === 'jpeg') 
                                                 || (cargo_photo_extension === 'png')" 
                                                 @click="largePreview(cargo_photo)">
                                                     <v-img 
                                                     :src="cargo_photo"  
-                                                    class="mb-0 pb-0" 
+                                                    class="mb-0 pb-0 oxoImg" 
                                                     height="147" 
                                                     width="200" 
                                                     >

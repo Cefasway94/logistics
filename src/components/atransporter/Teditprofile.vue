@@ -295,7 +295,8 @@
 
                                 <div v-show="profile_extension === 'jpg' || profile_extension === 'jpeg' || profile_extension === 'png'">
                                     <v-card height="200" width="250" outlined @click="handleClick('profile',profile_url)">
-                                        <img  id="profile_thumb" :src="profile_url" class="preview">
+                                         <img  id="profile_thumb" :src="profile_url" class="preview">
+
                                     </v-card>
                                 </div>
                                 <div v-show="profile_extension === 'pdf'">
@@ -860,7 +861,9 @@ export default {
            editaccounts:true,
            canceledits:false,
            edit:false,
-           payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
+            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
+            transporter_payment_terms:[],
+          //payment_terms:[],
 
            // Priview thumb nails
            large_preview_url:'',
@@ -906,20 +909,25 @@ export default {
 
                 if(this.LOAD_AGENT.objects.certificate !== null){
                     
-                        this.certificate_url = this.LOAD_AGENT.objects.certificate[0]
+                        this.certificate_url = this.LOAD_AGENT.objects.certificate[0];
 
                         this.certificate_extension = this.getFileExtension(this.certificate_url);
 
-                        console.log(this.certificate_extension);
+                        this.certificate = this.LOAD_AGENT.objects.certificate;
+
+                        console.log(this.certificate_url);
+                          console.log(this.certificate);
                     
 
                 }
 
                 if(this.LOAD_AGENT.objects.insurance !== null){
                     
-                        this.insurance_url = this.LOAD_AGENT.objects.insurance[0]
+                        this.insurance_url = this.LOAD_AGENT.objects.insurance[0];
 
                         this.insurance_extension = this.getFileExtension(this.insurance_url);
+                        
+                        this.insurance  = this.LOAD_AGENT.objects.insurance;
 
                         console.log(this.certificate_extension);
                     
@@ -928,9 +936,11 @@ export default {
 
                  if(this.LOAD_AGENT.objects.profile_image !== null){
                     
-                        this.profile_url = this.LOAD_AGENT.objects.profile_image[0]
+                        this.profile_url = this.LOAD_AGENT.objects.profile_image[0];
 
                         this.profile_extension = this.getFileExtension(this.profile_url);
+
+                        this.profile_image = this.LOAD_AGENT.objects.profile_image;
 
                         console.log(this.certificate_extension);
                     
@@ -949,12 +959,29 @@ export default {
                 this.bname = this.LOAD_AGENT.objects.bank_name
                 this.aname = this.LOAD_AGENT.objects.account_name
                 this.acnumber = this.LOAD_AGENT.objects.account_number
-                this.profileimage = this.LOAD_AGENT.objects.profile_image[0]
+                // this.profileimage = this.LOAD_AGENT.objects.profile_image[0]
 
            }else{
                 this.mail = localStorage.client
            }
-        })  
+        }).then(()=>{
+
+             console.log('entering here');
+
+            this.T_GET_AGENT_PAYMENT_TERMS(localStorage.client).then(()=>{
+
+                  console.log('transporter payment terms');
+                  console.log(this.LOAD_AGENT_PAYMENT_TERMS.length);
+
+                  for (let index = 0; index < this.LOAD_AGENT_PAYMENT_TERMS.length; index++) {
+
+                      this.transporter_payment_terms.push( this.LOAD_AGENT_PAYMENT_TERMS[index].installment_desc)                      
+                  }
+                  console.log(this.payment_terms);
+                  this.terms_of_payment = this.transporter_payment_terms;
+                  
+              })
+        }) 
 
     },
     components:{PDFDocument},
@@ -962,7 +989,8 @@ export default {
 
        ...mapActions([
         "T_GET_AGENT",
-        "T_POST_PAYMENT_TERMS"
+        "T_POST_PAYMENT_TERMS",
+        "T_GET_AGENT_PAYMENT_TERMS"
     ]),
 
         previewPdf(url){
@@ -1031,6 +1059,9 @@ export default {
         },
 
             validate(){
+
+              //this.insurance  = this.LOAD_AGENT.objects.insurance;
+               // this.certificate = this.LOAD_AGENT.objects.certificate;
 
                 if(this.rules.required(this.name) == 'Required'){
         
@@ -1119,14 +1150,31 @@ export default {
                         this.field_required = true
                         return false
 
-                }else if(this.certificate_url == '' && this.certificate == ''){
+                // }else if(this.certificate_url == '' && this.certificate == ''){
+
+                //         console.log(13);
+                //         this.field = 'kindly attach certificate'
+                //         this.field_required = true
+                //         return false
+
+                // }else if(this.insurance_url == '' && this.insurance == ''){
+
+                //         console.log(13);
+                //         this.field = 'kindly attach Insurance'
+                //         this.field_required = true
+                //         return false
+
+
+                //done by Mary and Sudi please please do not DELETE or COMMENT OUT
+
+                }else if(this.certificate.length === 0){
 
                         console.log(13);
                         this.field = 'kindly attach certificate'
                         this.field_required = true
                         return false
 
-                }else if(this.insurance_url == '' && this.insurance == ''){
+                }else if(this.insurance.length === 0){
 
                         console.log(13);
                         this.field = 'kindly attach Insurance'
@@ -1292,20 +1340,37 @@ export default {
 
                     const formdata = new FormData()
 
-                   this.profile_url = "";
-                   this.certificate_url = "";
-                   this.insurance_url = "";
+                //    this.profile_url = "";
+                //    this.certificate_url = "";
+                //    this.insurance_url = "";
 
-                    if(this.profile_url === ''){
+                   console.log(this.insurance)
+
+                    // if(this.profile_url === ''){
+                    //     formdata.append('profile_image[0]',this.profile_image[0]);
+                    // }
+
+                    // if(this.certificate_url === ''){
+                    //     formdata.append('certificate[0]', this.certificate[0]);
+                    // }
+
+                    // if(this.insurance_url === ''){
+                    //     formdata.append('insurance[0]', this.insurance[0])
+                    // }
+                   
+                    if(!(this.profile_image.length >0 && this.profile_url != '')){
                         formdata.append('profile_image[0]',this.profile_image[0]);
+                        //console.log(formdata.get('profile_image[0]'));
                     }
 
-                    if(this.certificate_url === ''){
+                    if(!(this.certificate.length > 0 && this.certificate_url != '')){
                         formdata.append('certificate[0]', this.certificate[0]);
+                        //console.log(formdata.get('certificate[0]'));
                     }
 
-                    if(this.insurance_url === ''){
-                        formdata.append('insurance[0]', this.insurance[0])
+                    if(!(this.insurance.length > 0 && this.insurance_url != '')){
+                        formdata.append('insurance[0]', this.insurance[0]);
+                        //console.log(formdata.get('insurance[0]'));
                     }
                     
                     
@@ -1332,9 +1397,9 @@ export default {
        previewprofile(){
 
            setTimeout(()=>{
-                this.update_success = false,
-            this.$router.push('/transporter/previewprofile')
-            this.$router.go('/transporter/previewprofile')
+                this.update_success = false
+                this.$router.push('/transporter/previewprofile')
+                this.$router.go('/transporter/previewprofile')
             },1000)
        },
 
@@ -1347,6 +1412,10 @@ export default {
                     this.loading = true
 
                     const dataobject = this.dataobject()
+
+                    console.log(dataobject.get('profile_image[0]'));
+                     console.log(dataobject.get('insurance[0]'));
+                      console.log(dataobject.get('certificate[0]'));
 
 
            if (this.validate()){
@@ -1413,7 +1482,6 @@ export default {
            }
                     
         
-        console.log(this.company_name);
         
        }
 
@@ -1421,7 +1489,7 @@ export default {
 
    computed: {
       ...mapGetters([
-          'LOAD_AGENT','LOAD_PROFILE','LOAD_POST_PAYMENT_TERMS'
+          'LOAD_AGENT','LOAD_PROFILE','LOAD_POST_PAYMENT_TERMS','LOAD_AGENT_PAYMENT_TERMS'
           //'LOAD_DIBTENDERS'
       ])
   }
@@ -1455,10 +1523,7 @@ export default {
      
  }
  
- img.preview{
-     width: 248px;
-     height: 200px
- }
+ 
 
  .large-preview{
 
