@@ -152,7 +152,7 @@
                                     <v-flex 
                                     class="" 
                                     style="background-color:#F5FAFF;" 
-                                    v-show="(bill_extension === 'jpg') || (bill_extension === 'jpg') || (bill_extension === 'png')" 
+                                    v-show="(bill_extension === 'jpg') || (bill_extension === 'jpeg') || (bill_extension === 'png')" 
                                     @click="largePreview(bill)">
                                         <v-img 
                                         :src="bill"  
@@ -193,7 +193,7 @@
                                     class="" 
                                     style="background-color:#F5FAFF;" 
                                     v-show="(authorization_letter_extension === 'jpg') 
-                                    || (authorization_letter_extension === 'jpg') 
+                                    || (authorization_letter_extension === 'jpeg') 
                                     || (authorization_letter_extension === 'png')" 
                                     @click="largePreview(authorization_letter)">
                                         <v-img 
@@ -231,7 +231,7 @@
                                                 class="" 
                                                 style="background-color:#F5FAFF;" 
                                                 v-show="(cargo_photo_extension === 'jpg') 
-                                                || (cargo_photo_extension === 'jpg') 
+                                                || (cargo_photo_extension === 'jpeg') 
                                                 || (cargo_photo_extension === 'png')" 
                                                 @click="largePreview(cargo_photo)">
                                                     <v-img 
