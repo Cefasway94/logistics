@@ -861,7 +861,9 @@ export default {
            editaccounts:true,
            canceledits:false,
            edit:false,
-           payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
+            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
+            transporter_payment_terms:[],
+          //payment_terms:[],
 
            // Priview thumb nails
            large_preview_url:'',
@@ -962,7 +964,24 @@ export default {
            }else{
                 this.mail = localStorage.client
            }
-        })  
+        }).then(()=>{
+
+             console.log('entering here');
+
+            this.T_GET_AGENT_PAYMENT_TERMS(localStorage.client).then(()=>{
+
+                  console.log('transporter payment terms');
+                  console.log(this.LOAD_AGENT_PAYMENT_TERMS.length);
+
+                  for (let index = 0; index < this.LOAD_AGENT_PAYMENT_TERMS.length; index++) {
+
+                      this.transporter_payment_terms.push( this.LOAD_AGENT_PAYMENT_TERMS[index].installment_desc)                      
+                  }
+                  console.log(this.payment_terms);
+                  this.terms_of_payment = this.transporter_payment_terms;
+                  
+              })
+        }) 
 
     },
     components:{PDFDocument},
@@ -970,7 +989,8 @@ export default {
 
        ...mapActions([
         "T_GET_AGENT",
-        "T_POST_PAYMENT_TERMS"
+        "T_POST_PAYMENT_TERMS",
+        "T_GET_AGENT_PAYMENT_TERMS"
     ]),
 
         previewPdf(url){
@@ -1378,8 +1398,8 @@ export default {
 
            setTimeout(()=>{
                 this.update_success = false
-            //this.$router.push('/transporter/previewprofile')
-            //this.$router.go('/transporter/previewprofile')
+                this.$router.push('/transporter/previewprofile')
+                this.$router.go('/transporter/previewprofile')
             },1000)
        },
 
@@ -1469,7 +1489,7 @@ export default {
 
    computed: {
       ...mapGetters([
-          'LOAD_AGENT','LOAD_PROFILE','LOAD_POST_PAYMENT_TERMS'
+          'LOAD_AGENT','LOAD_PROFILE','LOAD_POST_PAYMENT_TERMS','LOAD_AGENT_PAYMENT_TERMS'
           //'LOAD_DIBTENDERS'
       ])
   }
