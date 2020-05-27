@@ -1,6 +1,6 @@
 <template>
     <v-container class="pa-3 mt-10 mx-auto">
-
+        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
             <v-overlay :value="overlay">
 
                 <div class="large-preview">
@@ -467,6 +467,17 @@
                                         <img  id="files_thumb" class="preview">
                                     </v-card>
                                 </div>
+                                <div v-show="photo_extension === 'pdf'">
+
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="previewPdf(photo_url)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                </v-btn>
+
+                                            </div>
                             </v-card>
                        
                         </v-col> 
@@ -495,6 +506,17 @@
                                         <img  id="bill_thumb" class="preview">
                                     </v-card>
                                 </div>
+                                <div v-show="bill_of_lading_extension === 'pdf'">
+
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="previewPdf(bill_of_lading_url)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                </v-btn>
+
+                                            </div>
 
                             </v-card>
                        
@@ -523,7 +545,17 @@
                                         <img  id="letter_thumb" class="preview">
                                     </v-card>
                                 </div>
+                                <div v-show="letter_extension === 'pdf'">
 
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="previewPdf(letter_url)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                </v-btn>
+
+                                            </div>
                             </v-card>
                        
                         </v-col>   
@@ -586,11 +618,19 @@ export default {
         alert:'',
         display_alert: false,
 
-        photos_extension:'',
+        photo_extension:'',
+        photo_url:'',
         bill_of_lading_extension:'',
+        bill_of_lading_url:'',
         letter_extension:'',
-        
-        overlay: false,
+        letter_url:'',
+
+        overlay:false,
+        large_preview_url:'',
+
+         url:'',
+        pdf:false,
+        pdfOverlay:false,
 
         choose_tender:true,
 
