@@ -1,6 +1,8 @@
 <template>
     <v-container class=" mt-12 px-5">
 
+            <Alert v-if="alert" v-bind="{message,type}"/> 
+
             <v-card flat width="1300" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                     <v-flex>
@@ -211,7 +213,7 @@
 
 <script>
 import axios from 'axios'
-import {mapActions} from 'vuex'
+import Alert from '@/components/Alert.vue'
 
   export default {
     data () {
@@ -223,16 +225,26 @@ import {mapActions} from 'vuex'
         bid:[],
         payment:[],
 
-        tender_type:''
+        tender_type:'',
+
+        alert: false,
+        message:'',
+        type:'',
       
       }
     },
 
+    components: {Alert},
+
     methods:{
 
         //allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
+        setAlert(message,type){
 
-        ...mapActions(['setAlert']),
+            this.alert = true;
+            this.message = message;
+            this.type = type;
+        },
 
         awardTender(){
 
@@ -251,19 +263,31 @@ import {mapActions} from 'vuex'
                                //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
+                               if(response.data.genralErrorCode === 8000)
+                                {
+                                    this.$store.dispatch('setSnackbar',{
+                                        text: response.data.message,
+                                        color: 'success'
+                                    });  
 
-                               this.setAlert(response.data.message);
+                                    this.$router.push('/client');
 
-                               this.$router.push('/client');
+
+                                } else if(response.data.genralErrorCode === 8004){
+
+                                    this.alert = false;
+
+                                    this.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                                }
      
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
-                                this.setAlert("There is error during awarding a tender, Try again later");
+                                this.setAlert("There is an internal error","error");
 
-                                this.$router.push('/client');
+                                document.getElementById('app').scrollIntoView();
                             });
 
             } else if(this.$route.params.tender_type == "Clearing"){
@@ -273,22 +297,31 @@ import {mapActions} from 'vuex'
                 axios.put(url).then((response) => 
                             {
 
-                               //commit('setOnProgressTenders',response.data.objects)
-                               //eslint-disable-next-line no-console
-                               //console.log(response.data.objects);
+                               if(response.data.genralErrorCode === 8000)
+                                {
+                                    this.$store.dispatch('setSnackbar',{
+                                        text: response.data.message,
+                                        color: 'success'
+                                    });  
 
-                               this.setAlert(response.data.message);
+                                    this.$router.push('/client');
 
-                               this.$router.push('/client');
+
+                                } else if(response.data.genralErrorCode === 8004){
+
+                                    this.alert = false;
+
+                                    this.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                                }
      
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
-                                this.setAlert("There is error during awarding a tender, Try again later");
+                                this.setAlert("There is an internal error","error");
 
-                                this.$router.push('/client');
+                                document.getElementById('app').scrollIntoView();
                             });
 
             }
@@ -312,18 +345,33 @@ import {mapActions} from 'vuex'
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
 
-                               this.setAlert(response.data.message);
+                               if(response.data.genralErrorCode === 8000)
+                                {
+                                    this.$store.dispatch('setSnackbar',{
+                                        text: response.data.message,
+                                        color: 'success'
+                                    });  
 
-                               this.$router.push('/client');
+                                    this.$router.push('/client');
+
+
+                                } else if(response.data.genralErrorCode === 8004){
+
+                                    this.alert = false;
+
+                                    this.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                                }
      
 
                             }).catch(()=>{
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
-                                this.setAlert("There is error during droping award for a tender , Try again later");
+                                this.setAlert("There is an internal error","error");
 
-                                this.$router.push('/client');
+                                document.getElementById('app').scrollIntoView();
                             });
 
             } else if(this.$route.params.tender_type == "Clearing"){
@@ -333,22 +381,31 @@ import {mapActions} from 'vuex'
                 axios.put(url).then((response) => 
                             {
 
-                               //commit('setOnProgressTenders',response.data.objects)
-                               //eslint-disable-next-line no-console
-                               //console.log(response.data.objects);
+                               if(response.data.genralErrorCode === 8000)
+                                {
+                                    this.$store.dispatch('setSnackbar',{
+                                        text: response.data.message,
+                                        color: 'success'
+                                    });  
 
-                               this.setAlert(response.data.message);
+                                    this.$router.push('/client');
 
-                               this.$router.push('/client');
+
+                                } else if(response.data.genralErrorCode === 8004){
+
+                                    this.alert = false;
+
+                                    this.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                                }
      
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
-                                this.setAlert("There is error during droping award for a tender , Try again later");
+                                 this.setAlert("There is an internal error","error");
 
-                                this.$router.push('/client');
+                                document.getElementById('app').scrollIntoView();
                             });
             }
 
@@ -390,8 +447,11 @@ import {mapActions} from 'vuex'
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                               
+
+                                vm.setAlert("There is an internal error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
 
         } else if(vm.$route.params.tender_type == 'Clearing'){
@@ -419,8 +479,9 @@ import {mapActions} from 'vuex'
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                vm.setAlert("There is an internal error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
             }
          next();

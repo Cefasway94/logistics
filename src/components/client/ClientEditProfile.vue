@@ -2,7 +2,7 @@
 
         <v-container class=" mt-10 px-5">
 
-            <AlertError v-if="display_alert" v-bind:message="alert"/>
+           <Alert v-if="alert" v-bind="{message,type}"/>
 
              <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
@@ -786,8 +786,7 @@
 
 <script>
 import axios from 'axios'
-import {mapActions} from 'vuex'
-import AlertError from '@/components/AlertError.vue'
+import Alert from '@/components/Alert.vue'
 import PDFDocument from '@/components/PDFDocument'
 export default {
 
@@ -801,6 +800,10 @@ export default {
         bank_details: false,
 
         documents: false,
+
+        alert: false,
+        message:'',
+        type:'',
 
         percentage: 0,
 
@@ -866,15 +869,13 @@ export default {
 
         display_alert : false,
 
-        alert:'',
-
         url:'',
         pdf:false,
         pdfOverlay:false
 
      }),
 
-    components:{AlertError,PDFDocument},
+    components:{Alert,PDFDocument},
 
     methods: {
 
@@ -884,6 +885,13 @@ export default {
             this.pdfOverlay = true;
             this.pdf = true;
             
+        },
+
+        setAlert(message,type){
+
+            this.alert = true;
+            this.message = message;
+            this.type = type;
         },
 
         closePdfViewer(){
@@ -986,8 +994,6 @@ export default {
                 
             }
         },
-
-        ...mapActions(['setAlert']),
 
         bankStatementUpdated(){
             
@@ -1498,9 +1504,9 @@ export default {
 
                         if(response.data.genralErrorCode == 8004){
 
-                            this.alert = response.data.message;
+                            this.alert = false;
 
-                            this.display_alert = true;
+                            this.setAlert(response.data.message,"error");
 
                             document.getElementById('app').scrollIntoView();
                         }
@@ -1515,13 +1521,6 @@ export default {
                         
                             this.$router.push('/client/profile');
 
-                        }else {
-
-                            this.alert = response.data.message;
-
-                            this.display_alert = true;
-
-                            document.getElementById('app').scrollIntoView();
                         }
 
                         //eslint-disable-next-line no-console
@@ -1529,11 +1528,9 @@ export default {
 
                     }).catch(()=>{
 
-                        this.alert = "Error occured. Please try again";
+                        this.setAlert("There is an internal error","error");
 
-                        this.display_alert = true;
-
-                        document.getElementById('app').scrollIntoView();
+                        document.getElementById('app').scrollIntoView(); 
                     }); 
 
             
@@ -1638,12 +1635,9 @@ export default {
                 
                             }).catch(()=>{
 
-                                //eslint-disable-next-line no-console
-                                console.log("request failed");
+                               vm.setAlert("There is an internal error","error");
 
-
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                document.getElementById('app').scrollIntoView();   
                             });
 
             next();

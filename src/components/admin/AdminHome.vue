@@ -361,7 +361,6 @@
 
 <script>
 import axios from 'axios'
-// import AlertError from '@/components/AlertError.vue'
 import Alert from '@/components/Alert.vue'
 import Message from '@/components/Message.vue'
 import{mapActions,mapGetters} from 'vuex'
@@ -462,22 +461,22 @@ export default {
 
         } else if(response.data.genralErrorCode === 8004){
 
-            this.alert = response.data.message;
+            this.alert = false;
 
-            this.display_alert = true;
+            this.setAlert(response.data.message,"error");
 
             document.getElementById('app').scrollIntoView();
+
+            
         }
 
       }).catch(()=>
       
       {
 
-          this.alert = "Error occured. Please try again";
+         this.setAlert("There is internal error","error");
 
-          this.display_alert = true;
-
-          document.getElementById('app').scrollIntoView();                       
+          document.getElementById('app').scrollIntoView();                      
       });
   },
 
@@ -498,12 +497,9 @@ export default {
 
         } else if(response.data.genralErrorCode === 8004){
 
-            this.alert = response.data.message;
+            this.alert = false;
 
-            this.display_alert = true;
-
-            this.alert = true;
-
+            this.setAlert(response.data.message,"error");
 
             document.getElementById('app').scrollIntoView();
         }
@@ -512,11 +508,9 @@ export default {
       
       {
 
-          this.alert = "Error occured. Please try again";
+         this.setAlert("There is internal error","error");
 
-          this.display_alert = true;
-
-          document.getElementById('app').scrollIntoView();                       
+          document.getElementById('app').scrollIntoView();                        
       });
   },
 
@@ -536,22 +530,19 @@ export default {
 
         } else if(response.data.genralErrorCode === 8004){
 
-            this.alert = response.data.message;
+          this.alert = false;
 
-            this.display_alert = true;
+          this.setAlert(response.data.message,"success");
 
-            document.getElementById('app').scrollIntoView();
+          document.getElementById('app').scrollIntoView();
         }
 
       }).catch(()=>
-      
       {
 
-          this.alert = "Error occured. Please try again";
+          this.setAlert("There is internal error","error");
 
-          this.display_alert = true;
-
-          document.getElementById('app').scrollIntoView();                       
+          document.getElementById('app').scrollIntoView();                     
       });
   },
 
@@ -590,11 +581,9 @@ export default {
            
           } else if(response.data.genralErrorCode === 8004){
 
-            this.display_alert = false;
+            this.alert = false;
 
-            this.alert = response.data.message;
-
-            this.display_alert = true;
+            this.setAlert(response.data.message,"error");
 
             document.getElementById('app').scrollIntoView();
           }
@@ -603,11 +592,9 @@ export default {
       
           {
 
-                    /*vm.alert = "Error occured. Please try again";
+              this.setAlert("There is internal error","error");
 
-                    vm.display_alert = true;
-
-                    document.getElementById('app').scrollIntoView();*/                     
+              document.getElementById('app').scrollIntoView();                   
           });
         },
     
@@ -683,8 +670,6 @@ export default {
                 //this.$router.go('/admin');
 
               } else if(response.data.genralErrorCode === 8004){
-
-                // this.dialog = false;
 
                 this.alert = false;
   

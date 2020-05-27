@@ -2,6 +2,8 @@
 
     <v-container class="mt-12 px-5" color="#F5FAFF" fluid>
 
+         <Alert v-if="alert" v-bind="{message,type}"/> 
+
         <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
          <v-overlay :value="overlay">
@@ -287,12 +289,12 @@
 
 <script>
 import axios from 'axios'
-import AlertError from '@/components/AlertError.vue'
+import Alert from '@/components/Alert.vue'
 import PDFDocument from '@/components/PDFDocument'
 export default {
     name: 'AgentVerifying',
 
-    components:{AlertError, PDFDocument},
+    components:{Alert, PDFDocument},
 
     data () {
         return {
@@ -327,8 +329,9 @@ export default {
 
            payment_class:'',
 
-           display_alert: false,
-           alert:'',
+            alert: false,
+            message:'',
+            type:'',
 
            transporter:false,
            clearer: false,
@@ -340,7 +343,7 @@ export default {
            scheme_value:'',
            class_value:'',
 
-           url:'',
+            url:'',
             pdf:false,
             pdfOverlay:false,
 
@@ -357,6 +360,13 @@ export default {
     },
 
     methods:{
+
+        setAlert(message,type){
+
+            this.alert = true;
+            this.message = message;
+            this.type = type;
+        },
 
         getFileName(url){
 
@@ -441,17 +451,18 @@ export default {
 
                     if(response.data.genralErrorCode === 8000)
                     {
-                       this.display_alert = false;
+                        this.$store.dispatch('setSnackbar',{
+                            text: "Agent has been verified",
+                            color: 'success'
+                        });
 
-                       this.$router.push('/admin');
+                        this.$router.push('/admin');
 
                     } else if(response.data.genralErrorCode === 8004){
 
-                        this.display_alert = false;
+                        this.alert = false;
 
-                        this.alert = response.data.message;
-
-                        this.display_alert = true;
+                        this.setAlert(response.data.message,"error");
 
                         document.getElementById('app').scrollIntoView();
                     }
@@ -460,11 +471,9 @@ export default {
       
                 {
 
-                    /*vm.alert = "Error occured. Please try again";
+                    this.setAlert("There is an internal error","error");
 
-                    vm.display_alert = true;
-
-                    document.getElementById('app').scrollIntoView();*/                      
+                    document.getElementById('app').scrollIntoView();                     
                 });
 
             } else if(this.$route.params.type === 'Transporting'){
@@ -488,17 +497,18 @@ export default {
                     
                     if(response.data.genralErrorCode === 8000)
                     {
-                        this.display_alert = false;
+                        this.$store.dispatch('setSnackbar',{
+                            text: "Transporter has been  verified",
+                            color: 'success'
+                        });
 
                         this.$router.push('/admin');
 
                     } else if(response.data.genralErrorCode === 8004){
 
-                        this.display_alert = false;
+                        this.alert = false;
 
-                        this.alert = response.data.message;
-
-                        this.display_alert = true;
+                        this.setAlert(response.data.message,"error");
 
                         document.getElementById('app').scrollIntoView();
                     }
@@ -506,12 +516,9 @@ export default {
                 }).catch(()=>
       
                 {
+                    this.setAlert("There is an internal error","error");
 
-                    /*vm.alert = "Error occured. Please try again";
-
-                    vm.display_alert = true;
-
-                    document.getElementById('app').scrollIntoView();*/                      
+                    document.getElementById('app').scrollIntoView();                       
                 });
 
 
@@ -680,11 +687,9 @@ export default {
 
                     } else if(response.data.genralErrorCode === 8004){
 
-                        vm.display_alert = false;
+                        vm.alert = false;
 
-                        vm.alert = response.data.message;
-
-                        vm.display_alert = true;
+                        vm.setAlert(response.data.message,"error");
 
                         document.getElementById('app').scrollIntoView();
                     }
@@ -693,12 +698,9 @@ export default {
       
                     {
 
-                        
-                       /*vm.alert = "Error occured. Please try again";
+                        vm.setAlert("There is an internal error","error");
 
-                        vm.display_alert = true;
-
-                        document.getElementById('app').scrollIntoView();  */                     
+                        document.getElementById('app').scrollIntoView();                    
                     });
             }
             next();

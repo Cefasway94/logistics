@@ -1,6 +1,8 @@
 <template>
     <v-container class=" mt-12 px-5">
 
+            <Alert v-if="alert" v-bind="{message,type}"/>
+
             <v-card flat width="1300" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                     <v-flex>
@@ -140,6 +142,7 @@
 
 <script>
 import {mapGetters,mapActions} from 'vuex'
+import Alert from '@/components/Alert.vue'
 import axios from 'axios'
 export default {
 
@@ -148,7 +151,11 @@ export default {
             placeholder: 3,
             value:80,
             bids:[],
-            tender:[]
+            tender:[],
+
+            alert: false,
+            message:'',
+            type:'',
         }
     },
 
@@ -156,8 +163,17 @@ export default {
         ...mapGetters(['fetchTenderById','getTender'])
     },
 
+    components: {Alert},
+
     methods:{
         ...mapActions(['setTender']),
+
+        setAlert(message,type){
+
+            this.alert = true;
+            this.message = message;
+            this.type = type;
+        },
     },
 
     beforeRouteEnter (to, from, next) { 
@@ -179,8 +195,9 @@ export default {
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                this.setAlert("There is an internal error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
 
             let url = `http://207.180.215.239:9000/api/v1/bids/${vm.$route.params.id}`;
@@ -195,8 +212,9 @@ export default {
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                this.setAlert("There is an internal error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
 
         } else if(vm.$route.params.tender_type == "Clearing" ){
@@ -212,8 +230,9 @@ export default {
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                this.setAlert("There is an internal error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
 
             //fetching tender bids
@@ -229,8 +248,9 @@ export default {
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                this.setAlert("There is an internal error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
         }
          next();

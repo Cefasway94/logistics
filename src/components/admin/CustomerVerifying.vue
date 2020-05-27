@@ -1,6 +1,9 @@
 <template>
 
     <v-container class="mt-12 px-5" color="#F5FAFF" fluid>
+
+        <Alert v-if="alert" v-bind="{message,type}"/> 
+
         <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
          <v-overlay :value="overlay">
@@ -428,6 +431,7 @@
 import axios from 'axios'
 // import Message from '@/components/Message.vue'
 import PDFDocument from '@/components/PDFDocument'
+import Alert from '@/components/Alert.vue'
 import {mapActions} from 'vuex'
 
 export default {
@@ -444,7 +448,9 @@ export default {
 
             customer_type:'',
 
-            alert:'',
+            alert: false,
+            message:'',
+            type:'',
 
             has_photo: false,
 
@@ -483,11 +489,18 @@ export default {
       
     },
 
-    components:{PDFDocument},
+    components:{PDFDocument,Alert},
 
     methods:{
 
         ...mapActions(['setAdminAlert']),
+
+        setAlert(message,type){
+
+            this.alert = true;
+            this.message = message;
+            this.type = type;
+        },
 
         getFileName(url){
 
@@ -551,15 +564,13 @@ export default {
 
                        this.$router.push('/admin');
 
-                       //this.$router.go('/admin');
+                       this.$router.go('/admin');
 
                     } else if(response.data.genralErrorCode === 8004){
 
-                        this.display_alert = false;
+                        this.alert = false;
 
-                        this.alert = response.data.message;
-
-                        this.display_alert = true;
+                        this.setAlert(response.data.message,"error");
 
                         document.getElementById('app').scrollIntoView();
                     }
@@ -568,11 +579,9 @@ export default {
       
                 {
 
-                    /*vm.alert = "Error occured. Please try again";
+                    this.setAlert("There is an internal error","error");
 
-                    vm.display_alert = true;
-
-                    document.getElementById('app').scrollIntoView();*/                      
+                    document.getElementById('app').scrollIntoView();                     
                 });
         },
 
@@ -712,13 +721,13 @@ export default {
 
                             } else if(response.data.genralErrorCode === 8004){
 
-                                vm.display_alert = false;
+                                vm.alert = false;
 
-                                vm.alert = response.data.message;
-
-                                vm.display_alert = true;
+                                vm.setAlert(response.data.message,"error");
 
                                 document.getElementById('app').scrollIntoView();
+
+                                
                             }
 
                         }).catch(()=>{
@@ -731,11 +740,9 @@ export default {
                        
                         } else if(response.data.genralErrorCode === 8004){
 
-                            vm.display_alert = false;
+                            vm.alert = false;
 
-                            vm.alert = response.data.message;
-
-                            vm.display_alert = true;
+                            vm.setAlert(response.data.message,"error");
 
                             document.getElementById('app').scrollIntoView();
                         }
@@ -744,11 +751,9 @@ export default {
       
                 {
 
-                    /*vm.alert = "Error occured. Please try again";
+                    vm.setAlert("There is an internal error","error");
 
-                    vm.display_alert = true;
-
-                    document.getElementById('app').scrollIntoView();*/                      
+                    document.getElementById('app').scrollIntoView();                      
                 });
 
             

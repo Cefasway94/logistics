@@ -3,9 +3,7 @@
 
       <v-card class="mx-auto mt-12" color="#F5FAFF">
 
-        <AlertError v-if="display_alert_error" v-bind:message="alert_error"/>
-
-        <Alert v-if="display_alert" v-bind:message="alert"/>
+        <Alert v-if="alert" v-bind="{message,type}"/> 
 
         <v-container class="mx-auto mt-5">
           <h3> <center>Payments</center> </h3>
@@ -103,7 +101,6 @@
 
 <script>
 import axios from 'axios'
-import AlertError from '@/components/AlertError.vue'
 import Alert from '@/components/Alert.vue'
 
 export default {
@@ -116,11 +113,9 @@ export default {
 
       dialog: false,
 
-      alert:'',
-      display_alert: false,
-
-      alert_error:'',
-      display_alert_error: false,
+      alert: false,
+      message:'',
+      type:'',
 
       email:'',
 
@@ -129,9 +124,16 @@ export default {
     }
   },
 
-  components: {AlertError, Alert},
+  components: {Alert},
 
   methods: {
+
+    setAlert(message,type){
+
+      this.alert = true;
+      this.message = message;
+      this.type = type;
+    },
     
     verifyPayment(){
 
@@ -148,33 +150,30 @@ export default {
 
           if(response.data.genralErrorCode === 8000)
           {
-            this.alert = response.data.message;
+              this.$store.dispatch('setSnackbar',{
+                  text: response.data.message,
+                  color: 'success'
+              });  
 
-            this.display_alert = true;
+              this.$router.push('/admin/verify-payment');
 
-            document.getElementById('app').scrollIntoView();  
-
-            this.$router.push('/admin/verify-payment');
-
-            this.$router.go('/admin/verify-payment');
+              this.$router.go('/admin/verify-payment');
 
 
           } else if(response.data.genralErrorCode === 8004){
 
-            this.alert_error = response.data.message;
+              this.alert = false;
 
-            this.display_alert_error = true;
+              this.setAlert(response.data.message,"error");
 
-            document.getElementById('app').scrollIntoView();
+              document.getElementById('app').scrollIntoView();
           }
 
         }).catch(()=>
       
         {
 
-            this.alert_error = "Error occured. Please try again";
-
-            this.display_alert_error = true;
+            this.setAlert("There is an internal error","error");
 
             document.getElementById('app').scrollIntoView();                       
         });
@@ -202,9 +201,9 @@ export default {
 
           } else if(response.data.genralErrorCode === 8004){
 
-            vm.alert_error = response.data.message;
+            vm.alert = false;
 
-            vm.display_alert_error = true;
+            vm.setAlert(response.data.message,"error");
 
             document.getElementById('app').scrollIntoView();
           }
@@ -213,9 +212,7 @@ export default {
       
         {
 
-            vm.alert_error = "Error occured. Please try again";
-
-            vm.display_alert_error = true;
+            vm.setAlert("There is an internal error","error");
 
             document.getElementById('app').scrollIntoView();                       
         });
