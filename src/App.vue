@@ -82,4 +82,7 @@ export default {
      width: 248px;
      height: 200px
  }
+ .v-image__image--cover{
+   background-size: contain !important ;
+ }
 </style>

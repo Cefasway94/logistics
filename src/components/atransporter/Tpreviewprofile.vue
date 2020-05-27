@@ -287,7 +287,7 @@
                          <v-flex 
                          class="" 
                          style="background-color:#F5FAFF;" 
-                         v-show="(certificate_extension === 'jpg') || (certificate_extension === 'jpg') || (certificate_extension === 'png')" 
+                         v-show="(certificate_extension === 'jpg') || (certificate_extension === 'jpeg') || (certificate_extension === 'png')" 
                          @click="largePreview(certificate)">
                             <v-img 
                             :src="certificate"  
@@ -323,7 +323,7 @@
                          <v-flex 
                          class="" 
                          style="background-color:#F5FAFF;" 
-                         v-show="(insurance_extension === 'jpg') || (insurance_extension === 'jpg') || (insurance_extension === 'png')" 
+                         v-show="(insurance_extension === 'jpg') || (insurance_extension === 'jpeg') || (insurance_extension === 'png')" 
                          @click="largePreview(insurance)">
                             <v-img 
                             :src="insurance"  
