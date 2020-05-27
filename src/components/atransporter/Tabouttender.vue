@@ -156,7 +156,7 @@
                                     @click="largePreview(bill)">
                                         <v-img 
                                         :src="bill"  
-                                        class="mb-0 pb-0" 
+                                        class="mb-0 pb-0 oxoImg" 
                                         height="147" 
                                         width="200" 
                                         >
@@ -198,7 +198,7 @@
                                     @click="largePreview(authorization_letter)">
                                         <v-img 
                                         :src="authorization_letter"  
-                                        class="mb-0 pb-0" 
+                                        class="mb-0 pb-0 oxoImg" 
                                         height="147" 
                                         width="200" 
                                         >
@@ -236,7 +236,7 @@
                                                 @click="largePreview(cargo_photo)">
                                                     <v-img 
                                                     :src="cargo_photo"  
-                                                    class="mb-0 pb-0" 
+                                                    class="mb-0 pb-0 oxoImg" 
                                                     height="147" 
                                                     width="200" 
                                                     >

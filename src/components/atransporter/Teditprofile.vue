@@ -295,7 +295,8 @@
 
                                 <div v-show="profile_extension === 'jpg' || profile_extension === 'jpeg' || profile_extension === 'png'">
                                     <v-card height="200" width="250" outlined @click="handleClick('profile',profile_url)">
-                                        <img  id="profile_thumb" :src="profile_url" class="preview">
+                                         <img  id="profile_thumb" :src="profile_url" class="preview">
+
                                     </v-card>
                                 </div>
                                 <div v-show="profile_extension === 'pdf'">
@@ -1455,10 +1456,7 @@ export default {
      
  }
  
- img.preview{
-     width: 248px;
-     height: 200px
- }
+ 
 
  .large-preview{
 

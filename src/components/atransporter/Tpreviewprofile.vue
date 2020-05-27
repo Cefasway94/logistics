@@ -291,7 +291,7 @@
                          @click="largePreview(certificate)">
                             <v-img 
                             :src="certificate"  
-                            class="mb-0 pb-0" 
+                            class="mb-0 pb-0 oxoImg" 
                             height="147" 
                             width="200" 
                             >
@@ -327,7 +327,7 @@
                          @click="largePreview(insurance)">
                             <v-img 
                             :src="insurance"  
-                            class="mb-0 pb-0" 
+                            class="mb-0 pb-0 oxoImg" 
                             height="147" 
                             width="200" 
                             >

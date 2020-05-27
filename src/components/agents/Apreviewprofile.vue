@@ -280,7 +280,13 @@
                             v-show="(certificate_extension === 'jpg') || (certificate_extension === 'jpeg')|| (certificate_extension === 'png')" 
                             @click="largePreview(certificate_url)"
                         >
-                        <img :src="certificate_url" width=200 height=150/>
+                        <!-- <img :src="certificate_url" width=200 height=150/> -->
+                                    <v-img 
+                                        :src="certificate_url"  
+                                        class="mb-0 pb-0 oxoImg" 
+                                        height="147" 
+                                        width="200" >
+                                    </v-img>
                     </div>
                     
                     <div v-show="certificate_extension === 'pdf'">
@@ -309,7 +315,13 @@
                             v-show="(insurance_extension === 'jpg') || (insurance_extension === 'jpeg')|| (insurance_extension === 'png')" 
                             @click="largePreview(insurance_url)"
                         >
-                            <img :src="insurance_url" width=200 height=150/>
+                            <!-- <img :src="insurance_url" width=200 height=150/> -->
+                                    <v-img 
+                                        :src="insurance_url"  
+                                        class="mb-0 pb-0 oxoImg" 
+                                        height="147" 
+                                        width="200" >
+                                    </v-img>
                         </div>
                     
                     <div v-show="insurance_extension === 'pdf'">

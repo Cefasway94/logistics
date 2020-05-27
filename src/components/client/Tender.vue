@@ -94,7 +94,16 @@
                                                 v-show="(photo_extension === 'jpg') || (photo_extension === 'jpeg') || (photo_extension === 'png')" 
                                                 @click="largePreview(photo_url)"
                                             >
-                                                <img :src="photo_url" width=200 height=150/>
+                                                
+
+                                                <v-img 
+                                                    :src="photo_url"  
+                                                    class="mb-0 pb-0 oxoImg" 
+                                                    height="147" 
+                                                    width="200" 
+                                                    >
+                                                    
+                                                    </v-img>
                                             </div>
                                
                                             <div v-show="photo_extension === 'pdf'">
@@ -119,7 +128,15 @@
                                                 v-show="(bill_of_lading_extension === 'jpg') || (bill_of_lading_extension === 'jpeg') || (bill_of_lading_extension === 'png')" 
                                                 @click="largePreview(bill_of_lading_url)"
                                             >
-                                                <img :src="bill_of_lading_url" width=200 height=150/>
+                                                <!-- <img :src="bill_of_lading_url" width=200 height=150/> -->
+                                                <v-img 
+                                                    :src="bill_of_lading_url"  
+                                                    class="mb-0 pb-0 oxoImg" 
+                                                    height="147" 
+                                                    width="200" 
+                                                    >
+                                                    
+                                                    </v-img>
                                             </div>
                                
                                             <div v-show="bill_of_lading_extension === 'pdf'">
@@ -144,7 +161,16 @@
                                                     v-show="(letter_extension === 'jpg') || (letter_extension === 'jpeg') || (letter_extension === 'png')" 
                                                     @click="largePreview(letter_url)"
                                                 >
-                                                    <img :src="letter_url" width=200 height=150/>
+                                                    <!-- <img :src="letter_url" width=200 height=150/> -->
+                                                    <v-img 
+                                                    :src="letter_url"  
+                                                    class="mb-0 pb-0 oxoImg" 
+                                                    height="147"
+                                                    width="200" 
+                                                    >
+                                                    
+                                                    </v-img>
+                                                    
                                                 </div>
                                
                                                 <div v-show="letter_extension === 'pdf'">

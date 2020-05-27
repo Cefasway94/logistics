@@ -73,4 +73,13 @@ export default {
    max-width:500px;
    max-height:500px;
  }
+
+ .oxoImg:hover{
+   cursor: pointer;
+ }
+
+ img.preview{
+     width: 248px;
+     height: 200px
+ }
 </style>
