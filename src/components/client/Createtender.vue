@@ -91,7 +91,7 @@
                                             class="white--text pb-2"
                                         >
                                             <v-img
-                                                :src="require('../../assets/truck.png')"
+                                                :src="require('../../assets/box.png')"
                                                 class="mt-2"
                                                 contain
                                                 width=""
@@ -100,7 +100,7 @@
                                             </v-img>
                                        </v-btn>
                                     </v-card>
-                                    <p class="mt-3 ml-3 body-1 font-weight-bold primary--text">To Transport goods </p>
+                                    <p class="mt-3 ml-3 body-1 font-weight-bold primary--text">To Clear goods </p>
                                 </v-col>
                             </v-row>
                         </v-container>
