@@ -553,6 +553,7 @@ export default {
                 this.mail = localStorage.client
            }
         }).then(()=>{
+            console.log("its me agent")
             this.GET_AGENT_PAYMENT_TERMS(localStorage.client).then(()=>{
 
                   console.log('transporter payment terms');
