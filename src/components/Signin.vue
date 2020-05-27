@@ -16,7 +16,16 @@
             <v-form class="px-7">
 
 <!--         alerts ------------  --> 
-      
+                <!-- added by Mary and sudi -- start -->
+                <v-alert
+                :value="msgVerify"
+                color="#DC493A"
+                icon="error_outline"
+                >
+                Your Account have been Verified. Kindly login to proceed
+                </v-alert>
+
+                <!-- added by Mary and sudi -- end -->
                 <v-alert
                 :value="Connectionerror"
                 color="#DC493A"
@@ -271,6 +280,7 @@ export default {
           abouterror:'',
           show:false,
           email:'',
+          msgVerify:false, //added by Mary and Sudi
           secret:'',
           logerror:'',
           submitStatus: null,
@@ -292,11 +302,25 @@ validations:{
 
 
 created(){
-  
+  this.checkVerify();
 
 },
 
 methods:{
+// added by Mary and sudi
+
+  checkVerify(){
+
+    var msg =  location.search.split('v=')[1];
+    console.log(msg);
+    if (msg == null){
+      this.msgVerify = false
+    } else {
+      this.msgVerify = true
+    }
+
+  },
+
 // =====================================================================>>>
     Login() {
               

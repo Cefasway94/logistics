@@ -55,3 +55,22 @@ export default {
     }
 }
 </script>
+<style>
+.large-preview{
+
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
+ #large_thumbnail{
+   width:auto;
+   height:auto;
+   max-width:500px;
+   max-height:500px;
+ }
+</style>

@@ -8,7 +8,7 @@
                     
                     <v-row justify= "center">
                         <v-col cols=12>
-                            <img  id="large_thumbnail" :src="large_preview_url" style="width:auto;height:auto;max-width:500px;max-height:500px;" >
+                            <img  id="large_thumbnail" :src="large_preview_url" >
                              <v-btn
                                 small
                                 color="primary white--text"
