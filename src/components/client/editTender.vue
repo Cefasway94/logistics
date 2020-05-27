@@ -1,6 +1,8 @@
 <template>
     <v-container class="pa-3 mt-10 mx-auto">
 
+        <Alert v-if="alert" v-bind="{message,type}"/>
+
         <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
         <v-overlay :value="overlay">
@@ -470,6 +472,7 @@
 
 <script>
 import {mapGetters,mapActions} from 'vuex'
+import Alert from '@/components/Alert.vue'
 import axios from 'axios'
 import PDFDocument from '@/components/PDFDocument'
 
@@ -502,19 +505,30 @@ export default {
 
         url:'',
         pdf:false,
-        pdfOverlay:false
+        pdfOverlay:false,
+
+        alert: false,
+        message:'',
+        type:'',
        
     }),
 
-     components:{PDFDocument},
+     components:{PDFDocument,Alert},
 
     computed:{
-        ...mapGetters(['getTender','getAlert']),
+        ...mapGetters(['getTender']),
  
     },
 
     methods:{
-        ...mapActions(['updateTender','fetchAllTenders','setAlert']),
+        ...mapActions(['updateTender','fetchAllTenders']),
+
+        setAlert(message,type){
+
+            this.alert = true;
+            this.message = message;
+            this.type = type;
+        },
 
         setCustomerDetails(){
             //this.tender = this.getTender;
@@ -815,6 +829,8 @@ export default {
                         {
                             //this.setAlert(response.data.message);
 
+                            this.alert = false;
+
                             this.$store.dispatch('setSnackbar',{
                                 text: response.data.message,
                                 color: 'success'
@@ -829,6 +845,12 @@ export default {
                             console.log("operation failed");
 
                             this.loading = false;
+
+                            this.alert = false;
+
+                            this.setAlert(response.data.message,"error");
+
+                            document.getElementById('app').scrollIntoView();
                         }
 
                       
@@ -839,6 +861,10 @@ export default {
                         console.log("Error occured");
 
                         this.loading = false;
+
+                        this.setAlert("There is internal server error","error");
+
+                        document.getElementById('app').scrollIntoView();
                     });
 
             } else if(this.$route.params.tender_type == "Clearing"){
@@ -867,6 +893,9 @@ export default {
 
                         if(response.data.genralErrorCode === 8000)
                         {
+
+                            this.alert = false;
+
                             this.$store.dispatch('setSnackbar',{
                                 text: response.data.message,
                                 color: 'success'
@@ -879,7 +908,15 @@ export default {
                             //eslint-disable-next-line no-console
                             console.log("operation failed");
 
-                             this.loading = false;
+                            this.loading = false;
+
+                            this.alert = false;
+
+                            this.setAlert(response.data.message,"error");
+
+                            document.getElementById('app').scrollIntoView();
+
+                             
                         }
 
                     }).catch(()=>{
@@ -887,7 +924,11 @@ export default {
                         //eslint-disable-next-line no-console
                         console.log("Error occured");
 
-                         this.loading = false;
+                        this.loading = false;
+
+                        this.setAlert("There is internal server error","error");
+
+                        document.getElementById('app').scrollIntoView();
                     });
             }
             
@@ -914,12 +955,27 @@ export default {
                 //eslint-disable-next-line no-console
                 //console.log(response.data.objects[i].industry_name);
 
-                vm.customer = response.data.objects;
+                if(response.data.genralErrorCode == 8000){
+
+                    vm.customer = response.data.objects;
+
+                } else if(response.data.genralErrorCode == 8004){
+
+                    vm.alert = false;
+
+                    vm.setAlert(response.data.message,"error");
+
+                    document.getElementById('app').scrollIntoView();
+                }
 
             }).catch(()=>{
 
                  // response = null;
                 //commit('setOnProgressTenders',response)
+
+                vm.setAlert("There is internal server error","error");
+
+                document.getElementById('app').scrollIntoView();
             });
 
         
@@ -947,6 +1003,8 @@ export default {
                         //vm.tender = response.data.objects;
                         if(response.data.genralErrorCode === 8000)
                         {
+                            vm.alert = false;
+
                             vm.tender = response.data.objects;
 
                             if(vm.tender.cargo_photo !== null)
@@ -971,6 +1029,14 @@ export default {
                             }
 
                         }
+                        if(response.data.genralErrorCode === 8004){
+
+                            vm.alert = false;
+
+                            vm.setAlert(response.data.message,"error");
+
+                            document.getElementById('app').scrollIntoView();
+                        }
 
                      
 
@@ -978,6 +1044,10 @@ export default {
 
                         //eslint-disable-next-line no-console
                         console.log("Error occured");
+
+                        vm.setAlert("There is internal server error","error");
+
+                        document.getElementById('app').scrollIntoView();
                     });
         } else if(vm.$route.params.tender_type == "Clearing" ){
 
@@ -1003,6 +1073,8 @@ export default {
 
                         if(response.data.genralErrorCode === 8000)
                         {
+                            vm.alert = false;
+
                             vm.tender = response.data.objects;
 
                             if(vm.tender.cargo_photo !== null)
@@ -1027,13 +1099,23 @@ export default {
                             }
 
                         }
+                        else if(response.data.genralErrorCode === 8004){
 
-                         
+                            vm.alert = false;
+
+                            vm.setAlert(response.data.message,"error");
+
+                            document.getElementById('app').scrollIntoView();
+                        }
 
                     }).catch(()=>{
 
                         //eslint-disable-next-line no-console
                         console.log("Error occured");
+
+                        vm.setAlert("There is internal server error","error");
+
+                        document.getElementById('app').scrollIntoView();
                     });
         }
 

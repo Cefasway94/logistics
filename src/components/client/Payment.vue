@@ -2,6 +2,8 @@
     <v-container class="mt-12 pa-3">
        
             <!-- <AlertError v-if="display_alert" v-bind:message="alert"/> -->
+
+            <Alert v-if="alert" v-bind="{message,type}"/>
           
             <v-overlay :value="overlay">
 
@@ -260,6 +262,7 @@
 <script>
 import axios from 'axios'
 import {mapGetters,mapActions} from 'vuex'
+import Alert from '@/components/Alert.vue'
 // import AlertError from '@/components/AlertError.vue'
 
 
@@ -271,7 +274,9 @@ export default {
             payment_options:['Bank Transfer', 'Other'],
             currencies:[],
 
-            alert:'',
+            alert: false,
+            message:'',
+            type:'',
 
             currency_object:[],
 
@@ -293,7 +298,7 @@ export default {
         }
     },
 
-    // components: {AlertError},
+    components: {Alert},
 
     computed:{
         ...mapGetters(['getCurrencies']),
@@ -309,6 +314,13 @@ export default {
             for(let i = 0; i< this.getCurrencies.length; i++)
                 this.currencies.push(this.getCurrencies[i].name)      
         },*/
+
+         setAlert(message,type){
+
+            this.alert = true;
+            this.message = message;
+            this.type = type;
+        },
 
          slipUpdated(){
             //this.depositors_slip.push(document.getElementById("slip").files[0]);
@@ -470,21 +482,31 @@ export default {
                                     this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
                                 }*/
 
-                            
-                                this.loading = false;
+                                if(response.data.genralErrorCode == 8000){
 
-                                this.display_alert = false;
+                                    this.loading = false;
 
-                                this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+                                    this.alert = false;
+
+                                    this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+
+                                } else if(response.data.genralErrorCode == 8004){
+
+                                    this.alert = false;
+
+                                    this.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                                }
+
+                                
 
                             }).catch(()=>{
 
                                
                                 this.loading = false;
 
-                                this.alert = "Error occured. Please try again";
-
-                                this.display_alert = true;
+                                this.setAlert("There is internal server error","error");
 
                                 document.getElementById('app').scrollIntoView();
 
@@ -524,11 +546,25 @@ export default {
                                     this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
                                 }*/
 
-                                this.loading = false;
+                                if(response.data.genralErrorCode === 8000){
 
-                                this.display_alert = false;
+                                    this.loading = false;
 
-                                this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+                                    this.alert = false;
+
+                                    this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+                                }
+                                else if(response.data.genralErrorCode === 8004){
+
+                                    this.loading = false;
+
+                                    this.alert = false;
+
+                                    this.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                                }
+                                
 
                             }).catch(()=>{
 
@@ -537,9 +573,7 @@ export default {
 
                                 this.loading = false;
 
-                                this.alert = "Error occured. Please try again";
-
-                                this.display_alert = true;
+                                this.setAlert("There is internal server error","error");
 
                                 document.getElementById('app').scrollIntoView();
                             });  
@@ -570,32 +604,65 @@ export default {
                                //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
-                                vm.tender = response.data.objects;
+                               if(response.data.genralErrorCode == 8000){
 
-                                let get_payment_term = `http://207.180.215.239:9000/api/v1/payment-terms/${vm.tender.payment_terms_id}`;
+                                   vm.alert = false;
 
-                                axios.get(get_payment_term).then((response) => 
-                                {
+                                   vm.tender = response.data.objects;
 
-                                    //commit('setOnProgressTenders',response.data.objects)
-                                    //eslint-disable-next-line no-console
-                                    //console.log(response.data.objects);
+                                    let get_payment_term = `http://207.180.215.239:9000/api/v1/payment-terms/${vm.tender.payment_terms_id}`;
 
-                                    vm.no_of_installment = response.data.objects.no_of_installment;
-                               
+                                    axios.get(get_payment_term).then((response) => 
+                                    {
 
-                                }).catch(()=>{
+                                        //commit('setOnProgressTenders',response.data.objects)
+                                        //eslint-disable-next-line no-console
+                                        //console.log(response.data.objects);
 
-                                    //eslint-disable-next-line no-console
-                                    console.log("There is an error during fetching");
-                                    // response = null;
-                                    //commit('setOnProgressTenders',response)
-                                });
+                                        if(response.data.genralErrorCode == 8000){
 
+                                            vm.alert = false;
+
+                                            vm.no_of_installment = response.data.objects.no_of_installment;
+                                        }
+                                        else if(response.data.genralErrorCode == 8004){
+
+                                            vm.alert = false;
+
+                                            vm.setAlert(response.data.message,"error");
+
+                                            document.getElementById('app').scrollIntoView();
+                                        }
+
+                                        }).catch(()=>{
+
+                                        //eslint-disable-next-line no-console
+                                            console.log("There is an error during fetching");
+
+                                            vm.setAlert("There is internal server error","error");
+
+                                            document.getElementById('app').scrollIntoView();
+                                            // response = null;
+                                            //commit('setOnProgressTenders',response)
+                                    });
+                               }
+                               else if(response.data.genralErrorCode == 8004){
+
+                                    vm.alert = false;
+
+                                    vm.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                               }
+                                
                             }).catch(()=>{
 
                                   //eslint-disable-next-line no-console
-                               console.log("There is an error during fetching");
+                                console.log("There is an error during fetching");
+
+                                vm.setAlert("There is internal server error","error");
+
+                                document.getElementById('app').scrollIntoView();
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
                             });
@@ -609,16 +676,34 @@ export default {
                                //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
-                               
-                                vm.currency_object = response.data.objects;
 
-                                for(let i = 0; i< response.data.objects.length; i++)
-                                    vm.currencies.push(response.data.objects[i].name) 
+                                if(response.data.genralErrorCode == 8000){
+
+                                    vm.alert = false;
+
+                                    vm.currency_object = response.data.objects;
+
+                                    for(let i = 0; i< response.data.objects.length; i++)
+                                        vm.currencies.push(response.data.objects[i].name) 
+                               }
+                               else if(response.data.genralErrorCode == 8004){
+
+                                    vm.alert = false;
+
+                                    vm.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                               }
+                               
 
                             }).catch(()=>{
 
                                   //eslint-disable-next-line no-console
                                console.log("There is an error during fetching");
+
+                                this.setAlert("There is an internal error","error");
+
+                                document.getElementById('app').scrollIntoView(); 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
                             });
@@ -635,17 +720,33 @@ export default {
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
 
-                                vm.currency_object = response.data.objects;
+                                if(response.data.genralErrorCode == 8000){
 
-                                for(let i = 0; i< response.data.objects.length; i++)
-                                    vm.currencies.push(response.data.objects[i].name) 
+                                    vm.alert = false;
+
+                                    vm.currency_object = response.data.objects;
+
+                                    for(let i = 0; i< response.data.objects.length; i++)
+                                        vm.currencies.push(response.data.objects[i].name) 
+                               }
+                               else if(response.data.genralErrorCode == 8004){
+
+                                    vm.alert = false;
+
+                                    vm.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                               }
 
                             }).catch(()=>{
 
                                   //eslint-disable-next-line no-console
-                               console.log("There is an error during fetching");
+                                console.log("There is an error during fetching");
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+                                 vm.setAlert("There is internal server error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
 
             
@@ -658,32 +759,65 @@ export default {
                                //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
-                                vm.tender = response.data.objects;
+                                if(response.data.genralErrorCode == 8000){
+                                   
+                                   vm.tender = response.data.objects;
 
-                                let get_payment_term = `http://207.180.215.239:8000/api/v1/payment-terms/${vm.tender.payment_terms_id}`;
+                                    let get_payment_term = `http://207.180.215.239:8000/api/v1/payment-terms/${vm.tender.payment_terms_id}`;
 
-                                axios.get(get_payment_term).then((response) => 
-                                {
+                                    axios.get(get_payment_term).then((response) => 
+                                    {
 
-                                    //commit('setOnProgressTenders',response.data.objects)
-                                    //eslint-disable-next-line no-console
-                                    //console.log(response.data.objects);
+                                        //commit('setOnProgressTenders',response.data.objects)
+                                        //eslint-disable-next-line no-console
+                                        //console.log(response.data.objects);
 
-                                    vm.no_of_installment = response.data.objects.no_of_installment;
-                               
+                                        if(response.data.genralErrorCode == 8000){
 
-                                }).catch(()=>{
+                                            vm.alert = false;
 
-                                    //eslint-disable-next-line no-console
-                                    console.log("There is an error during fetching");
-                                    // response = null;
-                                    //commit('setOnProgressTenders',response)
-                                });
+                                            vm.no_of_installment = response.data.objects.no_of_installment;
+                                        }
+                                        else if(response.data.genralErrorCode == 8004){
+
+                                            vm.alert = false;
+
+                                            vm.setAlert(response.data.message,"error");
+
+                                            document.getElementById('app').scrollIntoView();
+
+                                        }
+
+                                    }).catch(()=>{
+
+                                        //eslint-disable-next-line no-console
+                                        console.log("There is an error during fetching");
+
+                                        vm.setAlert("There is an internal error","error");
+
+                                        document.getElementById('app').scrollIntoView(); 
+                                        // response = null;
+                                        //commit('setOnProgressTenders',response)
+                                    });
+                               }
+                               else if(response.data.genralErrorCode == 8004){
+
+                                    vm.alert = false;
+
+                                    vm.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                               }
+                                
 
                             }).catch(()=>{
 
                                   //eslint-disable-next-line no-console
                                console.log("There is an error during fetching");
+
+                                vm.setAlert("There is an internal error","error");
+
+                                document.getElementById('app').scrollIntoView();
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
                             });

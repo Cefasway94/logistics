@@ -1,6 +1,8 @@
 <template>
     <v-container class=" mt-12 px-5">
 
+            <Alert v-if="alert" v-bind="{message,type}"/>
+
             <v-card flat class="mt-12 mx-auto mb-5" color="#F5FAFF">
 
                 <v-row class="px-3 ">
@@ -697,7 +699,10 @@
 
 <script>
 import axios from 'axios'
+import Alert from '@/components/Alert.vue'
 export default {
+
+    components:{Alert},
 
     data: ()=>({
 
@@ -823,77 +828,95 @@ export default {
                                //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
-                                switch(response.data.objects.name){
+                               if(response.data.genralErrorCode === 8000)
+                               {
+                                   this.Alert = false;
 
-                                    case "Cargo loading":
+                                   switch(response.data.objects.name){
 
-                                        this.cargo_loading.InProgress = tender_progress[i].InProgress;
-                                        this.cargo_loading.completed = tender_progress[i].delivered;
-                                        this.cargo_loading.waiting = tender_progress[i].waiting;
-                                        this.cargo_loading.expected_date = tender_progress[i].expected_date;
-                                        this.cargo_loading.completed_date = tender_progress[i].completed_date;
-                                        this.cargo_loading.comments = tender_progress[i].comments;
+                                        case "Cargo loading":
 
-                                        if(tender_progress[i].comments !== null){
+                                            this.cargo_loading.InProgress = tender_progress[i].InProgress;
+                                            this.cargo_loading.completed = tender_progress[i].delivered;
+                                            this.cargo_loading.waiting = tender_progress[i].waiting;
+                                            this.cargo_loading.expected_date = tender_progress[i].expected_date;
+                                            this.cargo_loading.completed_date = tender_progress[i].completed_date;
+                                            this.cargo_loading.comments = tender_progress[i].comments;
+
+                                            if(tender_progress[i].comments !== null){
+                                                
+                                                this.comments = tender_progress[i].comments;
+                                            }
+
+
+                                            break;
+
+                                        case "Cargo in transit":
+
+                                            this.cargo_in_transmit.InProgress = tender_progress[i].InProgress;
+                                            this.cargo_in_transmit.completed = tender_progress[i].delivered;
+                                            this.cargo_in_transmit.waiting = tender_progress[i].waiting;
+                                            this.cargo_in_transmit.expected_date = tender_progress[i].expected_date;
+                                            this.cargo_in_transmit.completed_date = tender_progress[i].completed_date;
+                                            this.cargo_in_transmit.comments = tender_progress[i].comments;
                                             
-                                            this.comments = tender_progress[i].comments;
-                                        }
+                                            if(tender_progress[i].comments !== null){
+                                                
+                                                this.comments = tender_progress[i].comments;
+                                            }
 
+                                            break;
 
-                                        break;
+                                        case "Cargo offloading":
 
-                                    case "Cargo in transit":
+                                            this.cargo_offloading.InProgress = tender_progress[i].InProgress;
+                                            this.cargo_offloading.completed = tender_progress[i].delivered;
+                                            this.cargo_offloading.waiting = tender_progress[i].waiting;
+                                            this.cargo_offloading.expected_date = tender_progress[i].expected_date;
+                                            this.cargo_offloading.completed_date = tender_progress[i].completed_date;
+                                            this.cargo_offloading.comments = tender_progress[i].comments;
 
-                                        this.cargo_in_transmit.InProgress = tender_progress[i].InProgress;
-                                        this.cargo_in_transmit.completed = tender_progress[i].delivered;
-                                        this.cargo_in_transmit.waiting = tender_progress[i].waiting;
-                                        this.cargo_in_transmit.expected_date = tender_progress[i].expected_date;
-                                        this.cargo_in_transmit.completed_date = tender_progress[i].completed_date;
-                                        this.cargo_in_transmit.comments = tender_progress[i].comments;
-                                         
-                                        if(tender_progress[i].comments !== null){
-                                            
-                                            this.comments = tender_progress[i].comments;
-                                        }
+                                            if(tender_progress[i].comments !== null){
+                                                
+                                                this.comments = tender_progress[i].comments;
+                                            }
 
-                                        break;
+                                            break;
+                        
+                                        case "Cargo delivered":
 
-                                    case "Cargo offloading":
+                                            this.cargo_delivered.InProgress = tender_progress[i].InProgress;
+                                            this.cargo_delivered.completed = tender_progress[i].delivered;
+                                            this.cargo_delivered.waiting = tender_progress[i].waiting;
+                                            this.cargo_delivered.expected_date = tender_progress[i].expected_date;
+                                            this.cargo_delivered.completed_date = tender_progress[i].completed_date;
+                                            this.cargo_delivered.comments = tender_progress[i].comments;
 
-                                        this.cargo_offloading.InProgress = tender_progress[i].InProgress;
-                                        this.cargo_offloading.completed = tender_progress[i].delivered;
-                                        this.cargo_offloading.waiting = tender_progress[i].waiting;
-                                        this.cargo_offloading.expected_date = tender_progress[i].expected_date;
-                                        this.cargo_offloading.completed_date = tender_progress[i].completed_date;
-                                        this.cargo_offloading.comments = tender_progress[i].comments;
+                                            if(tender_progress[i].comments !== null){
 
-                                        if(tender_progress[i].comments !== null){
-                                            
-                                            this.comments = tender_progress[i].comments;
-                                        }
+                                                this.comments = tender_progress[i].comments;
+                                            }
 
-                                        break;
-                    
-                                    case "Cargo delivered":
+                                            break;
 
-                                        this.cargo_delivered.InProgress = tender_progress[i].InProgress;
-                                        this.cargo_delivered.completed = tender_progress[i].delivered;
-                                        this.cargo_delivered.waiting = tender_progress[i].waiting;
-                                        this.cargo_delivered.expected_date = tender_progress[i].expected_date;
-                                        this.cargo_delivered.completed_date = tender_progress[i].completed_date;
-                                        this.cargo_delivered.comments = tender_progress[i].comments;
+                                    }
 
-                                        if(tender_progress[i].comments !== null){
+                               }
+                               else if(response.data.genralErrorCode === 8004){
 
-                                            this.comments = tender_progress[i].comments;
-                                        }
+                                    this.alert = false;
 
-                                        break;
+                                    this.setAlert(response.data.message,"error");
 
-                            }}).catch(()=>{
+                                    document.getElementById('app').scrollIntoView();
+                               }
+                            }).catch(()=>{
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+                                this.setAlert("There is internal server error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
 
             }
@@ -914,78 +937,96 @@ export default {
                                //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
-                                switch(response.data.objects.name){
 
-                                    case "Port processing":
+                               if(response.data.genralErrorCode === 8000)
+                               {
+                                   this.alert = false;
 
-                                        this.port_processing.InProgress = tender_progress[i].InProgress;
-                                        this.port_processing.completed = tender_progress[i].completed;
-                                        this.port_processing.waiting = tender_progress[i].waiting;
-                                        this.port_processing.expected_date = tender_progress[i].expected_date;
-                                        this.port_processing.completed_date = tender_progress[i].completed_date;
-                                        this.port_processing.comments = tender_progress[i].comments;
+                                   switch(response.data.objects.name){
 
-                                        if(tender_progress[i].comments !== null){
+                                        case "Port processing":
 
-                                            this.comments = tender_progress[i].comments;
-                                        }
+                                            this.port_processing.InProgress = tender_progress[i].InProgress;
+                                            this.port_processing.completed = tender_progress[i].completed;
+                                            this.port_processing.waiting = tender_progress[i].waiting;
+                                            this.port_processing.expected_date = tender_progress[i].expected_date;
+                                            this.port_processing.completed_date = tender_progress[i].completed_date;
+                                            this.port_processing.comments = tender_progress[i].comments;
 
-                                        break;
+                                            if(tender_progress[i].comments !== null){
 
-                                    case "TRA":
+                                                this.comments = tender_progress[i].comments;
+                                            }
 
-                                        this.tcra_processing.InProgress = tender_progress[i].InProgress;
-                                        this.tcra_processing.completed = tender_progress[i].completed;
-                                        this.tcra_processing.waiting = tender_progress[i].waiting;
-                                        this.tcra_processing.expected_date = tender_progress[i].expected_date;
-                                        this.tcra_processing.completed_date = tender_progress[i].completed_date;
-                                        this.tcra_processing.comments = tender_progress[i].comments;
+                                            break;
 
-                                        if(tender_progress[i].comments !== null){
+                                        case "TRA":
 
-                                            this.comments = tender_progress[i].comments;
-                                        }
+                                            this.tcra_processing.InProgress = tender_progress[i].InProgress;
+                                            this.tcra_processing.completed = tender_progress[i].completed;
+                                            this.tcra_processing.waiting = tender_progress[i].waiting;
+                                            this.tcra_processing.expected_date = tender_progress[i].expected_date;
+                                            this.tcra_processing.completed_date = tender_progress[i].completed_date;
+                                            this.tcra_processing.comments = tender_progress[i].comments;
 
-                                        break;
-                                    case "Other processes":
+                                            if(tender_progress[i].comments !== null){
 
-                                        this.other_processes.InProgress = tender_progress[i].InProgress;
-                                        this.other_processes.completed = tender_progress[i].completed;
-                                        this.other_processes.waiting = tender_progress[i].waiting;
-                                        this.other_processes.expected_date = tender_progress[i].expected_date;
-                                        this.other_processes.completed_date = tender_progress[i].completed_date;
-                                        this.other_processes.comments = tender_progress[i].comments;
+                                                this.comments = tender_progress[i].comments;
+                                            }
 
-                                        if(tender_progress[i].comments !== null){
+                                            break;
+                                        case "Other processes":
 
-                                            this.comments = tender_progress[i].comments;
-                                        }
-                                        
+                                            this.other_processes.InProgress = tender_progress[i].InProgress;
+                                            this.other_processes.completed = tender_progress[i].completed;
+                                            this.other_processes.waiting = tender_progress[i].waiting;
+                                            this.other_processes.expected_date = tender_progress[i].expected_date;
+                                            this.other_processes.completed_date = tender_progress[i].completed_date;
+                                            this.other_processes.comments = tender_progress[i].comments;
 
-                                        break;
+                                            if(tender_progress[i].comments !== null){
 
-                                    case "Completion":
+                                                this.comments = tender_progress[i].comments;
+                                            }
+                                            
 
-                                        this.completion.InProgress = tender_progress[i].InProgress;
-                                        this.completion.completed = tender_progress[i].completed;
-                                        this.completion.waiting = tender_progress[i].waiting;
-                                        this.completion.expected_date = tender_progress[i].expected_date;
-                                        this.completion.completed_date = tender_progress[i].completed_date;
-                                        this.completion.comments = tender_progress[i].comments;
+                                            break;
 
-                                        if(tender_progress[i].comments !== null){
+                                        case "Completion":
 
-                                            this.comments = tender_progress[i].comments;
-                                        }
+                                            this.completion.InProgress = tender_progress[i].InProgress;
+                                            this.completion.completed = tender_progress[i].completed;
+                                            this.completion.waiting = tender_progress[i].waiting;
+                                            this.completion.expected_date = tender_progress[i].expected_date;
+                                            this.completion.completed_date = tender_progress[i].completed_date;
+                                            this.completion.comments = tender_progress[i].comments;
 
-                                        break;
-                                    default:
-                                        break;
+                                            if(tender_progress[i].comments !== null){
 
-                            }}).catch(()=>{
+                                                this.comments = tender_progress[i].comments;
+                                            }
+
+                                            break;
+                                        default:
+                                            break;
+
+                                }
+                               }
+                               else if(response.data.genralErrorCode === 8004){
+
+                                    this.alert = false;
+
+                                    this.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                               }
+                                }).catch(()=>{
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+                                this.setAlert("There is internal server error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
 
             }
@@ -1031,20 +1072,53 @@ export default {
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
 
-                                vm.tender = response.data.objects;
+                               if(response.data.genralErrorCode === 8000)
+                               {
+                                   vm.alert = false;
+
+                                   vm.tender = response.data.objects;
+
+                               }
+                               else if(response.data.genralErrorCode === 8004){
+
+                                    vm.alert = false;
+
+                                    vm.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                               }
+                                
 
                             }).catch(()=>{
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+                                vm.setAlert("There is internal server error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
 
                 axios.get(transporting).then((response) => 
                             {
                                 //vm.setProgress(response.data.objects);
-                                
-                                vm.setTransportingProgress(response.data.objects);
 
+
+                                if(response.data.genralErrorCode === 8000)
+                                {
+                                     vm.alert = false;
+
+                                     vm.setTransportingProgress(response.data.objects);
+                                }
+                                else if(response.data.genralErrorCode === 8004){
+
+                                    vm.alert = false;
+
+                                    vm.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+
+                                }
+                               
                                 //vm.setTransportingInProgress(response.data.objects);
                                  //eslint-disable-next-line no-console
                                  //console.log(response.data.objects);
@@ -1052,6 +1126,9 @@ export default {
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+                                vm.setAlert("There is internal server error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
 
                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
@@ -1110,6 +1187,9 @@ export default {
                                 //commit('setOnProgressTenders',response)
                                 //eslint-disable-next-line no-console
                                 //console.log("There is an error");
+                                vm.setAlert("There is internal server error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
 
             } else if(vm.$route.params.tender_type == "Clearing"){
@@ -1126,20 +1206,52 @@ export default {
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
 
-                                vm.tender = response.data.objects;
+                               if(response.data.genralErrorCode === 8000){
+
+                                   vm.alert = false;
+
+                                   vm.tender = response.data.objects;
+                               }
+                               else if(response.data.genralErrorCode === 8004){
+
+                                    vm.alert = false;
+
+                                    vm.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                               }
+
+                                
 
                             }).catch(()=>{
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+                                vm.setAlert("There is internal server error","error");
+
+                                document.getElementById('app').scrollIntoView();
+
                             });
 
                 axios.get(clearing).then((response) => 
                             {
                                 //vm.setProgress(response.data.objects);
-                                
-                                vm.setClearingProgress(response.data.objects);
 
+                                if(response.data.genralErrorCode === 8000){
+
+                                    vm.alert = false;
+
+                                    vm.setClearingProgress(response.data.objects);
+                                }
+                                else if(response.data.genralErrorCode === 8004){
+
+                                    vm.alert = false;
+
+                                    vm.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                                }
+                                
                                 //vm.setClearingInProgress(response.data.objects);
 
                                  //eslint-disable-next-line no-console
@@ -1148,6 +1260,9 @@ export default {
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+                                vm.setAlert("There is internal server error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
 
                  axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)

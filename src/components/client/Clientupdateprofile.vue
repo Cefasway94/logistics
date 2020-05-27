@@ -2,6 +2,8 @@
 
         <v-container class=" mt-10 px-5">
 
+            <Alert v-if="alert" v-bind="{message,type}"/>
+
             <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
             <v-overlay :value="overlay">
@@ -821,8 +823,8 @@
 
 <script>
 import axios from 'axios'
-import {mapActions} from 'vuex'
 import PDFDocument from '@/components/PDFDocument'
+import Alert from '@/components/Alert.vue'
 export default {
 
     data: ()=>({
@@ -897,11 +899,22 @@ export default {
         stage2_percent: 70,
         stage3_percent: 100,
 
+        alert: false,
+        message:'',
+        type:'',
+
      }),
 
-    components:{PDFDocument},
+    components:{PDFDocument,Alert},
 
     methods: {
+
+         setAlert(message,type){
+
+            this.alert = true;
+            this.message = message;
+            this.type = type;
+        },
 
         showStageTwo(){
 
@@ -1078,9 +1091,6 @@ export default {
                 }
             }
         },
-
-        ...mapActions(['setAlert']),
-
         bankStatementUpdated(){
             
 
@@ -1491,7 +1501,11 @@ export default {
                         //this.alert = response.data.message;
                         //eslint-disable-next-line no-console
 
-                            console.log(response.data.message);
+                        this.alert = false;
+
+                        this.setAlert(response.data.message,"error");
+
+                        document.getElementById('app').scrollIntoView();
 
                        
                     }
@@ -1517,14 +1531,10 @@ export default {
 
                 }).catch(()=>{
 
-                    //eslint-disable-next-line no-console
-                    console.log("Error occured, please try again");
+                    this.setAlert("There is internal server error","error");
 
-                    /*this.setAlert("Erro occured. Please try again");
+                    document.getElementById('app').scrollIntoView();
 
-                    this.alert = this.getAlert();
-
-                    this.$router.push('/client/createtender');*/
                 }); 
 
             
@@ -1637,7 +1647,13 @@ export default {
                                     //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
                                     //this.alert = response.data.message;
                                     //eslint-disable-next-line no-console
-                                        console.log("There is an error");
+                                    console.log("There is an error");
+
+                                    this.alert = false;
+
+                                    this.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
                                 }
                                 else if(response.data.genralErrorCode == 8000){
 
@@ -1673,6 +1689,10 @@ export default {
                                 //eslint-disable-next-line no-console
                                 console.log("error occured");
 
+                                this.setAlert("There is an internal server error","error");
+
+                                document.getElementById('app').scrollIntoView(); 
+
                                 /*this.setAlert("Erro occured. Please try again");
 
                                 this.alert = this.getAlert();
@@ -1705,7 +1725,13 @@ export default {
                                     //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
                                     //this.alert = response.data.message;
                                     //eslint-disable-next-line no-console
-                                        console.log("There is an error");
+                                    console.log("There is an error");
+
+                                    this.alert = false;
+
+                                    this.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
                                 }
                                 else if(response.data.genralErrorCode == 8000){
 
@@ -1809,6 +1835,10 @@ export default {
                                 //eslint-disable-next-line no-console
                                 console.log("error occured");
 
+                                this.setAlert("There is an internal error","error");
+
+                                document.getElementById('app').scrollIntoView(); 
+
                                 /*this.setAlert("Erro occured. Please try again");
 
                                 this.alert = this.getAlert();
@@ -1836,14 +1866,32 @@ export default {
                                //console.log(response.data.objects);
                                //vm.client_types = response.data.objects;
 
-                                for(let i=0; i< response.data.objects.length; i++)
+                               if(response.data.genralErrorCode == 8000){
+
+                                    vm.alert = false;
+
+                                    for(let i=0; i< response.data.objects.length; i++)
                                      vm.client_types.push(response.data.objects[i].customer_type);
+                               }
+                               else if(response.data.genralErrorCode == 8004){
+
+                                    vm.alert = false;
+
+                                    vm.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                               }
+
+                               
                                      //vm.client_types = response.data.objects;
 
                             }).catch(()=>{
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+                                this.setAlert("Fetching customer types failed,There is an internal error","error");
+
+                                document.getElementById('app').scrollIntoView(); 
 
                             });
 
@@ -1861,35 +1909,52 @@ export default {
                               
                                //vm.client_types = response.data.objects;
 
-                               vm.first_name = response.data.objects.first_name;
-                               vm.last_name = response.data.objects.last_name;
-                               vm.country = response.data.objects.country;
-                               vm.mobile_number = response.data.objects.mobile_number;
-                               vm.office_mobile = response.data.objects.office_mobile;
-                               vm.address = response.data.objects.address;
-                               vm.bank_acount_name = response.data.objects.bank_acount_name;
-                               vm.bank_account_number = response.data.objects.bank_account_number;
-                               vm.second_bank_account_name = response.data.objects.second_bank_account_name;
-                               vm.second_bank_account_number = response.data.objects.second_bank_account_number;
-                               vm.bank_swift_code = response.data.objects.bank_swift_code;
-                               vm.bank_address = response.data.objects.bank_address;
-                               vm.customer_type = response.data.objects.customer_type;
-                               vm.contact_person_names = response.data.objects.contact_person_names;
-                               vm.Contact_person_phone_number  = response.data.objects.Contact_person_phone_number;
-                               vm.Contact_person_designation = response.data.objects.Contact_person_designation;
-                               vm.company_sector = response.data.objects.company_sector;
-                               vm.company_name = response.data.objects.company_name;
-                               vm.city = response.data.objects.city;
-                              
-                               vm.percentage = response.data.objects.percentage;
+                               if(response.data.genralErrorCode == 8000){
 
-                               vm.client_details = response.data.objects.client_details;
-                               vm.bank_details = response.data.objects.bank_details;
+                                    vm.alert = false;
 
+                                    vm.first_name = response.data.objects.first_name;
+                                    vm.last_name = response.data.objects.last_name;
+                                    vm.country = response.data.objects.country;
+                                    vm.mobile_number = response.data.objects.mobile_number;
+                                    vm.office_mobile = response.data.objects.office_mobile;
+                                    vm.address = response.data.objects.address;
+                                    vm.bank_acount_name = response.data.objects.bank_acount_name;
+                                    vm.bank_account_number = response.data.objects.bank_account_number;
+                                    vm.second_bank_account_name = response.data.objects.second_bank_account_name;
+                                    vm.second_bank_account_number = response.data.objects.second_bank_account_number;
+                                    vm.bank_swift_code = response.data.objects.bank_swift_code;
+                                    vm.bank_address = response.data.objects.bank_address;
+                                    vm.customer_type = response.data.objects.customer_type;
+                                    vm.contact_person_names = response.data.objects.contact_person_names;
+                                    vm.Contact_person_phone_number  = response.data.objects.Contact_person_phone_number;
+                                    vm.Contact_person_designation = response.data.objects.Contact_person_designation;
+                                    vm.company_sector = response.data.objects.company_sector;
+                                    vm.company_name = response.data.objects.company_name;
+                                    vm.city = response.data.objects.city;
+                                    
+                                    vm.percentage = response.data.objects.percentage;
+
+                                    vm.client_details = response.data.objects.client_details;
+                                    vm.bank_details = response.data.objects.bank_details;
+
+                               }else if(response.data.genralErrorCode == 8004){
+
+                                    vm.alert = false;
+
+                                    vm.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+
+                               }
                             }).catch(()=>{
 
                                 //eslint-disable-next-line no-console
                                 console.log("request failed");
+
+                                vm.setAlert("There is an internal error","error");
+
+                                document.getElementById('app').scrollIntoView(); 
 
 
                                 // response = null;

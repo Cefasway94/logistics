@@ -1,5 +1,7 @@
 <template>
     <v-container class="pa-3 mt-10 mx-auto">
+        <Alert v-if="alert" v-bind="{message,type}"/>
+
         <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
             <v-overlay :value="overlay">
 
@@ -584,14 +586,14 @@
 
 <script>
 import {mapActions,mapGetters} from 'vuex'
-import AlertError from '@/components/AlertError.vue'
+import Alert from '@/components/Alert.vue'
 import PDFDocument from '@/components/PDFDocument'
 import axios from 'axios'
 
 export default {
     name: "createtender",
 
-    components: {AlertError, PDFDocument},
+    components: {Alert, PDFDocument},
 
     data: ()=>({
         details:'',
@@ -614,10 +616,7 @@ export default {
         tender_category:'',
 
         customer:[],
-
-        alert:'',
-        display_alert: false,
-
+        
         photo_extension:'',
         photo_url:'',
         bill_of_lading_extension:'',
@@ -633,6 +632,10 @@ export default {
         pdfOverlay:false,
 
         choose_tender:true,
+
+        alert: false,
+        message:'',
+        type:'',
 
     }),
 
@@ -650,6 +653,13 @@ export default {
             this.pdfOverlay = true;
             this.pdf = true;
             
+        },
+
+        setAlert(message,type){
+
+            this.alert = true;
+            this.message = message;
+            this.type = type;
         },
 
         closePdfViewer(){
@@ -944,11 +954,16 @@ export default {
                                 if(response.data.genralErrorCode == 8004){
 
                                     //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
-                                    this.alert = response.data.message;
+                                    this.alert = false;
+
+                                    this.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
                                 }
                                 else if(response.data.genralErrorCode == 8000){
 
                                     //this.AddTender(response.data.objects);
+                                    this.alert = false;
 
                                      this.$store.dispatch('setSnackbar',{
                                         text: response.data.message,
@@ -965,6 +980,7 @@ export default {
 
                                 //eslint-disable-next-line no-console
                                 this.loading = false;
+                                this.alert = false;
 
                                 /*this.alert = "Error occured. Please try again";
 
@@ -1001,13 +1017,19 @@ export default {
                                 if(response.data.genralErrorCode == 8004){
 
                                     //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
-                                    this.alert = response.data.message;
+                                    this.alert = false;
+
+                                    this.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
                                 }
                                 else if(response.data.genralErrorCode == 8000){
 
                                     //this.AddTender(response.data.objects);
 
                                      //this.setAlert(response.data.message);
+
+                                     this.alert = false;
 
                                      this.$store.dispatch('setSnackbar',{
                                         text: response.data.message,
@@ -1024,6 +1046,8 @@ export default {
 
                                 //eslint-disable-next-line no-console
                                 this.loading = false;
+
+                                this.alert = false;
 
                                 //this.setAlert("There is a server error, if you don't see your tender please create again");
 
@@ -1052,13 +1076,30 @@ export default {
                                 //eslint-disable-next-line no-console
                                //console.log(response.data.objects[i].industry_name);
 
-                               for(let i=0; i< response.data.objects.length; i++)
+                               if(response.data.genralErrorCode == 8000){
+
+                                   vm.alert = false;
+
+                                   for(let i=0; i< response.data.objects.length; i++)
                                     vm.tender_categories.push(response.data.objects[i].industry_name);
+
+                               }else if(response.data.genralErrorCode == 8004){
+
+                                    vm.alert = false;
+
+                                    vm.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+                               }
 
                             }).catch(()=>{
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+
+                                vm.setAlert("Failed to fetch industries, There is an internal server error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
                           
 
@@ -1070,12 +1111,28 @@ export default {
                                 //eslint-disable-next-line no-console
                                //console.log(response.data.objects[i].industry_name);
 
-                               vm.customer = response.data.objects;
+                               if(response.data.genralErrorCode == 8000){
+
+                                    vm.alert = false;
+                                    vm.customer = response.data.objects;
+
+                               } else if(response.data.genralErrorCode == 8004){
+
+                                    vm.alert = false;
+
+                                    vm.setAlert(response.data.message,"error");
+
+                                    document.getElementById('app').scrollIntoView();
+
+                               }
 
                             }).catch(()=>{
 
                                 // response = null;
                                 //commit('setOnProgressTenders',response)
+                                vm.setAlert("Failed to fetch customer, There is internal server error","error");
+
+                                document.getElementById('app').scrollIntoView();
                             });
             next();
         }) 

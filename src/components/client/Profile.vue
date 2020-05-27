@@ -2,7 +2,8 @@
 
     <v-container class="mt-12 px-5" color="#F5FAFF" fluid>
 
-        <Alert v-if="alert" v-bind:message="alert"/>
+        <Alert v-if="alert" v-bind="{message,type}"/>
+
         <Message/>
 
         <!--<canvas id="canvas">
@@ -517,7 +518,6 @@
 
 <script>
 import axios from 'axios'
-import AlertError from '@/components/AlertError.vue'
 import Alert from '@/components/Alert.vue'
 import Message from '@/components/Message.vue'
 import {mapGetters} from 'vuex'
@@ -550,7 +550,7 @@ import PDFDocument from '@/components/PDFDocument.vue'
 export default {
     name: 'Profile',
 
-    components:{AlertError,Alert,PDFDocument,Message},
+    components:{Alert,PDFDocument,Message},
 
     data () {
         return {
@@ -560,9 +560,7 @@ export default {
            display_alert: false,
 
            customer_type:'',
-
-           alert:'',
-
+           
            has_photo: false,
 
            dialog: false,
@@ -594,7 +592,11 @@ export default {
 
            url:'',
            pdf:false,
-           pdfOverlay:false
+           pdfOverlay:false,
+
+            alert: false,
+            message:'',
+            type:'',
       }
       
     },
@@ -787,7 +789,7 @@ export default {
 
                                 if(response.data.genralErrorCode === 8000){
 
-                                    vm.display_alert = false;
+                                    vm.alert = false;
 
                                     vm.customer_type = response.data.objects.customer_type;
 
@@ -859,15 +861,17 @@ export default {
 
                                 } else if(response.data.genralErrorCode === 8004){
 
-                                    vm.display_alert = false;
+                                    vm.alert = false;
 
-                                    vm.alert = response.data.message;
-
-                                    vm.display_alert = true;
+                                    vm.setAlert(response.data.message,"error");
 
                                     document.getElementById('app').scrollIntoView();
                                 }
                             }).catch(()=>{
+
+                                vm.setAlert("There is internal server error","error");
+
+                                document.getElementById('app').scrollIntoView();
 
                             });
 
@@ -875,6 +879,11 @@ export default {
 
                              //eslint-disable-next-line no-console
                             //console.log("*****8004****"+response.data);
+                            vm.alert = false;
+
+                            vm.setAlert(response.data.message,"error");
+
+                            document.getElementById('app').scrollIntoView();
                         }
                     }).catch();
               
