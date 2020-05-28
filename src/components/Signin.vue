@@ -254,7 +254,6 @@
 </template>
 
 <script>
-
 import {mapGetters} from 'vuex';
 import { required, minLength, email } from 'vuelidate/lib/validators'
 /* eslint-disable no-console */
@@ -303,24 +302,24 @@ validations:{
 
 
 created(){
-  //this.checkVerify();
+  this.checkVerify();
 
 },
 
 methods:{
 // added by Mary and sudi
 
-  // checkVerify(){
+   checkVerify(){
 
-  //   var msg =  location.search.split('v=')[1];
-  //   console.log(msg);
-  //   if (msg == null){
-  //     this.msgVerify = false
-  //   } else {
-  //     this.msgVerify = true
-  //   }
+     var msg = window.location.hash.split('msg=')[1];
+     //console.log(msg);
+     if (msg == null){
+       this.msgVerify = false
+     } else {
+       this.msgVerify = true
+     }
 
-  // },
+   },
 
 // =====================================================================>>>
     Login() {
