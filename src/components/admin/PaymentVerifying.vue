@@ -29,94 +29,6 @@
                 </div>
         </v-overlay>
 
-        <!--<v-container class="mx-auto mt-5">
-          <h3> <center>Payments</center> </h3>
-          <v-simple-table>
-
-          <template v-slot:default>
-            <thead>
-              <tr>
-                <th class="text-left">Name</th>
-                <th class="text-left">Account</th>
-                <th class="text-left">Amount</th>
-                <th></th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr v-for="payment in payments" :key="payment.id">
-                <td>{{ payment.depositors_name }}</td>
-                <td>{{ payment.customers_acct_number }}</td>
-                <td>{{ payment.amount }}</td>
-                <td>
-                  <v-dialog              
-                    v-model="dialog"
-                    width="600"
-                  >
-                    <template v-slot:activator="{ on }">
-                      <v-btn
-                        small 
-                        elevation="flat" 
-                        color="#4169E1" 
-                        class="white--text"
-                        :disabled="payment.verify != null"
-                        v-on="on"
-                      >
-                        Verify
-                      </v-btn>
-                    </template>
-
-                    <v-card>
-                      <v-card-title class="body-3 grey lighten-2" >Are you want to verify this payment? </v-card-title>
-
-                        <v-divider></v-divider>
-
-                          <v-card-actions>
-                            <v-spacer></v-spacer>
-                            <v-btn
-                              color="primary"
-                              text
-                              @click="dialog = false"
-                            >
-                              No
-                            </v-btn>
-
-                            <v-btn
-                              color="primary"
-                              text
-                              @click="verifyPayment()"
-                            >
-                              Yes
-                            </v-btn>
-                      </v-card-actions>
-                              </v-card>
-                            </v-dialog>
-                          </td>
-                          <td>
-                            <v-btn
-                              small 
-                              elevation="flat" 
-                              color="#4169E1" 
-                              class="white--text"   
-                            >
-                              <v-icon small color="white" v-show="customer.is_verified">
-                                  mdi-check-outline
-                              </v-icon>
-
-                              <v-icon small color="white" v-show="!customer.is_verified">
-                                  mdi-reload
-                              </v-icon>
-
-                            </v-btn>
-                          </td>
-                        </tr>
-                      </tbody>
-
-                    </template>
-
-                  </v-simple-table>  
-        </v-container>-->
-          
         <v-row>
         
           <v-col cols=8>
@@ -287,13 +199,255 @@
 
                 <template v-if="tab.title == 'Complete'">
 
-                  
+                  <v-data-table
+                    :items="completedPayments"
+                    :headers="headers"
+                  >
+                    
+                    <template v-slot:item.verify="{item}">
+
+                      <v-chip v-if="!item.verify" class="orange lighten-4">Pending</v-chip>
+
+                      <v-chip v-if="item.verify" class="teal lighten-4">Verified</v-chip>
+
+                    </template>
+
+                    <template v-slot:item.actions="{item}">
+
+
+                       <v-btn 
+                        small 
+                        @click="previewReceipt(item)"
+                        color="#4169E1" 
+                        class="white--text mr-2"
+                      >
+                        Preview
+                      </v-btn>
+
+                      <v-dialog              
+                              v-model="Denydialog"
+                              :retain-focus="false"
+                              width="550"
+                            >
+                              <template v-slot:activator="{ on }">
+                                <v-btn
+                                    small 
+                                    color="#4169E1" 
+                                    class="white--text"
+                                    :disabled="item.verify == 0"
+                                    v-on="on"
+                                >
+                                  Deny
+                                </v-btn>
+                              </template>
+
+                              <v-card>
+                                <v-card-title
+                                  class="body-3 grey lighten-2"
+                              
+                                  >
+                                  Are you sure you want to cancel payment verification?
+                                </v-card-title>
+
+                                <v-divider></v-divider>
+
+                                <v-card-actions>
+                                  <v-spacer></v-spacer>
+                                    <v-btn
+                                      color="primary"
+                                      text
+                                      @click="Denydialog = false"
+                                    >
+                                    No
+                                  </v-btn>
+                                  <v-btn
+                                      color="primary"
+                                      text
+                                      @click="DenyCustomerPayment(item)"
+                                    >
+                                    Yes
+                                  </v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+
+                      <v-dialog              
+                              v-model="Verydialog"
+                              :retain-focus="false"
+                              width="550"
+                            >
+                        <template v-slot:activator="{ on }">
+                          <v-btn
+                              small 
+                              color="#4169E1" 
+                              class="white--text ml-1"
+                              :disabled="item.verify == 1"
+                              v-on="on"
+                          >
+                            Verify
+                          </v-btn>
+                        </template>
+
+                          <v-card>
+                            <v-card-title
+                              class="body-3 grey lighten-2"
+                          
+                              >
+                              Are you sure you want to verify this payment?
+                            </v-card-title>
+
+                            <v-divider></v-divider>
+
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                                <v-btn
+                                  color="primary"
+                                  text
+                                  @click="Verydialog = false"
+                                >
+                                No
+                              </v-btn>
+                              <v-btn
+                                  color="primary"
+                                  text
+                                  @click="VerifyCustomerPayment(item)"
+                                >
+                                Yes
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
+                     
+                    </template>
+
+                  </v-data-table>
 
                 </template>
 
                 <template v-if="tab.title == 'Pending'">
 
-                  
+                  <v-data-table
+                    :items="pendingPayments"
+                    :headers="headers"
+                  >
+                    
+                    <template v-slot:item.verify="{item}">
+
+                      <v-chip v-if="!item.verify" class="orange lighten-4">Pending</v-chip>
+
+                      <v-chip v-if="item.verify" class="teal lighten-4">Verified</v-chip>
+
+                    </template>
+
+                    <template v-slot:item.actions="{item}">
+
+
+                       <v-btn 
+                        small 
+                        @click="previewReceipt(item)"
+                        color="#4169E1" 
+                        class="white--text mr-2"
+                      >
+                        Preview
+                      </v-btn>
+
+                      <v-dialog              
+                              v-model="Denydialog"
+                              :retain-focus="false"
+                              width="550"
+                            >
+                              <template v-slot:activator="{ on }">
+                                <v-btn
+                                    small 
+                                    color="#4169E1" 
+                                    class="white--text"
+                                    :disabled="item.verify == 0"
+                                    v-on="on"
+                                >
+                                  Deny
+                                </v-btn>
+                              </template>
+
+                              <v-card>
+                                <v-card-title
+                                  class="body-3 grey lighten-2"
+                              
+                                  >
+                                  Are you sure you want to cancel payment verification?
+                                </v-card-title>
+
+                                <v-divider></v-divider>
+
+                                <v-card-actions>
+                                  <v-spacer></v-spacer>
+                                    <v-btn
+                                      color="primary"
+                                      text
+                                      @click="Denydialog = false"
+                                    >
+                                    No
+                                  </v-btn>
+                                  <v-btn
+                                      color="primary"
+                                      text
+                                      @click="DenyCustomerPayment(item)"
+                                    >
+                                    Yes
+                                  </v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+
+                      <v-dialog              
+                              v-model="Verydialog"
+                              :retain-focus="false"
+                              width="550"
+                            >
+                        <template v-slot:activator="{ on }">
+                          <v-btn
+                              small 
+                              color="#4169E1" 
+                              class="white--text ml-1"
+                              :disabled="item.verify == 1"
+                              v-on="on"
+                          >
+                            Verify
+                          </v-btn>
+                        </template>
+
+                          <v-card>
+                            <v-card-title
+                              class="body-3 grey lighten-2"
+                          
+                              >
+                              Are you sure you want to verify this payment?
+                            </v-card-title>
+
+                            <v-divider></v-divider>
+
+                            <v-card-actions>
+                              <v-spacer></v-spacer>
+                                <v-btn
+                                  color="primary"
+                                  text
+                                  @click="Verydialog = false"
+                                >
+                                No
+                              </v-btn>
+                              <v-btn
+                                  color="primary"
+                                  text
+                                  @click="VerifyCustomerPayment(item)"
+                                >
+                                Yes
+                              </v-btn>
+                            </v-card-actions>
+                          </v-card>
+                        </v-dialog>
+                     
+                    </template>
+
+                  </v-data-table>
                 </template>
 
               </v-container>
@@ -338,6 +492,8 @@ export default {
       email:'',
 
       payments:[],
+      completedPayments:[],
+      pendingPayments:[],
 
       tabs:[ {title:'All payments'}, {title:'Complete'}, {title:'Pending'} ],
       tab: null,
@@ -540,7 +696,39 @@ export default {
     },
 
     fetchAllPayments(){
+      //getting all transporters
+      const payments = "http://207.180.215.239:8002/api/oxopayment/index"
 
+       axios.get(payments).then((response) => 
+        {
+                               
+            //eslint-disable-next-line no-console
+            //console.log(response.data.objects[i].industry_name);
+
+          if(response.data.genralErrorCode === 8000)
+          {
+            this.payments = response.data.objects;
+
+            //eslint-disable-next-line no-console
+            console.log(this.payments);
+
+          } else if(response.data.genralErrorCode === 8004){
+
+            this.alert = false;
+
+            this.setAlert(response.data.message,"error");
+
+            document.getElementById('app').scrollIntoView();
+          }
+
+        }).catch(()=>
+      
+        {
+
+            this.setAlert("There is an internal error","error");
+
+            document.getElementById('app').scrollIntoView();                       
+        });
     },
 
     fetchCompletePayments(){
@@ -608,40 +796,9 @@ export default {
   beforeRouteEnter(to, from, next){
     next(vm => {
         
-     
-       //getting all transporters
-      const payments = "http://207.180.215.239:8002/api/oxopayment/index"
-
-       axios.get(payments).then((response) => 
-        {
-                               
-            //eslint-disable-next-line no-console
-            //console.log(response.data.objects[i].industry_name);
-
-          if(response.data.genralErrorCode === 8000)
-          {
-            vm.payments = response.data.objects;
-
-            //eslint-disable-next-line no-console
-            console.log(vm.payments);
-
-          } else if(response.data.genralErrorCode === 8004){
-
-            vm.alert = false;
-
-            vm.setAlert(response.data.message,"error");
-
-            document.getElementById('app').scrollIntoView();
-          }
-
-        }).catch(()=>
-      
-        {
-
-            vm.setAlert("There is an internal error","error");
-
-            document.getElementById('app').scrollIntoView();                       
-        });
+    
+      vm.fetchAllPayments();
+       
  
       next();
     })
