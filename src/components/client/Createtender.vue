@@ -32,7 +32,7 @@
 
                 <v-card color="white">
                     <v-card-title>
-                        <p class="primary--text font-weight-bold">Choose the type of tender you want to create</p>
+                        <p class="primary--text font-weight-bold">Choose the tender category you wish to create</p>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
@@ -59,12 +59,13 @@
                                     </v-card>
                                     <p class="mt-3 ml-3 body-1 font-weight-bold primary--text">To Transport goods </p>
                                 </v-col> -->
-                                <v-col cols=6>
+                                <v-col class="categorySel" cols=6>
                                     <v-card class="pl-5" :hover="true" @click="setTenderCategory('Transporting')">
                                         <v-card-title>Transporting</v-card-title>
                                         <v-btn 
                                             height="60"
                                             width="70"
+                                            style="margin-bottom:20px;"
                                             elevation="10"
                                             color="primary"
                                             class="white--text pb-2"
@@ -79,15 +80,16 @@
                                             </v-img>
                                        </v-btn>
                                     </v-card>
-                                    <p class="mt-3 ml-3 body-1 font-weight-bold primary--text">To Transport goods </p>
+                                    
                                 </v-col>
 
-                                <v-col cols=6 >
-                                    <v-card class="pl-5" :hover="true" @click="setTenderCategory('Clearing')">
+                                <v-col class="categorySel" cols=6 >
+                                    <v-card class="pl-5" style="margin-left:16px;" :hover="true" @click="setTenderCategory('Clearing')">
                                         <v-card-title>Clearing</v-card-title>
                                         <v-btn 
                                             height="60"
                                             width="70"
+                                            style="margin-bottom:20px;"
                                             elevation="10"
                                             color="primary"
                                             class="white--text pb-2"
@@ -102,7 +104,7 @@
                                             </v-img>
                                        </v-btn>
                                     </v-card>
-                                    <p class="mt-3 ml-3 body-1 font-weight-bold primary--text">To Clear goods </p>
+                                    
                                 </v-col>
                             </v-row>
                         </v-container>

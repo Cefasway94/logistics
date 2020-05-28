@@ -85,4 +85,8 @@ export default {
  .v-image__image--cover{
    background-size: contain !important ;
  }
+ .categorySel{
+   max-width: 200px !important;
+   text-align: center;
+ }
 </style>
