@@ -1495,7 +1495,7 @@ export default {
                ).
                 then((response) => {
 
-                    if(response.data.genralErrorCode == 8004){
+                    if(response.data.genralErrorCode === 8004){
 
                         //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
                         //this.alert = response.data.message;
@@ -1509,7 +1509,7 @@ export default {
 
                        
                     }
-                    else if(response.data.genralErrorCode == 8000){
+                    else if(response.data.genralErrorCode === 8000){
 
                         //this.AddTender(response.data.objects);
 
@@ -1642,7 +1642,7 @@ export default {
                              
                                 this.loading = false;
 
-                                if(response.data.genralErrorCode == 8004){
+                                if(response.data.genralErrorCode === 8004){
 
                                     //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
                                     //this.alert = response.data.message;
@@ -1655,7 +1655,7 @@ export default {
 
                                     document.getElementById('app').scrollIntoView();
                                 }
-                                else if(response.data.genralErrorCode == 8000){
+                                else if(response.data.genralErrorCode === 8000){
 
                                     //this.AddTender(response.data.objects);
 
@@ -1733,7 +1733,7 @@ export default {
 
                                     document.getElementById('app').scrollIntoView();
                                 }
-                                else if(response.data.genralErrorCode == 8000){
+                                else if(response.data.genralErrorCode === 8000){
 
                                     //this.AddTender(response.data.objects);
 
@@ -1866,14 +1866,14 @@ export default {
                                //console.log(response.data.objects);
                                //vm.client_types = response.data.objects;
 
-                               if(response.data.genralErrorCode == 8000){
+                               if(response.data.genralErrorCode === 8000){
 
                                     vm.alert = false;
 
                                     for(let i=0; i< response.data.objects.length; i++)
                                      vm.client_types.push(response.data.objects[i].customer_type);
                                }
-                               else if(response.data.genralErrorCode == 8004){
+                               else if(response.data.genralErrorCode === 8004){
 
                                     vm.alert = false;
 
@@ -1909,7 +1909,7 @@ export default {
                               
                                //vm.client_types = response.data.objects;
 
-                               if(response.data.genralErrorCode == 8000){
+                               if(response.data.genralErrorCode === 8000){
 
                                     vm.alert = false;
 
@@ -1938,7 +1938,7 @@ export default {
                                     vm.client_details = response.data.objects.client_details;
                                     vm.bank_details = response.data.objects.bank_details;
 
-                               }else if(response.data.genralErrorCode == 8004){
+                               }else if(response.data.genralErrorCode === 8004){
 
                                     vm.alert = false;
 

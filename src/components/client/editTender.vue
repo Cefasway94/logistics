@@ -955,11 +955,11 @@ export default {
                 //eslint-disable-next-line no-console
                 //console.log(response.data.objects[i].industry_name);
 
-                if(response.data.genralErrorCode == 8000){
+                if(response.data.genralErrorCode === 8000){
 
                     vm.customer = response.data.objects;
 
-                } else if(response.data.genralErrorCode == 8004){
+                } else if(response.data.genralErrorCode === 8004){
 
                     vm.alert = false;
 

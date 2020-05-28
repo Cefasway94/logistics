@@ -4,7 +4,7 @@
 
            <Alert v-if="alert" v-bind="{message,type}"/>
 
-             <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
+            <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
             <v-overlay :value="overlay">
 
@@ -1502,7 +1502,7 @@ export default {
 
                         this.loading = false;
 
-                        if(response.data.genralErrorCode == 8004){
+                        if(response.data.genralErrorCode === 8004){
 
                             this.alert = false;
 
@@ -1510,7 +1510,7 @@ export default {
 
                             document.getElementById('app').scrollIntoView();
                         }
-                        else if(response.data.genralErrorCode == 8000){
+                        else if(response.data.genralErrorCode === 8000){
 
                             //this.setAlert(response.data.message);
 
