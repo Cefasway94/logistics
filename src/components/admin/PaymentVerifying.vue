@@ -40,6 +40,7 @@
                 elevation="flat" 
                 color="#4169E1" 
                 class="white--text ml-4"
+                :to="'/admin/payment-settings/'"
               >
               <v-icon >mdi-cog</v-icon></v-btn>
             </div>
@@ -526,7 +527,7 @@ export default {
 
       this.Denydialog = false;
 
-      const dening_url = "http://207.180.215.239:8002/api/oxopayment/deny/"+item.order_ID;
+      const dening_url = "http://207.180.215.239:8002/api/oxopayment/deny/"+item.id+"/"+item.order_ID;
 
       axios.post(dening_url).then((response) => 
       {
@@ -575,7 +576,7 @@ export default {
 
       this.Verydialog = false;
 
-      const verifing_url = "http://207.180.215.239:8002/api/oxopayment/verify/"+item.order_ID;
+      const verifing_url = "http://207.180.215.239:8002/api/oxopayment/verify/"+item.id+"/"+item.order_ID;
 
       axios.post(verifing_url).then((response) => 
       {
@@ -733,10 +734,77 @@ export default {
 
     fetchCompletePayments(){
 
+      //getting all complete payments
+      const payments = "http://207.180.215.239:8002/api/oxopayment/oxopayment_by_verify_true"
+
+       axios.get(payments).then((response) => 
+        {
+                               
+            //eslint-disable-next-line no-console
+            //console.log(response.data.objects[i].industry_name);
+
+          if(response.data.genralErrorCode === 8000)
+          {
+            this.completedPayments = response.data.objects;
+
+            //eslint-disable-next-line no-console
+            console.log(this.completedPayments);
+
+          } else if(response.data.genralErrorCode === 8004){
+
+            this.alert = false;
+
+            this.setAlert(response.data.message,"error");
+
+            document.getElementById('app').scrollIntoView();
+          }
+
+        }).catch(()=>
+      
+        {
+
+            this.setAlert("There is an internal error","error");
+
+            document.getElementById('app').scrollIntoView();                       
+        });
+
     },
 
     fetchPendingPayments(){
 
+      //getting all pending payments
+      const payments = "http://207.180.215.239:8002/api/oxopayment/oxopayment_by_verify_false"
+
+       axios.get(payments).then((response) => 
+        {
+                               
+            //eslint-disable-next-line no-console
+            //console.log(response.data.objects[i].industry_name);
+
+          if(response.data.genralErrorCode === 8000)
+          {
+            this.pendingPayments = response.data.objects;
+
+            //eslint-disable-next-line no-console
+            console.log(this.pendingPayments);
+
+          } else if(response.data.genralErrorCode === 8004){
+
+            this.alert = false;
+
+            this.setAlert(response.data.message,"error");
+
+            document.getElementById('app').scrollIntoView();
+          }
+
+        }).catch(()=>
+      
+        {
+
+            this.setAlert("There is an internal error","error");
+
+            document.getElementById('app').scrollIntoView();                       
+        });
     },
 
     setAlert(message,type){
@@ -798,6 +866,8 @@ export default {
         
     
       vm.fetchAllPayments();
+      vm.fetchCompletePayments();
+      vm.fetchPendingPayments();
        
  
       next();

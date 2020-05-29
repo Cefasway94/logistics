@@ -61,7 +61,10 @@
     <router-view name="CustomerVerifying"></router-view>
     <router-view name="AgentVerifying"></router-view>
     <router-view name="PaymentVerifying"></router-view>
-</transition>
+    <router-view name="PaymentSettings"></router-view>
+    
+
+</transition>s
       
   </v-content>
  </v-app>

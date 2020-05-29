@@ -89,4 +89,8 @@ export default {
    max-width: 200px !important;
    text-align: center;
  }
+
+ a {
+    text-decoration: none;
+}
 </style>

@@ -53,6 +53,8 @@ import AdminHome from '../components/admin/AdminHome.vue'
 import CustomerVerifying from '../components/admin/CustomerVerifying'
 import AgentVerifying from '../components/admin/AgentVerifying'
 import PaymentVerifying from '../components/admin/PaymentVerifying'
+import PaymentSettings from '../components/admin/PaymentSettings'
+
 
 
 Vue.use(VueRouter)
@@ -282,6 +284,11 @@ const routes = [
     path:'/admin/verify-payment',
     name:'PaymentVerifying',
     components:{PaymentVerifying}
+  },
+  { 
+    path:'/admin/payment-settings',
+    name:'PaymentSettings',
+    components:{PaymentSettings}
   },
 
 
