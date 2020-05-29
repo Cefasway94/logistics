@@ -530,7 +530,7 @@ export default {
                                     this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
                                 }*/
 
-                                if(response.data.genralErrorCode == 8000){
+                                if(response.data.genralErrorCode === 8000){
 
                                     this.loading = false;
 
@@ -538,7 +538,7 @@ export default {
 
                                     this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
 
-                                } else if(response.data.genralErrorCode == 8004){
+                                } else if(response.data.genralErrorCode === 8004){
 
                                     this.alert = false;
 
@@ -652,7 +652,7 @@ export default {
                                //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
-                               if(response.data.genralErrorCode == 8000){
+                               if(response.data.genralErrorCode === 8000){
 
                                    vm.alert = false;
 
@@ -667,13 +667,13 @@ export default {
                                         //eslint-disable-next-line no-console
                                         //console.log(response.data.objects);
 
-                                        if(response.data.genralErrorCode == 8000){
+                                        if(response.data.genralErrorCode === 8000){
 
                                             vm.alert = false;
 
                                             vm.no_of_installment = response.data.objects.no_of_installment;
                                         }
-                                        else if(response.data.genralErrorCode == 8004){
+                                        else if(response.data.genralErrorCode === 8004){
 
                                             vm.alert = false;
 
@@ -694,7 +694,7 @@ export default {
                                             //commit('setOnProgressTenders',response)
                                     });
                                }
-                               else if(response.data.genralErrorCode == 8004){
+                               else if(response.data.genralErrorCode === 8004){
 
                                     vm.alert = false;
 
@@ -725,7 +725,7 @@ export default {
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
 
-                                if(response.data.genralErrorCode == 8000){
+                                if(response.data.genralErrorCode === 8000){
 
                                     vm.alert = false;
 
@@ -734,7 +734,7 @@ export default {
                                     for(let i = 0; i< response.data.objects.length; i++)
                                         vm.currencies.push(response.data.objects[i].name) 
                                }
-                               else if(response.data.genralErrorCode == 8004){
+                               else if(response.data.genralErrorCode === 8004){
 
                                     vm.alert = false;
 
@@ -768,7 +768,7 @@ export default {
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
 
-                                if(response.data.genralErrorCode == 8000){
+                                if(response.data.genralErrorCode === 8000){
 
                                     vm.alert = false;
 
@@ -777,7 +777,7 @@ export default {
                                     for(let i = 0; i< response.data.objects.length; i++)
                                         vm.currencies.push(response.data.objects[i].name) 
                                }
-                               else if(response.data.genralErrorCode == 8004){
+                               else if(response.data.genralErrorCode === 8004){
 
                                     vm.alert = false;
 
@@ -807,7 +807,7 @@ export default {
                                //commit('setOnProgressTenders',response.data.objects)
                                //eslint-disable-next-line no-console
                                //console.log(response.data.objects);
-                                if(response.data.genralErrorCode == 8000){
+                                if(response.data.genralErrorCode === 8000){
                                    
                                    vm.tender = response.data.objects;
 
@@ -820,13 +820,13 @@ export default {
                                         //eslint-disable-next-line no-console
                                         //console.log(response.data.objects);
 
-                                        if(response.data.genralErrorCode == 8000){
+                                        if(response.data.genralErrorCode === 8000){
 
                                             vm.alert = false;
 
                                             vm.no_of_installment = response.data.objects.no_of_installment;
                                         }
-                                        else if(response.data.genralErrorCode == 8004){
+                                        else if(response.data.genralErrorCode === 8004){
 
                                             vm.alert = false;
 
@@ -848,7 +848,7 @@ export default {
                                         //commit('setOnProgressTenders',response)
                                     });
                                }
-                               else if(response.data.genralErrorCode == 8004){
+                               else if(response.data.genralErrorCode === 8004){
 
                                     vm.alert = false;
 

@@ -953,7 +953,7 @@ export default {
                              
                                 this.loading = false;
 
-                                if(response.data.genralErrorCode == 8004){
+                                if(response.data.genralErrorCode === 8004){
 
                                     //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
                                     this.alert = false;
@@ -962,7 +962,7 @@ export default {
 
                                     document.getElementById('app').scrollIntoView();
                                 }
-                                else if(response.data.genralErrorCode == 8000){
+                                else if(response.data.genralErrorCode === 8000){
 
                                     //this.AddTender(response.data.objects);
                                     this.alert = false;
@@ -1016,7 +1016,7 @@ export default {
                              
                                 this.loading = false;
 
-                                if(response.data.genralErrorCode == 8004){
+                                if(response.data.genralErrorCode === 8004){
 
                                     //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
                                     this.alert = false;
@@ -1025,7 +1025,7 @@ export default {
 
                                     document.getElementById('app').scrollIntoView();
                                 }
-                                else if(response.data.genralErrorCode == 8000){
+                                else if(response.data.genralErrorCode === 8000){
 
                                     //this.AddTender(response.data.objects);
 
@@ -1078,14 +1078,14 @@ export default {
                                 //eslint-disable-next-line no-console
                                //console.log(response.data.objects[i].industry_name);
 
-                               if(response.data.genralErrorCode == 8000){
+                               if(response.data.genralErrorCode === 8000){
 
                                    vm.alert = false;
 
                                    for(let i=0; i< response.data.objects.length; i++)
                                     vm.tender_categories.push(response.data.objects[i].industry_name);
 
-                               }else if(response.data.genralErrorCode == 8004){
+                               }else if(response.data.genralErrorCode === 8004){
 
                                     vm.alert = false;
 
@@ -1113,12 +1113,12 @@ export default {
                                 //eslint-disable-next-line no-console
                                //console.log(response.data.objects[i].industry_name);
 
-                               if(response.data.genralErrorCode == 8000){
+                               if(response.data.genralErrorCode === 8000){
 
                                     vm.alert = false;
                                     vm.customer = response.data.objects;
 
-                               } else if(response.data.genralErrorCode == 8004){
+                               } else if(response.data.genralErrorCode === 8004){
 
                                     vm.alert = false;
 

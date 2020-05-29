@@ -1136,7 +1136,7 @@ export default {
                             {
                                 if(response.data.genralErrorCode === 8000){
 
-                                    if(response.data.objects.verify == null)    
+                                    if(response.data.objects.verify === null)    
                                             vm.is_verified = false;
                                         else
                                             vm.is_verified = true;
@@ -1144,7 +1144,7 @@ export default {
                                  //eslint-disable-next-line no-console
                                     console.log("is paid full " +response.data.objects.is_full_amount_paid);
 
-                                     if(response.data.objects.verify == 1){
+                                     if(response.data.objects.verify === 1){
 
                                          //eslint-disable-next-line no-console
                                                 console.log("**************is verified");
