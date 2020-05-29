@@ -722,6 +722,10 @@ export default {
 
         payment_value:0,
 
+        alert: false,
+        message:'',
+        type:'',
+
         is_verified:0,
 
         cargo_loading:{
@@ -807,6 +811,13 @@ export default {
     }),
 
     methods:{
+
+        setAlert(message,type){
+
+            this.alert = true;
+            this.message = message;
+            this.type = type;
+        }, 
 
         fullPaid(){
 
