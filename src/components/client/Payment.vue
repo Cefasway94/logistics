@@ -2,6 +2,7 @@
     <v-container class="mt-12 pa-3">
        
             <!-- <AlertError v-if="display_alert" v-bind:message="alert"/> -->
+            <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
             <Alert v-if="alert" v-bind="{message,type}"/>
           
@@ -98,7 +99,7 @@
                 </v-flex>
             </v-card>
 
-            <v-card width="900" class="mx-auto px-4 pt-3">
+            <v-card width="900" height="500" class="mx-auto px-4 pt-3">
                 <v-flex column class="">
 
                 <v-flex row class="pl-4 pr-2">
@@ -206,11 +207,29 @@
                                 </template>
                             </v-file-input>
 
-                            <div v-show="slip_extension === 'jpg' || slip_extension === 'jpeg' ||  slip_extension === 'png' ">
+                            <!-- <div v-show="slip_extension === 'jpg' || slip_extension === 'jpeg' ||  slip_extension === 'png' ">
                                 <v-card height="200" width="358" outlined @click="showLargeThumbnail('slip')">
                                     <img  id="slip_thumb" class="preview">
                                 </v-card>
+                            </div> -->
+                            <div v-show="slip_extension === 'jpg' || slip_extension === 'jpeg' || slip_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="handleClick('slip',slip_url)">
+                                        <img  id="slip_thumb" :src="slip_url" class="preview">
+                                    </v-card>
                             </div>
+
+                             <div v-show="slip_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(slip_url)"
+                                        >
+                                        PREVIEW<v-icon x-small>mdi-file</v-icon>
+                                    </v-btn>
+                                    
+
+                                </div>
 
                         </v-card>
                     
@@ -263,6 +282,7 @@
 import axios from 'axios'
 import {mapGetters,mapActions} from 'vuex'
 import Alert from '@/components/Alert.vue'
+import PDFDocument from '@/components/PDFDocument'
 // import AlertError from '@/components/AlertError.vue'
 
 
@@ -290,15 +310,22 @@ export default {
             no_of_installment:'',
             response_message:'',
 
+            slip_url:'',
+
             loading: false,
             display_alert: false,
             overlay:false,
-            slip_extension:''
+            slip_extension:'',
+
+            url:'',
+            pdf:false,
+            pdfOverlay:false
 
         }
     },
 
-    components: {Alert},
+   components:{Alert,PDFDocument},
+
 
     computed:{
         ...mapGetters(['getCurrencies']),
@@ -315,13 +342,34 @@ export default {
                 this.currencies.push(this.getCurrencies[i].name)      
         },*/
 
-         setAlert(message,type){
+    previewPdf(url){
+
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        setAlert(message,type){
 
             this.alert = true;
             this.message = message;
             this.type = type;
         },
 
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
+        },
+
+        largePreview(src){
+
+            this.large_preview_url = src;
+
+            this.overlay = !this.overlay;
+
+        },
+        
          slipUpdated(){
             //this.depositors_slip.push(document.getElementById("slip").files[0]);
 
