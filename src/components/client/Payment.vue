@@ -511,6 +511,7 @@ export default {
 
                                  //eslint-disable-next-line no-console
                                     console.log(response.data);
+                                    console.log(response.data.errorCount);
                                     
                                 /*if(response.data.genralErrorCode == 8004){
                                     
