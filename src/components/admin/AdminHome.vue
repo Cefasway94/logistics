@@ -574,27 +574,33 @@ export default {
 
             this.alert = false;
 
-            this.setAlert("The transporter verification is deleted","success");
+             setTimeout(()=>{
 
-            this.$router.push('/admin');
-            this.$router.go('/admin');
+                    this.setAlert("The transporter verification is deleted","success");
+
+                    this.$router.push('/admin');
+                    this.$router.go('/admin');
+             },1000)
            
           } else if(response.data.genralErrorCode === 8004){
 
-            this.alert = false;
+             this.alert = false;
 
-            this.setAlert(response.data.message,"error");
+              setTimeout(()=>{
 
-            document.getElementById('app').scrollIntoView();
+                    this.setAlert(response.data.message,"error");
+              },1000)
           }
 
           }).catch(()=>
       
           {
 
-              this.setAlert("There is internal error","error");
+              setTimeout(()=>{
 
-              document.getElementById('app').scrollIntoView();                   
+                this.setAlert("There is internal server error","error");
+
+              },1000)                    
           });
         },
     
@@ -614,28 +620,33 @@ export default {
               {
                 this.alert = false;
 
-                this.setAlert("The agent verification has been deleted","success");
+                 setTimeout(()=>{
 
-                this.$router.push('/admin');
-                
-                this.$router.go('/admin');
+                    this.setAlert("The agent verification has been deleted","success");
+
+                    this.$router.push('/admin');
+                    this.$router.go('/admin');
+                },1000)
 
               } else if(response.data.genralErrorCode === 8004){
 
-                this.alert = false;
+                  this.alert = false;
 
-                this.setAlert(response.data.message,"error");
+                  setTimeout(()=>{
 
-                document.getElementById('app').scrollIntoView();
+                        this.setAlert(response.data.message,"error");
+                  },1000)
               }
 
               }).catch(()=>
       
               {
 
-                this.setAlert("There is internal server error","error");
+                setTimeout(()=>{
 
-                document.getElementById('app').scrollIntoView();  
+                    this.setAlert("There is internal server error","error");
+
+                },1000) 
 
               });     
     },
@@ -655,36 +666,38 @@ export default {
 
             if(response.data.genralErrorCode === 8000)
               {
-                /*this.$store.dispatch('setSnackbar',{
-                            text: "Customer have been denied",
-                            color: 'success'
-                });*/
+                
 
                 this.alert = false;
 
-                this.setAlert("The transporter verification has been successfully deleted","success");
+                 setTimeout(()=>{
 
-                document.getElementById('app').scrollIntoView();
+                    this.setAlert("Customer verification has been deleted","success");
 
-                //this.$router.push('/admin');
-                //this.$router.go('/admin');
+                    this.$router.push('/admin');
+                    this.$router.go('/admin');
+                },1000)
 
               } else if(response.data.genralErrorCode === 8004){
 
+                
                 this.alert = false;
-  
-                this.setAlert(response.data.message,"error");
 
-                document.getElementById('app').scrollIntoView();
+                    setTimeout(()=>{
+
+                        this.setAlert(response.data.message,"error");
+                },1000)
               }
 
               }).catch(()=>
       
               {
 
-                this.setAlert("There is internal server error","error");
-                
-                document.getElementById('app').scrollIntoView();                
+                setTimeout(()=>{
+
+                    this.setAlert("There is internal server error","error");
+
+                },1000)               
               });     
     },
 

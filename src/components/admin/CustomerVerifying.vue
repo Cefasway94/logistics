@@ -562,6 +562,8 @@ export default {
                             color: 'success'
                         });
 
+                        
+
                        this.$router.push('/admin');
 
                        this.$router.go('/admin');
