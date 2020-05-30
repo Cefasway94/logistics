@@ -28,7 +28,7 @@
             </div>
         </v-overlay>
 
-        <AlertError v-if="display_alert" v-bind:message="alert"/>
+        <!-- <AlertError v-if="display_alert" v-bind:message="alert"/> -->
 
         <v-card flat class="mt-10 mx-auto mb-2" color="#F5FAFF">
 
@@ -299,49 +299,29 @@ export default {
     data () {
         return {
            
-           agent:[],
+            agent:[],
 
-           payment_classes: ['Payment Scheme','Payment Classification'],
+            payment_classes: ['Payment Scheme','Payment Classification'],
 
-           scheme_values:[
-               {
-                   id:1,
-                   name:'Percent'
-               },
+            scheme_values:[],
 
-               {
-                   id:2,
-                   name:'Range'
-               }
-           ],
+            class_values:[],
 
-           class_values:[
-               {
-                   id:1,
-                   name:'Starter'
-               },
-
-               {
-                   id:2,
-                   name:'Middle level'
-               }
-           ],
-
-           payment_class:'',
+            payment_class:'',
 
             alert: false,
             message:'',
             type:'',
 
-           transporter:false,
-           clearer: false,
+            transporter:false,
+            clearer: false,
 
-           has_photo: false,
+            has_photo: false,
 
-           dialog: false,
+            dialog: false,
 
-           scheme_value:'',
-           class_value:'',
+            scheme_value:'',
+            class_value:'',
 
             url:'',
             pdf:false,
@@ -360,6 +340,8 @@ export default {
     },
 
     methods:{
+
+        
 
         setAlert(message,type){
 
@@ -428,6 +410,101 @@ export default {
                 return true;
         },
 
+        
+        fetchClassification(){
+
+            //getting all payment settings
+            const classification_url = "http://207.180.215.239:8002/api/settinggroup/index"
+
+            axios.get(classification_url).then((response) => 
+                {
+                                    
+                    //eslint-disable-next-line no-console
+                    //console.log(response.data.objects[i].industry_name);
+
+                if(response.data.genralErrorCode === 8000)
+                {
+
+                    this.class_values = response.data.objects;
+
+                    /*if(this.classifications.length > 0)
+                    {
+                            for(let i=0; i< this.classifications.length; i++)
+                            this.classification_names.push(this.classifications[i].name);
+                    }*/
+
+                    //eslint-disable-next-line no-console
+                    //console.log(this.payment_settings);
+
+                } else if(response.data.genralErrorCode === 8004){
+
+                    this.alert = false;
+
+                    setTimeout(()=>{
+
+                        this.setAlert(response.data.message,"error");
+                    },1000)
+                }
+
+                }).catch(()=>
+            
+                {
+                        setTimeout(()=>{
+
+                        this.setAlert("There is an internal error","error");
+                    },1000)
+                });
+        },
+
+        fetchPaymentScheme(){
+
+            //getting all payment settings
+            const payment_schemes_url = "http://207.180.215.239:8002/api/paymentscheme/index"
+
+            axios.get(payment_schemes_url).then((response) => 
+                {
+                                    
+                    //eslint-disable-next-line no-console
+                    //console.log(response.data.objects[i].industry_name);
+
+                if(response.data.genralErrorCode === 8000)
+                {
+
+                    //console.log("SCHEMES");
+                    //console.log(response.data.objects);
+
+                    this.scheme_values = response.data.objects;
+
+                    /*if(this.payment_schemes.length > 0)
+                    {
+                            for(let i=0; i< this.payment_schemes.length; i++)
+                            this.payment_scheme_names.push(this.payment_schemes[i].name);
+                    }*/
+
+                    //eslint-disable-next-line no-console
+                    //console.log(this.payment_settings);
+
+                } else if(response.data.genralErrorCode === 8004){
+
+                    this.alert = false;
+
+                    setTimeout(()=>{
+
+                        this.setAlert(response.data.message,"error");
+
+                    },1000)
+                }
+
+                }).catch(()=>
+            
+                {
+                    setTimeout(()=>{
+
+                        this.setAlert("There is an internal error","error");
+                    },1000)                    
+                });
+        },
+
         verifyAgent(){
 
             this.dialog = false;
@@ -437,8 +514,11 @@ export default {
                 let formData = new FormData();
 
                 if(this.scheme_value != '')
+
                     formData.append('scheme',this.scheme_value);
+
                 else if(this.class_value !='' )
+
                     formData.append('class',this.class_value);
 
                 const url = `http://207.180.215.239:8000/api/v1/agents/verify/${this.agent.email}`;
@@ -483,7 +563,9 @@ export default {
                 let formData = new FormData();
 
                 if(this.scheme_value != '')
+
                     formData.append('scheme',this.scheme_value);
+
                 else if(this.class_value !='' )
                     formData.append('class',this.class_value);
 
@@ -591,121 +673,126 @@ export default {
     },
 },
 
-    beforeRouteEnter(to,from,next){
-        next(vm=>{
+created(){
+    this.fetchClassification();
+    this.fetchPaymentScheme();
+},
 
-            if(vm.$route.params.type === 'Clearing'){
+beforeRouteEnter(to,from,next){
+    next(vm=>{
 
-                vm.clearer = true;
+        if(vm.$route.params.type === 'Clearing'){
 
-                const agent = `http://207.180.215.239:8000/api/v1/agents/${vm.$route.params.id}`;
+            vm.clearer = true;
 
-                 axios.get(agent).then((response) => 
+            const agent = `http://207.180.215.239:8000/api/v1/agents/${vm.$route.params.id}`;
+
+                axios.get(agent).then((response) => 
+            {
+                            
+                //eslint-disable-next-line no-console
+                //console.log(response.data.objects[i].industry_name);
+
+                if(response.data.genralErrorCode === 8000)
                 {
-                               
-                    //eslint-disable-next-line no-console
-                    //console.log(response.data.objects[i].industry_name);
+                    /*vm.display_alert = false;
 
-                    if(response.data.genralErrorCode === 8000)
+                    vm.agent = response.data.objects;
+
+                    if(vm.agent.profile_image.length > 0)
+                        vm.has_photo = true;*/
+
+                    vm.agent = response.data.objects;
+
+                    if(vm.agent.certificate !== null)
                     {
-                        /*vm.display_alert = false;
+                        vm.certificate_extension = vm.getFileExtension(vm.agent.certificate[0]);
 
-                        vm.agent = response.data.objects;
-
-                        if(vm.agent.profile_image.length > 0)
-                            vm.has_photo = true;*/
-
-                        vm.agent = response.data.objects;
-
-                        if(vm.agent.certificate !== null)
-                        {
-                            vm.certificate_extension = vm.getFileExtension(vm.agent.certificate[0]);
-
-                            vm.certificate_url = vm.agent.certificate[0];
-                        }
-
-                         if(vm.agent.insurance !== null)
-                        {
-                            vm.insurance_extension = vm.getFileExtension(vm.agent.insurance[0]);
-
-                            vm.insurance_url = vm.agent.insurance[0];
-                        }
-
-                    } else if(response.data.genralErrorCode === 8004){
-
-                        vm.display_alert = false;
-
-                        vm.alert = response.data.message;
-
-                        vm.display_alert = true;
-
-                        document.getElementById('app').scrollIntoView();
+                        vm.certificate_url = vm.agent.certificate[0];
                     }
-
-                }).catch(()=>
-      
-                {
-
-                    /*vm.alert = "Error occured. Please try again";
-
-                    vm.display_alert = true;
-
-                    document.getElementById('app').scrollIntoView();*/                      
-                });
-
-            } else if(vm.$route.params.type === 'Transporting'){
-
-                vm.transporter = true;
-
-                const transporter = `http://207.180.215.239:9000/api/v1/transporters/${vm.$route.params.id}`;
-
-                axios.get(transporter).then((response) => 
-                {
-                               
-                    //eslint-disable-next-line no-console
-                    //console.log(response.data.objects[i].industry_name);
-
-                    if(response.data.genralErrorCode === 8000)
-                    {
-                        vm.display_alert = false;
-
-                        vm.agent = response.data.objects;
-
-                        if(vm.agent.certificate !== null)
-                        {
-                            vm.certificate_extension = vm.getFileExtension(vm.agent.certificate[0]);
-
-                            vm.certificate_url = vm.agent.certificate[0];
-                        }
 
                         if(vm.agent.insurance !== null)
-                        {
-                            vm.insurance_extension = vm.getFileExtension(vm.agent.insurance[0]);
+                    {
+                        vm.insurance_extension = vm.getFileExtension(vm.agent.insurance[0]);
 
-                            vm.insurance_url = vm.agent.insurance[0];
-                        }
-
-                    } else if(response.data.genralErrorCode === 8004){
-
-                        vm.alert = false;
-
-                        vm.setAlert(response.data.message,"error");
-
-                        document.getElementById('app').scrollIntoView();
+                        vm.insurance_url = vm.agent.insurance[0];
                     }
 
-                    }).catch(()=>
-      
+                } else if(response.data.genralErrorCode === 8004){
+
+                    // vm.display_alert = false;
+
+                    vm.alert = response.data.message;
+
+                    // vm.display_alert = true;
+
+                    document.getElementById('app').scrollIntoView();
+                }
+
+            }).catch(()=>
+    
+            {
+
+                /*vm.alert = "Error occured. Please try again";
+
+                vm.display_alert = true;
+
+                document.getElementById('app').scrollIntoView();*/                      
+            });
+
+        } else if(vm.$route.params.type === 'Transporting'){
+
+            vm.transporter = true;
+
+            const transporter = `http://207.180.215.239:9000/api/v1/transporters/${vm.$route.params.id}`;
+
+            axios.get(transporter).then((response) => 
+            {
+                            
+                //eslint-disable-next-line no-console
+                //console.log(response.data.objects[i].industry_name);
+
+                if(response.data.genralErrorCode === 8000)
+                {
+                    // vm.display_alert = false;
+
+                    vm.agent = response.data.objects;
+
+                    if(vm.agent.certificate !== null)
                     {
+                        vm.certificate_extension = vm.getFileExtension(vm.agent.certificate[0]);
 
-                        vm.setAlert("There is an internal error","error");
+                        vm.certificate_url = vm.agent.certificate[0];
+                    }
 
-                        document.getElementById('app').scrollIntoView();                    
-                    });
-            }
-            next();
-        });
-    }
+                    if(vm.agent.insurance !== null)
+                    {
+                        vm.insurance_extension = vm.getFileExtension(vm.agent.insurance[0]);
+
+                        vm.insurance_url = vm.agent.insurance[0];
+                    }
+
+                } else if(response.data.genralErrorCode === 8004){
+
+                    vm.alert = false;
+
+                    vm.setAlert(response.data.message,"error");
+
+                    document.getElementById('app').scrollIntoView();
+                }
+
+                }).catch(()=>
+    
+                {
+
+                    vm.setAlert("There is an internal error","error");
+
+                    document.getElementById('app').scrollIntoView();                    
+                });
+        }
+        next();
+    });
+}
 }
 </script>
 

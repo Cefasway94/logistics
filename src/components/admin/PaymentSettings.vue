@@ -47,84 +47,86 @@
                                     inset
                                     vertical
                                     ></v-divider>
+
                                     <v-spacer></v-spacer>
+
                                     <v-dialog v-model="payment_setting_dialog" max-width="500px">
-                                    <template v-slot:activator="{ on }">
-                                        <v-btn color="primary" dark class="mb-2" v-on="on">ADD NEW</v-btn>
-                                    </template>
-                                    <v-card>
-                                        <v-card-title>
-                                        <span class="headline">{{ payment_settings_form_title }}</span>
-                                        </v-card-title>
+                                        <template v-slot:activator="{ on }">
+                                            <v-btn color="primary" dark class="mb-2" v-on="on">ADD NEW</v-btn>
+                                        </template>
+                                        <v-card>
+                                            <v-card-title>
+                                            <span class="headline">{{ payment_settings_form_title }}</span>
+                                            </v-card-title>
 
-                                        <v-card-text>
-                                            <v-container>
-                                                <v-row>
-                                                    <v-col cols="12">
+                                            <v-card-text>
+                                                <v-container>
+                                                    <v-row>
+                                                        <v-col cols="12">
 
-                                                        <p class=" body-1 mb-0 text-capitalize">Setting Name </p>
-                                                        <v-text-field  
-                                                            v-model="payment_setting.setting_name" 
-                                                            :rules="[v => !!v || 'Setting name is required']">
+                                                            <p class=" body-1 mb-0 text-capitalize">Setting Name </p>
+                                                            <v-text-field  
+                                                                v-model="payment_setting.setting_name" 
+                                                                :rules="[v => !!v || 'Setting name is required']">
 
-                                                            <template #label>
-                                                                <span class="red--text"><strong>* </strong></span>
-                                                            </template>
+                                                                <template #label>
+                                                                    <span class="red--text"><strong>* </strong></span>
+                                                                </template>
 
-                                                        </v-text-field>
-                                                    </v-col>
+                                                            </v-text-field>
+                                                        </v-col>
 
-                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-col cols="12" sm="6" md="6">
 
-                                                        <p class=" body-1 mb-0 text-capitalize">Setting Value </p>
-                                                        <v-select
+                                                            <p class=" body-1 mb-0 text-capitalize">Setting Value </p>
+                                                            <v-select
 
-                                                            v-model="payment_setting.setting_value"
-                                                            style="color:#4169E1;"
-                                                            :items="payment_scheme_names"
-                                                            color="#4169E1"
-                                                            :rules="[v => !!v || 'Setting value is required']"
-                                                            required
-                                                        >     
-                                                            <template #label>
-                                                                <span class="red--text"><strong>* </strong></span>
-                                                            </template>
+                                                                v-model="payment_setting.setting_value"
+                                                                style="color:#4169E1;"
+                                                                :items="payment_scheme_names"
+                                                                color="#4169E1"
+                                                                :rules="[v => !!v || 'Setting value is required']"
+                                                                required
+                                                            >     
+                                                                <template #label>
+                                                                    <span class="red--text"><strong>* </strong></span>
+                                                                </template>
 
-                                                        </v-select>
+                                                            </v-select>
 
-                                                    </v-col>
+                                                        </v-col>
 
-                                                    <v-col cols="12" sm="6" md="6">
+                                                        <v-col cols="12" sm="6" md="6">
 
-                                                        <p class=" body-1 mb-0 text-capitalize">Setting Group </p>
+                                                            <p class=" body-1 mb-0 text-capitalize">Setting Group </p>
 
-                                                        <v-select
-                                                           
-                                                            v-model="payment_setting.setting_group"
-                                                            style="color:#4169E1;"
-                                                            :items="classification_names"
-                                                            color="#4169E1"
-                                                            :rules="[v => !!v || 'Setting group is required']"
-                                                            required
-                                                        >     
-                                                            <template #label>
-                                                                <span class="red--text"><strong>* </strong></span>
-                                                            </template>
+                                                            <v-select
+                                                            
+                                                                v-model="payment_setting.group_ID"
+                                                                style="color:#4169E1;"
+                                                                :items="classification_names"
+                                                                color="#4169E1"
+                                                                :rules="[v => !!v || 'Setting group is required']"
+                                                                required
+                                                            >     
+                                                                <template #label>
+                                                                    <span class="red--text"><strong>* </strong></span>
+                                                                </template>
 
-                                                        </v-select>
+                                                            </v-select>
 
-                                                    </v-col>
-                                                    
-                                                </v-row>
-                                            </v-container>
-                                        </v-card-text>
+                                                        </v-col>
+                                                        
+                                                    </v-row>
+                                                </v-container>
+                                            </v-card-text>
 
-                                        <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn color="blue darken-1" text @click="closePaymentSettingDialog">Cancel</v-btn>
-                                        <v-btn color="blue darken-1" text @click="savePaymentSetting">Save</v-btn>
-                                        </v-card-actions>
-                                    </v-card>
+                                            <v-card-actions>
+                                                <v-spacer></v-spacer>
+                                                <v-btn color="blue darken-1" text @click="closePaymentSettingDialog">Cancel</v-btn>
+                                                <v-btn color="blue darken-1" text :disabled="paymentSettingValidation" @click="savePaymentSetting">Save</v-btn>
+                                            </v-card-actions>
+                                        </v-card>
                                     </v-dialog>
                                 </v-toolbar>
                             </template>
@@ -154,7 +156,6 @@
             </v-row>
 
 
-            
             <v-row class="ml-6 mt-8">
                 <v-row>
                     <div class="table">
@@ -230,7 +231,7 @@
                                         <v-card-actions>
                                         <v-spacer></v-spacer>
                                         <v-btn color="blue darken-1" text @click="closePaymentSchemeDialog">Cancel</v-btn>
-                                        <v-btn color="blue darken-1" text @click="savePaymentScheme">Save</v-btn>
+                                        <v-btn color="blue darken-1" text :disabled="paymentSchemeValidation" @click="savePaymentScheme">Save</v-btn>
                                         </v-card-actions>
                                     </v-card>
                                     </v-dialog>
@@ -313,7 +314,7 @@
                                         <v-card-actions>
                                         <v-spacer></v-spacer>
                                         <v-btn color="blue darken-1" text @click="closeClassificationDialog">Cancel</v-btn>
-                                        <v-btn color="blue darken-1" text @click="saveClassification">Save</v-btn>
+                                        <v-btn color="blue darken-1" text :disabled="classificationValidation" @click="saveClassification">Save</v-btn>
                                         </v-card-actions>
                                     </v-card>
                                     </v-dialog>
@@ -411,7 +412,7 @@
                     id:'',
                     setting_name:'',
                     setting_value:'',
-                    setting_group:'',
+                    group_ID:'',
                 },
 
                 payment_scheme:{
@@ -441,8 +442,6 @@
 
         methods:{
             
-           
-
             setAlert(message,type){
 
                 this.alert = true;
@@ -559,12 +558,17 @@
             
             editClassification(item){
 
+                console.log("classfication" + item.name);
+                
+                 console.log("classfication GID" + item.group_ID);
                 this.classification_edited = true;
 
                 this.classification_dialog = true;
 
                 this.classification = item;
 
+                
+            
             },
 
             savePaymentSetting(){
@@ -572,6 +576,59 @@
                 if(this.payment_setting_edited){
 
                     //editing
+
+                    this.payment_setting_dialog = false;
+                    this.payment_setting_edited = false;
+
+                    const edit_payment_url = 'http://207.180.215.239:8002/api/paymentsetting/update/'+this.payment_setting.id
+
+                    let formData = new FormData();
+
+                    formData.append('setting_name',this.payment_setting.setting_name);
+                    formData.append('setting_value',this.payment_setting.setting_value);
+                    formData.append('group_ID',this.payment_setting.group_ID);
+
+                    axios.post(edit_payment_url,formData,
+                                {
+                                    headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            }).
+                    
+                            then((response) => {
+
+                            if(response.data.genralErrorCode === 8000){
+
+                                this.alert = false;
+
+                                setTimeout(()=>{
+
+                                    this.setAlert(response.data.message,"success");
+
+                                    this.$router.push('/admin/payment-settings');
+                                    this.$router.go('/admin/payment-settings');
+                                },1000)
+
+                            } else if(response.data.genralErrorCode === 8004){
+
+                                this.alert = false;
+
+                                    setTimeout(()=>{
+
+                                        this.setAlert(response.data.message,"error");
+                                },1000)
+                            }
+
+                        }).catch(()=>{
+
+                            setTimeout(()=>{
+
+                                this.setAlert("There is internal server error","error");
+
+                            },1000)
+
+                        });
+
 
                 } else {
 
@@ -629,11 +686,92 @@
 
             editPaymentSetting(item){
 
+
                 this.payment_setting_edited = true;
 
                 this.payment_setting_dialog = true;
 
                 this.payment_setting = item;
+
+                this.getPaymentScheme();
+                this.getClassification();
+
+            },
+
+            getPaymentScheme(){
+                //getting all payment settings
+                const payment_scheme_url = "http://207.180.215.239:8002/api/paymentscheme/scheme_by_ID/"+this.payment_setting.setting_value
+
+                axios.get(payment_scheme_url).then((response) => 
+                    {
+                                        
+                        //eslint-disable-next-line no-console
+                        //console.log(response.data.objects[i].industry_name);
+
+                    if(response.data.genralErrorCode === 8000)
+                    {
+                        this.payment_setting.setting_value = response.data.objects.name;
+
+                       
+                        //eslint-disable-next-line no-console
+                        //console.log(this.payment_settings);
+
+                    } else if(response.data.genralErrorCode === 8004){
+
+                        this.alert = false;
+
+                       setTimeout(()=>{
+
+                            this.setAlert(response.data.message,"error");
+                        },1000)
+                    }
+
+                    }).catch(()=>
+                
+                    {
+                        setTimeout(()=>{
+
+                            this.setAlert("There is an internal error","error","error");
+                        },1000)
+                    });
+            },
+
+            getClassification(){
+                //getting all payment settings
+                const classification_url = "http://207.180.215.239:8002/api/settinggroup/group_by_ID/"+this.payment_setting.group_ID
+
+                axios.get(classification_url).then((response) => 
+                    {
+                                        
+                        //eslint-disable-next-line no-console
+                        //console.log(response.data.objects[i].industry_name);
+
+                    if(response.data.genralErrorCode === 8000)
+                    {
+                        this.payment_setting.group_ID = response.data.objects.name;
+
+                       
+                        //eslint-disable-next-line no-console
+                        //console.log(this.payment_settings);
+
+                    } else if(response.data.genralErrorCode === 8004){
+
+                        this.alert = false;
+
+                       setTimeout(()=>{
+
+                            this.setAlert(response.data.message,"error");
+                        },1000)
+                    }
+
+                    }).catch(()=>
+                
+                    {
+                        setTimeout(()=>{
+
+                            this.setAlert("There is an internal error","error","error");
+                        },1000)
+                    });
             },
 
             savePaymentScheme(){
@@ -916,7 +1054,31 @@
             classification_form_title(){
 
                 return this.classification_edited? 'Edit Classification':'New Classification';
-            }
+            },
+
+            paymentSettingValidation()
+            {
+                if(this.payment_setting.setting_name == '' || this.payment_setting.setting_value == '' || this.payment_setting.setting_group == '')
+                    return true
+                else 
+                    return false;
+            },
+
+            paymentSchemeValidation()
+            {
+                if(this.payment_scheme.name == '' || this.payment_scheme.formular == '')
+                    return true
+                else 
+                    return false;
+            },
+
+            classificationValidation()
+            {
+                if(this.classification.name == '')
+                    return true
+                else 
+                    return false;
+            },
         }
     }
 </script>
