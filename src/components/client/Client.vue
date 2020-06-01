@@ -131,7 +131,7 @@
 
                                     <template v-if='tab.title === "All"'>
 
-                                    <v-row v-if="(AllClearingTenders.length == 0 && AllTransportingTenders.length == 0)">
+                                    <v-row v-if="checkIfNoTenders">
                                         <v-col cols=12>
                                             <v-card>
                                                 <v-card-title class="headline">No tenders. Click add new to create</v-card-title>
@@ -415,7 +415,17 @@ export default {
       ...mapGetters(['AllClearingTenders','Tenders','ClearingBidedTenders','OnProgressTenders',
                         'ClearingTendersOnProgress','getAlert','AllTransportingTenders',
                         'TransportingBidedTenders','TransportingOnProgressTenders','BidedTenders', 'LOAD_AGENT'
-                    ])
+                    ]),
+        
+        checkIfNoTenders(){
+
+            if(this.AllClearingTenders.length == 0 && this.AllTransportingTenders.length == 0)
+               return true;
+            else
+                return false;
+        }
+
+
   },
 
   methods: {
