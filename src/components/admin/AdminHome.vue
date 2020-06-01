@@ -29,52 +29,39 @@
 
                 <template v-if="tab.title == 'Customers'">
 
-                  <v-simple-table>
+                  <v-data-table :items="customers" :headers="customer_headers">
 
-                    <template v-slot:default>
-                      <thead>
-                        <tr>
-                          <th class="text-left">Email</th>
-                          <th class="text-left">Country</th>
-                          <th></th>
-                          <th></th>
-                        </tr>
-                      </thead>
+                    <template v-slot:item.actions="{ item }">
+                                
+                                
 
-                      <tbody>
-                        <tr v-for="customer in customers" :key="customer.customer_id">
-                          <td>{{ customer.email }}</td>
-                          <td>{{ customer.country }}</td>
-                          <td>
-                            <v-btn
-                              small 
-                              elevation="flat" 
-                              color="#4169E1" 
-                              class="white--text"
-                              :to="'/admin/verify/'+customer.id"
-                              :disabled="customer.is_verified == 1"
-                            >
-                              Verify
-                            </v-btn>
-                          </td>
-                          <td>
-                            <v-dialog              
+                        <v-btn
+                          x-small 
+                          elevation="flat" 
+                          color="#4169E1" 
+                          class="white--text mr-3"
+                          :to="'/admin/verify/'+item.id"
+                          :disabled="item.is_verified == 1"
+                        >
+                          verify
+                        </v-btn>
+
+                        <v-dialog              
                               v-model="dialog"
                               :retain-focus="false"
                               width="600"
                             >
                               <template v-slot:activator="{ on }">
-                                <v-btn
-                                  small 
-                                  elevation="flat" 
-                                  color="#4169E1" 
-                                  class="white--text"
-                                  :disabled="customer.is_verified == 0"
-                                  @click="setEmail(customer.email)"
-                                  v-on="on"
-                                >
-                                  Deny
-                                </v-btn>
+                                  <v-btn
+                                    small 
+                                    elevation="flat" 
+                                    color="#4169E1" 
+                                    class="white--text"
+                                    v-on="on"
+                                    :disabled="item.is_verified == 0"
+                                  >
+                                    deny
+                                  </v-btn>
                               </template>
 
                               <v-card>
@@ -99,73 +86,38 @@
                                   <v-btn
                                       color="primary"
                                       text
-                                      @click="denyCustomerVerification()"
+                                      @click="denyCustomerVerification(item.email)"
                                     >
                                     Yes
                                   </v-btn>
                                 </v-card-actions>
                               </v-card>
                             </v-dialog>
-                          </td>
-                          <td>
-                            <v-btn
-                              small 
-                              elevation="flat" 
-                              color="#4169E1" 
-                              class="white--text"   
-                            >
-                              <v-icon small color="white" v-show="customer.is_verified">
-                                  mdi-check-outline
-                              </v-icon>
-
-                              <v-icon small color="white" v-show="!customer.is_verified">
-                                  mdi-reload
-                              </v-icon>
-
-                            </v-btn>
-                          </td>
-                        </tr>
-                      </tbody>
-
-                    </template>
-
-                  </v-simple-table>
+                      </template>
+                    
+                  </v-data-table>
 
                 </template>
 
                 <template v-if="tab.title == 'Agents'">
 
-                  <v-simple-table v-slot:default>
+                  <v-data-table :items="agents" :headers="agent_headers">
 
-                    <template>
-
-                      <thead>
-                        <tr>
-                          <th class="text-left">Email</th>
-                          <th class="text-left">Country</th>
-                          <th></th>
-                          <th></th>
-                        </tr>
-                      </thead>
-
-                      <tbody>
-                        <tr v-for="agent in agents" :key="agent.agent_id">
-                          <td>{{ agent.email }}</td>
-                          <td>{{ agent.country }}</td>
-                          <td>
-                            <v-btn
+                    <template v-slot:item.actions="{ item }">
+                                
+                                
+                        <v-btn
                               small 
                               elevation="flat" 
                               color="#4169E1" 
-                              class="white--text"
-                              :to="'/admin/verify/Clearing/'+agent.id"
-                              :disabled="agent.is_verified == 1"
+                              class="white--text mr-3"
+                              :to="'/admin/verify/Clearing/'+item.id"
+                              :disabled="item.is_verified == 1"
                             >
                               Verify
-                            </v-btn>
-                          </td>
-                          <td>
-                            <v-dialog              
+                        </v-btn>
+
+                        <v-dialog              
                               v-model="dialogAgent"
                               :retain-focus="false"
                               width="600"
@@ -176,8 +128,8 @@
                                   elevation="flat" 
                                   color="#4169E1" 
                                   class="white--text"
-                                  :disabled="agent.is_verified == 0"
-                                  @click="setEmail(agent.email)"
+                                  :disabled="item.is_verified == 0"
+
                                   v-on="on"
                                 >
                                   Deny
@@ -206,43 +158,93 @@
                                   <v-btn
                                       color="primary"
                                       text
-                                      @click="denyAgentVerification()"
+                                      @click="denyAgentVerification(item.email)"
                                     >
                                     Yes
                                   </v-btn>
                                 </v-card-actions>
                               </v-card>
                             </v-dialog>
-                          </td>
-                          <td>
-                            <v-btn
-                              small 
-                              elevation="flat" 
-                              color="#4169E1" 
-                              class="white--text"   
-                            >
-                              <v-icon small color="white" v-show="agent.is_verified">
-                                  mdi-check-outline
-                              </v-icon>
-
-                              <v-icon small color="white" v-show="!agent.is_verified">
-                                  mdi-reload
-                              </v-icon>
-
-                            </v-btn>
-                          </td>
-                        </tr>
-                      </tbody>
-                      
+                        
                     </template>
 
-                  </v-simple-table>
+                  </v-data-table>
 
                 </template>
 
                 <template v-if="tab.title == 'Transporters'">
 
-                  <v-simple-table v-slot:default>
+                  <v-data-table :items="transporters" :headers="transporter_headers">
+
+                    <template v-slot:item.actions="{ item }">
+                                
+                                
+                        <v-btn
+                          small 
+                          elevation="flat" 
+                          color="#4169E1" 
+                          class="white--text mr-3"
+                          :to="'/admin/verify/Transporting/'+item.id"
+                          :disabled="item.is_verified == 1"
+                          
+                        >
+                          Verify
+                        </v-btn>
+
+                          <v-dialog              
+                            v-model="dialogTransporter"
+                            :retain-focus="false"
+                            width="600"
+                          >
+                            <template v-slot:activator="{ on }">
+                              <v-btn
+                                small 
+                                elevation="flat" 
+                                color="#4169E1" 
+                                class="white--text"
+                                :disabled="item.is_verified == 0"
+                                v-on="on"
+                              >
+                                Deny
+                              </v-btn>
+                              
+                            </template>
+
+                            <v-card>
+                              <v-card-title
+                                class="body-3 grey lighten-2"
+                            
+                                >
+                                Are you want to cancel verification for this Transporter?
+                              </v-card-title>
+
+                              <v-divider></v-divider>
+
+                              <v-card-actions>
+                                <v-spacer></v-spacer>
+                                  <v-btn
+                                    color="primary"
+                                    text
+                                    @click="dialogTransporter = false"
+                                  >
+                                  No
+                                </v-btn>
+                                <v-btn
+                                    color="primary"
+                                    text
+                                    @click="denyVerification(item.email)"
+                                  >
+                                  Yes
+                                </v-btn>
+                              </v-card-actions>
+                            </v-card>
+                        </v-dialog>
+                        
+                      </template>
+
+                  </v-data-table>
+
+                  <!--<v-simple-table v-slot:default>
 
                     <template>
                        <thead>
@@ -345,7 +347,7 @@
                       </tbody>
                     </template>
 
-                  </v-simple-table>
+                  </v-simple-table>-->
                 </template>
 
               </v-container>
@@ -393,6 +395,48 @@ export default {
       type:'',
 
       email:'',
+
+      customer_headers:[
+
+       {
+          text: 'Email',
+          align: 'start',
+          value: 'email',
+          class:'primary--text blue lighten-5 body-1 font-weight-bold', 
+       },
+
+      { text: 'Country', class:'primary--text blue lighten-5 body-1 font-weight-bold', value: 'country' },
+      { text: 'Actions',  class:'primary--text blue lighten-5 body-1 font-weight-bold', value: 'actions' },
+
+      ],
+
+      agent_headers:[
+
+       {
+          text: 'Email',
+          align: 'start',
+          value: 'email',
+          class:'primary--text blue lighten-5 body-1 font-weight-bold', 
+       },
+
+      { text: 'Country', class:'primary--text blue lighten-5 body-1 font-weight-bold', value: 'country' },
+      { text: 'Actions',  class:'primary--text blue lighten-5 body-1 font-weight-bold', value: 'actions' },
+
+      ],
+
+      transporter_headers:[
+
+       {
+          text: 'Email',
+          align: 'start',
+          value: 'email',
+          class:'primary--text blue lighten-5 body-1 font-weight-bold', 
+       },
+
+      { text: 'Country', class:'primary--text blue lighten-5 body-1 font-weight-bold', value: 'country' },
+      { text: 'Actions',  class:'primary--text blue lighten-5 body-1 font-weight-bold', value: 'actions' },
+
+      ]
      
 
     }
@@ -553,12 +597,12 @@ export default {
         console.log(this.email);
   },
 
-  denyVerification(){
+  denyVerification(email){
 
     this.dialogTransporter = false;
 
   
-    const url = `http://207.180.215.239:9000/api/v1/transporters/deny/${this.email}`;
+    const url = `http://207.180.215.239:9000/api/v1/transporters/deny/${email}`;
 
               
     axios.post(url).then((response) => 
@@ -604,11 +648,11 @@ export default {
           });
         },
     
-    denyAgentVerification(){
+    denyAgentVerification(email){
       
         this.dialogAgent = false;
 
-        const url = `http://207.180.215.239:8000/api/v1/agents/deny/${this.email}`;
+        const url = `http://207.180.215.239:8000/api/v1/agents/deny/${email}`;
 
         axios.post(url).then((response) => 
           {
@@ -652,11 +696,11 @@ export default {
     },
     
 
-    denyCustomerVerification(){
+    denyCustomerVerification(email){
 
         this.dialog = false;
       
-        const url = `http://207.180.215.239:8181/api/v1/customers/deny/${this.email}`;
+        const url = `http://207.180.215.239:8181/api/v1/customers/deny/${email}`;
 
         axios.post(url).then((response) => 
           {

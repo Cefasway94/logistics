@@ -1362,6 +1362,8 @@ export default {
 
            if (this.validate()){
 
+               this.confirm_edit_profile = false
+
                this.$store.dispatch('POST_PAYMENT_TERMS',{
 
                     email : this.mail,

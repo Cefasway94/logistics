@@ -1420,6 +1420,8 @@ export default {
 
            if (this.validate()){
 
+                this.confirm_edit_profile = false
+
                this.$store.dispatch('T_POST_PAYMENT_TERMS',{
 
                     email : this.mail,
