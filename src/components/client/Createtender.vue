@@ -1,5 +1,6 @@
 <template>
     <v-container class="pa-3 mt-10 mx-auto">
+
         <Alert v-if="alert" v-bind="{message,type}"/>
 
         <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
@@ -112,9 +113,7 @@
                 </v-card>
 
             </v-overlay>
-
-        <AlertError v-if="display_alert" v-bind:message="alert"/>
-
+            
         <v-layout class="pa-3 mt-10">
             
 
