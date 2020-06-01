@@ -101,7 +101,7 @@
                                     class="ml-10 white--text" 
                                     color="success"
                                     small
-                                    @click="savechanges()">
+                                    @click.prevent="savechanges()">
                                         YES 
                                     </v-btn>
                                 </v-flex>

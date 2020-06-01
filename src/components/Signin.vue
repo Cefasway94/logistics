@@ -426,11 +426,12 @@ methods:{
           console.log(error.response);
 
           if (error.response == undefined) {
+
             console.log('try');
                 //  this.Displayservererror = "unable to connect to server. please check your internet 😔";
                 //  this.servererror = true;
                 setTimeout(() => {
-            this.loading = false;
+                 this.loading = false;
                  this.loading = false;
                 this.Connectionerror = true
                  }, 6000) 
@@ -438,9 +439,11 @@ methods:{
           }
 
            if (error.response.data.password) {
+
              this.timeout=false; // server timeout false
               console.log('require password');
               console.log(this.LOAD_LOGIN.password[0]);
+
                setTimeout(() => {
                  this.loading = false;
                  this.DisplayCerror = this.LOAD_LOGIN.password[0];
@@ -448,6 +451,7 @@ methods:{
                  }, 0)   //============ kill load
              
            } else if ( this.LOAD_LOGIN.email) {
+
              this.timeout=false; // server timeout false
              console.log('required email');
              console.log(this.LOAD_LOGIN.email[0]);
@@ -456,7 +460,9 @@ methods:{
                  this.DisplayCerror = this.LOAD_LOGIN.email[0];
                  this.Cerror = true;
                  }, 2000)   //============ kill load
+
            }else if(error) {
+
              console.log('server error');
              this.timeout=false
               setTimeout(() => {
@@ -469,9 +475,9 @@ methods:{
           this.userExists = true;
 
           if (error.email) {
-            this.abouterror = 'User Already exist. Please try other datails or log in with appropriate credentials'
+            this.abouterror = 'Please try other datails or log in with appropriate credentials'
           } else {
-            this.abouterror = 'registration failed, please check your internet and try again'
+            this.abouterror = 'signin failed, please check your internet and try again'
           }
          //  ======================== continue from here
           

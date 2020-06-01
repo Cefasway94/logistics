@@ -1361,6 +1361,7 @@ export default {
             console.log(dataobject.get('profile_image[0]'));                  
 
            if (this.validate()){
+               
 
                this.$store.dispatch('POST_PAYMENT_TERMS',{
 

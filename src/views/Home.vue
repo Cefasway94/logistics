@@ -64,7 +64,7 @@
     <router-view name="PaymentSettings"></router-view>
     
 
-</transition>s
+</transition>
       
   </v-content>
  </v-app>
