@@ -133,13 +133,23 @@
 
                             <template v-slot:item.actions="{ item }">
                                 
-                                <v-icon
-                                    small
-                                    class="mr-2"
-                                    @click="editPaymentSetting(item)"
+                                
+
+                                <v-btn
+                                  x-small 
+                                  elevation="flat" 
+                                  color="#4169E1" 
+                                  class="white--text"
+                                  @click="editPaymentSetting(item)"
                                 >
-                                    mdi-pencil
-                                </v-icon>
+                                  <v-icon
+                                        small
+                                        class="mr-2"
+                                    >
+                                        mdi-pencil
+                                    </v-icon>
+                                </v-btn>
+
                                 <!--<v-icon
                                     small
                                     @click="deletePaymentSetting(item)"
@@ -239,13 +249,21 @@
                             </template>
 
                             <template v-slot:item.actions="{ item }">
-                                <v-icon
-                                    small
-                                    class="mr-2"
-                                    @click="editPaymentScheme(item)"
+
+                                <v-btn
+                                  x-small 
+                                  elevation="flat" 
+                                  color="#4169E1" 
+                                  class="white--text"
+                                  @click="editPaymentScheme(item)"
                                 >
-                                    mdi-pencil
-                                </v-icon>
+                                  <v-icon
+                                        small
+                                        class="mr-2"
+                                    >
+                                        mdi-pencil
+                                    </v-icon>
+                                </v-btn>
                                 <!--<v-icon
                                     small
                                     @click="deletePaymentScheme(item)"
@@ -322,13 +340,21 @@
                             </template>
 
                             <template v-slot:item.actions="{ item }">
-                                <v-icon
-                                    small
-                                    class="mr-2"
-                                    @click="editClassification(item)"
+                                <v-btn
+                                  x-small 
+                                  elevation="flat" 
+                                  color="#4169E1" 
+                                  class="white--text"
+                                  @click="editClassification(item)"
                                 >
-                                    mdi-pencil
-                                </v-icon>
+                                  <v-icon
+                                        small
+                                        class="mr-2"
+                                    >
+                                        mdi-pencil
+                                    </v-icon>
+                                </v-btn>
+
                                 <!--<v-icon
                                     small
                                     @click="deleteClassification(item)"
@@ -1079,6 +1105,7 @@
                 else 
                     return false;
             },
+ 
         }
     }
 </script>
