@@ -615,69 +615,7 @@ export default {
             }
 
 
-        },
-
-        forceFileDownload(response){
-
-            let filename = this.getFileName(this.url);
-
-            const url = window.URL.createObjectURL(new Blob([response.data]))
-            const link = document.createElement('a')
-            link.href = url
-            link.setAttribute('download', filename) //or any other extension
-            document.body.appendChild(link)
-            link.click()
-      },
-
-      downloadPhoto(){
-          
-        axios({
-            //url: this.agent.profile_image[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            let filename = this.getFileName(this.url);
-
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', filename);
-            document.body.appendChild(link);
-            link.click();
-        });
-    },
-
-    downloadCertificate(){
-          
-        axios({
-            //url: this.agent.certificate[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-
-     downloadInsurance(){
-          
-        axios({
-             url: this.url,
-            //url: this.agent.insurance[0],
-
-            method: 'GET',
-
-            responseType: 'blob' // important
-
-        }).then((response) => {
-            this.forceFileDownload(response);
-        });
-    },
+        },   
 },
 
 created(){
