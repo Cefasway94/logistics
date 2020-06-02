@@ -55,6 +55,7 @@ export default {
     }
 }
 </script>
+
 <style>
 .large-preview{
 
@@ -93,4 +94,6 @@ export default {
  a {
     text-decoration: none;
 }
+
+
 </style>

@@ -614,6 +614,7 @@ export default {
 
     const url = `http://207.180.215.239:9000/api/v1/transporters/deny/${this.email}`;
 
+
     axios.post(url).then((response) => 
       {
                                
