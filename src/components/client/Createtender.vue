@@ -957,9 +957,10 @@ export default {
                                     //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
                                     this.alert = false;
 
-                                    this.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        this.setAlert(response.data.message,"error");
+                                    },1000)
                                 }
                                 else if(response.data.genralErrorCode === 8000){
 
@@ -972,6 +973,7 @@ export default {
                                     });
 
                                     this.$router.push('/client');
+
                                 }
 
                                 //eslint-disable-next-line no-console
@@ -1018,11 +1020,12 @@ export default {
                                 if(response.data.genralErrorCode === 8004){
 
                                     //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
-                                    this.alert = false;
+                                     this.alert = false;
 
-                                    this.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        this.setAlert(response.data.message,"error");
+                                    },1000)
                                 }
                                 else if(response.data.genralErrorCode === 8000){
 
@@ -1095,12 +1098,11 @@ export default {
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                setTimeout(()=>{
 
-                                vm.setAlert("Failed to fetch industries, There is an internal server error","error");
+                                    vm.setAlert("Failed to fetch industries, There is an internal server error","error");
 
-                                document.getElementById('app').scrollIntoView();
+                                },1000)
                             });
                           
 
@@ -1121,19 +1123,21 @@ export default {
 
                                     vm.alert = false;
 
-                                    vm.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                     vm.setAlert(response.data.message,"error");
+
+                                    },1000)
 
                                }
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
-                                vm.setAlert("Failed to fetch customer, There is internal server error","error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                 vm.setAlert("Failed to fetch customer, There is internal server error","error");
+
+                                },1000)
                             });
             next();
         }) 

@@ -542,9 +542,10 @@ export default {
 
                                     this.alert = false;
 
-                                    this.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        this.setAlert(response.data.message,"error");
+                                    },1000)
                                 }
 
                                 
@@ -554,9 +555,11 @@ export default {
                                
                                 this.loading = false;
 
-                                this.setAlert("There is internal server error","error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    this.setAlert("There is internal server error","error");
+
+                                },1000)
 
                             });  
 
@@ -573,27 +576,6 @@ export default {
                             }).
                             then((response) => {
 
-                                 //eslint-disable-next-line no-console
-                                    console.log(response.data);
-
-                                /*if(response.data.genralErrorCode === 8004){
-                                    
-                                    this.loading = false;
-
-                                    this.display_alert = false;
-
-                        
-                                    this.alert = response.data.message;
-                                }
-                                else if(response.data.genralErrorCode === 8000){
-
-                                    this.loading = false;
-
-                                    this.display_alert = false;
-
-                                    this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
-                                }*/
-
                                 if(response.data.genralErrorCode === 8000){
 
                                     this.loading = false;
@@ -608,22 +590,22 @@ export default {
 
                                     this.alert = false;
 
-                                    this.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        this.setAlert(response.data.message,"error");
+                                    },1000)
                                 }
                                 
 
                             }).catch(()=>{
 
-                                //eslint-disable-next-line no-console
-                                console.log("error occured");
-
                                 this.loading = false;
 
-                                this.setAlert("There is internal server error","error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    this.setAlert("There is internal server error","error");
+
+                                },1000)
                             });  
 
             }
@@ -677,42 +659,42 @@ export default {
 
                                             vm.alert = false;
 
-                                            vm.setAlert(response.data.message,"error");
+                                            setTimeout(()=>{
 
-                                            document.getElementById('app').scrollIntoView();
+                                                vm.setAlert(response.data.message,"error");
+
+                                            },1000)
                                         }
 
                                         }).catch(()=>{
 
-                                        //eslint-disable-next-line no-console
-                                            console.log("There is an error during fetching");
+                                            vm.alert = false;
 
-                                            vm.setAlert("There is internal server error","error");
+                                            setTimeout(()=>{
 
-                                            document.getElementById('app').scrollIntoView();
-                                            // response = null;
-                                            //commit('setOnProgressTenders',response)
+                                                vm.setAlert(response.data.message,"error");
+
+                                            },1000)
                                     });
                                }
                                else if(response.data.genralErrorCode === 8004){
 
                                     vm.alert = false;
 
-                                    vm.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        vm.setAlert(response.data.message,"error");
+
+                                    },1000)
                                }
                                 
                             }).catch(()=>{
 
-                                  //eslint-disable-next-line no-console
-                                console.log("There is an error during fetching");
+                                setTimeout(()=>{
 
-                                vm.setAlert("There is internal server error","error");
+                                    vm.setAlert("There is an internal error","error");
 
-                                document.getElementById('app').scrollIntoView();
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                },1000)
                             });
 
 
@@ -738,22 +720,21 @@ export default {
 
                                     vm.alert = false;
 
-                                    vm.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        vm.setAlert(response.data.message,"error");
+
+                                    },1000)
                                }
                                
 
                             }).catch(()=>{
 
-                                  //eslint-disable-next-line no-console
-                               console.log("There is an error during fetching");
+                                setTimeout(()=>{
 
-                                this.setAlert("There is an internal error","error");
+                                    vm.setAlert("There is an internal error","error");
 
-                                document.getElementById('app').scrollIntoView(); 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                },1000)
                             });
 
 
@@ -781,20 +762,20 @@ export default {
 
                                     vm.alert = false;
 
-                                    vm.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        vm.setAlert(response.data.message,"error");
+
+                                    },1000)
                                }
 
                             }).catch(()=>{
 
-                                  //eslint-disable-next-line no-console
-                                console.log("There is an error during fetching");
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
-                                 vm.setAlert("There is internal server error","error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    vm.setAlert("There is an internal error","error");
+
+                                },1000)
                             });
 
             
@@ -830,44 +811,42 @@ export default {
 
                                             vm.alert = false;
 
-                                            vm.setAlert(response.data.message,"error");
+                                            setTimeout(()=>{
 
-                                            document.getElementById('app').scrollIntoView();
+                                                vm.setAlert(response.data.message,"error");
+
+                                            },1000)
 
                                         }
 
                                     }).catch(()=>{
 
-                                        //eslint-disable-next-line no-console
-                                        console.log("There is an error during fetching");
+                                        setTimeout(()=>{
 
-                                        vm.setAlert("There is an internal error","error");
+                                            vm.setAlert("There is an internal error","error");
 
-                                        document.getElementById('app').scrollIntoView(); 
-                                        // response = null;
-                                        //commit('setOnProgressTenders',response)
+                                        },1000)
                                     });
                                }
                                else if(response.data.genralErrorCode === 8004){
 
                                     vm.alert = false;
 
-                                    vm.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        vm.setAlert(response.data.message,"error");
+
+                                    },1000)
                                }
                                 
 
                             }).catch(()=>{
 
-                                  //eslint-disable-next-line no-console
-                               console.log("There is an error during fetching");
+                                setTimeout(()=>{
 
-                                vm.setAlert("There is an internal error","error");
+                                    vm.setAlert("There is an internal error","error");
 
-                                document.getElementById('app').scrollIntoView();
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                },1000)
                             });
         }
 

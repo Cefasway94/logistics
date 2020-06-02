@@ -24,7 +24,8 @@ export default {
             showing: false,
             text:'',
             color:''
-        }
+        },
+        
     },
 
     getters:{

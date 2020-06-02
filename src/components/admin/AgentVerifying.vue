@@ -540,20 +540,23 @@ export default {
 
                     } else if(response.data.genralErrorCode === 8004){
 
-                        this.alert = false;
+                       this.alert = false;
 
-                        this.setAlert(response.data.message,"error");
+                        setTimeout(()=>{
 
-                        document.getElementById('app').scrollIntoView();
-                    }
+                            this.setAlert(response.data.message,"error");
+                        },1000)
+                        }
 
                 }).catch(()=>
       
                 {
 
-                    this.setAlert("There is an internal error","error");
+                    setTimeout(()=>{
 
-                    document.getElementById('app').scrollIntoView();                     
+                        this.setAlert("There is an internal error","error");
+                    },1000)  
+
                 });
 
             } else if(this.$route.params.type === 'Transporting'){
@@ -590,17 +593,21 @@ export default {
 
                         this.alert = false;
 
-                        this.setAlert(response.data.message,"error");
+                        setTimeout(()=>{
 
-                        document.getElementById('app').scrollIntoView();
+                            this.setAlert(response.data.message,"error");
+
+                        },1000)
                     }
 
                 }).catch(()=>
       
                 {
-                    this.setAlert("There is an internal error","error");
+                    setTimeout(()=>{
 
-                    document.getElementById('app').scrollIntoView();                       
+                        this.setAlert("There is an internal error","error");
+
+                    },1000)                        
                 });
 
 
@@ -776,18 +783,20 @@ beforeRouteEnter(to,from,next){
 
                     vm.alert = false;
 
-                    vm.setAlert(response.data.message,"error");
+                    setTimeout(()=>{
 
-                    document.getElementById('app').scrollIntoView();
+                            vm.setAlert(response.data.message,"error");
+                    },1000)
                 }
 
                 }).catch(()=>
     
                 {
 
-                    vm.setAlert("There is an internal error","error");
+                    setTimeout(()=>{
 
-                    document.getElementById('app').scrollIntoView();                    
+                            vm.setAlert("There is an internal error","error");
+                    },1000)                  
                 });
         }
         next();

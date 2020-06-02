@@ -507,9 +507,10 @@ export default {
 
             this.alert = false;
 
-            this.setAlert(response.data.message,"error");
+            setTimeout(()=>{
 
-            document.getElementById('app').scrollIntoView();
+                this.setAlert(response.data.message,"error");
+            },1000)
 
             
         }
@@ -518,9 +519,11 @@ export default {
       
       {
 
-         this.setAlert("There is internal error","error");
+        setTimeout(()=>{
 
-          document.getElementById('app').scrollIntoView();                      
+          this.setAlert("There is internal server error","error");
+
+        },1000)                     
       });
   },
 
@@ -543,18 +546,22 @@ export default {
 
             this.alert = false;
 
-            this.setAlert(response.data.message,"error");
+            setTimeout(()=>{
 
-            document.getElementById('app').scrollIntoView();
+                this.setAlert(response.data.message,"error");
+            },1000)
         }
 
       }).catch(()=>
       
       {
 
-         this.setAlert("There is internal error","error");
+        setTimeout(()=>{
 
-          document.getElementById('app').scrollIntoView();                        
+            this.setAlert("There is internal server error","error");
+
+        },1000)   
+
       });
   },
 
@@ -576,17 +583,20 @@ export default {
 
           this.alert = false;
 
-          this.setAlert(response.data.message,"success");
+          setTimeout(()=>{
 
-          document.getElementById('app').scrollIntoView();
+              this.setAlert(response.data.message,"error");
+          },1000)
         }
 
       }).catch(()=>
       {
 
-          this.setAlert("There is internal error","error");
+          setTimeout(()=>{
 
-          document.getElementById('app').scrollIntoView();                     
+            this.setAlert("There is internal server error","error");
+
+          },1000)                     
       });
   },
 
@@ -601,6 +611,8 @@ export default {
 
     this.dialogTransporter = false;
 
+    console.log("email is "+email);
+
   
     const url = `http://207.180.215.239:9000/api/v1/transporters/deny/${email}`;
 
@@ -608,9 +620,6 @@ export default {
     axios.post(url).then((response) => 
       {
                                
-        //eslint-disable-next-line no-console
-        //console.log(response.data.objects[i].industry_name);
-
         if(response.data.genralErrorCode === 8000)
           {
 
@@ -618,12 +627,14 @@ export default {
 
             this.alert = false;
 
+            console.log("transporter........"+response.data.objects);
+
              setTimeout(()=>{
 
-                    this.setAlert("The transporter verification is deleted","success");
+                    this.setAlert(response.data.message,"success");
 
-                    this.$router.push('/admin');
-                    this.$router.go('/admin');
+                    //this.$router.push('/admin');
+                    //this.$router.go('/admin');
              },1000)
            
           } else if(response.data.genralErrorCode === 8004){
@@ -751,8 +762,7 @@ export default {
   beforeRouteEnter(to, from, next){
     next(vm => {
 
-     
-
+  
       vm.fetchCustomers();
 
       vm.fetchAgents();

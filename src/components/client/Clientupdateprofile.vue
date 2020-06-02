@@ -1644,60 +1644,33 @@ export default {
 
                                 if(response.data.genralErrorCode === 8004){
 
-                                    //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
-                                    //this.alert = response.data.message;
-                                    //eslint-disable-next-line no-console
-                                    console.log("There is an error");
-
                                     this.alert = false;
 
-                                    this.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        this.setAlert(response.data.message,"error");
+                                    },1000)
                                 }
                                 else if(response.data.genralErrorCode === 8000){
 
-                                    //this.AddTender(response.data.objects);
-
-                                    //this.setAlert(response.data.message);
-
-                                   
                                     this.updatePercentage(30);
 
-                                    //.setAlert("Profile updating is completed");
-
-                                     this.$store.dispatch('setSnackbar',{
+                                    this.$store.dispatch('setSnackbar',{
                                         text: "Profile updating is completed",
                                         color: 'success'
                                     });
                                 
                                     this.$router.push('/client');
                                     
-                                    
-
-                                    //eslint-disable-next-line no-console
-                                    console.log(response.data);
-
-                                    
                                 }
-
-                                //eslint-disable-next-line no-console
-                                //console.log(response.data);
 
                             }).catch(()=>{
 
-                                //eslint-disable-next-line no-console
-                                console.log("error occured");
+                                setTimeout(()=>{
 
-                                this.setAlert("There is an internal server error","error");
+                                    this.setAlert("There is internal server error","error");
 
-                                document.getElementById('app').scrollIntoView(); 
-
-                                /*this.setAlert("Erro occured. Please try again");
-
-                                this.alert = this.getAlert();
-
-                                this.$router.push('/client/createtender');*/
+                                },1000)
                             }); 
 
             } else {
@@ -1705,9 +1678,7 @@ export default {
                 console.log("Not document");
 
                 const url = `http://207.180.215.239:8181/api/v1/customers/${this.$route.params.id}`;
-                //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
-
-         
+               
                 axios.post(url,
                             formData,
                             {
@@ -1722,52 +1693,26 @@ export default {
 
                                 if(response.data.genralErrorCode == 8004){
 
-                                    //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
-                                    //this.alert = response.data.message;
-                                    //eslint-disable-next-line no-console
-                                    console.log("There is an error");
-
                                     this.alert = false;
 
-                                    this.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        this.setAlert(response.data.message,"error");
+                                    },1000)
                                 }
                                 else if(response.data.genralErrorCode === 8000){
 
-                                    //this.AddTender(response.data.objects);
-
-                                    //this.setAlert(response.data.message);
-
-                                    //this.$router.push('/client');
-
-                                    //eslint-disable-next-line no-console
-                                    console.log(response.data);
-
                                     if(response.data.objects.client_details && this.percentage == this.initial_percent){
 
-                
-                                        //eslint-disable-next-line no-console
-                                        console.log("Updating client details ..stage1,....stage2....bankdetails "+this.stage1, this.stage2, this.bank_details);
-                                     
-
+            
                                         this.updatePercentage(40);
 
-                                        
-
-                                            
                                         this.client_details = response.data.objects.client_details;
 
                                         document.getElementById('app').scrollIntoView();
                                          
                                     } 
                                     else if((response.data.objects.client_details && this.percentage == this.stage1_percent) && this.stage1 == false){
-
-                                        //eslint-disable-next-line no-console
-                                        console.log("percentage is "+this.percentage);
-
-                                         //eslint-disable-next-line no-console
-                                        console.log("Updating bank details ..stage1,....stage2....bankdetails "+this.stage1, this.stage2, this.bank_details);
 
                                         this.updatePercentage(30)
 
@@ -1780,12 +1725,6 @@ export default {
                                          
                                     } else if(this.stage2){
 
-                                         //eslint-disable-next-line no-console
-                                         //console.log("STAGE22222222222222222"+response.data.objects.bank_details);
-
-                                         //eslint-disable-next-line no-console
-                                        console.log("Updating when stage2 is true ..stage1,....stage2....bankdetails "+this.stage1, this.stage2, this.bank_details);
-
                                         this.bank_details = response.data.objects.bank_details;
 
                                         this.stage2 = false;
@@ -1796,9 +1735,6 @@ export default {
 
                                     } else if(this.stage1){
 
-                                        //eslint-disable-next-line no-console
-                                        console.log("Updating when stage1 is true ..stage1,....stage2....bankdetails "+this.stage1, this.stage2, this.bank_details);
-
                                         this.client_details = response.data.objects.client_details;
 
                                         this.stage1 = false;
@@ -1808,48 +1744,20 @@ export default {
                                         document.getElementById('app').scrollIntoView();
                                     }
                                            
-                                    /*if(this.client_details){
-
-                                        this.client_details = false;
-
-                                        this.bank_details = true;
-
-                                        this.updatePercentage(40);
-
-                                    } else if(this.bank_details){
-
-                                        this.bank_details = false;
-
-                                        this.documents = true;
-
-                                        this.updatePercentage(30);
-
-                                    }*/
+                                   
                                 }
-
-                                //eslint-disable-next-line no-console
-                                //console.log(response.data);
-
                             }).catch(()=>{
 
-                                //eslint-disable-next-line no-console
-                                console.log("error occured");
+                              
+                               setTimeout(()=>{
 
-                                this.setAlert("There is an internal error","error");
+                                    this.setAlert("There is internal server error","error");
 
-                                document.getElementById('app').scrollIntoView(); 
+                                },1000)
 
-                                /*this.setAlert("Erro occured. Please try again");
-
-                                this.alert = this.getAlert();
-
-                                this.$router.push('/client/createtender');*/
                             }); 
 
             }
-            
-
-
         }
 
     },
@@ -1877,9 +1785,10 @@ export default {
 
                                     vm.alert = false;
 
-                                    vm.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                         vm.setAlert(response.data.message,"error");
+                                    },1000)
                                }
 
                                
@@ -1887,11 +1796,11 @@ export default {
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
-                                this.setAlert("Fetching customer types failed,There is an internal error","error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView(); 
+                                    vm.setAlert("There is internal server error","error");
+
+                                },1000)
 
                             });
 
@@ -1942,19 +1851,20 @@ export default {
 
                                     vm.alert = false;
 
-                                    vm.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                         vm.setAlert(response.data.message,"error");
+                                    },1000)
 
                                }
                             }).catch(()=>{
 
                                 //eslint-disable-next-line no-console
-                                console.log("request failed");
+                                setTimeout(()=>{
 
-                                vm.setAlert("There is an internal error","error");
+                                    vm.setAlert("There is an internal error","error");
 
-                                document.getElementById('app').scrollIntoView(); 
+                                },1000) 
 
 
                                 // response = null;

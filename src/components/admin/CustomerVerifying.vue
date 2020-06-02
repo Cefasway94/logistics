@@ -572,18 +572,23 @@ export default {
 
                         this.alert = false;
 
-                        this.setAlert(response.data.message,"error");
+                        setTimeout(()=>{
 
-                        document.getElementById('app').scrollIntoView();
+                            this.setAlert(response.data.message,"error");
+
+                        },1000)
                     }
 
                 }).catch(()=>
       
                 {
 
-                    this.setAlert("There is an internal error","error");
+                    setTimeout(()=>{
 
-                    document.getElementById('app').scrollIntoView();                     
+                         this.setAlert("There is an internal error","error");
+
+                    },1000)
+                   
                 });
         },
 
@@ -725,11 +730,10 @@ export default {
 
                                 vm.alert = false;
 
-                                vm.setAlert(response.data.message,"error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
-
-                                
+                                        vm.setAlert(response.data.message,"error");
+                                },1000)
                             }
 
                         }).catch(()=>{

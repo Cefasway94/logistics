@@ -13,7 +13,6 @@
                     color="transparent" 
                     class="mb-3 mx-auto"
                 >
-
                     <v-progress-circular
                         active="true"
                         indeterminate
@@ -577,8 +576,11 @@ export default {
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                setTimeout(()=>{
+
+                                    vm.setAlert("There is an internal error","error");
+
+                                },1000)
                             });
 
         vm.alert = vm.$store.getters.getAlert;
