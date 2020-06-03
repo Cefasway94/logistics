@@ -68,6 +68,13 @@ export default {
     z-index: 2;
     
  }
+
+ span.remove-file{
+    color: red;
+    cursor: pointer;
+    float: right;
+  }
+  
  #large_thumbnail{
    width:auto;
    height:auto;

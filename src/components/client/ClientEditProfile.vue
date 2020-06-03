@@ -754,55 +754,56 @@
                         </v-col>              
                     </v-row>
 
+                    <v-row>
+                        <v-col cols=12>
+
+                            <v-file-input 
+
+                                :clearable="false"
+                                placeholder="Choose a file"
+                                class="fileinput"
+                                id="otheFiles"
+                                @change="otherAttachmentsUpdated()"
+                                prepend-icon ="mdi-cloud-upload"
+                            >
+                            </v-file-input>
+
+                            <v-btn @click="addFiles()">
+                                Add other files
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+
                     <v-row class="mt-5">
-                        <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> OTHER ATTACHMENTS</p>
-                            <v-card flat width="250" height="270" outlined >
+                        <v-col cols=12 md=3 v-for="(file,key) in otherFiles" :key="key">
 
-                                <v-file-input 
-
-                                    :clearable="false"
-                                    placeholder="Choose a file"
-                                    id="otheFiles"
-                                    @change="otherAttachmentsUpdated()"
-                                    prepend-icon ="mdi-cloud-upload"
-                                >
-                                </v-file-input>
-
-                                <!-- <div v-show="bank_statement_extension === 'jpg' || bank_statement_extension === 'jpeg' || bank_statement_extension === 'png'">
-                                    <v-card height="200" width="250" outlined @click="handleClick('bank_statement',bank_statement_url)">
-                                            <img  id="bank_statement_thumb" :src="bank_statement_url" class="preview">
-                                    </v-card>
-                                </div>
-
-                                <div v-show="bank_statement_extension === 'pdf'">
-
-                                    <v-btn 
-                                        :block="true"
-                                        icon class="mt-7" 
-                                        @click="previewPdf(bank_statement_url)"
-                                        >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                    </v-btn>
-
-                                </div> -->
-
-                            </v-card>
-                    
-                        </v-col>   
-
-                        <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
+                            <p>{{ file.file.name }} <span class="remove-file" v-on:click="removeFile( key )">Remove</span></p>
 
                             <div v-show="file.file.type === 'image/jpeg' || file.file.type === 'image/png'">
                                
-                                <v-card height="200" width="250" outlined @click="handleClick('bank_statement',bank_statement_url)">
+                                <v-card height="200" width="250" outlined @click="largePreview(file.source)">
                                         <img  id="bank_statement_thumb" :src="file.source" class="preview">
                                 </v-card>
                             </div>
 
-                        </v-col>
+                            <div v-show="file.file.type === 'application/pdf'">
 
+                                    <v-card height="200" width="250" outlined >
+
+                                        <v-btn 
+                                            :block="true"
+                                            icon class="mt-7" 
+                                            @click="previewPdf(file.source)"
+                                            >
+                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        </v-btn>
+                                        
+                                    </v-card>
+                            </div>
+
+                        </v-col>
                     </v-row>
+
                 </v-card>
             </div>
             
@@ -932,6 +933,15 @@ export default {
     components:{Alert,PDFDocument},
 
     methods: {
+
+        addFiles(){
+
+            document.getElementById("otheFiles").click();
+        },
+
+        removeFile( key ){
+            this.otherFiles.splice( key, 1 );
+        },
 
         previewPdf(url){
 
@@ -1508,7 +1518,15 @@ export default {
                     }
                     else if(document.getElementById("otheFiles").files[i].type === 'application/pdf')
                     {
-                        alert("pdf is here")
+                        file.source = URL.createObjectURL(document.getElementById("otheFiles").files[i]);
+
+                        this.previewPdf(file.source);
+
+                        file.file = document.getElementById("otheFiles").files[i];
+
+                        this.otherFiles.push(file);
+
+                        
                     }
                 }
             }
@@ -1787,6 +1805,13 @@ export default {
     z-index: 2;
     
  }
+
+ .fileinput{
+    position: absolute;
+    left: -2000px;
+ }
+
+ 
 
  .progress { z-index: 1;}
 
