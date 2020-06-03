@@ -277,17 +277,20 @@ import Alert from '@/components/Alert.vue'
 
                                     this.alert = false;
 
-                                    this.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        this.setAlert(response.data.message,"error");
+                                    },1000)
                                 }
      
 
                             }).catch(()=>{
 
-                                this.setAlert("There is an internal error","error");
+                                 setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    this.setAlert("There is internal server error","error");
+
+                                 },1000)
                             });
 
             } else if(this.$route.params.tender_type == "Clearing"){
@@ -311,17 +314,21 @@ import Alert from '@/components/Alert.vue'
 
                                     this.alert = false;
 
-                                    this.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        this.setAlert(response.data.message,"error");
+                                    },1000)
                                 }
      
 
                             }).catch(()=>{
 
-                                this.setAlert("There is an internal error","error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    this.setAlert("There is internal server error","error");
+
+                                },1000)
+
                             });
 
             }
@@ -359,19 +366,20 @@ import Alert from '@/components/Alert.vue'
 
                                     this.alert = false;
 
-                                    this.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        this.setAlert(response.data.message,"error");
+                                    },1000)
                                 }
      
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
-                                this.setAlert("There is an internal error","error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    this.setAlert("There is internal server error","error");
+
+                                },1000)
                             });
 
             } else if(this.$route.params.tender_type == "Clearing"){
@@ -395,17 +403,21 @@ import Alert from '@/components/Alert.vue'
 
                                     this.alert = false;
 
-                                    this.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        this.setAlert(response.data.message,"error");
+                                    },1000)
                                 }
      
 
                             }).catch(()=>{
 
-                                 this.setAlert("There is an internal error","error");
+                                 setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    this.setAlert("There is internal server error","error");
+
+                                },1000)
+
                             });
             }
 
@@ -447,11 +459,11 @@ import Alert from '@/components/Alert.vue'
 
                             }).catch(()=>{
 
-                               
+                                setTimeout(()=>{
 
-                                vm.setAlert("There is an internal error","error");
+                                    vm.setAlert("There is an internal error","error");
 
-                                document.getElementById('app').scrollIntoView();
+                                },1000)
                             });
 
         } else if(vm.$route.params.tender_type == 'Clearing'){
@@ -479,9 +491,11 @@ import Alert from '@/components/Alert.vue'
 
                             }).catch(()=>{
 
-                                vm.setAlert("There is an internal error","error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    vm.setAlert("There is an internal error","error");
+
+                                },1000)
                             });
             }
          next();

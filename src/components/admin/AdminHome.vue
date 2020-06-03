@@ -59,9 +59,11 @@
                                     class="white--text"
                                     v-on="on"
                                     :disabled="item.is_verified == 0"
+                                    @click="setEmail(item.email)"
                                   >
                                     deny
                                   </v-btn>
+                                 
                               </template>
 
                               <v-card>
@@ -86,7 +88,7 @@
                                   <v-btn
                                       color="primary"
                                       text
-                                      @click="denyCustomerVerification(item.email)"
+                                      @click="denyCustomerVerification()"
                                     >
                                     Yes
                                   </v-btn>
@@ -129,6 +131,7 @@
                                   color="#4169E1" 
                                   class="white--text"
                                   :disabled="item.is_verified == 0"
+                                  @click="setEmail(item.email)"
 
                                   v-on="on"
                                 >
@@ -158,7 +161,7 @@
                                   <v-btn
                                       color="primary"
                                       text
-                                      @click="denyAgentVerification(item.email)"
+                                      @click="denyAgentVerification()"
                                     >
                                     Yes
                                   </v-btn>
@@ -178,17 +181,16 @@
 
                     <template v-slot:item.actions="{ item }">
                                 
-                                
-                        <v-btn
-                          small 
-                          elevation="flat" 
-                          color="#4169E1" 
-                          class="white--text mr-3"
-                          :to="'/admin/verify/Transporting/'+item.id"
-                          :disabled="item.is_verified == 1"
+                          <v-btn
+                            small 
+                            elevation="flat" 
+                            color="#4169E1" 
+                            class="white--text mr-3"
+                            :to="'/admin/verify/Transporting/'+item.id"
+                            :disabled="item.is_verified == 1"
                           
-                        >
-                          Verify
+                          >
+                            Verify
                         </v-btn>
 
                           <v-dialog              
@@ -203,11 +205,12 @@
                                 color="#4169E1" 
                                 class="white--text"
                                 :disabled="item.is_verified == 0"
+                                @click="setEmail(item.email)"
                                 v-on="on"
                               >
                                 Deny
                               </v-btn>
-                              
+
                             </template>
 
                             <v-card>
@@ -232,7 +235,7 @@
                                 <v-btn
                                     color="primary"
                                     text
-                                    @click="denyVerification(item.email)"
+                                    @click="denyVerification()"
                                   >
                                   Yes
                                 </v-btn>
@@ -507,20 +510,22 @@ export default {
 
             this.alert = false;
 
-            this.setAlert(response.data.message,"error");
+            setTimeout(()=>{
 
-            document.getElementById('app').scrollIntoView();
-
-            
+                this.setAlert(response.data.message,"error");
+            },1000)
         }
 
       }).catch(()=>
       
       {
 
-         this.setAlert("There is internal error","error");
+        setTimeout(()=>{
 
-          document.getElementById('app').scrollIntoView();                      
+          this.setAlert("There is internal server error","error");
+
+        },1000)    
+
       });
   },
 
@@ -543,18 +548,22 @@ export default {
 
             this.alert = false;
 
-            this.setAlert(response.data.message,"error");
+            setTimeout(()=>{
 
-            document.getElementById('app').scrollIntoView();
+                this.setAlert(response.data.message,"error");
+            },1000)
         }
 
       }).catch(()=>
       
       {
 
-         this.setAlert("There is internal error","error");
+        setTimeout(()=>{
 
-          document.getElementById('app').scrollIntoView();                        
+            this.setAlert("There is internal server error","error");
+
+        },1000)   
+
       });
   },
 
@@ -576,41 +585,39 @@ export default {
 
           this.alert = false;
 
-          this.setAlert(response.data.message,"success");
+          setTimeout(()=>{
 
-          document.getElementById('app').scrollIntoView();
+              this.setAlert(response.data.message,"error");
+          },1000)
         }
 
       }).catch(()=>
       {
 
-          this.setAlert("There is internal error","error");
+          setTimeout(()=>{
 
-          document.getElementById('app').scrollIntoView();                     
+            this.setAlert("There is internal server error","error");
+
+          },1000)                     
       });
   },
 
   setEmail(email){
+
     this.email = email;
 
-     //eslint-disable-next-line no-console
-        console.log(this.email);
   },
 
-  denyVerification(email){
+  denyVerification(){
 
     this.dialogTransporter = false;
 
-  
-    const url = `http://207.180.215.239:9000/api/v1/transporters/deny/${email}`;
+    const url = `http://207.180.215.239:9000/api/v1/transporters/deny/${this.email}`;
 
-              
+
     axios.post(url).then((response) => 
       {
                                
-        //eslint-disable-next-line no-console
-        //console.log(response.data.objects[i].industry_name);
-
         if(response.data.genralErrorCode === 8000)
           {
 
@@ -618,12 +625,12 @@ export default {
 
             this.alert = false;
 
-             setTimeout(()=>{
+            setTimeout(()=>{
 
-                    this.setAlert("The transporter verification is deleted","success");
+              this.setAlert(response.data.message,"success");
 
-                    this.$router.push('/admin');
-                    this.$router.go('/admin');
+              this.$router.push('/admin');
+              this.$router.go('/admin');
              },1000)
            
           } else if(response.data.genralErrorCode === 8004){
@@ -648,11 +655,11 @@ export default {
           });
         },
     
-    denyAgentVerification(email){
+    denyAgentVerification(){
       
         this.dialogAgent = false;
 
-        const url = `http://207.180.215.239:8000/api/v1/agents/deny/${email}`;
+        const url = `http://207.180.215.239:8000/api/v1/agents/deny/${this.email}`;
 
         axios.post(url).then((response) => 
           {
@@ -666,7 +673,7 @@ export default {
 
                  setTimeout(()=>{
 
-                    this.setAlert("The agent verification has been deleted","success");
+                    this.setAlert(response.data.message,"success");
 
                     this.$router.push('/admin');
                     this.$router.go('/admin');
@@ -696,11 +703,11 @@ export default {
     },
     
 
-    denyCustomerVerification(email){
+    denyCustomerVerification(){
 
         this.dialog = false;
       
-        const url = `http://207.180.215.239:8181/api/v1/customers/deny/${email}`;
+        const url = `http://207.180.215.239:8181/api/v1/customers/deny/${this.email}`;
 
         axios.post(url).then((response) => 
           {
@@ -711,15 +718,14 @@ export default {
             if(response.data.genralErrorCode === 8000)
               {
                 
-
                 this.alert = false;
 
                  setTimeout(()=>{
 
-                    this.setAlert("Customer verification has been deleted","success");
+                  this.setAlert(response.data.message,"success");
 
-                    this.$router.push('/admin');
-                    this.$router.go('/admin');
+                  this.$router.push('/admin');
+                  this.$router.go('/admin');
                 },1000)
 
               } else if(response.data.genralErrorCode === 8004){
@@ -751,8 +757,7 @@ export default {
   beforeRouteEnter(to, from, next){
     next(vm => {
 
-     
-
+  
       vm.fetchCustomers();
 
       vm.fetchAgents();

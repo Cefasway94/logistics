@@ -195,9 +195,11 @@ export default {
 
                             }).catch(()=>{
 
-                                this.setAlert("There is an internal error","error");
+                                 setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    this.setAlert("There is internal server error","error");
+
+                                },1000)
                             });
 
             let url = `http://207.180.215.239:9000/api/v1/bids/${vm.$route.params.id}`;
@@ -212,9 +214,11 @@ export default {
 
                             }).catch(()=>{
 
-                                this.setAlert("There is an internal error","error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    this.setAlert("There is internal server error","error");
+
+                                },1000)
                             });
 
         } else if(vm.$route.params.tender_type == "Clearing" ){
@@ -230,9 +234,11 @@ export default {
 
                             }).catch(()=>{
 
-                                this.setAlert("There is an internal error","error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    this.setAlert("There is internal server error","error");
+
+                                },1000)
                             });
 
             //fetching tender bids
@@ -248,9 +254,11 @@ export default {
 
                             }).catch(()=>{
 
-                                this.setAlert("There is an internal error","error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    this.setAlert("There is internal server error","error");
+
+                                },1000)
                             });
         }
          next();

@@ -6,9 +6,6 @@
 
         <Message/>
 
-        <!--<canvas id="canvas">
-
-        </canvas>-->
         <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
         <v-overlay :value="overlay">
@@ -555,44 +552,44 @@ export default {
     data () {
         return {
            
-           customer:[],
+            customer:[],
 
-           display_alert: false,
+            display_alert: false,
 
-           customer_type:'',
-           
-           has_photo: false,
+            customer_type:'',
+            
+            has_photo: false,
 
-           dialog: false,
+            dialog: false,
 
-           overlay:false,
+            overlay:false,
 
-           large_preview_url:'',
+            large_preview_url:'',
 
-           tin_extension:'',
-           profile_photo_extension:'',
-           id_extension:'',
+            tin_extension:'',
+            profile_photo_extension:'',
+            id_extension:'',
 
-           copy_of_registration_extension:'',
-           tax_payer_extension:'',
-           vat_extension:'',
-           licence_extension:'',
-           bank_statement_extension:'',
-           logo_extension:'',
+            copy_of_registration_extension:'',
+            tax_payer_extension:'',
+            vat_extension:'',
+            licence_extension:'',
+            bank_statement_extension:'',
+            logo_extension:'',
 
-           tin_url:'',
-           logo_url:'',
-           profile_photo_url:'',
-           id_url:'',
-           copy_of_registration_url:'',
-           tax_payer_url:'',
-           vat_url:'',
-           licence_url:'',
-           bank_statement_url:'',
+            tin_url:'',
+            logo_url:'',
+            profile_photo_url:'',
+            id_url:'',
+            copy_of_registration_url:'',
+            tax_payer_url:'',
+            vat_url:'',
+            licence_url:'',
+            bank_statement_url:'',
 
-           url:'',
-           pdf:false,
-           pdfOverlay:false,
+            url:'',
+            pdf:false,
+            pdfOverlay:false,
 
             alert: false,
             message:'',
@@ -614,6 +611,13 @@ export default {
             this.pdfOverlay = true;
             this.pdf = true;
             
+        },
+
+        setAlert(message,type){
+
+            this.alert = true;
+            this.message = message;
+            this.type = type;
         },
 
         closePdfViewer(){
@@ -647,118 +651,7 @@ export default {
 
             return extracted_string;
 
-        },
-
-        /*forceFileDownload(response){
-
-            let filename = this.getFileName(this.url);
-
-            const url = window.URL.createObjectURL(new Blob([response.data]))
-            const link = document.createElement('a')
-            link.href = url
-            link.setAttribute('download', filename) //or any other extension
-            document.body.appendChild(link)
-            link.click()
-      },
-
-      downloadIdentityCard(){
-          
-        axios({
-            //url: this.agent.profile_image[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-
-    downloadVATCertificate(){
-          
-        axios({
-            //url: this.agent.profile_image[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-
-    downloadBusinessLicence(){
-          
-        axios({
-            //url: this.agent.profile_image[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-
-    downloadTaxPayerDocument(){
-          
-        axios({
-            //url: this.agent.profile_image[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-    
-    downloadCertificate(){
-          
-        axios({
-            //url: this.agent.certificate[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-
-    downloadRegistrationCertificate(){
-          
-        axios({
-            //url: this.agent.certificate[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-    
-    downloadBankStatement(){
-          
-        axios({
-             url: this.url,
-            //url: this.agent.insurance[0],
-
-            method: 'GET',
-
-            responseType: 'blob' // important
-
-        }).then((response) => {
-            this.forceFileDownload(response);
-        });
-    },*/
+        }, 
 },
 
     beforeRouteEnter(to,from,next){
@@ -863,27 +756,31 @@ export default {
 
                                     vm.alert = false;
 
-                                    vm.setAlert(response.data.message,"error");
+                                    setTimeout(()=>{
 
-                                    document.getElementById('app').scrollIntoView();
+                                        vm.setAlert(response.data.message,"error");
+
+                                    },1000)
                                 }
                             }).catch(()=>{
 
-                                vm.setAlert("There is internal server error","error");
+                                setTimeout(()=>{
 
-                                document.getElementById('app').scrollIntoView();
+                                    vm.setAlert("There is an internal error","error");
+
+                                },1000)
 
                             });
 
                         } else if(response.data.genralErrorCode === 8004){
 
-                             //eslint-disable-next-line no-console
-                            //console.log("*****8004****"+response.data);
                             vm.alert = false;
 
-                            vm.setAlert(response.data.message,"error");
+                            setTimeout(()=>{
 
-                            document.getElementById('app').scrollIntoView();
+                                vm.setAlert(response.data.message,"error");
+
+                            },1000)
                         }
                     }).catch();
               

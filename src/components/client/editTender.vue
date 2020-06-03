@@ -841,30 +841,28 @@ export default {
 
                         } else if(response.data.genralErrorCode === 8004){
 
-                            //eslint-disable-next-line no-console
-                            console.log("operation failed");
-
                             this.loading = false;
 
                             this.alert = false;
 
-                            this.setAlert(response.data.message,"error");
+                            setTimeout(()=>{
 
-                            document.getElementById('app').scrollIntoView();
+                                this.setAlert(response.data.message,"error");
+                            },1000)
                         }
 
                       
 
                     }).catch(()=>{
 
-                        //eslint-disable-next-line no-console
-                        console.log("Error occured");
-
                         this.loading = false;
 
-                        this.setAlert("There is internal server error","error");
+                        setTimeout(()=>{
 
-                        document.getElementById('app').scrollIntoView();
+                            this.setAlert("There is internal server error","error");
+
+                        },1000)
+
                     });
 
             } else if(this.$route.params.tender_type == "Clearing"){
@@ -905,16 +903,14 @@ export default {
                             
                         } else if(response.data.genralErrorCode === 8004){
 
-                            //eslint-disable-next-line no-console
-                            console.log("operation failed");
-
                             this.loading = false;
 
-                            this.alert = false;
+                           this.alert = false;
 
-                            this.setAlert(response.data.message,"error");
+                            setTimeout(()=>{
 
-                            document.getElementById('app').scrollIntoView();
+                                this.setAlert(response.data.message,"error");
+                            },1000)
 
                              
                         }
@@ -926,9 +922,11 @@ export default {
 
                         this.loading = false;
 
-                        this.setAlert("There is internal server error","error");
+                        setTimeout(()=>{
 
-                        document.getElementById('app').scrollIntoView();
+                            this.setAlert("There is internal server error","error");
+
+                        },1000)
                     });
             }
             
@@ -952,9 +950,6 @@ export default {
         axios.get(url1).then((response) => 
             {
                                
-                //eslint-disable-next-line no-console
-                //console.log(response.data.objects[i].industry_name);
-
                 if(response.data.genralErrorCode === 8000){
 
                     vm.customer = response.data.objects;
@@ -963,44 +958,30 @@ export default {
 
                     vm.alert = false;
 
-                    vm.setAlert(response.data.message,"error");
+                    setTimeout(()=>{
 
-                    document.getElementById('app').scrollIntoView();
+                        vm.setAlert(response.data.message,"error");
+
+                    },1000)
                 }
 
             }).catch(()=>{
 
-                 // response = null;
-                //commit('setOnProgressTenders',response)
+                setTimeout(()=>{
 
-                vm.setAlert("There is internal server error","error");
+                    vm.setAlert("There is an internal error","error");
 
-                document.getElementById('app').scrollIntoView();
+                },1000)
             });
 
         
 
         if(vm.$route.params.tender_type == "Transporting"){
 
-             //eslint-disable-next-line no-console
-                        console.log("Tender type is 1");
                         
             axios.get(`http://207.180.215.239:9000/api/v1/tenders/${vm.$route.params.id}`).
                     then((response)=>{
                   
-                         //eslint-disable-next-line no-console
-                        //console.log(response.data.objects);
-
-                        //this.$router.push('/client');
-                        
-                        //this.$router.push({path:'/client',query:{alert:'Customer has been edited'}});//then(window.location.load);
-
-                        //this.$router.push({path:'/client',query:{alert:response.data.message}});
-
-                        //this.setAlert(response.data.message);
-
-                        //this.$router.push('/client');
-                        //vm.tender = response.data.objects;
                         if(response.data.genralErrorCode === 8000)
                         {
                             vm.alert = false;
@@ -1033,44 +1014,29 @@ export default {
 
                             vm.alert = false;
 
-                            vm.setAlert(response.data.message,"error");
+                            setTimeout(()=>{
 
-                            document.getElementById('app').scrollIntoView();
+                                vm.setAlert(response.data.message,"error");
+
+                            },1000)
                         }
 
                      
 
                     }).catch(()=>{
 
-                        //eslint-disable-next-line no-console
-                        console.log("Error occured");
+                       setTimeout(()=>{
 
-                        vm.setAlert("There is internal server error","error");
+                            vm.setAlert("There is an internal error","error");
 
-                        document.getElementById('app').scrollIntoView();
+                        },1000)
+
                     });
         } else if(vm.$route.params.tender_type == "Clearing" ){
-
-                    //eslint-disable-next-line no-console
-                        console.log("CLEARING::::::::::");
 
             axios.get(`http://207.180.215.239:8000/api/v1/tenders/${vm.$route.params.id}`).
                     then((response)=>{
                   
-                       
-                        //this.$router.push('/client');
-                        
-                        //this.$router.push({path:'/client',query:{alert:'Customer has been edited'}});//then(window.location.load);
-
-                        //this.$router.push({path:'/client',query:{alert:response.data.message}});
-
-                        //this.setAlert(response.data.message);
-
-                        //this.$router.push('/client');
-
-                         //eslint-disable-next-line no-console
-                        //console.log(response.data.objects);
-
                         if(response.data.genralErrorCode === 8000)
                         {
                             vm.alert = false;
@@ -1103,19 +1069,20 @@ export default {
 
                             vm.alert = false;
 
-                            vm.setAlert(response.data.message,"error");
+                            setTimeout(()=>{
 
-                            document.getElementById('app').scrollIntoView();
+                                vm.setAlert(response.data.message,"error");
+
+                            },1000)
                         }
 
                     }).catch(()=>{
 
-                        //eslint-disable-next-line no-console
-                        console.log("Error occured");
+                        setTimeout(()=>{
 
-                        vm.setAlert("There is internal server error","error");
+                            vm.setAlert("There is an internal error","error");
 
-                        document.getElementById('app').scrollIntoView();
+                        },1000)
                     });
         }
 

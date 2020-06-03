@@ -540,20 +540,23 @@ export default {
 
                     } else if(response.data.genralErrorCode === 8004){
 
-                        this.alert = false;
+                       this.alert = false;
 
-                        this.setAlert(response.data.message,"error");
+                        setTimeout(()=>{
 
-                        document.getElementById('app').scrollIntoView();
-                    }
+                            this.setAlert(response.data.message,"error");
+                        },1000)
+                        }
 
                 }).catch(()=>
       
                 {
 
-                    this.setAlert("There is an internal error","error");
+                    setTimeout(()=>{
 
-                    document.getElementById('app').scrollIntoView();                     
+                        this.setAlert("There is an internal error","error");
+                    },1000)  
+
                 });
 
             } else if(this.$route.params.type === 'Transporting'){
@@ -590,17 +593,21 @@ export default {
 
                         this.alert = false;
 
-                        this.setAlert(response.data.message,"error");
+                        setTimeout(()=>{
 
-                        document.getElementById('app').scrollIntoView();
+                            this.setAlert(response.data.message,"error");
+
+                        },1000)
                     }
 
                 }).catch(()=>
       
                 {
-                    this.setAlert("There is an internal error","error");
+                    setTimeout(()=>{
 
-                    document.getElementById('app').scrollIntoView();                       
+                        this.setAlert("There is an internal error","error");
+
+                    },1000)                        
                 });
 
 
@@ -608,69 +615,7 @@ export default {
             }
 
 
-        },
-
-        forceFileDownload(response){
-
-            let filename = this.getFileName(this.url);
-
-            const url = window.URL.createObjectURL(new Blob([response.data]))
-            const link = document.createElement('a')
-            link.href = url
-            link.setAttribute('download', filename) //or any other extension
-            document.body.appendChild(link)
-            link.click()
-      },
-
-      downloadPhoto(){
-          
-        axios({
-            //url: this.agent.profile_image[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            let filename = this.getFileName(this.url);
-
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', filename);
-            document.body.appendChild(link);
-            link.click();
-        });
-    },
-
-    downloadCertificate(){
-          
-        axios({
-            //url: this.agent.certificate[0],
-            url: this.url,
-            method: 'GET',
-            responseType: 'blob' // important
-
-        }).then((response) => {
-
-            this.forceFileDownload(response);
-        });
-    },
-
-     downloadInsurance(){
-          
-        axios({
-             url: this.url,
-            //url: this.agent.insurance[0],
-
-            method: 'GET',
-
-            responseType: 'blob' // important
-
-        }).then((response) => {
-            this.forceFileDownload(response);
-        });
-    },
+        },   
 },
 
 created(){
@@ -776,18 +721,20 @@ beforeRouteEnter(to,from,next){
 
                     vm.alert = false;
 
-                    vm.setAlert(response.data.message,"error");
+                    setTimeout(()=>{
 
-                    document.getElementById('app').scrollIntoView();
+                            vm.setAlert(response.data.message,"error");
+                    },1000)
                 }
 
                 }).catch(()=>
     
                 {
 
-                    vm.setAlert("There is an internal error","error");
+                    setTimeout(()=>{
 
-                    document.getElementById('app').scrollIntoView();                    
+                            vm.setAlert("There is an internal error","error");
+                    },1000)                  
                 });
         }
         next();

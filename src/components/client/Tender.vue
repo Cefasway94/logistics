@@ -1,6 +1,8 @@
 <template>
     <v-container class=" mt-12 px-5 pt-12">
 
+             <Alert v-if="alert" v-bind="{message,type}"/>
+
             <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
             <v-overlay :value="overlay">
                 <div class="large-preview">
@@ -265,6 +267,7 @@
 import {mapGetters} from 'vuex';
 import axios from 'axios'
 import PDFDocument from '@/components/PDFDocument'
+import Alert from '@/components/Alert'
 
 export default {
   
@@ -282,13 +285,17 @@ export default {
         overlay:false,
         large_preview_url:'',
 
-         url:'',
+        url:'',
         pdf:false,
-        pdfOverlay:false
+        pdfOverlay:false,
+
+        alert: false,
+        message:'',
+        type:'',
 
     }),
 
-     components:{PDFDocument},
+     components:{PDFDocument,Alert},
 
     computed: {
 
@@ -326,9 +333,6 @@ export default {
         return extracted_string;
 
         },
-
-      
-
 
         largePreview(src){
 
@@ -394,8 +398,11 @@ export default {
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                setTimeout(()=>{
+
+                                    vm.setAlert("There is an internal error","error");
+
+                                },1000)
                             });
 
 
@@ -446,8 +453,11 @@ export default {
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
+                                setTimeout(()=>{
+
+                                    vm.setAlert("There is an internal error","error");
+
+                                },1000)
                             });
 
           }

@@ -3,6 +3,8 @@
 
             <Alert v-if="alert" v-bind="{message,type}"/>
 
+            <Message/>
+
             <v-card flat class="mt-12 mx-auto mb-5" color="#F5FAFF">
 
                 <v-row class="px-3 ">
@@ -700,9 +702,10 @@
 <script>
 import axios from 'axios'
 import Alert from '@/components/Alert.vue'
+import Message from '@/components/Message.vue'
 export default {
 
-    components:{Alert},
+    components:{Alert,Message},
 
     data: ()=>({
 
