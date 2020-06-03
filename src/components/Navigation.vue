@@ -97,15 +97,12 @@
               </v-list-item-avatar>
             </v-list-item>
 
-            <v-list-item link>
+            <v-list-item >
               <v-list-item-content>
                 <v-list-item-title class="title" >{{company_name}}</v-list-item-title>
                 <v-list-item-subtitle>{{email}}</v-list-item-subtitle>
               </v-list-item-content>
 
-              <v-list-item-action>
-                <v-icon>mdi-menu-down</v-icon>
-              </v-list-item-action>
             </v-list-item>
           </v-list>
           <v-divider></v-divider>
@@ -301,13 +298,24 @@
           link
           @click="tenders()"
         >
-          <v-list-item-icon>
-            <v-icon>{{items[0] && items[0].icon}}</v-icon>
-          </v-list-item-icon>
+         <v-tooltip top dark>
+            <template v-slot:activator="{ on }">
+              <v-flex row v-on="on" class="pl-3">
+                <v-flex xs1 sm1 md1>
+                <v-list-item-icon>
+                  <v-icon>{{items[0] && items[0].icon}}</v-icon>
+                </v-list-item-icon>
+                </v-flex>
 
-          <v-list-item-content>
-            <v-list-item-title>{{items[0] && items[0].title}}</v-list-item-title>
-          </v-list-item-content>
+                <v-flex xs9 sm9 md9 class="pl-7">
+                <v-list-item-content >
+                  <v-list-item-title class="mt-2 text-end">{{items[0] && items[0].title}}</v-list-item-title>
+                </v-list-item-content>
+                </v-flex>
+                </v-flex>
+            </template>  
+            <span class="mb-0">Click to view list of all new tenders</span>   
+         </v-tooltip>
         </v-list-item>
 
         <!-- dashboard -->
@@ -316,13 +324,24 @@
           params: {id:this.LOAD_AGENT.objects && this.LOAD_AGENT.objects.agent_id}}"
           link
         >
-          <v-list-item-icon>
-            <v-icon>{{items[1] && items[1].icon}}</v-icon>
-          </v-list-item-icon>
+          <v-tooltip right position-x="200" position-y="" dark>
+            <template v-slot:activator="{ on }">
+              <v-flex row v-on="on" class="pl-3">
+                <v-flex xs1 sm1 md1>
+                <v-list-item-icon>
+                  <v-icon>{{items[1] && items[1].icon}}</v-icon>
+                </v-list-item-icon>
+                </v-flex>
 
-          <v-list-item-content>
-            <v-list-item-title>{{items[1] && items[1].title}}</v-list-item-title>
-          </v-list-item-content>
+                <v-flex xs9 sm9 md9 class="pl-7">
+                <v-list-item-content >
+                  <v-list-item-title class="mt-2 text-end">{{items[1] && items[1].title}}</v-list-item-title>
+                </v-list-item-content>
+                </v-flex>
+                </v-flex>
+            </template>  
+            <span class="mb-0">Click to view list of active tenders</span>   
+         </v-tooltip>
         </v-list-item>
 
         <!-- payment -->
@@ -330,17 +349,29 @@
           :to="{name: this.items[2] && this.items[2].router.name}"
           link
         >
-          <v-list-item-icon>
-            <v-icon>{{items[2] && items[2].icon}}</v-icon>
-          </v-list-item-icon>
+          <v-tooltip bottom dark>
+            <template v-slot:activator="{ on }">
+              <v-flex row v-on="on" class="pl-3">
+                <v-flex xs1 sm1 md1>
+                <v-list-item-icon>
+                  <v-icon>{{items[2] && items[2].icon}}</v-icon>
+                </v-list-item-icon>
+                </v-flex>
 
-          <v-list-item-content>
-            <v-list-item-title>{{items[2] && items[2].title}}</v-list-item-title>
-          </v-list-item-content>
+                <v-flex xs9 sm9 md9 class="pl-7">
+                <v-list-item-content >
+                  <v-list-item-title class="mt-2 text-end">{{items[2] && items[2].title}}</v-list-item-title>
+                </v-list-item-content>
+                </v-flex>
+                </v-flex>
+            </template>  
+            <span class="mb-0">Click to view Payment history</span>   
+         </v-tooltip>
+
         </v-list-item>
       </v-list>
 
-      <!-- ---------------------------------------------------------------------- to be continued -->
+     
 
       <v-flex class="px-2 pt-12">
         
@@ -404,48 +435,55 @@
           link
           @click="tenders()"
         >
-          <v-list-item-icon>
-            <v-icon>{{items[0] && items[0].icon}}</v-icon>
-          </v-list-item-icon>
+          <v-tooltip  right position-x="200" dark>
+            <template v-slot:activator="{ on }">
+              <v-flex row v-on="on" class="pl-3">
+                <v-flex xs1 sm1 md1>
+                <v-list-item-icon>
+                  <v-icon>{{items[0] && items[0].icon}}</v-icon>
+                </v-list-item-icon>
+                </v-flex>
 
-          <v-list-item-content>
-            <v-list-item-title>{{items[0] && items[0].title}}</v-list-item-title>
-          </v-list-item-content>
+                <v-flex xs9 sm9 md9 class="pl-7">
+                <v-list-item-content >
+                  <v-list-item-title class="mt-2 text-end">{{items[0] && items[0].title}}</v-list-item-title>
+                </v-list-item-content>
+                </v-flex>
+                </v-flex>
+            </template>  
+            <span class="mb-0">Click to go to your tender dashboard</span>   
+         </v-tooltip>
         </v-list-item>
 
-        <!-- dashboard -->
-        <!-- <v-list-item
-          router
-          :to="{name: this.items[1].router.name, 
-          params: {id:this.LOAD_AGENT.objects.agent_id}}"
-          link
-        >
-          <v-list-item-icon>
-            <v-icon>{{items[1].icon}}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{items[1].title}}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item> -->
-
+        
         <!-- payment history -->
         <v-list-item
           :to="{name: this.items[1] && this.items[1].router.name}"
           link
         >
-          <v-list-item-icon>
-            <v-icon>{{items[1] && items[1].icon}}</v-icon>
-          </v-list-item-icon>
+          <v-tooltip bottom dark>
+            <template v-slot:activator="{ on }">
+              <v-flex row v-on="on" class="pl-3">
+                <v-flex xs1 sm1 md1>
+                <v-list-item-icon>
+                  <v-icon>{{items[1] && items[1].icon}}</v-icon>
+                </v-list-item-icon>
+                </v-flex>
 
-          <v-list-item-content>
-            <v-list-item-title>{{items[1] && items[1].title}}</v-list-item-title>
-          </v-list-item-content>
+                <v-flex xs9 sm9 md9 class="pl-7">
+                <v-list-item-content >
+                  <v-list-item-title class="mt-2 text-end">{{items[1] && items[1].title}}</v-list-item-title>
+                </v-list-item-content>
+                </v-flex>
+                </v-flex>
+            </template>  
+            <span class="mb-0">Click to view Payment history</span>   
+         </v-tooltip>
+
         </v-list-item>
       </v-list>
 
-      <!-- ---------------------------------------------------------------------- to be continued -->
-
+      
       <v-flex class="px-2 pt-12">
         
       </v-flex>

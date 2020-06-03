@@ -617,7 +617,11 @@
                                 </v-file-input>
 
                                 <div v-show="insurance_extension === 'jpg' || insurance_extension === 'jpeg' || insurance_extension === 'png'">
-                                    <v-card height="200" width="250" outlined @click="handleClick('insurance',insurance_url)">
+                                    <v-card 
+                                    height="200" 
+                                    width="250" 
+                                    outlined 
+                                    @click="handleClick('insurance',insurance_url)">
                                         <img  id="insurance_thumb" :src="insurance_url" class="preview">
                                     </v-card>
                                 </div>

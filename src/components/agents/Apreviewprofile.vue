@@ -268,74 +268,107 @@
                 </v-progress-linear>
 
             <v-row class="pt-3">
-                <v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-2">Certificate</p>
+               <v-col>
+                    <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Certificate</p>
                      <v-card 
                      flat 
                      width="200" 
                      height="150" 
                      outlined 
                      class="mx-3">
-                    <div 
-                            v-show="(certificate_extension === 'jpg') || (certificate_extension === 'jpeg')|| (certificate_extension === 'png')" 
-                            @click="largePreview(certificate_url)"
-                        >
-                        <!-- <img :src="certificate_url" width=200 height=150/> -->
+
+                         <v-flex 
+                         class="" 
+                         style="background-color:#F5FAFF;" 
+                         v-show="(certificate_extension === 'jpg') || (certificate_extension === 'jpeg') || (certificate_extension === 'png')" 
+                         @click="largePreview(certificate_url)">
+                            
+                            <v-tooltip right color="#1565C0">
+                                <template v-slot:activator="{ on }">
                                     <v-img 
-                                        :src="certificate_url"  
-                                        class="mb-0 pb-0 oxoImg" 
-                                        height="147" 
-                                        width="200" >
+                                    :src="certificate_url"  
+                                    class="mb-0 pb-0 oxoImg" 
+                                    height="147" 
+                                    width="200"
+                                    v-on="on">
                                     </v-img>
-                    </div>
-                    
-                    <div v-show="certificate_extension === 'pdf'">
+                                </template>
+                                <span> click to view image </span>
+                            </v-tooltip>
 
-                        <v-btn 
-                            :block="true"
-                            icon class="mt-7" 
-                            @click="previewPdf(certificate_url)"
-                            >
-                            PREVIEW<v-icon x-large>mdi-file</v-icon>
-                        </v-btn>
+                         </v-flex>
 
-                    </div>
+                         <v-flex v-show="certificate_extension === 'pdf'">
+                             <v-tooltip right color="#1565C0">
+                                <template v-slot:activator="{ on }">
+                                    <v-card 
+                                        flat
+                                        color=""
+                                        height="148"
+                                        :block="true"
+                                        icon 
+                                        class="py-12 px-12 insurance_preview"
+                                        @click="previewPdf(certificate_url)"
+                                        v-on="on">
+                                        <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                    </v-card>
+                                 </template>
+                                 <span>Click to view document</span>
+                             </v-tooltip>
+                        </v-flex>
                     </v-card>
                 </v-col>
 
                 <v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-2">Insurance</p>
-                     <v-card 
-                     flat
-                     width="200" 
-                     height="150" 
-                     outlined 
-                     class="mx-3 ">
-                        <div 
-                            v-show="(insurance_extension === 'jpg') || (insurance_extension === 'jpeg')|| (insurance_extension === 'png')" 
-                            @click="largePreview(insurance_url)"
-                        >
-                            <!-- <img :src="insurance_url" width=200 height=150/> -->
-                                    <v-img 
-                                        :src="insurance_url"  
-                                        class="mb-0 pb-0 oxoImg" 
-                                        height="147" 
-                                        width="200" >
-                                    </v-img>
-                        </div>
-                    
-                    <div v-show="insurance_extension === 'pdf'">
+                    <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Insurance</p>
 
-                        <v-btn 
-                            :block="true"
-                            icon class="mt-7" 
-                            @click="previewPdf(insurance_url)"
-                            >
-                            PREVIEW<v-icon x-large>mdi-file</v-icon>
-                        </v-btn>
+                            <v-card 
+                            flat 
+                            width="200" 
+                            height="150" 
+                            outlined 
+                            class="mx-3">
+                                <v-flex 
+                                class="" 
+                                style="background-color:#F5FAFF;" 
+                                v-show="(insurance_extension === 'jpg') || (insurance_extension === 'jpeg') || (insurance_extension === 'png')" 
+                                @click="largePreview(insurance_url)">
 
-                    </div>
-                    </v-card>
+                                    <v-tooltip right color="#1565C0">
+                                        <template v-slot:activator="{ on }">
+                                            <v-img 
+                                            :src="insurance_url"  
+                                            class="mb-0 pb-0 oxoImg" 
+                                            height="147" 
+                                            width="200" 
+                                            v-on="on">
+                                            </v-img>
+                                        </template>
+                                        <span> click to view image </span>
+                                    </v-tooltip>
+                                </v-flex>
+
+                                <v-flex v-show="insurance_extension === 'pdf'">
+
+                                    <v-tooltip right color="#1565C0">
+                                        <template v-slot:activator="{ on }">
+                                            <v-card 
+                                                flat
+                                                color=""
+                                                height="148"
+                                                :block="true"
+                                                icon 
+                                                class="py-12 px-12 insurance_preview"
+                                                @click="previewPdf(insurance_url)"
+                                                v-on="on">
+                                                <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                            </v-card>
+                                        </template>
+                                        <span>Click to view document</span>
+                                    </v-tooltip>
+
+                                </v-flex>
+                            </v-card>
                 </v-col>
 
                 <!--<v-col>
@@ -646,4 +679,14 @@ export default {
     z-index: 2;
     
  }
+
+  .insurance_preview:hover {
+  border-color: #F5FAFF;
+  color: #4169E1;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+  background-color: #F5FAFF;
+}
+
 </style>

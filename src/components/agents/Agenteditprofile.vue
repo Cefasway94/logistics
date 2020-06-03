@@ -549,8 +549,10 @@
                                 </v-file-input>
 
                                 <div v-show="certificate_extension === 'jpg' || certificate_extension === 'jpeg' || certificate_extension === 'png'">
-                                    <v-card height="200" width="250" outlined @click="handleClick('certificate',certificate_url)">
+                                    <v-card flat  height="200" width="250" outlined @click="handleClick('certificate',certificate_url)">
+
                                         <img  id="certificate_thumb" :src="certificate_url" class="preview">
+
                                     </v-card>
                                 </div>
 
@@ -568,33 +570,7 @@
                             </v-card>
                         </v-col> 
 
-                <!--<v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-0">Insurance</p>
-                     <v-card 
-                     flat color="#F5FAFF" 
-                     width="200" 
-                     height="150" 
-                     outlined 
-                     class="mx-3">
-                         <v-flex class="" >
-                            <v-file-input 
-                            id="insurance"
-                            ref="insurance"
-                            type="file"
-                            flat 
-                            dropzone 
-                            class="mb-0 pb-0" 
-                            height="150" 
-                            width="100" 
-                            outlined 
-                            prepend-icon="" 
-                            @change="updateinsurance()"
-                            >
-                            </v-file-input>
-                         </v-flex>
-                    </v-card>
-                </v-col>-->
-
+              
                 <v-col cols=12 sm=4 class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> Insurance  <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="250" height="270" outlined >
@@ -614,18 +590,35 @@
                                 <div v-show="insurance_extension === 'jpg' || insurance_extension === 'jpeg' || insurance_extension === 'png'">
                                     <v-card height="200" width="250" outlined @click="handleClick('insurance',insurance_url)">
                                         <img  id="insurance_thumb" :src="insurance_url" class="preview">
+
                                     </v-card>
                                 </div>
 
                                 <div v-show="insurance_extension === 'pdf'">
 
-                                    <v-btn 
+                                    <!-- <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
                                         @click="previewPdf(insurance_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                    </v-btn>
+                                    </v-btn> -->
+
+                                     <!--  -->
+                                     
+                                            <v-card 
+                                                flat
+                                                color=""
+                                                height="198"
+                                                :block="true"
+                                                icon 
+                                                class="py-12 px-12 insurance_preview"
+                                                @click="previewPdf(insurance_url)"
+                                                v-on="on">
+                                                <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                            </v-card>
+                                        
+                                    <!--  -->
                                     
 
                                      <!-- <v-card height="200" width="250" outlined @click="handlePdfClick()">
@@ -1510,6 +1503,15 @@ export default {
  img.preview:hover{
      cursor: pointer;
  }
+
+.insurance_preview:hover {
+  border-color: #F5FAFF;
+  color: #4169E1;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+  background-color: #F5FAFF;
+}
 
 
 </style>

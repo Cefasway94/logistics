@@ -284,68 +284,99 @@
                      height="150" 
                      outlined 
                      class="mx-3">
+
                          <v-flex 
                          class="" 
                          style="background-color:#F5FAFF;" 
                          v-show="(certificate_extension === 'jpg') || (certificate_extension === 'jpeg') || (certificate_extension === 'png')" 
                          @click="largePreview(certificate)">
-                            <v-img 
-                            :src="certificate"  
-                            class="mb-0 pb-0 oxoImg" 
-                            height="147" 
-                            width="200" 
-                            >
                             
-                            </v-img>
+                            <v-tooltip right color="#1565C0">
+                                <template v-slot:activator="{ on }">
+                                    <v-img 
+                                    :src="certificate"  
+                                    class="mb-0 pb-0 oxoImg" 
+                                    height="147" 
+                                    width="200"
+                                    v-on="on">
+                                    </v-img>
+                                </template>
+                                <span> click to view image </span>
+                            </v-tooltip>
+
                          </v-flex>
+
                          <v-flex v-show="certificate_extension === 'pdf'">
-
-                                    <v-btn 
+                             <v-tooltip right color="#1565C0">
+                                <template v-slot:activator="{ on }">
+                                    <v-card 
+                                        flat
+                                        color=""
+                                        height="148"
                                         :block="true"
-                                        icon class="mt-7" 
+                                        icon 
+                                        class="py-12 px-12 insurance_preview"
                                         @click="previewPdf(certificate)"
-                                        >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                    </v-btn>
-
+                                        v-on="on">
+                                        <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                    </v-card>
+                                 </template>
+                                 <span>Click to view document</span>
+                             </v-tooltip>
                         </v-flex>
                     </v-card>
                 </v-col>
 
                 <v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Insurance</p>
-                     <v-card 
-                     flat 
-                     width="200" 
-                     height="150" 
-                     outlined 
-                     class="mx-3">
-                         <v-flex 
-                         class="" 
-                         style="background-color:#F5FAFF;" 
-                         v-show="(insurance_extension === 'jpg') || (insurance_extension === 'jpeg') || (insurance_extension === 'png')" 
-                         @click="largePreview(insurance)">
-                            <v-img 
-                            :src="insurance"  
-                            class="mb-0 pb-0 oxoImg" 
-                            height="147" 
+
+                            <v-card 
+                            flat 
                             width="200" 
-                            >
-                            
-                            </v-img>
-                         </v-flex>
-                         <v-flex v-show="insurance_extension === 'pdf'">
+                            height="150" 
+                            outlined 
+                            class="mx-3">
+                                <v-flex 
+                                class="" 
+                                style="background-color:#F5FAFF;" 
+                                v-show="(insurance_extension === 'jpg') || (insurance_extension === 'jpeg') || (insurance_extension === 'png')" 
+                                @click="largePreview(insurance)">
 
-                                    <v-btn 
-                                        :block="true"
-                                        icon class="mt-7" 
-                                        @click="previewPdf(insurance)"
-                                        >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                    </v-btn>
+                                    <v-tooltip right color="#1565C0">
+                                        <template v-slot:activator="{ on }">
+                                            <v-img 
+                                            :src="insurance"  
+                                            class="mb-0 pb-0 oxoImg" 
+                                            height="147" 
+                                            width="200" 
+                                            v-on="on">
+                                            </v-img>
+                                        </template>
+                                        <span> click to view image </span>
+                                    </v-tooltip>
+                                </v-flex>
 
-                        </v-flex>
-                    </v-card>
+                                <v-flex v-show="insurance_extension === 'pdf'">
+
+                                    <v-tooltip right color="#1565C0">
+                                        <template v-slot:activator="{ on }">
+                                            <v-card 
+                                                flat
+                                                color=""
+                                                height="148"
+                                                :block="true"
+                                                icon 
+                                                class="py-12 px-12 insurance_preview"
+                                                @click="previewPdf(insurance)"
+                                                v-on="on">
+                                                <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                            </v-card>
+                                        </template>
+                                        <span>Click to view document</span>
+                                    </v-tooltip>
+
+                                </v-flex>
+                            </v-card>
                 </v-col>
 
                <!-- <v-col>
@@ -672,4 +703,13 @@ export default {
     z-index: 2;
     
  }
+
+ .insurance_preview:hover {
+  border-color: #F5FAFF;
+  color: #4169E1;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+  background-color: #F5FAFF;
+}
 </style>
