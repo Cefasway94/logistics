@@ -8,7 +8,21 @@
                     <v-flex>
                         <v-row class="pl-2 mb-1">
                             <h1 class=" font-weight-regular headline ">Agent: {{ bid.agent_id}}</h1>
-                            <v-chip color="grey" small class="white--text ml-7 mt-1">{{ bid.bid_status}}</v-chip>
+                            <v-tooltip right content-class="tooltip">
+                                <template v-slot:activator="{ on }">
+                                    <v-chip 
+                                        small 
+                                        v-on="on"
+                                        color="green"
+                                        class="white--text ml-7 mt-1"
+                                    >
+                                        {{ bid.bid_status}}
+
+                                    </v-chip>
+                                </template>
+                                <span v-if="bid.bid_status === 'accepted'">This offer has been accepted by the agent for processing</span>
+                                <span v-if="bid.bid_status === 'awaiting'">This offer is being waiting for acceptance from an agent</span>
+                            </v-tooltip>
                         </v-row>
                     </v-flex>
                     <v-spacer></v-spacer>
@@ -503,3 +517,20 @@ import Alert from '@/components/Alert.vue'
     },
   }
 </script>
+<style scoped>
+
+.tooltip{
+
+    width:30%;
+    max-width: 150px;
+    background-color: #4169E1;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+ }
+</style>
