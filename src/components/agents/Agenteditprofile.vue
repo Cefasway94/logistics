@@ -1528,13 +1528,14 @@ export default {
                     }
 
                     if(this.currentFiles.length > 0){
-
-                        for( var j = 0; j < this.currentFiles.length; j++ ){
-
-                            let file_path = this.currentFiles[j];
-
-                            formdata.append('currentFiles[' + j + ']', file_path);  
+                        for( var h = 0; h < this.currentFiles.length; h++ ){
+                            let file_path = this.currentFiles[h];
+                            formData.append('currentFiles[' + h + ']', file_path);
                         }
+                    }
+                    else if(this.currentFiles.length === 0)
+                    {
+                        formData.append('currentFiles[0]','');
                     }
 
                     return formdata;
