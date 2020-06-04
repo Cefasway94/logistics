@@ -359,6 +359,45 @@
                 </v-col> -->        
 
             </v-row>
+
+            <v-row class="mt-5" v-if="otherFiles.length > 0">
+
+                <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+
+                <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
+
+                    <v-card flat width="200" height="150" outlined>
+                        <v-row>
+                            <v-col >
+                                <div 
+                                    v-show="(getFileExtension(file) === 'jpg') || (getFileExtension(file) === 'jpeg') || (getFileExtension(file) === 'png')" 
+                                    @click="largePreview(file)"
+                                >
+                        
+                                    <v-img 
+                                        :src="file"  
+                                        class="mb-0 pb-0 oxoImg" 
+                                        height="147" 
+                                        width="200" >
+                                    </v-img>
+                                </div>
+                            
+                                <div v-show="getFileExtension(file) === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(file)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-card>
+                </v-col>
+            </v-row>
         </v-card>
 
         <v-card flat width="900" class="mt-12 mx-auto" color="#F5FAFF">
@@ -495,7 +534,10 @@ export default {
            overlay: false,
            url:'',
             pdf:false,
-            pdfOverlay:false
+            pdfOverlay:false,
+
+            //call other files
+            otherFiles:[],
           
     }
    },
@@ -513,6 +555,8 @@ export default {
                 this.verification = true
                 
             }
+
+            
 
             if (!this.LOAD_AGENT.objects.agent_id == ''){
 
@@ -534,6 +578,12 @@ export default {
                     this.certificate_url = this.LOAD_AGENT.objects.certificate[0];
                     this.certificate_extension = this.getFileExtension(this.certificate_url);
                 }
+
+                //other files
+                if(this.LOAD_AGENT.objects.files !== null)
+                    {
+                        this.otherFiles = this.LOAD_AGENT.objects.files;
+                    }
                 
                 this.name = this.LOAD_AGENT.objects.company_name
                 this.faxnumber = this.LOAD_AGENT.objects.fax

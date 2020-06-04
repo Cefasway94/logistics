@@ -666,6 +666,99 @@
                     </v-card>
                 </v-col>-->     
             </v-row>
+
+            <v-row class="mt-5" v-if="currentFiles.length > 0">
+
+                        <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+
+                        <v-col cols=12 md=4 v-for="(file,key) in currentFiles" :key="key">
+
+                            <p><span class="red--text" style="cursor:pointer" v-on:click="removeCurrentFile( key )">Remove</span></p>
+
+                            <v-card flat width="200" height="150" outlined>
+
+                                <v-row>
+                                    <v-col >
+                                        <div 
+                                            v-show="(getFileExtension(file) === 'jpg') || (getFileExtension(file) === 'jpeg') || (getFileExtension(file) === 'png')" 
+                                            @click="largePreview(file)"
+                                        >
+                                
+                                            <v-img 
+                                                :src="file"  
+                                                class="mb-0 pb-0 oxoImg" 
+                                                height="147" 
+                                                width="200" >
+                                            </v-img>
+                                        </div>
+                                    
+                                        <div v-show="getFileExtension(file) === 'pdf'">
+
+                                            <v-btn 
+                                                :block="true"
+                                                icon class="mt-7" 
+                                                @click="previewPdf(file)"
+                                                >
+                                                PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            </v-btn>
+
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols=12>
+
+                            <v-file-input 
+
+                                :clearable="false"
+                                placeholder="Choose a file"
+                                class="fileinput"
+                                id="otheFiles"
+                                @change="otherAttachmentsUpdated()"
+                                prepend-icon ="mdi-cloud-upload"
+                            >
+                            </v-file-input>
+
+                            <v-btn @click="addFiles()">
+                                Add other documents
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+
+                    <v-row class="mt-5">
+                        <v-col cols=12 md=3 v-for="(file,key) in otherFiles" :key="key">
+
+                            <p>{{ file.file.name }} <span class="remove-file" v-on:click="removeFile( key )">Remove</span></p>
+
+                            <div v-show="file.file.type === 'image/jpeg' || file.file.type === 'image/png'">
+                               
+                                <v-card height="200" width="250" outlined @click="largePreview(file.source)">
+                                        <img  id="bank_statement_thumb" :src="file.source" class="preview">
+                                </v-card>
+                            </div>
+
+                            <div v-show="file.file.type === 'application/pdf'">
+
+                                    <v-card height="200" width="250" outlined >
+
+                                        <v-btn 
+                                            :block="true"
+                                            icon class="mt-7" 
+                                            @click="previewPdf(file.source)"
+                                            >
+                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        </v-btn>
+                                        
+                                    </v-card>
+                            </div>
+
+                        </v-col>
+                    </v-row>
+
         </v-card>
 
         <v-card flat width="900" class="mt-12 mx-auto" color="#F5FAFF">
@@ -871,7 +964,13 @@ export default {
            certificate_url:'',
 
            insurance_extension:'',
-           insurance_url:''
+           insurance_url:'',
+
+           otherFiles:[],
+
+           currentFiles:[],
+            
+           files:[],
     }
    },
 
@@ -889,6 +988,11 @@ export default {
                 this.verification = true
                 
             }
+
+            if(this.LOAD_AGENT.objects.files !== null)
+                {
+                    this.currentFiles = this.LOAD_AGENT.objects.files;
+                }
 
             if (!this.LOAD_AGENT.objects.agent_id == ''){
                 
@@ -979,6 +1083,21 @@ export default {
         "POST_PAYMENT_TERMS",
         "GET_AGENT_PAYMENT_TERMS"
     ]),
+
+     addFiles(){
+
+            document.getElementById("otheFiles").click();
+        },
+
+        removeFile( key ){
+            this.otherFiles.splice( key, 1 );
+        },
+
+        removeCurrentFile(key){
+
+            this.currentFiles.splice( key, 1 );
+        },
+
       previewPdf(url){
 
             this.url = url;
@@ -1248,6 +1367,72 @@ export default {
                 
                 }
            },
+
+           otherAttachmentsUpdated(){
+
+            if(document.getElementById("otheFiles").files[0]){
+
+                for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
+                {
+
+                    /*this.otherFiles.push(
+                        document.getElementById("otheFiles").files[i]);*/
+                    
+                    /*let extension = this.getFileExtension(document.getElementById("otheFiles").files[i].name);
+
+                    if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' )
+                    {
+
+                    }
+                    else if(extension === 'pdf'){
+
+                    }*/
+                    var file = {
+                        file:[],
+                        source:''
+                    }
+
+                    if(document.getElementById("otheFiles").files[i].type === 'image/jpeg' || document.getElementById("otheFiles").files[i].type === 'image/png' )
+                    {
+                       
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            file.source = dataURL;
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                    
+                        }
+
+                        reader.readAsDataURL(document.getElementById("otheFiles").files[i]);
+
+                        file.file = document.getElementById("otheFiles").files[i];
+
+                        this.otherFiles.push(file);
+
+                    }
+                    else if(document.getElementById("otheFiles").files[i].type === 'application/pdf')
+                    {
+                        file.source = URL.createObjectURL(document.getElementById("otheFiles").files[i]);
+
+                        this.previewPdf(file.source);
+
+                        file.file = document.getElementById("otheFiles").files[i];
+
+                        this.otherFiles.push(file);
+
+                        
+                    }
+                }
+            }
+         },
             
             uploadother(){ 
                 this.other = []
@@ -1331,6 +1516,26 @@ export default {
                     formdata.append('bank_name', this.bname)
                     formdata.append('account_name', this.aname)
                     formdata.append('account_number', this.acnumber)
+
+                    if(this.otherFiles.length > 0){
+
+                        for( var i = 0; i < this.otherFiles.length; i++ ){
+
+                            let file = this.otherFiles[i].file;
+
+                            formdata.append('files[' + i + ']', file);  
+                        }
+                    }
+
+                    if(this.currentFiles.length > 0){
+
+                        for( var j = 0; j < this.currentFiles.length; j++ ){
+
+                            let file_path = this.currentFiles[j];
+
+                            formdata.append('currentFiles[' + j + ']', file_path);  
+                        }
+                    }
 
                     return formdata;
                     
@@ -1446,7 +1651,10 @@ export default {
 </script>
 
 <style scoped>
-
+ .fileinput{
+    position: absolute;
+    left: -2000px;
+ }
 .selectcountry{
           height:103%; 
           width:100%; 
