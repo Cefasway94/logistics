@@ -144,10 +144,23 @@
                                             <v-card column width="350"  elevation="3" class="px-4 py-3">
                                                 <v-row  row class="px-3 pt-1">
                                                     <h4  class="">{{ tender.cargo_details}}</h4>
-                                                    <v-chip 
-                                                        small class="light-green white--text caption font-weight-bold mx-3" >
-                                                        {{ tender.tender_status}}
-                                                    </v-chip>
+
+                                                    <v-tooltip right content-class="tooltip">
+                                                        <template v-slot:activator="{ on }">
+                                                            <v-chip 
+                                                                small 
+                                                                v-on="on"
+                                                                class="light-green white--text caption font-weight-bold mx-3" 
+                                                            >
+                                                                {{ tender.tender_status}}
+
+                                                            </v-chip>
+                                                        </template>
+                                                        <span v-if="tender.tender_status === 'open'">Tender has not been awarded to any agent and it is open for agents to put offer on</span>
+                                                        <span v-if="tender.tender_status === 'awarded'">Tender has already been awarded to an agent</span>
+                                                        <span v-if="tender.tender_status === 'OnProgress'">The agent has started to work on this tender</span>
+                                                    </v-tooltip>
+                                                    
                                                     <v-spacer></v-spacer>
                                                 </v-row>
                     
@@ -175,10 +188,22 @@
                                             <v-card column width="350"  elevation="3" class="px-4 py-3">
                                                 <v-row  row class="px-3 pt-1">
                                                     <h4  class="">{{ tender.cargo_details}}</h4>
-                                                    <v-chip 
-                                                        small class="light-green white--text caption font-weight-bold mx-3" >
-                                                        {{ tender.tender_status}}
-                                                    </v-chip>
+                                                   
+                                                    <v-tooltip right content-class="tooltip">
+                                                        <template v-slot:activator="{ on }">
+                                                            <v-chip 
+                                                                small 
+                                                                v-on="on"
+                                                                class="light-green white--text caption font-weight-bold mx-3" 
+                                                            >
+                                                                {{ tender.tender_status}}
+
+                                                            </v-chip>
+                                                        </template>
+                                                        <span v-if="tender.tender_status === 'open'">Tender has not been awarded to any agent and it is open for agents to put offer on</span>
+                                                        <span v-if="tender.tender_status === 'awarded'">Tender has already been awarded to an agent</span>
+                                                        <span v-if="tender.tender_status === 'OnProgress'">The agent has started to work on this tender</span>
+                                                    </v-tooltip>
                                                     <v-spacer></v-spacer>
                                                 </v-row>
                     
@@ -210,10 +235,20 @@
                                             <v-card column width="350"  elevation="3" class="px-4 py-3">
                                                 <v-row  row class="px-3 pt-1">
                                                     <h4  class="">{{ tender.cargo_details}}</h4>
-                                                    <v-chip 
-                                                        small class="orange white--text caption font-weight-bold mx-3" >
-                                                        {{ tender.bids_count }} bids
-                                                    </v-chip>
+                                                   
+                                                    <v-tooltip right content-class="tooltip">
+                                                        <template v-slot:activator="{ on }">
+                                                            <v-chip 
+                                                                small 
+                                                                v-on="on"
+                                                                class="orange white--text caption font-weight-bold mx-3" 
+                                                            >
+                                                               {{ tender.bids_count }} bids
+
+                                                            </v-chip>
+                                                        </template>
+                                                        <span>Number of offers from different agents on this tender</span>
+                                                    </v-tooltip>
                                                     <v-spacer></v-spacer>
 
                                                     <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
@@ -223,10 +258,22 @@
 
                                                     <p class="body-2  pt-1 ">status: </p>
 
-                                                    <v-chip 
-                                                        small class="green white--text caption font-weight-bold mx-3" >
-                                                        {{ tender.tender_status}}
-                                                    </v-chip>
+                                                    <v-tooltip right content-class="tooltip">
+                                                        <template v-slot:activator="{ on }">
+                                                            <v-chip 
+                                                                small 
+                                                                v-on="on"
+                                                                class="green white--text caption font-weight-bold mx-3" 
+                                                            >
+                                                                {{ tender.tender_status}}
+
+                                                            </v-chip>
+                                                        </template>
+                                                        <span v-if="tender.tender_status === 'open'">Tender has not been awarded to any agent and it is open for agents to put offer on</span>
+                                                        <span v-if="tender.tender_status === 'awarded'">Tender has already been awarded to an agent</span>
+                                                        <span v-if="tender.tender_status === 'OnProgress'">The agent has started to work on this tender</span>
+                                                    </v-tooltip>
+
                                                 </v-row>
                     
                                                 <p class=" body-2 grey--text">{{ tender.description}}</p>
@@ -252,10 +299,20 @@
                                             <v-card column width="350"  elevation="3" class="px-4 py-3">
                                                 <v-row  row class="px-3 pt-1">
                                                     <h4  class="">{{ tender.cargo_details}}</h4>
-                                                    <v-chip 
-                                                        small class="orange white--text caption font-weight-bold mx-3" >
-                                                        {{ tender.bids_count }} bids
-                                                    </v-chip>
+                                                   
+                                                    <v-tooltip right content-class="tooltip">
+                                                        <template v-slot:activator="{ on }">
+                                                            <v-chip 
+                                                                small 
+                                                                v-on="on"
+                                                                class="orange white--text caption font-weight-bold mx-3" 
+                                                            >
+                                                               {{ tender.bids_count }} bids
+
+                                                            </v-chip>
+                                                        </template>
+                                                        <span>Number of offers from different agents on this tender</span>
+                                                    </v-tooltip>
                                                     <v-spacer></v-spacer>
 
                                                     <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
@@ -265,10 +322,22 @@
 
                                                     <p class="body-2  pt-1 ">status: </p>
 
-                                                    <v-chip 
-                                                        small class="green white--text caption font-weight-bold mx-3" >
-                                                        {{ tender.tender_status}}
-                                                    </v-chip>
+                                                    <v-tooltip right content-class="tooltip">
+                                                        <template v-slot:activator="{ on }">
+                                                            <v-chip 
+                                                                small 
+                                                                v-on="on"
+                                                                class="green white--text caption font-weight-bold mx-3" 
+                                                            >
+                                                                {{ tender.tender_status}}
+
+                                                            </v-chip>
+                                                        </template>
+                                                        <span v-if="tender.tender_status === 'open'">Tender has not been awarded to any agent and it is open for agents to put offer on</span>
+                                                        <span v-if="tender.tender_status === 'awarded'">Tender has already been awarded to an agent</span>
+                                                        <span v-if="tender.tender_status === 'OnProgress'">The agent has started to work on this tender</span>
+                                                    </v-tooltip>
+
                                                 </v-row>
                     
                                                 <p class=" body-2 grey--text">{{ tender.description}}</p>
@@ -298,10 +367,20 @@
                                             <v-card column width="350"  elevation="3" class="px-4 py-3">
                                                 <v-row  row class="px-3 pt-1">
                                                     <h4  class="">{{ tender.cargo_details}}</h4>
-                                                    <v-chip 
-                                                        small class="light-green white--text caption font-weight-light mx-3" >
-                                                        {{ tender.tender_progress}}
-                                                    </v-chip>
+                                                    
+                                                    <v-tooltip right content-class="tooltip">
+                                                        <template v-slot:activator="{ on }">
+                                                            <v-chip 
+                                                                small 
+                                                                v-on="on"
+                                                                class="light-green white--text caption font-weight-light mx-3" 
+                                                            >
+                                                                {{ tender.tender_progress}}
+
+                                                            </v-chip>
+                                                        </template>
+                                                        <span v-if="tender.tender_progress === 'onProgress'">The agent has started to work on this tender</span>
+                                                    </v-tooltip>
                                                     <v-spacer></v-spacer>
 
                                                     <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
@@ -332,10 +411,20 @@
                                             <v-card column width="350"  elevation="3" class="px-4 py-3">
                                                 <v-row  row class="px-3 pt-1">
                                                     <h4  class="">{{ tender.cargo_details}}</h4>
-                                                    <v-chip 
-                                                        small class="light-green white--text caption font-weight-light mx-3" >
-                                                        {{ tender.tender_progress}}
-                                                    </v-chip>
+                                                   
+                                                     <v-tooltip right content-class="tooltip">
+                                                        <template v-slot:activator="{ on }">
+                                                            <v-chip 
+                                                                small 
+                                                                v-on="on"
+                                                                class="light-green white--text caption font-weight-light mx-3" 
+                                                            >
+                                                                {{ tender.tender_progress}}
+
+                                                            </v-chip>
+                                                        </template>
+                                                        <span v-if="tender.tender_progress === 'onProgress'">The agent has started to work on this tender</span>
+                                                    </v-tooltip>
                                                     <v-spacer></v-spacer>
 
                                                     <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
@@ -603,8 +692,8 @@ export default {
 
 .tooltip{
 
-    width:auto;
-    max-width: 250px;
+    width:30%;
+    max-width: 150px;
     background-color: #4169E1;
     color: #fff;
     text-align: center;

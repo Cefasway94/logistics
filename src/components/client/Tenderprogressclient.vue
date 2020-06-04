@@ -13,7 +13,25 @@
                         
                         <v-row>
                             <v-col><h1 class=" font-weight-regular headline ">{{ tender.cargo_details }}</h1></v-col>
-                            <v-col><v-chip color="green" small class="white--text ml-7 mt-1">{{ tender.tender_progress }}</v-chip></v-col>
+                            <v-col>
+                                <v-tooltip right content-class="tooltip">
+                                    <template v-slot:activator="{ on }">
+                                        <v-chip 
+                                            small 
+                                            v-on="on"
+                                            color="green"
+                                            class="white--text ml-7 mt-1"
+                                        >
+                                            {{ tender.tender_progress}}
+
+                                        </v-chip>
+                                    </template>
+                                    <span v-if="tender.tender_progress === 'onProgress'">The agent has started to work on this tender</span>
+                                    <span v-if="tender.tender_progress === 'awaiting'">Tender has not yet been started to be processed</span>
+                                </v-tooltip>
+                            </v-col>
+
+                           
                         </v-row>
 
                     </v-col>
@@ -137,20 +155,29 @@
                                                 >
 
                                                     <v-flex row xs12 class="mb-3" offset-1>
+                                                            <v-tooltip right content-class="tooltip">
 
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
+                                                                <template v-slot:activator="{on}">
+
+                                                                    <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
                                                                
 
-                                                                <v-icon large color="white" v-show="port_processing.completed">
-                                                                    mdi-check-outline
+                                                                        <v-icon large color="white" v-show="port_processing.completed">
+                                                                            mdi-check-outline
 
-                                                                </v-icon>
+                                                                        </v-icon>
 
-                                                                 <v-icon large color="white" v-show="port_processing.InProgress">
-                                                                    mdi-reload
-                                                                </v-icon>
+                                                                        <v-icon large color="white" v-show="port_processing.InProgress">
+                                                                            mdi-reload
+                                                                        </v-icon>
                                                                 
-                                                            </v-card>
+                                                                    </v-card>
+
+                                                                </template>
+                                                                <span>Port processing explanation</span>
+
+                                                            </v-tooltip>
+                                                            
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
@@ -183,15 +210,23 @@
 
                                                     <v-flex row xs12 class="mb-3" offset-1>
 
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
-                                                                <v-icon large color="white" v-show="tcra_processing.completed">
-                                                                    mdi-check-outline
-                                                                </v-icon>
+                                                            <v-tooltip right content-class="tooltip">
 
-                                                                 <v-icon large color="white" v-show="tcra_processing.InProgress">
-                                                                    mdi-reload
-                                                                </v-icon>
-                                                            </v-card>
+                                                                <template v-slot:activator="{on}">
+
+                                                                    <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
+                                                                        <v-icon large color="white" v-show="tcra_processing.completed">
+                                                                            mdi-check-outline
+                                                                        </v-icon>
+
+                                                                        <v-icon large color="white" v-show="tcra_processing.InProgress">
+                                                                            mdi-reload
+                                                                        </v-icon>
+                                                                    </v-card>
+                                                                </template>
+                                                                <span>TRA processing</span>
+
+                                                            </v-tooltip>
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
@@ -226,15 +261,25 @@
 
                                                     <v-flex row xs12 class="mb-3" offset-1>
 
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
-                                                                <v-icon large color="white" v-show="other_processes.completed">
-                                                                    mdi-check-outline
-                                                                </v-icon>
+                                                            <v-tooltip right content-class="tooltip">
 
-                                                                 <v-icon large color="white" v-show="other_processes.InProgress">
-                                                                    mdi-reload
-                                                                </v-icon>
-                                                            </v-card>
+                                                                <template v-slot:activator="{on}">
+
+                                                                    <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
+                                                                        <v-icon large color="white" v-show="other_processes.completed">
+                                                                            mdi-check-outline
+                                                                        </v-icon>
+
+                                                                        <v-icon large color="white" v-show="other_processes.InProgress">
+                                                                            mdi-reload
+                                                                        </v-icon>
+                                                                    </v-card>
+
+                                                                </template>
+                                                                <span>Other processes explanation</span>
+
+                                                            </v-tooltip>
+
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
@@ -269,15 +314,26 @@
 
                                                     <v-flex row xs12 class="mb-3" offset-1>
 
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
-                                                                <v-icon large color="white" v-show="completion.completed">
-                                                                    mdi-check-outline
-                                                                </v-icon>
+                                                            <v-tooltip right content-class="tooltip">
 
-                                                                 <v-icon large color="white" v-show="completion.InProgress">
-                                                                    mdi-reload
-                                                                </v-icon>
-                                                            </v-card>
+                                                                <template v-slot:activator="{on}">
+
+                                                                    <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
+                                                                        <v-icon large color="white" v-show="completion.completed">
+                                                                            mdi-check-outline
+                                                                        </v-icon>
+
+                                                                        <v-icon large color="white" v-show="completion.InProgress">
+                                                                            mdi-reload
+                                                                        </v-icon>
+                                                                    </v-card>
+
+                                                                </template>
+                                                                <span>Completion explanation</span>
+
+                                                            </v-tooltip>
+                                                            
+                                                           
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
@@ -437,19 +493,30 @@
 
                                                     <v-flex row xs12 class="mb-3" offset-1>
 
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
+                                                            <v-tooltip right content-class="tooltip">
+
+                                                                <template v-slot:activator="{on}">
+
+                                                                    <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
                                                                
 
-                                                                <v-icon large color="white" v-show="cargo_loading.completed">
-                                                                    mdi-check-outline
+                                                                        <v-icon large color="white" v-show="cargo_loading.completed">
+                                                                            mdi-check-outline
 
-                                                                </v-icon>
+                                                                        </v-icon>
 
-                                                                 <v-icon large color="white" v-show="cargo_loading.InProgress">
-                                                                    mdi-reload
-                                                                </v-icon>
+                                                                        <v-icon large color="white" v-show="cargo_loading.InProgress">
+                                                                            mdi-reload
+                                                                        </v-icon>
                                                                 
-                                                            </v-card>
+                                                                    </v-card>
+
+                                                                </template>
+                                                                <span>Cargo loading explanation </span>
+
+                                                            </v-tooltip>
+
+                                                            
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
@@ -482,15 +549,25 @@
 
                                                     <v-flex row xs12 class="mb-3" offset-1>
 
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
-                                                                <v-icon large color="white" v-show="cargo_in_transmit.completed">
-                                                                    mdi-check-outline
-                                                                </v-icon>
+                                                            <v-tooltip right content-class="tooltip">
 
-                                                                 <v-icon large color="white" v-show="cargo_in_transmit.InProgress">
-                                                                    mdi-reload
-                                                                </v-icon>
-                                                            </v-card>
+                                                                <template v-slot:activator="{on}">
+
+                                                                    <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
+                                                                        <v-icon large color="white" v-show="cargo_in_transmit.completed">
+                                                                            mdi-check-outline
+                                                                        </v-icon>
+
+                                                                        <v-icon large color="white" v-show="cargo_in_transmit.InProgress">
+                                                                            mdi-reload
+                                                                        </v-icon>
+                                                                    </v-card>
+                                                                </template>
+                                                                <span>cargo in transit explanation</span>
+
+                                                            </v-tooltip>
+
+                                                           
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
@@ -525,17 +602,27 @@
 
                                                     <v-flex row xs12 class="mb-3" offset-1>
 
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
+                                                            <v-tooltip right content-class="tooltip">
+
+                                                                <template v-slot:activator="{on}">
+
+                                                                    <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
                                                                 
-                                                                <v-icon large color="white" v-show="cargo_offloading.completed">
-                                                                    mdi-check-outline
-                                                                </v-icon>
+                                                                        <v-icon large color="white" v-show="cargo_offloading.completed">
+                                                                            mdi-check-outline
+                                                                        </v-icon>
 
-                                                                 <v-icon large color="white" v-show="cargo_offloading.InProgress">
-                                                                    mdi-reload
-                                                                </v-icon>
+                                                                        <v-icon large color="white" v-show="cargo_offloading.InProgress">
+                                                                            mdi-reload
+                                                                        </v-icon>
 
-                                                            </v-card>
+                                                                    </v-card>
+                                                                </template>
+                                                                <span>Cargo offloading explanation</span>
+
+                                                            </v-tooltip>
+
+                                                            
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
@@ -568,19 +655,25 @@
 
                                                     <v-flex row xs12 class="mb-3" offset-1>
 
-                                                            
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
-                                                                
-                                                            <v-icon large color="white" v-show ="cargo_delivered.completed">
-                                                                    mdi-check-outline
-                                                            </v-icon>
+                                                            <v-tooltip right content-class="tooltip">
 
-                                                            <v-icon large color="white" v-show ="cargo_delivered.InProgress">
-                                                                    mdi-reload
-                                                            </v-icon>
+                                                                <template v-slot:activator="{on}">
 
-                                                            </v-card>
+                                                                    <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
                                                                 
+                                                                        <v-icon large color="white" v-show ="cargo_delivered.completed">
+                                                                                mdi-check-outline
+                                                                        </v-icon>
+
+                                                                        <v-icon large color="white" v-show ="cargo_delivered.InProgress">
+                                                                                mdi-reload
+                                                                        </v-icon>
+
+                                                                    </v-card>
+
+                                                                </template>
+                                                                <span>Cargo delivered explanation</span>
+                                                            </v-tooltip> 
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
@@ -1364,5 +1457,20 @@ export default {
      .completed {
         opacity: 0.3;
     }
+
+    .tooltip{
+
+    width:auto;
+    max-width: 150px;
+    background-color: #4169E1;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+ }
 
 </style>

@@ -8,7 +8,21 @@
                     <v-flex>
                         <v-row class="pl-2 mb-1">
                             <h1 class=" font-weight-regular headline ">{{ tender.cargo_details}}</h1>
-                            <v-chip color="green" small class="white--text ml-7 mt-1">{{ tender.tender_progress}}</v-chip>
+                            <v-tooltip right content-class="tooltip">
+                                <template v-slot:activator="{ on }">
+                                    <v-chip 
+                                        small 
+                                        v-on="on"
+                                        color="green"
+                                        class="white--text ml-7 mt-1"
+                                    >
+                                        {{ tender.tender_progress}}
+
+                                    </v-chip>
+                                </template>
+                                <span v-if="tender.tender_progress === 'onProgress'">The agent has started to work on this tender</span>
+                                <span v-if="tender.tender_progress === 'awaiting'">Tender has not yet been started to be processed</span>
+                            </v-tooltip>
                         </v-row>
                         <p class="grey--text">{{ tender.description}}</p>
                     </v-flex>
@@ -119,7 +133,22 @@
                                                     <v-flex row  class="px-6 pt-1">
 
                                                          <v-flex column class="px-6 pt-1 mt-5" v-if="bid.bid_status != 'Not awarded'">
-                                                            <v-chip color="green" small class="white--text ml-7 mt-1">{{ bid.bid_status}}</v-chip>
+                                                    
+                                                            <v-tooltip right content-class="tooltip">
+                                                                <template v-slot:activator="{ on }">
+                                                                    <v-chip 
+                                                                        small 
+                                                                        v-on="on"
+                                                                        color="green"
+                                                                        class="white--text ml-7 mt-1"
+                                                                    >
+                                                                        {{ bid.bid_status}}
+
+                                                                    </v-chip>
+                                                                </template>
+                                                                <span v-if="bid.bid_status === 'accepted'">This offer has been accepted by the agent for processing</span>
+                                                                <span v-if="bid.bid_status === 'awaiting'">This offer is being waiting for acceptance from an agent</span>
+                                                            </v-tooltip>
                                                         </v-flex>
                                                         <v-flex column class="px-6 pt-1 mt-5">
                                                             <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/Aboutbid/' + bid.id+'/'+tender.tender_type">View Bid</v-btn>
@@ -267,3 +296,20 @@ export default {
    
 }
 </script>
+<style scoped>
+
+ .tooltip{
+
+    width:30%;
+    max-width: 150px;
+    background-color: #4169E1;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+ }
+</style>

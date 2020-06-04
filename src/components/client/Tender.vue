@@ -31,7 +31,22 @@
                     <v-flex>
                         <v-row class="pl-2 mb-1">
                             <h1 class=" font-weight-regular headline ">{{ tender.cargo_details }}</h1>
-                            <v-chip color="grey" small class="white--text ml-7 mt-1">{{ tender.tender_progress }}</v-chip>
+
+                            <v-tooltip right content-class="tooltip">
+                                <template v-slot:activator="{ on }">
+                                    <v-chip 
+                                        small 
+                                        v-on="on"
+                                        color="grey"
+                                        class="white--text ml-7 mt-1"
+                                    >
+                                        {{ tender.tender_progress}}
+
+                                    </v-chip>
+                                </template>
+                                <span v-if="tender.tender_progress === 'onProgress'">The agent has started to work on this tender</span>
+                                <span v-if="tender.tender_progress === 'awaiting'">Tender has not yet been started to be processed</span>
+                            </v-tooltip>
                         </v-row>
                         <p class="grey--text">{{ tender.description }}</p>
                     </v-flex>
@@ -473,6 +488,21 @@ export default {
 .pa-auto{
     font-family :"Roboto",sans-serif !important;
 }
+
+.tooltip{
+
+    width:30%;
+    max-width: 150px;
+    background-color: #4169E1;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+ }
 
 .large-preview{
 

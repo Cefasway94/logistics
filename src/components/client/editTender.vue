@@ -247,73 +247,90 @@
 
                             <v-col cols=12 md=4>
                                 <p class="primary--text body-2 text-uppercase mb-0">BILL OF LADING </p>
-                                <v-card flat width="250" height="270" outlined >
-                                    <v-file-input 
 
-                                        :clearable="false"
-                                        placeholder="Choose a file"
-                                        id="bill"
-                                        @change="billOfLadingUpdated()"
-                                        prepend-icon ="mdi-cloud-upload"
-                                    
-                                    
-                                    >
-                                    </v-file-input>
+                                <v-tooltip top content-class="tooltip">
+                                    <template v-slot:activator="{ on }">
+                                        
+                                        <v-card flat width="250" v-on="on" height="270" outlined >
+                                            <v-file-input 
 
-                                    <div v-show="bill_of_lading_extension === 'jpg' || bill_of_lading_extension === 'jpeg' || bill_of_lading_extension === 'png'">
-                                        <v-card height="200" width="250" outlined @click="handleClick('bill',bill_of_lading_url)">
-                                            <img  id="bill_thumb" :src="bill_of_lading_url" class="preview">
-                                        </v-card>
-                                    </div>
-
-                                    <div v-show="bill_of_lading_extension === 'pdf'">
-
-                                        <v-btn 
-                                            :block="true"
-                                            icon class="mt-7" 
-                                            @click="previewPdf(bill_of_lading_url)"
+                                                :clearable="false"
+                                                placeholder="Choose a file"
+                                                id="bill"
+                                                @change="billOfLadingUpdated()"
+                                                prepend-icon ="mdi-cloud-upload"
+                                            
+                                            
                                             >
-                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                        </v-btn>
+                                            </v-file-input>
 
-                                    </div>
-                                </v-card>
+                                            <div v-show="bill_of_lading_extension === 'jpg' || bill_of_lading_extension === 'jpeg' || bill_of_lading_extension === 'png'">
+                                                <v-card height="200" width="250" outlined @click="handleClick('bill',bill_of_lading_url)">
+                                                    <img  id="bill_thumb" :src="bill_of_lading_url" class="preview">
+                                                </v-card>
+                                            </div>
+
+                                            <div v-show="bill_of_lading_extension === 'pdf'">
+
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="previewPdf(bill_of_lading_url)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                </v-btn>
+
+                                            </div>
+                                        </v-card>
+                                    </template>
+                                     <span>
+                                        is a document issued by a carrier to acknowledge receipt of cargo for shipment.
+                                    </span>
+                                </v-tooltip>
                             </v-col>
 
                             <v-col cols=12 md=4>
                                 <p class="primary--text body-2 text-uppercase mb-0">AUTHORIZATION LETTER </p>
-                                <v-card flat width="250" height="270" outlined >
-                                    <v-file-input 
 
-                                        :clearable="false"
-                                        placeholder="Choose a file"
-                                        id="letter"
-                                        @change="letterUpdated()"
-                                        prepend-icon ="mdi-cloud-upload"
-                                    
-                                    
-                                    >
-                                    </v-file-input>
+                                <v-tooltip top content-class="tooltip">
+                                    <template v-slot:activator="{ on }">
 
-                                    <div v-show="letter_extension === 'jpg' || letter_extension === 'jpeg' || letter_extension === 'png'">
-                                        <v-card height="200" width="250" outlined @click="handleClick('letter',letter_url)">
-                                            <img  id="letter_thumb" :src="letter_url" class="preview">
-                                        </v-card>
-                                    </div>
+                                        <v-card flat width="250" v-on="on" height="270" outlined >
+                                            <v-file-input 
 
-                                    <div v-show="letter_extension === 'pdf'">
-
-                                        <v-btn 
-                                            :block="true"
-                                            icon class="mt-7" 
-                                            @click="previewPdf(letter_url)"
+                                                :clearable="false"
+                                                placeholder="Choose a file"
+                                                id="letter"
+                                                @change="letterUpdated()"
+                                                prepend-icon ="mdi-cloud-upload"
+                                            
+                                            
                                             >
-                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                        </v-btn>
+                                            </v-file-input>
 
-                                    </div>
-                                </v-card>
+                                            <div v-show="letter_extension === 'jpg' || letter_extension === 'jpeg' || letter_extension === 'png'">
+                                                <v-card height="200" width="250" outlined @click="handleClick('letter',letter_url)">
+                                                    <img  id="letter_thumb" :src="letter_url" class="preview">
+                                                </v-card>
+                                            </div>
+
+                                            <div v-show="letter_extension === 'pdf'">
+
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="previewPdf(letter_url)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                </v-btn>
+
+                                            </div>
+                                        </v-card>
+                                    </template>
+                                    <span>This is letter which authorize you as the owner of this cargo</span>
+                                </v-tooltip>
                             </v-col>
+
                         </v-row>
                         
                     </v-container>
