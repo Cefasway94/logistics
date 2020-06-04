@@ -564,13 +564,16 @@ export default {
 
                      // eslint-disable-next-line no-console
                      console.log('bidsss---');
-                     // eslint-disable-next-line no-console
 
-                     if (this.LOAD_DASHBOARDS.objectsCount > 0) {
+                     // eslint-disable-next-line no-console
+                     console.log(this.LOAD_DASHBOARDS);
+                     
+
+                     if (this.LOAD_DASHBOARDS.objects.length > 0) {
 
                          setTimeout(()=>{
                              this.loadingbiding = false
-                             this.bidlist=true
+                             this.onprogressliast=true
                          },500)
                          
                      } else {

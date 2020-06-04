@@ -431,6 +431,7 @@
                     </v-card>
                 </v-col>
             </v-row>
+            
         </v-card>
 
         <v-card flat width="900" class="mt-12 mx-auto" color="#F5FAFF">

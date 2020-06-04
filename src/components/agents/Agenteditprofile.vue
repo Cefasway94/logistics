@@ -1145,7 +1145,9 @@ export default {
 
             reader.readAsDataURL(document.getElementById(id).files[0]);
         },
-            validate(){
+        
+
+        validate(){
 
                 if(this.rules.required(this.name) == 'Required'){
         
@@ -1630,10 +1632,12 @@ export default {
 </script>
 
 <style scoped>
+
  .fileinput{
     position: absolute;
     left: -2000px;
  }
+ 
 .selectcountry{
           height:103%; 
           width:100%; 
