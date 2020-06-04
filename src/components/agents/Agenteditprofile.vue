@@ -1530,12 +1530,12 @@ export default {
                     if(this.currentFiles.length > 0){
                         for( var h = 0; h < this.currentFiles.length; h++ ){
                             let file_path = this.currentFiles[h];
-                            formData.append('currentFiles[' + h + ']', file_path);
+                            formdata.append('currentFiles[' + h + ']', file_path);
                         }
                     }
                     else if(this.currentFiles.length === 0)
                     {
-                        formData.append('currentFiles[0]','');
+                        formdata.append('currentFiles[0]','');
                     }
 
                     return formdata;
