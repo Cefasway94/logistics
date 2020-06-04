@@ -754,6 +754,48 @@
                         </v-col>              
                     </v-row>
 
+                    <v-row class="mt-5" v-if="currentFiles.length > 0">
+
+                        <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+
+                        <v-col cols=12 md=4 v-for="(file,key) in currentFiles" :key="key">
+
+                            <p><span class="red--text" style="cursor:pointer" v-on:click="removeCurrentFile( key )">Remove</span></p>
+
+                            <v-card flat width="200" height="150" outlined>
+
+                                <v-row>
+                                    <v-col >
+                                        <div 
+                                            v-show="(getFileExtension(file) === 'jpg') || (getFileExtension(file) === 'jpeg') || (getFileExtension(file) === 'png')" 
+                                            @click="largePreview(file)"
+                                        >
+                                
+                                            <v-img 
+                                                :src="file"  
+                                                class="mb-0 pb-0 oxoImg" 
+                                                height="147" 
+                                                width="200" >
+                                            </v-img>
+                                        </div>
+                                    
+                                        <div v-show="getFileExtension(file) === 'pdf'">
+
+                                            <v-btn 
+                                                :block="true"
+                                                icon class="mt-7" 
+                                                @click="previewPdf(file)"
+                                                >
+                                                PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            </v-btn>
+
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+
                     <v-row>
                         <v-col cols=12>
 
@@ -769,7 +811,7 @@
                             </v-file-input>
 
                             <v-btn @click="addFiles()">
-                                Add other files
+                                Add other documents
                             </v-btn>
                         </v-col>
                     </v-row>
@@ -806,8 +848,6 @@
 
                 </v-card>
             </div>
-            
-            
             
             <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row class=" pa-3">
@@ -925,6 +965,8 @@ export default {
         pdfOverlay:false,
 
         otherFiles:[],
+
+        currentFiles:[],
         
         files:[],
 
@@ -941,6 +983,11 @@ export default {
 
         removeFile( key ){
             this.otherFiles.splice( key, 1 );
+        },
+
+        removeCurrentFile(key){
+
+            this.currentFiles.splice( key, 1 );
         },
 
         previewPdf(url){
@@ -1563,6 +1610,26 @@ export default {
 
                 if(this.profile_photo.length > 0)
                     formData.append('profile_photo[0]',this.profile_photo[0]);
+
+                if(this.otherFiles.length > 0){
+
+                    for( var i = 0; i < this.otherFiles.length; i++ ){
+
+                        let file = this.otherFiles[i].file;
+
+                        formData.append('files[' + i + ']', file);  
+                    }
+                }
+
+                if(this.currentFiles.length > 0){
+
+                    for( var j = 0; j < this.currentFiles.length; j++ ){
+
+                        let file_path = this.currentFiles[j];
+
+                        formData.append('currentFiles[' + j + ']', file_path);  
+                    }
+                }
                
                 return formData;
 
@@ -1608,6 +1675,26 @@ export default {
 
                 if(this.company_logo.length > 0)
                     formData.append('company_logo[0]',this.company_logo[0]);
+
+                if(this.otherFiles.length > 0){
+
+                    for( var k = 0; k < this.otherFiles.length; k++ ){
+
+                        let file = this.otherFiles[k].file;
+
+                        formData.append('files[' + k + ']', file);  
+                    }
+                }
+
+                if(this.currentFiles.length > 0){
+
+                    for( var h = 0; h < this.currentFiles.length; h++ ){
+
+                        let file_path = this.currentFiles[h];
+
+                        formData.append('currentFiles[' + h + ']', file_path);  
+                    }
+                }
 
                 return formData;
             }
@@ -1658,6 +1745,8 @@ export default {
                         //console.log(response.data);
 
                     }).catch(()=>{
+
+                        this.loading = false;
 
                         setTimeout(()=>{
 
@@ -1720,6 +1809,11 @@ export default {
                                     vm.profile_photo_extension = vm.getFileExtension(vm.customer.profile_photo[0]);
                                     vm.profile_photo_url = vm.customer.profile_photo[0];
                                 }
+
+                                if(vm.customer.files !== null)
+                                {
+                                    vm.currentFiles = vm.customer.files;
+                                }
                                              
                             } 
                             else if(vm.$route.params.type === "Company"){
@@ -1761,6 +1855,11 @@ export default {
                                 {
                                     vm.bank_statement_url = vm.customer.three_months_bank_statement[0];
                                     vm.bank_statement_extension = vm.getFileExtension(vm.customer.three_months_bank_statement[0]);
+                                }
+
+                                if(vm.customer.files !== null)
+                                {
+                                    vm.currentFiles = vm.customer.files;
                                 }
                                     
 
