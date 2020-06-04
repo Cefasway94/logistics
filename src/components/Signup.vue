@@ -1118,7 +1118,7 @@ methods:{
           if(error.response.status == 404){
             this.clear_alert()
             this.invalid = true
-            this.abouterror = 'Connection error, Please contact admin for support'
+            this.abouterror = 'Connection error, Please contact admin for support 😔'
             this.loading = false
           }
           
