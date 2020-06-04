@@ -268,6 +268,48 @@
                             </v-flex> -->
 
                         </v-flex>
+
+                        <v-flex row class="mt-3 mb-3 ml-2" >
+                            <v-row class="mt-5" v-if="otherFiles.length > 0">
+
+                                <v-col cols=12><p class="primary--text body-1 mb-1"> OTHER DOCUMENTS</p></v-col>
+
+                                <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
+
+                                    <v-card flat width="200" height="150" outlined>
+                                        <v-row>
+                                            <v-col >
+                                                <div 
+                                                    v-show="(getFileExtension(file) === 'jpg') || (getFileExtension(file) === 'jpeg') || (getFileExtension(file) === 'png')" 
+                                                    @click="largePreview(file)"
+                                                >
+                                        
+                                                    <v-img 
+                                                        :src="file"  
+                                                        class="mb-0 pb-0 oxoImg" 
+                                                        height="147" 
+                                                        width="200" >
+                                                    </v-img>
+                                                </div>
+                                            
+                                                <div v-show="getFileExtension(file) === 'pdf'">
+
+                                                    <v-btn 
+                                                        :block="true"
+                                                        icon class="mt-7" 
+                                                        @click="previewPdf(file)"
+                                                        >
+                                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                    </v-btn>
+
+                                                </div>
+                                            </v-col>
+                                        </v-row>
+                                    </v-card>
+                                </v-col>
+                            </v-row>
+                        </v-flex>
+
                         </v-flex>
                     </v-card>
                     
@@ -315,8 +357,8 @@
                     </v-flex> -->
                    <v-flex xms12 sm12 md12 lg12 class="pl-3 ">
                     <p class="white--text body-1 font-weight-strong mb-0">
-                    You have already bided this tender, click the button bellow to view list of
-                    active tenders
+                    You have already bided this tender, click a button bellow to view your list of
+                    Bids
                     </p>
                     </v-flex>
                      <v-flex row xms12 sm12 md12 lg12 class="" >
@@ -356,8 +398,8 @@
                     </v-flex> -->
                     <v-flex xms12 sm12 md12 lg12 class="pl-3 ">
                     <p class="white--text body-1 font-weight-strong mb-0">
-                     Your bid have been sent succefully, click the button to
-                     view list of active tenders
+                     Your bid have been sent succefully, click a button to
+                     view your list of Bids
                     </p>
                     </v-flex>
                     <v-flex row xms12 sm12 md12 lg12 class="" >
@@ -583,8 +625,12 @@ export default {
            authorization_letter_extension_url:'',
 
            url:'',
-            pdf:false,
-            pdfOverlay:false
+           pdf:false,
+           pdfOverlay:false,
+
+           //call other files
+           otherFiles:[],
+
 
       }
   },
@@ -595,7 +641,7 @@ export default {
     
       this.T_GET_TENDERSDETAILs(tab).then(()=>{
 
-          if(!this.LOAD_TENDER.bill_of_lading[0] == ''){
+                if(!this.LOAD_TENDER.bill_of_lading[0] == ''){
 
                   this.bill = this.LOAD_TENDER.bill_of_lading[0]
                   this.bill_extension = this.getFileExtension(this.bill);
@@ -618,6 +664,12 @@ export default {
                   console.log(this.cargo_photo)
 
                 }
+
+                 //other files
+                if(this.LOAD_AGENT.objects.files !== null){
+
+                     this.otherFiles = this.LOAD_AGENT.objects.files;
+                 }
 
                 if (!this.LOAD_TENDER.customer_offer_amount == '') {
 

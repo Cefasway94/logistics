@@ -158,6 +158,46 @@
                             </v-flex>
                         </v-flex>
                         </v-flex>
+
+                        <!-- display other files -->
+                        <v-row class="mt-5" v-if="otherFiles.length > 0">
+
+                <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+
+                <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
+
+                    <v-card flat width="200" height="150" outlined>
+                        <v-row>
+                            <v-col >
+                                <div 
+                                    v-show="(getFileExtension(file) === 'jpg') || (getFileExtension(file) === 'jpeg') || (getFileExtension(file) === 'png')" 
+                                    @click="largePreview(file)"
+                                >
+                        
+                                    <v-img 
+                                        :src="file"  
+                                        class="mb-0 pb-0 oxoImg" 
+                                        height="147" 
+                                        width="200" >
+                                    </v-img>
+                                </div>
+                            
+                                <div v-show="getFileExtension(file) === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(file)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-card>
+                </v-col>
+            </v-row>
                     </v-card>
                 </v-flex>
 
@@ -863,7 +903,10 @@ export default {
             complete_tender:true,
             url:'',
             pdf:false,
-            pdfOverlay:false
+            pdfOverlay:false,
+
+            //call other files
+            otherFiles:[],
         }
     },
 
@@ -903,6 +946,12 @@ export default {
 
                     vm.letter_url = vm.LOAD_TENDER.authorization_letter[0];
                 }
+
+                //other files
+                if(vm.LOAD_TENDER.files !== null)
+                    {
+                        vm.otherFiles = vm.LOAD_TENDER.files;
+                    }
 
                 if (!vm.LOAD_TENDER.customer_offer_amount == '') {
 

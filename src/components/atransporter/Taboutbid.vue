@@ -168,7 +168,7 @@
                                                 class="" 
                                                 style="background-color:#F5FAFF;" 
                                                 v-show="(cargo_photo_extension === 'jpg') 
-                                                || (cargo_photo_extension === 'jpg') 
+                                                || (cargo_photo_extension === 'jpeg') 
                                                 || (cargo_photo_extension === 'png')" 
                                                 @click="largePreview(cargo_photo)">
                                                     <v-img 
@@ -205,6 +205,49 @@
                             </v-flex> -->
 
                         </v-flex>
+
+                        <v-flex row class="mt-3 mb-3 ml-2" >
+                            <v-row class="mt-5" v-if="otherFiles.length > 0">
+
+                                <v-col cols=12><p class="primary--text body-1 mb-1"> OTHER DOCUMENTS</p></v-col>
+
+                                <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
+
+                                    <v-card flat width="200" height="150" outlined>
+                                        <v-row>
+                                            <v-col >
+                                                <div 
+                                                    v-show="(getFileExtension(file) === 'jpg') || (getFileExtension(file) === 'jpeg') || (getFileExtension(file) === 'png')" 
+                                                    @click="largePreview(file)"
+                                                >
+                                        
+                                                    <v-img 
+                                                        :src="file"  
+                                                        class="mb-0 pb-0 oxoImg" 
+                                                        height="147" 
+                                                        width="200" >
+                                                    </v-img>
+                                                </div>
+                                            
+                                                <div v-show="getFileExtension(file) === 'pdf'">
+
+                                                    <v-btn 
+                                                        :block="true"
+                                                        icon class="mt-7" 
+                                                        @click="previewPdf(file)"
+                                                        >
+                                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                    </v-btn>
+
+                                                </div>
+                                            </v-col>
+                                        </v-row>
+                                    </v-card>
+                                </v-col>
+                            </v-row>
+                        </v-flex>
+
+
                         </v-flex>
                     </v-card>
 
@@ -342,8 +385,11 @@ export default {
            overlay: false,
            large_preview_url:'',
            url:'',
-        pdf:false,
-        pdfOverlay:false
+           pdf:false,
+           pdfOverlay:false, 
+
+           //call other files
+           otherFiles:[],
 
          
   }
@@ -394,6 +440,12 @@ export default {
                                     vm.cargo_photo_extension = vm.getFileExtension(vm.cargo_photo);
                                     console.log(vm.cargo_photo)
 
+                            }
+
+                             //other files
+                            if(vm.LOAD_AGENT.objects.files !== null){
+
+                                vm.otherFiles = vm.LOAD_AGENT.objects.files;
                             }
 
                             if (!vm.LOAD_TENDER.customer_offer_amount == '') {

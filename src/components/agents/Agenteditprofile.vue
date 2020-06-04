@@ -259,7 +259,7 @@
                         </v-card>
                         </v-flex>-->
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> PROFILE  <span class="red--text"><strong>* </strong></span></p>
+                            <p class="primary--text body-2 mb-0"> PROFILE  <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -507,32 +507,7 @@
                          </v-flex>
 
             <v-row class="pt-3">
-                <!--<v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-0">Certificate</p>
-                     <v-card 
-                     flat 
-                     color="#F5FAFF" 
-                     width="200" 
-                     height="150" 
-                     outlined 
-                     class="mx-3">
-                         <v-flex class="" >
-                            <v-file-input 
-                            id="certificate"
-                            ref="certificate"
-                            type="file"
-                            flat 
-                            dropzone 
-                            class="mb-0 pb-0" 
-                            height="150" 
-                            width="100" 
-                            outlined 
-                            prepend-icon=""
-                            @change="updatecertificate()">
-                            </v-file-input>
-                         </v-flex>
-                    </v-card>
-                </v-col>-->
+                
                 <v-col cols=12 sm=4 class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> Certificate  <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="250" height="270" outlined >
@@ -543,58 +518,50 @@
                                     id="certificate" 
                                     @change="updatecertificate()"
                                     prepend-icon ="mdi-cloud-upload"
-                                    :rules="[v => !!v || 'identity card is required']"
+                                    :rules="[v => !!v || 'Certificate is required']"
                                     required>
 
                                 </v-file-input>
 
                                 <div v-show="certificate_extension === 'jpg' || certificate_extension === 'jpeg' || certificate_extension === 'png'">
-                                    <v-card height="200" width="250" outlined @click="handleClick('certificate',certificate_url)">
+                                    <v-card flat  height="200" width="250" outlined @click="handleClick('certificate',certificate_url)">
+
                                         <img  id="certificate_thumb" :src="certificate_url" class="preview">
+
                                     </v-card>
                                 </div>
 
                                 <div v-show="certificate_extension === 'pdf'">
 
-                                    <v-btn 
+                                    <!-- <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
                                         @click="previewPdf(certificate_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                    </v-btn>
+                                    </v-btn> -->
+                                <v-tooltip left color="#1565C0">
+                                  <template v-slot:activator="{ on }">
+                                    <v-card 
+                                        flat
+                                        color=""
+                                        height="198"
+                                        :block="true"
+                                        icon 
+                                        class="py-12 px-12 insurance_preview"
+                                        @click="previewPdf(certificate_url)"
+                                        v-on="on">
+                                        <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                    </v-card>
+                                  </template>
+                                  <span>Click to view document</span>
+                                </v-tooltip>
 
                                 </div>
                             </v-card>
                         </v-col> 
 
-                <!--<v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-0">Insurance</p>
-                     <v-card 
-                     flat color="#F5FAFF" 
-                     width="200" 
-                     height="150" 
-                     outlined 
-                     class="mx-3">
-                         <v-flex class="" >
-                            <v-file-input 
-                            id="insurance"
-                            ref="insurance"
-                            type="file"
-                            flat 
-                            dropzone 
-                            class="mb-0 pb-0" 
-                            height="150" 
-                            width="100" 
-                            outlined 
-                            prepend-icon="" 
-                            @change="updateinsurance()"
-                            >
-                            </v-file-input>
-                         </v-flex>
-                    </v-card>
-                </v-col>-->
-
+              
                 <v-col cols=12 sm=4 class="">
                             <p class="primary--text body-2 text-uppercase mb-0"> Insurance  <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="250" height="270" outlined >
@@ -619,23 +586,34 @@
 
                                 <div v-show="insurance_extension === 'pdf'">
 
-                                    <v-btn 
+                                    <!-- <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
                                         @click="previewPdf(insurance_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                    </v-btn>
-                                    
+                                    </v-btn> -->
 
-                                     <!-- <v-card height="200" width="250" outlined @click="handlePdfClick()">
-                                        <embed  
-                                            @click="handlePdfClick()"
-                                            id="insurance_pdf"
-                                            width="250"
-                                            height="200">
-                                    </v-card> -->
-
+                                     <!--  -->
+                                     
+                                        <v-tooltip right color="#1565C0">
+                                        <template v-slot:activator="{ on }">
+                                            <v-card 
+                                                flat
+                                                color=""
+                                                height="198"
+                                                :block="true"
+                                                icon 
+                                                class="py-12 px-12 insurance_preview"
+                                                @click="previewPdf(insurance_url)"
+                                                v-on="on">
+                                                <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                            </v-card>
+                                        </template>
+                                        <span>Click to view document</span>
+                                    </v-tooltip>
+                                        
+                                    <!--  -->
                                 </div>
                             </v-card>
                         </v-col> 
@@ -666,6 +644,99 @@
                     </v-card>
                 </v-col>-->     
             </v-row>
+
+            <v-row class="mt-5" v-if="currentFiles.length > 0">
+
+                        <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+
+                        <v-col cols=12 md=4 v-for="(file,key) in currentFiles" :key="key">
+
+                            <p><span class="red--text" style="cursor:pointer" v-on:click="removeCurrentFile( key )">Remove</span></p>
+
+                            <v-card flat width="200" height="150" outlined>
+
+                                <v-row>
+                                    <v-col >
+                                        <div 
+                                            v-show="(getFileExtension(file) === 'jpg') || (getFileExtension(file) === 'jpeg') || (getFileExtension(file) === 'png')" 
+                                            @click="largePreview(file)"
+                                        >
+                                
+                                            <v-img 
+                                                :src="file"  
+                                                class="mb-0 pb-0 oxoImg" 
+                                                height="147" 
+                                                width="200" >
+                                            </v-img>
+                                        </div>
+                                    
+                                        <div v-show="getFileExtension(file) === 'pdf'">
+
+                                            <v-btn 
+                                                :block="true"
+                                                icon class="mt-7" 
+                                                @click="previewPdf(file)"
+                                                >
+                                                PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            </v-btn>
+
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols=12>
+
+                            <v-file-input 
+
+                                :clearable="false"
+                                placeholder="Choose a file"
+                                class="fileinput"
+                                id="otheFiles"
+                                @change="otherAttachmentsUpdated()"
+                                prepend-icon ="mdi-cloud-upload"
+                            >
+                            </v-file-input>
+
+                            <v-btn @click="addFiles()">
+                                Add other documents
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+
+                    <v-row class="mt-5">
+                        <v-col cols=12 md=3 v-for="(file,key) in otherFiles" :key="key">
+
+                            <p>{{ file.file.name }} <span class="remove-file" v-on:click="removeFile( key )">Remove</span></p>
+
+                            <div v-show="file.file.type === 'image/jpeg' || file.file.type === 'image/png'">
+                               
+                                <v-card height="200" width="250" outlined @click="largePreview(file.source)">
+                                        <img  id="bank_statement_thumb" :src="file.source" class="preview">
+                                </v-card>
+                            </div>
+
+                            <div v-show="file.file.type === 'application/pdf'">
+
+                                    <v-card height="200" width="250" outlined >
+
+                                        <v-btn 
+                                            :block="true"
+                                            icon class="mt-7" 
+                                            @click="previewPdf(file.source)"
+                                            >
+                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        </v-btn>
+                                        
+                                    </v-card>
+                            </div>
+
+                        </v-col>
+                    </v-row>
+
         </v-card>
 
         <v-card flat width="900" class="mt-12 mx-auto" color="#F5FAFF">
@@ -871,7 +942,13 @@ export default {
            certificate_url:'',
 
            insurance_extension:'',
-           insurance_url:''
+           insurance_url:'',
+
+           otherFiles:[],
+
+           currentFiles:[],
+            
+           files:[],
     }
    },
 
@@ -889,6 +966,11 @@ export default {
                 this.verification = true
                 
             }
+
+            if(this.LOAD_AGENT.objects.files !== null)
+                {
+                    this.currentFiles = this.LOAD_AGENT.objects.files;
+                }
 
             if (!this.LOAD_AGENT.objects.agent_id == ''){
                 
@@ -979,6 +1061,21 @@ export default {
         "POST_PAYMENT_TERMS",
         "GET_AGENT_PAYMENT_TERMS"
     ]),
+
+     addFiles(){
+
+            document.getElementById("otheFiles").click();
+        },
+
+        removeFile( key ){
+            this.otherFiles.splice( key, 1 );
+        },
+
+        removeCurrentFile(key){
+
+            this.currentFiles.splice( key, 1 );
+        },
+
       previewPdf(url){
 
             this.url = url;
@@ -1048,7 +1145,9 @@ export default {
 
             reader.readAsDataURL(document.getElementById(id).files[0]);
         },
-            validate(){
+        
+
+        validate(){
 
                 if(this.rules.required(this.name) == 'Required'){
         
@@ -1248,6 +1347,72 @@ export default {
                 
                 }
            },
+
+           otherAttachmentsUpdated(){
+
+            if(document.getElementById("otheFiles").files[0]){
+
+                for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
+                {
+
+                    /*this.otherFiles.push(
+                        document.getElementById("otheFiles").files[i]);*/
+                    
+                    /*let extension = this.getFileExtension(document.getElementById("otheFiles").files[i].name);
+
+                    if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' )
+                    {
+
+                    }
+                    else if(extension === 'pdf'){
+
+                    }*/
+                    var file = {
+                        file:[],
+                        source:''
+                    }
+
+                    if(document.getElementById("otheFiles").files[i].type === 'image/jpeg' || document.getElementById("otheFiles").files[i].type === 'image/png' )
+                    {
+                       
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            file.source = dataURL;
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                    
+                        }
+
+                        reader.readAsDataURL(document.getElementById("otheFiles").files[i]);
+
+                        file.file = document.getElementById("otheFiles").files[i];
+
+                        this.otherFiles.push(file);
+
+                    }
+                    else if(document.getElementById("otheFiles").files[i].type === 'application/pdf')
+                    {
+                        file.source = URL.createObjectURL(document.getElementById("otheFiles").files[i]);
+
+                        this.previewPdf(file.source);
+
+                        file.file = document.getElementById("otheFiles").files[i];
+
+                        this.otherFiles.push(file);
+
+                        
+                    }
+                }
+            }
+         },
             
             uploadother(){ 
                 this.other = []
@@ -1332,6 +1497,27 @@ export default {
                     formdata.append('account_name', this.aname)
                     formdata.append('account_number', this.acnumber)
 
+                    if(this.otherFiles.length > 0){
+
+                        for( var i = 0; i < this.otherFiles.length; i++ ){
+
+                            let file = this.otherFiles[i].file;
+
+                            formdata.append('files[' + i + ']', file);  
+                        }
+                    }
+
+                    if(this.currentFiles.length > 0){
+                        for( var h = 0; h < this.currentFiles.length; h++ ){
+                            let file_path = this.currentFiles[h];
+                            formdata.append('currentFiles[' + h + ']', file_path);
+                        }
+                    }
+                    else if(this.currentFiles.length === 0)
+                    {
+                        formdata.append('currentFiles[0]','');
+                    }
+
                     return formdata;
                     
                 }
@@ -1361,6 +1547,7 @@ export default {
             console.log(dataobject.get('profile_image[0]'));                  
 
            if (this.validate()){
+               
 
                this.confirm_edit_profile = false
 
@@ -1447,6 +1634,11 @@ export default {
 
 <style scoped>
 
+ .fileinput{
+    position: absolute;
+    left: -2000px;
+ }
+ 
 .selectcountry{
           height:103%; 
           width:100%; 
@@ -1509,6 +1701,15 @@ export default {
  img.preview:hover{
      cursor: pointer;
  }
+
+.insurance_preview:hover {
+  border-color: #F5FAFF;
+  color: #4169E1;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+  background-color: #F5FAFF;
+}
 
 
 </style>

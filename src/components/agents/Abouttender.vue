@@ -232,6 +232,47 @@
                             </v-flex>
                         </v-flex>
                         </v-flex>
+
+                        <!-- display other files -->
+                        <v-row class="mt-5" v-if="otherFiles.length > 0">
+
+                <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+
+                <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
+
+                    <v-card flat width="200" height="150" outlined>
+                        <v-row>
+                            <v-col >
+                                <div 
+                                    v-show="(getFileExtension(file) === 'jpg') || (getFileExtension(file) === 'jpeg') || (getFileExtension(file) === 'png')" 
+                                    @click="largePreview(file)"
+                                >
+                        
+                                    <v-img 
+                                        :src="file"  
+                                        class="mb-0 pb-0 oxoImg" 
+                                        height="147" 
+                                        width="200" >
+                                    </v-img>
+                                </div>
+                            
+                                <div v-show="getFileExtension(file) === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(file)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </v-card>
+                </v-col>
+            </v-row>
+
                     </v-card>
                     
                     <v-card flat width="1300" class="mt-5" color="#F5FAFF">
@@ -527,7 +568,10 @@ export default {
             letter_url:'',
 
             overlay:false,
-            large_preview_url:''
+            large_preview_url:'',
+
+            //call other files
+            otherFiles:[],
 
       }
   },
@@ -554,6 +598,12 @@ export default {
 
                this.bill_of_lading_url = this.LOAD_TENDER.bill_of_lading[0];
            }
+
+           //other files
+            if(this.LOAD_TENDER.files !== null)
+                {
+                    this.otherFiles = this.LOAD_TENDER.files;
+                }
 
             if(this.LOAD_TENDER.authorization_letter !== null)
            {
