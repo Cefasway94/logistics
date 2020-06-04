@@ -411,34 +411,13 @@
 
         
             <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
-                 <v-row
-                    class="fill-height"
-                    align-content="center"
-                    justify="center"
-                    v-if="loading"
-                >
-                    <v-col
-                        class="subtitle-1 text-center"
-                        cols="12"
-                    >
-                        Creating a tender
-                    </v-col>
-
-                    <v-col cols="6">
-                        <v-progress-linear
-                            color="deep-purple accent-4"
-                            indeterminate
-                            rounded
-                            height="6"
-                        >
-                        </v-progress-linear>
-                    </v-col>
-                </v-row>
+                 
 
                 <v-row>
-                <v-icon color="grey" class="mb-4 ml-3 ">attachments</v-icon>
-                <p class="grey--text title">Attachments</p>
+                    <v-icon color="grey" class="mb-4 ml-3 ">attachments</v-icon>
+                    <p class="grey--text title">Attachments</p>
                 </v-row>
+
                 <v-card width="1300" class="mx-auto pa-3">
 
                     <v-flex class="pt-3" >
@@ -586,6 +565,57 @@
                         </v-col>   
                                       
                     </v-row>
+
+                    <v-row>
+                        <v-col cols=12>
+
+                            <v-file-input 
+
+                                :clearable="false"
+                                placeholder="Choose a file"
+                                class="fileinput"
+                                id="otheFiles"
+                                @change="otherAttachmentsUpdated()"
+                                prepend-icon ="mdi-cloud-upload"
+                            >
+                            </v-file-input>
+
+                            <v-btn @click="addFiles()">
+                                Add other documents
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+
+                    <v-row class="mt-5">
+                        <v-col cols=12 md=3 v-for="(file,key) in otherFiles" :key="key">
+
+                            <p>{{ file.file.name }} <span class="remove-file" v-on:click="removeFile( key )">Remove</span></p>
+
+                            <div v-show="file.file.type === 'image/jpeg' || file.file.type === 'image/png'">
+                               
+                                <v-card height="200" width="250" outlined @click="largePreview(file.source)">
+                                        <img  id="bank_statement_thumb" :src="file.source" class="preview">
+                                </v-card>
+                            </div>
+
+                            <div v-show="file.file.type === 'application/pdf'">
+
+                                    <v-card height="200" width="250" outlined >
+
+                                        <v-btn 
+                                            :block="true"
+                                            icon class="mt-7" 
+                                            @click="previewPdf(file.source)"
+                                            >
+                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        </v-btn>
+                                        
+                                    </v-card>
+                            </div>
+
+                        </v-col>
+                    </v-row>
+
                 </v-card>
             </v-card>
 
@@ -594,6 +624,31 @@
            
             <v-card col flat width="1000" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row class=" pa-3">
+
+                    <v-row
+                        class="fill-height"
+                        align-content="center"
+                        justify="center"
+                        v-if="loading"          
+                    >
+                        <v-col
+                            class="subtitle-1 text-center"
+                            cols="12"
+                        >
+                            Creating a tender
+                        </v-col>
+
+                        <v-col cols="6">
+                            <v-progress-linear
+                                color="deep-purple accent-4"
+                                indeterminate
+                                rounded
+                                height="6"
+                            >
+                            </v-progress-linear>
+                        </v-col>
+                    </v-row>
+                    
                     <v-spacer></v-spacer>
             
                     <v-btn outlined color="primary" class="mx-4"  @click="cancel">Cancel</v-btn>
@@ -660,6 +715,10 @@ export default {
         message:'',
         type:'',
 
+        otherFiles:[],
+
+        currentFiles:[],
+
     }),
 
     computed:{
@@ -669,6 +728,16 @@ export default {
 
 
     methods: {
+
+        addFiles(){
+
+            document.getElementById("otheFiles").click();
+        },
+
+        removeFile( key ){
+
+            this.otherFiles.splice( key, 1 );
+        },
 
         previewPdf(url){
 
@@ -819,9 +888,9 @@ export default {
             }
         },
 
-        removeFile(){
+        /*removeFile(){
             this.photos = [];
-        },
+        },*/
 
         billUpdated(){
             //this.bill_of_lading.push(document.getElementById("bill").files[0]);
@@ -911,6 +980,59 @@ export default {
             
         },
 
+        otherAttachmentsUpdated(){
+
+            if(document.getElementById("otheFiles").files[0]){
+
+                for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
+                {
+                    var file = {
+                        file:[],
+                        source:''
+                    }
+
+                    if(document.getElementById("otheFiles").files[i].type === 'image/jpeg' || document.getElementById("otheFiles").files[i].type === 'image/png' )
+                    {
+                       
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            file.source = dataURL;
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                    
+                        }
+
+                        reader.readAsDataURL(document.getElementById("otheFiles").files[i]);
+
+                        file.file = document.getElementById("otheFiles").files[i];
+
+                        this.otherFiles.push(file);
+
+                    }
+                    else if(document.getElementById("otheFiles").files[i].type === 'application/pdf')
+                    {
+                        file.source = URL.createObjectURL(document.getElementById("otheFiles").files[i]);
+
+                        this.previewPdf(file.source);
+
+                        file.file = document.getElementById("otheFiles").files[i];
+
+                        this.otherFiles.push(file);
+
+                        
+                    }
+                }
+            }
+         },
+
         createData(){
 
             let formData = new FormData();
@@ -923,6 +1045,16 @@ export default {
 
                     formData.append('cargo_photo['+i+']',file);
 
+                }
+            }
+
+            if(this.otherFiles.length > 0){
+
+                for( var j = 0; j < this.otherFiles.length; j++ ){
+
+                    let file = this.otherFiles[j].file;
+
+                    formData.append('files[' + j + ']', file);  
                 }
             }
             
@@ -1188,6 +1320,11 @@ img.preview{
 
  img.preview:hover{
      cursor: pointer;
+ }
+
+ .fileinput{
+    position: absolute;
+    left: -2000px;
  }
 
  .tooltip{

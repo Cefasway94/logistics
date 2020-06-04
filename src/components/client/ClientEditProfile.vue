@@ -1911,7 +1911,6 @@ export default {
  }
 
  
-
  .progress { z-index: 1;}
 
  img.preview:hover{
