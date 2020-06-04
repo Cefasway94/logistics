@@ -60,7 +60,7 @@
         fab 
         elevation="flat" 
         v-on="on"
-        color="transparent hidden-sm-and-down">
+        color="transparent ">
         <v-avatar >
           <img 
           v-if="!profile_image == ''" 

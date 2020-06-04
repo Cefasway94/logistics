@@ -1,8 +1,8 @@
 
 <template>
     <v-container class="my-12 px-5">
-
-        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
+<PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
+        
                     <!-- alert ----------------------------- -->
                                 
                 <v-dialog
@@ -26,7 +26,7 @@
                 </v-flex> -->
                 <v-flex xms11 sm11 md11 lg11 class="pl-3">
                 <p class="text--text title mb-0">
-                Welcome to ubalori, this your working desk.
+                Welcome to ubalori.
                 </p>
                 <p class="text--text subtitle-1 mb-0">
                 Please edit your profile to complete registration
@@ -41,8 +41,8 @@
                 
                 </v-dialog>   
 
-                
-                  <v-dialog
+
+                <v-dialog
                     v-model="field_required"
                     max-width="400"
                     color="#f5faff"
@@ -54,7 +54,7 @@
                     class="pt-2">
     
                     <v-alert  
-                    prominent=""
+                    prominent
                     height="" 
                     type="error">
                       <p class="font-weight-strong mb-0">{{field}}</p>
@@ -64,7 +64,7 @@
                   </v-dialog>
 
 
-                    <v-dialog
+                   <v-dialog
                     v-model="confirm_edit_profile"
                     color="#2296f3"
                     max-width="350"
@@ -101,7 +101,7 @@
                                     class="ml-10 white--text" 
                                     color="success"
                                     small
-                                    @click.prevent="savechanges()">
+                                    @click="savechanges()">
                                         YES 
                                     </v-btn>
                                 </v-flex>
@@ -132,7 +132,6 @@
                     </v-alert>
                         </v-card>
                     </v-dialog>
-
 <!-- overlay -->
             <v-overlay :value="overlay">
 
@@ -155,9 +154,29 @@
                     </v-row>
                 </div>
             </v-overlay>
-
-
                 
+
+                  <!-- <v-dialog
+                    v-model="field_required"
+                    max-width="350"
+                    color="#f5faff"
+                    transition="scale-transition"
+                    :hide-overlay="true">
+                    <v-card 
+                    height="80" 
+                    color="#f64f51" 
+                    class="pt-2">
+    
+                    <v-alert  
+                    height="" 
+                    prominent
+                    type="error">
+                      <p class="font-weight-strong mb-0">{{field}}</p>
+                    </v-alert>
+
+                    </v-card>
+                  </v-dialog> -->
+
         <v-card flat width="900" class="mt-12 mx-auto mb-7" color="#F5FAFF">
             <v-flex row class="px-3 ">
                 <h1 class=" font-weight-regular headline mb-0 ">Transporter Profile info</h1>
@@ -195,6 +214,7 @@
         </v-card>
 
         <v-card 
+        :disabled="edit" 
         width="900" 
         class="mt-5 mx-auto mb-5 pl-3 pb-3 pr-3">
 
@@ -211,115 +231,72 @@
             <v-flex column class="pt-3">
            
                 <v-flex row class="pb-5 pl-2 mt-3" style="background-color:;">
-                        <!-- <v-flex>
+                        <!--<v-flex>
                         <p class="bondy-2 mb-0 ml-3 mb-1">Profile Image</p>
                         <v-card
                         flat 
+                        color="#F5FAFF" 
                         width="200" 
-                        height="220"  
-                        class="mx-3">
-
-                            <v-card
-                            width="200" 
-                            height="150" 
-                            outlined 
-                            class="mx-auto"
-                            >
-                        
-                            <v-flex v-if="profileimage !== '' || profileimage !== 'null'  " 
-                            class="" 
-                            style="background-color:#F5FAFF;" >
-                            <v-img 
-                            :src="profileimage"
-                            class="mb-0 pb-0" 
-                            height="150" 
-                            width="200" 
-                            >
-                            </v-img>
-                         </v-flex>
-
-                         <v-flex v-else class="" style="background-color:#F5FAFF;" >
-                            <v-img 
-                            :src="profileimage"
-                            class="mb-0 pb-0" 
-                            height="147" 
-                            width="100" 
-                            >
-                            
-                            </v-img>
-                         </v-flex>
-                        </v-card>
-
-                        <v-flex class=" mt-2" >
+                        height="150" 
+                        outlined 
+                        class="mx-3"
+                        style="bo">
+                            <v-flex class="" >
                                 <v-file-input
-                                dense
                                 id="profile_image"
                                 ref="other"
                                 type="file" 
                                 flat 
+                                dropzone 
                                 class="mb-0 pb-0" 
-                                height="" 
-                                width="100"
-                                prepend-icon=""
-                                prepend-inner-icon="cloud_download"
+                                height="150" 
+                                width="100" 
                                 outlined 
-                                @change="uploadprofile()">
-                                        <template #label>
-                                            <span class="text--text body-2 ml-4">select image </span>
-                                        </template>
-                                                                
-                                </v-file-input>
+                                prepend-icon=""
+                                @change="uploadprofile()" 
+                                ></v-file-input>
                             </v-flex>
-                            
                         </v-card>
-                        </v-flex> -->
-
-
-                        <!--  -->
+                        </v-flex>-->
                         <v-col cols=12 sm=4 class="">
-                            <p class="body-2 mb-0 primary--text"> Profile image  <span class="red--text"><strong>* </strong></span></p>
+                            <p class="primary--text body-2 mb-0"> Profile image  <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
                                     :clearable="false"
                                     placeholder="Choose a file"
-                                    id="profile" 
+                                    id="profile_image" 
                                     @change="uploadprofile()"
                                     prepend-icon ="mdi-cloud-upload"
-                                    :rules="[v => !!v || 'identity card is required']"
+                                    :rules="[v => !!v || 'profile image is required']"
                                     required
                                 
                                 >
 
                                 </v-file-input>
 
-                                <div v-show="profile_extension === 'jpg' || profile_extension === 'jpeg' || profile_extension === 'png'">
-                                    <v-card height="200" width="250" outlined @click="handleClick('profile',profile_url)">
-                                         <img  id="profile_thumb" :src="profile_url" class="preview">
-
+                                <div v-show="profile_image_extension === 'jpg' || profile_image_extension === 'jpeg' || profile_image_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="handleClick('profile_image',profile_image_url)">
+                                        <img  id="profile_image_thumb" :src="profile_image_url" class="preview">
                                     </v-card>
                                 </div>
-                                <div v-show="profile_extension === 'pdf'">
+
+                                <div v-show="profile_image_extension === 'pdf'">
 
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="previewPdf(profile_url)"
+                                        @click="previewPdf(profile_image_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
 
                                 </div>
+                                
 
                             </v-card>
                     
-                        </v-col> 
-
-                        <!--  -->
-
-
-
-
+                        </v-col>
                 </v-flex> 
             
 
@@ -406,6 +383,7 @@
                 </v-flex>
             </v-flex>
 
+
             <v-flex row class="px">
                 <!-- <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Email</p>
@@ -463,10 +441,6 @@
                       :removePlaceholder="true"
                       class="selectcountry"/>
                     </v-card>
-                            <!-- <template #label>
-                                <span class="deep-orange--text"><strong>* </strong></span>
-                            </template> -->
-                    
                 </v-flex>
 
                 <v-flex row sm6 mb6 justify-center>
@@ -524,7 +498,7 @@
                 color="#4169E1">
                 </v-progress-linear>
 
-                         <v-flex class="pt-3" >
+                 <v-flex class="pt-3" >
                              <center>
                              <p class="mb-0 body-1 red--text">
                                 Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
@@ -533,41 +507,9 @@
                          </v-flex>
 
             <v-row class="pt-3">
-
-                <!-- <v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-0">Certificate</p>
-                     <v-card 
-                     flat 
-                     color="#F5FAFF" 
-                     width="200" 
-                     height="150" 
-                     outlined 
-                     class="mx-3">
-                         <v-flex class="" >
-                            <v-file-input 
-                            id="certificate"
-                            ref="certificate"
-                            type="file"
-                            flat 
-                            dropzone 
-                            class="mb-0 pb-0" 
-                            height="150" 
-                            width="100" 
-                            outlined 
-                            prepend-icon=""
-                            @change="updatecertificate()" 
-                            :rules="[rules.required]">
-                                     <template #label>
-                                        <span class="deep-orange--text"><strong>* </strong></span>
-                                    </template>
-                            </v-file-input>
-                         </v-flex>
-                    </v-card>
-                </v-col> -->
-
-                     <v-col cols=12 sm=4 class="">
-                        
-                            <p class="body-1 mb-0 primary--text"> Certificate <span class="red--text"><strong>* </strong></span></p>
+                
+                <v-col cols=12 sm=4 class="">
+                            <p class="primary--text body-2 text-uppercase mb-0"> Certificate  <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -576,34 +518,52 @@
                                     id="certificate" 
                                     @change="updatecertificate()"
                                     prepend-icon ="mdi-cloud-upload"
-                                >
+                                    :rules="[v => !!v || 'Certificate is required']"
+                                    required>
 
                                 </v-file-input>
 
                                 <div v-show="certificate_extension === 'jpg' || certificate_extension === 'jpeg' || certificate_extension === 'png'">
-                                    <v-card height="200" width="250" outlined @click="handleClick('certificate',certificate_url)">
+                                    <v-card flat  height="200" width="250" outlined @click="handleClick('certificate',certificate_url)">
+
                                         <img  id="certificate_thumb" :src="certificate_url" class="preview">
+
                                     </v-card>
                                 </div>
 
                                 <div v-show="certificate_extension === 'pdf'">
 
-                                    <v-btn 
+                                    <!-- <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
                                         @click="previewPdf(certificate_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                    </v-btn>
+                                    </v-btn> -->
+                                <v-tooltip left color="#1565C0">
+                                  <template v-slot:activator="{ on }">
+                                    <v-card 
+                                        flat
+                                        color=""
+                                        height="198"
+                                        :block="true"
+                                        icon 
+                                        class="py-12 px-12 insurance_preview"
+                                        @click="previewPdf(certificate_url)"
+                                        v-on="on">
+                                        <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                    </v-card>
+                                  </template>
+                                  <span>Click to view document</span>
+                                </v-tooltip>
 
                                 </div>
-
                             </v-card>
-                    
                         </v-col> 
 
+              
                 <v-col cols=12 sm=4 class="">
-                            <p class="body-1 mb-0 primary--text"> Insurance  <span class="red--text"><strong>* </strong></span></p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> Insurance  <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -612,37 +572,53 @@
                                     id="insurance" 
                                     @change="updateinsurance()"
                                     prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'Insurance is required']"
+                                    required
                                 >
 
                                 </v-file-input>
 
                                 <div v-show="insurance_extension === 'jpg' || insurance_extension === 'jpeg' || insurance_extension === 'png'">
-                                    <v-card 
-                                    height="200" 
-                                    width="250" 
-                                    outlined 
-                                    @click="handleClick('insurance',insurance_url)">
+                                    <v-card height="200" width="250" outlined @click="handleClick('insurance',insurance_url)">
                                         <img  id="insurance_thumb" :src="insurance_url" class="preview">
                                     </v-card>
                                 </div>
 
                                 <div v-show="insurance_extension === 'pdf'">
 
-                                    <v-btn 
+                                    <!-- <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
                                         @click="previewPdf(insurance_url)"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                    </v-btn>
+                                    </v-btn> -->
 
+                                     <!--  -->
+                                     
+                                        <v-tooltip right color="#1565C0">
+                                        <template v-slot:activator="{ on }">
+                                            <v-card 
+                                                flat
+                                                color=""
+                                                height="198"
+                                                :block="true"
+                                                icon 
+                                                class="py-12 px-12 insurance_preview"
+                                                @click="previewPdf(insurance_url)"
+                                                v-on="on">
+                                                <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                            </v-card>
+                                        </template>
+                                        <span>Click to view document</span>
+                                    </v-tooltip>
+                                        
+                                    <!--  -->
                                 </div>
-
                             </v-card>
-                    
-                        </v-col>
+                        </v-col> 
 
-                <!-- <v-col>
+                <!--<v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-0">Other</p>
                      <v-card 
                      flat color="#F5FAFF" 
@@ -663,15 +639,10 @@
                             outlined 
                             prepend-icon=""
                             @change="uploadother()" 
-                           :rules="[rules.required]">
-                                     <template #label>
-                                        <span class="deep-orange--text"><strong>* </strong></span>
-                                    </template>
-                            </v-file-input>
+                            ></v-file-input>
                          </v-flex>
                     </v-card>
-                </v-col>   -->
-
+                </v-col>-->     
             </v-row>
         </v-card>
 
@@ -682,7 +653,7 @@
             </v-flex>
         </v-card>
 
-        <v-card :disabled="edit"  width="900" class="mt-5 mx-auto px-3 " >
+       <v-card :disabled="edit"  width="900" class="mt-5 mx-auto px-3 " >
              <!-- loading -----  -->
             <v-progress-linear
                 :active="loading"
@@ -720,7 +691,7 @@
             </v-flex>
         </v-card>
 
-        <v-card :disabled="edit"  width="900" class="mt-5 mx-auto px-3 ">
+       <v-card :disabled="edit"  width="900" class="mt-5 mx-auto px-3 ">
 
              <!-- loading -----  -->
             <v-progress-linear
@@ -728,7 +699,7 @@
                 indeterminate
                 absolute
                 color="#4169E1">
-                </v-progress-linear>
+            </v-progress-linear>
 
             <v-flex column class="px-3 pt-7">
             <p class="bondy-2 mb-0 mb-0">Bank name</p>
@@ -788,7 +759,6 @@
             </v-btn>
             </v-flex>
         </v-card>
-
     </v-container>
 </template>
 
@@ -800,10 +770,6 @@ import PDFDocument from '@/components/PDFDocument'
 export default {
    data() {
        return{
-
-           // thumb nails
-           profileimage:'',
-
            //place holders
            name:'',
            faxnumber:'',
@@ -831,10 +797,12 @@ export default {
            update_success:false,
            success_alert:'',
 
-// confirm edit profiile -------------------
+           // confirm edit profiile
            confirm_edit_profile:false,
 
-            
+           url:'',
+            pdf:false,
+            pdfOverlay:false,
 
 
            rules: {
@@ -865,32 +833,23 @@ export default {
            editaccounts:true,
            canceledits:false,
            edit:false,
-            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
-            transporter_payment_terms:[],
-          //payment_terms:[],
-
+           payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
+           agent_payment_terms:[],
+          
            // Priview thumb nails
            large_preview_url:'',
            overlay: false,
 
            startswith:false,
            
-           profile_extension:'',
-           profile_url:'',
+           profile_image_extension:'',
+           profile_image_url:'',
 
            certificate_extension:'',
            certificate_url:'',
 
            insurance_extension:'',
-           insurance_url:'',
-
-           other_extension:'',
-           other_url:'',
-           url:'',
-            pdf:false,
-            pdfOverlay:false
-           
-          
+           insurance_url:''
     }
    },
 
@@ -910,47 +869,51 @@ export default {
             }
 
             if (!this.LOAD_AGENT.objects.agent_id == ''){
-
-                if(this.LOAD_AGENT.objects.certificate !== null){
-                    
-                        this.certificate_url = this.LOAD_AGENT.objects.certificate[0];
-
-                        this.certificate_extension = this.getFileExtension(this.certificate_url);
-
-                        this.certificate = this.LOAD_AGENT.objects.certificate;
-
-                        console.log(this.certificate_url);
-                          console.log(this.certificate);
-                    
-
-                }
-
-                if(this.LOAD_AGENT.objects.insurance !== null){
-                    
-                        this.insurance_url = this.LOAD_AGENT.objects.insurance[0];
-
-                        this.insurance_extension = this.getFileExtension(this.insurance_url);
-                        
-                        this.insurance  = this.LOAD_AGENT.objects.insurance;
-
-                        console.log(this.certificate_extension);
-                    
-
-                }
-
-                 if(this.LOAD_AGENT.objects.profile_image !== null){
-                    
-                        this.profile_url = this.LOAD_AGENT.objects.profile_image[0];
-
-                        this.profile_extension = this.getFileExtension(this.profile_url);
-
-                        this.profile_image = this.LOAD_AGENT.objects.profile_image;
-
-                        console.log(this.certificate_extension);
-                    
-
-                }
                 
+                 if(this.LOAD_AGENT.objects.certificate !== null)
+                {
+                    
+                    this.certificate_url = this.LOAD_AGENT.objects.certificate[0]
+
+                    this.certificate_extension = this.getFileExtension(this.certificate_url);
+
+                    console.log(this.certificate_extension);
+                    
+
+                }
+
+                if(this.LOAD_AGENT.objects.profile_image !== null)
+                {
+                    
+                    this.profile_image_url = this.LOAD_AGENT.objects.profile_image[0]
+
+                    this.profile_image_extension = this.getFileExtension(this.profile_image_url);
+
+                    console.log(this.certificate_extension);
+                    
+
+                }
+
+                if(this.LOAD_AGENT.objects.insurance !== null)
+                {
+                    
+                    this.insurance_url = this.LOAD_AGENT.objects.insurance[0]
+
+                    this.insurance_extension = this.getFileExtension(this.insurance_url);
+
+                    console.log(this.insurance_extension);
+                }
+
+                 /*if(this.LOAD_AGENT.objects.insurance !== null)
+                {
+                    
+                    this.insurance_url = this.LOAD_AGENT.objects.insurance[0]
+
+                    this.insurance_extension = this.getFileExtension(this.insurance_url);
+
+                    console.log(this.insurance_extension);
+                }*/
+
                 this.name = this.LOAD_AGENT.objects.company_name
                 this.faxnumber = this.LOAD_AGENT.objects.fax
                 this.tin = this.LOAD_AGENT.objects.tin_number
@@ -963,8 +926,6 @@ export default {
                 this.bname = this.LOAD_AGENT.objects.bank_name
                 this.aname = this.LOAD_AGENT.objects.account_name
                 this.acnumber = this.LOAD_AGENT.objects.account_number
-                // this.profileimage = this.LOAD_AGENT.objects.profile_image[0]
-
            }else{
                 this.mail = localStorage.client
            }
@@ -979,13 +940,13 @@ export default {
 
                   for (let index = 0; index < this.LOAD_AGENT_PAYMENT_TERMS.length; index++) {
 
-                      this.transporter_payment_terms.push( this.LOAD_AGENT_PAYMENT_TERMS[index].installment_desc)                      
+                      this.agent_payment_terms.push( this.LOAD_AGENT_PAYMENT_TERMS[index].installment_desc)                      
                   }
                   console.log(this.payment_terms);
-                  this.terms_of_payment = this.transporter_payment_terms;
+                  this.terms_of_payment = this.agent_payment_terms;
                   
               })
-        }) 
+        })
 
     },
     components:{PDFDocument},
@@ -996,8 +957,7 @@ export default {
         "T_POST_PAYMENT_TERMS",
         "T_GET_AGENT_PAYMENT_TERMS"
     ]),
-
-        previewPdf(url){
+      previewPdf(url){
 
             this.url = url;
             this.pdfOverlay = true;
@@ -1009,8 +969,13 @@ export default {
             this.pdf = false;
             this.pdfOverlay = false;
         },
-            
-            handleClick(id,src){
+
+      handlePdfClick(){
+
+          alert('test pdf clicking');
+      },
+
+      handleClick(id,src){
 
             //eslint-disable-next-line no-console
                         console.log("source "+src);
@@ -1061,11 +1026,7 @@ export default {
 
             reader.readAsDataURL(document.getElementById(id).files[0]);
         },
-
             validate(){
-
-              //this.insurance  = this.LOAD_AGENT.objects.insurance;
-               // this.certificate = this.LOAD_AGENT.objects.certificate;
 
                 if(this.rules.required(this.name) == 'Required'){
         
@@ -1101,13 +1062,6 @@ export default {
 
                         console.log(4);
                         this.field = 'fax number is required'
-                        this.field_required = true
-                        return false
-
-                }else if (this.rules.required(this.box) == 'Required') {
-
-                        console.log(4);
-                        this.field = 'Box address field is required'
                         this.field_required = true
                         return false
 
@@ -1154,31 +1108,14 @@ export default {
                         this.field_required = true
                         return false
 
-                // }else if(this.certificate_url == '' && this.certificate == ''){
-
-                //         console.log(13);
-                //         this.field = 'kindly attach certificate'
-                //         this.field_required = true
-                //         return false
-
-                // }else if(this.insurance_url == '' && this.insurance == ''){
-
-                //         console.log(13);
-                //         this.field = 'kindly attach Insurance'
-                //         this.field_required = true
-                //         return false
-
-
-                //done by Mary and Sudi please please do not DELETE or COMMENT OUT
-
-                }else if(this.certificate.length === 0){
+                }else if(this.certificate_url == '' && this.certificate == ''){
 
                         console.log(13);
                         this.field = 'kindly attach certificate'
                         this.field_required = true
                         return false
 
-                }else if(this.insurance.length === 0){
+                }else if(this.insurance_url == '' && this.insurance == ''){
 
                         console.log(13);
                         this.field = 'kindly attach Insurance'
@@ -1194,12 +1131,11 @@ export default {
             },
                
            updateinsurance(){
-               //this.insurance = []
-               //this.insurance.push(document.getElementById("insurance").files[0])
-               if(document.getElementById("insurance").files[0]){
+                //this.insurance = []
+                //this.insurance.push(document.getElementById("insurance").files[0])
+                if(document.getElementById("insurance").files[0]){
 
                     this.insurance = [];
-                    this.insurance_url = ''
 
                     this.insurance.push(document.getElementById("insurance").files[0]);
                     
@@ -1227,27 +1163,31 @@ export default {
                         }
 
                         reader.readAsDataURL(document.getElementById("insurance").files[0]);
-                    }
-                     else if(this.insurance_extension === 'pdf')
-                        {
-                            this.insurance_url = URL.createObjectURL(document.getElementById("insurance").files[0]);
+                    } else if(this.insurance_extension === 'pdf') {
 
-                            this.previewPdf(this.insurance_url);
-                        }
+                        this.insurance_url = URL.createObjectURL(document.getElementById("insurance").files[0]);
+
+                        this.previewPdf(this.insurance_url);
+
+
+                        /*console.log(src);
+                        console.log(output);*/
+
+                      
+                        //this.insurance_extension = '';
+                    }
 
                 
                 }
-               
-                    
                },
 
            updatecertificate(){
-               //this.certificate = []
+                //this.certificate = []
                //this.certificate.push(document.getElementById("certificate").files[0])
+
                 if(document.getElementById("certificate").files[0]){
 
                     this.certificate = [];
-                    this.certificate_url = ''
 
                     this.certificate.push(document.getElementById("certificate").files[0]);
                     
@@ -1255,6 +1195,7 @@ export default {
 
                     if(this.certificate_extension === 'jpg' || this.certificate_extension === 'jpeg' || this.certificate_extension === 'png')
                     {
+
 
                         var reader = new FileReader();
 
@@ -1276,35 +1217,36 @@ export default {
 
                         reader.readAsDataURL(document.getElementById("certificate").files[0]);
                     }
-                    else if(this.certificate_extension === 'pdf')
-                        {
-                            this.certificate_url = URL.createObjectURL(document.getElementById("certificate").files[0]);
+                    else if(this.certificate_extension === 'pdf'){
+                        this.certificate_url = URL.createObjectURL(document.getElementById("certificate").files[0]);
 
-                            this.previewPdf(this.certificate_url);
-                        }
+                        this.previewPdf(this.certificate_url);
+                    }
 
                 
                 }
            },
             
-            // uploadother(){ 
-            //     this.other = []
-            //    this.other.push(document.getElementById("other").files[0])
-            // },
+            uploadother(){ 
+                this.other = []
+               this.other.push(document.getElementById("other").files[0])
+            },
 
             uploadprofile(){
+                //this.profile_image = []
+                //this.profile_image.push(document.getElementById("profile_image").files[0])
+                //this.profile_image = 'profile image'
 
-                
-                if(document.getElementById("profile").files[0]){
+                //console.log(this.profile_image);
+                if(document.getElementById("profile_image").files[0]){
 
                     this.profile_image = [];
-                    this.profile_url = ''
 
-                    this.profile_image.push(document.getElementById("profile").files[0]);
+                    this.profile_image.push(document.getElementById("profile_image").files[0]);
                     
-                    this.profile_extension = this.getFileExtension(document.getElementById("profile").files[0].name);
+                    this.profile_image_extension = this.getFileExtension(document.getElementById("profile_image").files[0].name);
 
-                    if(this.profile_extension === 'jpg' || this.profile_extension === 'jpeg' || this.profile_extension === 'png')
+                    if(this.profile_image_extension === 'jpg' || this.profile_image_extension === 'jpeg' || this.profile_image_extension === 'png')
                     {
 
                         var reader = new FileReader();
@@ -1313,7 +1255,7 @@ export default {
 
                             var dataURL = reader.result;
 
-                            var output = document.getElementById('profile_thumb');
+                            var output = document.getElementById('profile_image_thumb');
 
                             var large_thumbnail = document.getElementById('large_thumbnail');
                             
@@ -1325,17 +1267,18 @@ export default {
                         
                         }
 
-                        reader.readAsDataURL(document.getElementById("profile").files[0]);
+                        reader.readAsDataURL(document.getElementById("profile_image").files[0]);
                     }
-                    else if(this.profile_extension === 'pdf')
-                        {
-                            this.profile_url = URL.createObjectURL(document.getElementById("profile").files[0]);
+                    else if(this.profile_image_extension === 'pdf') {
+                        this.profile_image_url = URL.createObjectURL(document.getElementById("profile_image").files[0]);
 
-                            this.previewPdf(this.profile_url);
-                        }
+                        this.previewPdf(this.profile_image_url);
+                    }
 
                 
                 }
+                
+                
             },
 
             dataobject(){
@@ -1344,40 +1287,15 @@ export default {
 
                     const formdata = new FormData()
 
-                //    this.profile_url = "";
-                //    this.certificate_url = "";
-                //    this.insurance_url = "";
+                    if(this.profile_image.length > 0)
+                         formdata.append('profile_image[0]',this.profile_image[0]);
 
-                   console.log(this.insurance)
-
-                    // if(this.profile_url === ''){
-                    //     formdata.append('profile_image[0]',this.profile_image[0]);
-                    // }
-
-                    // if(this.certificate_url === ''){
-                    //     formdata.append('certificate[0]', this.certificate[0]);
-                    // }
-
-                    // if(this.insurance_url === ''){
-                    //     formdata.append('insurance[0]', this.insurance[0])
-                    // }
-                   
-                    if(!(this.profile_image.length >0 && this.profile_url != '')){
-                        formdata.append('profile_image[0]',this.profile_image[0]);
-                        //console.log(formdata.get('profile_image[0]'));
-                    }
-
-                    if(!(this.certificate.length > 0 && this.certificate_url != '')){
+                    if(this.certificate.length > 0)
                         formdata.append('certificate[0]', this.certificate[0]);
-                        //console.log(formdata.get('certificate[0]'));
-                    }
 
-                    if(!(this.insurance.length > 0 && this.insurance_url != '')){
-                        formdata.append('insurance[0]', this.insurance[0]);
-                        //console.log(formdata.get('insurance[0]'));
-                    }
-                    
-                    
+                    if(this.insurance.length > 0)
+                        formdata.append('insurance[0]', this.insurance[0])
+
                     formdata.append('company_name', this.name)
                     formdata.append('email', this.mail)
                     formdata.append('tin_number', this.tin)
@@ -1393,7 +1311,7 @@ export default {
                     formdata.append('account_number', this.acnumber)
 
                     return formdata;
-
+                    
                 }
                 
             },
@@ -1407,24 +1325,23 @@ export default {
             },1000)
        },
 
+
        savechanges(){
 
-           console.log(this.validate());
+           console.log(this.validate());  
+           
+           this.confirm_edit_profile = false
 
-                    this.confirm_edit_profile = false
-                    
-                    this.loading = true
+            this.loading = true
 
-                    const dataobject = this.dataobject()
+            const dataobject = this.dataobject()
 
-                    console.log(dataobject.get('profile_image[0]'));
-                     console.log(dataobject.get('insurance[0]'));
-                      console.log(dataobject.get('certificate[0]'));
-
+            console.log(dataobject.get('profile_image[0]'));                  
 
            if (this.validate()){
+               
 
-                this.confirm_edit_profile = false
+               this.confirm_edit_profile = false
 
                this.$store.dispatch('T_POST_PAYMENT_TERMS',{
 
@@ -1488,6 +1405,7 @@ export default {
            }
                     
         
+        console.log(this.company_name);
         
        }
 
@@ -1495,8 +1413,11 @@ export default {
 
    computed: {
       ...mapGetters([
-          'LOAD_AGENT','LOAD_PROFILE','LOAD_POST_PAYMENT_TERMS','LOAD_AGENT_PAYMENT_TERMS'
-          //'LOAD_DIBTENDERS'
+          'LOAD_AGENT',
+          'LOAD_PROFILE',
+          'LOAD_POST_PAYMENT_TERMS',
+          'LOAD_AGENT_PAYMENT_TERMS'
+          
       ])
   }
 
@@ -1504,6 +1425,22 @@ export default {
 </script>
 
 <style scoped>
+
+.selectcountry{
+          height:103%; 
+          width:100%; 
+          padding-left: 2%;
+          border-color: black ;
+          margin-bottom: 0%;
+           
+  }
+
+.selectcountry:hover {
+  border-color:black;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+}
 
 .selectcountry{
           height:103%; 
@@ -1529,7 +1466,10 @@ export default {
      
  }
  
- 
+ img.preview{
+     width: 248px;
+     height: 200px
+ }
 
  .large-preview{
 
@@ -1548,5 +1488,15 @@ export default {
  img.preview:hover{
      cursor: pointer;
  }
+
+.insurance_preview:hover {
+  border-color: #F5FAFF;
+  color: #4169E1;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+  background-color: #F5FAFF;
+}
+
 
 </style>

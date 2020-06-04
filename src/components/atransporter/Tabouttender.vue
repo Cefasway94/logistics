@@ -315,8 +315,8 @@
                     </v-flex> -->
                    <v-flex xms12 sm12 md12 lg12 class="pl-3 ">
                     <p class="white--text body-1 font-weight-strong mb-0">
-                    You have already bided this tender, click the button bellow to view list of
-                    active tenders
+                    You have already bided this tender, click a button bellow to view your list of
+                    Bids
                     </p>
                     </v-flex>
                      <v-flex row xms12 sm12 md12 lg12 class="" >
@@ -356,8 +356,8 @@
                     </v-flex> -->
                     <v-flex xms12 sm12 md12 lg12 class="pl-3 ">
                     <p class="white--text body-1 font-weight-strong mb-0">
-                     Your bid have been sent succefully, click the button to
-                     view list of active tenders
+                     Your bid have been sent succefully, click a button to
+                     view your list of Bids
                     </p>
                     </v-flex>
                     <v-flex row xms12 sm12 md12 lg12 class="" >

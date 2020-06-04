@@ -1,238 +1,1559 @@
+
 <template>
-    <v-container class=" mt-12 px-5 pt-12">
+    <v-container class="my-12 px-5">
 
-            <v-card flat width="1300" class="mt-12 mx-auto mb-5" color="#F5FAFF">
-                <v-flex row class="px-3 ">
-                <v-flex>
-                <v-row class="pl-2 mb-1">
-                <h1 class=" font-weight-regular headline ">Used furniture</h1>
-                <v-chip color="grey" small class="white--text ml-7 mt-1">Aavilable</v-chip>
-                </v-row>
-                <p class="grey--text">1 40 feet container of used furniture</p>
+        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
+                    <!-- alert ----------------------------- -->
+                                
+                <v-dialog
+                v-model="edited"
+                max-width="700"
+                >
+                
+                <v-alert
+                
+                clearable
+                class=""
+                :value="edited"
+                color="lblue"
+                type="error"
+                row
+                >
+                <v-flex row>
+                <v-flex row xms9 sm9 md9 lg9 class="pl-4">
+                <!-- <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                <v-icon large color="orange" class="">notification_important</v-icon>    
+                </v-flex> -->
+                <v-flex xms11 sm11 md11 lg11 class="pl-3">
+                <p class="text--text title mb-0">
+                Welcome to ubalori.
+                </p>
+                <p class="text--text subtitle-1 mb-0">
+                Please edit your profile to complete registration
+                </p>
                 </v-flex>
                 </v-flex>
-            </v-card>
+                <v-flex  xsm3 sm3 md3 lg3>
+                
+                </v-flex>
+                </v-flex>
+                </v-alert>    
+                
+                </v-dialog>   
 
-            <v-card flat width="1300" class=" mx-auto mb-10 px-5" color="#F5FAFF" v-model="tender" >
-                <v-flex row >
-                <v-flex sm12 md9 lg9 xlg9 >
-                    <v-card width="" class="pt-6 pb-3 pl-8" >
-                        <v-flex column>
-                        <v-flex row >
-                            <v-flex column class="pl-3">
-                            <p class="primary--text body-1 mb-2"> DESTINATION </p>
-                            <p class="body-1">Rwanda</p>
-                            </v-flex>
-                            <v-flex column >
-                            <p class="primary--text body-1 mb-2"> ORIGIN </p>
-                            <p class="body-1">Rwanda</p>
-                            </v-flex>
-                            <v-flex column >
-                            <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
-                            <p class="body-1">40 feet</p>
-                            </v-flex>
-                        </v-flex>
+                
+                  <v-dialog
+                    v-model="field_required"
+                    max-width="400"
+                    color="#f5faff"
+                    transition="scale-transition"
+                    :hide-overlay="true">
+                    <v-card 
+                    height="105" 
+                    color="#f64f51" 
+                    class="pt-2">
+    
+                    <v-alert  
+                    prominent=""
+                    height="" 
+                    type="error">
+                      <p class="font-weight-strong mb-0">{{field}}</p>
+                    </v-alert>
 
-                        <v-flex column class="mt-7 pr-4">
-                            <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
-                            <p class="body-1">Lorem ipsum, dolor sit amet consectetur 
-                                adipisicing elit.</p>
-                        </v-flex>
-
-                        <v-flex row class="mt-10 mb-4" >
-                            <v-flex column class="pl-3">
-                            <p class="primary--text body-1 mb-2"> DESTINATION </p>
-                            <v-card flat width="200" height="150" outlined>
-                            <v-img class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
-                        
-                        </v-card>
-                            </v-flex>
-
-                            <v-flex column >
-                            <p class="primary--text body-1 mb-2"> ORIGIN </p>
-                            <v-card flat width="200" height="150" outlined>
-                            <v-img class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
-                        </v-card>
-                            </v-flex>
-
-                            <v-flex column >
-                            <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
-                            <v-card flat width="200" height="150" outlined>
-                            <v-img class="ma-auto">
-                                <v-icon x-large class="mx-12 mt-12">
-                                    cloud_upload
-                                </v-icon>
-                            </v-img>
-                        </v-card>
-                            </v-flex>
-                        </v-flex>
-                        </v-flex>
                     </v-card>
+                  </v-dialog>
+
+
+                    <v-dialog
+                    v-model="confirm_edit_profile"
+                    color="#2296f3"
+                    max-width="350"
+                    transition="scale-transition"
+                    >
+                        <v-card 
+                    height="130" 
+                    color="#2296f3" 
+                    clas>
+                    <v-flex>
+                        <v-alert
+                        prominent
+                            type="info"
+                            >
+                            <v-flex align="center" class=" px-3">
+                                
+                                  <p class="grow title mb-0">
+                                      Confirm Profile Update
+                                </p>   
+                            </v-flex>
+                            </v-alert>
+
+                            <center>
+                            <v-flex class="shrink px-5">
+                                
+                                    <v-btn 
+                                    class="white--text"
+                                    color="red"
+                                    small
+                                    @click=" confirm_edit_profile = false">
+                                        NO
+                                    </v-btn>
+                                    <v-btn
+                                    class="ml-10 white--text" 
+                                    color="success"
+                                    small
+                                    @click.prevent="savechanges()">
+                                        YES 
+                                    </v-btn>
+                                </v-flex>
+                                </center>
+                        </v-flex>
+                        </v-card>
+                    </v-dialog>
+
+                 
+                    <v-dialog
+                    v-model="update_success"
+                    max-width="330"
+                    color="#f5faff"
+                    transition="scale-transition">
+                        <v-card 
+                    height="100" 
+                    color="#4bae50" 
+                    clas>
+                  <v-alert
+                    prominent
+                    type="success"
+                    >
+                    <v-row align="center">
+                        <v-col class="grow">
+                            {{success_alert}}
+                        </v-col>
+                    </v-row>
+                    </v-alert>
+                        </v-card>
+                    </v-dialog>
+
+<!-- overlay -->
+            <v-overlay :value="overlay">
+
+                <div class="large-preview">
                     
-                    <v-card flat width="1300" class="mt-5 mb-5" color="#F5FAFF">
-                        <v-flex row class="">
-                            <v-spacer></v-spacer>
-                            <!-- Removed router to and added the 'listId' function that consologs the id passed from New tenders page
-                                <v-btn color="#4169E1" @click="listId ()" large class="white--text" rauter to="/agent/biding">Bid on tender</v-btn> -->
-                            <v-btn color="#4169E1" large class="white--text"
-                            @click="Bid">
-                            Bid on tender</v-btn>
-                        </v-flex>
-                    </v-card>
+                    <v-row justify= "center">
+                        <v-col cols=12>
+                            <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                        </v-col>
 
-         
-                <v-card width="1300" class="mt-5 mb-5 pl-8 pt-6 pb-5" 
-                v-bind:style="{ visibility: computedVisibility }">
-                        <v-flex>
-                            <p class="body-1" style="color:#4169E1;" color="#4169E1">Biding detail</p>
-                        </v-flex>
-                        <v-flex row class="pl-2 mt-10">
-                        <v-flex column class="sm3 md3 px-2">
-                            <v-text-field color="#4169E1" clearable
-                            label="Bid amount"></v-text-field>
-                        </v-flex>
-                        <v-flex column class="sm3 md3 px-2">
-                            <v-text-field color="#4169E1" clearable
-                            label="Delivery time"></v-text-field>
-                        </v-flex>
-                        <v-flex column class="sm6 md6 px-2">
-                            <v-text-field color="#4169E1" clearable
-                            label="Terms and conditions"></v-text-field>
-                        </v-flex>
-                        </v-flex>
-                        <v-flex row class="">
-                            <v-spacer></v-spacer>
-                            <v-btn  elevation="flat" color="white" class="mx-3" style="color:#4169E1;">cancel</v-btn>
-                            <v-btn color="#4169E1" class="white--text">confirm bid</v-btn>
-                        </v-flex>
-                    </v-card>
+                        <v-col class="mt-0" offset="4">
+                            <v-btn
+                                large
+                                color="primary white--text"
+                                @click="overlay = false"
+                            >
+                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </div>
+            </v-overlay>
 
+
+                
+        <v-card flat width="900" class="mt-12 mx-auto mb-7" color="#F5FAFF">
+            <v-flex row class="px-3 ">
+                <h1 class=" font-weight-regular headline mb-0 ">Transporter Profile info</h1>
+                <v-chip 
+                color="orange" 
+                class="mx-auto" 
+                v-show="verification"> 
+                Account waiting for verification
+                </v-chip>
+                </v-flex>
+        </v-card>
+
+        <v-card flat width="900" class="mt-5 mx-auto " color="#F5FAFF">
+            <v-flex row class="px-3">
+            <v-icon color="#4169E1" class="mr-5">person_outline</v-icon>
+            <h1 style="color:#4169E1;" class=" font-weight-regular title ">Transporter details</h1>
+             <v-spacer></v-spacer>
+                <!-- <v-btn
+                color="#4169E1" 
+                class="white--text" 
+                width="100"
+                v-show="editaccounts" 
+                @click="editaccount()">
+                EDIT
+                </v-btn>
+                <v-btn
+                color="#4169E1" 
+                class="white--text" 
+                width="100"
+                v-show="canceledits" 
+                @click="canceledit()">
+                CANCEL
+                </v-btn> -->
+            </v-flex>
+        </v-card>
+
+        <v-card 
+        width="900" 
+        class="mt-5 mx-auto mb-5 pl-3 pb-3 pr-3">
+
+        <!-- loading -->
+                
+                <v-progress-linear
+                :active="loading"
+                indeterminate
+                absolute
+                color="#4169E1">
+                </v-progress-linear>
+               
+
+            <v-flex column class="pt-3">
+           
+                <v-flex row class="pb-5 pl-2 mt-3" style="background-color:;">
+                        <!-- <v-flex>
+                        <p class="bondy-2 mb-0 ml-3 mb-1">Profile Image</p>
+                        <v-card
+                        flat 
+                        width="200" 
+                        height="220"  
+                        class="mx-3">
+
+                            <v-card
+                            width="200" 
+                            height="150" 
+                            outlined 
+                            class="mx-auto"
+                            >
+                        
+                            <v-flex v-if="profileimage !== '' || profileimage !== 'null'  " 
+                            class="" 
+                            style="background-color:#F5FAFF;" >
+                            <v-img 
+                            :src="profileimage"
+                            class="mb-0 pb-0" 
+                            height="150" 
+                            width="200" 
+                            >
+                            </v-img>
+                         </v-flex>
+
+                         <v-flex v-else class="" style="background-color:#F5FAFF;" >
+                            <v-img 
+                            :src="profileimage"
+                            class="mb-0 pb-0" 
+                            height="147" 
+                            width="100" 
+                            >
+                            
+                            </v-img>
+                         </v-flex>
+                        </v-card>
+
+                        <v-flex class=" mt-2" >
+                                <v-file-input
+                                dense
+                                id="profile_image"
+                                ref="other"
+                                type="file" 
+                                flat 
+                                class="mb-0 pb-0" 
+                                height="" 
+                                width="100"
+                                prepend-icon=""
+                                prepend-inner-icon="cloud_download"
+                                outlined 
+                                @change="uploadprofile()">
+                                        <template #label>
+                                            <span class="text--text body-2 ml-4">select image </span>
+                                        </template>
+                                                                
+                                </v-file-input>
+                            </v-flex>
+                            
+                        </v-card>
+                        </v-flex> -->
+
+
+                        <!--  -->
+                        <v-col cols=12 sm=4 class="">
+                            <p class="body-2 mb-0 primary--text"> Profile image  <span class="red--text"><strong>* </strong></span></p>
+                            <v-card flat width="250" height="270" outlined >
+
+                                <v-file-input 
+                                    :clearable="false"
+                                    placeholder="Choose a file"
+                                    id="profile" 
+                                    @change="uploadprofile()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'identity card is required']"
+                                    required
+                                
+                                >
+
+                                </v-file-input>
+
+                                <div v-show="profile_extension === 'jpg' || profile_extension === 'jpeg' || profile_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="handleClick('profile',profile_url)">
+                                         <img  id="profile_thumb" :src="profile_url" class="preview">
+
+                                    </v-card>
+                                </div>
+                                <div v-show="profile_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(profile_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                            </v-card>
+                    
+                        </v-col> 
+
+                        <!--  -->
+
+
+
+
+                </v-flex> 
+            
+
+            <v-flex row class="">
+                <v-flex column sm6 mb6 class="px-6">
+                    <p class="bondy-2 mb-0">Name</p>
+                    <v-text-field
+                    v-model="name" 
+                    outlined 
+                    class="" 
+                    clearable 
+                    color="#4169E1"
+                    :rules="[rules.required]">
+                        <template #label>
+                            <span class="deep-orange--text"><strong>* </strong></span>
+                        </template>
+                    </v-text-field>
+                </v-flex>
+                <v-flex row sm4 mb4 justify-center>
+                <!-- <v-flex column sm6 mb6>
+                    <p class="bondy-2 mb-0">Category</p>
+                    <v-select
+                    outlined
+                    class=""
+                    style="color:#4169E1;"
+                    :items="service_type"
+                    color="#4169E1"
+                    clearable
+                    ></v-select>
+                </v-flex> -->
+                <v-flex column class="">
+                    <p class="bondy-2 mb-0">Tin No</p>
+                    <v-text-field 
+                    sm3 md3
+                    v-model="tin"
+                    outlined 
+                    color="#4169E1" 
+                    clearable 
+                    :rules="[rules.required]">
+                         <template #label>
+                            <span class="deep-orange--text"><strong>* </strong></span>
+                        </template>
+                    </v-text-field>
+                </v-flex>
+                </v-flex>
+            </v-flex>
+            </v-flex>
+
+            <v-flex column>
+            <v-flex class="px-3">
+            <h1 style="color:#4169E1;" class=" font-weight-bold body-1 my-5">CONTACTS</h1>
+            </v-flex>
+            <v-flex row class="px">
+
+                <v-flex column sm6 mb6 class="px-6">
+                    <p class="bondy-2 mb-0">Phone number</p>
+                    <v-text-field 
+                    v-model="phone"
+                    outlined 
+                    class="" 
+                    clearable 
+                    color="#4169E1"
+                    :rules="[rules.required, rules.number]" >
+                            <template #label>
+                              <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                    </v-text-field>
                 </v-flex>
 
-                <v-flex sm12 md3 lg3 xlg3 class="px-3">
+                <v-flex row sm6 mb6 justify-center>
+                <v-flex>
+                    <p class="bondy-2 mb-0">Fax</p>
+                    <v-text-field 
+                    v-model="faxnumber"
+                    outlined 
+                    color="#4169E1" 
+                    clearable 
+                     :rules="[rules.required]">
+                            <template #label>
+                                <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                     </v-text-field>
+                </v-flex>
+                </v-flex>
+            </v-flex>
 
-                    <v-card color="#4169E1" width="" class="py-4 px-5">
-                        <v-flex row >
-                            <v-flex column class="px-3" >
-                            <p  class="white--text body-1 font-weight-bold" > {{LOAD_TENDER.customer_id}} </p>
-                            <v-flex column>
-                            <v-flex row class="px-3 ">
-                            <v-icon class="mb-3 white--text" >mail_outline</v-icon>
-                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
-                            </v-flex>
-                            <v-flex class="pl-8">
-                            <p class="white--text ">Lorem@gamil.com</p>
-                            </v-flex>
-                            </v-flex>
+            <v-flex row class="px">
+                <!-- <v-flex column sm6 mb6 class="px-6">
+                    <p class="bondy-2 mb-0">Email</p>
+                    <v-text-field
+                    v-model="mail"
+                    outlined 
+                    class="" 
+                    clearable 
+                    color="#4169E1"
+                    :rules="[rules.required, rules.email]">
+                            <template #label>
+                                <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                    </v-text-field>
+                </v-flex> -->
 
-                            <v-flex column>
-                            <v-flex row class="px-3 ">
-                            <v-icon class="mb-3 white--text"  >room</v-icon>
-                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
-                            </v-flex>
-                            <v-flex class="pl-8">
-                            <p class="white--text ">Street location, st</p>
-                            </v-flex>
-                            </v-flex>
+                 <v-flex column sm6 mb6 class="px-6">
+                <v-flex>
+                    <p class="bondy-2 mb-0">P.O.Box</p>
+                    <v-text-field 
+                    v-model="box"
+                    outlined 
+                    color="#4169E1" 
+                    clearable 
+                    :rules="[rules.required]">
+                            <template #label>
+                                <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                    </v-text-field>
+                </v-flex>
+                </v-flex>
+            </v-flex>
+            </v-flex>
 
-                            <v-flex column>
-                            <v-flex row class="px-3 ">
-                            <v-icon class="mb-3 white--text" >local_phone</v-icon>
-                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
-                            </v-flex>
-                            <v-flex class="pl-8">
-                            <p class="white--text ">Lorem@gamil.com</p>
-                            </v-flex>
-                            </v-flex>
-                            </v-flex>
-
-                        </v-flex>
-
+            <v-flex column>
+            <v-flex class="px-3">
+            <h1 style="color:#4169E1;" class=" font-weight-bold body-1 my-5">LOCATION</h1>
+            </v-flex>
+            <v-flex row class="px">
+                <v-flex column sm6 mb6 class="px-6">
+                    <p class="bondy-2 mb-0">Country</p>
+                    <v-card
+                    outlined
+                    color="" 
+                    height="55" 
+                    class="card "
+                    style="border-color:#babdc2;">
+                    
+                      <country-select 
+                      v-model="country" 
+                      :country="country" 
+                      topCountry="Tanzania, United Republic of" 
+                      height="55"
+                      :countryName="true"
+                      :removePlaceholder="true"
+                      class="selectcountry"/>
                     </v-card>
+                            <!-- <template #label>
+                                <span class="deep-orange--text"><strong>* </strong></span>
+                            </template> -->
+                    
+                </v-flex>
+
+                <v-flex row sm6 mb6 justify-center>
+                <v-flex>
+                    <p class="bondy-2 mb-0">City</p>
+                    <v-text-field 
+                    v-model="pcity"
+                    outlined 
+                    color="#4169E1" 
+                    clearable 
+                     :rules="[rules.required]">
+                            <template #label>
+                                <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                    </v-text-field>
                 </v-flex>
                 </v-flex>
-            </v-card>
+            </v-flex>
+
+            <v-flex row class="px">
+                <v-flex column sm6 mb6 class="px-6">
+                    <p class="bondy-2 mb-0">Region</p>
+                    <v-text-field 
+                    v-model="pregion"
+                    outlined 
+                    class="" 
+                    clearable 
+                    color="#4169E1"
+                     :rules="[rules.required]">
+                            <template #label>
+                                <span class="deep-orange--text"><strong>* </strong></span>
+                            </template>
+                     </v-text-field>
+                </v-flex>
+                
+            </v-flex>
+            </v-flex>
+        </v-card>
+    
+        <v-card flat width="900" class="mt-12 mx-auto" color="#F5FAFF">
+            <v-flex row class="px-3">
+            <v-icon color="#4169E1" class="">attachments</v-icon>
+            <h1 style="color:#4169E1;" class=" font-weight-regular title ">Attachments</h1>
+            </v-flex>
+        </v-card>
+
+    
+        <v-card :disabled="edit"  width="900" class="mt-5 mx-auto mb-5 pb-3 pl-3 pr-3">
+
+        <!-- loading -----  -->
+            <v-progress-linear
+                :active="loading"
+                indeterminate
+                absolute
+                color="#4169E1">
+                </v-progress-linear>
+
+                         <v-flex class="pt-3" >
+                             <center>
+                             <p class="mb-0 body-1 red--text">
+                                Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
+                             </p>
+                             </center>
+                         </v-flex>
+
+            <v-row class="pt-3">
+
+                <!-- <v-col>
+                    <p class="bondy-2 mb-0 ml-3 mb-0">Certificate</p>
+                     <v-card 
+                     flat 
+                     color="#F5FAFF" 
+                     width="200" 
+                     height="150" 
+                     outlined 
+                     class="mx-3">
+                         <v-flex class="" >
+                            <v-file-input 
+                            id="certificate"
+                            ref="certificate"
+                            type="file"
+                            flat 
+                            dropzone 
+                            class="mb-0 pb-0" 
+                            height="150" 
+                            width="100" 
+                            outlined 
+                            prepend-icon=""
+                            @change="updatecertificate()" 
+                            :rules="[rules.required]">
+                                     <template #label>
+                                        <span class="deep-orange--text"><strong>* </strong></span>
+                                    </template>
+                            </v-file-input>
+                         </v-flex>
+                    </v-card>
+                </v-col> -->
+
+                     <v-col cols=12 sm=4 class="">
+                        
+                            <p class="body-1 mb-0 primary--text"> Certificate <span class="red--text"><strong>* </strong></span></p>
+                            <v-card flat width="250" height="270" outlined >
+
+                                <v-file-input 
+                                    :clearable="false"
+                                    placeholder="Choose a file"
+                                    id="certificate" 
+                                    @change="updatecertificate()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'Certificate is required']"
+                                    required>
+
+                                </v-file-input>
+
+                                <div v-show="certificate_extension === 'jpg' || certificate_extension === 'jpeg' || certificate_extension === 'png'">
+                                    <v-card 
+                                    height="200" 
+                                    width="250" 
+                                    outlined 
+                                    @click="handleClick('certificate',certificate_url)">
+                                        <img  id="certificate_thumb" :src="certificate_url" class="preview">
+                                    </v-card>
+                                </div>
+
+                                <div v-show="certificate_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(certificate_url)">
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                            </v-card>
+                    
+                        </v-col> 
+
+                <v-col cols=12 sm=4 class="">
+                            <p class="body-1 mb-0 primary--text"> Insurance  <span class="red--text"><strong>* </strong></span></p>
+                            <v-card flat width="250" height="270" outlined >
+
+                                <v-file-input 
+                                    :clearable="false"
+                                    placeholder="Choose a file"
+                                    id="insurance" 
+                                    @change="updateinsurance()"
+                                    prepend-icon ="mdi-cloud-upload"
+                                >
+
+                                </v-file-input>
+
+                                <div v-show="insurance_extension === 'jpg' || insurance_extension === 'jpeg' || insurance_extension === 'png'">
+                                    <v-card 
+                                    height="200" 
+                                    width="250" 
+                                    outlined 
+                                    @click="handleClick('insurance',insurance_url)">
+                                        <img  id="insurance_thumb" :src="insurance_url" class="preview">
+                                    </v-card>
+                                </div>
+
+                                <div v-show="insurance_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(insurance_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                            </v-card>
+                    
+                        </v-col>
+
+                <!-- <v-col>
+                    <p class="bondy-2 mb-0 ml-3 mb-0">Other</p>
+                     <v-card 
+                     flat color="#F5FAFF" 
+                     width="200" 
+                     height="150" 
+                     outlined 
+                     class="mx-3">
+                         <v-flex class="" >
+                            <v-file-input
+                            id="other"
+                            ref="other"
+                            type="file" 
+                            flat 
+                            dropzone 
+                            class="mb-0 pb-0" 
+                            height="150" 
+                            width="100" 
+                            outlined 
+                            prepend-icon=""
+                            @change="uploadother()" 
+                           :rules="[rules.required]">
+                                     <template #label>
+                                        <span class="deep-orange--text"><strong>* </strong></span>
+                                    </template>
+                            </v-file-input>
+                         </v-flex>
+                    </v-card>
+                </v-col>   -->
+
+            </v-row>
+        </v-card>
+
+        <v-card flat width="900" class="mt-12 mx-auto" color="#F5FAFF">
+            <v-flex row class="px-3">
+            <v-icon color="#4169E1" class="mr-5">announcement</v-icon>
+            <h1 style="color:#4169E1;" class=" font-weight-regular title ">Bid terms</h1>
+            </v-flex>
+        </v-card>
+
+        <v-card :disabled="edit"  width="900" class="mt-5 mx-auto px-3 " >
+             <!-- loading -----  -->
+            <v-progress-linear
+                :active="loading"
+                indeterminate
+                absolute
+                color="#4169E1">
+                </v-progress-linear>
+
+            <v-flex column class="px-3 pt-5">
+            <p class="bondy-2 mb-0  mb-0">Payment terms</p>
+            <v-select
+              attach
+              chips
+              multiple
+              class=""
+              style="color:#4169E1;"
+              :items="payment_terms"
+              color="#4169E1"
+              clearable
+              v-model="terms_of_payment"
+               :rules="[rules.required]">
+
+                    <template #label>
+                    <span class="red--text"><strong>{{terms_required}}</strong></span>
+                    </template>
+
+            </v-select>
+            </v-flex>
+        </v-card>
+
+        <v-card flat width="900" class="mt-12 mx-auto" color="#F5FAFF">
+            <v-flex row class="px-3">
+            <v-icon color="#4169E1" class="mr-5">account_balance</v-icon>
+            <h1 style="color:#4169E1;" class=" font-weight-regular title ">Bank account details</h1>
+            </v-flex>
+        </v-card>
+
+        <v-card :disabled="edit"  width="900" class="mt-5 mx-auto px-3 ">
+
+             <!-- loading -----  -->
+            <v-progress-linear
+                :active="loading"
+                indeterminate
+                absolute
+                color="#4169E1">
+                </v-progress-linear>
+
+            <v-flex column class="px-3 pt-7">
+            <p class="bondy-2 mb-0 mb-0">Bank name</p>
+            <v-text-field 
+            v-model="bname"
+            outlined 
+            class="" 
+            clearable 
+            color="#4169E1"
+             :rules="[rules.required]">
+                        <template #label>
+                        <span class="deep-orange--text"><strong>* </strong></span>
+                        </template>
+            </v-text-field>
+            </v-flex>
+
+            <v-flex column class="px-3">
+            <p class="bondy-2 mb-0 mb-0">Account name</p>
+            <v-text-field 
+            v-model="aname"
+            outlined 
+            class="" 
+            clearable 
+            color="#4169E1"
+             :rules="[rules.required]">
+                        <template #label>
+                        <span class="deep-orange--text"><strong>* </strong></span>
+                        </template>
+            </v-text-field>
+            </v-flex>
+
+            <v-flex column class="px-3">
+            <p class="bondy-2 mb-0 mb-0">Acount number</p>
+            <v-text-field
+            v-model="acnumber"
+            outlined 
+            class="" 
+            clearable 
+            color="#4169E1"
+             :rules="[rules.required]">
+                        <template #label>
+                        <span class="deep-orange--text"><strong>* </strong></span>
+                        </template>
+            </v-text-field>
+            </v-flex>
+        </v-card>
+
+        <v-card flat width="900" class="mt-5 mx-auto" color="#F5FAFF">
+            <v-flex row class="">
+            <v-spacer></v-spacer>
+            <v-btn 
+            :disabled="edit" 
+            class="primary" 
+            flat 
+            @click="validate()">
+            save changes
+            </v-btn>
+            </v-flex>
+        </v-card>
 
     </v-container>
 </template>
 
 <script>
-import {mapGetters, mapActions} from 'vuex';
+import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
+import PDFDocument from '@/components/PDFDocument'
+/* eslint-disable no-console */
 export default {
-        
-  
-  data () {
-      return{
-          visibility: 'hidden',
-           tender:'',
-           onbiding: 'false'         
-      }
-  },
+   data() {
+       return{
 
-  mounted (tab){
-             tab = this.$route.params.id;
-      this.GET_TENDERSDETAILs(tab);
-  },
-  
-  methods:{
-      ...mapActions([
-          'GET_TENDERSDETAILs'
+           // thumb nails
+           profileimage:'',
 
-      ]),
+           //place holders
+           name:'',
+           faxnumber:'',
+           pcity:'',
+           tin:'',
+           phone:'',
+           box:'',
+           country:'',
+           pregion:'',
+           terms_of_payment:[],
+           bname:'',
+           aname:'',
+           acnumber:'',
 
-      
-      theid(id){
-          // eslint-disable-next-line no-console
-         // console.log(id);
-         return id;
-      },
+           // temrs and condition field
+           terms_required:'*',
+           field_required:false,
+           field:'',
 
-      Bid: function() {
-            this.visibility = 'visible';
+           // connection error
+           connectio_error:'',
+           error:'',
+
+           // Update success
+           update_success:false,
+           success_alert:'',
+
+// confirm edit profiile -------------------
+           confirm_edit_profile:false,
+
+            
+
+
+           rules: {
+            required: value => !!value || "Required",
+            number: value => {
+              const pattern = /^\d+$/;
+              return pattern.test(value) || "Number only required"
+            },
+
+            min: v => v.length >= 8 || 'Min 8 characters',
+
+            email: value => {
+             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+             return pattern.test(value) || "invalid email";
+            }
+           },
+
+           // files
+           certificate:[],
+           insurance:[],     
+           other:[],
+           profile_image:[],
+
+           //others 
+           edited:false,
+           verification:false,
+           loading:false,
+           editaccounts:true,
+           canceledits:false,
+           edit:false,
+            payment_terms:['Full payment', 'Pay in 2 installments (50%, 50%)', 'Pay in 3 installments (30%, 40%, 30%)'],
+            transporter_payment_terms:[],
+          //payment_terms:[],
+
+           // Priview thumb nails
+           large_preview_url:'',
+           overlay: false,
+
+           startswith:false,
            
-        }
+           profile_extension:'',
+           profile_url:'',
 
-     
+           certificate_extension:'',
+           certificate_url:'',
 
-    //   listId (id)
-    //   {
-    //     id= this.LOAD_TENDERS
-    //       id.map(data=>{
-    //            // eslint-disable-next-line no-console
-    //             console.log(data.name);
-    //           return this.tender = data
-    //       });       
-    //   }           
-  },
+           insurance_extension:'',
+           insurance_url:'',
 
-  computed: {
+           other_extension:'',
+           other_url:'',
+           url:'',
+            pdf:false,
+            pdfOverlay:false
+           
+          
+    }
+   },
+
+
+    created (){
+         
+        this.T_GET_AGENT(localStorage.client).then(()=>{
+
+            console.log(this.LOAD_AGENT);
+
+            if (
+                !this.LOAD_AGENT.objects.agent_id == '' && 
+                this.LOAD_AGENT.objects.is_verified == 0 ){
+
+                this.verification = true
+                
+            }
+
+            if (!this.LOAD_AGENT.objects.agent_id == ''){
+
+                if(this.LOAD_AGENT.objects.certificate !== null){
+                    
+                        this.certificate_url = this.LOAD_AGENT.objects.certificate[0];
+
+                        this.certificate_extension = this.getFileExtension(this.certificate_url);
+
+                        this.certificate = this.LOAD_AGENT.objects.certificate;
+
+                        console.log(this.certificate_url);
+                          console.log(this.certificate);
+                    
+
+                }
+
+                if(this.LOAD_AGENT.objects.insurance !== null){
+                    
+                        this.insurance_url = this.LOAD_AGENT.objects.insurance[0];
+
+                        this.insurance_extension = this.getFileExtension(this.insurance_url);
+                        
+                        this.insurance  = this.LOAD_AGENT.objects.insurance;
+
+                        console.log(this.certificate_extension);
+                    
+
+                }
+
+                 if(this.LOAD_AGENT.objects.profile_image !== null){
+                    
+                        this.profile_url = this.LOAD_AGENT.objects.profile_image[0];
+
+                        this.profile_extension = this.getFileExtension(this.profile_url);
+
+                        this.profile_image = this.LOAD_AGENT.objects.profile_image;
+
+                        console.log(this.certificate_extension);
+                    
+
+                }
+                
+                this.name = this.LOAD_AGENT.objects.company_name
+                this.faxnumber = this.LOAD_AGENT.objects.fax
+                this.tin = this.LOAD_AGENT.objects.tin_number
+                this.phone = this.LOAD_AGENT.objects.phone
+                this.mail = this.LOAD_AGENT.objects.email
+                this.box = this.LOAD_AGENT.objects.p_o_box
+                this.country = this.LOAD_AGENT.objects.country
+                this.pcity = this.LOAD_AGENT.objects.city
+                this.pregion = this.LOAD_AGENT.objects.city
+                this.bname = this.LOAD_AGENT.objects.bank_name
+                this.aname = this.LOAD_AGENT.objects.account_name
+                this.acnumber = this.LOAD_AGENT.objects.account_number
+                // this.profileimage = this.LOAD_AGENT.objects.profile_image[0]
+
+           }else{
+                this.mail = localStorage.client
+           }
+        }).then(()=>{
+
+             console.log('entering here');
+
+            this.T_GET_AGENT_PAYMENT_TERMS(localStorage.client).then(()=>{
+
+                  console.log('transporter payment terms');
+                  console.log(this.LOAD_AGENT_PAYMENT_TERMS.length);
+
+                  for (let index = 0; index < this.LOAD_AGENT_PAYMENT_TERMS.length; index++) {
+
+                      this.transporter_payment_terms.push( this.LOAD_AGENT_PAYMENT_TERMS[index].installment_desc)                      
+                  }
+                  console.log(this.payment_terms);
+                  this.terms_of_payment = this.transporter_payment_terms;
+                  
+              })
+        }) 
+
+    },
+    components:{PDFDocument},
+   methods: {
+
+       ...mapActions([
+        "T_GET_AGENT",
+        "T_POST_PAYMENT_TERMS",
+        "T_GET_AGENT_PAYMENT_TERMS"
+    ]),
+
+        previewPdf(url){
+
+            this.url = url;
+            this.pdfOverlay = true;
+            this.pdf = true;
+            
+        },
+
+        closePdfViewer(){
+            this.pdf = false;
+            this.pdfOverlay = false;
+        },
+            
+            handleClick(id,src){
+
+            //eslint-disable-next-line no-console
+                        console.log("source "+src);
+
+            if(document.getElementById(id).files[0]){
+
+                this.showLargeThumbnail(id);
+
+            }else {
+                
+                this.largePreview(src);
+            }
+        },
+
+            largePreview(src){
+
+                this.large_preview_url = src;
+
+                this.overlay = !this.overlay;
+
+            },
+
+            getFileExtension(url){
+
+                let position = url.lastIndexOf('.');
+
+                let extracted_string = url.slice(position + 1, url.length + 1);
+
+                return extracted_string;
+
+            },
+
+            showLargeThumbnail(id){
+
+            this.overlay = !this.overlay
+
+            var reader = new FileReader();
+
+                reader.onload = function(){
+
+                    var dataURL = reader.result;
+
+                    var large_thumbnail = document.getElementById('large_thumbnail');
+               
+                    large_thumbnail.src = dataURL;
+                   
+                }
+
+            reader.readAsDataURL(document.getElementById(id).files[0]);
+        },
+
+            validate(){
+
+              //this.insurance  = this.LOAD_AGENT.objects.insurance;
+               // this.certificate = this.LOAD_AGENT.objects.certificate;
+
+                if(this.rules.required(this.name) == 'Required'){
+        
+                        console.log(3);
+                        this.field = 'name field is required'
+                        this.field_required = true
+                    // this.requiredemail = true  
+                    // this.invalidemail = false
+                        return false
+
+                }else if (this.rules.required(this.tin) == 'Required') {
+
+                        console.log(2);
+                        this.field = 'Tin number field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.required(this.phone) == 'Required'){
+
+                        console.log(1);
+                        this.field = 'Phone number field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.number(this.phone) === 'Number only required'){
+
+                        console.log(1);
+                        this.field = 'Phone number field accept numbers only'
+                        this.field_required = true
+                        return false
+
+                }else if (this.rules.required(this.faxnumber) == 'Required') {
+
+                        console.log(4);
+                        this.field = 'fax number is required'
+                        this.field_required = true
+                        return false
+
+                }else if (this.rules.required(this.box) == 'Required') {
+
+                        console.log(4);
+                        this.field = 'Box address field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.required(this.pcity) == 'Required'){
+
+                        console.log(7);
+                        this.field = 'City name field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.required(this.pregion) == 'Required'){
+
+                        console.log(8);
+                        this.field = 'Region field is required'
+                        this.field_required = true
+                        return false
+
+                }else if((this.terms_of_payment) == '' || (this.terms_of_payment) == 'null'){
+
+                        console.log(9);
+                        this.terms_required = "Required"
+                        this.field = 'Payment terms field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.required(this.bname) == 'Required'){
+
+                        console.log(10);
+                        this.field = 'Bank name field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.required(this.aname) == 'Required'){
+
+                        console.log(11);
+                        this.field = 'Account name field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.required(this.acnumber) == 'Required'){
+
+                        console.log(13);
+                        this.field = 'Account number field is required'
+                        this.field_required = true
+                        return false
+
+                // }else if(this.certificate_url == '' && this.certificate == ''){
+
+                //         console.log(13);
+                //         this.field = 'kindly attach certificate'
+                //         this.field_required = true
+                //         return false
+
+                // }else if(this.insurance_url == '' && this.insurance == ''){
+
+                //         console.log(13);
+                //         this.field = 'kindly attach Insurance'
+                //         this.field_required = true
+                //         return false
+
+
+                //done by Mary and Sudi please please do not DELETE or COMMENT OUT
+
+                }else if(this.certificate.length === 0){
+
+                        console.log(13);
+                        this.field = 'kindly attach certificate'
+                        this.field_required = true
+                        return false
+
+                }else if(this.insurance.length === 0){
+
+                        console.log(13);
+                        this.field = 'kindly attach Insurance'
+                        this.field_required = true
+                        return false
+
+                }else{
+
+                    this.confirm_edit_profile = true
+                    return true
+                }
+               
+            },
+               
+           updateinsurance(){
+               //this.insurance = []
+               //this.insurance.push(document.getElementById("insurance").files[0])
+               if(document.getElementById("insurance").files[0]){
+
+                    this.insurance = [];
+                    //this.insurance_url = ''
+
+                    this.insurance.push(document.getElementById("insurance").files[0]);
+                    
+                    this.insurance_extension = this.getFileExtension(document.getElementById("insurance").files[0].name);
+
+                    if(this.insurance_extension === 'jpg' || this.insurance_extension === 'jpeg' || this.insurance_extension === 'png')
+                    {
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('insurance_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("insurance").files[0]);
+                    }
+                     else if(this.insurance_extension === 'pdf')
+                        {
+                            this.insurance_url = URL.createObjectURL(document.getElementById("insurance").files[0]);
+
+                            this.previewPdf(this.insurance_url);
+                        }
+
+                
+                }
+               
+                    
+               },
+
+           updatecertificate(){
+               //this.certificate = []
+               //this.certificate.push(document.getElementById("certificate").files[0])
+                if(document.getElementById("certificate").files[0]){
+
+                    this.certificate = [];
+                    //this.certificate_url = ''
+
+                    this.certificate.push(document.getElementById("certificate").files[0]);
+                    
+                    this.certificate_extension = this.getFileExtension(document.getElementById("certificate").files[0].name);
+
+                    if(this.certificate_extension === 'jpg' || this.certificate_extension === 'jpeg' || this.certificate_extension === 'png')
+                    {
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('certificate_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("certificate").files[0]);
+                    }
+                    else if(this.certificate_extension === 'pdf')
+                        {
+                            this.certificate_url = URL.createObjectURL(document.getElementById("certificate").files[0]);
+
+                            this.previewPdf(this.certificate_url);
+                        }
+                        
+                }
+                console.log(this.certificate);
+                
+           },
+            
+            // uploadother(){ 
+            //     this.other = []
+            //    this.other.push(document.getElementById("other").files[0])
+            // },
+
+            uploadprofile(){
+
+                
+                if(document.getElementById("profile").files[0]){
+
+                    this.profile_image = [];
+                    //this.profile_url = ''
+
+                    this.profile_image.push(document.getElementById("profile").files[0]);
+                    
+                    this.profile_extension = this.getFileExtension(document.getElementById("profile").files[0].name);
+
+                    if(this.profile_extension === 'jpg' || this.profile_extension === 'jpeg' || this.profile_extension === 'png')
+                    {
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('profile_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("profile").files[0]);
+                    }
+                    else if(this.profile_extension === 'pdf')
+                        {
+                            this.profile_url = URL.createObjectURL(document.getElementById("profile").files[0]);
+
+                            this.previewPdf(this.profile_url);
+                        }
+
+                
+                }
+            },
+
+            dataobject(){
+
+                if (this.validate()){
+
+                    const formdata = new FormData()
+
+             
+                   console.log(this.insurance)
+
+                    
+                   
+                    if(!(this.profile_image.length >0 && this.profile_url != '' )){
+                        formdata.append('profile_image[0]',this.profile_image[0]);
+                        //console.log(formdata.get('profile_image[0]'));
+                    }
+
+                    if(!(this.certificate.length > 0 && this.certificate_url != '')){
+                        formdata.append('certificate[0]', this.certificate[0]);
+                        //console.log(formdata.get('certificate[0]'));
+                    }
+
+                    if(!(this.insurance.length > 0 && this.insurance_url != '')){
+                        formdata.append('insurance[0]', this.insurance[0]);
+                        //console.log(formdata.get('insurance[0]'));
+                    } 
+
+                    //  if(this.profile_image.length >0 ){
+                    //     formdata.append('profile_image[0]',this.profile_image[0]);
+                    //              //console.log(formdata.get('profile_image[0]'));
+                    // }
+
+                    // if(this.certificate.length > 0 ){
+                    //     formdata.append('certificate[0]', this.certificate[0]);
+                    //              //console.log(formdata.get('certificate[0]'));
+                    // }
+
+                    // if(this.insurance.length > 0 ){
+                    //     formdata.append('insurance[0]', this.insurance[0]);
+                    //              //console.log(formdata.get('insurance[0]'));
+                    // }
+                    
+                    
+                    formdata.append('company_name', this.name)
+                    formdata.append('email', this.mail)
+                    formdata.append('tin_number', this.tin)
+                    formdata.append('phone', this.phone)
+                    formdata.append('fax', this.faxnumber)
+                    formdata.append('p_o_box', this.box)
+                    formdata.append('country', this.country)
+                    formdata.append('city', this.pcity)
+                    formdata.append('region', this.pregion)
+                    formdata.append('terms_of_payment', this.terms_of_payment) 
+                    formdata.append('bank_name', this.bname)
+                    formdata.append('account_name', this.aname)
+                    formdata.append('account_number', this.acnumber)
+
+                    return formdata;
+
+                }
+                
+            },
+
+       previewprofile(){
+
+           setTimeout(()=>{
+                this.update_success = false
+                this.$router.push('/transporter/previewprofile')
+                this.$router.go('/transporter/previewprofile')
+            },1000)
+       },
+
+       savechanges(){
+
+           console.log(this.validate());
+
+                    this.confirm_edit_profile = false
+                    
+                    this.loading = true
+
+                    const dataobject = this.dataobject()
+
+                    console.log(dataobject.get('profile_image[0]'));
+                     console.log(dataobject.get('insurance[0]'));
+                      console.log(dataobject.get('certificate[0]'));
+
+
+           if (this.validate()){
+
+                this.confirm_edit_profile = false
+
+               this.$store.dispatch('T_POST_PAYMENT_TERMS',{
+
+                    email : this.mail,
+                    installment_desc:this.terms_of_payment,
+               
+            }).then(()=>{
+
+               console.log('sent payment terms with email');
+
+
+               if ( this.LOAD_POST_PAYMENT_TERMS){
+                                    
+                       this.$store.dispatch('T_EDIT_PROFILE',{dataobject, email: this.mail} ).then(() => {
+
+                                    console.log('load profile....');           
+                                    console.log(this.LOAD_PROFILE);
+                                
+                                if (this.LOAD_PROFILE.errorCount == 0 && this.LOAD_PROFILE.genralErrorCode == 8000) {
+
+                                    //console.log(this.LOAD_PROFILE);
+                                    this.loading = true;
+                                    
+                                    setTimeout(()=>{
+                                        this.loading= false;
+                                        this.update_success = true,
+                                        this.confirm_edit_profile = false
+                                        this.success_alert = 'Profile Updated successfully'
+                                        //this.previewprofile()
+                                    },1000)
+
+                                    console.log(this.email);
+                                    console.log(this.LOAD_PROFILE);
+
+                                }else{
+
+                                    console.log('profile failed');
+                                    
+                                }
+                                
+                        }).catch((error)=>{
+
+                            console.log(error.response.status);
+                            
+                        })                   
+               }
+               
+               
+           }).catch((error)=>{
+
+               this.loading = false
+               this.error = 'Cant update profile please check internet connection and try again'
+                this.connectio_error = true
+
+                console.log(error.response.data);
+                
+           })
+
+           }else {
+               this.loading = false
+           }
+                    
+        
+        
+       }
+
+   },
+
+   computed: {
       ...mapGetters([
-          'LOAD_TENDER',
+          'LOAD_AGENT','LOAD_PROFILE','LOAD_POST_PAYMENT_TERMS','LOAD_AGENT_PAYMENT_TERMS'
           //'LOAD_DIBTENDERS'
-      ]),
-
-      computedVisibility: function() {
-            return this.visibility;
-        }
-      
+      ])
   }
 
-    
 }
 </script>
 
 <style scoped>
-.pa-auto{
-    font-family :"Roboto",sans-serif !important;
+
+.selectcountry{
+          height:103%; 
+          width:100%; 
+          padding-left: 2%;
+          border-color: black ;
+          margin-bottom: 0%;
+           
+  }
+
+.selectcountry:hover {
+  border-color:black;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
 }
 
+
+ .select-control{
+     width:100%;
+     height:100%;
+     cursor: pointer;
+     
+ }
+ 
+ 
+
+ .large-preview{
+
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
+
+ .progress { z-index: 1;}
+
+ img.preview:hover{
+     cursor: pointer;
+ }
 
 </style>

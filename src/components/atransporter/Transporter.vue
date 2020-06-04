@@ -129,7 +129,32 @@
                 class="mt-12"
                 color="#4169E1">
                 </v-progress-circular>
-                </v-card>
+      </v-card>
+
+      <v-card 
+      width="300" 
+      flat 
+      color="transparent" 
+      class="mb-3">
+      <v-container 
+        v-show="notender" 
+        row 
+        fluid 
+        class="pt-5" 
+        style="background-color:#F5FAFF;" >
+
+                <v-alert
+                :value="notender"
+                dense
+                outlined
+                prominent
+                type="info"
+                >
+            No new Bids
+            </v-alert>
+            
+        </v-container>
+      </v-card>
 
 <!-- ----------------- Biding card------------- -->
       <v-container 
@@ -242,7 +267,35 @@
         </v-container>
 
 <!-- ----------------- On progress cards------------- -->
-        <v-container v-show="onprogressliast" row fluid class="pt-5" style="background-color:#F5FAFF;" >
+            <v-card 
+            width="300" 
+            flat 
+            color="transparent" 
+            class="mb-3">
+            <v-container 
+                v-show="notenderonprogress" 
+                row 
+                fluid 
+                class="pt-5" 
+                style="background-color:#F5FAFF;" >
+
+                        <v-alert
+                        :value="notenderonprogress"
+                        dense
+                        outlined
+                        prominent
+                        type="info"
+                        >
+                        No Tender on progress
+                    </v-alert>
+                    
+                </v-container>
+            </v-card>
+
+        <v-container 
+        v-show="onprogressliast" 
+        row fluid class="pt-5" 
+        style="background-color:#F5FAFF;" >
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
              v-for="(tender, i) in LOAD_DASHBOARDS.objects" :key="i"  >
@@ -341,7 +394,11 @@ export default {
           tab: this.$route.params.id,
           componemtkey: 0,
           acceptDialog: false,
-          i:''
+          i:'',
+         
+         // no tender found
+          notender:false,
+          notenderonprogress:false
           
       }
   },
@@ -354,28 +411,40 @@ export default {
         this.T_GET_AGENT(tab).then(()=>{
             
             if (!this.LOAD_AGENT.objects.agent_id == '') {
+
                 if (this.LOAD_AGENT.objects.is_verified == 0) {
-                    setTimeout(()=>{
-                    this.loading = false
-                    this.verify = true;
-                 this.verification = false
-                 },500)
+                        
+                        setTimeout(()=>{
+                        this.loading = false
+                        this.verify = true;
+                    this.verification = false
+                    },500)
+
                 }else{
+
                      tab = this.tab
-                 this.T_GET_DASHBOARD(tab).then(()=>{
+                    this.T_GET_DASHBOARD(tab).then(()=>{
                     // let status = this.$refs.accepted
                      
                          //document.getElementById()
                      // eslint-disable-next-line no-console
                      console.log(status);
-                     if (status == 'accept') {
-                         // eslint-disable-next-line no-console
-                         console.log('did ------------------------');
-                         
-                     }else{
 
-                         // eslint-disable-next-line no-console
-                         console.log(this.LOAD_DASHBOARDS);
+                     if (this.LOAD_DASHBOARDS.objectsCount > 0) {
+
+                         setTimeout(()=>{
+                             this.loadingbiding = false
+                             this.bidlist=true
+                         },500)
+                         
+                     } else {
+
+                         setTimeout(()=>{
+                             this.loadingbiding = false
+                             this.notender = true
+                             this.notenderonprogress = false
+                         },500)
+                         
                      }
 
 // Remove loadding ================================>>
@@ -384,9 +453,12 @@ export default {
                       this.verify = false;
                      this.verification = true
                      },500)
+                     
                  })
                 }
+
              }else{
+
                 setTimeout(()=>{
                      this.loading = false
                   this.profile = true;
@@ -395,6 +467,7 @@ export default {
              }
                    
         }).catch(error=>{
+
              // eslint-disable-next-line no-console
             console.log(error);
              // eslint-disable-next-line no-console
@@ -422,27 +495,53 @@ export default {
       },
 
 // get all dashboards (on bid tenders) ========================>>>>>>
-      get_dashboard(tab){
+
+     get_dashboard(tab){
+         
+         this.notender = false
+         this.notenderonprogress = false
+
           this.onprogressliast = false
           this.bidlist = false
-              this.loadingbiding = true
+          this.loadingbiding = true
+
+
             // eslint-disable-next-line no-console
-          console.log('44444444');
+            console.log('44444444');
                      tab = this.tab
+
                  this.T_GET_DASHBOARD(tab).then(()=>{
+
                      // eslint-disable-next-line no-console
                      console.log('bidsss---');
                      // eslint-disable-next-line no-console
                      console.log(this.LOAD_DASHBOARDS);
-                     setTimeout(()=>{
-                         this.loadingbiding = false
-                         this.bidlist=true
-                     },500)
+
+                     if (this.LOAD_DASHBOARDS.objectsCount > 0) {
+
+                         setTimeout(()=>{
+                             this.loadingbiding = false
+                             this.bidlist=true
+                         },500)
+                         
+                     } else {
+
+                         setTimeout(()=>{
+                             this.loadingbiding = false
+                             this.notender = true
+                             this.notenderonprogress = false
+                         },500)
+                         
+                     }
+                     
+
                  }).catch(error=>{
-             // eslint-disable-next-line no-console
-            console.log(error);
-             // eslint-disable-next-line no-console
-              console.log(this.LOAD_AGENT);   
+
+                    // eslint-disable-next-line no-console
+                    console.log(error);
+                    // eslint-disable-next-line no-console
+                    console.log(this.LOAD_AGENT);   
+
         });
       },
 
@@ -450,26 +549,47 @@ export default {
 
 // get all awarded tenders     =============================>>>>
       get_onprogress(tab){
+
+          this.notender = false
+          this.notenderonprogress = false
+
           this.onprogressliast = false
           this.bidlist = false
-              this.loadingbiding = true
+          this.loadingbiding = true
             // eslint-disable-next-line no-console
           console.log('555555');
                      tab = this.tab
+
                  this.T_GET_ONPROGRESS(tab).then(()=>{
+
                      // eslint-disable-next-line no-console
                      console.log('bidsss---');
                      // eslint-disable-next-line no-console
-                     console.log(this.LOAD_DASHBOARDS);
-                     setTimeout(()=>{
-                         this.loadingbiding = false
-                         this.onprogressliast=true
-                     },500)
+
+                     if (this.LOAD_DASHBOARDS.objectsCount > 0) {
+
+                         setTimeout(()=>{
+                             this.loadingbiding = false
+                             this.bidlist=true
+                         },500)
+                         
+                     } else {
+
+                         setTimeout(()=>{
+                             this.loadingbiding = false
+                             this.notender = false
+                             this.notenderonprogress = true
+                         },500)
+                         
+                     }
+
                  }).catch(error=>{
+
              // eslint-disable-next-line no-console
             console.log(error);
              // eslint-disable-next-line no-console
-              console.log(this.LOAD_AGENT);   
+              console.log(this.LOAD_AGENT);  
+
         });
       },
 
