@@ -990,8 +990,7 @@ export default {
                 }
             }
 
-            if(this.currentFiles.length > 0)
-            {
+            if(this.currentFiles.length > 0){
 
                 for( var h = 0; h < this.currentFiles.length; h++ ){
 
@@ -999,6 +998,11 @@ export default {
 
                     formData.append('currentFiles[' + h + ']', file_path);  
                 }
+            }
+             else if(this.currentFiles.length === 0)
+            {
+                
+                formData.append('currentFiles[0]',''); 
             }
 
            return formData;

@@ -1630,7 +1630,12 @@ export default {
                         formData.append('currentFiles[' + j + ']', file_path);  
                     }
                 }
-               
+                else if(this.currentFiles.length === 0)
+                {
+                   
+                    formData.append('currentFiles[0]',''); 
+                }
+
                 return formData;
 
             } else if(this.client_type == "Company")
@@ -1688,12 +1693,17 @@ export default {
 
                 if(this.currentFiles.length > 0){
 
-                    for( var h = 0; h < this.currentFiles.length; h++ ){
+                    for( var l = 0; l < this.currentFiles.length; l++ ){
 
-                        let file_path = this.currentFiles[h];
+                        let file_path = this.currentFiles[l];
 
-                        formData.append('currentFiles[' + h + ']', file_path);  
+                        formData.append('currentFiles[' + l + ']', file_path);  
                     }
+                }
+                else if(this.currentFiles.length === 0)
+                {
+                   
+                     formData.append('currentFiles[0]',''); 
                 }
 
                 return formData;
