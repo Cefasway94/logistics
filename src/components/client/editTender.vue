@@ -111,7 +111,7 @@
                         <v-row class="px-3">
                             
                             <v-row wrap>
-                                <v-col cols="12" md="6">
+                                <v-col cols="12" md="4">
                                     <p class="primary--text body-2 text-uppercase mb-0"> CURRENCY</p>
                                     <v-text-field 
                                         outlined 
@@ -127,7 +127,7 @@
                                     </v-text-field>
                                 </v-col>
 
-                                <v-col cols="12" md="6">
+                                <v-col cols="12" md="4">
                                     <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
                                     <v-text-field 
                                         outlined 
@@ -143,28 +143,36 @@
 
                                     </v-text-field>
                                 </v-col>
-                            </v-row>
-                        </v-row>
 
-                        <v-row>
-                            <v-col
-                                offset="2"
-                                align-self="center"
-                                cols='12' 
-                                md="3" 
-                            >
-                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE  <span class="red--text"><strong>* </strong></span></p>
-                            </v-col>
-                            <v-col
-                                cols="12" 
-                                md="9" 
-                            >
-                                <v-date-picker 
-                                    v-model="tender.customer_delivery_timeline"
-                                    :min="timeline"
-                                    full-width>
-                                </v-date-picker>
-                            </v-col>
+                                <v-col
+                                    cols='12' 
+                                    md="4" 
+                                >
+                                    <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE</p>
+
+                                    <v-text-field 
+                                        v-model="tender.customer_delivery_timeline"
+                                        :rules="[v => !!v || 'Date is required']"
+                                        required
+                                        @click="date_clicked = true"
+                                        >
+
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
+
+                                    </v-text-field>
+
+                                    <v-date-picker 
+                                        v-model="tender.customer_delivery_timeline"
+                                        v-show="date_clicked"
+                                        :min="timeline"
+                                        full-width
+                                        @change="date_clicked = false">
+                                    </v-date-picker>
+
+                                </v-col>
+                            </v-row>
                         </v-row>
 
                         <v-row>
@@ -606,6 +614,8 @@ export default {
 
         overlay:false,
         loading: false,
+
+        date_clicked: false,
 
         photo:[],
         bill_of_lading:[],

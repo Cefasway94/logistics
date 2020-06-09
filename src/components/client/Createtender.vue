@@ -358,15 +358,34 @@
                             </v-col>
 
                             <v-col  xs12 sm6 md4 lg4 xl4>
-                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE  <span class="red--text"><strong>* </strong></span> </p>
+                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
+                                <v-text-field 
+        
+                                    :rules="[v => !!v || 'Date is required']"
+                                    required
+                                    v-model="timeline"
+                                    @click="date_clicked = true"
+                                >
+
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                            </template><template #label>
+
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
+                                </v-text-field>
+
+                                
                                 <v-date-picker 
                                     v-model="timeline"
+                                    v-show="date_clicked"
+                                    @change="date_clicked = false"
                                     :rules="[v => !!v || 'Date is required']"
                                     :min= time
                                     required
                                     full-width>
                                 </v-date-picker>
-                             
+
                             </v-col>
 
                         </v-row>
@@ -701,6 +720,8 @@ export default {
         bill_of_lading_url:'',
         letter_extension:'',
         letter_url:'',
+
+        date_clicked:false,
 
         overlay:false,
         large_preview_url:'',
