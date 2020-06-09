@@ -256,7 +256,7 @@
                             <v-col cols=12 md=4>
                                 <p class="primary--text body-2 text-uppercase mb-0">BILL OF LADING </p>
 
-                                <v-tooltip top content-class="tooltip">
+                                <v-tooltip bottom content-class="tooltip">
                                     <template v-slot:activator="{ on }">
                                         
                                         <v-card flat width="250" v-on="on" height="270" outlined >
@@ -1345,6 +1345,21 @@ export default {
  .fileinput{
     position: absolute;
     left: -2000px;
+ }
+
+ .tooltip{
+
+    width:auto;
+    max-width: 250px;
+    background-color: #4169E1;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
  }
 
  .progress { z-index: 1;}
