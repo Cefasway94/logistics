@@ -708,7 +708,7 @@ export default {
         authorization_letter:[],
 
         loading:false,
-        currencies:['TZS','USD'],
+        currencies:['USD'],
         tender_categories:[],
         tender_category:'',
 
