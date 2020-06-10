@@ -332,6 +332,99 @@
                             </v-col>
 
                         </v-row>
+
+
+                        <v-row class="mt-5" v-if="currentFiles.length > 0">
+
+                        <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+
+                        <v-col cols=12 md=4 v-for="(file,key) in currentFiles" :key="key">
+
+                            <p><span class="red--text" style="cursor:pointer" v-on:click="removeCurrentFile( key )">Remove</span></p>
+
+                            <v-card flat width="200" height="150" outlined>
+
+                                <v-row>
+                                    <v-col >
+                                        <div 
+                                            v-show="(getFileExtension(file) === 'jpg') || (getFileExtension(file) === 'jpeg') || (getFileExtension(file) === 'png')" 
+                                            @click="largePreview(file)"
+                                        >
+                                
+                                            <v-img 
+                                                :src="file"  
+                                                class="mb-0 pb-0 oxoImg" 
+                                                height="147" 
+                                                width="200" >
+                                            </v-img>
+                                        </div>
+                                    
+                                        <div v-show="getFileExtension(file) === 'pdf'">
+
+                                            <v-btn 
+                                                :block="true"
+                                                icon class="mt-7" 
+                                                @click="previewPdf(file)"
+                                                >
+                                                PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            </v-btn>
+
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols=12>
+
+                            <v-file-input 
+
+                                :clearable="false"
+                                placeholder="Choose a file"
+                                class="fileinput"
+                                id="otheFiles"
+                                @change="otherAttachmentsUpdated()"
+                                prepend-icon ="mdi-cloud-upload"
+                            >
+                            </v-file-input>
+
+                            <v-btn @click="addFiles()">
+                                Add other documents
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+
+                    <v-row class="mt-5">
+                        <v-col cols=12 md=3 v-for="(file,key) in otherFiles" :key="key">
+
+                            <p>{{ file.file.name }} <span class="remove-file" v-on:click="removeFile( key )">Remove</span></p>
+
+                            <div v-show="file.file.type === 'image/jpeg' || file.file.type === 'image/png'">
+                               
+                                <v-card height="200" width="250" outlined @click="largePreview(file.source)">
+                                        <img  id="bank_statement_thumb" :src="file.source" class="preview">
+                                </v-card>
+                            </div>
+
+                            <div v-show="file.file.type === 'application/pdf'">
+
+                                    <v-card height="200" width="250" outlined >
+
+                                        <v-btn 
+                                            :block="true"
+                                            icon class="mt-7" 
+                                            @click="previewPdf(file.source)"
+                                            >
+                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        </v-btn>
+                                        
+                                    </v-card>
+                            </div>
+
+                        </v-col>
+                    </v-row>
                         
                     </v-container>
                     </v-form>
@@ -527,6 +620,12 @@ export default {
         alert: false,
         message:'',
         type:'',
+
+        otherFiles:[],
+
+        currentFiles:[],
+        
+        files:[],
        
     }),
 
@@ -539,6 +638,20 @@ export default {
 
     methods:{
         ...mapActions(['updateTender','fetchAllTenders']),
+
+        addFiles(){
+
+            document.getElementById("otheFiles").click();
+        },
+
+        removeFile( key ){
+            this.otherFiles.splice( key, 1 );
+        },
+
+        removeCurrentFile(key){
+
+            this.currentFiles.splice( key, 1 );
+        },
 
         setAlert(message,type){
 
@@ -734,6 +847,60 @@ export default {
             }
         },
 
+        otherAttachmentsUpdated(){
+
+            if(document.getElementById("otheFiles").files[0]){
+
+                for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
+                {
+
+                    var file = {
+                        file:[],
+                        source:''
+                    }
+
+                    if(document.getElementById("otheFiles").files[i].type === 'image/jpeg' || document.getElementById("otheFiles").files[i].type === 'image/png' )
+                    {
+                       
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            file.source = dataURL;
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                    
+                        }
+
+                        reader.readAsDataURL(document.getElementById("otheFiles").files[i]);
+
+                        file.file = document.getElementById("otheFiles").files[i];
+
+                        this.otherFiles.push(file);
+
+                    }
+                    else if(document.getElementById("otheFiles").files[i].type === 'application/pdf')
+                    {
+                        file.source = URL.createObjectURL(document.getElementById("otheFiles").files[i]);
+
+                        this.previewPdf(file.source);
+
+                        file.file = document.getElementById("otheFiles").files[i];
+
+                        this.otherFiles.push(file);
+
+                        
+                    }
+                }
+            }
+         },
+
         billOfLadingUpdated()
         {
             if(document.getElementById("bill").files[0]){
@@ -810,6 +977,33 @@ export default {
 
             if(this.bill_of_lading.length > 0)
                 formData.append('authorization_letter[0]',this.bill_of_lading[0]);
+
+
+            if(this.otherFiles.length > 0)
+            {
+
+                for( var k = 0; k < this.otherFiles.length; k++ ){
+
+                    let file = this.otherFiles[k].file;
+
+                    formData.append('files[' + k + ']', file);  
+                }
+            }
+
+            if(this.currentFiles.length > 0){
+
+                for( var h = 0; h < this.currentFiles.length; h++ ){
+
+                    let file_path = this.currentFiles[h];
+
+                    formData.append('currentFiles[' + h + ']', file_path);  
+                }
+            }
+             else if(this.currentFiles.length === 0)
+            {
+                
+                formData.append('currentFiles[0]',''); 
+            }
 
            return formData;
         },
@@ -1026,6 +1220,11 @@ export default {
                                 vm.letter_url = vm.tender.authorization_letter[0];
                             }
 
+                            if(vm.tender.files !== null)
+                            {
+                                vm.currentFiles = vm.tender.files;
+                            }
+
                         }
                         if(response.data.genralErrorCode === 8004){
 
@@ -1074,11 +1273,16 @@ export default {
                                 vm.bill_of_lading_url = vm.tender.bill_of_lading[0];
                             }
 
-                                if(vm.tender.authorization_letter !== null)
+                            if(vm.tender.authorization_letter !== null)
                             {
                                 vm.letter_extension = vm.getFileExtension(vm.tender.authorization_letter[0]);
 
                                 vm.letter_url = vm.tender.authorization_letter[0];
+                            }
+
+                            if(vm.tender.files !== null)
+                            {
+                                vm.currentFiles = vm.tender.files;
                             }
 
                         }
@@ -1126,6 +1330,11 @@ export default {
     transform: translate(-50%, -50%);
     z-index: 2;
     
+ }
+
+ .fileinput{
+    position: absolute;
+    left: -2000px;
  }
 
  .progress { z-index: 1;}
