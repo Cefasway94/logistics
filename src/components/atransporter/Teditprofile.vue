@@ -63,6 +63,50 @@
                     </v-card>
                   </v-dialog>
 
+                  <v-dialog
+                    v-model="connection_error"
+                    max-width="400"
+                    color="#f5faff"
+                    transition="scale-transition"
+                    :hide-overlay="false">
+                    <v-card 
+                    height="105" 
+                    color="#f64f51" 
+                    class="pt-2">
+    
+                    <v-alert  
+                    prominent
+                    height="" 
+                    type="warning">
+                      <p class="font-weight-strong mb-0">{{error}}</p>
+                    </v-alert>
+
+                    </v-card>
+                  </v-dialog>
+
+                  <v-dialog
+                    v-model="largefilesize"
+                    max-width="400"
+                    color="#f5faff"
+                    transition="scale-transition"
+                    :hide-overlay="true">
+                    <v-card 
+                    height="105" 
+                    color="#f64f51" 
+                    class="pt-2">
+    
+                    <v-alert  
+                    prominent
+                    height="" 
+                    type="error">
+                      <p class="font-weight-strong mb-0">File size is too large limit 2MB</p>
+                    </v-alert>
+
+                    </v-card>
+                  </v-dialog>
+
+
+
 
                    <v-dialog
                     v-model="confirm_edit_profile"
@@ -266,11 +310,11 @@
                                     :clearable="false"
                                     placeholder="Choose a file"
                                     id="profile_image" 
+                                    ref="profile_upload"
                                     @change="uploadprofile()"
                                     prepend-icon ="mdi-cloud-upload"
                                     :rules="[v => !!v || 'profile image is required']"
-                                    required
-                                
+                                    required                               
                                 >
 
                                 </v-file-input>
@@ -278,6 +322,12 @@
                                 <div v-show="profile_image_extension === 'jpg' || profile_image_extension === 'jpeg' || profile_image_extension === 'png'">
                                     <v-card height="200" width="250" outlined @click="handleClick('profile_image',profile_image_url)">
                                         <img  id="profile_image_thumb" :src="profile_image_url" class="preview">
+                                    </v-card>
+                                </div>
+
+                                <div v-show="profile_image_extension === 'largefile' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
                                     </v-card>
                                 </div>
 
@@ -531,6 +581,12 @@
                                     </v-card>
                                 </div>
 
+                                <div v-show="certificate_extension === 'largefile' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                    </v-card>
+                                </div>
+
                                 <div v-show="certificate_extension === 'pdf'">
 
                                     <!-- <v-btn 
@@ -584,6 +640,12 @@
                                     </v-card>
                                 </div>
 
+                                <div v-show="insurance_extension === 'largefile' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                    </v-card>
+                                </div>
+
                                 <div v-show="insurance_extension === 'pdf'">
 
                                     <!-- <v-btn 
@@ -617,32 +679,6 @@
                                 </div>
                             </v-card>
                         </v-col> 
-
-                <!--<v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-0">Other</p>
-                     <v-card 
-                     flat color="#F5FAFF" 
-                     width="200" 
-                     height="150" 
-                     outlined 
-                     class="mx-3">
-                         <v-flex class="" >
-                            <v-file-input
-                            id="other"
-                            ref="other"
-                            type="file" 
-                            flat 
-                            dropzone 
-                            class="mb-0 pb-0" 
-                            height="150" 
-                            width="100" 
-                            outlined 
-                            prepend-icon=""
-                            @change="uploadother()" 
-                            ></v-file-input>
-                         </v-flex>
-                    </v-card>
-                </v-col>-->     
             </v-row>
 
             <v-row class="mt-5" v-if="currentFiles.length > 0">
@@ -669,6 +705,13 @@
                                                 width="200" >
                                             </v-img>
                                         </div>
+
+                                        <!-- <div v-show="insurance_extension === 'largefile' ">
+                                            <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                            </v-card>
+                                        </div> -->
+                                        
                                     
                                         <div v-show="getFileExtension(file) === 'pdf'">
 
@@ -885,7 +928,7 @@ export default {
            field:'',
 
            // connection error
-           connectio_error:'',
+           connection_error:'',
            error:'',
 
            // Update success
@@ -951,6 +994,8 @@ export default {
            currentFiles:[],
             
            files:[],
+
+           largefilesize: false
     }
    },
 
@@ -1064,7 +1109,7 @@ export default {
         "T_GET_AGENT_PAYMENT_TERMS"
     ]),
 
-       addFiles(){
+     addFiles(){
 
             document.getElementById("otheFiles").click();
         },
@@ -1073,7 +1118,7 @@ export default {
             this.otherFiles.splice( key, 1 );
         },
 
-        removeCurrentFile(key){
+     removeCurrentFile(key){
 
             this.currentFiles.splice( key, 1 );
         },
@@ -1227,7 +1272,7 @@ export default {
 
                 }else if(this.rules.required(this.acnumber) == 'Required'){
 
-                        console.log(13);
+                        console.log(12);
                         this.field = 'Account number field is required'
                         this.field_required = true
                         return false
@@ -1239,9 +1284,23 @@ export default {
                         this.field_required = true
                         return false
 
+                }else if(this.certificate.length == 0){
+
+                        console.log(14);
+                        this.field = 'kindly attach certificate'
+                        this.field_required = true
+                        return false
+
                 }else if(this.insurance_url == '' && this.insurance == ''){
 
-                        console.log(13);
+                        console.log(15);
+                        this.field = 'kindly attach Insurance'
+                        this.field_required = true
+                        return false
+
+                }else if(this.insurance.length == 0){
+
+                        console.log(16);
                         this.field = 'kindly attach Insurance'
                         this.field_required = true
                         return false
@@ -1253,6 +1312,76 @@ export default {
                 }
                
             },
+
+
+        uploadother(){ 
+                this.other = []
+               this.other.push(document.getElementById("other").files[0])
+            },
+
+        uploadprofile(){
+                //this.profile_image = []
+                //this.profile_image.push(document.getElementById("profile_image").files[0])
+                //this.profile_image = 'profile image'
+
+                //console.log(this.profile_image);
+                if(document.getElementById("profile_image").files[0]){
+
+                    this.profile_image = [];
+
+                    this.profile_image.push(document.getElementById("profile_image").files[0])
+
+                  //  console.log( this.profile_image[0].size);
+                                    
+                    this.profile_image_extension = this.getFileExtension(document.getElementById("profile_image").files[0].name);
+
+                if ( this.profile_image[0].size < 2024000){
+
+                    
+                        if(this.profile_image_extension === 'jpg' 
+                            || this.profile_image_extension === 'jpeg' 
+                            || this.profile_image_extension === 'png')
+                        {
+                            
+                            var reader = new FileReader();
+
+                            reader.onload = function(){
+
+                                var dataURL = reader.result;
+
+                                var output = document.getElementById('profile_image_thumb');
+
+                                var large_thumbnail = document.getElementById('large_thumbnail');
+                                
+                                if(output !== null)
+                                    output.src = dataURL;
+
+                                if(large_thumbnail !== null)
+                                    large_thumbnail.src = dataURL;
+                            
+                            }
+
+                            reader.readAsDataURL(document.getElementById("profile_image").files[0]);
+                        }
+                        else if(this.profile_image_extension === 'pdf') {
+                            this.profile_image_url = URL.createObjectURL(document.getElementById("profile_image").files[0]);
+
+                            this.previewPdf(this.profile_image_url);
+                        }
+                }else{
+                    
+                    this.largefilesize = true
+                    this.profile_image_extension = 'largefile'
+                    this.profile_image = []
+                                      
+                }
+
+                
+                }
+                
+                
+            },
+
                
            updateinsurance(){
                 //this.insurance = []
@@ -1265,42 +1394,53 @@ export default {
                     
                     this.insurance_extension = this.getFileExtension(document.getElementById("insurance").files[0].name);
 
-                    if(this.insurance_extension === 'jpg' || this.insurance_extension === 'jpeg' || this.insurance_extension === 'png')
-                    {
+                    
+                    if ( this.insurance[0].size < 2024000){
 
-                        var reader = new FileReader();
+                            if(this.insurance_extension === 'jpg' 
+                                || this.insurance_extension === 'jpeg' 
+                                || this.insurance_extension === 'png')
+                            {
 
-                        reader.onload = function(){
+                                var reader = new FileReader();
 
-                            var dataURL = reader.result;
+                                reader.onload = function(){
 
-                            var output = document.getElementById('insurance_thumb');
+                                    var dataURL = reader.result;
 
-                            var large_thumbnail = document.getElementById('large_thumbnail');
+                                    var output = document.getElementById('insurance_thumb');
+
+                                    var large_thumbnail = document.getElementById('large_thumbnail');
+                                    
+                                    if(output !== null)
+                                        output.src = dataURL;
+
+                                    if(large_thumbnail !== null)
+                                        large_thumbnail.src = dataURL;
+                                
+                                }
+
+                                reader.readAsDataURL(document.getElementById("insurance").files[0]);
+                            } else if(this.insurance_extension === 'pdf') {
+
+                                this.insurance_url = URL.createObjectURL(document.getElementById("insurance").files[0]);
+
+                                this.previewPdf(this.insurance_url);
+
+
+                                /*console.log(src);
+                                console.log(output);*/
+
                             
-                            if(output !== null)
-                                output.src = dataURL;
+                                //this.insurance_extension = '';
+                            }
+                    }else{
 
-                            if(large_thumbnail !== null)
-                                large_thumbnail.src = dataURL;
-                        
-                        }
+                            this.largefilesize = true
+                            this.insurance_extension = 'largefile'
+                            this.insurance = []
 
-                        reader.readAsDataURL(document.getElementById("insurance").files[0]);
-                    } else if(this.insurance_extension === 'pdf') {
-
-                        this.insurance_url = URL.createObjectURL(document.getElementById("insurance").files[0]);
-
-                        this.previewPdf(this.insurance_url);
-
-
-                        /*console.log(src);
-                        console.log(output);*/
-
-                      
-                        //this.insurance_extension = '';
-                    }
-
+                            }
                 
                 }
                },
@@ -1309,168 +1449,143 @@ export default {
                 //this.certificate = []
                //this.certificate.push(document.getElementById("certificate").files[0])
 
-                if(document.getElementById("certificate").files[0]){
+               this.largefilesize = false
+               
 
-                    this.certificate = [];
+                        if(document.getElementById("certificate").files[0]){
 
-                    this.certificate.push(document.getElementById("certificate").files[0]);
-                    
-                    this.certificate_extension = this.getFileExtension(document.getElementById("certificate").files[0].name);
+                            this.certificate = [];
 
-                    if(this.certificate_extension === 'jpg' || this.certificate_extension === 'jpeg' || this.certificate_extension === 'png')
-                    {
-
-
-                        var reader = new FileReader();
-
-                        reader.onload = function(){
-
-                            var dataURL = reader.result;
-
-                            var output = document.getElementById('certificate_thumb');
-
-                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            this.certificate.push(document.getElementById("certificate").files[0]);
                             
-                            if(output !== null)
-                                output.src = dataURL;
+                            this.certificate_extension = this.getFileExtension(document.getElementById("certificate").files[0].name);
 
-                            if(large_thumbnail !== null)
-                                large_thumbnail.src = dataURL;
+                            if ( this.certificate[0].size < 2024000){
+
+                                    if(this.certificate_extension === 'jpg'
+                                    || this.certificate_extension === 'jpeg' 
+                                        || this.certificate_extension === 'png')
+                                    {
+
+
+                                        var reader = new FileReader();
+
+                                        reader.onload = function(){
+
+                                            var dataURL = reader.result;
+
+                                            var output = document.getElementById('certificate_thumb');
+
+                                            var large_thumbnail = document.getElementById('large_thumbnail');
+                                            
+                                            if(output !== null)
+                                                output.src = dataURL;
+
+                                            if(large_thumbnail !== null)
+                                                large_thumbnail.src = dataURL;
+                                        
+                                        }
+
+                                        reader.readAsDataURL(document.getElementById("certificate").files[0]);
+                                    }
+                                    else if(this.certificate_extension === 'pdf'){
+                                        this.certificate_url = URL.createObjectURL(document.getElementById("certificate").files[0]);
+
+                                        this.previewPdf(this.certificate_url);
+                                    }
+                            }else{
+
+                            this.largefilesize = true
+                            this.certificate_extension = 'largefile'
+                            this.certificate = []
+                           // console.log(this.certificate);
+                            
+
+                            }
+
                         
                         }
-
-                        reader.readAsDataURL(document.getElementById("certificate").files[0]);
-                    }
-                    else if(this.certificate_extension === 'pdf'){
-                        this.certificate_url = URL.createObjectURL(document.getElementById("certificate").files[0]);
-
-                        this.previewPdf(this.certificate_url);
-                    }
-
-                
-                }
            },
 
 
            otherAttachmentsUpdated(){
 
-            if(document.getElementById("otheFiles").files[0]){
+                    if(document.getElementById("otheFiles").files[0]){
 
-                for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
-                {
+                       // console.log(document.getElementById("otheFiles").files[0].size);
 
-                    /*this.otherFiles.push(
-                        document.getElementById("otheFiles").files[i]);*/
-                    
-                    /*let extension = this.getFileExtension(document.getElementById("otheFiles").files[i].name);
+                        if (document.getElementById("otheFiles").files[0].size < 2024000) {
 
-                    if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' )
-                    {
+                                for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
+                                    {
+                                        /*this.otherFiles.push(
+                                            document.getElementById("otheFiles").files[i]);*/
+                                        
+                                        /*let extension = this.getFileExtension(document.getElementById("otheFiles").files[i].name);
 
-                    }
-                    else if(extension === 'pdf'){
+                                        if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' )
+                                        {
 
-                    }*/
-                    var file = {
-                        file:[],
-                        source:''
-                    }
+                                        }
+                                        else if(extension === 'pdf'){
 
-                    if(document.getElementById("otheFiles").files[i].type === 'image/jpeg' || document.getElementById("otheFiles").files[i].type === 'image/png' )
-                    {
-                       
+                                        }*/
+                                        var file = {
+                                            file:[],
+                                            source:''
+                                        }
 
-                        var reader = new FileReader();
+                                        if(document.getElementById("otheFiles").files[i].type === 'image/jpeg' 
+                                                || document.getElementById("otheFiles").files[i].type === 'image/png' )
+                                        {
+                                        
 
-                        reader.onload = function(){
+                                            var reader = new FileReader();
 
-                            var dataURL = reader.result;
+                                            reader.onload = function(){
 
-                            file.source = dataURL;
+                                                var dataURL = reader.result;
 
-                            var large_thumbnail = document.getElementById('large_thumbnail');
+                                                file.source = dataURL;
+
+                                                var large_thumbnail = document.getElementById('large_thumbnail');
+                                                
+                                                if(large_thumbnail !== null)
+                                                    large_thumbnail.src = dataURL;
+                                        
+                                            }
+
+                                            reader.readAsDataURL(document.getElementById("otheFiles").files[i]);
+
+                                            file.file = document.getElementById("otheFiles").files[i];
+
+                                            this.otherFiles.push(file);
+
+                                        }
+                                        else if(document.getElementById("otheFiles").files[i].type === 'application/pdf')
+                                        {
+                                            file.source = URL.createObjectURL(document.getElementById("otheFiles").files[i]);
+
+                                            this.previewPdf(file.source);
+
+                                            file.file = document.getElementById("otheFiles").files[i];
+
+                                            this.otherFiles.push(file);
+
+                                            
+                                        }
+                                    }
                             
-                            if(large_thumbnail !== null)
-                                large_thumbnail.src = dataURL;
-                    
+                        } else {
+
+                             this.largefilesize = true
+                            
                         }
-
-                        reader.readAsDataURL(document.getElementById("otheFiles").files[i]);
-
-                        file.file = document.getElementById("otheFiles").files[i];
-
-                        this.otherFiles.push(file);
-
-                    }
-                    else if(document.getElementById("otheFiles").files[i].type === 'application/pdf')
-                    {
-                        file.source = URL.createObjectURL(document.getElementById("otheFiles").files[i]);
-
-                        this.previewPdf(file.source);
-
-                        file.file = document.getElementById("otheFiles").files[i];
-
-                        this.otherFiles.push(file);
-
                         
+
                     }
-                }
-            }
-         },
+                },
             
-            uploadother(){ 
-                this.other = []
-               this.other.push(document.getElementById("other").files[0])
-            },
-
-            uploadprofile(){
-                //this.profile_image = []
-                //this.profile_image.push(document.getElementById("profile_image").files[0])
-                //this.profile_image = 'profile image'
-
-                //console.log(this.profile_image);
-                if(document.getElementById("profile_image").files[0]){
-
-                    this.profile_image = [];
-
-                    this.profile_image.push(document.getElementById("profile_image").files[0]);
-                    
-                    this.profile_image_extension = this.getFileExtension(document.getElementById("profile_image").files[0].name);
-
-                    if(this.profile_image_extension === 'jpg' || this.profile_image_extension === 'jpeg' || this.profile_image_extension === 'png')
-                    {
-
-                        var reader = new FileReader();
-
-                        reader.onload = function(){
-
-                            var dataURL = reader.result;
-
-                            var output = document.getElementById('profile_image_thumb');
-
-                            var large_thumbnail = document.getElementById('large_thumbnail');
-                            
-                            if(output !== null)
-                                output.src = dataURL;
-
-                            if(large_thumbnail !== null)
-                                large_thumbnail.src = dataURL;
-                        
-                        }
-
-                        reader.readAsDataURL(document.getElementById("profile_image").files[0]);
-                    }
-                    else if(this.profile_image_extension === 'pdf') {
-                        this.profile_image_url = URL.createObjectURL(document.getElementById("profile_image").files[0]);
-
-                        this.previewPdf(this.profile_image_url);
-                    }
-
-                
-                }
-                
-                
-            },
 
             dataobject(){
 
@@ -1604,11 +1719,23 @@ export default {
                
            }).catch((error)=>{
 
-               this.loading = false
-               this.error = 'Cant update profile please check internet connection and try again'
-                this.connectio_error = true
+                console.log(error.response.status);
 
-                console.log(error.response.data);
+                if (error.response.status == 500) {
+
+                     this.loading = false
+                     this.error = 'can not serve you currently, Plese try again later'
+                     this.connection_error = true
+                    
+                }else{
+
+                    this.loading = false
+                    this.error = 'Cant update profile please check internet connection and try again'
+                    this.connectio_error = true
+
+                    console.log(error.response.data);
+
+                }
                 
            })
 
@@ -1715,5 +1842,13 @@ export default {
   background-color: #F5FAFF;
 }
 
+.largefile{
+  border-color: red;
+  color: red;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+  background-color: #F5FAFF;
+}
 
 </style>

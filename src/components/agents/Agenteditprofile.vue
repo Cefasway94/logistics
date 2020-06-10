@@ -64,6 +64,28 @@
                   </v-dialog>
 
 
+                  <v-dialog
+                    v-model="largefilesize"
+                    max-width="400"
+                    color="#f5faff"
+                    transition="scale-transition"
+                    :hide-overlay="true">
+                    <v-card 
+                    height="105" 
+                    color="#f64f51" 
+                    class="pt-2">
+    
+                    <v-alert  
+                    prominent
+                    height="" 
+                    type="error">
+                      <p class="font-weight-strong mb-0">File size is too large limit 2MB</p>
+                    </v-alert>
+
+                    </v-card>
+                  </v-dialog>
+
+
                    <v-dialog
                     v-model="confirm_edit_profile"
                     color="#2296f3"
@@ -259,7 +281,7 @@
                         </v-card>
                         </v-flex>-->
                         <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 mb-0"> PROFILE  <span class="red--text"><strong>* </strong></span></p>
+                            <p class="primary--text body-2 mb-0"> Profile image  <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -278,6 +300,12 @@
                                 <div v-show="profile_image_extension === 'jpg' || profile_image_extension === 'jpeg' || profile_image_extension === 'png'">
                                     <v-card height="200" width="250" outlined @click="handleClick('profile_image',profile_image_url)">
                                         <img  id="profile_image_thumb" :src="profile_image_url" class="preview">
+                                    </v-card>
+                                </div>
+
+                                <div v-show="profile_image_extension === 'largefile' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
                                     </v-card>
                                 </div>
 
@@ -531,6 +559,12 @@
                                     </v-card>
                                 </div>
 
+                                <div v-show="certificate_extension === 'largefile' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                    </v-card>
+                                </div>
+
                                 <div v-show="certificate_extension === 'pdf'">
 
                                     <!-- <v-btn 
@@ -584,6 +618,12 @@
                                     </v-card>
                                 </div>
 
+                                <div v-show="insurance_extension === 'largefile' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                    </v-card>
+                                </div>
+
                                 <div v-show="insurance_extension === 'pdf'">
 
                                     <!-- <v-btn 
@@ -618,31 +658,7 @@
                             </v-card>
                         </v-col> 
 
-                <!--<v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-0">Other</p>
-                     <v-card 
-                     flat color="#F5FAFF" 
-                     width="200" 
-                     height="150" 
-                     outlined 
-                     class="mx-3">
-                         <v-flex class="" >
-                            <v-file-input
-                            id="other"
-                            ref="other"
-                            type="file" 
-                            flat 
-                            dropzone 
-                            class="mb-0 pb-0" 
-                            height="150" 
-                            width="100" 
-                            outlined 
-                            prepend-icon=""
-                            @change="uploadother()" 
-                            ></v-file-input>
-                         </v-flex>
-                    </v-card>
-                </v-col>-->     
+              
             </v-row>
 
             <v-row class="mt-5" v-if="currentFiles.length > 0">
@@ -951,6 +967,8 @@ export default {
            currentFiles:[],
             
            files:[],
+
+            largefilesize: false
     }
    },
 
@@ -1226,7 +1244,7 @@ export default {
 
                 }else if(this.rules.required(this.acnumber) == 'Required'){
 
-                        console.log(13);
+                        console.log(12);
                         this.field = 'Account number field is required'
                         this.field_required = true
                         return false
@@ -1238,9 +1256,23 @@ export default {
                         this.field_required = true
                         return false
 
+                }else if( this.certificate.length == 0){
+
+                        console.log(14);
+                        this.field = 'kindly attach certificate'
+                        this.field_required = true
+                        return false
+
                 }else if(this.insurance_url == '' && this.insurance == ''){
 
-                        console.log(13);
+                        console.log(15);
+                        this.field = 'kindly attach Insurance'
+                        this.field_required = true
+                        return false
+
+                }else if(this.insurance.length == 0){
+
+                        console.log(16);
                         this.field = 'kindly attach Insurance'
                         this.field_required = true
                         return false
@@ -1252,176 +1284,9 @@ export default {
                 }
                
             },
-               
-           updateinsurance(){
-                //this.insurance = []
-                //this.insurance.push(document.getElementById("insurance").files[0])
-                if(document.getElementById("insurance").files[0]){
+          
 
-                    this.insurance = [];
-
-                    this.insurance.push(document.getElementById("insurance").files[0]);
-                    
-                    this.insurance_extension = this.getFileExtension(document.getElementById("insurance").files[0].name);
-
-                    if(this.insurance_extension === 'jpg' || this.insurance_extension === 'jpeg' || this.insurance_extension === 'png')
-                    {
-
-                        var reader = new FileReader();
-
-                        reader.onload = function(){
-
-                            var dataURL = reader.result;
-
-                            var output = document.getElementById('insurance_thumb');
-
-                            var large_thumbnail = document.getElementById('large_thumbnail');
-                            
-                            if(output !== null)
-                                output.src = dataURL;
-
-                            if(large_thumbnail !== null)
-                                large_thumbnail.src = dataURL;
-                        
-                        }
-
-                        reader.readAsDataURL(document.getElementById("insurance").files[0]);
-                    } else if(this.insurance_extension === 'pdf') {
-
-                        this.insurance_url = URL.createObjectURL(document.getElementById("insurance").files[0]);
-
-                        this.previewPdf(this.insurance_url);
-
-
-                        /*console.log(src);
-                        console.log(output);*/
-
-                      
-                        //this.insurance_extension = '';
-                    }
-
-                
-                }
-               },
-
-           updatecertificate(){
-                //this.certificate = []
-               //this.certificate.push(document.getElementById("certificate").files[0])
-
-                if(document.getElementById("certificate").files[0]){
-
-                    this.certificate = [];
-
-                    this.certificate.push(document.getElementById("certificate").files[0]);
-                    
-                    this.certificate_extension = this.getFileExtension(document.getElementById("certificate").files[0].name);
-
-                    if(this.certificate_extension === 'jpg' || this.certificate_extension === 'jpeg' || this.certificate_extension === 'png')
-                    {
-
-
-                        var reader = new FileReader();
-
-                        reader.onload = function(){
-
-                            var dataURL = reader.result;
-
-                            var output = document.getElementById('certificate_thumb');
-
-                            var large_thumbnail = document.getElementById('large_thumbnail');
-                            
-                            if(output !== null)
-                                output.src = dataURL;
-
-                            if(large_thumbnail !== null)
-                                large_thumbnail.src = dataURL;
-                        
-                        }
-
-                        reader.readAsDataURL(document.getElementById("certificate").files[0]);
-                    }
-                    else if(this.certificate_extension === 'pdf'){
-                        this.certificate_url = URL.createObjectURL(document.getElementById("certificate").files[0]);
-
-                        this.previewPdf(this.certificate_url);
-                    }
-
-                
-                }
-           },
-
-           otherAttachmentsUpdated(){
-
-            if(document.getElementById("otheFiles").files[0]){
-
-                for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
-                {
-
-                    /*this.otherFiles.push(
-                        document.getElementById("otheFiles").files[i]);*/
-                    
-                    /*let extension = this.getFileExtension(document.getElementById("otheFiles").files[i].name);
-
-                    if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' )
-                    {
-
-                    }
-                    else if(extension === 'pdf'){
-
-                    }*/
-                    var file = {
-                        file:[],
-                        source:''
-                    }
-
-                    if(document.getElementById("otheFiles").files[i].type === 'image/jpeg' || document.getElementById("otheFiles").files[i].type === 'image/png' )
-                    {
-                       
-
-                        var reader = new FileReader();
-
-                        reader.onload = function(){
-
-                            var dataURL = reader.result;
-
-                            file.source = dataURL;
-
-                            var large_thumbnail = document.getElementById('large_thumbnail');
-                            
-                            if(large_thumbnail !== null)
-                                large_thumbnail.src = dataURL;
-                    
-                        }
-
-                        reader.readAsDataURL(document.getElementById("otheFiles").files[i]);
-
-                        file.file = document.getElementById("otheFiles").files[i];
-
-                        this.otherFiles.push(file);
-
-                    }
-                    else if(document.getElementById("otheFiles").files[i].type === 'application/pdf')
-                    {
-                        file.source = URL.createObjectURL(document.getElementById("otheFiles").files[i]);
-
-                        this.previewPdf(file.source);
-
-                        file.file = document.getElementById("otheFiles").files[i];
-
-                        this.otherFiles.push(file);
-
-                        
-                    }
-                }
-            }
-         },
-            
-            uploadother(){ 
-                this.other = []
-               this.other.push(document.getElementById("other").files[0])
-            },
-
-            uploadprofile(){
+          uploadprofile(){
                 //this.profile_image = []
                 //this.profile_image.push(document.getElementById("profile_image").files[0])
                 //this.profile_image = 'profile image'
@@ -1435,7 +1300,11 @@ export default {
                     
                     this.profile_image_extension = this.getFileExtension(document.getElementById("profile_image").files[0].name);
 
-                    if(this.profile_image_extension === 'jpg' || this.profile_image_extension === 'jpeg' || this.profile_image_extension === 'png')
+                if ( this.profile_image[0].size < 2024000){
+
+                    if(this.profile_image_extension === 'jpg' 
+                        || this.profile_image_extension === 'jpeg' 
+                        || this.profile_image_extension === 'png')
                     {
 
                         var reader = new FileReader();
@@ -1457,20 +1326,229 @@ export default {
                         }
 
                         reader.readAsDataURL(document.getElementById("profile_image").files[0]);
+                    
                     }
                     else if(this.profile_image_extension === 'pdf') {
+
                         this.profile_image_url = URL.createObjectURL(document.getElementById("profile_image").files[0]);
 
                         this.previewPdf(this.profile_image_url);
                     }
 
                 
+                } else{
+                    
+                    this.largefilesize = true
+                    this.profile_image_extension = 'largefile'
+                    this.profile_image = []
+                                      
                 }
                 
+                }
+            },
+               
+           updateinsurance(){
+                //this.insurance = []
+                //this.insurance.push(document.getElementById("insurance").files[0])
+                if(document.getElementById("insurance").files[0]){
+
+                    this.insurance = [];
+
+                    this.insurance.push(document.getElementById("insurance").files[0]);
+                    
+                    this.insurance_extension = this.getFileExtension(document.getElementById("insurance").files[0].name);
+
+                    if ( this.insurance[0].size < 2024000){
+
+                                if(this.insurance_extension === 'jpg' 
+                                    || this.insurance_extension === 'jpeg' 
+                                    || this.insurance_extension === 'png')
+                                {
+
+                                    var reader = new FileReader();
+
+                                    reader.onload = function(){
+
+                                        var dataURL = reader.result;
+
+                                        var output = document.getElementById('insurance_thumb');
+
+                                        var large_thumbnail = document.getElementById('large_thumbnail');
+                                        
+                                        if(output !== null)
+                                            output.src = dataURL;
+
+                                        if(large_thumbnail !== null)
+                                            large_thumbnail.src = dataURL;
+                                    
+                                    }
+
+                                    reader.readAsDataURL(document.getElementById("insurance").files[0]);
+                                } else if(this.insurance_extension === 'pdf') {
+
+                                    this.insurance_url = URL.createObjectURL(document.getElementById("insurance").files[0]);
+
+                                    this.previewPdf(this.insurance_url);
+
+
+                                    /*console.log(src);
+                                    console.log(output);*/
+
+                                
+                                    //this.insurance_extension = '';
+                                }
+                    }else{
+
+                        this.largefilesize = true
+                        this.insurance_extension = 'largefile'
+                        this.insurance = []
+
+                    }                
+                }
+               },
+
+           updatecertificate(){
+                //this.certificate = []
+               //this.certificate.push(document.getElementById("certificate").files[0])
+
+                if(document.getElementById("certificate").files[0]){
+
+                    this.certificate = [];
+
+                    this.certificate.push(document.getElementById("certificate").files[0]);
+                    
+                    this.certificate_extension = this.getFileExtension(document.getElementById("certificate").files[0].name);
+
+                    if ( this.certificate[0].size < 2024000){
+
+                            if(this.certificate_extension === 'jpg' 
+                                || this.certificate_extension === 'jpeg' 
+                                || this.certificate_extension === 'png')
+                            {
+
+
+                                var reader = new FileReader();
+
+                                reader.onload = function(){
+
+                                    var dataURL = reader.result;
+
+                                    var output = document.getElementById('certificate_thumb');
+
+                                    var large_thumbnail = document.getElementById('large_thumbnail');
+                                    
+                                    if(output !== null)
+                                        output.src = dataURL;
+
+                                    if(large_thumbnail !== null)
+                                        large_thumbnail.src = dataURL;
+                                
+                                }
+
+                                reader.readAsDataURL(document.getElementById("certificate").files[0]);
+                            }
+                            else if(this.certificate_extension === 'pdf'){
+                                this.certificate_url = URL.createObjectURL(document.getElementById("certificate").files[0]);
+
+                                this.previewPdf(this.certificate_url);
+                            }
+                    }else{
+
+                            this.largefilesize = true
+                            this.certificate_extension = 'largefile'
+                            this.certificate = []
+                            console.log(this.certificate);
+
+                    }
+
                 
+                }
+           },
+
+         otherAttachmentsUpdated(){
+
+              console.log(document.getElementById("otheFiles").files[0].size);
+                    if(document.getElementById("otheFiles").files[0]){
+
+
+                        if (document.getElementById("otheFiles").files[0].size < 2024000) {
+
+                                for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
+                                    {
+                                        /*this.otherFiles.push(
+                                            document.getElementById("otheFiles").files[i]);*/
+                                        
+                                        /*let extension = this.getFileExtension(document.getElementById("otheFiles").files[i].name);
+
+                                        if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' )
+                                        {
+
+                                        }
+                                        else if(extension === 'pdf'){
+
+                                        }*/
+                                        var file = {
+                                            file:[],
+                                            source:''
+                                        }
+
+                                        if(document.getElementById("otheFiles").files[i].type === 'image/jpeg' 
+                                                || document.getElementById("otheFiles").files[i].type === 'image/png' )
+                                        {
+                                        
+
+                                            var reader = new FileReader();
+
+                                            reader.onload = function(){
+
+                                                var dataURL = reader.result;
+
+                                                file.source = dataURL;
+
+                                                var large_thumbnail = document.getElementById('large_thumbnail');
+                                                
+                                                if(large_thumbnail !== null)
+                                                    large_thumbnail.src = dataURL;
+                                        
+                                            }
+
+                                            reader.readAsDataURL(document.getElementById("otheFiles").files[i]);
+
+                                            file.file = document.getElementById("otheFiles").files[i];
+
+                                            this.otherFiles.push(file);
+
+                                        }
+                                        else if(document.getElementById("otheFiles").files[i].type === 'application/pdf')
+                                        {
+                                            file.source = URL.createObjectURL(document.getElementById("otheFiles").files[i]);
+
+                                            this.previewPdf(file.source);
+
+                                            file.file = document.getElementById("otheFiles").files[i];
+
+                                            this.otherFiles.push(file);
+
+                                            
+                                        }
+                                    }
+                            
+                        } else {
+
+                             this.largefilesize = true
+                            
+                        }
+                    }
+                },
+            
+        uploadother(){ 
+                this.other = []
+               this.other.push(document.getElementById("other").files[0])
             },
 
-            dataobject(){
+            
+
+        dataobject(){
 
                 if (this.validate()){
 
@@ -1536,7 +1614,7 @@ export default {
                  
       },
 
-       savechanges(){
+      savechanges(){
 
            console.log(this.validate());  
            
@@ -1602,11 +1680,23 @@ export default {
                
            }).catch((error)=>{
 
-               this.loading = false
-               this.error = 'Cant update profile please check internet connection and try again'
-                this.connectio_error = true
+               
 
-                console.log(error.response.data);
+                if (error.response.status == 500) {
+
+                     this.loading = false
+                     this.error = 'can not serve you currently, Plese try again later'
+                     this.connection_error = true
+                    
+                } else{
+
+                    this.loading = false
+                    this.error = 'Cant update profile please check internet connection and try again'
+                    this.connectio_error = true
+
+                    console.log(error.response.data);
+
+                }
                 
            })
 
@@ -1707,6 +1797,15 @@ export default {
 .insurance_preview:hover {
   border-color: #F5FAFF;
   color: #4169E1;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+  background-color: #F5FAFF;
+}
+
+.largefile{
+  border-color: red;
+  color: red;
   border-style: solid;
   border-width: 1px;
   margin-bottom: 0%;
