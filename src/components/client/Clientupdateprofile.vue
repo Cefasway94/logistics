@@ -29,6 +29,31 @@
                 
             </v-overlay>
 
+            <v-dialog
+                v-model="display_file_size_error"
+                max-width="400"
+                color="#F5FAFF"
+                transition="scale-transition"
+                :hide-overlay="true"
+            >
+                <v-card
+                    height="105"
+                    color="#F64F51"
+                    class="pt-2"
+                >
+                    
+                    <v-alert
+                        prominent
+                        height=""
+                        type="error"
+                    >
+                        <p class="font-weight-strong mb-0">File size is too large limit 2MB</p>
+                    </v-alert>
+                    
+                </v-card>
+
+            </v-dialog>
+
             <v-progress-linear
                 :value="percentage"
                 class="mt-5 teal lighten-5 progress"
@@ -569,6 +594,24 @@
                                         <img  id="copy_of_id_thumb" class="preview">
                                     </v-card>
                                 </div>
+
+                                <div v-show="id_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(id_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                                <div v-show="id_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
                                 
 
                             </v-card>
@@ -597,6 +640,24 @@
                                         <img  id="profilePhoto_thumb" class="preview">
                                     </v-card>
                                 </div>
+
+                                <div v-show="profile_photo_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(profile_photo_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                                <div v-show="profile_photo_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
                                 
 
                             </v-card>
@@ -621,6 +682,24 @@
                                         <img  id="personal_tin_thumb" class="preview">
                                     </v-card>
                                 </div>
+
+                                 <div v-show="tin_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(tin_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                                 <div v-show="tin_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
                                
                             </v-card>
 
@@ -649,6 +728,24 @@
                                         <img  id="company_logo_thumb" class="preview">
                                     </v-card>
                                 </div>
+
+                                <div v-show="logo_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(logo_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                                <div v-show="logo_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
                             </v-card>
                     
                         </v-col> 
@@ -674,6 +771,24 @@
                                         <img  id="registration_certificate_thumb" class="preview">
                                     </v-card>
                                 </div>
+
+                                <div v-show="copy_of_registration_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(copy_of_registration_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                                <div v-show="copy_of_registration_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
                                 
 
                             </v-card>
@@ -700,6 +815,24 @@
                                         <img  id="tin_document_thumb" class="preview">
                                     </v-card>
                                 </div>
+
+                                <div v-show="tax_payer_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(tax_payer_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                                 <div v-show="tax_payer_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
                                 
                             </v-card>
                     
@@ -729,6 +862,24 @@
                                         <img  id="vat_certificate_thumb" class="preview">
                                     </v-card>
                                 </div>
+
+                                 <div v-show="vat_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(vat_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                                 <div v-show="vat_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
     
                             </v-card>
                     
@@ -756,6 +907,24 @@
                                         <img  id="business_licence_thumb" class="preview">
                                     </v-card>
                                 </div>
+
+                                <div v-show="licence_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(licence_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                                <div v-show="licence_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
                                
                             </v-card>
                     
@@ -783,6 +952,24 @@
                                         <img  id="bank_statement_thumb" class="preview">
                                     </v-card>
                                 </div>
+
+                                 <div v-show="bank_statement_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(bank_statement_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+
+                                <div v-show="bank_statement_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
                                
                             </v-card>
                     
@@ -975,6 +1162,16 @@ export default {
         bank_statement_extension:'',
         logo_extension:'',
 
+        tin_url:'',
+        logo_url:'',
+        profile_photo_url:'',
+        id_url:'',
+        copy_of_registration_url:'',
+        tax_payer_url:'',
+        vat_url:'',
+        licence_url:'',
+        bank_statement_url:'',
+
         loading: false,
         overlay: false,
 
@@ -994,6 +1191,8 @@ export default {
         alert: false,
         message:'',
         type:'',
+
+        display_file_size_error: false,
 
         otherFiles:[],
         currentFiles:[],
@@ -1202,9 +1401,17 @@ export default {
             }
         },
         bankStatementUpdated(){
-            
 
-            if(document.getElementById("bank_statement").files[0]){
+            if(document.getElementById("bank_statement").files[0].size > 2097152){
+
+                this.bank_statement_extension = 'error';
+
+            }
+            else{
+
+                this.bank_statement_extension = ''; 
+
+                if(document.getElementById("bank_statement").files[0]){
 
 
                 this.three_months_bank_statement = [];
@@ -1238,18 +1445,28 @@ export default {
 
                  else if(this.bank_statement_extension === 'pdf'){
 
-                    let url = URL.createObjectURL(document.getElementById("bank_statement").files[0]);
+                    this.bank_statement_url = URL.createObjectURL(document.getElementById("bank_statement").files[0]);
 
-                    this.previewPdf(url);
+                    this.previewPdf(this.bank_statement_url);
                 }
 
                 
+            }
             }
         },
 
         businessLicenceUpdated(){
 
-            if(document.getElementById("business_licence").files[0]){
+            if(document.getElementById("business_licence").files[0].size > 2097152){
+
+                this.licence_extension = 'error';
+
+            }
+            else{
+
+                this.licence_extension = ''; 
+
+                if(document.getElementById("business_licence").files[0]){
 
                 this.business_licence_document = [];
 
@@ -1281,17 +1498,28 @@ export default {
                 }
                 else if(this.licence_extension === 'pdf'){
 
-                    let url = URL.createObjectURL(document.getElementById("business_licence").files[0]);
+                    this.licence_url = URL.createObjectURL(document.getElementById("business_licence").files[0]);
 
-                    this.previewPdf(url);
+                    this.previewPdf(this.licence_url);
                 }
                 
+            }
+
             }
         },
 
         vatCertificateUploaded(){
 
-            if(document.getElementById("vat_certificate").files[0]){
+            if(document.getElementById("vat_certificate").files[0].size > 2097152){
+
+                this.vat_extension = 'error';
+
+            }
+            else{
+
+                this.vat_extension = ''; 
+
+                if(document.getElementById("vat_certificate").files[0]){
 
                 this.vat_certificate = [];
 
@@ -1323,18 +1551,28 @@ export default {
                 }
                  else if(this.vat_extension === 'pdf'){
 
-                    let url = URL.createObjectURL(document.getElementById("vat_certificate").files[0]);
+                    this.vat_url = URL.createObjectURL(document.getElementById("vat_certificate").files[0]);
 
-                    this.previewPdf(url);
+                    this.previewPdf(this.vat_url);
                 }
 
                 
+            }
             }
         },
 
         tinDocumentUpdated(){
 
-            if(document.getElementById("tin_document").files[0]){
+            if(document.getElementById("tin_document").files[0].size > 2097152){
+
+                this.tax_payer_extension = 'error';
+
+            }
+            else{
+
+                this.tax_payer_extension = ''; 
+
+                if(document.getElementById("tin_document").files[0]){
 
                 this.tax_payer_identification_document = [];
 
@@ -1366,17 +1604,27 @@ export default {
                 }
                 else if(this.tax_payer_extension === 'pdf'){
 
-                    let url = URL.createObjectURL(document.getElementById("tin_document").files[0]);
+                    this.tax_payer_url = URL.createObjectURL(document.getElementById("tin_document").files[0]);
 
-                    this.previewPdf(url);
+                    this.previewPdf(this.tax_payer_url);
                 }
                 
+            }
             }
         },
 
         registrationCertificateUpdated(){
 
-            if(document.getElementById("registration_certificate").files[0]){
+             if(document.getElementById("registration_certificate").files[0].size > 2097152){
+
+                this.copy_of_registration_extension = 'error';
+
+            }
+            else{
+
+                this.copy_of_registration_extension = ''; 
+
+                if(document.getElementById("registration_certificate").files[0]){
 
                 this.certificate_of_registration = [];
 
@@ -1408,23 +1656,34 @@ export default {
                 }
                 else if(this.copy_of_registration_extension === 'pdf'){
 
-                    let url = URL.createObjectURL(document.getElementById("registration_certificate").files[0]);
+                    this.copy_of_registration_url = URL.createObjectURL(document.getElementById("registration_certificate").files[0]);
 
-                    this.previewPdf(url);
+                    this.previewPdf(this.copy_of_registration_url);
                 }
                 
             }
+            }
+
         },
 
         companyLogoUpdated(){
 
-            if(document.getElementById("company_logo").files[0]){
+            if(document.getElementById("company_logo").files[0].size > 2097152){
+
+                this.logo_extension = 'error';
+
+            }
+            else{
+
+                this.logo_extension = ''; 
+
+                if(document.getElementById("company_logo").files[0]){
 
                 this.company_logo = [];
 
-               this.company_logo.push(document.getElementById("company_logo").files[0]);
+                this.company_logo.push(document.getElementById("company_logo").files[0]);
 
-               this.logo_extension = this.getFileExtension(document.getElementById("company_logo").files[0].name);
+                this.logo_extension = this.getFileExtension(document.getElementById("company_logo").files[0].name);
 
                 if(this.logo_extension === 'jpg' || this.logo_extension === 'jpeg' || this.logo_extension === 'png')
                 {
@@ -1450,23 +1709,33 @@ export default {
                 }
                  else if(this.logo_extension === 'pdf'){
 
-                    let url = URL.createObjectURL(document.getElementById("company_logo").files[0]);
+                    this.logo_url = URL.createObjectURL(document.getElementById("company_logo").files[0]);
 
-                    this.previewPdf(url);
+                    this.previewPdf(this.logo_url);
                 }
                 
+            }
             }
         },
 
         personalTinUpdated(){
 
-           if(document.getElementById("personal_tin").files[0]){
+            if(document.getElementById("personal_tin").files[0].size > 2097152){
 
-               this.copy_of_tax_identification_number_certificate = [];
+                this.tin_extension = 'error';
 
-               this.copy_of_tax_identification_number_certificate.push(document.getElementById("personal_tin").files[0]);
+            }
+            else{
 
-               this.tin_extension = this.getFileExtension(document.getElementById("personal_tin").files[0].name);
+                this.tin_extension = ''; 
+
+                if(document.getElementById("personal_tin").files[0]){
+
+                this.copy_of_tax_identification_number_certificate = [];
+
+                this.copy_of_tax_identification_number_certificate.push(document.getElementById("personal_tin").files[0]);
+
+                this.tin_extension = this.getFileExtension(document.getElementById("personal_tin").files[0].name);
 
                if(this.tin_extension === 'jpg' || this.tin_extension === 'jpeg' || this.tin_extension === 'png' )
                {
@@ -1492,17 +1761,28 @@ export default {
                }
                 else if(this.tin_extension === 'pdf'){
 
-                    let url = URL.createObjectURL(document.getElementById("personal_tin").files[0]);
+                    this.tin_url = URL.createObjectURL(document.getElementById("personal_tin").files[0]);
 
-                    this.previewPdf(url);
+                    this.previewPdf(this.tin_url);
                 }
 
-                
+            }
+
             }
         },
 
         updateID(){
-            if(document.getElementById("copy_of_id").files[0]){
+
+            if(document.getElementById("copy_of_id").files[0].size > 2097152){
+
+                this.id_extension = 'error';
+
+            }
+            else{
+
+                this.id_extension = ''; 
+
+                if(document.getElementById("copy_of_id").files[0]){
 
                 this.copy_of_identity_card = [];
 
@@ -1535,19 +1815,29 @@ export default {
                 }
                 else if(this.id_extension === 'pdf'){
 
-                    let url = URL.createObjectURL(document.getElementById("copy_of_id").files[0]);
+                    this.id_url = URL.createObjectURL(document.getElementById("copy_of_id").files[0]);
 
-                    this.previewPdf(url);
+                    this.previewPdf(this.id_url);
                 }
 
                 
             }
-                
+
+            }     
         },
 
         updateProfilePhoto(){
 
-            if(document.getElementById("profilePhoto").files[0]){
+            if(document.getElementById("profilePhoto").files[0].size > 2097152){
+
+                this.profile_photo_extension = 'error';
+
+            }
+            else{
+
+                this.profile_photo_extension = '';
+
+                if(document.getElementById("profilePhoto").files[0]){
 
                 this.profile_photo = [];
 
@@ -1579,14 +1869,14 @@ export default {
                 }
                 else if(this.profile_photo_extension === 'pdf'){
 
-                    let url = URL.createObjectURL(document.getElementById("profilePhoto").files[0]);
+                    this.profile_photo_url = URL.createObjectURL(document.getElementById("profilePhoto").files[0]);
 
-                    this.previewPdf(url);
+                    this.previewPdf(this.profile_photo_url);
                 }
                 
             }
-
-
+                
+            }
         },
 
         updatePercentage(percent){
@@ -1654,21 +1944,15 @@ export default {
 
             if(document.getElementById("otheFiles").files[0]){
 
-                for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
+                if(document.getElementById("otheFiles").files[0].size >  2097152){
+
+                    this.display_file_size_error = true;
+
+                } else 
+                { 
+                     for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
                 {
 
-                    /*this.otherFiles.push(
-                        document.getElementById("otheFiles").files[i]);*/
-                    
-                    /*let extension = this.getFileExtension(document.getElementById("otheFiles").files[i].name);
-
-                    if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' )
-                    {
-
-                    }
-                    else if(extension === 'pdf'){
-
-                    }*/
                     var file = {
                         file:[],
                         source:''
@@ -1710,8 +1994,8 @@ export default {
 
                         this.otherFiles.push(file);
 
-                        
                     }
+                }
                 }
             }
          },
@@ -1820,143 +2104,163 @@ export default {
 
         save(){
 
-            this.loading = true;
+            if(this.tin_extension === 'error' 
+                || this.profile_photo_extension === 'error' 
+                || this.id_extension === 'error'
+                || this.copy_of_registration_extension === 'error'
+                || this.tax_payer_extension === 'error'
+                || this.vat_extension === 'error'
+                || this.licence_extension === 'error'
+                || this.bank_statement_extension === 'error'
+                || this.logo_extension === 'error'
+            
+            )
+            {
 
-            let formData = this.createData();
+                this.display_file_size_error = true;
+            }
+            else 
+            {
+                this.loading = true;
 
-            if(this.bank_details){
-                console.log("Document is here");
+                let formData = this.createData();
 
-                const url = `http://207.180.215.239:8181/api/v1/customers/upload/${this.$route.params.id}`;
+                if(this.bank_details){
+                    console.log("Document is here");
 
-                axios.post(url,
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }).
-                            then((response) => {
+                    const url = `http://207.180.215.239:8181/api/v1/customers/upload/${this.$route.params.id}`;
 
-                             
-                                this.loading = false;
+                    axios.post(url,
+                                formData,
+                                {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data'
+                                    }
+                                }).
+                                then((response) => {
 
-                                if(response.data.genralErrorCode === 8004){
+                                
+                                    this.loading = false;
 
-                                    this.alert = false;
+                                    if(response.data.genralErrorCode === 8004){
+
+                                        this.alert = false;
+
+                                        setTimeout(()=>{
+
+                                            this.setAlert(response.data.message,"error");
+                                        },1000)
+                                    }
+                                    else if(response.data.genralErrorCode === 8000){
+
+                                        this.updatePercentage(30);
+
+                                        this.$store.dispatch('setSnackbar',{
+                                            text: "Profile updating is completed",
+                                            color: 'success'
+                                        });
+                                    
+                                        this.$router.push('/client');
+                                        
+                                    }
+
+                                }).catch(()=>{
 
                                     setTimeout(()=>{
 
-                                        this.setAlert(response.data.message,"error");
+                                        this.setAlert("There is internal server error","error");
+
                                     },1000)
-                                }
-                                else if(response.data.genralErrorCode === 8000){
+                                }); 
 
-                                    this.updatePercentage(30);
+                } else {
 
-                                    this.$store.dispatch('setSnackbar',{
-                                        text: "Profile updating is completed",
-                                        color: 'success'
-                                    });
+                    console.log("Not document");
+
+                    const url = `http://207.180.215.239:8181/api/v1/customers/${this.$route.params.id}`;
+                
+                    axios.post(url,
+                                formData,
+                                {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data'
+                                    }
+                                }).
+                                then((response) => {
+
                                 
-                                    this.$router.push('/client');
+                                    this.loading = false;
+
+                                    if(response.data.genralErrorCode == 8004){
+
+                                        this.alert = false;
+
+                                        setTimeout(()=>{
+
+                                            this.setAlert(response.data.message,"error");
+                                        },1000)
+                                    }
+                                    else if(response.data.genralErrorCode === 8000){
+
+                                        if(response.data.objects.client_details && this.percentage == this.initial_percent){
+
+                
+                                            this.updatePercentage(40);
+
+                                            this.client_details = response.data.objects.client_details;
+
+                                            document.getElementById('app').scrollIntoView();
+                                            
+                                        } 
+                                        else if((response.data.objects.client_details && this.percentage == this.stage1_percent) && this.stage1 == false){
+
+                                            this.updatePercentage(30)
+
+                                            this.bank_details = response.data.objects.bank_details;
+
+                                            this.stage2 = false;
+
+                                            document.getElementById('app').scrollIntoView();
+            
+                                            
+                                        } else if(this.stage2){
+
+                                            this.bank_details = response.data.objects.bank_details;
+
+                                            this.stage2 = false;
+
+                                            this.stage1 = false;
+
+                                            document.getElementById('app').scrollIntoView();
+
+                                        } else if(this.stage1){
+
+                                            this.client_details = response.data.objects.client_details;
+
+                                            this.stage1 = false;
+
+                                            this.stage2 = true;
+
+                                            document.getElementById('app').scrollIntoView();
+                                        }
+                                            
                                     
-                                }
+                                    }
+                                }).catch(()=>{
 
-                            }).catch(()=>{
-
+                                
                                 setTimeout(()=>{
 
-                                    this.setAlert("There is internal server error","error");
+                                        this.setAlert("There is internal server error","error");
 
-                                },1000)
-                            }); 
-
-            } else {
-
-                console.log("Not document");
-
-                const url = `http://207.180.215.239:8181/api/v1/customers/${this.$route.params.id}`;
-               
-                axios.post(url,
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }).
-                            then((response) => {
-
-                             
-                                this.loading = false;
-
-                                if(response.data.genralErrorCode == 8004){
-
-                                    this.alert = false;
-
-                                    setTimeout(()=>{
-
-                                        this.setAlert(response.data.message,"error");
                                     },1000)
-                                }
-                                else if(response.data.genralErrorCode === 8000){
 
-                                    if(response.data.objects.client_details && this.percentage == this.initial_percent){
+                                }); 
+
+                }
+            }
 
             
-                                        this.updatePercentage(40);
-
-                                        this.client_details = response.data.objects.client_details;
-
-                                        document.getElementById('app').scrollIntoView();
-                                         
-                                    } 
-                                    else if((response.data.objects.client_details && this.percentage == this.stage1_percent) && this.stage1 == false){
-
-                                        this.updatePercentage(30)
-
-                                        this.bank_details = response.data.objects.bank_details;
-
-                                        this.stage2 = false;
-
-                                        document.getElementById('app').scrollIntoView();
-         
-                                         
-                                    } else if(this.stage2){
-
-                                        this.bank_details = response.data.objects.bank_details;
-
-                                        this.stage2 = false;
-
-                                        this.stage1 = false;
-
-                                        document.getElementById('app').scrollIntoView();
-
-                                    } else if(this.stage1){
-
-                                        this.client_details = response.data.objects.client_details;
-
-                                        this.stage1 = false;
-
-                                        this.stage2 = true;
-
-                                        document.getElementById('app').scrollIntoView();
-                                    }
-                                           
-                                   
-                                }
-                            }).catch(()=>{
-
-                              
-                               setTimeout(()=>{
-
-                                    this.setAlert("There is internal server error","error");
-
-                                },1000)
-
-                            }); 
-
-            }
         }
 
     },
@@ -2107,6 +2411,15 @@ export default {
     z-index: 2;
     
  }
+
+ .largefile{
+  border-color: red;
+  color: red;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+  background-color: #F5FAFF;
+}
 
  .progress { z-index: 1;}
 
