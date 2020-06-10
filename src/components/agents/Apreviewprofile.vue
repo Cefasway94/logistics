@@ -441,13 +441,17 @@
             </v-flex>
         </v-card>
 
-        <v-card 
-        width="900"
-        class="mt-5 mx-auto px-3 " >
+        <v-card
+          width="900" 
+          class="mt-5 mx-auto px-3 " >
 
-            <v-flex row column class="px-3 pt-5">
-            <p class="bondy-2 mb-4">Payment terms</p>
-            <v-flex xs6 sm3 md3 lg3 xl3 class="py-3 px-1 justify-center" 
+
+            <v-flex  column class=" pt-4">
+            <v-flex class="">
+            <p class="bondy-2  nb-2 ml-3">Payment terms</p>
+            </v-flex>
+            <v-row class="pb-2">
+            <v-flex row xs12 sm4 md4 lg4 xl4 class="  justify-center" 
              v-for="(tender, i) in payment_terms" :key="i"  >
              <v-chip
             class="ma-2"
@@ -456,6 +460,7 @@
             </v-chip>
 
             </v-flex>
+            </v-row>
             </v-flex>
         </v-card>
 

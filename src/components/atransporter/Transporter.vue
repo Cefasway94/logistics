@@ -131,32 +131,35 @@
                 </v-progress-circular>
       </v-card>
 
-      <v-card 
-      width="300" 
-      flat 
-      color="transparent" 
-      class="mb-3">
-      <v-container 
-        v-show="notender" 
-        row 
-        fluid 
-        class="pt-5" 
-        style="background-color:#F5FAFF;" >
-
-                <v-alert
-                :value="notender"
-                dense
-                outlined
-                prominent
-                type="info"
-                >
-            No new Bids
-            </v-alert>
-            
-        </v-container>
-      </v-card>
 
 <!-- ----------------- Biding card------------- -->
+
+            <!-------- No new Bids ----------->
+                <v-card 
+                width="300" 
+                flat 
+                color="transparent" 
+                class="mb-3">
+                <v-container 
+                    v-show="notender" 
+                    row 
+                    fluid 
+                    class="pt-5" 
+                    style="background-color:#F5FAFF;" >
+
+                        <v-alert
+                        :value="notender"
+                        dense
+                        outlined
+                        prominent
+                        type="info"
+                        >
+                            No Bids
+                        </v-alert>
+                        
+                    </v-container>
+                </v-card>
+
       <v-container 
       v-show="bidlist" 
       row 
@@ -404,10 +407,14 @@ export default {
   },
 
   created (tab){
-              this.loading = true
-            // eslint-disable-next-line no-console
-          console.log('44444444');
+
+                this.loading = true
+
+                // eslint-disable-next-line no-console
+                console.log('44444444');
+
              tab = localStorage.client
+             
         this.T_GET_AGENT(tab).then(()=>{
             
             if (!this.LOAD_AGENT.objects.agent_id == '') {
@@ -417,12 +424,13 @@ export default {
                         setTimeout(()=>{
                         this.loading = false
                         this.verify = true;
-                    this.verification = false
-                    },500)
+                        this.verification = false
+                        },500)
 
                 }else{
 
                      tab = this.tab
+
                     this.T_GET_DASHBOARD(tab).then(()=>{
                     // let status = this.$refs.accepted
                      
@@ -460,10 +468,10 @@ export default {
              }else{
 
                 setTimeout(()=>{
-                     this.loading = false
+                  this.loading = false
                   this.profile = true;
-                 this.verification = false
-                 },500) 
+                  this.verification = false
+                },500) 
              }
                    
         }).catch(error=>{
@@ -517,14 +525,14 @@ export default {
                      // eslint-disable-next-line no-console
                      console.log(this.LOAD_DASHBOARDS);
 
-                     if (this.LOAD_DASHBOARDS.objectsCount > 0) {
+                    if (this.LOAD_DASHBOARDS.objectsCount > 0) {
 
                          setTimeout(()=>{
                              this.loadingbiding = false
                              this.bidlist=true
                          },500)
                          
-                     } else {
+                    } else {
 
                          setTimeout(()=>{
                              this.loadingbiding = false
@@ -532,7 +540,7 @@ export default {
                              this.notenderonprogress = false
                          },500)
                          
-                     }
+                    }
                      
 
                  }).catch(error=>{
@@ -556,9 +564,9 @@ export default {
           this.onprogressliast = false
           this.bidlist = false
           this.loadingbiding = true
-            // eslint-disable-next-line no-console
-          console.log('555555');
-                     tab = this.tab
+
+           
+                tab = this.tab
 
                  this.T_GET_ONPROGRESS(tab).then(()=>{
 
@@ -588,21 +596,23 @@ export default {
 
                  }).catch(error=>{
 
-             // eslint-disable-next-line no-console
-            console.log(error);
-             // eslint-disable-next-line no-console
-              console.log(this.LOAD_AGENT);  
+                    // eslint-disable-next-line no-console
+                    console.log(error);
+                    // eslint-disable-next-line no-console
+                    console.log(this.LOAD_AGENT);  
 
-        });
+                 });
       },
 
 // accept bid ============================>>>
     acceptbid(bid_id){
+
         this.acceptDialog = false;
         // eslint-disable-next-line no-console
         console.log(bid_id);
         
         this.T_ACCEPT_BID(bid_id).then(()=>{
+
             // eslint-disable-next-line no-console
             console.log(this.LOAD_ACCEPT_BID)
             return this.get_dashboard()
@@ -616,14 +626,15 @@ export default {
       getbiddetails(tab){
 
           this.T_GET_DASHBOARDDETAILs(tab).then(()=>{
+
               // eslint-disable-next-line no-console
               console.log('the bid outpost');
               // eslint-disable-next-line no-console
               console.log(tab);
               // eslint-disable-next-line no-console
-              console.log(this.LOAD_DASHBOARD);
+              console.log(this.LOAD_DASHBOARD)
                             
-          });
+          })
       },
       
   },

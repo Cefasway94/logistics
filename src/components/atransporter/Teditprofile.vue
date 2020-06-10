@@ -701,21 +701,22 @@
                             >
                             </v-file-input>
 
-                            <v-btn @click="addFiles()">
+                            <v-btn elevation="flat" outlined color="primary" class="ml-1 mt-3" @click="addFiles()">
                                 Add other documents
                             </v-btn>
                         </v-col>
                     </v-row>
 
-                    <v-row class="mt-5">
-                        <v-col cols=12 md=3 v-for="(file,key) in otherFiles" :key="key">
+                    <v-row class="mt-3 ">
+                        <v-col cols=12 md=3 v-for="(file,key) in otherFiles" :key="key" class="mr-10">
 
-                            <p>{{ file.file.name }} <span class="remove-file" v-on:click="removeFile( key )">Remove</span></p>
+                           
+                            <p class="ml-1">{{ file.file.name }} <span class="remove-file" v-on:click="removeFile( key )"> <v-btn elevation="flat" outlined color="red" small class="white--text"> Remove </v-btn> </span></p>
 
-                            <div v-show="file.file.type === 'image/jpeg' || file.file.type === 'image/png'">
+                            <div v-show="file.file.type === 'image/jpeg' || file.file.type === 'image/png'" >
                                
-                                <v-card height="200" width="250" outlined @click="largePreview(file.source)">
-                                        <img  id="bank_statement_thumb" :src="file.source" class="preview">
+                                <v-card height="200" width="250"  flat @click="largePreview(file.source)" >
+                                        <img  id="bank_statement_thumb" :src="file.source" class="preview "  >
                                 </v-card>
                             </div>
 
@@ -733,6 +734,7 @@
                                         
                                     </v-card>
                             </div>
+                        
 
                         </v-col>
                     </v-row>
