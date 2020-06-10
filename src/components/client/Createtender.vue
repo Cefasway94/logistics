@@ -27,6 +27,31 @@
                 
             </v-overlay>
 
+            <v-dialog
+            v-model="display_file_size_error"
+            max-width="400"
+            color="#F5FAFF"
+            transition="scale-transition"
+            :hide-overlay="true"
+        >
+            <v-card
+                height="105"
+                color="#F64F51"
+                class="pt-2"
+            >
+                
+                <v-alert
+                    prominent
+                    height=""
+                    type="error"
+                >
+                      <p class="font-weight-strong mb-0">File size is too large limit 2MB</p>
+                </v-alert>
+                
+            </v-card>
+
+        </v-dialog>
+
             <v-overlay
                 :value="choose_tender"
                 >
@@ -470,15 +495,22 @@
                                 </div>
                                 <div v-show="photo_extension === 'pdf'">
 
-                                                <v-btn 
-                                                    :block="true"
-                                                    icon class="mt-7" 
-                                                    @click="previewPdf(photo_url)"
-                                                    >
-                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                                </v-btn>
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(photo_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
 
-                                            </div>
+                                </div>
+
+                                <div v-show="photo_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                </div>
+
                             </v-card>
                        
                         </v-col> 
@@ -514,15 +546,21 @@
                                     </div>
                                     <div v-show="bill_of_lading_extension === 'pdf'">
 
-                                                    <v-btn 
-                                                        :block="true"
-                                                        icon class="mt-7" 
-                                                        @click="previewPdf(bill_of_lading_url)"
-                                                        >
-                                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                                    </v-btn>
+                                        <v-btn 
+                                            :block="true"
+                                            icon class="mt-7" 
+                                            @click="previewPdf(bill_of_lading_url)"
+                                            >
+                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                        </v-btn>
 
-                                                </div>
+                                    </div>
+
+                                    <div v-show="bill_of_lading_extension === 'error' ">
+                                        <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                            <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                        </v-card>
+                                    </div>
 
                                     </v-card>
                                 </template>
@@ -574,6 +612,12 @@
                                         </v-btn>
 
                                      </div>
+
+                                     <div v-show="letter_extension === 'error' ">
+                                        <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                            <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                        </v-card>
+                                    </div>
                                 </v-card>
 
                                 </template>
@@ -732,6 +776,8 @@ export default {
 
         choose_tender:true,
 
+        display_file_size_error:false,
+
         alert: false,
         message:'',
         type:'',
@@ -868,45 +914,56 @@ export default {
                  //eslint-disable-next-line no-console
                  //console.log(response.data); 
             }*/
+            if(document.getElementById("files").files[0].size > 2097152){
 
-            if(document.getElementById("files").files[0]){
+                this.photo_extension = 'error';
 
-                this.photos = [];
-                
-                this.photos.push(document.getElementById("files").files[0]);
+            } else {
 
-                this.photo_extension = this.getFileExtension(document.getElementById("files").files[0].name);
+                this.photo_extension = '';
 
-                if(this.photo_extension === 'jpg' || this.photo_extension === 'jpeg' || this.photo_extension === 'png')
+                if(document.getElementById("files").files[0])
                 {
-                    var reader = new FileReader();
 
-                    reader.onload = function(){
-
-                        var dataURL = reader.result;
-
-                        var output = document.getElementById('files_thumb');
-
-                        var large_thumbnail = document.getElementById('large_thumbnail');
-                        
-                        if(output !== null)
-                            output.src = dataURL;
-
-                        if(large_thumbnail !== null)
-                            large_thumbnail.src = dataURL;
+                    this.photos = [];
                     
+                    this.photos.push(document.getElementById("files").files[0]);
+
+                    this.photo_extension = this.getFileExtension(document.getElementById("files").files[0].name);
+
+                    if(this.photo_extension === 'jpg' || this.photo_extension === 'jpeg' || this.photo_extension === 'png')
+                    {
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('files_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("files").files[0]);
+                    }
+                    else if(this.photo_extension === 'pdf')
+                    {
+                        this.photo_url = URL.createObjectURL(document.getElementById("files").files[0]);
+
+                        this.previewPdf(this.photo_url);
                     }
 
-                    reader.readAsDataURL(document.getElementById("files").files[0]);
                 }
-                else if(this.photo_extension === 'pdf')
-                {
-                    this.photo_url = URL.createObjectURL(document.getElementById("files").files[0]);
-
-                    this.previewPdf(this.photo_url);
-                }
-
             }
+
+            
         },
 
         /*removeFile(){
@@ -915,89 +972,112 @@ export default {
 
         billUpdated(){
             //this.bill_of_lading.push(document.getElementById("bill").files[0]);
-            if(document.getElementById("bill").files[0]){
 
-                this.bill_of_lading = [];
-                
-                this.bill_of_lading.push(document.getElementById("bill").files[0]);
+            if(document.getElementById("bill").files[0].size > 2097152){
 
-                this.bill_of_lading_extension = this.getFileExtension(document.getElementById("bill").files[0].name);
+                this.bill_of_lading_extension = 'error';
 
-                if(this.bill_of_lading_extension === 'jpg' || this.bill_of_lading_extension === 'jpeg' || this.bill_of_lading_extension === 'png')
+            } else {
+
+                this.bill_of_lading_extension = '';
+
+                if(document.getElementById("bill").files[0])
                 {
-                    var reader = new FileReader();
 
-                    reader.onload = function(){
-
-                        var dataURL = reader.result;
-
-                        var output = document.getElementById('bill_thumb');
-
-                        var large_thumbnail = document.getElementById('large_thumbnail');
-                        
-                        if(output !== null)
-                            output.src = dataURL;
-
-                        if(large_thumbnail !== null)
-                            large_thumbnail.src = dataURL;
+                    this.bill_of_lading = [];
                     
+                    this.bill_of_lading.push(document.getElementById("bill").files[0]);
+
+                    this.bill_of_lading_extension = this.getFileExtension(document.getElementById("bill").files[0].name);
+
+                    if(this.bill_of_lading_extension === 'jpg' || this.bill_of_lading_extension === 'jpeg' || this.bill_of_lading_extension === 'png')
+                    {
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('bill_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("bill").files[0]);
+                    }
+                    else if(this.bill_of_lading_extension === 'pdf')
+                    {
+                        this.bill_of_lading_url = URL.createObjectURL(document.getElementById("bill").files[0]);
+
+                        this.previewPdf(this.bill_of_lading_url);
                     }
 
-                    reader.readAsDataURL(document.getElementById("bill").files[0]);
-                }
-                else if(this.bill_of_lading_extension === 'pdf')
-                {
-                    this.bill_of_lading_url = URL.createObjectURL(document.getElementById("bill").files[0]);
-
-                    this.previewPdf(this.bill_of_lading_url);
-                }
+            }
 
             }
+            
         },
 
         letterUpdated(){
             //this.authorization_letter.push(document.getElementById("letter").files[0]);
 
-            if(document.getElementById("letter").files[0]){
+            if(document.getElementById("letter").files[0].size > 2097152){
 
-                this.authorization_letter = [];
-                
-                this.authorization_letter.push(document.getElementById("letter").files[0]);
+                this.letter_extension = 'error';
 
-                this.letter_extension = this.getFileExtension(document.getElementById("letter").files[0].name);
+            } else {
 
-                if(this.letter_extension === 'jpg' || this.letter_extension === 'jpeg' || this.letter_extension === 'png')
-                {
-                    var reader = new FileReader();
 
-                    reader.onload = function(){
+                this.letter_extension = '';
 
-                        var dataURL = reader.result;
+                 if(document.getElementById("letter").files[0]){
 
-                        var output = document.getElementById('letter_thumb');
-
-                        var large_thumbnail = document.getElementById('large_thumbnail');
-                        
-                        if(output !== null)
-                            output.src = dataURL;
-
-                        if(large_thumbnail !== null)
-                            large_thumbnail.src = dataURL;
+                    this.authorization_letter = [];
                     
+                    this.authorization_letter.push(document.getElementById("letter").files[0]);
+
+                    this.letter_extension = this.getFileExtension(document.getElementById("letter").files[0].name);
+
+                    if(this.letter_extension === 'jpg' || this.letter_extension === 'jpeg' || this.letter_extension === 'png')
+                    {
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('letter_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("letter").files[0]);
                     }
 
-                    reader.readAsDataURL(document.getElementById("letter").files[0]);
-                }
+                    else if(this.letter_extension === 'pdf')
+                    {
+                        this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
 
-                 else if(this.letter_extension === 'pdf')
-                {
-                    this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
-
-                    this.previewPdf(this.letter_url);
-                }
+                        this.previewPdf(this.letter_url);
+                    }
 
             }
 
+            }
             
         },
 
@@ -1005,7 +1085,13 @@ export default {
 
             if(document.getElementById("otheFiles").files[0]){
 
-                for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
+                if(document.getElementById("otheFiles").files[0].size >  2097152){
+
+                    this.display_file_size_error = true;
+
+                } else {
+
+                    for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
                 {
                     var file = {
                         file:[],
@@ -1051,6 +1137,8 @@ export default {
                         
                     }
                 }
+                }
+
             }
          },
 
@@ -1105,141 +1193,150 @@ export default {
 
         publishTender(){
 
-            this.loading = true;
+            if(this.letter_extension === 'error' || this.bill_of_lading_extension === 'error' || this.photo_extension === 'error'){
 
-            let formData = this.createData();
-
-            if(this.tender_category === 'Transporting')
+                this.display_file_size_error = true;
+            } 
+            else 
             {
-                const url = "http://207.180.215.239:9000/api/v1/tenders";
-                //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
+                this.loading = true;
 
-         
-                axios.post(url,
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }).
-                            then((response) => {
+                let formData = this.createData();
 
-                             
-                                this.loading = false;
+                if(this.tender_category === 'Transporting')
+                {
+                    const url = "http://207.180.215.239:9000/api/v1/tenders";
+                    //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
 
-                                if(response.data.genralErrorCode === 8004){
-
-                                    //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
-                                    this.alert = false;
-
-                                    setTimeout(()=>{
-
-                                        this.setAlert(response.data.message,"error");
-                                    },1000)
-                                }
-                                else if(response.data.genralErrorCode === 8000){
-
-                                    //this.AddTender(response.data.objects);
-                                    this.alert = false;
-
-                                     this.$store.dispatch('setSnackbar',{
-                                        text: response.data.message,
-                                        color: 'success'
-                                    });
-
-                                    this.$router.push('/client');
-
-                                }
-
-                                //eslint-disable-next-line no-console
-                                //console.log(response.data);
-
-                            }).catch(()=>{
-
-                                //eslint-disable-next-line no-console
-                                this.loading = false;
-                                this.alert = false;
-
-                                /*this.alert = "Error occured. Please try again";
-
-                                this.display_alert = true;
-
-                                document.getElementById('app').scrollIntoView();*/
             
-                                 this.$store.dispatch('setSnackbar',{
-                                        text: "There is a server error, Refresh a page to see your tender otherwise please create again",
-                                        color: 'error'
-                                    });
+                    axios.post(url,
+                                formData,
+                                {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data'
+                                    }
+                                }).
+                                then((response) => {
 
-                                this.$router.push('/client');
-                            }); 
+                                
+                                    this.loading = false;
 
-            } else if(this.tender_category === 'Clearing')
+                                    if(response.data.genralErrorCode === 8004){
 
-            {
-                const url = "http://207.180.215.239:8000/api/v1/tenders";
-                //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
+                                        //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
+                                        this.alert = false;
 
-                axios.post(url,
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }).
-                            then((response) => {
+                                        setTimeout(()=>{
 
-                             
-                                this.loading = false;
+                                            this.setAlert(response.data.message,"error");
+                                        },1000)
+                                    }
+                                    else if(response.data.genralErrorCode === 8000){
 
-                                if(response.data.genralErrorCode === 8004){
+                                        //this.AddTender(response.data.objects);
+                                        this.alert = false;
 
-                                    //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
-                                     this.alert = false;
+                                        this.$store.dispatch('setSnackbar',{
+                                            text: response.data.message,
+                                            color: 'success'
+                                        });
 
-                                    setTimeout(()=>{
+                                        this.$router.push('/client');
 
-                                        this.setAlert(response.data.message,"error");
-                                    },1000)
-                                }
-                                else if(response.data.genralErrorCode === 8000){
+                                    }
 
-                                    //this.AddTender(response.data.objects);
+                                    //eslint-disable-next-line no-console
+                                    //console.log(response.data);
 
-                                     //this.setAlert(response.data.message);
+                                }).catch(()=>{
 
-                                     this.alert = false;
+                                    //eslint-disable-next-line no-console
+                                    this.loading = false;
+                                    this.alert = false;
 
-                                     this.$store.dispatch('setSnackbar',{
-                                        text: response.data.message,
+                                    /*this.alert = "Error occured. Please try again";
+
+                                    this.display_alert = true;
+
+                                    document.getElementById('app').scrollIntoView();*/
+                
+                                    this.$store.dispatch('setSnackbar',{
+                                            text: "There is a server error, Refresh a page to see your tender otherwise please create again",
+                                            color: 'error'
+                                        });
+
+                                    this.$router.push('/client');
+                                }); 
+
+                } else if(this.tender_category === 'Clearing')
+
+                {
+                    const url = "http://207.180.215.239:8000/api/v1/tenders";
+                    //const url = "http://192.168.43.27:8000/api/v1/tenders?customer_id=10";
+
+                    axios.post(url,
+                                formData,
+                                {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data'
+                                    }
+                                }).
+                                then((response) => {
+
+                                
+                                    this.loading = false;
+
+                                    if(response.data.genralErrorCode === 8004){
+
+                                        //this.$router.push({path:'//client/createtender',query:{alert:response.data.message}});
+                                        this.alert = false;
+
+                                        setTimeout(()=>{
+
+                                            this.setAlert(response.data.message,"error");
+                                        },1000)
+                                    }
+                                    else if(response.data.genralErrorCode === 8000){
+
+                                        //this.AddTender(response.data.objects);
+
+                                        //this.setAlert(response.data.message);
+
+                                        this.alert = false;
+
+                                        this.$store.dispatch('setSnackbar',{
+                                            text: response.data.message,
+                                            color: 'success'
+                                        });
+
+                                        this.$router.push('/client');
+                                    }
+
+                                    //eslint-disable-next-line no-console
+                                    //console.log(response.data);
+
+                                }).catch(()=>{
+
+                                    //eslint-disable-next-line no-console
+                                    this.loading = false;
+
+                                    this.alert = false;
+
+                                    //this.setAlert("There is a server error, if you don't see your tender please create again");
+
+                                    //this.setAlert(response.data.message);
+
+                                    this.$store.dispatch('setSnackbar',{
+                                        text: "There is a server error, if you don't see your tender please create again",
                                         color: 'error'
                                     });
 
                                     this.$router.push('/client');
-                                }
-
-                                //eslint-disable-next-line no-console
-                                //console.log(response.data);
-
-                            }).catch(()=>{
-
-                                //eslint-disable-next-line no-console
-                                this.loading = false;
-
-                                this.alert = false;
-
-                                //this.setAlert("There is a server error, if you don't see your tender please create again");
-
-                                //this.setAlert(response.data.message);
-
-                                this.$store.dispatch('setSnackbar',{
-                                    text: "There is a server error, if you don't see your tender please create again",
-                                    color: 'error'
-                                });
-
-                                this.$router.push('/client');
-                            }); 
+                                }); 
+                }
             }
+
+            
               
         }
     },
@@ -1362,5 +1459,14 @@ img.preview{
     position: absolute;
     z-index: 1;
  }
+
+ .largefile{
+  border-color: red;
+  color: red;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+  background-color: #F5FAFF;
+}
 
 </style>
