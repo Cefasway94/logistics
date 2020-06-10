@@ -325,6 +325,9 @@
                                                 </v-btn>
 
                                             </div>
+                                            <div v-show="letter_extension === 'doc' || letter_extension === 'docx'">
+                                                <VueDocPreview :value="letter_url" :type="office" />
+                                            </div>
                                         </v-card>
                                     </template>
                                     <span>This is letter which authorize you as the owner of this cargo</span>
@@ -492,6 +495,7 @@ import {mapGetters,mapActions} from 'vuex'
 import Alert from '@/components/Alert.vue'
 import axios from 'axios'
 import PDFDocument from '@/components/PDFDocument'
+import VueDocPreview from 'vue-doc-preview'
 
 export default {
     name: "createtender",
@@ -530,7 +534,7 @@ export default {
        
     }),
 
-     components:{PDFDocument,Alert},
+     components:{PDFDocument,Alert, VueDocPreview},
 
     computed:{
         ...mapGetters(['getTender']),
@@ -574,7 +578,11 @@ export default {
 
         getFileExtension(url){
 
-            let position = url.lastIndexOf('.');
+            let position = url.lastIndexOf('.') + 1;
+
+            //let position = url.substr(0, url.lastIndexOf('.'));
+
+            //console.log(position)
 
             let extracted_string = url.slice(position + 1, url.length + 1);
 
@@ -681,6 +689,14 @@ export default {
                     this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
 
                     this.previewPdf(this.letter_url);
+                }
+                else if(extension === 'doc' || extension === 'docx')
+                {
+                    this.letter_extension = extension;
+
+                    this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
+
+                    this.VueDocPreview(this.letter_url);
                 }
    
             }
