@@ -326,7 +326,7 @@
 
                                             </div>
                                             <div v-show="letter_extension === 'doc' || letter_extension === 'docx'">
-                                                <VueDocPreview :value="letter_url" :type="office" />
+                                                <VueDocPreview />
                                             </div>
                                         </v-card>
                                     </template>
@@ -690,14 +690,14 @@ export default {
 
                     this.previewPdf(this.letter_url);
                 }
-                else if(extension === 'doc' || extension === 'docx')
-                {
-                    this.letter_extension = extension;
+                // else if(extension === 'doc' || extension === 'docx')
+                // {
+                //     this.letter_extension = extension;
 
-                    this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
+                //     this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
 
-                    this.VueDocPreview(this.letter_url);
-                }
+                //     this.VueDocPreview(this.letter_url);
+                // }
    
             }
         }, 
