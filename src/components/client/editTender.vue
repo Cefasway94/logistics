@@ -277,9 +277,9 @@
                                     </div>
 
                                     <div v-show="photo_extension === 'error' ">
-                                            <v-card height="200" width="250" outline class="pt-10 largefile" >
-                                                <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
-                                            </v-card>
+                                        <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                            <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                        </v-card>
                                     </div>
                                 </v-card>
                             </v-col>

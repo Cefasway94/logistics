@@ -29,15 +29,41 @@
                 
             </v-overlay>
 
+            <v-dialog
+                v-model="display_file_size_error"
+                max-width="400"
+                color="#F5FAFF"
+                transition="scale-transition"
+                :hide-overlay="true"
+            >
+                <v-card
+                    height="105"
+                    color="#F64F51"
+                    class="pt-2"
+                >
+                    
+                    <v-alert
+                        prominent
+                        height=""
+                        type="error"
+                    >
+                        <p class="font-weight-strong mb-0">File size is too large limit 2MB</p>
+                    </v-alert>
+                    
+                </v-card>
+
+            </v-dialog>
+
              <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
-                <v-flex>
-                <v-row class="pl-2 mb-1">
-                <h1 class=" font-weight-regular headline ">{{ tender.cargo_details }}</h1>
-                </v-row>
-                </v-flex>
-                <v-spacer></v-spacer>
-                <h2 style="color:#4169E1;">{{ tender.currency}} {{ Number(tender.customer_offer_amount).toLocaleString()}}</h2>
+                    <v-flex>
+                        <v-row class="pl-2 mb-1">
+                            <h1 class=" font-weight-regular headline ">{{ tender.cargo_details }}</h1>
+                        </v-row>
+                    </v-flex>
+
+                    <v-spacer></v-spacer>
+                    <h2 style="color:#4169E1;">{{ tender.currency}} {{ Number(tender.customer_offer_amount).toLocaleString()}}</h2>
                 </v-flex>
             </v-card>
 
@@ -220,16 +246,20 @@
 
                              <div v-show="slip_extension === 'pdf'">
 
-                                    <v-btn 
-                                        :block="true"
-                                        icon class="mt-7" 
-                                        @click="previewPdf(slip_url)"
-                                        >
-                                        PREVIEW<v-icon x-small>mdi-file</v-icon>
-                                    </v-btn>
-                                    
+                                <v-btn 
+                                    :block="true"
+                                    icon class="mt-7" 
+                                    @click="previewPdf(slip_url)"
+                                    >
+                                    PREVIEW<v-icon x-small>mdi-file</v-icon>
+                                </v-btn>
+                            </div>
 
-                                </div>
+                            <div v-show="slip_extension === 'error' ">
+                                <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                    <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                </v-card>
+                            </div>
 
                         </v-card>
                     
@@ -297,6 +327,8 @@ export default {
             alert: false,
             message:'',
             type:'',
+
+            display_file_size_error:false,
 
             currency_object:[],
 
@@ -373,38 +405,51 @@ export default {
          slipUpdated(){
             //this.depositors_slip.push(document.getElementById("slip").files[0]);
 
-            if(document.getElementById("slip").files[0]){
+             if(document.getElementById("slip").files[0].size > 2097152){
 
-                this.depositors_slip = [];
-                
-                this.depositors_slip.push(document.getElementById("slip").files[0]);
-
-                this.slip_extension = this.getFileExtension(document.getElementById("slip").files[0].name);
-
-                if(this.slip_extension === 'jpg' || this.slip_extension === 'jpeg' || this.slip_extension === 'png')
-                {
-                    var reader = new FileReader();
-
-                    reader.onload = function(){
-
-                        var dataURL = reader.result;
-
-                        var output = document.getElementById('slip_thumb');
-
-                        var large_thumbnail = document.getElementById('large_thumbnail');
-                        
-                        if(output !== null)
-                            output.src = dataURL;
-
-                        if(large_thumbnail !== null)
-                            large_thumbnail.src = dataURL;
-                    
-                    }
-
-                    reader.readAsDataURL(document.getElementById("slip").files[0]);
-                }
+                this.slip_extension = 'error';
 
             }
+            else{
+
+                this.slip_extension = '';
+
+                 if(document.getElementById("slip").files[0]){
+
+                    this.depositors_slip = [];
+                    
+                    this.depositors_slip.push(document.getElementById("slip").files[0]);
+
+                    this.slip_extension = this.getFileExtension(document.getElementById("slip").files[0].name);
+
+                    if(this.slip_extension === 'jpg' || this.slip_extension === 'jpeg' || this.slip_extension === 'png')
+                    {
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('slip_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("slip").files[0]);
+                    }
+
+                }
+                
+            }
+
+           
         },
 
          getFileExtension(url){
@@ -484,132 +529,135 @@ export default {
 
         confirmPayment(event){
 
-            
+            if(this.slip_extension === 'error'){
 
-            if(event)
-                event.preventDefault();
+                this.display_file_size_error = true;
+            }
+            else
+            {
+                if(event)
+                    event.preventDefault();
 
-            this.loading = true;
+                this.loading = true;
 
-        
-            let formData = this.createData();
+                let formData = this.createData();
 
-            let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.id}/${this.tender.tender_type}`;
+                let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.id}/${this.tender.tender_type}`;
 
-            if(this.no_of_installment == "1"){
+                if(this.no_of_installment == "1"){
 
-                if(this.tender.customer_offer_amount == this.amount){
+                    if(this.tender.customer_offer_amount == this.amount){
 
-                   axios.post(url,
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }).
-                            then((response) => {
+                    axios.post(url,
+                                formData,
+                                {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data'
+                                    }
+                                }).
+                                then((response) => {
 
-                                 //eslint-disable-next-line no-console
-                                    console.log(response.data);
+                                    //eslint-disable-next-line no-console
+                                        console.log(response.data);
+                                        
+                                    /*if(response.data.genralErrorCode == 8004){
+                                        
+                                        this.loading = false;
+
+                                        this.display_alert = false;
+
+                            
+                                        this.alert = response.data.message;
+                                    }
+                                    else if(response.data.genralErrorCode == 8000){
+
+                                        this.loading = false;
+
+                                        this.display_alert = false;
+
+                                        this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+                                    }*/
+
+                                    if(response.data.genralErrorCode === 8000){
+
+                                        this.loading = false;
+
+                                        this.alert = false;
+
+                                        this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+
+                                    } else if(response.data.genralErrorCode === 8004){
+
+                                        this.alert = false;
+
+                                        setTimeout(()=>{
+
+                                            this.setAlert(response.data.message,"error");
+                                        },1000)
+                                    }
+
                                     
-                                /*if(response.data.genralErrorCode == 8004){
-                                    
+
+                                }).catch(()=>{
+
+                                
                                     this.loading = false;
-
-                                    this.display_alert = false;
-
-                        
-                                    this.alert = response.data.message;
-                                }
-                                else if(response.data.genralErrorCode == 8000){
-
-                                    this.loading = false;
-
-                                    this.display_alert = false;
-
-                                    this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
-                                }*/
-
-                                if(response.data.genralErrorCode === 8000){
-
-                                    this.loading = false;
-
-                                    this.alert = false;
-
-                                    this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
-
-                                } else if(response.data.genralErrorCode === 8004){
-
-                                    this.alert = false;
 
                                     setTimeout(()=>{
 
-                                        this.setAlert(response.data.message,"error");
+                                        this.setAlert("There is internal server error","error");
+
                                     },1000)
-                                }
 
-                                
+                                });  
 
-                            }).catch(()=>{
+                    }
 
-                               
-                                this.loading = false;
+                } else {
 
-                                setTimeout(()=>{
+                    axios.post(url,
+                                formData,
+                                {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data'
+                                    }
+                                }).
+                                then((response) => {
 
-                                    this.setAlert("There is internal server error","error");
+                                    if(response.data.genralErrorCode === 8000){
 
-                                },1000)
+                                        this.loading = false;
 
-                            });  
+                                        this.alert = false;
+
+                                        this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+                                    }
+                                    else if(response.data.genralErrorCode === 8004){
+
+                                        this.loading = false;
+
+                                        this.alert = false;
+
+                                        setTimeout(()=>{
+
+                                            this.setAlert(response.data.message,"error");
+                                        },1000)
+                                    }
+                                    
+
+                                }).catch(()=>{
+
+                                    this.loading = false;
+
+                                    setTimeout(()=>{
+
+                                        this.setAlert("There is internal server error","error");
+
+                                    },1000)
+                                });  
 
                 }
-
-            } else {
-
-                axios.post(url,
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }).
-                            then((response) => {
-
-                                if(response.data.genralErrorCode === 8000){
-
-                                    this.loading = false;
-
-                                    this.alert = false;
-
-                                    this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
-                                }
-                                else if(response.data.genralErrorCode === 8004){
-
-                                    this.loading = false;
-
-                                    this.alert = false;
-
-                                    setTimeout(()=>{
-
-                                        this.setAlert(response.data.message,"error");
-                                    },1000)
-                                }
-                                
-
-                            }).catch(()=>{
-
-                                this.loading = false;
-
-                                setTimeout(()=>{
-
-                                    this.setAlert("There is internal server error","error");
-
-                                },1000)
-                            });  
-
             }
-
         }
     },
 
@@ -875,6 +923,15 @@ export default {
     z-index: 2;
     
  }
+
+ .largefile{
+  border-color: red;
+  color: red;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+  background-color: #F5FAFF;
+}
 
  img.preview:hover{
      cursor: pointer;
