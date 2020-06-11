@@ -5,6 +5,8 @@
 
         <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
+        <DOCDocument v-bind="{docType, docValue, docOverlay}" @clicked="closeDocViewer" v-if="doc"/>
+
         <v-overlay :value="overlay">
             <div class="large-preview">
 
@@ -15,7 +17,7 @@
 
                     <v-col class="mt-0" offset="4">
                         <v-btn
-                            large
+                            largedoc
                             color="primary white--text"
                             @click="overlay = false"
                         >
@@ -371,7 +373,15 @@
                                                 </v-btn>
 
                                             </div>
-
+                                            <div v-show="letter_extension === 'doc' || letter_extension === 'docx' || letter_extension === 'xlsx' || letter_extension === 'pptx' || letter_extension === 'ppt' || letter_extension === 'xls' ">
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="previewDoc(letter_url)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-download</v-icon>
+                                                </v-btn>
+                                            </div>
                                             <div v-show="letter_extension === 'error' ">
                                                 <v-card height="200" width="250" outline class="pt-10 largefile" >
                                                     <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
@@ -417,6 +427,17 @@
                                                 :block="true"
                                                 icon class="mt-7" 
                                                 @click="previewPdf(file)"
+                                                >
+                                                PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            </v-btn>
+
+                                        </div>
+                                        <div v-show="getFileExtension(file) === 'doc' || getFileExtension(file) === 'docx' || getFileExtension(file) === 'ppt' || getFileExtension(file) === 'pptx' || getFileExtension(file) === 'xlsx' || getFileExtension(file) === 'xls'">
+
+                                            <v-btn 
+                                                :block="true"
+                                                icon class="mt-7" 
+                                                @click="previewDoc(file)"
                                                 >
                                                 PREVIEW<v-icon x-large>mdi-file</v-icon>
                                             </v-btn>
@@ -639,7 +660,7 @@ import {mapGetters,mapActions} from 'vuex'
 import Alert from '@/components/Alert.vue'
 import axios from 'axios'
 import PDFDocument from '@/components/PDFDocument'
-import VueDocPreview from 'vue-doc-preview'
+import DOCDocument from '@/components/DOCDocument'
 
 export default {
     name: "createtender",
@@ -687,10 +708,16 @@ export default {
         currentFiles:[],
         
         files:[],
+
+        docType:'',
+        docValue:'',
+        docOverlay: false,
+        doc:false,
+
        
     }),
 
-     components:{PDFDocument,Alert,VueDocPreview},
+     components:{PDFDocument,Alert,DOCDocument},
 
     computed:{
         ...mapGetters(['getTender']),
@@ -735,9 +762,21 @@ export default {
             
         },
 
+        previewDoc(url){
+            this.docValue = url;
+            this.docOverlay = true;
+            this.docType = 'office';
+            this.doc =true;
+        },
+
         closePdfViewer(){
             this.pdf = false;
             this.pdfOverlay = false;
+        },
+
+        closeDocViewer(){
+            this.doc = false;
+            this.docOverlay = false;
         },
 
         largePreview(src){
@@ -851,18 +890,6 @@ export default {
 
                             var output = document.getElementById('letter_thumb');
 
-<<<<<<< HEAD
-                    this.previewPdf(this.letter_url);
-                }
-                else if(extension === 'doc' || extension === 'docx')
-                {
-                    this.letter_extension = extension;
-
-                    this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
-
-                    this.VueDocPreview(this.letter_url);
-                }
-=======
                             var large_thumbnail = document.getElementById('large_thumbnail');
                             
                             if(output !== null)
@@ -883,7 +910,16 @@ export default {
 
                         this.previewPdf(this.letter_url);
                     }
->>>>>>> e1a8837d8c7dec6147067cf0c01b4231c3ebe87f
+                    else if(extension === 'doc' || extension === 'ppt' || extension === 'docx' || extension === 'xlsx' || extension === 'xls' || extension === 'pptx' )
+                    {
+                        this.letter_extension = extension;
+
+                        this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
+
+                        console.log(this.letter_url);
+
+                        this.previewDoc('http://oxobucket.s3-us-west-1.amazonaws.com/1591859863_file-sample_100kB.doc');
+                    }
    
                 }
             }
