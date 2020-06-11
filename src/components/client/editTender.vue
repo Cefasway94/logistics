@@ -326,7 +326,14 @@
 
                                             </div>
                                             <div v-show="letter_extension === 'doc' || letter_extension === 'docx'">
-                                                <VueDocPreview />
+                                                <VueDocPreview :value="letter_extension" :url="letter_url" :type="office" >
+                                                    <v-btn 
+                                                        :block="true"
+                                                        icon class="mt-7" 
+                                                        @click="VueDocPreview(letter_url)">
+                                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                    </v-btn>
+                                                </VueDocPreview>
                                             </div>
                                         </v-card>
                                     </template>
@@ -633,7 +640,7 @@ export default {
        
     }),
 
-     components:{PDFDocument,Alert, VueDocPreview},
+     components:{PDFDocument,Alert,VueDocPreview},
 
     computed:{
         ...mapGetters(['getTender']),
@@ -691,7 +698,7 @@ export default {
 
         getFileExtension(url){
 
-            let position = url.lastIndexOf('.') + 1;
+            let position = url.lastIndexOf('.');
 
             //let position = url.substr(0, url.lastIndexOf('.'));
 
@@ -803,14 +810,14 @@ export default {
 
                     this.previewPdf(this.letter_url);
                 }
-                // else if(extension === 'doc' || extension === 'docx')
-                // {
-                //     this.letter_extension = extension;
+                else if(extension === 'doc' || extension === 'docx')
+                {
+                    this.letter_extension = extension;
 
-                //     this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
+                    this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
 
-                //     this.VueDocPreview(this.letter_url);
-                // }
+                    this.VueDocPreview(this.letter_url);
+                }
    
             }
         }, 
