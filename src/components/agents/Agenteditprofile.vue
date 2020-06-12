@@ -626,16 +626,6 @@
 
                                 <div v-show="insurance_extension === 'pdf'">
 
-                                    <!-- <v-btn 
-                                        :block="true"
-                                        icon class="mt-7" 
-                                        @click="previewPdf(insurance_url)"
-                                        >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                    </v-btn> -->
-
-                                     <!--  -->
-                                     
                                         <v-tooltip right color="#1565C0">
                                         <template v-slot:activator="{ on }">
                                             <v-card 
@@ -653,21 +643,30 @@
                                         <span>Click to view document</span>
                                     </v-tooltip>
                                         
-                                    <!--  -->
+                                    
                                 </div>
                             </v-card>
                         </v-col> 
-
-              
             </v-row>
 
             <v-row class="mt-5" v-if="currentFiles.length > 0">
 
-                        <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+                        <v-col cols=12>
+                            <p class="primary--text body-1 mb-0 ml-2 mt-3 text-center">
+                                 OTHER DOCUMENTS
+                            </p>
+                            <v-divider color="" class="mb-0 mt-2"></v-divider>
+                        </v-col>
 
-                        <v-col cols=12 md=4 v-for="(file,key) in currentFiles" :key="key">
 
-                            <p class="mb-2 text-center body-1">{{file.name}}<span class="red--text ml-6 "   style="cursor:pointer" v-on:click="removeCurrentFile( key )">Remove</span></p>
+                       <v-col cols=12 md=4 v-for="(file,key) in currentFiles" :key="key">
+
+                            <p class="mb-2 text-center body-1"> 
+                                {{ file.name }} 
+                                <span class="red--text ml-6 "   style="cursor:pointer" v-on:click="removeCurrentFile( key )">
+                                    Remove
+                                </span>
+                            </p>
 
                             <v-card flat width="200" height="150" outlined class="mx-auto">
 
@@ -703,7 +702,7 @@
                         </v-col>
                     </v-row>
 
-                    <v-row>
+                    <!-- <v-row>
                         <v-col cols=12>
 
                             <v-file-input 
@@ -753,29 +752,35 @@
                         
 
                         </v-col>
-                    </v-row>
+                    </v-row> -->
 
            <!--Expansion pannel to add other documents  -->
-                <v-row>
-                    <v-card flat width="850" class="mx-auto">
+                <v-row class="mt-10">
+                    <v-card outlined width="850" class="mx-auto mb-2">
                     
                             <v-expansion-panels 
                             
                             v-model="panel"
-                            :accordion="true"
+                           
                             :hover="true"
                             :flat="true"
+                            class="elevation-0"
                             >
 
-                            <v-expansion-panel
-                            
-                            >
-                                <v-expansion-panel-header>
+                            <v-expansion-panel  class="elevation-0">
+
+                                <v-expansion-panel-header class="pt-5 pb-1">
+
                                     <v-flex class="">
                                     <p class="font-weight-regular text-uppercase text-center body-1 primary--text pt-1">
                                         add other files
                                     </p> 
                                      </v-flex>
+
+                                    <template v-slot:actions>
+                                        <v-icon color="primary" class="mb-5"> $expand </v-icon>
+                                    </template>
+                     
                                 </v-expansion-panel-header>
 
                                 <v-expansion-panel-content>
@@ -1262,9 +1267,6 @@
                     
                     </v-card>
                 </v-row>
-
-
-
         </v-card>
 
         <v-card flat width="900" class="mt-12 mx-auto" color="#F5FAFF">
@@ -1384,10 +1386,13 @@
 </template>
 
 <script>
+
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
 import PDFDocument from '@/components/PDFDocument'
+
 /* eslint-disable no-console */
+
 export default {
    data() {
        return{
@@ -1477,8 +1482,6 @@ export default {
 
            insurance_extension:'',
            insurance_url:'',
-
-
 
            // expansion pannel
             panel: [0, 1],
@@ -1627,7 +1630,9 @@ export default {
         })
 
     },
-    components:{PDFDocument},
+
+   components:{PDFDocument},
+   
    methods: {
 
        ...mapActions([
@@ -1847,70 +1852,70 @@ export default {
 
                 }else if(this.otherdocument1.length > 0 && (this.otherdocument1_title == '' || this.otherdocument1_title == null)){
 
-                        console.log(17);
+                        console.log(19);
                         this.field = 'Please fill title on attachment 2'
                         this.field_required = true
                         return false
 
                 }else if(this.otherdocument1.length == 0 && (!this.otherdocument1_title == '' || !this.otherdocument1_title == null)){
 
-                        console.log(18);
+                        console.log(20);
                         this.field = 'Please attach file on attachment 2'
                         this.field_required = true
                         return false
 
                 }else if(this.otherdocument2.length > 0 && (this.otherdocument2_title == '' || this.otherdocument2_title == null)){
 
-                        console.log(17);
+                        console.log(21);
                         this.field = 'Please fill title on attachment 3'
                         this.field_required = true
                         return false
 
                 }else if(this.otherdocument2.length == 0 && (!this.otherdocument2_title == '' || !this.otherdocument2_title == null)){
 
-                        console.log(18);
+                        console.log(22);
                         this.field = 'Please attach file on attachment 3'
                         this.field_required = true
                         return false
 
                 }else if(this.otherdocument3.length > 0 && (this.otherdocument3_title == '' || this.otherdocument3_title == null)){
 
-                        console.log(17);
+                        console.log(23);
                         this.field = 'Please fill title on attachment 4'
                         this.field_required = true
                         return false
 
                 }else if(this.otherdocument3.length == 0 && (!this.otherdocument3_title == '' || !this.otherdocument3_title == null)){
 
-                        console.log(18);
+                        console.log(24);
                         this.field = 'Please attach file on attachment 4'
                         this.field_required = true
                         return false
 
                 }else if(this.otherdocument4.length > 0 && (this.otherdocument4_title == '' || this.otherdocument4_title == null)){
 
-                        console.log(17);
+                        console.log(25);
                         this.field = 'Please fill title on attachment 5'
                         this.field_required = true
                         return false
 
                 }else if(this.otherdocument4.length == 0 && (!this.otherdocument4_title == '' || !this.otherdocument4_title == null)){
 
-                        console.log(18);
+                        console.log(26);
                         this.field = 'Please attach file on attachment 5'
                         this.field_required = true
                         return false
 
                 }else if(this.otherdocument5.length > 0 && (this.otherdocument5_title == '' || this.otherdocument5_title == null)){
 
-                        console.log(17);
+                        console.log(27);
                         this.field = 'Please fill title on attachment 6'
                         this.field_required = true
                         return false
 
                 }else if(this.otherdocument5.length == 0 && (!this.otherdocument5_title == '' || !this.otherdocument5_title == null)){
 
-                        console.log(18);
+                        console.log(28);
                         this.field = 'Please attach file on attachment 6'
                         this.field_required = true
                         return false
@@ -2612,7 +2617,9 @@ export default {
                     }
 
                     if(this.currentFiles.length > 0){
+
                         for( var h = 0; h < this.currentFiles.length; h++ ){
+
                             let file_path = this.currentFiles[h]['url'];
                             let file_name = this.currentFiles[h]['name'];
                             formdata.append('currentFiles[' + h + '][url]', file_path);
@@ -2685,7 +2692,7 @@ export default {
                                         this.update_success = true,
                                         this.confirm_edit_profile = false
                                         this.success_alert = 'Profile Updated successfully'
-                                       // this.previewprofile()
+                                        this.previewprofile()
                                     },1000)
 
                                     console.log(this.email);
@@ -2837,6 +2844,12 @@ export default {
   border-width: 1px;
   margin-bottom: 0%;
   background-color: #F5FAFF;
+}
+
+
+
+.v-expansion-panel::before {
+   box-shadow: none !important;
 }
 
 
