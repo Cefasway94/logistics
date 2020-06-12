@@ -2622,7 +2622,7 @@ export default {
                     }
                     else if(this.currentFiles.length === 0)
                     {
-                        //formdata.append('currentFiles[0]','');
+                        formdata.append('currentFiles[0]','');
                     }
 
                     return formdata;
