@@ -399,6 +399,8 @@
 
                 <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
 
+                    <p class="mb-3 ml-3 body-1">{{file.name}}</p>
+
                     <v-card flat width="200" height="150" outlined>
                         <v-row>
                             <v-col >

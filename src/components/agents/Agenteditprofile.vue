@@ -667,9 +667,9 @@
 
                         <v-col cols=12 md=4 v-for="(file,key) in currentFiles" :key="key">
 
-                            <p><span class="red--text" style="cursor:pointer" v-on:click="removeCurrentFile( key )">Remove</span></p>
+                            <p class="mb-2 text-center body-1">{{file.name}}<span class="red--text ml-6 "   style="cursor:pointer" v-on:click="removeCurrentFile( key )">Remove</span></p>
 
-                            <v-card flat width="200" height="150" outlined>
+                            <v-card flat width="200" height="150" outlined class="mx-auto">
 
                                 <v-row>
                                     <v-col >
@@ -1542,8 +1542,6 @@ export default {
             if(this.LOAD_AGENT.objects.files !== null)
                 {
                     this.currentFiles = this.LOAD_AGENT.objects.files;
-                    console.log(this.LOAD_AGENT.objects.files);
-                    console.log(this.currentFiles);
                     
                     
                 }
