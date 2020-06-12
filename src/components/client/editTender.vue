@@ -5,6 +5,8 @@
 
         <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
 
+        <DOCDocument v-bind="{docType, docValue, docOverlay}" @clicked="closeDocViewer" v-if="doc"/>
+
         <v-overlay :value="overlay">
             <div class="large-preview">
 
@@ -15,7 +17,7 @@
 
                     <v-col class="mt-0" offset="4">
                         <v-btn
-                            large
+                            largedoc
                             color="primary white--text"
                             @click="overlay = false"
                         >
@@ -26,6 +28,31 @@
 
             </div>
         </v-overlay>
+
+        <v-dialog
+            v-model="display_file_size_error"
+            max-width="400"
+            color="#F5FAFF"
+            transition="scale-transition"
+            :hide-overlay="true"
+        >
+            <v-card
+                height="105"
+                color="#F64F51"
+                class="pt-2"
+            >
+                
+                <v-alert
+                    prominent
+                    height=""
+                    type="error"
+                >
+                      <p class="font-weight-strong mb-0">File size is too large limit 2MB</p>
+                </v-alert>
+                
+            </v-card>
+
+        </v-dialog>
 
         <v-layout class="pa-3 mt-10">
             <v-card row flat class="mx-auto" width="1300" color="#F5FAFF" >
@@ -111,7 +138,7 @@
                         <v-row class="px-3">
                             
                             <v-row wrap>
-                                <v-col cols="12" md="6">
+                                <v-col cols="12" md="4">
                                     <p class="primary--text body-2 text-uppercase mb-0"> CURRENCY</p>
                                     <v-text-field 
                                         outlined 
@@ -127,7 +154,7 @@
                                     </v-text-field>
                                 </v-col>
 
-                                <v-col cols="12" md="6">
+                                <v-col cols="12" md="4">
                                     <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
                                     <v-text-field 
                                         outlined 
@@ -143,28 +170,36 @@
 
                                     </v-text-field>
                                 </v-col>
-                            </v-row>
-                        </v-row>
 
-                        <v-row>
-                            <v-col
-                                offset="2"
-                                align-self="center"
-                                cols='12' 
-                                md="3" 
-                            >
-                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE  <span class="red--text"><strong>* </strong></span></p>
-                            </v-col>
-                            <v-col
-                                cols="12" 
-                                md="9" 
-                            >
-                                <v-date-picker 
-                                    v-model="tender.customer_delivery_timeline"
-                                    :min="timeline"
-                                    full-width>
-                                </v-date-picker>
-                            </v-col>
+                                <v-col
+                                    cols='12' 
+                                    md="4" 
+                                >
+                                    <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE</p>
+
+                                    <v-text-field 
+                                        v-model="tender.customer_delivery_timeline"
+                                        :rules="[v => !!v || 'Date is required']"
+                                        required
+                                        @click="date_clicked = true"
+                                        >
+
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
+
+                                    </v-text-field>
+
+                                    <v-date-picker 
+                                        v-model="tender.customer_delivery_timeline"
+                                        v-show="date_clicked"
+                                        :min="timeline"
+                                        full-width
+                                        @change="date_clicked = false">
+                                    </v-date-picker>
+
+                                </v-col>
+                            </v-row>
                         </v-row>
 
                         <v-row>
@@ -215,7 +250,7 @@
                                 <v-card flat width="250" height="270" outlined >
                                     <v-file-input 
 
-                                        :clearable="false"
+                                        :clearable="true"
                                         placeholder="Choose a file"
                                         id="photo"
                                         @change="photoUpdated()"
@@ -242,19 +277,25 @@
                                         </v-btn>
 
                                     </div>
+
+                                    <div v-show="photo_extension === 'error' ">
+                                        <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                            <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                        </v-card>
+                                    </div>
                                 </v-card>
                             </v-col>
 
                             <v-col cols=12 md=4>
                                 <p class="primary--text body-2 text-uppercase mb-0">BILL OF LADING </p>
 
-                                <v-tooltip top content-class="tooltip">
+                                <v-tooltip bottom content-class="tooltip">
                                     <template v-slot:activator="{ on }">
                                         
                                         <v-card flat width="250" v-on="on" height="270" outlined >
                                             <v-file-input 
 
-                                                :clearable="false"
+                                                :clearable="true"
                                                 placeholder="Choose a file"
                                                 id="bill"
                                                 @change="billOfLadingUpdated()"
@@ -264,13 +305,13 @@
                                             >
                                             </v-file-input>
 
-                                            <div v-show="bill_of_lading_extension === 'jpg' || bill_of_lading_extension === 'jpeg' || bill_of_lading_extension === 'png'">
+                                            <div v-show="(bill_of_lading_extension === 'jpg' || bill_of_lading_extension === 'jpeg' || bill_of_lading_extension === 'png')">
                                                 <v-card height="200" width="250" outlined @click="handleClick('bill',bill_of_lading_url)">
                                                     <img  id="bill_thumb" :src="bill_of_lading_url" class="preview">
                                                 </v-card>
                                             </div>
 
-                                            <div v-show="bill_of_lading_extension === 'pdf'">
+                                            <div v-show="(bill_of_lading_extension === 'pdf')">
 
                                                 <v-btn 
                                                     :block="true"
@@ -281,6 +322,13 @@
                                                 </v-btn>
 
                                             </div>
+
+                                            <div v-show="bill_of_lading_extension === 'error' ">
+                                                <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                    <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                                </v-card>
+                                            </div>
+
                                         </v-card>
                                     </template>
                                      <span>
@@ -292,7 +340,7 @@
                             <v-col cols=12 md=4>
                                 <p class="primary--text body-2 text-uppercase mb-0">AUTHORIZATION LETTER </p>
 
-                                <v-tooltip top content-class="tooltip">
+                                <v-tooltip bottom content-class="tooltip">
                                     <template v-slot:activator="{ on }">
 
                                         <v-card flat width="250" v-on="on" height="270" outlined >
@@ -324,6 +372,20 @@
                                                     PREVIEW<v-icon x-large>mdi-file</v-icon>
                                                 </v-btn>
 
+                                            </div>
+                                            <div v-show="letter_extension === 'doc' || letter_extension === 'docx' || letter_extension === 'xlsx' || letter_extension === 'pptx' || letter_extension === 'ppt' || letter_extension === 'xls' ">
+                                                <v-btn 
+                                                    :block="true"
+                                                    icon class="mt-7" 
+                                                    @click="previewDoc(letter_url)"
+                                                    >
+                                                    PREVIEW<v-icon x-large>mdi-download</v-icon>
+                                                </v-btn>
+                                            </div>
+                                            <div v-show="letter_extension === 'error' ">
+                                                <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                    <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                                </v-card>
                                             </div>
                                         </v-card>
                                     </template>
@@ -365,6 +427,17 @@
                                                 :block="true"
                                                 icon class="mt-7" 
                                                 @click="previewPdf(file)"
+                                                >
+                                                PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            </v-btn>
+
+                                        </div>
+                                        <div v-show="getFileExtension(file) === 'doc' || getFileExtension(file) === 'docx' || getFileExtension(file) === 'ppt' || getFileExtension(file) === 'pptx' || getFileExtension(file) === 'xlsx' || getFileExtension(file) === 'xls'">
+
+                                            <v-btn 
+                                                :block="true"
+                                                icon class="mt-7" 
+                                                @click="previewDoc(file)"
                                                 >
                                                 PREVIEW<v-icon x-large>mdi-file</v-icon>
                                             </v-btn>
@@ -570,9 +643,11 @@
 
                     <v-spacer></v-spacer>
                     <v-btn outlined color="primary" class="mx-4" router to="/client">Cancel</v-btn>
-                    <v-btn color="primary white--text"  @click="editTender($event)" :disabled="!isValid()">SAVE</v-btn>
+                    <v-btn color="primary white--text"  @click="editTender()" :disabled="!isValid()">SAVE</v-btn>
                 </v-row>
             </v-card>
+
+
 
         </v-layout>
 
@@ -585,6 +660,7 @@ import {mapGetters,mapActions} from 'vuex'
 import Alert from '@/components/Alert.vue'
 import axios from 'axios'
 import PDFDocument from '@/components/PDFDocument'
+import DOCDocument from '@/components/DOCDocument'
 
 export default {
     name: "createtender",
@@ -607,6 +683,8 @@ export default {
         overlay:false,
         loading: false,
 
+        date_clicked: false,
+
         photo:[],
         bill_of_lading:[],
         letter:[],
@@ -621,15 +699,25 @@ export default {
         message:'',
         type:'',
 
+        display_file_size_error:false,
+
+        file_size_error:false,
+
         otherFiles:[],
 
         currentFiles:[],
         
         files:[],
+
+        docType:'',
+        docValue:'',
+        docOverlay: false,
+        doc:false,
+
        
     }),
 
-     components:{PDFDocument,Alert},
+     components:{PDFDocument,Alert,DOCDocument},
 
     computed:{
         ...mapGetters(['getTender']),
@@ -640,6 +728,8 @@ export default {
         ...mapActions(['updateTender','fetchAllTenders']),
 
         addFiles(){
+
+
 
             document.getElementById("otheFiles").click();
         },
@@ -672,9 +762,21 @@ export default {
             
         },
 
+        previewDoc(url){
+            this.docValue = url;
+            this.docOverlay = true;
+            this.docType = 'office';
+            this.doc =true;
+        },
+
         closePdfViewer(){
             this.pdf = false;
             this.pdfOverlay = false;
+        },
+
+        closeDocViewer(){
+            this.doc = false;
+            this.docOverlay = false;
         },
 
         largePreview(src){
@@ -688,6 +790,10 @@ export default {
         getFileExtension(url){
 
             let position = url.lastIndexOf('.');
+
+            //let position = url.substr(0, url.lastIndexOf('.'));
+
+            //console.log(position)
 
             let extracted_string = url.slice(position + 1, url.length + 1);
 
@@ -754,114 +860,27 @@ export default {
         
         letterUpdated()
         {
-            if(document.getElementById("letter").files[0]){
+            if(document.getElementById("letter").files[0].size > 2097152){
 
+                this.letter_extension = 'error';
 
-                this.letter = [];
-
-                this.letter.push(document.getElementById("letter").files[0]);
-
-                let extension = this.getFileExtension(document.getElementById("letter").files[0].name);
-
-                if(extension === 'jpg' || extension === 'jpeg' || extension === 'png')
-                {
-                    this.letter_extension = extension;
-
-                    var reader = new FileReader();
-
-                    reader.onload = function(){
-
-                        var dataURL = reader.result;
-
-                        var output = document.getElementById('letter_thumb');
-
-                        var large_thumbnail = document.getElementById('large_thumbnail');
-                        
-                        if(output !== null)
-                            output.src = dataURL;
-
-                        if(large_thumbnail !== null)
-                            large_thumbnail.src = dataURL;
-                    
-                    }
-
-                    reader.readAsDataURL(document.getElementById("letter").files[0]);
-                } 
-                else if(extension === 'pdf')
-                {
-                    this.letter_extension = extension;
-
-                    this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
-
-                    this.previewPdf(this.letter_url);
-                }
-   
             }
-        }, 
+            else{
 
-        photoUpdated()
-        {
-            if(document.getElementById("photo").files[0]){
+                this.letter_extension = '';
+
+                if(document.getElementById("letter").files[0]){
 
 
-                this.photo = [];
+                    this.letter = [];
 
-                this.photo.push(document.getElementById("photo").files[0]);
+                    this.letter.push(document.getElementById("letter").files[0]);
 
-                let extension = this.getFileExtension(document.getElementById("photo").files[0].name);
+                    let extension = this.getFileExtension(document.getElementById("letter").files[0].name);
 
-                if(extension === 'jpg' || extension === 'jpeg' || extension === 'png')
-                {
-                    this.photo_extension = extension;
-
-                    var reader = new FileReader();
-
-                    reader.onload = function(){
-
-                        var dataURL = reader.result;
-
-                        var output = document.getElementById('photo_thumb');
-
-                        var large_thumbnail = document.getElementById('large_thumbnail');
-                        
-                        if(output !== null)
-                            output.src = dataURL;
-
-                        if(large_thumbnail !== null)
-                            large_thumbnail.src = dataURL;
-                    
-                    }
-
-                    reader.readAsDataURL(document.getElementById("photo").files[0]);
-
-                } 
-                else if(extension === 'pdf')
-                {
-                     this.photo_extension = extension;
-
-                    this.photo_url= URL.createObjectURL(document.getElementById("photo").files[0]);
-
-                    this.previewPdf(this.photo_url);
-                }
-   
-            }
-        },
-
-        otherAttachmentsUpdated(){
-
-            if(document.getElementById("otheFiles").files[0]){
-
-                for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
-                {
-
-                    var file = {
-                        file:[],
-                        source:''
-                    }
-
-                    if(document.getElementById("otheFiles").files[i].type === 'image/jpeg' || document.getElementById("otheFiles").files[i].type === 'image/png' )
+                    if(extension === 'jpg' || extension === 'jpeg' || extension === 'png')
                     {
-                       
+                        this.letter_extension = extension;
 
                         var reader = new FileReader();
 
@@ -869,84 +888,222 @@ export default {
 
                             var dataURL = reader.result;
 
-                            file.source = dataURL;
+                            var output = document.getElementById('letter_thumb');
 
                             var large_thumbnail = document.getElementById('large_thumbnail');
                             
+                            if(output !== null)
+                                output.src = dataURL;
+
                             if(large_thumbnail !== null)
                                 large_thumbnail.src = dataURL;
-                    
+                        
                         }
 
-                        reader.readAsDataURL(document.getElementById("otheFiles").files[i]);
-
-                        file.file = document.getElementById("otheFiles").files[i];
-
-                        this.otherFiles.push(file);
-
-                    }
-                    else if(document.getElementById("otheFiles").files[i].type === 'application/pdf')
+                        reader.readAsDataURL(document.getElementById("letter").files[0]);
+                    } 
+                    else if(extension === 'pdf')
                     {
-                        file.source = URL.createObjectURL(document.getElementById("otheFiles").files[i]);
+                        this.letter_extension = extension;
 
-                        this.previewPdf(file.source);
+                        this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
 
-                        file.file = document.getElementById("otheFiles").files[i];
-
-                        this.otherFiles.push(file);
-
-                        
+                        this.previewPdf(this.letter_url);
                     }
+                    else if(extension === 'doc' || extension === 'ppt' || extension === 'docx' || extension === 'xlsx' || extension === 'xls' || extension === 'pptx' )
+                    {
+                        this.letter_extension = extension;
+
+                        this.letter_url = URL.createObjectURL(document.getElementById("letter").files[0]);
+
+                        console.log(this.letter_url);
+
+                        this.previewDoc('http://oxobucket.s3-us-west-1.amazonaws.com/1591859863_file-sample_100kB.doc');
+                    }
+   
+                }
+            }
+
+            
+        }, 
+
+        photoUpdated()
+        {
+            if(document.getElementById("photo").files[0].size > 2097152){
+
+                this.photo_extension = 'error';
+
+            }
+            else{
+
+                this.photo_extension = '';
+
+                if(document.getElementById("photo").files[0]){
+
+
+                    this.photo = [];
+
+                    this.photo.push(document.getElementById("photo").files[0]);
+
+                    let extension = this.getFileExtension(document.getElementById("photo").files[0].name);
+
+                    if(extension === 'jpg' || extension === 'jpeg' || extension === 'png')
+                    {
+                        this.photo_extension = extension;
+
+                        var reader = new FileReader();
+
+                        reader.onload = function(){
+
+                            var dataURL = reader.result;
+
+                            var output = document.getElementById('photo_thumb');
+
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
+                        
+                        }
+
+                        reader.readAsDataURL(document.getElementById("photo").files[0]);
+
+                    } 
+                    else if(extension === 'pdf')
+                    {
+                        this.photo_extension = extension;
+
+                        this.photo_url= URL.createObjectURL(document.getElementById("photo").files[0]);
+
+                        this.previewPdf(this.photo_url);
+                    }
+   
+            }
+            
+            }
+            
+        },
+
+        otherAttachmentsUpdated(){
+
+            if(document.getElementById("otheFiles").files[0]){
+
+                if(document.getElementById("otheFiles").files[0].size >  2097152){
+
+                    this.display_file_size_error = true;
+
+                } else {
+
+                    for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
+                    {
+
+                        var file = {
+                            file:[],
+                            source:''
+                        }
+
+                        if(document.getElementById("otheFiles").files[i].type === 'image/jpeg' || document.getElementById("otheFiles").files[i].type === 'image/png' )
+                        {
+                        
+
+                            var reader = new FileReader();
+
+                            reader.onload = function(){
+
+                                var dataURL = reader.result;
+
+                                file.source = dataURL;
+
+                                var large_thumbnail = document.getElementById('large_thumbnail');
+                                
+                                if(large_thumbnail !== null)
+                                    large_thumbnail.src = dataURL;
+                        
+                            }
+
+                            reader.readAsDataURL(document.getElementById("otheFiles").files[i]);
+
+                            file.file = document.getElementById("otheFiles").files[i];
+
+                            this.otherFiles.push(file);
+
+                        }
+                        else if(document.getElementById("otheFiles").files[i].type === 'application/pdf')
+                        {
+                            file.source = URL.createObjectURL(document.getElementById("otheFiles").files[i]);
+
+                            this.previewPdf(file.source);
+
+                            file.file = document.getElementById("otheFiles").files[i];
+
+                            this.otherFiles.push(file);
+
+                            
+                        }
+                    }
+
                 }
             }
          },
 
         billOfLadingUpdated()
         {
-            if(document.getElementById("bill").files[0]){
+            if(document.getElementById("bill").files[0].size > 2097152){
+
+                this.bill_of_lading_extension = 'error';
+
+            }
+            else{
+
+                this.bill_of_lading_extension = ' ';
+
+                 if(document.getElementById("bill").files[0]){
 
 
-                this.bill_of_lading = [];
+                    this.bill_of_lading = [];
 
-                this.bill_of_lading.push(document.getElementById("bill").files[0]);
+                    this.bill_of_lading.push(document.getElementById("bill").files[0]);
 
-                let extension = this.getFileExtension(document.getElementById("bill").files[0].name);
+                    let extension = this.getFileExtension(document.getElementById("bill").files[0].name);
 
-                if(extension === 'jpg' || extension === 'jpeg' || extension === 'png')
-                {
-                    this.bill_of_lading_extension = extension;
+                    if(extension === 'jpg' || extension === 'jpeg' || extension === 'png')
+                    {
+                        this.bill_of_lading_extension = extension;
 
-                    var reader = new FileReader();
+                        var reader = new FileReader();
 
-                    reader.onload = function(){
+                        reader.onload = function(){
 
-                        var dataURL = reader.result;
+                            var dataURL = reader.result;
 
-                        var output = document.getElementById('bill_thumb');
+                            var output = document.getElementById('bill_thumb');
 
-                        var large_thumbnail = document.getElementById('large_thumbnail');
+                            var large_thumbnail = document.getElementById('large_thumbnail');
+                            
+                            if(output !== null)
+                                output.src = dataURL;
+
+                            if(large_thumbnail !== null)
+                                large_thumbnail.src = dataURL;
                         
-                        if(output !== null)
-                            output.src = dataURL;
+                        }
 
-                        if(large_thumbnail !== null)
-                            large_thumbnail.src = dataURL;
-                    
+                        reader.readAsDataURL(document.getElementById("bill").files[0]);
+
+                    } 
+                    else if(extension === 'pdf')
+                    {
+                        this.bill_of_lading_extension = extension;
+
+
+                        this.bill_of_lading_url= URL.createObjectURL(document.getElementById("bill").files[0]);
+
+                        this.previewPdf(this.bill_of_lading_url);
                     }
-
-                    reader.readAsDataURL(document.getElementById("bill").files[0]);
-
-                } 
-                else if(extension === 'pdf')
-                {
-                     this.bill_of_lading_extension = extension;
-
-
-                    this.bill_of_lading_url= URL.createObjectURL(document.getElementById("bill").files[0]);
-
-                    this.previewPdf(this.bill_of_lading_url);
                 }
-   
             }
         },
 
@@ -1008,140 +1165,145 @@ export default {
            return formData;
         },
 
-        editTender(event){
+        editTender(){
 
-            this.loading = true;
 
-            if(event)
-                event.preventDefault();
 
-            if(this.$route.params.tender_type === "Transporting") {
+            if(this.letter_extension === 'error' || this.photo_extension === 'error' || this.bill_of_lading_extension === 'error'){
 
-                let formData = this.createData("Transporting")
-
-                axios.post(`http://207.180.215.239:9000/api/v1/tenders/${this.tender.id}`,formData,
-                        {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                        }).
-                    then((response)=>{
-                  
-                        //eslint-disable-next-line no-console
-                        //console.log(res.data);
-
-                        //this.$router.push('/client');
-                        
-                        //this.$router.push({path:'/client',query:{alert:'Customer has been edited'}});//then(window.location.load);
-
-                        //this.$router.push({path:'/client',query:{alert:response.data.message}});
-
-                        if(response.data.genralErrorCode === 8000)
-                        {
-                            //this.setAlert(response.data.message);
-
-                            this.alert = false;
-
-                            this.$store.dispatch('setSnackbar',{
-                                text: response.data.message,
-                                color: 'success'
-                            });
-
-                            this.$router.push('/client');
-                          
-
-                        } else if(response.data.genralErrorCode === 8004){
-
-                            this.loading = false;
-
-                            this.alert = false;
-
-                            setTimeout(()=>{
-
-                                this.setAlert(response.data.message,"error");
-                            },1000)
-                        }
-
-                      
-
-                    }).catch(()=>{
-
-                        this.loading = false;
-
-                        setTimeout(()=>{
-
-                            this.setAlert("There is internal server error","error");
-
-                        },1000)
-
-                    });
-
-            } else if(this.$route.params.tender_type == "Clearing"){
-
-                let formData = this.createData("Clearing");
-
-                axios.post(`http://207.180.215.239:8000/api/v1/tenders/${this.tender.id}`,
-
-                            formData,
-                            {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data'
-                                }
-                            }
-                       ).
-                    then((response)=>{
-                  
-                        //eslint-disable-next-line no-console
-                        //console.log(res.data);
-
-                        //this.$router.push('/client');
-                        
-                        //this.$router.push({path:'/client',query:{alert:'Customer has been edited'}});//then(window.location.load);
-
-                        //this.$router.push({path:'/client',query:{alert:response.data.message}});
-
-                        if(response.data.genralErrorCode === 8000)
-                        {
-
-                            this.alert = false;
-
-                            this.$store.dispatch('setSnackbar',{
-                                text: response.data.message,
-                                color: 'success'
-                            });
-
-                            this.$router.push('/client');
-                            
-                        } else if(response.data.genralErrorCode === 8004){
-
-                            this.loading = false;
-
-                           this.alert = false;
-
-                            setTimeout(()=>{
-
-                                this.setAlert(response.data.message,"error");
-                            },1000)
-
-                             
-                        }
-
-                    }).catch(()=>{
-
-                        //eslint-disable-next-line no-console
-                        console.log("Error occured");
-
-                        this.loading = false;
-
-                        setTimeout(()=>{
-
-                            this.setAlert("There is internal server error","error");
-
-                        },1000)
-                    });
+                this.display_file_size_error = true;
             }
-            
+            else {
+
+                this.loading = true;
+
+                if(this.$route.params.tender_type === "Transporting") {
+
+                    let formData = this.createData("Transporting")
+
+                    axios.post(`http://207.180.215.239:9000/api/v1/tenders/${this.tender.id}`,formData,
+                            {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data'
+                                    }
+                            }).
+                        then((response)=>{
                     
+                            //eslint-disable-next-line no-console
+                            //console.log(res.data);
+
+                            //this.$router.push('/client');
+                            
+                            //this.$router.push({path:'/client',query:{alert:'Customer has been edited'}});//then(window.location.load);
+
+                            //this.$router.push({path:'/client',query:{alert:response.data.message}});
+
+                            if(response.data.genralErrorCode === 8000)
+                            {
+                                //this.setAlert(response.data.message);
+
+                                this.alert = false;
+
+                                this.$store.dispatch('setSnackbar',{
+                                    text: response.data.message,
+                                    color: 'success'
+                                });
+
+                                this.$router.push('/client');
+                            
+
+                            } else if(response.data.genralErrorCode === 8004){
+
+                                this.loading = false;
+
+                                this.alert = false;
+
+                                setTimeout(()=>{
+
+                                    this.setAlert(response.data.message,"error");
+                                },1000)
+                            }
+
+                        
+
+                        }).catch(()=>{
+
+                            this.loading = false;
+
+                            setTimeout(()=>{
+
+                                this.setAlert("There is internal server error","error");
+
+                            },1000)
+
+                        });
+
+                } else if(this.$route.params.tender_type == "Clearing"){
+
+                    let formData = this.createData("Clearing");
+
+                    axios.post(`http://207.180.215.239:8000/api/v1/tenders/${this.tender.id}`,
+
+                                formData,
+                                {
+                                    headers: {
+                                        'Content-Type': 'multipart/form-data'
+                                    }
+                                }
+                        ).
+                        then((response)=>{
+                    
+                            //eslint-disable-next-line no-console
+                            //console.log(res.data);
+
+                            //this.$router.push('/client');
+                            
+                            //this.$router.push({path:'/client',query:{alert:'Customer has been edited'}});//then(window.location.load);
+
+                            //this.$router.push({path:'/client',query:{alert:response.data.message}});
+
+                            if(response.data.genralErrorCode === 8000)
+                            {
+
+                                this.alert = false;
+
+                                this.$store.dispatch('setSnackbar',{
+                                    text: response.data.message,
+                                    color: 'success'
+                                });
+
+                                this.$router.push('/client');
+                                
+                            } else if(response.data.genralErrorCode === 8004){
+
+                                this.loading = false;
+
+                            this.alert = false;
+
+                                setTimeout(()=>{
+
+                                    this.setAlert(response.data.message,"error");
+                                },1000)
+
+                                
+                            }
+
+                        }).catch(()=>{
+
+                            //eslint-disable-next-line no-console
+                            console.log("Error occured");
+
+                            this.loading = false;
+
+                            setTimeout(()=>{
+
+                                this.setAlert("There is internal server error","error");
+
+                            },1000)
+                        });
+                }
+
+            }        
         }
    },
 
@@ -1335,6 +1497,30 @@ export default {
  .fileinput{
     position: absolute;
     left: -2000px;
+ }
+
+ .largefile{
+  border-color: red;
+  color: red;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+  background-color: #F5FAFF;
+}
+
+ .tooltip{
+
+    width:auto;
+    max-width: 250px;
+    background-color: #4169E1;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
  }
 
  .progress { z-index: 1;}

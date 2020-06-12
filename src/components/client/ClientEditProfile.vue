@@ -28,6 +28,31 @@
                 </div>
             </v-overlay>
 
+             <v-dialog
+                v-model="display_file_size_error"
+                max-width="400"
+                color="#F5FAFF"
+                transition="scale-transition"
+                :hide-overlay="true"
+            >
+            <v-card
+                height="105"
+                color="#F64F51"
+                class="pt-2"
+            >
+                
+                <v-alert
+                    prominent
+                    height=""
+                    type="error"
+                >
+                      <p class="font-weight-strong mb-0">File size is too large limit 2MB</p>
+                </v-alert>
+                
+            </v-card>
+
+        </v-dialog>
+
             <v-card row flat width="1300" class="mt-10 mx-auto mb-5"  color="#F5FAFF">
                 <v-flex row class="px-3">
                     <h3 class="headline mt-1 font-weight-regular">Profile info</h3>
@@ -453,6 +478,12 @@
 
                                 </div>
 
+                                <div v-show="id_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
+
                             </v-card>
                     
                         </v-col> 
@@ -492,6 +523,12 @@
 
                                 </div>
 
+                                <div v-show="profile_photo_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
+
                             </v-card>
                     
                         </v-col> 
@@ -526,6 +563,12 @@
                                     </v-btn>
 
                                 </div>
+
+                                <div v-show="tin_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
 
                             </v-card>
 
@@ -566,6 +609,12 @@
                                     </v-btn>
 
                                 </div>
+
+                                 <div v-show="logo_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
                             </v-card>
                     
                         </v-col> 
@@ -600,6 +649,12 @@
                                     </v-btn>
 
                                 </div>
+
+                                 <div v-show="copy_of_registration_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
 
                             </v-card>
                     
@@ -636,6 +691,12 @@
                                     </v-btn>
 
                                 </div>
+
+                                <div v-show="tax_payer_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
                             </v-card>
                     
                         </v-col>              
@@ -675,6 +736,12 @@
 
                                 </div>
 
+                                <div v-show="vat_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
+
                             </v-card>
                     
                         </v-col> 
@@ -713,6 +780,12 @@
 
                                 </div>
 
+                                <div v-show="licence_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
+
                             </v-card>
                     
                         </v-col> 
@@ -748,6 +821,12 @@
                                     </v-btn>
 
                                 </div>
+
+                                <div v-show="bank_statement_extension === 'error' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                    </v-card>
+                                 </div>
 
                             </v-card>
                     
@@ -960,6 +1039,8 @@ export default {
 
         display_alert : false,
 
+        display_file_size_error: false,
+
         url:'',
         pdf:false,
         pdfOverlay:false,
@@ -1109,7 +1190,16 @@ export default {
         bankStatementUpdated(){
             
 
-            if(document.getElementById("bank_statement").files[0]){
+            if(document.getElementById("bank_statement").files[0].size > 2097152){
+
+                this.bank_statement_extension = 'error';
+
+            }
+            else{
+
+                this.bank_statement_extension = '';
+
+                if(document.getElementById("bank_statement").files[0]){
 
 
                 this.three_months_bank_statement = [];
@@ -1150,11 +1240,23 @@ export default {
                 }
    
             }
+            }
+
+           
         },
 
         businessLicenceUpdated(){
 
-            if(document.getElementById("business_licence").files[0]){
+            if(document.getElementById("business_licence").files[0].size > 2097152){
+
+                this.licence_extension = 'error';
+
+            }
+            else{
+
+                this.licence_extension = '';
+
+                if(document.getElementById("business_licence").files[0]){
 
                 this.business_licence_document = [];
 
@@ -1195,11 +1297,22 @@ export default {
                 
             }
 
+            }
+
         },
 
         vatCertificateUploaded(){
 
-            if(document.getElementById("vat_certificate").files[0]){
+            if(document.getElementById("vat_certificate").files[0].size > 2097152){
+
+                this.vat_extension = 'error';
+
+            }
+            else{
+
+                this.vat_extension = '';
+
+                if(document.getElementById("vat_certificate").files[0]){
 
                 this.vat_certificate = [];
 
@@ -1240,11 +1353,24 @@ export default {
 
                 
             }
+
+            }
+
+           
         },
 
         tinDocumentUpdated(){
 
-            if(document.getElementById("tin_document").files[0]){
+             if(document.getElementById("tin_document").files[0].size > 2097152){
+
+                this.tax_payer_extension = 'error';
+
+            }
+            else{
+
+                this.tax_payer_extension = '';
+
+                if(document.getElementById("tin_document").files[0]){
 
                 this.tax_payer_identification_document = [];
 
@@ -1284,11 +1410,24 @@ export default {
                 }
                 
             }
+            
+            } 
         },
 
         registrationCertificateUpdated(){
 
-            if(document.getElementById("registration_certificate").files[0]){
+
+            if(document.getElementById("registration_certificate").files[0].size > 2097152){
+
+                this.copy_of_registration_extension = 'error';
+
+            }
+            else{
+
+                this.copy_of_registration_extension = '';
+
+
+                if(document.getElementById("registration_certificate").files[0]){
 
                 this.certificate_of_registration = [];
 
@@ -1329,17 +1468,30 @@ export default {
                 }
                 
             }
+            
+            }
+
+            
         },
 
         companyLogoUpdated(){
 
-            if(document.getElementById("company_logo").files[0]){
+            if(document.getElementById("company_logo").files[0].size > 2097152){
+
+                this.logo_extension = 'error';
+
+            }
+            else{
+
+                this.logo_extension = '';
+
+                if(document.getElementById("company_logo").files[0]){
 
                 this.company_logo = [];
 
-               this.company_logo.push(document.getElementById("company_logo").files[0]);
+                this.company_logo.push(document.getElementById("company_logo").files[0]);
 
-               let extension = this.getFileExtension(document.getElementById("company_logo").files[0].name);
+                let extension = this.getFileExtension(document.getElementById("company_logo").files[0].name);
 
                 if(extension === 'jpg' || extension === 'jpeg' || extension === 'png')
                 {
@@ -1372,17 +1524,30 @@ export default {
                 }
                 
             }
+            
+            }
         },
 
         personalTinUpdated(){
 
-           if(document.getElementById("personal_tin").files[0]){
 
-               this.copy_of_tax_identification_number_certificate = [];
+            if(document.getElementById("personal_tin").files[0].size > 2097152){
 
-               this.copy_of_tax_identification_number_certificate.push(document.getElementById("personal_tin").files[0]);
+                this.tin_extension = 'error';
 
-               let extension = this.getFileExtension(document.getElementById("personal_tin").files[0].name);
+            }
+            else
+            {
+
+                this.tin_extension = '';
+
+                if(document.getElementById("personal_tin").files[0]){
+
+                this.copy_of_tax_identification_number_certificate = [];
+
+                this.copy_of_tax_identification_number_certificate.push(document.getElementById("personal_tin").files[0]);
+
+                let extension = this.getFileExtension(document.getElementById("personal_tin").files[0].name);
 
                if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' )
                {
@@ -1418,10 +1583,23 @@ export default {
 
                 
             }
+            
+            }
         },
 
         updateID(){
-            if(document.getElementById("copy_of_id").files[0]){
+
+            if(document.getElementById("copy_of_id").files[0].size > 2097152){
+
+                this.id_extension = 'error';
+
+            }
+            else
+            {
+
+                this.id_extension = '';
+
+                if(document.getElementById("copy_of_id").files[0]){
 
                 this.copy_of_identity_card = [];
 
@@ -1463,12 +1641,23 @@ export default {
 
                 
             }
+            }
                 
         },
 
         updateProfilePhoto(){
 
-            if(document.getElementById("profilePhoto").files[0]){
+            if(document.getElementById("profilePhoto").files[0].size > 2097152){
+
+                this.profile_photo_extension = 'error';
+
+            }
+            else
+            {
+
+                this.profile_photo_extension = '';
+
+                if(document.getElementById("profilePhoto").files[0]){
 
                 this.profile_photo = [];
 
@@ -1509,29 +1698,25 @@ export default {
                 }
                 
             }
-
-
+            
+            }
         },
 
         otherAttachmentsUpdated(){
 
             if(document.getElementById("otheFiles").files[0]){
 
+
+                if(document.getElementById("otheFiles").files[0].size >  2097152){
+
+                    this.display_file_size_error = true;
+
+                } else 
+                {
+
                 for(var i=0; i< document.getElementById("otheFiles").files.length; i++)
                 {
 
-                    /*this.otherFiles.push(
-                        document.getElementById("otheFiles").files[i]);*/
-                    
-                    /*let extension = this.getFileExtension(document.getElementById("otheFiles").files[i].name);
-
-                    if(extension === 'jpg' || extension === 'jpeg' || extension === 'png' )
-                    {
-
-                    }
-                    else if(extension === 'pdf'){
-
-                    }*/
                     var file = {
                         file:[],
                         source:''
@@ -1575,6 +1760,8 @@ export default {
 
                         
                     }
+                }
+
                 }
             }
          },
@@ -1712,13 +1899,31 @@ export default {
 
         save(){
 
-            this.loading = true;
+            if(this.tin_extension === 'error' 
+                || this.profile_photo_extension === 'error' 
+                || this.id_extension === 'error'
+                || this.copy_of_registration_extension === 'error'
+                || this.tax_payer_extension === 'error'
+                || this.vat_extension === 'error'
+                || this.licence_extension === 'error'
+                || this.bank_statement_extension === 'error'
+                || this.logo_extension === 'error'
+            
+            )
+            {
 
-            let formData = this.createData();
+                this.display_file_size_error = true;
+            }
+            else 
+            {
 
-            const url = "http://207.180.215.239:8181/api/v1/customers/editprofile";
+                this.loading = true;
 
-            axios.post(url,
+                let formData = this.createData();
+
+                const url = "http://207.180.215.239:8181/api/v1/customers/editprofile";
+
+                axios.post(url,
                     formData,
                     {
                         headers: {
@@ -1765,7 +1970,7 @@ export default {
                         },1000) 
                     }); 
 
-            
+            }
         }
     },
 
@@ -1914,6 +2119,15 @@ export default {
     z-index: 2;
     
  }
+
+ .largefile{
+  border-color: red;
+  color: red;
+  border-style: solid;
+  border-width: 1px;
+  margin-bottom: 0%;
+  background-color: #F5FAFF;
+}
 
  .fileinput{
     position: absolute;
