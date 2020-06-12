@@ -176,7 +176,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);*/
   z-index:2;
-  background-color: bisque;
+  background-color: white;
   overflow: scroll;
 
 }
