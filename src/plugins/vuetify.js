@@ -29,7 +29,10 @@ export default new Vuetify({
             onProgress:'#4169E1',
         //used somewhere 
             paleblack:'#37474F',
-            try:'#7486e8'
+            try:'#7486e8',
+
+        // strong grey
+           grey_text:'#757575'
             },
             
         }
