@@ -170,24 +170,24 @@
                         <v-row>
                             <v-col >
                                 <div 
-                                    v-show="(getFileExtension(file) === 'jpg') || (getFileExtension(file) === 'jpeg') || (getFileExtension(file) === 'png')" 
-                                    @click="largePreview(file)"
+                                    v-show="(getFileExtension(file['url']) === 'jpg') || (getFileExtension(file['url']) === 'jpeg') || (getFileExtension(file['url']) === 'png')" 
+                                    @click="largePreview(file['url'])"
                                 >
                         
                                     <v-img 
-                                        :src="file"  
+                                        :src="file['url']"  
                                         class="mb-0 pb-0 oxoImg" 
                                         height="147" 
                                         width="200" >
                                     </v-img>
                                 </div>
                             
-                                <div v-show="getFileExtension(file) === 'pdf'">
+                                <div v-show="getFileExtension(file['url']) === 'pdf'">
 
                                     <v-btn 
                                         :block="true"
                                         icon class="mt-7" 
-                                        @click="previewPdf(file)"
+                                        @click="previewPdf(file['url'])"
                                         >
                                         PREVIEW<v-icon x-large>mdi-file</v-icon>
                                     </v-btn>
