@@ -1131,65 +1131,50 @@ export default {
                                 document.getElementById('app').scrollIntoView();
                             });
 
-                axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
+                axios.get(`http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/${vm.$route.params.id}`)
                         .then((response) => 
                             {
+
                                 if(response.data.genralErrorCode === 8000){
-
-                                    if(response.data.objects.verify === null)    
-                                            vm.is_verified = false;
-                                        else
-                                            vm.is_verified = true;
                                   
-                                 //eslint-disable-next-line no-console
-                                    console.log("is paid full " +response.data.objects.is_full_amount_paid);
-
-                                     if(response.data.objects.verify === 1){
-
-                                         //eslint-disable-next-line no-console
-                                                console.log("**************is verified");
-
-                                            if(response.data.objects.is_full_amount_paid == 1)
-                                            {
-                                                  //eslint-disable-next-line no-console
-                                                console.log("**************Full paid");
-
-
-                                                vm.full_paid = true;
-
-                                                //eslint-disable-next-line no-console
-                                                console.log("**************Full paid");
-
-                                                vm.payment_value = 100;
-                                            }
-                                                
-                                            else
-                                            {
-                                                 //eslint-disable-next-line no-console
-                                                    console.log("**************Not full paid");
-                                                vm.payment_value = response.data.objects.percentage_deposited;
-                                            }
-                                                
-                                        
-                                    } else {
-                                        
-                                        vm.payment_value = 0;
-                                    }
+                                    if(response.data.objects[response.data.objects.length - 1].verify == true)    
+                                        vm.is_verified = true;
+                                    else
+                                        vm.is_verified = false;           
                                 }
                                 else if(response.data.genralErrorCode === 8001){
 
                                     vm.is_verified = true;
                                 }
-                                
+
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
-                                //eslint-disable-next-line no-console
-                                //console.log("There is an error");
-                                vm.setAlert("There is internal server error","error");
+                                 console.log("There is an error");
+                            });
 
-                                document.getElementById('app').scrollIntoView();
+                            
+                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
+                        .then((response) => 
+                            {
+
+                                if(response.data.genralErrorCode === 8000){
+                                  
+                                    if(response.data.objects.is_full_amount_paid == 1)
+                                    {
+                                        vm.full_paid = true;
+
+                                        vm.payment_value = 100;
+                                    }
+                                        
+                                    else
+                                    {
+                                            
+                                        vm.payment_value = response.data.objects.percentage_deposited;
+                                    }         
+                                }
+                            }).catch(()=>{
+
+                                 console.log("There is an error");
                             });
 
             } else if(vm.$route.params.tender_type == "Clearing"){
@@ -1265,65 +1250,53 @@ export default {
                                 document.getElementById('app').scrollIntoView();
                             });
 
-                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
+
+                 axios.get(`http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/${vm.$route.params.id}`)
                         .then((response) => 
                             {
 
-                                if(response.data.genralErrorCode === 8000){
-                                  
-                                 //eslint-disable-next-line no-console
-                                        if(response.data.objects.verify == null)    
-                                            vm.is_verified = false;
-                                        else
-                                            vm.is_verified = true;
+                                if(response.data.genralErrorCode === 8000)
+                                {
 
-
-                                                console.log("is paid full " +response.data.objects.is_full_amount_paid);
-                                     if(response.data.objects.verify == 1){
-
-                                         //eslint-disable-next-line no-console
-                                                console.log("**************is verified");
-
-                                            if(response.data.objects.is_full_amount_paid == 1)
-                                            {
-                                                  //eslint-disable-next-line no-console
-                                                console.log("**************Full paid");
-
-
-                                                vm.full_paid = true;
-
-                                                //eslint-disable-next-line no-console
-                                                console.log("**************Full paid");
-
-                                                vm.payment_value = 100;
-                                            }
-                                                
-                                            else
-                                            {
-                                                 //eslint-disable-next-line no-console
-                                                    console.log("**************Not full paid");
-                                                vm.payment_value = response.data.objects.percentage_deposited;
-                                            }
-                                                
-                                        
-                                    } else {
-                                        
-                                        vm.payment_value = 0;
-                                    }
+                                    if(response.data.objects[response.data.objects.length - 1].verify == true)    
+                                        vm.is_verified = true;
+                                    else
+                                        vm.is_verified = false;            
                                 }
                                 else if(response.data.genralErrorCode === 8001){
 
                                     vm.is_verified = true;
                                 }
 
-                                //eslint-disable-next-line no-console
-                                 //console.log(response.data.objects);
+                                console.log("is_verified status... "+vm.is_verified);
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
-                                //eslint-disable-next-line no-console
+                                 console.log("There is an error");
+                            });
+
+                            
+                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
+                        .then((response) => 
+                            {
+
+                                if(response.data.genralErrorCode === 8000){
+                                  
+                                    if(response.data.objects.is_full_amount_paid == 1)
+                                    {
+                                        vm.full_paid = true;
+
+                                        vm.payment_value = 100;
+                                    }
+                                        
+                                    else
+                                    {
+                                            
+                                        vm.payment_value = response.data.objects.percentage_deposited;
+                                    }         
+                                }
+                            }).catch(()=>{
+
                                  console.log("There is an error");
                             });
             }
