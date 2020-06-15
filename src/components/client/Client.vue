@@ -165,17 +165,7 @@
                                                         
                                                         <v-spacer></v-spacer>
                                                     </v-row>
-                    
-                                                    <p class=" body-2 grey--text">{{ tender.description}}</p>
-                            
-                                                    <v-row class="px-3" v-show="tender.tender_type == 2">
-                                                        <p class="body-2  pt-1 ">{{  tender.origin }}</p>
-                                
-                                                        <v-icon small color="#4169E1" class="px-2 pb-3">
-                                                            arrow_forward
-                                                        </v-icon>
-                                                        <p  class="body-2  pt-1 ">{{ tender.destination }}</p>
-                                                    </v-row>
+            
                                                     <v-row>
                                                         <v-col>
                                                             <p class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
@@ -223,8 +213,6 @@
                                                         <v-spacer></v-spacer>
                                                     </v-row>
                     
-                                                    <p class=" body-2 grey--text">{{ tender.description}}</p>
-                            
                                                     <v-row class="px-3" v-show="tender.tender_type == 'Transporting'">
                                                         <p class="body-2  pt-1 ">{{  tender.origin }}</p>
                                 
@@ -304,17 +292,7 @@
 
                                                     </v-row>
                     
-                                                    <p class=" body-2 grey--text">{{ tender.description}}</p>
-                            
-                                                    <v-row class="px-3">
-                                                        <p class="body-2  pt-1 ">{{ tender.origin }}</p>
-                                
-                                                        <v-icon small color="#4169E1" class="px-2 pb-3">
-                                                            arrow_forward
-                                                        </v-icon>
-                                                        <p  class="body-2  pt-1 ">{{ tender.destination }}</p>
-                                                    </v-row>
-
+    
                                                     <v-row>
 
                                                         <v-col>
@@ -382,8 +360,6 @@
 
                                                     </v-row>
                     
-                                                <p class=" body-2 grey--text">{{ tender.description}}</p>
-                        
                                                 <v-row class="px-3">
                                                     <p class="body-2  pt-1 ">{{ tender.origin }}</p>
                             
@@ -442,18 +418,6 @@
                                                         <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
                                                     </v-row>
                     
-                                                    <p class=" body-2 grey--text">{{ tender.description}}</p>
-
-                                                
-                                                    <v-row class="px-3">
-                                                        <p class="body-2  pt-1 ">{{ tender.origin }}</p>
-                                
-                                                        <v-icon small color="#4169E1" class="px-2 pb-3">
-                                                            arrow_forward
-                                                        </v-icon>
-                                                        <p  class="body-2  pt-1 ">{{ tender.destination }}</p>
-                                                    </v-row>
-
                                                     <v-row>
 
                                                         <v-col>
