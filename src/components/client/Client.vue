@@ -179,7 +179,7 @@
                                                     
                                                         <v-spacer></v-spacer>
                                                         <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
-                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View Details</v-btn>
+                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View</v-btn>
                                                     </v-row>
                                                 </v-card-actions>
 
@@ -223,20 +223,21 @@
                                                     </v-row>
 
                                                     <v-row>
-                                                        <v-col>
-                                                            <p  class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
+                                                        <v-col cols="8">
+                                                            <p  class="title">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
+                                                        </v-col>
+
+                                                         <v-spacer></v-spacer>
+
+                                                        <v-col cols="4">
+
+                                                            <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View</v-btn>
+
                                                         </v-col>
                                                          
                                                     </v-row>
 
                                                 </v-card-text>
-                                                
-
-                                                <v-row class="px-3">
-                                                        <v-spacer></v-spacer>
-                                                        <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
-                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View Details</v-btn>
-                                                </v-row>
                                             </v-card>
                                         </v-flex>  
 
@@ -307,7 +308,7 @@
                                                 <v-row row class="px-3">
                                                     
                                                         <v-spacer></v-spacer>
-                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text"  @click="set(tender)" :to="'/client/AboutTenderBids/'+ tender.id+'/'+tender.tender_type">View Details</v-btn>
+                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text"  @click="set(tender)" :to="'/client/AboutTenderBids/'+ tender.id+'/'+tender.tender_type">View Bids</v-btn>
                                                 </v-row>
                                             </v-card>
                                         </v-flex>  
@@ -366,26 +367,27 @@
                                                     <v-icon small color="#4169E1" class="px-2 pb-3">
                                                         arrow_forward
                                                     </v-icon>
-                                                    <p  class="body-2  pt-1 ">{{ tender.destination }}</p>
+                                                    <p  class="body-2  font-weight-bold pt-1 ">{{ tender.destination }}</p>
                                                 </v-row>
 
                                                 <v-row>
 
                                                     <v-col>
-                                                        <p  class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
+                                                        <p  class=" body-2 font-weight-bold">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
+
+                                                    </v-col>
+
+                                                     <v-spacer></v-spacer>
+
+                                                    <v-col>
+
+                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text"  @click="set(tender)" :to="'/client/AboutTenderBids/'+ tender.id+'/'+tender.tender_type">View Bids</v-btn>
 
                                                     </v-col>
 
                                                 </v-row>
 
                                                 </v-card-text>
-                                                
-
-                                                <v-row row class="px-3">
-                                                    
-                                                        <v-spacer></v-spacer>
-                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text"  @click="set(tender)" :to="'/client/AboutTenderBids/'+ tender.id+'/'+tender.tender_type">View Details</v-btn>
-                                                </v-row>
                                             </v-card>
                                         </v-flex>
 
@@ -394,7 +396,7 @@
                                     <template v-if='tab.title === "Progress"'>
 
                                         <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in ClearingTendersOnProgress" :key="tender.tender_id">
-                                            <v-card column width="350"  elevation="3" class="px-4 py-3">
+                                            <v-card column width="350"  max-height="200" elevation="3" class="px-4 py-3">
                                                 <v-card-text>
 
                                                     <v-row  row class="px-3 pt-1">
@@ -402,14 +404,16 @@
                                                         
                                                         <v-tooltip right content-class="tooltip">
                                                             <template v-slot:activator="{ on }">
+
                                                                 <v-chip 
                                                                     small 
                                                                     v-on="on"
-                                                                    class="light-green white--text caption font-weight-light mx-3" 
+                                                                    class="green white--text caption font-weight-bold mx-3"  
                                                                 >
                                                                     {{ tender.tender_progress}}
 
                                                                 </v-chip>
+
                                                             </template>
                                                             <span v-if="tender.tender_progress === 'onProgress'">The agent has started to work on this tender</span>
                                                         </v-tooltip>
@@ -422,7 +426,7 @@
 
                                                         <v-col>
 
-                                                            <p  class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
+                                                            <p  class="title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
 
                                                         </v-col>
                                                     </v-row>
@@ -435,13 +439,13 @@
                                                     
                                                         <v-spacer></v-spacer>
                                                         <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>-->
-                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id+'/'+tender.tender_type">View Details</v-btn>
+                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tenderprogress/'+tender.id+'/'+tender.tender_type">Show progress</v-btn>
                                                 </v-row>
                                             </v-card>
                                         </v-flex> 
 
                                         <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in TransportingOnProgressTenders" :key="tender.tender_id">
-                                            <v-card column width="350"  elevation="3" class="px-4 py-3">
+                                            <v-card column width="350"  max-height="200" elevation="3" class="px-4 py-3">
 
                                                 <v-card-text>
 
@@ -453,7 +457,7 @@
                                                                 <v-chip 
                                                                     small 
                                                                     v-on="on"
-                                                                    class="light-green white--text caption font-weight-light mx-3" 
+                                                                    class="green white--text caption font-weight-bold mx-3"
                                                                 >
                                                                     {{ tender.tender_progress}}
 
@@ -466,9 +470,7 @@
                                                         <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
                                                     </v-row>
                     
-                                                    <p class=" body-2 grey--text">{{ tender.description}}</p>
 
-                                                
                                                     <v-row class="px-3">
                                                         <p class="body-2  pt-1 ">{{ tender.origin }}</p>
                                 
@@ -481,19 +483,18 @@
                                                     <v-row>
                                                         <v-col>
                                                             
-                                                            <p class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
+                                                            <p class="body-2 font-weight-bold">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
 
+                                                        </v-col>
+
+                                                        <v-spacer></v-spacer>
+
+                                                        <v-col>
+                                                            <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tenderprogress/'+tender.id+'/'+tender.tender_type">Show progress</v-btn>
                                                         </v-col>
                                                     </v-row>
 
                                                 </v-card-text>
-                                                
-
-                                                <v-row row class="px-3">
-                                                        <v-spacer></v-spacer>
-                                                        <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>-->
-                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id+'/'+tender.tender_type">View Details</v-btn>
-                                                </v-row>
                                             </v-card>
                                         </v-flex>  
 
