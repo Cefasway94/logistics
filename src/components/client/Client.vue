@@ -6,6 +6,8 @@
 
                  <Message/>
 
+                <Alert v-if="alert" v-bind="{message,type}"/> 
+
                  <!-- loading -->
                 <v-card width="300" 
                     v-show="loading" 
@@ -144,28 +146,64 @@
                                             <v-card column width="350"  elevation="3" class="px-4 py-3">
                                                 <v-card-text>
 
+
+                                                    <h4  class="">{{ tender.cargo_details}}</h4>
+
+                                                   
+
                                                     <v-row  row class="px-3 pt-1">
-                                                        <h4  class="">{{ tender.cargo_details}}</h4>
 
-                                                        <v-tooltip right content-class="tooltip">
-                                                            <template v-slot:activator="{ on }">
-                                                                <v-chip 
-                                                                    small 
-                                                                    v-on="on"
-                                                                    class="light-green white--text caption font-weight-bold mx-3" 
-                                                                >
-                                                                    {{ tender.tender_status}}
+                                                        <v-col cols=3>
+                                                            <p>Status: </p>
+                                                        </v-col>
 
-                                                                </v-chip>
-                                                            </template>
-                                                            <span v-if="tender.tender_status === 'open'">Tender has not been awarded to any agent and it is open for agents to put offer on</span>
-                                                            <span v-if="tender.tender_status === 'awarded'">Tender has already been awarded to an agent</span>
-                                                            <span v-if="tender.tender_status === 'OnProgress'">The agent has started to work on this tender</span>
-                                                        </v-tooltip>
-                                                        
+                                                        <v-col cols=9>
+
+                                                           
+                                                            <v-chip 
+                                                                v-if="tender.tender_status == 'rejected'"
+                                                                
+                                                                small 
+                                                                v-on="on"
+                                                                class="light-green white--text caption font-weight-bold mx-2" 
+                                                            >
+                                                                awarded
+
+                                                            </v-chip>
+                                                               
+
+                                                            <v-tooltip right content-class="tooltip">
+                                                                <template v-slot:activator="{ on }">
+                                                                    <v-chip 
+                                                                        v-show="tender.tender_status !== 'rejected'"
+                                                                        small 
+                                                                        v-on="on"
+                                                                        class="light-green white--text caption font-weight-bold mx-3" 
+                                                                    >
+                                                                        {{ tender.tender_status}}
+
+                                                                    </v-chip>
+
+                                                                    <v-chip 
+                                                                        small 
+                                                                        v-show="tender.tender_status === 'rejected'"
+                                                                        v-on="on"
+                                                                        class="red white--text caption font-weight-bold mx-3" 
+                                                                    >
+                                                                        {{ tender.tender_status}}
+
+                                                                    </v-chip>
+                                                                </template>
+                                                                <span v-if="tender.tender_status === 'open'">Tender has not been awarded to any agent and it is open for agents to put offer on</span>
+                                                                <span v-if="tender.tender_status === 'awarded'">Tender has already been awarded to an agent</span>
+                                                                <span v-if="tender.tender_status === 'OnProgress'">The agent has started to work on this tender</span>
+                                                                <span v-if="tender.tender_status === 'rejected'">Tender's award has been rejected. please click reset tender to republish</span>
+                                                            </v-tooltip>
+                                                        </v-col>
+
                                                         <v-spacer></v-spacer>
                                                     </v-row>
-            
+                                                
                                                     <v-row>
                                                         <v-col>
                                                             <p class=" title ">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
@@ -177,6 +215,55 @@
                                                 <v-card-actions>
                                                     <v-row class="px-3">
                                                     
+                                                        <v-dialog              
+                                                            v-model="tenderResetDialog"
+                                                            :retain-focus="false"
+                                                            width="450"
+                                                        >
+                                                            <template v-slot:activator="{ on }">
+                                                                <v-btn
+                                                                    small 
+                                                                    color="#4169E1" 
+                                                                    class="white--text ml-1"
+                                                                    elevation="flat"
+                                                                    v-show="tender.tender_status === 'rejected'"
+                                                                    v-on="on"
+                                                                >
+                                                                    Reset tender
+                                                                </v-btn>
+                                                            </template>
+
+                                                            <v-card>
+
+                                                                <v-card-title class="body-3 grey lighten-2">
+
+                                                                    Are you sure you want to reset this tender?
+
+                                                                </v-card-title>
+
+
+                                                                <v-divider></v-divider>
+
+                                                                <v-card-actions>
+                                                                    <v-spacer></v-spacer>
+                                                                        <v-btn
+                                                                        color="primary"
+                                                                        text
+                                                                        @click="tenderResetDialog = false"
+                                                                        >
+                                                                        No
+                                                                    </v-btn>
+                                                                    <v-btn
+                                                                        color="primary"
+                                                                        text
+                                                                        @click="resetTender(tender)"
+                                                                        >
+                                                                        Yes
+                                                                    </v-btn>
+                                                                </v-card-actions>
+                                                            </v-card>
+                                                        </v-dialog>
+
                                                         <v-spacer></v-spacer>
                                                         <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
                                                         <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View</v-btn>
@@ -192,24 +279,33 @@
 
                                                 <v-card-text>
 
-                                                    <v-row  row class="px-3 pt-1">
-                                                        <h4  class="">{{ tender.cargo_details}}</h4>
-                                                    
-                                                        <v-tooltip right content-class="tooltip">
-                                                            <template v-slot:activator="{ on }">
-                                                                <v-chip 
-                                                                    small 
-                                                                    v-on="on"
-                                                                    class="light-green white--text caption font-weight-bold mx-3" 
-                                                                >
-                                                                    {{ tender.tender_status}}
+                                                    <h4  class="">{{ tender.cargo_details}}</h4>
 
-                                                                </v-chip>
-                                                            </template>
-                                                            <span v-if="tender.tender_status === 'open'">Tender has not been awarded to any agent and it is open for agents to put offer on</span>
-                                                            <span v-if="tender.tender_status === 'awarded'">Tender has already been awarded to an agent</span>
-                                                            <span v-if="tender.tender_status === 'OnProgress'">The agent has started to work on this tender</span>
-                                                        </v-tooltip>
+                                                    <v-row  row class="px-3 pt-1">
+                                                        <v-col cols=3>
+                                                            <p>Status: </p>
+                                                        </v-col>
+
+                                                        <v-col cols=9>
+
+                                                            <v-tooltip right content-class="tooltip">
+                                                                <template v-slot:activator="{ on }">
+                                                                    <v-chip 
+                                                                        small 
+                                                                        v-on="on"
+                                                                        class="light-green white--text caption font-weight-bold mx-3" 
+                                                                    >
+                                                                        {{ tender.tender_status}}
+
+                                                                    </v-chip>
+                                                                </template>
+                                                                <span v-if="tender.tender_status === 'open'">Tender has not been awarded to any agent and it is open for agents to put offer on</span>
+                                                                <span v-if="tender.tender_status === 'awarded'">Tender has already been awarded to an agent</span>
+                                                                <span v-if="tender.tender_status === 'OnProgress'">The agent has started to work on this tender</span>
+                                                            </v-tooltip>
+
+                                                        </v-col>
+                                                        
                                                         <v-spacer></v-spacer>
                                                     </v-row>
                     
@@ -514,13 +610,14 @@
 
 import { mapGetters, mapActions} from 'vuex'
 import Message from '@/components/Message.vue'
+import Alert from '@/components/Alert.vue'
 import axios from 'axios'
 
 export default {
   
   name: 'Client',
 
-  components: {Message},
+  components: {Message,Alert},
 
   data () {
       return{
@@ -538,9 +635,14 @@ export default {
           tab: null,
 
           id: 10,
-          alert:'',
-
+        
           customer:[],
+
+          tenderResetDialog: false,
+
+           alert: false,
+            message:'',
+            type:'',
 
       }
 
@@ -569,11 +671,68 @@ export default {
                         'fetchAllTransportingTenders','setTenders','fetchTransportingBidedTenders',
                         'fetchTransportingOnProgressTenders','setOnProgressTenders','setBidedTenders', 'GET_CUSTOMER']),
 
+        setAlert(message,type){
+
+            this.alert = true;
+            this.message = message;
+            this.type = type;
+        },
+
       set(tender){
           //eslint-disable-next-line no-console
           //console.log(tender);
           this.setTender(tender);
       },  
+
+      resetTender(tender){
+
+          this.tenderResetDialog = false;
+
+          console.log("TENDER IS "+ tender.id);
+
+          if(tender.tender_type === 'Clearing')
+          {
+              let url = "http://207.180.215.239:8000/api/v1/tenders/reset-tender/"+tender.id;
+
+              axios.post(url)
+                .then((response)=>{
+            
+                    if(response.data.genralErrorCode === 8000)
+                    {
+
+                        
+                        this.alert = false;
+
+                        this.setAlert(response.data.message);
+
+                        //this.$router.push('/client');
+
+                        //this.$router.go('/client');
+
+                    } else if(response.data.genralErrorCode === 8004){
+
+                        this.alert = false;
+
+                        this.setAlert(response.data.message,"error");
+                        
+                    }
+
+                }).catch(()=>{
+
+                    setTimeout(()=>{
+
+                        this.setAlert("There is internal server error","error");
+
+                    },1000)
+                });
+          }
+          else if(tender.tender_type === 'Transporting')
+          {
+              console.log("reseting transporting");
+          }
+
+          
+      },
 
       editprofile(){
           this.verify = false
