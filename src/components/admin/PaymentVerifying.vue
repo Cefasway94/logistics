@@ -109,6 +109,7 @@
                                     color="#4169E1" 
                                     class="white--text"
                                     :disabled="item.verify == 0"
+                                     @click="setItem(item)"
                                     v-on="on"
                                 >
                                   Deny
@@ -137,7 +138,7 @@
                                   <v-btn
                                       color="primary"
                                       text
-                                      @click="DenyCustomerPayment(item)"
+                                      @click="DenyCustomerPayment()"
                                     >
                                     Yes
                                   </v-btn>
@@ -156,6 +157,7 @@
                               color="#4169E1" 
                               class="white--text ml-1"
                               :disabled="item.verify == 1"
+                               @click="setItem(item)"
                               v-on="on"
                           >
                             Verify
@@ -184,7 +186,7 @@
                               <v-btn
                                   color="primary"
                                   text
-                                  @click="VerifyCustomerPayment(item)"
+                                  @click="VerifyCustomerPayment()"
                                 >
                                 Yes
                               </v-btn>
@@ -236,6 +238,7 @@
                                     color="#4169E1" 
                                     class="white--text"
                                     :disabled="item.verify == 0"
+                                    @click="setItem(item)"
                                     v-on="on"
                                 >
                                   Deny
@@ -264,7 +267,7 @@
                                   <v-btn
                                       color="primary"
                                       text
-                                      @click="DenyCustomerPayment(item)"
+                                      @click="DenyCustomerPayment()"
                                     >
                                     Yes
                                   </v-btn>
@@ -283,6 +286,7 @@
                               color="#4169E1" 
                               class="white--text ml-1"
                               :disabled="item.verify == 1"
+                              @click="setItem(item)"
                               v-on="on"
                           >
                             Verify
@@ -311,7 +315,7 @@
                               <v-btn
                                   color="primary"
                                   text
-                                  @click="VerifyCustomerPayment(item)"
+                                  @click="VerifyCustomerPayment()"
                                 >
                                 Yes
                               </v-btn>
@@ -363,6 +367,7 @@
                                     color="#4169E1" 
                                     class="white--text"
                                     :disabled="item.verify == 0"
+                                    @click="setItem(item)"
                                     v-on="on"
                                 >
                                   Deny
@@ -391,7 +396,7 @@
                                   <v-btn
                                       color="primary"
                                       text
-                                      @click="DenyCustomerPayment(item)"
+                                      @click="DenyCustomerPayment()"
                                     >
                                     Yes
                                   </v-btn>
@@ -410,6 +415,8 @@
                               color="#4169E1" 
                               class="white--text ml-1"
                               :disabled="item.verify == 1"
+                              @click="setItem(item)"
+
                               v-on="on"
                           >
                             Verify
@@ -438,7 +445,7 @@
                               <v-btn
                                   color="primary"
                                   text
-                                  @click="VerifyCustomerPayment(item)"
+                                  @click="VerifyCustomerPayment()"
                                 >
                                 Yes
                               </v-btn>
@@ -490,7 +497,7 @@ export default {
       Denydialog:false,
       Verydialog:false,
 
-      email:'',
+      item:[],
 
       payments:[],
       completedPayments:[],
@@ -523,11 +530,17 @@ export default {
 
   methods: {
 
-    DenyCustomerPayment(item){
+  setItem(item){
+
+    this.item = item;
+
+  },
+
+    DenyCustomerPayment(){
 
       this.Denydialog = false;
 
-      const dening_url = "http://207.180.215.239:8002/api/oxopayment/deny/"+item.id+"/"+item.order_ID;
+      const dening_url = "http://207.180.215.239:8002/api/oxopayment/deny/"+this.item.id+"/"+this.item.order_ID;
 
       axios.post(dening_url).then((response) => 
       {
@@ -572,11 +585,11 @@ export default {
       
     },
 
-    VerifyCustomerPayment(item){
+    VerifyCustomerPayment(){
 
       this.Verydialog = false;
 
-      const verifing_url = "http://207.180.215.239:8002/api/oxopayment/verify/"+item.id+"/"+item.order_ID;
+      const verifing_url = "http://207.180.215.239:8002/api/oxopayment/verify/"+this.item.id+"/"+this.item.order_ID;
 
       axios.post(verifing_url).then((response) => 
       {
