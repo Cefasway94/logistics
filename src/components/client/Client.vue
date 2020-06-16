@@ -298,7 +298,7 @@
                                                         >
                                                             Reset tender
                                                         </v-btn>
-                                                        
+
                                                         <v-spacer></v-spacer>
                                                         <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View details</v-btn>
                                                     </v-row>
@@ -496,16 +496,23 @@
                                                         </v-col>
                                                     </v-row>
 
-                                                </v-card-text>
+                                                    <v-row row class="px-3">
 
-                                                
-
-                                                <v-row row class="px-3">
-                                                    
+                                                        <v-btn 
+                                                            small elevation="flat" 
+                                                            color="#4169E1" 
+                                                            class="white--text" 
+                                                            :to="'/client/tenderprogress/'+tender.id+'/'+tender.tender_type"
+                                                        >
+                                                            PAY
+                                                        </v-btn>
+                                                        
                                                         <v-spacer></v-spacer>
                                                         <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>-->
                                                         <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tenderprogress/'+tender.id+'/'+tender.tender_type">Show progress</v-btn>
-                                                </v-row>
+                                                    </v-row>
+
+                                                </v-card-text>
                                             </v-card>
                                         </v-flex> 
 
@@ -553,6 +560,17 @@
                                                         </v-col>
                                                     </v-row>
                                                     <v-row>
+
+                                                        <v-btn 
+                                                            small elevation="flat" 
+                                                            color="#4169E1" 
+                                                            class="white--text" 
+                                                            :to="'/client/payment/'+tender.id+'/'+tender.tender_type"
+                                                            :disabled="tender.payment_status === 'full'"
+                                                        >
+                                                            PAY
+                                                        </v-btn>
+
                                                          <v-spacer></v-spacer>
                                                          
                                                         <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tenderprogress/'+tender.id+'/'+tender.tender_type">Show progress</v-btn>
