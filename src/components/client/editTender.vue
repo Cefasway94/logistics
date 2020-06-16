@@ -1156,12 +1156,9 @@
 
                     <v-spacer></v-spacer>
                     <v-btn outlined color="primary" class="mx-4" router to="/client">Cancel</v-btn>
-                    <v-btn color="primary white--text"  @click="editTender()" :disabled="!isValid()">SAVE</v-btn>
+                    <v-btn color="primary white--text"  @click="editTender()" :disabled="!isValid()"><span v-show="tender.tender_status !== 'rejected'">SAVE</span><span v-show="tender.tender_status === 'rejected'">PUBLISH</span></v-btn>
                 </v-row>
             </v-card>
-
-
-
         </v-layout>
 
     </v-container>
