@@ -121,27 +121,8 @@
                                 <v-flex row xs6 sm9 md12 class="">
                                     <v-card flat width="1200" class="px-5 py-3" outlined>
                                         <v-flex row xs6 sm9 md12 justify="center">
-                                            <!--<v-flex column v-for="progress in transporting_progress" :key="progress.id">
-                                                    
-                                                <v-card flat height="150"  width="180" class="px-5 py-3" outlined :class="{ InProgress: InProgress}">
-
-                                                    <v-flex row xs12 class="mb-3" offset-1>
-
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
-                                                                <v-icon large color="white" v-if="InProgress">
-                                                                    mdi-reload
-                                                                </v-icon>
-                                                            </v-card>
-                                                    </v-flex>
-                                                   
-                                                    <v-flex row xs12 class="">
-                                                        <p>{{ progress.name}} </p>
-                                                    </v-flex>
-
-                                                </v-card>
-
-                                            </v-flex>-->
-                                            <v-flex column>
+                                           
+                                            <!-- <v-flex column>
                                                     
                                                 <v-card 
                                                     flat height="150"  
@@ -156,7 +137,7 @@
 
                                                     <v-flex row xs12 class="mb-3" offset-1>
                                                            
-                                                        <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
+                                                        <v-card flat height="80" width="100" class="px-5 py-3" color="#4169E1">
                                                     
 
                                                             <v-icon large color="white" v-show="port_processing.completed">
@@ -173,7 +154,6 @@
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
-                                                        <!--<p>{{ transporting_progress[0].name}} </p>-->
                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Port processing</span></v-flex>
                                                         <v-flex row xs12>
 
@@ -185,9 +165,9 @@
 
                                                 </v-card>
 
-                                            </v-flex>
+                                            </v-flex> -->
 
-                                            <v-flex column>
+                                            <!-- <v-flex column>
                                                     
                                                 <v-card 
                                                     flat height="150"  
@@ -204,7 +184,7 @@
 
                                                            
 
-                                                        <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
+                                                        <v-card flat height="80" width="100" class="px-5 py-3" color="#4169E1">
                                                             <v-icon large color="white" v-show="tcra_processing.completed">
                                                                 mdi-check-outline
                                                             </v-icon>
@@ -217,7 +197,7 @@
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
-                                                        <!--<p>{{ transporting_progress[1].name}} </p>-->
+                                                       
                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">TRA</span></v-flex>
                                                         <v-flex row xs12>
 
@@ -225,15 +205,14 @@
                                                             <span v-show="tcra_processing.completed" class="font-weight- body-2">Completed on {{ tcra_processing.completed_date}}</span>
 
                                                         </v-flex>
-                                                        <!--<p class="font-weight-bold blue--text text--darken-2">Cargo in transit</p>-->
                                                        
                                                     </v-flex>
 
                                                 </v-card>
 
-                                            </v-flex>
+                                            </v-flex> -->
 
-                                            <v-flex column>
+                                            <!-- <v-flex column>
                                                     
                                                 <v-card 
                                                     flat height="150"  
@@ -248,7 +227,7 @@
 
                                                     <v-flex row xs12 class="mb-3" offset-1>
 
-                                                        <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
+                                                        <v-card flat height="80" width="100" class="px-5 py-3" color="#4169E1">
                                                             <v-icon large color="white" v-show="other_processes.completed">
                                                                 mdi-check-outline
                                                             </v-icon>
@@ -261,23 +240,23 @@
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
-                                                        <!--<p>{{ transporting_progress[1].name}} </p>-->
+                                                       
                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Other processes</span></v-flex>
                                                         <v-flex row xs12>
 
-                                                           <span v-show="!other_processes.completed" class="font-weight-regular body-2">Started on {{ other_processes.expected_date}}</span>
-                                                           <span v-show="other_processes.completed" class="font-weight- body-2">Completed on {{ other_processes.completed_date}}</span>
+                                                        <span v-show="!other_processes.completed" class="font-weight-regular body-2">Started on {{ other_processes.expected_date}}</span>
+                                                        <span v-show="other_processes.completed" class="font-weight- body-2">Completed on {{ other_processes.completed_date}}</span>
 
-                                                        </v-flex>
-                                                        <!--<p class="font-weight-bold blue--text text--darken-2">Cargo in transit</p>-->
+                                                    </v-flex>
+                                                        
                                                        
                                                     </v-flex>
 
                                                 </v-card>
 
-                                            </v-flex>
+                                            </v-flex> -->
 
-                                            <v-flex column>
+                                            <!-- <v-flex column>
                                                     
                                                 <v-card 
                                                     flat height="150"  
@@ -294,7 +273,7 @@
 
                                                             
 
-                                                        <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
+                                                        <v-card flat height="80" width="100" class="px-5 py-3" color="#4169E1">
                                                             <v-icon large color="white" v-show="completion.completed">
                                                                 mdi-check-outline
                                                             </v-icon>
@@ -308,7 +287,7 @@
                                                     </v-flex>
                                                    
                                                     <v-flex row xs12 class="">
-                                                        <!--<p>{{ transporting_progress[1].name}} </p>-->
+                                                      
                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Completion</span></v-flex>
                                                         <v-flex row xs12>
 
@@ -316,102 +295,146 @@
                                                            <span v-show="completion.completed" class="font-weight- body-2">Completed on {{ completion.completed_date}}</span>
 
                                                         </v-flex>
-                                                        <!--<p class="font-weight-bold blue--text text--darken-2">Cargo in transit</p>-->
+                                                       
                                                        
                                                     </v-flex>
 
                                                 </v-card>
 
-                                            </v-flex>
+                                            </v-flex> -->
+                                            <v-flex class="progress">
+                                                <ul class="text-center">
 
-                                            <!--<v-flex column>
-                                                    
-                                                <v-card 
-                                                    flat height="150"  
-                                                    width="210" 
-                                                    class="px-5 py-3" 
-                                                    outlined 
-                                                    :class="{   InProgress: cargo_offloading.InProgress, 
-                                                                waiting: cargo_offloading.waiting, 
-                                                                completed: cargo_offloading.completed
-                                                            }"
-                                                >
+                                                    <li style="" class="steps">
+                                                        <template>
 
-                                                    <v-flex row xs12 class="mb-3" offset-1>
-
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
-                                                                
-                                                                <v-icon large color="white" v-show="cargo_offloading.completed">
-                                                                    mdi-check-outline
-                                                                </v-icon>
-
-                                                                 <v-icon large color="white" v-show="cargo_offloading.InProgress">
-                                                                    mdi-reload
-                                                                </v-icon>
-
-                                                            </v-card>
-                                                    </v-flex>
-                                                   
-                                                    <v-flex row xs12 class="">
-                                                      
-                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo offloading</span></v-flex>
-                                                        <v-flex row xs12>
-
-                                                            <span v-show ="!cargo_offloading.completed" class="font-weight-regular body-2">Started on {{ cargo_offloading.expected_date}}</span>
-                                                            <span v-show ="cargo_offloading.completed" class="font-weight- body-2">Completed on {{ cargo_offloading.completed_date}}</span>
-                                                            
-                                                        </v-flex>
-                                                    </v-flex>
-
-                                                </v-card>
-
-                                            </v-flex>-->
-
-                                            <!--<v-flex column>
-                                                    
-                                                <v-card 
-                                                    flat height="150"  
-                                                    width="210" 
-                                                    class="px-5 py-3" 
-                                                    outlined 
-                                                    :class="{   InProgress: cargo_delivered.InProgress, 
-                                                                waiting: cargo_delivered.waiting, 
-                                                                completed: cargo_delivered.completed
-                                                            }"
-                                                >
-
-                                                    <v-flex row xs12 class="mb-3" offset-1>
-
-                                                            
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
-                                                                
-                                                            <v-icon large color="white" v-show ="cargo_delivered.completed">
-                                                                    mdi-check-outline
-                                                            </v-icon>
-
-                                                            <v-icon large color="white" v-show ="cargo_delivered.InProgress">
-                                                                    mdi-reload
-                                                            </v-icon>
-
-                                                            </v-card>
-                                                                
-                                                    </v-flex>
-                                                   
-                                                    <v-flex row xs12 class="">
-                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo delivered</span></v-flex>
-                                                        <v-flex row xs12>
-
-                                                        <span v-show="!cargo_delivered.completed" class="font-weight-regular body-2">Started on {{ cargo_delivered.expected_date}}</span>
-                                                        <span v-show="cargo_delivered.completed" class="font-weight- body-2">Completed on {{ cargo_delivered.completed_date}}</span>
-                                                            
-                                                        </v-flex>
+                                                            <v-card
+                                                                flat
+                                                                :class="{   
+                                                                    InProgress: port_processing.InProgress, 
+                                                                    waiting: port_processing.waiting, 
+                                                                    completed: port_processing.completed
+                                                                }"
+                                                            >
+                                                                <v-icon color="primary" size="50">archive</v-icon><br>
+                                                                <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                                                    <v-icon class="x-large " v-show="port_processing.InProgress">cached</v-icon>
+                                                                    <v-icon class="x-large " v-show="port_processing.completed">done</v-icon>
+                                                                </v-btn>
+                            
+                                                                <p class="mb-0">Port processing</p>
                                         
-                                                    </v-flex>
+                                                                <p></p>
+                                                                <p v-show="!port_processing.completed" class="font-weight-regular body-2">Started on {{ port_processing.expected_date}}</p>
+                                                                <p v-show="port_processing.completed" class="font-weight- body-2">Completed on {{ port_processing.completed_date}}</p>
+                                                            </v-card>
+                                                    
+                                                        </template>
+                                                    </li>
+                                                
 
-                                                </v-card>
+                                                    <li class="divider" >
+                                                        <v-divider color="" width="100" size="20"></v-divider>
+                                                        <v-divider v-if="tcra_processing.InProgress" color="blue" width="100" size="20"></v-divider>
+                                                        <v-divider v-else-if="tcra_processing.completed" color="lightblue" width="100" size="20"></v-divider>
+                                                    </li>
 
-                                            </v-flex>-->
+                                                    <li style="" class="steps">
+                                                        <template>
 
+                                                            <v-card
+                                                                flat
+                                                                :class="{   
+                                                                    InProgress: tcra_processing.InProgress, 
+                                                                    waiting: tcra_processing.waiting, 
+                                                                    completed: tcra_processing.completed
+                                                                }"
+                                                            >
+                                                                <v-icon color="primary" size="50">local_shipping</v-icon><br>
+                                                                <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                                                    <v-icon class="x-large " v-show="tcra_processing.InProgress">cached</v-icon>
+                                                                    <v-icon class="x-large " v-show="tcra_processing.completed">done</v-icon>
+                                                                </v-btn>
+                                                            
+                                                                <p class="mb-0">TRA</p>
+                                        
+                                                                <p></p>
+                                                                <p v-show="!tcra_processing.completed" class="font-weight-regular body-2">Started on {{ tcra_processing.expected_date}}</p>
+                                                                <p v-show="tcra_processing.completed" class="font-weight- body-2">Completed on {{ tcra_processing.completed_date}}</p>
+                                                            </v-card>
+                                                    
+                                                        </template>
+                                                    </li>
+
+                                                    <li class="divider" >
+                                                        <v-divider color="" width="100" size="20"></v-divider>
+                                                        <v-divider v-if="other_processes.InProgress" color="blue" width="100" size="20"></v-divider>
+                                                        <v-divider v-else-if="other_processes.completed" color="lightblue" width="100" size="20"></v-divider>
+                                                    </li>
+                                                    
+
+                                                    <li style="" class="steps">
+                                                        <template>
+
+                                                        <v-card
+                                                            flat
+                                                            :class="{   
+                                                                InProgress: other_processes.InProgress, 
+                                                                waiting: other_processes.waiting, 
+                                                                completed: other_processes.completed
+                                                            }"
+                                                        >
+                                                            <v-icon color="primary" size="50">unarchive</v-icon><br>
+                                                            <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                                                <v-icon class="x-large " v-show="other_processes.InProgress">cached</v-icon>
+                                                                <v-icon class="x-large " v-show="other_processes.completed">done</v-icon>
+                                                            </v-btn>
+                                                        
+                                                            <p class="mb-0">Other processes</p>
+                                    
+                                                            <p></p>
+                                                            <p v-show="!other_processes.completed" class="font-weight-regular body-2">Started on {{ other_processes.expected_date}}</p>
+                                                            <p v-show="other_processes.completed" class="font-weight- body-2">Completed on {{ other_processes.completed_date}}</p>
+                                                        </v-card>
+                                                    
+                                                        </template>
+                                                    </li>
+
+                                                    <li class="divider" >
+                                                        <v-divider color="" width="100" size="20"></v-divider>
+                                                        <v-divider v-if="completion.InProgress" color="blue" width="100" size="20"></v-divider>
+                                                        <v-divider v-else-if="completion.completed" color="lightblue" width="100" size="20"></v-divider>
+                                                    </li>
+                                                    
+
+                                                    <li style="" class="steps">
+                                                        <template>
+
+                                                            <v-card
+                                                                flat
+                                                                :class="{   
+                                                                    InProgress: completion.InProgress, 
+                                                                    waiting: completion.waiting, 
+                                                                    completed: completion.completed
+                                                                }"
+                                                            >
+                                                                <v-icon color="primary" size="50">assignment_turned_in</v-icon><br>
+                                                                <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                                                    <v-icon class="x-large " v-show="completion.InProgress">cached</v-icon>
+                                                                    <v-icon class="x-large " v-show="completion.completed">done</v-icon>
+                                                                </v-btn>
+                                                                
+                                                                <p class="mb-0">Completion</p>
+                                        
+                                                                <p></p>
+                                                                <p v-show="!completion.completed" class="font-weight-regular body-2">Started on {{ completion.expected_date}}</p>
+                                                                <p v-show="completion.completed" class="font-weight- body-2">Completed on {{ completion.completed_date}}</p>
+                                                            </v-card>
+                                                    
+                                                        </template>
+                                                    </li>
+                                                </ul>
+                                            </v-flex>
                                         </v-flex>
                                     </v-card>
                                 </v-flex> 
@@ -427,207 +450,142 @@
                                 </v-row> 
 
                                 <v-flex row xs6 sm9 md12 class="">
-                                    <v-card flat width="1200" class="px-5 py-3" outlined>
-                                        <v-flex row xs6 sm9 md12 justify="center">
-                                            <!--<v-flex column v-for="progress in transporting_progress" :key="progress.id">
-                                                    
-                                                <v-card flat height="150"  width="180" class="px-5 py-3" outlined :class="{ InProgress: InProgress}">
+                                    <v-card flat width='100%' class="px-5 py-3" outlined>
 
-                                                    <v-flex row xs12 class="mb-3" offset-1>
+                                        <v-flex class="progress">
+                                            <ul class="text-center">
 
-                                                            <v-card flat height="80"  width="100" class="px-5 py-3" color="#4169E1">
-                                                                <v-icon large color="white" v-if="InProgress">
-                                                                    mdi-reload
-                                                                </v-icon>
-                                                            </v-card>
-                                                    </v-flex>
-                                                   
-                                                    <v-flex row xs12 class="">
-                                                        <p>{{ progress.name}} </p>
-                                                    </v-flex>
+                                                <li style="" class="steps">
+                                                     <template>
 
-                                                </v-card>
-
-                                            </v-flex>-->
-                                            <v-flex column>
-                                                    
-                                                <v-card 
-                                                    flat height="150"  
-                                                    width="210" 
-                                                    class="px-5 py-3" 
-                                                    outlined 
-                                                    :class="{   InProgress: cargo_loading.InProgress, 
+                                                         <v-card
+                                                            flat
+                                                            :class="{   
+                                                                InProgress: cargo_loading.InProgress, 
                                                                 waiting: cargo_loading.waiting, 
                                                                 completed: cargo_loading.completed
                                                             }"
-                                                >
-
-                                                    <v-flex row xs12 class="mb-3" offset-1>
-
-                                                        <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
-                                                    
-                                                            <v-icon large color="white" v-show="cargo_loading.completed">
-                                                                mdi-check-outline
-
-                                                            </v-icon>
-
-                                                            <v-icon large color="white" v-show="cargo_loading.InProgress">
-                                                                mdi-reload
-                                                            </v-icon>
-                                                    
+                                                        >
+                                                            <v-icon color="primary" size="50">archive</v-icon><br>
+                                                            <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                                                <v-icon class="x-large " v-show="cargo_loading.InProgress">cached</v-icon>
+                                                                <v-icon class="x-large " v-show="cargo_loading.completed">done</v-icon>
+                                                            </v-btn>
+                        
+                                                            <p class="mb-0">Cargo loading</p>
+                                    
+                                                            <p></p>
+                                                            <p v-show="!cargo_loading.completed" class="font-weight-regular body-2">Started on {{ cargo_loading.expected_date}}</p>
+                                                            <p v-show="cargo_loading.completed" class="font-weight- body-2">Completed on {{ cargo_loading.completed_date}}</p>
                                                         </v-card>
-                                                            
-                                                    </v-flex>
-                                                   
-                                                    <v-flex row xs12 class="">
-                                                        <!--<p>{{ transporting_progress[0].name}} </p>-->
-                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo loading</span></v-flex>
-                                                        <v-flex row xs12>
+                                                
+                                                    </template>
+                                                </li>
+                                               
 
-                                                            <span v-show="!cargo_loading.completed" class="font-weight-regular body-2">Started on {{ cargo_loading.expected_date}}</span>
-                                                            <span v-show="cargo_loading.completed" class="font-weight- body-2">Completed on {{ cargo_loading.completed_date}}</span>
-                                                            
-                                                        </v-flex>
-                                                    </v-flex>
+                                                <li class="divider" >
+                                                    <v-divider color="" width="100" size="20"></v-divider>
+                                                    <v-divider v-if="cargo_in_transmit.InProgress" color="blue" width="100" size="20"></v-divider>
+                                                    <v-divider v-else-if="cargo_in_transmit.completed" color="lightblue" width="100" size="20"></v-divider>
+                                                </li>
 
-                                                </v-card>
+                                                <li style="" class="steps">
+                                                    <template>
 
-                                            </v-flex>
-
-                                            <v-flex column>
-                                                    
-                                                <v-card 
-                                                    flat height="150"  
-                                                    width="210" 
-                                                    class="px-5 py-3" 
-                                                    outlined 
-                                                    :class="{   InProgress: cargo_in_transmit.InProgress, 
+                                                        <v-card
+                                                            flat
+                                                            :class="{   
+                                                                InProgress: cargo_in_transmit.InProgress, 
                                                                 waiting: cargo_in_transmit.waiting, 
                                                                 completed: cargo_in_transmit.completed
                                                             }"
-                                                >
-
-                                                    <v-flex row xs12 class="mb-3" offset-1>
-
-                                                        <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
-                                                            <v-icon large color="white" v-show="cargo_in_transmit.completed">
-                                                                mdi-check-outline
-                                                            </v-icon>
-
-                                                            <v-icon large color="white" v-show="cargo_in_transmit.InProgress">
-                                                                mdi-reload
-                                                            </v-icon>
+                                                        >
+                                                            <v-icon color="primary" size="50">local_shipping</v-icon><br>
+                                                            <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                                                <v-icon class="x-large " v-show="cargo_in_transmit.InProgress">cached</v-icon>
+                                                                <v-icon class="x-large " v-show="cargo_in_transmit.completed">done</v-icon>
+                                                            </v-btn>
+                                                        
+                                                            <p class="mb-0">Cargo in transit</p>
+                                    
+                                                            <p></p>
+                                                            <p v-show="!cargo_in_transmit.completed" class="font-weight-regular body-2">Started on {{ cargo_in_transmit.expected_date}}</p>
+                                                            <p v-show="cargo_in_transmit.completed" class="font-weight- body-2">Completed on {{ cargo_in_transmit.completed_date}}</p>
                                                         </v-card>
-                                                                  
-                                                    </v-flex>
-                                                   
-                                                    <v-flex row xs12 class="">
-                                                        <!--<p>{{ transporting_progress[1].name}} </p>-->
-                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo in transit</span></v-flex>
-                                                        <v-flex row xs12>
+                                                
+                                                    </template>
+                                                </li>
 
-                                                           <span v-show="!cargo_in_transmit.completed" class="font-weight-regular body-2">Started on {{ cargo_in_transmit.expected_date}}</span>
-                                                            <span v-show="cargo_in_transmit.completed" class="font-weight- body-2">Completed on {{ cargo_in_transmit.completed_date}}</span>
+                                                 <li class="divider" >
+                                                    <v-divider color="" width="100" size="20"></v-divider>
+                                                    <v-divider v-if="cargo_offloading.InProgress" color="blue" width="100" size="20"></v-divider>
+                                                    <v-divider v-else-if="cargo_offloading.completed" color="lightblue" width="100" size="20"></v-divider>
+                                                </li>
+                                                
 
-                                                        </v-flex>
-                                                        <!--<p class="font-weight-bold blue--text text--darken-2">Cargo in transit</p>-->
-                                                       
-                                                    </v-flex>
+                                                <li style="" class="steps">
+                                                    <template>
 
-                                                </v-card>
-
-                                            </v-flex>
-
-                                            <v-flex column>
+                                                    <v-card
+                                                        flat
+                                                        :class="{   
+                                                            InProgress: cargo_offloading.InProgress, 
+                                                            waiting: cargo_offloading.waiting, 
+                                                            completed: cargo_offloading.completed
+                                                        }"
+                                                    >
+                                                        <v-icon color="primary" size="50">unarchive</v-icon><br>
+                                                        <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                                            <v-icon class="x-large " v-show="cargo_offloading.InProgress">cached</v-icon>
+                                                            <v-icon class="x-large " v-show="cargo_offloading.completed">done</v-icon>
+                                                        </v-btn>
                                                     
-                                                <v-card 
-                                                    flat height="150"  
-                                                    width="210" 
-                                                    class="px-5 py-3" 
-                                                    outlined 
-                                                    :class="{   InProgress: cargo_offloading.InProgress, 
-                                                                waiting: cargo_offloading.waiting, 
-                                                                completed: cargo_offloading.completed
-                                                            }"
-                                                >
+                                                        <p class="mb-0">Cargo offloading</p>
+                                
+                                                        <p></p>
+                                                        <p v-show="!cargo_offloading.completed" class="font-weight-regular body-2">Started on {{ cargo_offloading.expected_date}}</p>
+                                                        <p v-show="cargo_offloading.completed" class="font-weight- body-2">Completed on {{ cargo_offloading.completed_date}}</p>
+                                                    </v-card>
+                                                
+                                                    </template>
+                                                </li>
 
-                                                    <v-flex row xs12 class="mb-3" offset-1>
+                                                 <li class="divider" >
+                                                    <v-divider color="" width="100" size="20"></v-divider>
+                                                    <v-divider v-if="cargo_delivered.InProgress" color="blue" width="100" size="20"></v-divider>
+                                                    <v-divider v-else-if="cargo_delivered.completed" color="lightblue" width="100" size="20"></v-divider>
+                                                </li>
+                                                
 
-                                                        <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
-                                                    
-                                                            <v-icon large color="white" v-show="cargo_offloading.completed">
-                                                                mdi-check-outline
-                                                            </v-icon>
+                                                <li style="" class="steps">
+                                                    <template>
 
-                                                            <v-icon large color="white" v-show="cargo_offloading.InProgress">
-                                                                mdi-reload
-                                                            </v-icon>
-
-                                                        </v-card>
-                                                               
-                                                    </v-flex>
-                                                   
-                                                    <v-flex row xs12 class="">
-                                                        <!--<p>{{ transporting_progress[2].name}} </p>-->
-                                                         <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo offloading</span></v-flex>
-                                                        <v-flex row xs12>
-
-                                                            <span v-show ="!cargo_offloading.completed" class="font-weight-regular body-2">Started on {{ cargo_offloading.expected_date}}</span>
-                                                            <span v-show ="cargo_offloading.completed" class="font-weight- body-2">Completed on {{ cargo_offloading.completed_date}}</span>
-                                                            
-                                                        </v-flex>
-                                                    </v-flex>
-
-                                                </v-card>
-
-                                            </v-flex>
-
-                                            <v-flex column>
-                                                    
-                                                <v-card 
-                                                    flat height="150"  
-                                                    width="210" 
-                                                    class="px-5 py-3" 
-                                                    outlined 
-                                                    :class="{   InProgress: cargo_delivered.InProgress, 
+                                                        <v-card
+                                                            flat
+                                                            :class="{   
+                                                                InProgress: cargo_delivered.InProgress, 
                                                                 waiting: cargo_delivered.waiting, 
                                                                 completed: cargo_delivered.completed
                                                             }"
-                                                >
-
-                                                    <v-flex row xs12 class="mb-3" offset-1>
-
-                                                        <v-card flat height="80"  v-on="on" width="100" class="px-5 py-3" color="#4169E1">
-                                                    
-                                                            <v-icon large color="white" v-show ="cargo_delivered.completed">
-                                                                    mdi-check-outline
-                                                            </v-icon>
-
-                                                            <v-icon large color="white" v-show ="cargo_delivered.InProgress">
-                                                                    mdi-reload
-                                                            </v-icon>
-
-                                                        </v-card>
-
-                                                    </v-flex>
-                                                   
-                                                    <v-flex row xs12 class="">
-                                                        <!--<p>{{ transporting_progress[3].name}} </p>-->
-                                                        <v-flex row xs12 offset-1><span class="font-weight-bold blue--text text--darken-2">Cargo delivered</span></v-flex>
-                                                        <v-flex row xs12>
-
-                                                        <span v-show="!cargo_delivered.completed" class="font-weight-regular body-2">Started on {{ cargo_delivered.expected_date}}</span>
-                                                        <span v-show="cargo_delivered.completed" class="font-weight- body-2">Completed on {{ cargo_delivered.completed_date}}</span>
+                                                        >
+                                                            <v-icon color="primary" size="50">assignment_turned_in</v-icon><br>
+                                                            <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
+                                                                <v-icon class="x-large " v-show="cargo_delivered.InProgress">cached</v-icon>
+                                                                <v-icon class="x-large " v-show="cargo_delivered.completed">done</v-icon>
+                                                            </v-btn>
                                                             
-                                                        </v-flex>
-                                        
-                                                    </v-flex>
-
-                                                </v-card>
-
-                                            </v-flex>
-
+                                                            <p class="mb-0">Cargo delivered</p>
+                                    
+                                                            <p></p>
+                                                            <p v-show="!cargo_delivered.completed" class="font-weight-regular body-2">Started on {{ cargo_delivered.expected_date}}</p>
+                                                            <p v-show="cargo_delivered.completed" class="font-weight- body-2">Completed on {{ cargo_delivered.completed_date}}</p>
+                                                        </v-card>
+                                                
+                                                    </template>
+                                                </li>
+                                            </ul>
                                         </v-flex>
+
                                     </v-card>
                                 </v-flex> 
                                         
@@ -1173,65 +1131,50 @@ export default {
                                 document.getElementById('app').scrollIntoView();
                             });
 
-                axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
+                axios.get(`http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/${vm.$route.params.id}`)
                         .then((response) => 
                             {
+
                                 if(response.data.genralErrorCode === 8000){
-
-                                    if(response.data.objects.verify === null)    
-                                            vm.is_verified = false;
-                                        else
-                                            vm.is_verified = true;
                                   
-                                 //eslint-disable-next-line no-console
-                                    console.log("is paid full " +response.data.objects.is_full_amount_paid);
-
-                                     if(response.data.objects.verify === 1){
-
-                                         //eslint-disable-next-line no-console
-                                                console.log("**************is verified");
-
-                                            if(response.data.objects.is_full_amount_paid == 1)
-                                            {
-                                                  //eslint-disable-next-line no-console
-                                                console.log("**************Full paid");
-
-
-                                                vm.full_paid = true;
-
-                                                //eslint-disable-next-line no-console
-                                                console.log("**************Full paid");
-
-                                                vm.payment_value = 100;
-                                            }
-                                                
-                                            else
-                                            {
-                                                 //eslint-disable-next-line no-console
-                                                    console.log("**************Not full paid");
-                                                vm.payment_value = response.data.objects.percentage_deposited;
-                                            }
-                                                
-                                        
-                                    } else {
-                                        
-                                        vm.payment_value = 0;
-                                    }
+                                    if(response.data.objects[response.data.objects.length - 1].verify == true)    
+                                        vm.is_verified = true;
+                                    else
+                                        vm.is_verified = false;           
                                 }
                                 else if(response.data.genralErrorCode === 8001){
 
                                     vm.is_verified = true;
                                 }
-                                
+
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
-                                //eslint-disable-next-line no-console
-                                //console.log("There is an error");
-                                vm.setAlert("There is internal server error","error");
+                                 console.log("There is an error");
+                            });
 
-                                document.getElementById('app').scrollIntoView();
+                            
+                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
+                        .then((response) => 
+                            {
+
+                                if(response.data.genralErrorCode === 8000){
+                                  
+                                    if(response.data.objects.is_full_amount_paid == 1)
+                                    {
+                                        vm.full_paid = true;
+
+                                        vm.payment_value = 100;
+                                    }
+                                        
+                                    else
+                                    {
+                                            
+                                        vm.payment_value = response.data.objects.percentage_deposited;
+                                    }         
+                                }
+                            }).catch(()=>{
+
+                                 console.log("There is an error");
                             });
 
             } else if(vm.$route.params.tender_type == "Clearing"){
@@ -1307,65 +1250,53 @@ export default {
                                 document.getElementById('app').scrollIntoView();
                             });
 
-                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
+
+                 axios.get(`http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/${vm.$route.params.id}`)
                         .then((response) => 
                             {
 
-                                if(response.data.genralErrorCode === 8000){
-                                  
-                                 //eslint-disable-next-line no-console
-                                        if(response.data.objects.verify == null)    
-                                            vm.is_verified = false;
-                                        else
-                                            vm.is_verified = true;
+                                if(response.data.genralErrorCode === 8000)
+                                {
 
-
-                                                console.log("is paid full " +response.data.objects.is_full_amount_paid);
-                                     if(response.data.objects.verify == 1){
-
-                                         //eslint-disable-next-line no-console
-                                                console.log("**************is verified");
-
-                                            if(response.data.objects.is_full_amount_paid == 1)
-                                            {
-                                                  //eslint-disable-next-line no-console
-                                                console.log("**************Full paid");
-
-
-                                                vm.full_paid = true;
-
-                                                //eslint-disable-next-line no-console
-                                                console.log("**************Full paid");
-
-                                                vm.payment_value = 100;
-                                            }
-                                                
-                                            else
-                                            {
-                                                 //eslint-disable-next-line no-console
-                                                    console.log("**************Not full paid");
-                                                vm.payment_value = response.data.objects.percentage_deposited;
-                                            }
-                                                
-                                        
-                                    } else {
-                                        
-                                        vm.payment_value = 0;
-                                    }
+                                    if(response.data.objects[response.data.objects.length - 1].verify == true)    
+                                        vm.is_verified = true;
+                                    else
+                                        vm.is_verified = false;            
                                 }
                                 else if(response.data.genralErrorCode === 8001){
 
                                     vm.is_verified = true;
                                 }
 
-                                //eslint-disable-next-line no-console
-                                 //console.log(response.data.objects);
+                                console.log("is_verified status... "+vm.is_verified);
 
                             }).catch(()=>{
 
-                                // response = null;
-                                //commit('setOnProgressTenders',response)
-                                //eslint-disable-next-line no-console
+                                 console.log("There is an error");
+                            });
+
+                            
+                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
+                        .then((response) => 
+                            {
+
+                                if(response.data.genralErrorCode === 8000){
+                                  
+                                    if(response.data.objects.is_full_amount_paid == 1)
+                                    {
+                                        vm.full_paid = true;
+
+                                        vm.payment_value = 100;
+                                    }
+                                        
+                                    else
+                                    {
+                                            
+                                        vm.payment_value = response.data.objects.percentage_deposited;
+                                    }         
+                                }
+                            }).catch(()=>{
+
                                  console.log("There is an error");
                             });
             }
@@ -1390,7 +1321,7 @@ export default {
     }
 
      .completed {
-        opacity: 0.3;
+        opacity: 0.6;
     }
 
     .tooltip{
@@ -1407,5 +1338,24 @@ export default {
     position: absolute;
     z-index: 1;
  }
+
+ .progress{
+  margin: 20px 20px;
+}
+ul{
+    text-align: center;
+    
+}
+
+ul li{
+    display: inline-block;
+}
+
+.steps{
+    width: 150px;
+}
+.divider{
+    margin-bottom: 70px;
+}
 
 </style>
