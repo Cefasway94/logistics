@@ -624,7 +624,7 @@ actions: {
 
 //Agent get progress details  ----------------------------------------     
 GET_PAYMENT_PROGRESS: async ({commit},payload) => {
-    const url= 'http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/'+payload;
+    const url= 'http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/'+payload;
     await axios.get(url).then((res)=>{
         // eslint-disable-next-line no-console
             console.log(res);
@@ -1043,7 +1043,7 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
 
 //Transporter get progress details  ---------------------------------------------------------------------------         
                 T_GET_PAYMENT_PROGRESS: async ({commit},payload) => {
-                    const url= 'http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/'+payload;
+                    const url= 'http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/'+payload;
                     await axios.get(url).then((res)=>{
                         // eslint-disable-next-line no-console
                             console.log(res);

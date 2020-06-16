@@ -244,17 +244,27 @@
                                         <v-card-title>Are you sure you want to accept this tender?</v-card-title>
                                         <v-card-actions row>
  
-                                            <v-btn 
-                                                color="#4169E1"
-                                                @click="acceptbid(tender.id)" 
-                                                class="white--text"
+                                             <v-btn 
+                                                color="error" 
                                                 small 
-                                                elevation="flat" 
-                                             >
-                                             YES
+                                                elevation="" 
+                                                @click="acceptDialog = false" 
+                                                class="ml-3 font-weight-bold">
+                                                NO
                                              </v-btn>
-                                            <v-spacer></v-spacer>
-                                            <v-btn color="#4169E1" text @click="acceptDialog = false" class="mt-2 ml-2">NO</v-btn>
+
+                                             <v-spacer></v-spacer>
+                                             
+                                             <v-btn 
+                                                 color="green"
+                                                 @click="acceptbid(tender.id)" 
+                                                 class="white--text font-weight-bold mr-5"
+                                                 small 
+                                                 elevation=""  
+                                              >
+                                              YES
+                                              </v-btn>
+                                        
                                         </v-card-actions>
                                     </v-card>
                         </v-dialog>
