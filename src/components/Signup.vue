@@ -12,7 +12,7 @@
                 <h1 class="primary--text text-center pt-2 pb-1 font-weight-medium  " >UBALORI</h1>
             </v-card-title>
             <v-card-text>
-                <p class="text-center font-weight-regular body-1 mb-0">Welcome, please register to create your account</p>
+                <p class="text-center font-weight-regular body-1 mb-0">Please select one of the categories below </p>
             </v-card-text>
 
 <!-- signup success dialogues ---------------------------->
@@ -133,7 +133,7 @@
 
                      <v-flex row class="pl-9 " >
                       <v-flex xs3 sm3 md3 lg3  >
-                      <p class="grey--text mb-0"  > Name :  </p>
+                      <p class="grey--text mb-0"  > Company Name :  </p>
                       </v-flex>
                       <v-flex xs9 sm9 md9 >
                       <p class=" text--text" >
@@ -385,7 +385,7 @@
                       </v-flex>
                       <v-flex xs6 sm6 md6 >
                       <p class=" text--text" >
-                       {{phone_number}}
+                       {{client_phone_number}}
                       </p>
                       </v-flex>
                       </v-flex>
@@ -433,17 +433,45 @@
               
 <!-------------  alerts ------------  -->
                 <v-alert
-                :value="error"
-                color="error"
+                elevation="5"
+                :value="selectcategory"
+                type="warning"
                 icon="error_outline"
+                prominent
+                transition="slide-x-transition"
+                >
+                Please select one of the categories below Trasnpporter, Agent or Client
+                </v-alert>
+                
+                <v-alert
+                elevation="10"
+                :value="error"
+                type="error"
+                prominent
+                icon="error_outline"
+                transition="slide-x-transition"
                 >
                 error
                 </v-alert>
 
                 <v-alert
+                elevation="10"
                 :value="emptyfilds"
-                color="error"
+                type="error"
                 icon="error_outline"
+                prominent
+                transition="slide-x-transition"
+                >
+                All fields are required
+                </v-alert>
+
+                <v-alert
+                elevation="10"
+                :value="Client_phone_emptyfilds"
+                type="error"
+                icon="error_outline"
+                prominent
+                transition="slide-x-transition"
                 >
                 All fields are required
                 </v-alert>
@@ -674,6 +702,11 @@
                     </v-hover>
                     </v-flex>
                     </v-flex>     -->
+
+                    <!-- <template>
+                      <country-select v-model="country" :country="country" topCountry="US" />
+                      <region-select v-model="region" :country="country" :region="region" />
+                    </template> -->
                     
                     <v-flex row class="mb-4 ">
                     <v-flex column xs12 sm12 md12 lg12  class="">
@@ -701,12 +734,41 @@
                     </v-hover>
                     </v-flex>
                     </v-flex>
+
+
+                    <v-flex v-if='category == 3' row class="mb-4 ">
+                    <v-flex column xs12 sm12 md12 lg12  class="">
+                      <p class="font-weight-regular subtitle-2 grey--text mb-0" >PHONE NUMBER</p>
+                    <v-hover>
+                    <template v-slot="{ hover }">
+                    <v-card 
+                    color="transparent" 
+                    height="40" 
+                    :elevation="hover ? 6 : 0">
+                        <v-text-field
+                        dense 
+                        light
+                        solo 
+                        outlined
+                        class="mt-1 text-center" 
+                        color="#4169E1" 
+                        background-color="transparent" 
+                        @input="clear_alert()" 
+                        v-model="client_phone_number" 
+                       :rules="[rules.required, rules.number, rules.min]" 
+                        > 
+                        </v-text-field>
+                    </v-card>
+                    </template>
+                    </v-hover>                    
+                    </v-flex>
+                    </v-flex>    
                     
 
-                    <v-flex row class="" >
+                    <v-flex v-else row class="" >
                       
                     <v-flex column xs12 sm12 md6 lg6  class="px-1 ">
-                    <p class="font-weight-regular subtitle-2 grey--text  mb-0" >NAME</p>
+                    <p class="font-weight-regular subtitle-2 grey--text  mb-0" >COMPANY NAME</p>
                     <v-hover class="mb-4">
                     <template v-slot="{ hover }">
                     <v-card 
@@ -748,7 +810,6 @@
                         class="mt-1 text-center" 
                         color="#4169E1" 
                         background-color="transparent" 
-                        clearable 
                         @input="clear_alert()"
                         v-model="phone_number"
                         :rules="[rules.required, rules.number, rules.min]" 
@@ -816,8 +877,11 @@
                     </v-hover>
 
                     <v-alert
+                    elevation="10"
                     :value="dontmatch"
-                    color="error"
+                    type="error"
+                    transition="slide-x-transition"
+                    prominent=""
                     icon="error_outline"
                     >
                     password don't match.
@@ -892,10 +956,10 @@ export default {
           signedup_successively:false,
 
         //-------------
-          be1: '5',
+          be1: '0',
           be2: '0',
           be3: '0',
-          btn1:"#4169E1", 
+          btn1:"transparent", 
           btn2:"transparent", 
           btn3:"transparent",
 
@@ -905,7 +969,9 @@ export default {
 
          //match: false,                // used to chcek if passwords match, 
          invalid: false,             // togle fields
+
          //invalidemail : false,      // check if email is valid
+          selectcategory:false,      // check if category
           emptyfilds:false,         // Check fields   
           dontmatch : false,   
           error: false,
@@ -914,9 +980,12 @@ export default {
           loading:false,
           success: false,
           timeout:false,
-          category: 2,
+          Client_phone_emptyfilds: false,
+
+          category: '',
           name:'',
           phone_number:'',
+          client_phone_number:'',
           email:'',
           country:'',
           secret:'',
@@ -967,6 +1036,8 @@ methods:{
     },
 
     confirm(){
+
+            
 
       this.clear_alert()
 
@@ -1078,13 +1149,25 @@ methods:{
 
           console.log('here register')
 
+          let phone 
+
+          if (this.category == 1 || this.category == 2) {
+              
+              phone = this.phone_number
+            
+          } else {
+
+            phone = this.client_phone_number
+
+          }
+
           this.$store.dispatch('REGISTER', {
           name: this.name,
           email: this.email,
           password: this.secret,
           country: this.country,
           password_confirmation:this.confirm_secret,
-          phone: this.phone_number,
+          phone: phone,
           category: this.category
         })
         .then((data) => {
@@ -1163,7 +1246,14 @@ methods:{
 
 
     validate() {
-      if(this.email === '' || this.email === null ) {
+
+      if(this.category === '' ) {
+
+        console.log('how0')
+         this.selectcategory = true
+         return false
+      
+      }else if(this.email === '' || this.email === null ) {
 
         console.log('how1')
          this.emptyfilds = true
@@ -1181,10 +1271,16 @@ methods:{
          this.emptyfilds= true;
          return false
 
-      }else if( this.phone_number == '' || this.phone_number === null ){
+      }else if( (this.phone_number == '' || this.phone_number === null) & (this.category == 1 || this.category == 2) ){
          
          console.log('how1');
          this.emptyfilds= true;
+         return false
+
+      }else if( (this.client_phone_number == '' || this.client_phone_number === null) & (this.category == 3) ){
+         
+         console.log('how1');
+         this.Client_phone_emptyfilds = true;
          return false
 
       }else if(this.confirm_secret == '' || this.confirm_secret === null ){
@@ -1196,7 +1292,7 @@ methods:{
       }else if(this.country == '' || this.country === null ){
 
         console.log('how1');
-         this.emptyfilds= true;
+         //this.emptyfilds= true;
          return false
       }
 
@@ -1208,7 +1304,11 @@ methods:{
       } else {       
 
         console.log('how');       
+        console.log(this.client_phone_nunmber);
+        
            return this.secret === this.confirm_secret
+
+
 
       }
     },
@@ -1221,6 +1321,9 @@ methods:{
       this.dontmatch = false
       this.requiredemail = false
       this.invalidemail = false
+      this.Client_phone_emptyfilds = false,
+      this.selectcategory = false
+
     }, 
    
     // Transporter select
@@ -1232,6 +1335,8 @@ methods:{
       this.be2 ='0';
       this.be3 ='0';
       this.category = 2;
+      this.selectcategory = false
+      this.clear_alert()
       console.log(this.category);
     },
 
@@ -1244,6 +1349,7 @@ methods:{
       this.be2 ='5';
       this.be3 ='0';
       this.category = 1;
+       this.clear_alert()
       console.log(this.category);
     },
 
@@ -1255,7 +1361,8 @@ methods:{
       this.be1 ='0';
       this.be2 ='0';
       this.be3 ='5';
-      this.category = 3;
+      this.category = 3
+       this.clear_alert()
       console.log(this.category);
 
 

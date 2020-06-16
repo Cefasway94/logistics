@@ -312,9 +312,12 @@
                                     id="profile_image" 
                                     ref="profile_upload"
                                     @change="uploadprofile()"
-                                    prepend-icon ="mdi-cloud-upload"
+                                    prepend-icon =""
+                                    prepend-inner-icon="mdi-cloud-upload"
                                     :rules="[v => !!v || 'profile image is required']"
-                                    required                               
+                                    required     
+                                    dense
+                                    outlined                          
                                 >
 
                                 </v-file-input>
@@ -378,7 +381,7 @@
                     ></v-select>
                 </v-flex> -->
                 <v-flex column class="">
-                    <p class="bondy-2 mb-0">Tin No</p>
+                    <p class="bondy-2 mb-0">Tin number</p>
                     <v-text-field 
                     sm3 md3
                     v-model="tin"
@@ -554,7 +557,14 @@
                                 Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
                              </p>
                              </center>
-                         </v-flex>
+                 </v-flex>
+
+                 <v-col cols=12>
+                            <p class="primary--text body-1 mb-1 ml-2 mt-3 text-center">
+                                 ESSENTIAL DOCUMENTS
+                            </p>
+                            <v-divider color="" class="mb-0 mt-2"></v-divider>
+                 </v-col>
 
             <v-row class="pt-3">
                 
@@ -567,9 +577,13 @@
                                     placeholder="Choose a file"
                                     id="certificate" 
                                     @change="updatecertificate()"
-                                    prepend-icon ="mdi-cloud-upload"
+                                    prepend-icon =""
+                                    prepend-inner-icon="mdi-cloud-upload"
                                     :rules="[v => !!v || 'Certificate is required']"
-                                    required>
+                                    required
+                                    dense
+                                    outlined
+                                    >
 
                                 </v-file-input>
 
@@ -627,9 +641,12 @@
                                     placeholder="Choose a file"
                                     id="insurance" 
                                     @change="updateinsurance()"
-                                    prepend-icon ="mdi-cloud-upload"
+                                    prepend-icon =""
+                                    prepend-inner-icon="mdi-cloud-upload"
                                     :rules="[v => !!v || 'Insurance is required']"
                                     required
+                                    outlined
+                                    dense
                                 >
 
                                 </v-file-input>
@@ -679,6 +696,117 @@
                                 </div>
                             </v-card>
                         </v-col> 
+
+                        <v-col cols=12 sm=4 class="">
+                            <p class="primary--text body-2 text-uppercase mb-1"> Tin certificate  <span class="red--text ml-2 mb-0" ><strong>*</strong></span></p>
+                            <v-card flat width="250" height="270" outlined >
+
+                                <v-file-input 
+                                    :clearable="false"
+                                    placeholder="Choose a file"
+                                    id="tin_certificate" 
+                                    @change="updatetin_certificate()"
+                                    prepend-icon =""
+                                    prepend-inner-icon="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'Tin certificate is required']"
+                                    required
+                                    dense
+                                    outlined
+                                >
+
+                                </v-file-input>
+
+                                <div v-show="tin_certificate_extension === 'jpg' || tin_certificate_extension === 'jpeg' || tin_certificate_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="handleClick('tin_certificate',tin_certificate_url)">
+                                        <img  id="tin_certificate_thumb" :src="tin_certificate_url" class="preview">
+                                    </v-card>
+                                </div>
+
+                                <div v-show="tin_certificate_extension === 'largefile' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                    </v-card>
+                                </div>
+
+                                <div v-show="tin_certificate_extension === 'pdf'">
+
+                                        <v-tooltip right color="#1565C0">
+                                        <template v-slot:activator="{ on }">
+                                            <v-card 
+                                                flat
+                                                color=""
+                                                height="198"
+                                                :block="true"
+                                                icon 
+                                                class="py-12 px-12 insurance_preview"
+                                                @click="previewPdf(tin_certificate_url)"
+                                                v-on="on">
+                                                <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                            </v-card>
+                                        </template>
+                                        <span>Click to view document</span>
+                                    </v-tooltip>
+                                        
+                                    
+                                </div>
+                            </v-card>
+                        </v-col>
+
+                        <v-col cols=12 sm=4 class="">
+                            <p class="primary--text body-2 text-uppercase mb-1"> Business License  <span class="red--text"><strong>* </strong></span></p>
+                            <v-card flat width="250" height="270" outlined >
+
+                                <v-file-input 
+                                    :clearable="false"
+                                    placeholder="Choose a file"
+                                    id="business_license" 
+                                    @change="updatebusiness_license()"
+                                    prepend-icon =""
+                                    prepend-inner-icon="mdi-cloud-upload"
+                                    :rules="[v => !!v || 'Insurance is required']"
+                                    required
+                                    dense
+                                    outlined
+                                >
+
+                                </v-file-input>
+
+                                <div v-show="business_license_extension === 'jpg' || business_license_extension === 'jpeg' || business_license_extension === 'png'">
+                                    <v-card height="200" width="250" outlined @click="handleClick('business_license',business_license_url)">
+                                        <img  id="business_license_thumb" :src="business_license_url" class="preview">
+                                    </v-card>
+                                </div>
+
+                                <div v-show="business_license_extension === 'largefile' ">
+                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                    </v-card>
+                                </div>
+
+                                <div v-show="business_license_extension === 'pdf'">
+
+                                        <v-tooltip right color="#1565C0">
+                                        <template v-slot:activator="{ on }">
+                                            <v-card 
+                                                flat
+                                                color=""
+                                                height="198"
+                                                :block="true"
+                                                icon 
+                                                class="py-12 px-12 insurance_preview"
+                                                @click="previewPdf(business_license_url)"
+                                                v-on="on">
+                                                <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                            </v-card>
+                                        </template>
+                                        <span>Click to view document</span>
+                                    </v-tooltip>
+                                        
+                                    
+                                </div>
+                            </v-card>
+                        </v-col>
+
             </v-row>
 
             <v-row class="mt-5" v-if="currentFiles.length > 0">
@@ -1379,7 +1507,7 @@
             class="" 
             clearable 
             color="#4169E1"
-             :rules="[rules.required]">
+             :rules="[rules.required, rules.letters]">
                         <template #label>
                         <span class="deep-orange--text"><strong>* </strong></span>
                         </template>
@@ -1394,7 +1522,7 @@
             class="" 
             clearable 
             color="#4169E1"
-             :rules="[rules.required]">
+             :rules="[rules.required, rules.number]">
                         <template #label>
                         <span class="deep-orange--text"><strong>* </strong></span>
                         </template>
@@ -1465,9 +1593,15 @@ export default {
 
            rules: {
             required: value => !!value || "Required",
+
             number: value => {
               const pattern = /^\d+$/;
               return pattern.test(value) || "Number only required"
+            },
+
+            letters: value => {
+              const pattern = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+              return pattern.test(value) || "Letters only required"
             },
 
             min: v => v.length >= 8 || 'Min 8 characters',
@@ -1479,10 +1613,12 @@ export default {
            },
 
            // files
-           certificate:[],
-           insurance:[],     
-           other:[],
            profile_image:[],
+           certificate:[],
+           insurance:[], 
+           business_license:[], 
+           tin_certificate:[],     
+           
            otherdocument:[],
            otherdocument1:[],
            otherdocument2:[],
@@ -1490,6 +1626,8 @@ export default {
            otherdocument4:[],
            otherdocument5:[],
 
+           other:[],
+           
            //others 
            edited:false,
            verification:false,
@@ -1514,6 +1652,12 @@ export default {
 
            insurance_extension:'',
            insurance_url:'',
+
+           business_license_extension:'',
+           business_license_url:'',
+
+           tin_certificate_extension:'',
+           tin_certificate_url:'',
 
            // expansion pannel
             panel: [0, 1],
@@ -1832,10 +1976,24 @@ export default {
                         this.field_required = true
                         return false
 
+                }else if (this.rules.letters(this.aname) == 'Letters only required') {         
+
+                        console.log(2);
+                        this.field = 'Account name should be letters only'
+                        this.field_required = true
+                        return false
+
                 }else if(this.rules.required(this.acnumber) == 'Required'){
 
                         console.log(12);
                         this.field = 'Account number field is required'
+                        this.field_required = true
+                        return false
+
+                }else if(this.rules.number(this.acnumber) == 'Number only required'){       // ----------------------------------
+
+                        console.log(12);
+                        this.field = 'Account number should be numbers only with no space.'
                         this.field_required = true
                         return false
 
@@ -1866,6 +2024,34 @@ export default {
                         console.log(this.insurance_url);
                         
                         this.field = 'kindly attach Insurance'
+                        this.field_required = true
+                        return false
+
+                }else if(this.tin_certificate_url == '' && this.tin_certificate == ''){
+
+                        console.log(15);
+                        this.field = 'kindly attach Tin certifiacte'
+                        this.field_required = true
+                        return false
+
+                }else if(this.tin_certificate_url == '' && this.tin_certificate.length == 0){
+
+                        console.log(16);
+                        this.field = 'kindly attach Tin certifiacte'
+                        this.field_required = true
+                        return false  //-------
+
+                }else if(this.business_license_url == '' && this.business_license == ''){
+
+                        console.log(15);
+                        this.field = 'kindly attach Business license'
+                        this.field_required = true
+                        return false
+
+                }else if(this.business_license_url == '' && this.business_license.length == 0){
+
+                        console.log(16);
+                        this.field = 'kindly attach Business license'
                         this.field_required = true
                         return false
 
@@ -2155,6 +2341,121 @@ export default {
                         }
            },
 
+           updatetin_certificate(){
+                //this.certificate = []
+               //this.certificate.push(document.getElementById("certificate").files[0])
+
+                if(document.getElementById("tin_certificate").files[0]){
+
+                    this.tin_certificate = [];
+
+                    this.tin_certificate.push(document.getElementById("tin_certificate").files[0]);
+                    
+                    this.tin_certificate_extension = this.getFileExtension(document.getElementById("tin_certificate").files[0].name);
+
+                    if ( this.tin_certificate[0].size < 2024000){
+
+                            if(this.tin_certificate_extension === 'jpg' 
+                                || this.tin_certificate_extension === 'jpeg' 
+                                || this.tin_certificate_extension === 'png')
+                            {
+
+
+                                var reader = new FileReader();
+
+                                reader.onload = function(){
+
+                                    var dataURL = reader.result;
+
+                                    var output = document.getElementById('tin_certificate_thumb');
+
+                                    var large_thumbnail = document.getElementById('large_thumbnail');
+                                    
+                                    if(output !== null)
+                                        output.src = dataURL;
+
+                                    if(large_thumbnail !== null)
+                                        large_thumbnail.src = dataURL;
+                                
+                                }
+
+                                reader.readAsDataURL(document.getElementById("tin_certificate").files[0]);
+                            }
+                            else if(this.tin_certificate_extension === 'pdf'){
+                                this.tin_certificate_url = URL.createObjectURL(document.getElementById("tin_certificate").files[0]);
+
+                                this.previewPdf(this.tin_certificate_url);
+                            }
+                    }else{
+
+                            this.largefilesize = true
+                            this.tin_certificate_extension = 'largefile'
+                            this.tin_certificate = []
+                            console.log(this.tin_certificate);
+
+                    }
+
+                
+                }
+           },
+
+           updatebusiness_license(){
+                //this.certificate = []
+               //this.certificate.push(document.getElementById("certificate").files[0])
+
+                if(document.getElementById("business_license").files[0]){
+
+                    this.business_license = [];
+
+                    this.business_license.push(document.getElementById("business_license").files[0]);
+                    
+                    this.business_license_extension = this.getFileExtension(document.getElementById("business_license").files[0].name);
+
+                    if ( this.business_license[0].size < 2024000){
+
+                            if(this.business_license_extension === 'jpg' 
+                                || this.business_license_extension === 'jpeg' 
+                                || this.business_license_extension === 'png')
+                            {
+
+
+                                var reader = new FileReader();
+
+                                reader.onload = function(){
+
+                                    var dataURL = reader.result;
+
+                                    var output = document.getElementById('business_license_thumb');
+
+                                    var large_thumbnail = document.getElementById('large_thumbnail');
+                                    
+                                    if(output !== null)
+                                        output.src = dataURL;
+
+                                    if(large_thumbnail !== null)
+                                        large_thumbnail.src = dataURL;
+                                
+                                }
+
+                                reader.readAsDataURL(document.getElementById("business_license").files[0]);
+                            }
+                            else if(this.business_license_extension === 'pdf'){
+                                this.business_license_url = URL.createObjectURL(document.getElementById("business_license").files[0]);
+
+                                this.previewPdf(this.business_license_url);
+                            }
+                    }else{
+
+                            this.largefilesize = true
+                            this.business_license_extension = 'largefile'
+                            this.business_license = []
+                            console.log(this.business_license);
+
+                    }
+
+                
+                }
+           },
 
            otherAttachmentsUpdated(){
 
@@ -2612,6 +2913,12 @@ export default {
 
                     if(this.insurance.length > 0)
                         formdata.append('insurance[0]', this.insurance[0])
+
+                    if(this.tin_certificate.length > 0)
+                        formdata.append('tin_certificate[0]', this.tin_certificate[0])
+
+                    if(this.business_license.length > 0)
+                        formdata.append('business_license[0]', this.business_license[0])
 
                     if(this.otherdocument.length > 0){
                         formdata.append('otherfiles[0][file]', this.otherdocument[0])

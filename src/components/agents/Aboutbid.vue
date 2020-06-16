@@ -291,7 +291,7 @@
                         </v-flex>
 
                         <v-flex column class="mt-7 pr-4">
-                            <p class="primary--text body-1 mb-0">BID TERMS AND CONDITIIONS </p>
+                            <p class="primary--text body-1 mb-0">BID TERMS AND CONDITIONS </p>
                             <p class="body-1">{{LOAD_DASHBOARD.objects.bid_terms_and_conditions}}</p>
                         </v-flex>
                         </v-flex>

@@ -226,22 +226,32 @@
                             </center>
                         </v-flex>
 
-                         <v-dialog v-model="acceptDialog" max-width="500" >
-                                    <v-card>
-                                        <v-card-title>Are you sure you want to accept this tender?</v-card-title>
+                         <v-dialog   background-color="primary" v-model="acceptDialog" max-width="500" >
+                                    <v-card color="#2296f3">
+                                        <v-card-title class="white--text">Are you sure you want to accept this tender?</v-card-title>
                                         <v-card-actions row>
  
                                             <v-btn 
+                                                color="error" 
+                                                small 
+                                                elevation="" 
+                                                @click="acceptDialog = false" 
+                                                class="ml-3 font-weight-bold" >
+                                                NO
+                                            </v-btn>
+
+                                            <v-spacer></v-spacer>
+
+                                            <v-btn 
                                                 color="green"
                                                 @click="acceptbid(tender.id)" 
-                                                class="white--text"
+                                                class="white--text font-weight-bold mr-5"
                                                 small 
-                                                elevation="flat" 
+                                                elevation="" 
                                              >
                                              YES
                                              </v-btn>
-                                            <v-spacer></v-spacer>
-                                            <v-btn color="#4169E1" text @click="acceptDialog = false" class="mt-2 ml-2">NO</v-btn>
+                                             
                                         </v-card-actions>
                                     </v-card>
                         </v-dialog>

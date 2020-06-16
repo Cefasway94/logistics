@@ -17,10 +17,13 @@
 
 <!--         alerts ------------  --> 
                 <!-- added by Mary and sudi -- start -->
+                
                 <v-alert
-                :value="msgVerify"
-                color="#DC493A"
-                icon="error_outline"
+                elevation="10"
+               :value="msgVerify"
+                type="success"
+                prominent
+                transition="slide-x-transition"
                 >
                 Your Account have been Verified. Kindly login to proceed
                 </v-alert>
@@ -28,7 +31,10 @@
                 <!-- added by Mary and sudi -- end -->
                 <v-alert
                 :value="Connectionerror"
-                color="#DC493A"
+                type="error"
+                elevation="10"
+                transition="slide-x-transition"
+                prominent
                 icon="error_outline"
                 >
                 Connection time out, please check your internet and try again.
@@ -36,7 +42,10 @@
 
                 <v-alert
                 :value="error"
-                color="#DC493A"
+                type="error"
+                elevation="10"
+                transition="slide-x-transition"
+                prominent
                 icon="error_outline"
                 >
                 Field cant be empty
@@ -44,7 +53,10 @@
 
                 <v-alert
                 :value="Perror"
-                color="#DC493A"
+                type="error"
+               elevation="10"
+                transition="slide-x-transition"
+                prominent
                 icon="error_outline"
                 >
                 Kindly check your email and password and try again
@@ -53,7 +65,10 @@
                 
                 <v-alert
                 :value="Eerror"
-                color="#DC493A"
+                type="error"
+                elevation="10"
+                transition="slide-x-transition"
+                prominent
                 icon="error_outline"
                 >
                 Kindly check your email and password and try again
@@ -62,7 +77,10 @@
                 <v-alert
                 text
                 :value="Verror"
-                color="deep-orange"
+                type="warning"
+                elevation="10"
+                transition="slide-x-transition"
+                prominent
                 icon="error_outline"
                 >
                 Kindly check your email and verify your account
@@ -70,7 +88,10 @@
 
                 <v-alert
                 :value="Cerror"
-                color="#DC493A"
+                type="error"
+                elevation="10"
+                transition="slide-x-transition"
+                prominent
                 icon="error_outline"
                 >
                   {{DisplayCerror}}
@@ -78,7 +99,10 @@
 
                 <v-alert
                 :value="servererror"
-                color="orange"
+                type="warning"
+                elevation="10"
+                transition="slide-x-transition"
+                prominent
                 icon="error_outline"
                 >
                   {{Displayservererror}}
@@ -314,9 +338,19 @@ methods:{
      var msg = window.location.hash.split('msg=')[1];
      //console.log(msg);
      if (msg == null){
+
        this.msgVerify = false
+
      } else {
-       this.msgVerify = true
+
+        setTimeout(()=>{
+         this.msgVerify = true
+       },400)
+
+       setTimeout(()=>{
+         this.msgVerify = false
+       },4000)
+       
      }
 
    },
