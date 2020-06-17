@@ -162,9 +162,7 @@
                                                            
                                                             <v-chip 
                                                                 v-if="tender.tender_status == 'rejected'"
-                                                                
-                                                                small 
-                                                                v-on="on"
+                                                                small
                                                                 class="light-green white--text caption font-weight-bold mx-2" 
                                                             >
                                                                 awarded
@@ -214,59 +212,21 @@
 
                                                 <v-card-actions>
                                                     <v-row class="px-3">
-                                                    
-                                                        <v-dialog              
-                                                            v-model="tenderResetDialog"
-                                                            :retain-focus="false"
-                                                            width="450"
+                                                        
+                                                        <v-btn
+                                                            small 
+                                                            color="#4169E1" 
+                                                            class="white--text ml-1"
+                                                            elevation="flat"
+                                                            v-show="tender.tender_status === 'rejected'"
+                                                            :to="'/client/edittender/' + tender.id+'/'+tender.tender_type"  
                                                         >
-                                                            <template v-slot:activator="{ on }">
-                                                                <v-btn
-                                                                    small 
-                                                                    color="#4169E1" 
-                                                                    class="white--text ml-1"
-                                                                    elevation="flat"
-                                                                    v-show="tender.tender_status === 'rejected'"
-                                                                    v-on="on"
-                                                                >
-                                                                    Reset tender
-                                                                </v-btn>
-                                                            </template>
-
-                                                            <v-card>
-
-                                                                <v-card-title class="body-3 grey lighten-2">
-
-                                                                    Are you sure you want to reset this tender?
-
-                                                                </v-card-title>
-
-
-                                                                <v-divider></v-divider>
-
-                                                                <v-card-actions>
-                                                                    <v-spacer></v-spacer>
-                                                                        <v-btn
-                                                                        color="primary"
-                                                                        text
-                                                                        @click="tenderResetDialog = false"
-                                                                        >
-                                                                        No
-                                                                    </v-btn>
-                                                                    <v-btn
-                                                                        color="primary"
-                                                                        text
-                                                                        @click="resetTender(tender)"
-                                                                        >
-                                                                        Yes
-                                                                    </v-btn>
-                                                                </v-card-actions>
-                                                            </v-card>
-                                                        </v-dialog>
+                                                            Reset tender
+                                                        </v-btn>
 
                                                         <v-spacer></v-spacer>
                                                         <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/'+tender.id">View Details</v-btn>-->
-                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View</v-btn>
+                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View details</v-btn>
                                                     </v-row>
                                                 </v-card-actions>
 
@@ -319,18 +279,28 @@
                                                     </v-row>
 
                                                     <v-row>
-                                                        <v-col cols="8">
-                                                            <p  class="title">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
-                                                        </v-col>
 
-                                                         <v-spacer></v-spacer>
+                                                       <v-col>
+                                                           <p  class="title">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
+                                                       </v-col>
 
-                                                        <v-col cols="4">
+                                                    </v-row>
 
-                                                            <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View</v-btn>
+                                                    <v-row>
 
-                                                        </v-col>
-                                                         
+                                                        <v-btn
+                                                            small 
+                                                            color="#4169E1" 
+                                                            class="white--text ml-1"
+                                                            elevation="flat"
+                                                            v-show="tender.tender_status === 'rejected'"
+                                                            :to="'/client/edittender/' + tender.id+'/'+tender.tender_type"  
+                                                        >
+                                                            Reset tender
+                                                        </v-btn>
+
+                                                        <v-spacer></v-spacer>
+                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tender/' + tender.id+'/'+tender.tender_type">View details</v-btn>
                                                     </v-row>
 
                                                 </v-card-text>
@@ -473,14 +443,13 @@
 
                                                     </v-col>
 
-                                                     <v-spacer></v-spacer>
+                                                </v-row>
 
-                                                    <v-col>
+                                                <v-row>
 
-                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text"  @click="set(tender)" :to="'/client/AboutTenderBids/'+ tender.id+'/'+tender.tender_type">View Bids</v-btn>
-
-                                                    </v-col>
-
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn small elevation="flat" color="#4169E1" class="white--text"  @click="set(tender)" :to="'/client/AboutTenderBids/'+ tender.id+'/'+tender.tender_type">View Bids</v-btn>
+                                                    
                                                 </v-row>
 
                                                 </v-card-text>
@@ -527,16 +496,23 @@
                                                         </v-col>
                                                     </v-row>
 
-                                                </v-card-text>
+                                                    <v-row row class="px-3">
 
-                                                
-
-                                                <v-row row class="px-3">
-                                                    
+                                                        <v-btn 
+                                                            small elevation="flat" 
+                                                            color="#4169E1" 
+                                                            class="white--text" 
+                                                            :to="'/client/tenderprogress/'+tender.id+'/'+tender.tender_type"
+                                                        >
+                                                            PAY
+                                                        </v-btn>
+                                                        
                                                         <v-spacer></v-spacer>
                                                         <!--<v-btn small elevation="flat" color="#4169E1" class="white--text" router to="/client/aboutbid">View Details</v-btn>-->
                                                         <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tenderprogress/'+tender.id+'/'+tender.tender_type">Show progress</v-btn>
-                                                </v-row>
+                                                    </v-row>
+
+                                                </v-card-text>
                                             </v-card>
                                         </v-flex> 
 
@@ -582,12 +558,22 @@
                                                             <p class="body-2 font-weight-bold">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{ tender.currency}} </p>
 
                                                         </v-col>
+                                                    </v-row>
+                                                    <v-row>
 
-                                                        <v-spacer></v-spacer>
+                                                        <v-btn 
+                                                            small elevation="flat" 
+                                                            color="#4169E1" 
+                                                            class="white--text" 
+                                                            :to="'/client/payment/'+tender.id+'/'+tender.tender_type"
+                                                            :disabled="tender.payment_status === 'full'"
+                                                        >
+                                                            PAY
+                                                        </v-btn>
 
-                                                        <v-col>
-                                                            <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tenderprogress/'+tender.id+'/'+tender.tender_type">Show progress</v-btn>
-                                                        </v-col>
+                                                         <v-spacer></v-spacer>
+                                                         
+                                                        <v-btn small elevation="flat" color="#4169E1" class="white--text" :to="'/client/tenderprogress/'+tender.id+'/'+tender.tender_type">Show progress</v-btn>
                                                     </v-row>
 
                                                 </v-card-text>
@@ -688,48 +674,48 @@ export default {
 
           this.tenderResetDialog = false;
 
-          console.log("TENDER IS "+ tender.id);
+          console.log("TENDER IS "+ tender);
 
-          if(tender.tender_type === 'Clearing')
-          {
-              let url = "http://207.180.215.239:8000/api/v1/tenders/reset-tender/"+tender.id;
+        //   if(tender.tender_type === 'Clearing')
+        //   {
+        //       let url = "http://207.180.215.239:8000/api/v1/tenders/reset-tender/"+tender.id;
 
-              axios.post(url)
-                .then((response)=>{
+        //       axios.post(url)
+        //         .then((response)=>{
             
-                    if(response.data.genralErrorCode === 8000)
-                    {
+        //             if(response.data.genralErrorCode === 8000)
+        //             {
 
                         
-                        this.alert = false;
+        //                 this.alert = false;
 
-                        this.setAlert(response.data.message);
+        //                 this.setAlert(response.data.message);
 
-                        //this.$router.push('/client');
+        //                 //this.$router.push('/client');
 
-                        //this.$router.go('/client');
+        //                 //this.$router.go('/client');
 
-                    } else if(response.data.genralErrorCode === 8004){
+        //             } else if(response.data.genralErrorCode === 8004){
 
-                        this.alert = false;
+        //                 this.alert = false;
 
-                        this.setAlert(response.data.message,"error");
+        //                 this.setAlert(response.data.message,"error");
                         
-                    }
+        //             }
 
-                }).catch(()=>{
+        //         }).catch(()=>{
 
-                    setTimeout(()=>{
+        //             setTimeout(()=>{
 
-                        this.setAlert("There is internal server error","error");
+        //                 this.setAlert("There is internal server error","error");
 
-                    },1000)
-                });
-          }
-          else if(tender.tender_type === 'Transporting')
-          {
-              console.log("reseting transporting");
-          }
+        //             },1000)
+        //         });
+        //   }
+        //   else if(tender.tender_type === 'Transporting')
+        //   {
+        //       console.log("reseting transporting");
+        //   }
 
           
       },

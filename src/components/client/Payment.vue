@@ -30,6 +30,29 @@
             </v-overlay>
 
             <v-dialog
+                v-model="low_amount"
+                max-width="400"
+                color="#f5faff"
+                transition="scale-transition"
+                :hide-overlay="true"
+            >
+            <v-card 
+                height="105" 
+                color="#f64f51" 
+                class="pt-2"
+            >
+
+                <v-alert  
+                    prominent
+                    height="" 
+                    type="error">
+                    <p class="font-weight-strong mb-0">{{low_amount_message}}</p>
+                </v-alert>
+
+            </v-card>
+        </v-dialog>
+
+            <v-dialog
                 v-model="display_file_size_error"
                 max-width="400"
                 color="#F5FAFF"
@@ -351,7 +374,10 @@ export default {
 
             url:'',
             pdf:false,
-            pdfOverlay:false
+            pdfOverlay:false,
+
+            low_amount_message:'',
+            low_amount:false,
 
         }
     },
@@ -367,12 +393,6 @@ export default {
     methods:{
 
         ...mapActions(['fetchCurrencies']),
-
-        /*setCurrencies(){
-    
-            for(let i = 0; i< this.getCurrencies.length; i++)
-                this.currencies.push(this.getCurrencies[i].name)      
-        },*/
 
     previewPdf(url){
 
@@ -495,20 +515,6 @@ export default {
 
         createData(){
 
-            //eslint-disable-next-line no-console
-                               
-
-            /*for(let i = 0; i< this.currency_object.length; i++)
-            {
-
-                if(this.currency_object[i].name === this.currency)
-                {
-                     this.currency_id = this.currency_object[i].id;
-
-                     break;
-                }
-            }*/
-                
             let formData = new FormData();
             
             formData.append('amount',this.amount);
@@ -544,10 +550,13 @@ export default {
 
                 let url = `http://207.180.215.239:8002/api/customerpayment/create/${this.tender.id}/${this.tender.tender_type}`;
 
-                if(this.no_of_installment == "1"){
+               
 
-                    if(this.tender.customer_offer_amount == this.amount){
+                if(this.no_of_installment === "1"){
 
+                    if(this.amount >= this.tender.customer_offer_amount){
+
+                       
                     axios.post(url,
                                 formData,
                                 {
@@ -557,32 +566,56 @@ export default {
                                 }).
                                 then((response) => {
 
-                                    //eslint-disable-next-line no-console
-                                        console.log(response.data);
-                                        
-                                    /*if(response.data.genralErrorCode == 8004){
-                                        
-                                        this.loading = false;
-
-                                        this.display_alert = false;
-
-                            
-                                        this.alert = response.data.message;
-                                    }
-                                    else if(response.data.genralErrorCode == 8000){
-
-                                        this.loading = false;
-
-                                        this.display_alert = false;
-
-                                        this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
-                                    }*/
+                                    
+                                    console.log(response.data);
+                                   
 
                                     if(response.data.genralErrorCode === 8000){
 
                                         this.loading = false;
 
                                         this.alert = false;
+
+                                        let status = response.data.objects.is_full_amount_paid === 1 ? 1:0;
+                                        
+                                        let port = this.tender.tender_type === 'Clearing' ? 8000: 9000;
+
+
+                                        axios.post(`http://207.180.215.239:${port}/api/v1/tenders/set-payment-status/${this.tender.id}`,{
+
+                                            'payment_status': status
+                                        })
+                                        .then((response)=>{
+
+                                            if(response.data.genralErrorCode === 8004){
+
+                                                this.alert = false;
+
+                                                setTimeout(()=>{
+
+                                                    this.setAlert(response.data.message,"error");
+                                                },500);
+
+                                                this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+
+                                            }
+
+                                        })
+                                        .catch(()=>{
+
+
+                                            this.loading = false;
+
+                                            setTimeout(()=>{
+
+                                                this.setAlert("There is internal server error during updating tender payment status","error");
+
+                                            },500);
+
+                                            this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+
+                                        });
+
 
                                         this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
 
@@ -612,6 +645,13 @@ export default {
                                 });  
 
                     }
+                    else {
+
+                        this.loading = false;
+                        this.low_amount_message = "Payment for this tender is single installment, you need to put the required amount";
+                        this.low_amount = true;
+
+                    }
 
                 } else {
 
@@ -629,6 +669,47 @@ export default {
                                         this.loading = false;
 
                                         this.alert = false;
+
+                                        let status = response.data.objects.is_full_amount_paid === 1 ? 1:0;
+                                        
+                                        let port = this.tender.tender_type === 'Clearing' ? 8000: 9000;
+
+
+                                        axios.post(`http://207.180.215.239:${port}/api/v1/tenders/set-payment-status/${this.tender.id}`,{
+
+                                            'payment_status': status
+                                        })
+                                        .then((response)=>{
+
+                                            if(response.data.genralErrorCode === 8004){
+
+                                                this.alert = false;
+
+                                                setTimeout(()=>{
+
+                                                    this.setAlert(response.data.message,"error");
+                                                },500);
+
+                                                this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+
+                                            }
+
+                                        })
+                                        .catch(()=>{
+
+
+                                            this.loading = false;
+
+                                            setTimeout(()=>{
+
+                                                this.setAlert("There is internal server error during updating tender payment status","error");
+
+                                            },500);
+
+                                            this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
+
+                                        });
+
 
                                         this.$router.push('/client/tenderprogress/'+this.tender.id+'/'+this.tender.tender_type);
                                     }
@@ -774,7 +855,6 @@ export default {
 
                                     },1000)
                                }
-                               
 
                             }).catch(()=>{
 

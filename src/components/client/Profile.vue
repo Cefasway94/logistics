@@ -491,6 +491,48 @@
 
             <v-row class="mt-5" v-if="otherFiles.length > 0">
 
+                                    <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+
+                                    <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
+
+                                        <p class="mb-3 ml-3 body-1">{{file.name}}</p>
+
+                                        <v-card flat width="200" height="150" outlined>
+                                            <v-row>
+                                                <v-col >
+                                                    <div 
+                                                        v-show="(getFileExtension(file['url']) === 'jpg') || (getFileExtension(file['url']) === 'jpeg') || (getFileExtension(file['url']) === 'png')" 
+                                                        @click="largePreview(file['url'])"
+                                                    >
+                                                        <v-img 
+                                                            :src="file['url']"  
+                                                            class="mb-0 pb-0 oxoImg" 
+                                                            height="147" 
+                                                            width="200" >
+                                                        </v-img>
+                                                    </div>
+                                                
+                                                    <div v-show="getFileExtension(file['url']) === 'pdf'">
+
+                                                        <v-btn 
+                                                            :block="true"
+                                                            icon class="mt-7" 
+                                                            @click="previewPdf(file['url'])"
+                                                            >
+                                                            PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                                        </v-btn>
+
+                                                    </div>
+                                                </v-col>
+                                            </v-row>
+                                        </v-card>
+                                    </v-col>
+                                </v-row>
+
+<!--                                 
+
+            <v-row class="mt-5" v-if="otherFiles.length > 0">
+
                 <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
 
                 <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
@@ -526,7 +568,7 @@
                         </v-row>
                     </v-card>
                 </v-col>
-            </v-row>
+            </v-row> -->
 
         </v-card>
         <v-card col flat width="1000" class="mx-auto mb-10" color="#F5FAFF">
