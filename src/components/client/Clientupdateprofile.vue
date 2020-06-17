@@ -213,20 +213,27 @@
 
             <div v-show="showStageOne()">
                 <v-card width="1300" class="mx-auto mb-5 d-flex pa-3" color="">
-                    <v-flex row xs12>
-                        <v-select 
-                            class="mx-6" 
-                            style="color:#4169E1;"
-                            v-model = "client_type" 
-                            :items="client_types" 
-                            color="#4169E1" 
-                            label="Select your type" 
-                            clearable 
-                            :rules="[v => !!v || 'Client type is required']"
-                            required
+
+                   
+                    
+                    <v-radio-group 
+                        row 
+                        v-model="client_type" 
+                        :mandatory="true"
+                        :rules="[v => !!v || 'Client type is required']"
+                        class="ml-5"
+                    >
+                        <v-radio 
+                            v-for="customer_type in customer_types" 
+                            :key="customer_type.id"
+                            :label="customer_type.customer_type"
+                            :value="customer_type.customer_type"
                         >
-                        </v-select>
-                    </v-flex>
+                            
+                        </v-radio>
+                    </v-radio-group>
+                    
+                 
                 </v-card>
             </div>
 
