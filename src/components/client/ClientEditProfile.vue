@@ -833,37 +833,50 @@
                         </v-col>              
                     </v-row>
 
-                    <v-row class="mt-5" v-if="currentFiles.length > 0">
+                   
 
-                        <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+                     <v-row class="mt-5" v-if="currentFiles.length > 0">
 
-                        <v-col cols=12 md=4 v-for="(file,key) in currentFiles" :key="key">
+                        <v-col cols=12>
+                            <p class="primary--text body-1 mb-0 ml-2 mt-3 text-center">
+                                 OTHER DOCUMENTS
+                            </p>
+                            <v-divider color="" class="mb-0 mt-2"></v-divider>
+                        </v-col>
 
-                            <p><span class="red--text" style="cursor:pointer" v-on:click="removeCurrentFile( key )">Remove</span></p>
 
-                            <v-card flat width="200" height="150" outlined>
+                       <v-col cols=12 md=4 v-for="(file,key) in currentFiles" :key="key">
+
+                            <p class="mb-2 text-center body-1"> 
+                                {{ file.name }} 
+                                <span class="red--text ml-6 "   style="cursor:pointer" v-on:click="removeCurrentFile( key )">
+                                    Remove
+                                </span>
+                            </p>
+
+                            <v-card flat width="200" height="150" outlined class="mx-auto">
 
                                 <v-row>
                                     <v-col >
                                         <div 
-                                            v-show="(getFileExtension(file) === 'jpg') || (getFileExtension(file) === 'jpeg') || (getFileExtension(file) === 'png')" 
-                                            @click="largePreview(file)"
+                                            v-show="(getFileExtension(file['url']) === 'jpg') || (getFileExtension(file['url']) === 'jpeg') || (getFileExtension(file['url']) === 'png')" 
+                                            @click="largePreview(file['url'])"
                                         >
                                 
                                             <v-img 
-                                                :src="file"  
+                                                :src="file['url']"  
                                                 class="mb-0 pb-0 oxoImg" 
                                                 height="147" 
                                                 width="200" >
                                             </v-img>
                                         </div>
                                     
-                                        <div v-show="getFileExtension(file) === 'pdf'">
+                                        <div v-show="getFileExtension(file['url']) === 'pdf'">
 
                                             <v-btn 
                                                 :block="true"
                                                 icon class="mt-7" 
-                                                @click="previewPdf(file)"
+                                                @click="previewPdf(file['url'])"
                                                 >
                                                 PREVIEW<v-icon x-large>mdi-file</v-icon>
                                             </v-btn>
@@ -875,25 +888,518 @@
                         </v-col>
                     </v-row>
 
+                    <!-- added by mary start -->
                     <v-row>
-                        <v-col cols=12>
-
-                            <v-file-input 
-
-                                :clearable="false"
-                                placeholder="Choose a file"
-                                class="fileinput"
-                                id="otheFiles"
-                                @change="otherAttachmentsUpdated()"
-                                prepend-icon ="mdi-cloud-upload"
+                    <v-card flat width="850" class="mx-auto">
+                    
+                            <v-expansion-panels 
+                            
+                            v-model="panel"
+                            :accordion="true"
+                            :hover="true"
+                            :flat="true"
                             >
-                            </v-file-input>
 
-                            <v-btn @click="addFiles()">
-                                Add other documents
-                            </v-btn>
-                        </v-col>
+                            <v-expansion-panel
+                            
+                            >
+                                <v-expansion-panel-header>
+                                    <v-flex class="">
+                                    <p class="font-weight-regular text-uppercase text-center body-1 primary--text pt-1">
+                                        add other files
+                                    </p> 
+                                     </v-flex>
+                                </v-expansion-panel-header>
+
+                                <v-expansion-panel-content>
+                                     
+                                     <v-divider color="" class="mb-4"></v-divider>
+                                    
+                                        <v-row>
+                                        
+                                        <!-- pannel content -->
+                                            <v-col cols=12 sm=4 class="">
+
+                                                <v-row class="ml-9 mb-3">
+                                                    <!-- <v-icon class="font-weight-regular">attachment</v-icon> -->
+
+                                                    <p class="font-weight-bold text-center body-1 grey_text--text mb-0 ml-5">
+                                                        Attachment 1
+                                                    </p> 
+                                                </v-row>
+
+                                                <v-text-field 
+                                                v-model="otherdocument_title"
+                                                outlined 
+                                                class="" 
+                                                clearable 
+                                                color="#4169E1"
+                                                label="title"
+                                                dense
+                                                >
+                                                        
+                                                </v-text-field>
+                                                
+                                                <v-card flat width="250"  >
+
+                                                    <v-file-input 
+                                                        dense
+                                                        :clearable="false"
+                                                        placeholder="Choose a file"
+                                                        id="otherdocument" 
+                                                        @change="expansionpannelfiles()"
+                                                        prepend-inner-icon="mdi-cloud-upload"
+                                                        prepend-icon=""
+                                                        
+                                                        outlined
+                                                    >
+
+                                                    </v-file-input>
+
+                                                    <div v-show="otherdocument_extension === 'jpg' || otherdocument_extension === 'jpeg' || otherdocument_extension === 'png'">
+                                                        <v-card height="200" width="250" outlined @click="handleClick('otherdocument',otherdocument_url)">
+                                                            <img  id="otherdocument_thumb" :src="otherdocument_url" class="preview">
+                                                        </v-card>
+                                                    </div>
+
+                                                    <div v-show="otherdocument_extension === 'largefile' ">
+                                                        <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                            <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                                        </v-card>
+                                                    </div>
+
+                                                    <div v-show="otherdocument_extension === 'pdf'">                                            
+                                                    <v-tooltip right color="#1565C0">
+                                                    <template v-slot:activator="{ on }">
+                                                        <v-card 
+                                                            flat
+                                                            color=""
+                                                            height="198"
+                                                            :block="true"
+                                                            icon 
+                                                            class="py-12 px-12 insurance_preview"
+                                                            @click="previewPdf(otherdocument_url)"
+                                                            v-on="on">
+                                                            <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                                        </v-card>
+                                                    </template>
+                                                    <span>Click to view document</span>
+                                                </v-tooltip>
+                                                    
+                                                <!--  -->
+                                            </div>
+                                        </v-card>
+                                    </v-col> 
+
+                                    <!-- <v-divider color="" :vertical="true"></v-divider> -->
+
+                                    <!-- pannel content 1-->
+                                            <v-col cols=12 sm=4 class="">
+
+                                                <v-row class="ml-9 mb-3">
+                                                    <!-- <v-icon class="">attachment</v-icon> -->
+
+                                                    <p class="font-weight-bold text-center body-1 grey_text--text mb-0 ml-5">
+                                                        Attachment 2
+                                                    </p> 
+                                                </v-row>
+
+                                                <v-text-field 
+                                                v-model="otherdocument1_title"
+                                                outlined 
+                                                class="" 
+                                                clearable 
+                                                color="#4169E1"
+                                                label="title"
+                                                dense
+                                                >
+                                                        
+                                                </v-text-field>
+                                                
+                                                <v-card flat width="250"  >
+
+                                                    <v-file-input 
+                                                        dense
+                                                        :clearable="false"
+                                                        placeholder="Choose a file"
+                                                        id="otherdocument1" 
+                                                        @change="expansionpannelfiles1()"
+                                                        prepend-inner-icon="mdi-cloud-upload"
+                                                        prepend-icon=""
+                                                        
+                                                        outlined
+                                                    >
+
+                                                    </v-file-input>
+
+                                                    <div v-show="otherdocument1_extension === 'jpg' || otherdocument1_extension === 'jpeg' || otherdocument1_extension === 'png'">
+                                                        <v-card height="200" width="250" outlined @click="handleClick('otherdocument1',otherdocument1_url)">
+                                                            <img  id="otherdocument1_thumb" :src="otherdocument1_url" class="preview">
+                                                        </v-card>
+                                                    </div>
+
+                                                    <div v-show="otherdocument1_extension === 'largefile' ">
+                                                        <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                            <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                                        </v-card>
+                                                    </div>
+
+                                                    <div v-show="otherdocument1_extension === 'pdf'">                                            
+                                                    <v-tooltip right color="#1565C0">
+                                                    <template v-slot:activator="{ on }">
+                                                        <v-card 
+                                                            flat
+                                                            color=""
+                                                            height="198"
+                                                            :block="true"
+                                                            icon 
+                                                            class="py-12 px-12 insurance_preview"
+                                                            @click="previewPdf(otherdocument1_url)"
+                                                            v-on="on">
+                                                            <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                                        </v-card>
+                                                    </template>
+                                                    <span>Click to view document</span>
+                                                </v-tooltip>
+                                                    
+                                                <!--  -->
+                                            </div>
+                                        </v-card>
+                                        
+                                    </v-col> 
+
+                                    <!-- <v-divider color="" :vertical="true"></v-divider> -->
+
+                                    <!-- pannel content 2-->
+                                            <v-col cols=12 sm=4 class="">
+
+                                                <v-row class="ml-9 mb-4">
+                                                    <!-- <v-icon class="">attachment</v-icon> -->
+
+                                                    <p class="font-weight-bold text-center body-1 grey_text--text mb-0 ml-5">
+                                                        Attachment 3
+                                                    </p> 
+                                                </v-row>
+
+                                                <v-text-field 
+                                                v-model="otherdocument2_title"
+                                                outlined 
+                                                class="" 
+                                                clearable 
+                                                color="#4169E1"
+                                                label="title"
+                                                
+                                                dense
+                                                >
+                                                        
+                                                </v-text-field>
+                                                
+                                                <v-card flat width="250"  >
+
+                                                    <v-file-input 
+                                                        dense
+                                                        :clearable="false"
+                                                        placeholder="Choose a file "
+                                                        id="otherdocument2" 
+                                                        @change="expansionpannelfiles2()"
+                                                        prepend-inner-icon="mdi-cloud-upload"
+                                                        prepend-icon=""
+                                                    
+                                                    
+                                                        outlined
+                                                    >
+
+                                                    </v-file-input>
+
+                                                    <div v-show="otherdocument2_extension === 'jpg' || otherdocument2_extension === 'jpeg' || otherdocument2_extension === 'png'">
+                                                        <v-card height="200" width="250" outlined @click="handleClick('otherdocument2',otherdocument2_url)">
+                                                            <img  id="otherdocument2_thumb" :src="otherdocument2_url" class="preview">
+                                                        </v-card>
+                                                    </div>
+
+                                                    <div v-show="otherdocument2_extension === 'largefile' ">
+                                                        <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                            <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                                        </v-card>
+                                                    </div>
+
+                                                    <div v-show="otherdocument2_extension === 'pdf'">                                            
+                                                    <v-tooltip right color="#1565C0">
+                                                    <template v-slot:activator="{ on }">
+                                                        <v-card 
+                                                            flat
+                                                            color=""
+                                                            height="198"
+                                                            :block="true"
+                                                            icon 
+                                                            class="py-12 px-12 insurance_preview"
+                                                            @click="previewPdf(otherdocument2_url)"
+                                                            v-on="on">
+                                                            <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                                        </v-card>
+                                                    </template>
+                                                    <span>Click to view document</span>
+                                                </v-tooltip>
+                                                    
+                                                <!--  -->
+                                            </div>
+                                        </v-card>
+                                    </v-col> 
+
+                                    </v-row>
+
+                                </v-expansion-panel-content>
+
+                                <v-expansion-panel-content>
+
+                                    <v-divider color="" class="mb-4" ></v-divider> 
+                                    
+                                    <v-row>
+                                    
+                                    <!-- pannel content 3-->
+                                        <v-col cols=12 sm=4 class="">
+
+                                            <v-row class="ml-9 mb-3">
+                                                <!-- <v-icon class="font-weight-regular">attachment</v-icon> -->
+
+                                                <p class="font-weight-bold text-center body-1 grey_text--text mb-0 ml-5">
+                                                    Attachment 4
+                                                </p> 
+                                            </v-row>
+
+                                            <v-text-field 
+                                            v-model="otherdocument3_title"
+                                            outlined 
+                                            class="" 
+                                            clearable 
+                                            color="#4169E1"
+                                            label="title"
+                                            dense
+                                             >
+                                                    
+                                            </v-text-field>
+                                            
+                                            <v-card flat width="250"  >
+
+                                                <v-file-input 
+                                                    dense
+                                                    :clearable="false"
+                                                    placeholder="Choose a file"
+                                                    id="otherdocument3" 
+                                                    @change="expansionpannelfiles3()"
+                                                    prepend-inner-icon="mdi-cloud-upload"
+                                                    prepend-icon=""
+                                                    
+                                                    outlined
+                                                >
+
+                                                </v-file-input>
+
+                                                <div v-show="otherdocument3_extension === 'jpg' || otherdocument3_extension === 'jpeg' || otherdocument3_extension === 'png'">
+                                                    <v-card height="200" width="250" outlined @click="handleClick('otherdocument3',otherdocument3_url)">
+                                                        <img  id="otherdocument3_thumb" :src="otherdocument3_url" class="preview">
+                                                    </v-card>
+                                                </div>
+
+                                                <div v-show="otherdocument3_extension === 'largefile' ">
+                                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                                    </v-card>
+                                                </div>
+
+                                                <div v-show="otherdocument3_extension === 'pdf'">                                            
+                                                <v-tooltip right color="#1565C0">
+                                                <template v-slot:activator="{ on }">
+                                                    <v-card 
+                                                        flat
+                                                        color=""
+                                                        height="198"
+                                                        :block="true"
+                                                        icon 
+                                                        class="py-12 px-12 insurance_preview"
+                                                        @click="previewPdf(otherdocument3_url)"
+                                                        v-on="on">
+                                                        <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                                    </v-card>
+                                                </template>
+                                                <span>Click to view document</span>
+                                            </v-tooltip>
+                                                
+                                            <!--  -->
+                                        </div>
+                                    </v-card>
+                                </v-col> 
+
+                                 <!-- <v-divider color="" :vertical="true"></v-divider> -->
+
+                                 <!-- pannel content 4-->
+                                        <v-col cols=12 sm=4 class="">
+
+                                            <v-row class="ml-9 mb-3">
+                                                <!-- <v-icon class="">attachment</v-icon> -->
+
+                                                <p class="font-weight-bold text-center body-1 grey_text--text mb-0 ml-5">
+                                                    Attachment 5
+                                                </p> 
+                                            </v-row>
+
+                                            <v-text-field 
+                                            v-model="otherdocument4_title"
+                                            outlined 
+                                            class="" 
+                                            clearable 
+                                            color="#4169E1"
+                                            label="title"
+                                            dense
+                                             >
+                                                    
+                                            </v-text-field>
+                                            
+                                            <v-card flat width="250"  >
+
+                                                <v-file-input 
+                                                    dense
+                                                    :clearable="false"
+                                                    placeholder="Choose a file"
+                                                    id="otherdocument4" 
+                                                    @change="expansionpannelfiles4()"
+                                                    prepend-inner-icon="mdi-cloud-upload"
+                                                    prepend-icon=""
+                                                    
+                                                    outlined
+                                                >
+
+                                                </v-file-input>
+
+                                                <div v-show="otherdocument4_extension === 'jpg' || otherdocument4_extension === 'jpeg' || otherdocument4_extension === 'png'">
+                                                    <v-card height="200" width="250" outlined @click="handleClick('otherdocument4',otherdocument4_url)">
+                                                        <img  id="otherdocument4_thumb" :src="otherdocument4_url" class="preview">
+                                                    </v-card>
+                                                </div>
+
+                                                <div v-show="otherdocument4_extension === 'largefile' ">
+                                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                                    </v-card>
+                                                </div>
+
+                                                <div v-show="otherdocument4_extension === 'pdf'">                                            
+                                                <v-tooltip right color="#1565C0">
+                                                <template v-slot:activator="{ on }">
+                                                    <v-card 
+                                                        flat
+                                                        color=""
+                                                        height="198"
+                                                        :block="true"
+                                                        icon 
+                                                        class="py-12 px-12 insurance_preview"
+                                                        @click="previewPdf(otherdocument4_url)"
+                                                        v-on="on">
+                                                        <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                                    </v-card>
+                                                </template>
+                                                <span>Click to view document</span>
+                                            </v-tooltip>
+                                                
+                                            <!--  -->
+                                        </div>
+                                    </v-card>
+                                    
+                                </v-col> 
+
+                                  <!-- <v-divider color="" :vertical="true"></v-divider> -->
+
+                                <!-- pannel content 5-->
+                                        <v-col cols=12 sm=4 class="">
+
+                                            <v-row class="ml-9 mb-4">
+                                                <!-- <v-icon class="">attachment</v-icon> -->
+
+                                                <p class="font-weight-bold text-center body-1 grey_text--text mb-0 ml-5">
+                                                    Attachment 6
+                                                </p> 
+                                            </v-row>
+
+                                            <v-text-field 
+                                            v-model="otherdocument5_title"
+                                            outlined 
+                                            class="" 
+                                            clearable 
+                                            color="#4169E1"
+                                            label="title"
+                                            
+                                            dense
+                                             >
+                                                    
+                                            </v-text-field>
+                                            
+                                            <v-card flat width="250"  >
+
+                                                <v-file-input 
+                                                    dense
+                                                    :clearable="false"
+                                                    placeholder="Choose a file "
+                                                    id="otherdocument5" 
+                                                    @change="expansionpannelfiles5()"
+                                                    prepend-inner-icon="mdi-cloud-upload"
+                                                    prepend-icon=""
+                                                   
+                                                   
+                                                    outlined
+                                                >
+
+                                                </v-file-input>
+
+                                                <div v-show="otherdocument5_extension === 'jpg' || otherdocument5_extension === 'jpeg' || otherdocument5_extension === 'png'">
+                                                    <v-card height="200" width="250" outlined @click="handleClick('otherdocument5',otherdocument5_url)">
+                                                        <img  id="otherdocument5_thumb" :src="otherdocument5_url" class="preview">
+                                                    </v-card>
+                                                </div>
+
+                                                <div v-show="otherdocument5_extension === 'largefile' ">
+                                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                                    </v-card>
+                                                </div>
+
+                                                <div v-show="otherdocument5_extension === 'pdf'">                                            
+                                                <v-tooltip right color="#1565C0">
+                                                <template v-slot:activator="{ on }">
+                                                    <v-card 
+                                                        flat
+                                                        color=""
+                                                        height="198"
+                                                        :block="true"
+                                                        icon 
+                                                        class="py-12 px-12 insurance_preview"
+                                                        @click="previewPdf(otherdocument5_url)"
+                                                        v-on="on">
+                                                        <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                                    </v-card>
+                                                </template>
+                                                <span>Click to view document</span>
+                                            </v-tooltip>
+                                                
+                                            <!--  -->
+                                        </div>
+                                    </v-card>
+                                </v-col> 
+
+                                </v-row>
+
+                                </v-expansion-panel-content>
+
+                            </v-expansion-panel>
+                            
+                            </v-expansion-panels>
+                    
+                    </v-card>
                     </v-row>
+
+                   
+                    
+
+                    <!-- added by mary end -->
 
                     <v-row class="mt-5">
                         <v-col cols=12 md=3 v-for="(file,key) in otherFiles" :key="key">
@@ -925,10 +1431,7 @@
                         </v-col>
                     </v-row>
 
-                </v-card>
-            </div>
-            
-            <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
+                    <v-card col flat width="1300" class="mx-auto mb-10" color="#F5FAFF">
                 <v-row class=" pa-3">
 
                     <v-col cols="6"
@@ -950,6 +1453,13 @@
                    <v-btn color="primary white--text" :disabled="!isValid()" @click="save">Save</v-btn>
                 </v-row>
             </v-card>
+
+                </v-card>
+
+                
+            </div>
+            
+            
 
         </v-container>   
 </template>
@@ -1050,6 +1560,51 @@ export default {
         currentFiles:[],
         
         files:[],
+
+        otherdocument:[],
+        otherdocument1:[],
+        otherdocument2:[],
+        otherdocument3:[],
+        otherdocument4:[],
+        otherdocument5:[],
+
+        // expansion pannel
+        panel: [0, 1],
+
+        // other document in expansion pannel
+        otherdocument_extension:'',
+        otherdocument_url:'',
+        otherdocument_title:'',
+
+        // other document in expansion pannel 1
+        otherdocument1_extension:'',
+        otherdocument1_url:'',
+        otherdocument1_title:'',
+
+
+        // other document in expansion pannel 2
+        otherdocument2_extension:'',
+        otherdocument2_url:'',
+        otherdocument2_title:'',
+
+        // other document in expansion pannel 3
+        otherdocument3_extension:'',
+        otherdocument3_url:'',
+        otherdocument3_title:'',
+
+        // other document in expansion pannel 4
+        otherdocument4_extension:'',
+        otherdocument4_url:'',
+        otherdocument4_title:'',
+
+        // other document in expansion pannel 5
+        otherdocument5_extension:'',
+        otherdocument5_url:'',
+        otherdocument5_title:'',
+
+        field_required:false,
+        field:'',
+        largefilesize: false,
 
      }),
 
@@ -1186,6 +1741,462 @@ export default {
                 
             }
         },
+
+        validate(){
+
+            if(this.otherdocument.length > 0 && (this.otherdocument_title == '' || this.otherdocument_title == null)){
+
+                    console.log(17);
+                    this.field = 'Please fill title on attachment 1 '
+                    this.field_required = true
+                    return false
+
+            }else if(this.otherdocument.length == 0 && (!this.otherdocument_title == '' || !this.otherdocument_title == null)){
+
+                    console.log(18);
+                    this.field = 'Please attach file on attachment 1'
+                    this.field_required = true
+                    return false
+
+            }else if(this.otherdocument1.length > 0 && (this.otherdocument1_title == '' || this.otherdocument1_title == null)){
+
+                    console.log(17);
+                    this.field = 'Please fill title on attachment 2'
+                    this.field_required = true
+                    return false
+
+            }else if(this.otherdocument1.length == 0 && (!this.otherdocument1_title == '' || !this.otherdocument1_title == null)){
+
+                    console.log(18);
+                    this.field = 'Please attach file on attachment 2'
+                    this.field_required = true
+                    return false
+
+            }else if(this.otherdocument2.length > 0 && (this.otherdocument2_title == '' || this.otherdocument2_title == null)){
+
+                    console.log(17);
+                    this.field = 'Please fill title on attachment 3'
+                    this.field_required = true
+                    return false
+
+            }else if(this.otherdocument2.length == 0 && (!this.otherdocument2_title == '' || !this.otherdocument2_title == null)){
+
+                    console.log(18);
+                    this.field = 'Please attach file on attachment 3'
+                    this.field_required = true
+                    return false
+
+            }else if(this.otherdocument3.length > 0 && (this.otherdocument3_title == '' || this.otherdocument3_title == null)){
+
+                    console.log(17);
+                    this.field = 'Please fill title on attachment 4'
+                    this.field_required = true
+                    return false
+
+            }else if(this.otherdocument3.length == 0 && (!this.otherdocument3_title == '' || !this.otherdocument3_title == null)){
+
+                    console.log(18);
+                    this.field = 'Please attach file on attachment 4'
+                    this.field_required = true
+                    return false
+
+            }else if(this.otherdocument4.length > 0 && (this.otherdocument4_title == '' || this.otherdocument4_title == null)){
+
+                    console.log(17);
+                    this.field = 'Please fill title on attachment 5'
+                    this.field_required = true
+                    return false
+
+            }else if(this.otherdocument4.length == 0 && (!this.otherdocument4_title == '' || !this.otherdocument4_title == null)){
+
+                    console.log(18);
+                    this.field = 'Please attach file on attachment 5'
+                    this.field_required = true
+                    return false
+
+            }else if(this.otherdocument5.length > 0 && (this.otherdocument5_title == '' || this.otherdocument5_title == null)){
+
+                    console.log(17);
+                    this.field = 'Please fill title on attachment 6'
+                    this.field_required = true
+                    return false
+
+            }else if(this.otherdocument5.length == 0 && (!this.otherdocument5_title == '' || !this.otherdocument5_title == null)){
+
+                    console.log(18);
+                    this.field = 'Please attach file on attachment 6'
+                    this.field_required = true
+                    return false
+
+            }else{
+
+                
+                return true
+            }
+               
+        },
+
+        expansionpannelfiles(){
+                //this.insurance = []
+                //this.insurance.push(document.getElementById("insurance").files[0])
+                if(document.getElementById("otherdocument").files[0]){
+
+                    this.otherdocument = [];
+
+                    this.otherdocument.push(document.getElementById("otherdocument").files[0]);
+                    
+                    this.otherdocument_extension = this.getFileExtension(document.getElementById("otherdocument").files[0].name);
+
+                    if ( this.otherdocument[0].size < 2024000){
+
+                                if(this.otherdocument_extension === 'jpg' 
+                                    || this.otherdocument_extension === 'jpeg' 
+                                    || this.otherdocument_extension === 'png')
+                                {
+
+                                    var reader = new FileReader();
+
+                                    reader.onload = function(){
+
+                                        var dataURL = reader.result;
+
+                                        var output = document.getElementById('otherdocument_thumb');
+
+                                        var large_thumbnail = document.getElementById('large_thumbnail');
+                                        
+                                        if(output !== null)
+                                            output.src = dataURL;
+
+                                        if(large_thumbnail !== null)
+                                            large_thumbnail.src = dataURL;
+                                    
+                                    }
+
+                                    reader.readAsDataURL(document.getElementById("otherdocument").files[0]);
+                                } else if(this.otherdocument_extension === 'pdf') {
+
+                                    this.otherdocument_url = URL.createObjectURL(document.getElementById("otherdocument").files[0]);
+
+                                    this.previewPdf(this.otherdocument_url);
+
+
+                                    /*console.log(src);
+                                    console.log(output);*/
+
+                                
+                                    //this.insurance_extension = '';
+                                }
+                    }else{
+
+                        this.largefilesize = true
+                        this.otherdocument_extension = 'largefile'
+                        this.otherdocument = []
+
+                    }                
+                }
+               },
+
+        expansionpannelfiles1(){
+                //this.insurance = []
+                //this.insurance.push(document.getElementById("insurance").files[0])
+                if(document.getElementById("otherdocument1").files[0]){
+
+                    this.otherdocument1 = [];
+
+                    this.otherdocument1.push(document.getElementById("otherdocument1").files[0]);
+                    
+                    this.otherdocument1_extension = this.getFileExtension(document.getElementById("otherdocument1").files[0].name);
+
+                    if ( this.otherdocument1[0].size < 2024000){
+
+                                if(this.otherdocument1_extension === 'jpg' 
+                                    || this.otherdocument1_extension === 'jpeg' 
+                                    || this.otherdocument1_extension === 'png')
+                                {
+
+                                    var reader = new FileReader();
+
+                                    reader.onload = function(){
+
+                                        var dataURL = reader.result;
+
+                                        var output = document.getElementById('otherdocument1_thumb');
+
+                                        var large_thumbnail = document.getElementById('large_thumbnail');
+                                        
+                                        if(output !== null)
+                                            output.src = dataURL;
+
+                                        if(large_thumbnail !== null)
+                                            large_thumbnail.src = dataURL;
+                                    
+                                    }
+
+                                    reader.readAsDataURL(document.getElementById("otherdocument1").files[0]);
+                                } else if(this.otherdocument1_extension === 'pdf') {
+
+                                    this.otherdocument1_url = URL.createObjectURL(document.getElementById("otherdocument1").files[0]);
+
+                                    this.previewPdf(this.otherdocument1_url);
+
+
+                                    /*console.log(src);
+                                    console.log(output);*/
+
+                                
+                                    //this.insurance_extension = '';
+                                }
+                    }else{
+
+                        this.largefilesize = true
+                        this.otherdocument1_extension = 'largefile'
+                        this.otherdocument1 = []
+
+                    }                
+                }
+               },
+
+        
+         expansionpannelfiles2(){
+                //this.insurance = []
+                //this.insurance.push(document.getElementById("insurance").files[0])
+                if(document.getElementById("otherdocument2").files[0]){
+
+                    this.otherdocument2 = [];
+
+                    this.otherdocument2.push(document.getElementById("otherdocument2").files[0]);
+                    
+                    this.otherdocument2_extension = this.getFileExtension(document.getElementById("otherdocument2").files[0].name);
+
+                    if ( this.otherdocument2[0].size < 2024000){
+
+                                if(this.otherdocument2_extension === 'jpg' 
+                                    || this.otherdocument2_extension === 'jpeg' 
+                                    || this.otherdocument2_extension === 'png')
+                                {
+
+                                    var reader = new FileReader();
+
+                                    reader.onload = function(){
+
+                                        var dataURL = reader.result;
+
+                                        var output = document.getElementById('otherdocument2_thumb');
+
+                                        var large_thumbnail = document.getElementById('large_thumbnail');
+                                        
+                                        if(output !== null)
+                                            output.src = dataURL;
+
+                                        if(large_thumbnail !== null)
+                                            large_thumbnail.src = dataURL;
+                                    
+                                    }
+
+                                    reader.readAsDataURL(document.getElementById("otherdocument2").files[0]);
+                                } else if(this.otherdocument2_extension === 'pdf') {
+
+                                    this.otherdocument2_url = URL.createObjectURL(document.getElementById("otherdocument2").files[0]);
+
+                                    this.previewPdf(this.otherdocument2_url);
+
+
+                                    /*console.log(src);
+                                    console.log(output);*/
+
+                                
+                                    //this.insurance_extension = '';
+                                }
+                    }else{
+
+                        this.largefilesize = true
+                        this.otherdocument2_extension = 'largefile'
+                        this.otherdocument2 = []
+
+                    }                
+                }
+               },
+
+        expansionpannelfiles3(){
+                //this.insurance = []
+                //this.insurance.push(document.getElementById("insurance").files[0])
+                if(document.getElementById("otherdocument3").files[0]){
+
+                    this.otherdocument3 = [];
+
+                    this.otherdocument3.push(document.getElementById("otherdocument3").files[0]);
+                    
+                    this.otherdocument3_extension = this.getFileExtension(document.getElementById("otherdocument3").files[0].name);
+
+                    if ( this.otherdocument3[0].size < 2024000){
+
+                                if(this.otherdocument3_extension === 'jpg' 
+                                    || this.otherdocument3_extension === 'jpeg' 
+                                    || this.otherdocument3_extension === 'png')
+                                {
+
+                                    var reader = new FileReader();
+
+                                    reader.onload = function(){
+
+                                        var dataURL = reader.result;
+
+                                        var output = document.getElementById('otherdocument3_thumb');
+
+                                        var large_thumbnail = document.getElementById('large_thumbnail');
+                                        
+                                        if(output !== null)
+                                            output.src = dataURL;
+
+                                        if(large_thumbnail !== null)
+                                            large_thumbnail.src = dataURL;
+                                    
+                                    }
+
+                                    reader.readAsDataURL(document.getElementById("otherdocument3").files[0]);
+                                } else if(this.otherdocument3_extension === 'pdf') {
+
+                                    this.otherdocument3_url = URL.createObjectURL(document.getElementById("otherdocument3").files[0]);
+
+                                    this.previewPdf(this.otherdocument3_url);
+
+
+                                    /*console.log(src);
+                                    console.log(output);*/
+
+                                
+                                    //this.insurance_extension = '';
+                                }
+                    }else{
+
+                        this.largefilesize = true
+                        this.otherdocument3_extension = 'largefile'
+                        this.otherdocument3 = []
+
+                    }                
+                }
+               },
+
+        expansionpannelfiles4(){
+                //this.insurance = []
+                //this.insurance.push(document.getElementById("insurance").files[0])
+                if(document.getElementById("otherdocument4").files[0]){
+
+                    this.otherdocument4 = [];
+
+                    this.otherdocument4.push(document.getElementById("otherdocument4").files[0]);
+                    
+                    this.otherdocument4_extension = this.getFileExtension(document.getElementById("otherdocument4").files[0].name);
+
+                    if ( this.otherdocument4[0].size < 2024000){
+
+                                if(this.otherdocument4_extension === 'jpg' 
+                                    || this.otherdocument4_extension === 'jpeg' 
+                                    || this.otherdocument4_extension === 'png')
+                                {
+
+                                    var reader = new FileReader();
+
+                                    reader.onload = function(){
+
+                                        var dataURL = reader.result;
+
+                                        var output = document.getElementById('otherdocument4_thumb');
+
+                                        var large_thumbnail = document.getElementById('large_thumbnail');
+                                        
+                                        if(output !== null)
+                                            output.src = dataURL;
+
+                                        if(large_thumbnail !== null)
+                                            large_thumbnail.src = dataURL;
+                                    
+                                    }
+
+                                    reader.readAsDataURL(document.getElementById("otherdocument4").files[0]);
+                                } else if(this.otherdocument4_extension === 'pdf') {
+
+                                    this.otherdocument4_url = URL.createObjectURL(document.getElementById("otherdocument4").files[0]);
+
+                                    this.previewPdf(this.otherdocument4_url);
+
+
+                                    /*console.log(src);
+                                    console.log(output);*/
+
+                                
+                                    //this.insurance_extension = '';
+                                }
+                    }else{
+
+                        this.largefilesize = true
+                        this.otherdocument4_extension = 'largefile'
+                        this.otherdocument4 = []
+
+                    }                
+                }
+               },
+               
+        expansionpannelfiles5(){
+                //this.insurance = []
+                //this.insurance.push(document.getElementById("insurance").files[0])
+                if(document.getElementById("otherdocument5").files[0]){
+
+                    this.otherdocument5 = [];
+
+                    this.otherdocument5.push(document.getElementById("otherdocument5").files[0]);
+                    
+                    this.otherdocument5_extension = this.getFileExtension(document.getElementById("otherdocument5").files[0].name);
+
+                    if ( this.otherdocument5[0].size < 2024000){
+
+                                if(this.otherdocument5_extension === 'jpg' 
+                                    || this.otherdocument5_extension === 'jpeg' 
+                                    || this.otherdocument5_extension === 'png')
+                                {
+
+                                    var reader = new FileReader();
+
+                                    reader.onload = function(){
+
+                                        var dataURL = reader.result;
+
+                                        var output = document.getElementById('otherdocument5_thumb');
+
+                                        var large_thumbnail = document.getElementById('large_thumbnail');
+                                        
+                                        if(output !== null)
+                                            output.src = dataURL;
+
+                                        if(large_thumbnail !== null)
+                                            large_thumbnail.src = dataURL;
+                                    
+                                    }
+
+                                    reader.readAsDataURL(document.getElementById("otherdocument5").files[0]);
+                                } else if(this.otherdocument5_extension === 'pdf') {
+
+                                    this.otherdocument5_url = URL.createObjectURL(document.getElementById("otherdocument5").files[0]);
+
+                                    this.previewPdf(this.otherdocument5_url);
+
+
+                                    /*console.log(src);
+                                    console.log(output);*/
+
+                                
+                                    //this.insurance_extension = '';
+                                }
+                    }else{
+
+                        this.largefilesize = true
+                        this.otherdocument5_extension = 'largefile'
+                        this.otherdocument5 = []
+
+                    }                
+                }
+            },
+            
 
         bankStatementUpdated(){
             
@@ -1798,31 +2809,62 @@ export default {
                 if(this.profile_photo.length > 0)
                     formData.append('profile_photo[0]',this.profile_photo[0]);
 
-                if(this.otherFiles.length > 0){
+                // if(this.otherFiles.length > 0){
 
-                    for( var i = 0; i < this.otherFiles.length; i++ ){
+                //     for( var i = 0; i < this.otherFiles.length; i++ ){
 
-                        let file = this.otherFiles[i].file;
+                //         let file = this.otherFiles[i].file;
 
-                        formData.append('files[' + i + ']', file);  
-                    }
+                //         formData.append('files[' + i + ']', file);  
+                //     }
+                // }
+
+                if(this.otherdocument.length > 0){
+                formData.append('otherfiles[0][file]', this.otherdocument[0])
+                formData.append('otherfiles[0][name]', this.otherdocument_title)
                 }
 
-                if(this.currentFiles.length > 0){
-
-                    for( var j = 0; j < this.currentFiles.length; j++ ){
-
-                        let file_path = this.currentFiles[j];
-
-                        formData.append('currentFiles[' + j + ']', file_path);  
+                if(this.otherdocument1.length > 0){
+                    formData.append('otherfiles[1][file]', this.otherdocument1[0])
+                    formData.append('otherfiles[1][name]', this.otherdocument1_title)
                     }
+
+                if(this.otherdocument2.length > 0){
+                    formData.append('otherfiles[2][file]', this.otherdocument2[0])
+                    formData.append('otherfiles[2][name]', this.otherdocument2_title)
+                    }
+
+                if(this.otherdocument3.length > 0){
+                    formData.append('otherfiles[3][file]', this.otherdocument3[0])
+                    formData.append('otherfiles[3][name]', this.otherdocument3_title)
+                }
+
+                if(this.otherdocument4.length > 0){
+                    formData.append('otherfiles[4][file]', this.otherdocument4[0])
+                    formData.append('otherfiles[4][name]', this.otherdocument4_title)
+                }
+
+                if(this.otherdocument5.length > 0){
+                    formData.append('otherfiles[5][file]', this.otherdocument5[0])
+                    formData.append('otherfiles[5][name]', this.otherdocument5_title)
+                }
+
+                 if(this.currentFiles.length > 0){
+
+                for( var i = 0; i < this.currentFiles.length; i++ ){
+                    let file_path = this.currentFiles[i]['url'];
+                    let file_name = this.currentFiles[i]['name'];
+                    formData.append('currentFiles[' + i + '][url]', file_path);
+                    formData.append('currentFiles[' + i + '][name]', file_name);
+
+                }
                 }
                 else if(this.currentFiles.length === 0)
                 {
-                   
-                    formData.append('currentFiles[0]',''); 
-                }
+                    formData.append('currentFiles[0][url]','');
+                    formData.append('currentFiles[0][name]','');
 
+                }
                 return formData;
 
             } else if(this.client_type == "Company")
@@ -1868,29 +2910,61 @@ export default {
                 if(this.company_logo.length > 0)
                     formData.append('company_logo[0]',this.company_logo[0]);
 
-                if(this.otherFiles.length > 0){
+                // if(this.otherFiles.length > 0){
 
-                    for( var k = 0; k < this.otherFiles.length; k++ ){
+                //     for( var k = 0; k < this.otherFiles.length; k++ ){
 
-                        let file = this.otherFiles[k].file;
+                //         let file = this.otherFiles[k].file;
 
-                        formData.append('files[' + k + ']', file);  
-                    }
+                //         formData.append('files[' + k + ']', file);  
+                //     }
+                // }
+
+                if(this.otherdocument.length > 0){
+                formData.append('otherfiles[0][file]', this.otherdocument[0])
+                formData.append('otherfiles[0][name]', this.otherdocument_title)
                 }
 
-                if(this.currentFiles.length > 0){
-
-                    for( var l = 0; l < this.currentFiles.length; l++ ){
-
-                        let file_path = this.currentFiles[l];
-
-                        formData.append('currentFiles[' + l + ']', file_path);  
+                if(this.otherdocument1.length > 0){
+                    formData.append('otherfiles[1][file]', this.otherdocument1[0])
+                    formData.append('otherfiles[1][name]', this.otherdocument1_title)
                     }
+
+                if(this.otherdocument2.length > 0){
+                    formData.append('otherfiles[2][file]', this.otherdocument2[0])
+                    formData.append('otherfiles[2][name]', this.otherdocument2_title)
+                    }
+
+                if(this.otherdocument3.length > 0){
+                    formData.append('otherfiles[3][file]', this.otherdocument3[0])
+                    formData.append('otherfiles[3][name]', this.otherdocument3_title)
+                }
+
+                if(this.otherdocument4.length > 0){
+                    formData.append('otherfiles[4][file]', this.otherdocument4[0])
+                    formData.append('otherfiles[4][name]', this.otherdocument4_title)
+                }
+
+                if(this.otherdocument5.length > 0){
+                    formData.append('otherfiles[5][file]', this.otherdocument5[0])
+                    formData.append('otherfiles[5][name]', this.otherdocument5_title)
+                }
+
+                 if(this.currentFiles.length > 0){
+
+                for( var h = 0; h < this.currentFiles.length; h++ ){
+                    let file_path = this.currentFiles[h]['url'];
+                    let file_name = this.currentFiles[h]['name'];
+                    formData.append('currentFiles[' + h + '][url]', file_path);
+                    formData.append('currentFiles[' + h + '][name]', file_name);
+
+                }
                 }
                 else if(this.currentFiles.length === 0)
                 {
-                   
-                     formData.append('currentFiles[0]',''); 
+                    formData.append('currentFiles[0][url]','');
+                    formData.append('currentFiles[0][name]','');
+
                 }
 
                 return formData;
