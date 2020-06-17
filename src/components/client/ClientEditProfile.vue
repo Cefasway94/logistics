@@ -3123,20 +3123,20 @@ export default {
 
                             vm.first_name = response.data.objects.first_name;
                             vm.last_name = response.data.objects.last_name;
-                            vm.country = response.data.objects.country;
+                            vm.country = response.data.objects.country === null?'':response.data.objects.country;
                             vm.mobile_number = response.data.objects.mobile_number;
-                            vm.office_mobile = response.data.objects.office_mobile;
+                            vm.office_mobile = response.data.objects.office_mobile == null?'':response.data.objects.office_mobile;
                             vm.address = response.data.objects.address;
                             vm.bank_acount_name = response.data.objects.bank_acount_name;
                             vm.bank_account_number = response.data.objects.bank_account_number;
-                            vm.second_bank_account_name = response.data.objects.second_bank_account_name;
-                            vm.second_bank_account_number = response.data.objects.second_bank_account_number;
+                            vm.second_bank_account_name = response.data.objects.second_bank_account_name === null?'':response.data.objects.second_bank_account_name;
+                            vm.second_bank_account_number = response.data.objects.second_bank_account_number === null?'':response.data.objects.second_bank_account_number;
                             vm.bank_swift_code = response.data.objects.bank_swift_code;
                             vm.bank_address = response.data.objects.bank_address;
                             vm.customer_type = response.data.objects.customer_type;
                             vm.contact_person_names = response.data.objects.contact_person_names;
                             vm.Contact_person_phone_number  = response.data.objects.Contact_person_phone_number;
-                            vm.Contact_person_designation = response.data.objects.Contact_person_designation;
+                            vm.Contact_person_designation = response.data.objects.Contact_person_designation === null?'':response.data.objects.Contact_person_designation;
                             vm.company_sector = response.data.objects.company_sector;
                             vm.company_name = response.data.objects.company_name;
                             vm.city = response.data.objects.city;
