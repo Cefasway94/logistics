@@ -213,6 +213,7 @@
                     
                     <v-flex row class=" justify-center ml-1 mb-2">
                     <v-checkbox 
+                    v-model="remember"
                     v-ripple
                     color="#4169E1"
                     class="mb-0" 
@@ -303,11 +304,17 @@ export default {
           DisplayCerror:'',
           abouterror:'',
           show:false,
-          email:'',
           msgVerify:false, //added by Mary and Sudi
-          secret:'',
+          
           logerror:'',
           submitStatus: null,
+          
+          email:'',
+          secret:'',
+          
+
+          remember:false,
+          
           rules: {
             required: value => !!value || "Required",
             //number:value => {},
@@ -326,7 +333,26 @@ validations:{
 
 
 created(){
+
   this.checkVerify();
+
+  if (document.cookie !== '' || document.cookie !== null) {
+
+      const cookie_data = document.cookie
+                        .split(';')
+                          .map(cookie => cookie.split('='))
+                            .reduce((accumulator, [key, value]) => (
+                              { ...accumulator, [key.trim()]: decodeURIComponent(value) }), {})
+
+      this.email =cookie_data.user
+      this.secret = cookie_data.secret
+
+      console.log(cookie_data.user);
+      console.log(cookie_data.secret);
+      
+      
+
+  }  
 
 },
 
@@ -357,7 +383,8 @@ methods:{
 
 // =====================================================================>>>
     Login() {
-              
+
+                    
       this.clear_alert()
       
       this.loading = true
@@ -393,6 +420,8 @@ methods:{
 
               if (this.LOAD_LOGIN.objects[1]==1 && localStorage.category ==1) {
 
+                this.rememberme()
+
                 this.$router.push('/agent/tenders/open')
                 this.$router.go('/agent/tenders/open')
               //return data;
@@ -400,11 +429,17 @@ methods:{
               console.log('Opened as Agent');              
                 
               } else if (this.LOAD_LOGIN.objects[1]==2 && localStorage.category ==2) {
+
+                this.rememberme()
+
                 this.$router.push('/transporter/tenders/open')
                 this.$router.go('/transporter/tenders/open')
                 console.log('transporter');
                 
               }else if (this.LOAD_LOGIN.objects[1]==3 && localStorage.category ==3){
+
+                this.rememberme()
+
                 this.$router.push('/client')
                 this.$router.go('/client')
                // this.$route.params.id = //asign from local storage
@@ -416,6 +451,7 @@ methods:{
 
                 this.$router.push('/Signin')
                 this.$router.go('/Signin')
+
               }
               }, 2000)     //============ kill load
 
@@ -425,26 +461,32 @@ methods:{
           }else{
 
             if (this.LOAD_LOGIN === "Kindly check your email") {
+
                     this.timeout=false; // server timeout false
                     console.log("whataaat");
                     console.log(this.LOAD_LOGIN);
+                  
                   setTimeout(() => {
                     this.loading = false
                     this.Eerror=true;
                     }, 2000)     //============ kill load
                 
             }else if (this.LOAD_LOGIN === "Kindly check your email and verify your account"){
-                    this.timeout=false; // server timeout false
+                  
+                  this.timeout=false; // server timeout false
                     console.log("whataaat");
                     console.log(this.LOAD_LOGIN);
+                  
                   setTimeout(() => {
                     this.loading = false
                     this.Verror=true;
                     }, 2000)     //============ kill load
 
             }else{
+
               this.timeout=false; // server timeout false
               console.log('incorrect password');
+              
               setTimeout(() => {
                 this.loading = false;
                 this.Perror=true;
@@ -489,6 +531,7 @@ methods:{
              this.timeout=false; // server timeout false
              console.log('required email');
              console.log(this.LOAD_LOGIN.email[0]);
+
                setTimeout(() => {
                  this.loading = false;
                  this.DisplayCerror = this.LOAD_LOGIN.email[0];
@@ -499,6 +542,7 @@ methods:{
 
              console.log('server error');
              this.timeout=false
+
               setTimeout(() => {
                  this.loading = false;
                  this.Displayservererror = "unable to connect to server at moment, Please try agin after few  minutes. 😔";
@@ -509,35 +553,47 @@ methods:{
           this.userExists = true;
 
           if (error.email) {
+
             this.abouterror = 'Please try other datails or log in with appropriate credentials'
+          
           } else {
+
             this.abouterror = 'signin failed, please check your internet and try again'
+          
           }
          //  ======================== continue from here
           
         });
       }else {
+
         console.log('else');
-          return this.logerror = true;
+        return this.logerror = true;
+       
        }   
     },
 
     validate() {
+      
            if (this.email === null || this.email === '' ){
-             this.loading = false
-             this.error = true;
-             return true
+             
+              this.loading = false
+              this.error = true;
+              return true
+           
            } else if (this.secret === null || this.secret === '' ) {
-             this.loading = false
-             this.error = true;
-             return true
+           
+              this.loading = false
+              this.error = true;
+              return true
+           
            }
            
     },
 
    
     clear_alert() {
-      this.Connectionerror = false;
+
+        this.Connectionerror = false;
         this.servererror =false;
         this.Cerror = false;
         this.Perror = false;
@@ -546,23 +602,43 @@ methods:{
         this.error = false;
        
     },
+
+    rememberme(){
+
+        // Remember me
+        if (this.remember == true) {
+
+            document.cookie = "rememberme=yes;domain=http://localhost:8080;path=/"
+            // save username and password
+            document.cookie = "user="+this.email
+            document.cookie = "secret="+this.secret
+            document.cookie = "chkbx="+this.remember
+            
+          
+        } else {
+
+            document.cookie = "rememberme=no;domain=http://localhost:8080;path=/"
+            // save username and password
+            document.cookie = "user="
+            document.cookie = "secret="
+            document.cookie = "chkbx="
+          
+        }
+
+    },
     
     signup() {
+      
       this.$router.push('/signup')
     }
    
   },
 
  computed: {
+
       ...mapGetters([
           'LOAD_LOGIN'
-          //'LOAD_DIBTENDERS'
-      ]),
-
-      // nameError () {
-
-      // }
-      
+      ]),      
   }
     
 }

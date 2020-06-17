@@ -1725,39 +1725,59 @@ export default {
 
             if (!this.LOAD_AGENT.objects.agent_id == ''){
                 
-                 if(this.LOAD_AGENT.objects.certificate !== null)
-                {
-                    
-                    this.certificate_url = this.LOAD_AGENT.objects.certificate[0]
-
-                    this.certificate_extension = this.getFileExtension(this.certificate_url);
-
-                    console.log(this.certificate_extension);
-                    
-
-                }
-
                 if(this.LOAD_AGENT.objects.profile_image !== null)
-                {
-                    
-                    this.profile_image_url = this.LOAD_AGENT.objects.profile_image[0]
+                    {
+                        
+                        this.profile_image_url = this.LOAD_AGENT.objects.profile_image[0]
 
-                    this.profile_image_extension = this.getFileExtension(this.profile_image_url);
+                        this.profile_image_extension = this.getFileExtension(this.profile_image_url);
 
-                    console.log(this.certificate_extension);
-                    
+                        console.log(this.certificate_extension);
+                        
+                    }
 
-                }
+                 if(this.LOAD_AGENT.objects.certificate !== null)
+                    {
+                        
+                        this.certificate_url = this.LOAD_AGENT.objects.certificate[0]
+
+                        this.certificate_extension = this.getFileExtension(this.certificate_url);
+
+                        console.log(this.certificate_extension);
+                        
+                    }
 
                 if(this.LOAD_AGENT.objects.insurance !== null)
-                {
-                    
-                    this.insurance_url = this.LOAD_AGENT.objects.insurance[0]
+                    {
+                        
+                        this.insurance_url = this.LOAD_AGENT.objects.insurance[0]
 
-                    this.insurance_extension = this.getFileExtension(this.insurance_url);
+                        this.insurance_extension = this.getFileExtension(this.insurance_url);
 
-                    console.log(this.insurance_url);
-                }
+                        console.log(this.insurance_url);
+                    }
+
+                if(this.LOAD_AGENT.objects.tin_certificate !== null)
+                    {
+                        
+                        this.tin_certificate_url = this.LOAD_AGENT.objects.tin_certificate[0]
+
+                        this.tin_certificate_extension = this.getFileExtension(this.tin_certificate_url);
+
+                        console.log(this.tin_certificate_extension);
+                        
+                    }
+
+                if(this.LOAD_AGENT.objects.business_license !== null)
+                    {
+                        
+                        this.business_license_url = this.LOAD_AGENT.objects.business_license[0]
+
+                        this.business_license_extension = this.getFileExtension(this.business_license_url);
+
+                        console.log(this.business_license_extension);
+                        
+                    }
 
                  /*if(this.LOAD_AGENT.objects.insurance !== null)
                 {
@@ -1769,21 +1789,25 @@ export default {
                     console.log(this.insurance_extension);
                 }*/
 
-                this.name = this.LOAD_AGENT.objects.company_name
-                this.faxnumber = this.LOAD_AGENT.objects.fax
-                this.tin = this.LOAD_AGENT.objects.tin_number
-                this.phone = this.LOAD_AGENT.objects.phone
-                this.mail = this.LOAD_AGENT.objects.email
-                this.box = this.LOAD_AGENT.objects.p_o_box
-                this.country = this.LOAD_AGENT.objects.country
-                this.pcity = this.LOAD_AGENT.objects.city
-                this.pregion = this.LOAD_AGENT.objects.city
-                this.bname = this.LOAD_AGENT.objects.bank_name
-                this.aname = this.LOAD_AGENT.objects.account_name
-                this.acnumber = this.LOAD_AGENT.objects.account_number
+                    this.name = this.LOAD_AGENT.objects.company_name
+                    this.faxnumber = this.LOAD_AGENT.objects.fax
+                    this.tin = this.LOAD_AGENT.objects.tin_number
+                    this.phone = this.LOAD_AGENT.objects.phone
+                    this.mail = this.LOAD_AGENT.objects.email
+                    this.box = this.LOAD_AGENT.objects.p_o_box
+                    this.country = this.LOAD_AGENT.objects.country
+                    this.pcity = this.LOAD_AGENT.objects.city
+                    this.pregion = this.LOAD_AGENT.objects.city
+                    this.bname = this.LOAD_AGENT.objects.bank_name
+                    this.aname = this.LOAD_AGENT.objects.account_name
+                    this.acnumber = this.LOAD_AGENT.objects.account_number
+
            }else{
+
                 this.mail = localStorage.client
+
            }
+
         }).then(()=>{
 
              console.log('entering here');
