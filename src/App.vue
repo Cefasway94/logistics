@@ -34,7 +34,7 @@ export default {
     created(){
       
       // (localStorage.length == 4 && !localStorage.client == "" ) && ( !localStorage.category == '' && !localStorage.secret == '')
-      if (localStorage.length >= 3) {    
+      if (localStorage.length >= 3 ) {    
           this.login = false
           console.log('app');
           

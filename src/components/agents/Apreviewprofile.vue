@@ -265,7 +265,15 @@
                 indeterminate
                 absolute
                 color="#4169E1">
-                </v-progress-linear>
+            </v-progress-linear>
+
+            <v-col 
+            cols=12>
+                    <p class=" primary--text body-1 mb-1 ml-2 mt-3 text-center"> 
+                        ESSENTIAL DOCUMENTS
+                    </p>
+                    <v-divider color="" class="mb-0 mt-2"></v-divider>
+            </v-col>
 
             <v-row class="pt-3">
                <v-col>
@@ -371,6 +379,112 @@
                             </v-card>
                 </v-col>
 
+                <v-col>
+                    <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Tin Certificate</p>
+
+                            <v-card 
+                                flat 
+                                width="200" 
+                                height="150" 
+                                outlined 
+                                class="mx-3">
+                                
+                                <v-flex 
+                                class="" 
+                                style="background-color:#F5FAFF;" 
+                                v-show="(tin_certificate_extension === 'jpg') || (tin_certificate_extension === 'jpeg') || (tin_certificate_extension === 'png')" 
+                                @click="largePreview(tin_certificate)">
+
+                                    <v-tooltip right color="#1565C0">
+                                        <template v-slot:activator="{ on }">
+                                            <v-img 
+                                            :src="tin_certificate"  
+                                            class="mb-0 pb-0 oxoImg" 
+                                            height="147" 
+                                            width="200" 
+                                            v-on="on">
+                                            </v-img>
+                                        </template>
+                                        <span> click to view image </span>
+                                    </v-tooltip>
+                                </v-flex>
+
+                                <v-flex v-show="tin_certificate_extension === 'pdf'">
+
+                                    <v-tooltip right color="#1565C0">
+                                        <template v-slot:activator="{ on }">
+                                            <v-card 
+                                                flat
+                                                color=""
+                                                height="148"
+                                                :block="true"
+                                                icon 
+                                                class="py-12 px-12 insurance_preview"
+                                                @click="previewPdf(tin_certificate)"
+                                                v-on="on">
+                                                <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                            </v-card>
+                                        </template>
+                                        <span>Click to view document</span>
+                                    </v-tooltip>
+
+                                </v-flex>
+                            </v-card>
+                </v-col>
+
+                <v-col>
+                    <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Business License</p>
+
+                            <v-card 
+                                flat 
+                                width="200" 
+                                height="150" 
+                                outlined 
+                                class="mx-3">
+                                
+                                <v-flex 
+                                class="" 
+                                style="background-color:#F5FAFF;" 
+                                v-show="(business_license_extension === 'jpg') || (business_license_extension === 'jpeg') || (business_license_extension === 'png')" 
+                                @click="largePreview(business_license)">
+
+                                    <v-tooltip right color="#1565C0">
+                                        <template v-slot:activator="{ on }">
+                                            <v-img 
+                                            :src="business_license"  
+                                            class="mb-0 pb-0 oxoImg" 
+                                            height="147" 
+                                            width="200" 
+                                            v-on="on">
+                                            </v-img>
+                                        </template>
+                                        <span> click to view image </span>
+                                    </v-tooltip>
+                                </v-flex>
+
+                                <v-flex v-show="business_license_extension === 'pdf'">
+
+                                    <v-tooltip right color="#1565C0">
+                                        <template v-slot:activator="{ on }">
+                                            <v-card 
+                                                flat
+                                                color=""
+                                                height="148"
+                                                :block="true"
+                                                icon 
+                                                class="py-12 px-12 insurance_preview"
+                                                @click="previewPdf(business_license)"
+                                                v-on="on">
+                                                <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                            </v-card>
+                                        </template>
+                                        <span>Click to view document</span>
+                                    </v-tooltip>
+
+                                </v-flex>
+                            </v-card>
+                </v-col>
+
                 <!--<v-col>
                     <p class="bondy-2 mb-0 ml-3 mb-2">Other</p>
                      <v-card 
@@ -395,7 +509,14 @@
 
             <v-row class="mt-5" v-if="otherFiles.length > 0">
 
-                <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+               
+                <v-col 
+                cols=12>
+                        <p class=" primary--text body-1 mb-1 ml-2 mt-3 text-center"> 
+                            OTHER DOCUMENTS
+                        </p>
+                        <v-divider color="" class="mb-0 mt-2"></v-divider>
+                </v-col>
 
                 <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
 
@@ -552,10 +673,12 @@ export default {
            acnumber:'',
 
            // files
-           certificate:[],
-           insurance:[],     
+           certificate:'',
+           insurance:'',
+           tin_certificate:'',   
+           business_license:'',     
            other:[],
-           profileimage:[],
+           profileimage:'',
 
            //others 
            edited:false,
@@ -603,22 +726,44 @@ export default {
 
 
                 if(this.LOAD_AGENT.objects.profile_image !== null)
-                {
-                    this.profile_image_url = this.LOAD_AGENT.objects.profile_image[0];
-                    this.profile_image_extension = this.getFileExtension(this.profile_image_url);
-                }
+                    {
+                        this.profile_image_url = this.LOAD_AGENT.objects.profile_image[0];
+                        this.profile_image_extension = this.getFileExtension(this.profile_image_url);
+                    }
 
-                 if(this.LOAD_AGENT.objects.insurance !== null)
-                {
-                    this.insurance_url = this.LOAD_AGENT.objects.insurance[0];
-                    this.insurance_extension = this.getFileExtension(this.insurance_url);
-                }
+                if(this.LOAD_AGENT.objects.insurance !== null)
+                    {
+                        this.insurance_url = this.LOAD_AGENT.objects.insurance[0];
+                        this.insurance_extension = this.getFileExtension(this.insurance_url);
+                    }
 
-                 if(this.LOAD_AGENT.objects.certificate !== null)
-                {
-                    this.certificate_url = this.LOAD_AGENT.objects.certificate[0];
-                    this.certificate_extension = this.getFileExtension(this.certificate_url);
-                }
+                if(this.LOAD_AGENT.objects.certificate !== null)
+                    {
+                        this.certificate_url = this.LOAD_AGENT.objects.certificate[0];
+                        this.certificate_extension = this.getFileExtension(this.certificate_url);
+                    }
+
+                if(this.LOAD_AGENT.objects.tin_certificate !== null)
+                    {
+                        
+                        this.tin_certificate = this.LOAD_AGENT.objects.tin_certificate[0]
+
+                        this.tin_certificate_extension = this.getFileExtension(this.tin_certificate);
+
+                        console.log(this.tin_certificate_extension);
+                        
+                    }
+
+                if(this.LOAD_AGENT.objects.business_license !== null)
+                    {
+                        
+                        this.business_license = this.LOAD_AGENT.objects.business_license[0]
+
+                        this.business_license_extension = this.getFileExtension(this.business_license);
+
+                        console.log(this.business_license_extension);
+                        
+                    }
 
                 //other files
                 if(this.LOAD_AGENT.objects.files !== null)
