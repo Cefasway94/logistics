@@ -1032,9 +1032,513 @@
                             >
                             </v-file-input>
 
-                            <v-btn @click="addFiles()">
-                                Add other documents
-                            </v-btn>
+                            <v-row>
+                                <v-card flat width="850" class="mx-auto">
+                                
+                                        <v-expansion-panels 
+                                        
+                                        v-model="panel"
+                                        :accordion="true"
+                                        :hover="true"
+                                        :flat="true"
+                                        >
+
+                                        <v-expansion-panel
+                                        
+                                        >
+                                            <v-expansion-panel-header>
+                                                <v-flex class="">
+                                                <p class="font-weight-regular text-uppercase text-center body-1 primary--text pt-1">
+                                                    add other files
+                                                </p> 
+                                                </v-flex>
+                                            </v-expansion-panel-header>
+
+                                            <v-expansion-panel-content>
+                                                
+                                                <v-divider color="" class="mb-4"></v-divider>
+                                                
+                                                    <v-row>
+                                                    
+                                                    <!-- pannel content -->
+                                                        <v-col cols=12 sm=4 class="">
+
+                                                            <v-row class="ml-9 mb-3">
+                                                                <!-- <v-icon class="font-weight-regular">attachment</v-icon> -->
+
+                                                                <p class="font-weight-bold text-center body-1 grey_text--text mb-0 ml-5">
+                                                                    Attachment 1
+                                                                </p> 
+                                                            </v-row>
+
+                                                            <v-text-field 
+                                                            v-model="otherdocument_title"
+                                                            outlined 
+                                                            class="" 
+                                                            clearable 
+                                                            color="#4169E1"
+                                                            label="title"
+                                                            dense
+                                                            >
+                                                                    
+                                                            </v-text-field>
+                                                            
+                                                            <v-card flat width="250"  >
+
+                                                                <v-file-input 
+                                                                    dense
+                                                                    :clearable="false"
+                                                                    placeholder="Choose a file"
+                                                                    id="otherdocument" 
+                                                                    @change="expansionpannelfiles()"
+                                                                    prepend-inner-icon="mdi-cloud-upload"
+                                                                    prepend-icon=""
+                                                                    
+                                                                    outlined
+                                                                >
+
+                                                                </v-file-input>
+
+                                                                <div v-show="otherdocument_extension === 'jpg' || otherdocument_extension === 'jpeg' || otherdocument_extension === 'png'">
+                                                                    <v-card height="200" width="250" outlined @click="handleClick('otherdocument',otherdocument_url)">
+                                                                        <img  id="otherdocument_thumb" :src="otherdocument_url" class="preview">
+                                                                    </v-card>
+                                                                </div>
+
+                                                                <div v-show="otherdocument_extension === 'largefile' ">
+                                                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                                                    </v-card>
+                                                                </div>
+
+                                                                <div v-show="otherdocument_extension === 'pdf'">                                            
+                                                                <v-tooltip right color="#1565C0">
+                                                                <template v-slot:activator="{ on }">
+                                                                    <v-card 
+                                                                        flat
+                                                                        color=""
+                                                                        height="198"
+                                                                        :block="true"
+                                                                        icon 
+                                                                        class="py-12 px-12 insurance_preview"
+                                                                        @click="previewPdf(otherdocument_url)"
+                                                                        v-on="on">
+                                                                        <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                                                    </v-card>
+                                                                </template>
+                                                                <span>Click to view document</span>
+                                                            </v-tooltip>
+                                                                
+                                                            <!--  -->
+                                                        </div>
+                                                    </v-card>
+                                                </v-col> 
+
+                                                <!-- <v-divider color="" :vertical="true"></v-divider> -->
+
+                                                <!-- pannel content 1-->
+                                                        <v-col cols=12 sm=4 class="">
+
+                                                            <v-row class="ml-9 mb-3">
+                                                                <!-- <v-icon class="">attachment</v-icon> -->
+
+                                                                <p class="font-weight-bold text-center body-1 grey_text--text mb-0 ml-5">
+                                                                    Attachment 2
+                                                                </p> 
+                                                            </v-row>
+
+                                                            <v-text-field 
+                                                            v-model="otherdocument1_title"
+                                                            outlined 
+                                                            class="" 
+                                                            clearable 
+                                                            color="#4169E1"
+                                                            label="title"
+                                                            dense
+                                                            >
+                                                                    
+                                                            </v-text-field>
+                                                            
+                                                            <v-card flat width="250"  >
+
+                                                                <v-file-input 
+                                                                    dense
+                                                                    :clearable="false"
+                                                                    placeholder="Choose a file"
+                                                                    id="otherdocument1" 
+                                                                    @change="expansionpannelfiles1()"
+                                                                    prepend-inner-icon="mdi-cloud-upload"
+                                                                    prepend-icon=""
+                                                                    
+                                                                    outlined
+                                                                >
+
+                                                                </v-file-input>
+
+                                                                <div v-show="otherdocument1_extension === 'jpg' || otherdocument1_extension === 'jpeg' || otherdocument1_extension === 'png'">
+                                                                    <v-card height="200" width="250" outlined @click="handleClick('otherdocument1',otherdocument1_url)">
+                                                                        <img  id="otherdocument1_thumb" :src="otherdocument1_url" class="preview">
+                                                                    </v-card>
+                                                                </div>
+
+                                                                <div v-show="otherdocument1_extension === 'largefile' ">
+                                                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                                                    </v-card>
+                                                                </div>
+
+                                                                <div v-show="otherdocument1_extension === 'pdf'">                                            
+                                                                <v-tooltip right color="#1565C0">
+                                                                <template v-slot:activator="{ on }">
+                                                                    <v-card 
+                                                                        flat
+                                                                        color=""
+                                                                        height="198"
+                                                                        :block="true"
+                                                                        icon 
+                                                                        class="py-12 px-12 insurance_preview"
+                                                                        @click="previewPdf(otherdocument1_url)"
+                                                                        v-on="on">
+                                                                        <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                                                    </v-card>
+                                                                </template>
+                                                                <span>Click to view document</span>
+                                                            </v-tooltip>
+                                                                
+                                                            <!--  -->
+                                                        </div>
+                                                    </v-card>
+                                                    
+                                                </v-col> 
+
+                                                <!-- <v-divider color="" :vertical="true"></v-divider> -->
+
+                                                <!-- pannel content 2-->
+                                                        <v-col cols=12 sm=4 class="">
+
+                                                            <v-row class="ml-9 mb-4">
+                                                                <!-- <v-icon class="">attachment</v-icon> -->
+
+                                                                <p class="font-weight-bold text-center body-1 grey_text--text mb-0 ml-5">
+                                                                    Attachment 3
+                                                                </p> 
+                                                            </v-row>
+
+                                                            <v-text-field 
+                                                            v-model="otherdocument2_title"
+                                                            outlined 
+                                                            class="" 
+                                                            clearable 
+                                                            color="#4169E1"
+                                                            label="title"
+                                                            
+                                                            dense
+                                                            >
+                                                                    
+                                                            </v-text-field>
+                                                            
+                                                            <v-card flat width="250"  >
+
+                                                                <v-file-input 
+                                                                    dense
+                                                                    :clearable="false"
+                                                                    placeholder="Choose a file "
+                                                                    id="otherdocument2" 
+                                                                    @change="expansionpannelfiles2()"
+                                                                    prepend-inner-icon="mdi-cloud-upload"
+                                                                    prepend-icon=""
+                                                                
+                                                                
+                                                                    outlined
+                                                                >
+
+                                                                </v-file-input>
+
+                                                                <div v-show="otherdocument2_extension === 'jpg' || otherdocument2_extension === 'jpeg' || otherdocument2_extension === 'png'">
+                                                                    <v-card height="200" width="250" outlined @click="handleClick('otherdocument2',otherdocument2_url)">
+                                                                        <img  id="otherdocument2_thumb" :src="otherdocument2_url" class="preview">
+                                                                    </v-card>
+                                                                </div>
+
+                                                                <div v-show="otherdocument2_extension === 'largefile' ">
+                                                                    <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                                        <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                                                    </v-card>
+                                                                </div>
+
+                                                                <div v-show="otherdocument2_extension === 'pdf'">                                            
+                                                                <v-tooltip right color="#1565C0">
+                                                                <template v-slot:activator="{ on }">
+                                                                    <v-card 
+                                                                        flat
+                                                                        color=""
+                                                                        height="198"
+                                                                        :block="true"
+                                                                        icon 
+                                                                        class="py-12 px-12 insurance_preview"
+                                                                        @click="previewPdf(otherdocument2_url)"
+                                                                        v-on="on">
+                                                                        <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                                                    </v-card>
+                                                                </template>
+                                                                <span>Click to view document</span>
+                                                            </v-tooltip>
+                                                                
+                                                            <!--  -->
+                                                        </div>
+                                                    </v-card>
+                                                </v-col> 
+
+                                                </v-row>
+
+                                            </v-expansion-panel-content>
+
+                                            <v-expansion-panel-content>
+
+                                                <v-divider color="" class="mb-4" ></v-divider> 
+                                                
+                                                <v-row>
+                                                
+                                                <!-- pannel content 3-->
+                                                    <v-col cols=12 sm=4 class="">
+
+                                                        <v-row class="ml-9 mb-3">
+                                                            <!-- <v-icon class="font-weight-regular">attachment</v-icon> -->
+
+                                                            <p class="font-weight-bold text-center body-1 grey_text--text mb-0 ml-5">
+                                                                Attachment 4
+                                                            </p> 
+                                                        </v-row>
+
+                                                        <v-text-field 
+                                                        v-model="otherdocument3_title"
+                                                        outlined 
+                                                        class="" 
+                                                        clearable 
+                                                        color="#4169E1"
+                                                        label="title"
+                                                        dense
+                                                        >
+                                                                
+                                                        </v-text-field>
+                                                        
+                                                        <v-card flat width="250"  >
+
+                                                            <v-file-input 
+                                                                dense
+                                                                :clearable="false"
+                                                                placeholder="Choose a file"
+                                                                id="otherdocument3" 
+                                                                @change="expansionpannelfiles3()"
+                                                                prepend-inner-icon="mdi-cloud-upload"
+                                                                prepend-icon=""
+                                                                
+                                                                outlined
+                                                            >
+
+                                                            </v-file-input>
+
+                                                            <div v-show="otherdocument3_extension === 'jpg' || otherdocument3_extension === 'jpeg' || otherdocument3_extension === 'png'">
+                                                                <v-card height="200" width="250" outlined @click="handleClick('otherdocument3',otherdocument3_url)">
+                                                                    <img  id="otherdocument3_thumb" :src="otherdocument3_url" class="preview">
+                                                                </v-card>
+                                                            </div>
+
+                                                            <div v-show="otherdocument3_extension === 'largefile' ">
+                                                                <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                                    <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                                                </v-card>
+                                                            </div>
+
+                                                            <div v-show="otherdocument3_extension === 'pdf'">                                            
+                                                            <v-tooltip right color="#1565C0">
+                                                            <template v-slot:activator="{ on }">
+                                                                <v-card 
+                                                                    flat
+                                                                    color=""
+                                                                    height="198"
+                                                                    :block="true"
+                                                                    icon 
+                                                                    class="py-12 px-12 insurance_preview"
+                                                                    @click="previewPdf(otherdocument3_url)"
+                                                                    v-on="on">
+                                                                    <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                                                </v-card>
+                                                            </template>
+                                                            <span>Click to view document</span>
+                                                        </v-tooltip>
+                                                            
+                                                        <!--  -->
+                                                    </div>
+                                                </v-card>
+                                            </v-col> 
+
+                                            <!-- <v-divider color="" :vertical="true"></v-divider> -->
+
+                                            <!-- pannel content 4-->
+                                                    <v-col cols=12 sm=4 class="">
+
+                                                        <v-row class="ml-9 mb-3">
+                                                            <!-- <v-icon class="">attachment</v-icon> -->
+
+                                                            <p class="font-weight-bold text-center body-1 grey_text--text mb-0 ml-5">
+                                                                Attachment 5
+                                                            </p> 
+                                                        </v-row>
+
+                                                        <v-text-field 
+                                                        v-model="otherdocument4_title"
+                                                        outlined 
+                                                        class="" 
+                                                        clearable 
+                                                        color="#4169E1"
+                                                        label="title"
+                                                        dense
+                                                        >
+                                                                
+                                                        </v-text-field>
+                                                        
+                                                        <v-card flat width="250"  >
+
+                                                            <v-file-input 
+                                                                dense
+                                                                :clearable="false"
+                                                                placeholder="Choose a file"
+                                                                id="otherdocument4" 
+                                                                @change="expansionpannelfiles4()"
+                                                                prepend-inner-icon="mdi-cloud-upload"
+                                                                prepend-icon=""
+                                                                
+                                                                outlined
+                                                            >
+
+                                                            </v-file-input>
+
+                                                            <div v-show="otherdocument4_extension === 'jpg' || otherdocument4_extension === 'jpeg' || otherdocument4_extension === 'png'">
+                                                                <v-card height="200" width="250" outlined @click="handleClick('otherdocument4',otherdocument4_url)">
+                                                                    <img  id="otherdocument4_thumb" :src="otherdocument4_url" class="preview">
+                                                                </v-card>
+                                                            </div>
+
+                                                            <div v-show="otherdocument4_extension === 'largefile' ">
+                                                                <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                                    <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                                                </v-card>
+                                                            </div>
+
+                                                            <div v-show="otherdocument4_extension === 'pdf'">                                            
+                                                            <v-tooltip right color="#1565C0">
+                                                            <template v-slot:activator="{ on }">
+                                                                <v-card 
+                                                                    flat
+                                                                    color=""
+                                                                    height="198"
+                                                                    :block="true"
+                                                                    icon 
+                                                                    class="py-12 px-12 insurance_preview"
+                                                                    @click="previewPdf(otherdocument4_url)"
+                                                                    v-on="on">
+                                                                    <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                                                </v-card>
+                                                            </template>
+                                                            <span>Click to view document</span>
+                                                        </v-tooltip>
+                                                            
+                                                        <!--  -->
+                                                    </div>
+                                                </v-card>
+                                                
+                                            </v-col> 
+
+                                            <!-- <v-divider color="" :vertical="true"></v-divider> -->
+
+                                            <!-- pannel content 5-->
+                                                    <v-col cols=12 sm=4 class="">
+
+                                                        <v-row class="ml-9 mb-4">
+                                                            <!-- <v-icon class="">attachment</v-icon> -->
+
+                                                            <p class="font-weight-bold text-center body-1 grey_text--text mb-0 ml-5">
+                                                                Attachment 6
+                                                            </p> 
+                                                        </v-row>
+
+                                                        <v-text-field 
+                                                        v-model="otherdocument5_title"
+                                                        outlined 
+                                                        class="" 
+                                                        clearable 
+                                                        color="#4169E1"
+                                                        label="title"
+                                                        
+                                                        dense
+                                                        >
+                                                                
+                                                        </v-text-field>
+                                                        
+                                                        <v-card flat width="250"  >
+
+                                                            <v-file-input 
+                                                                dense
+                                                                :clearable="false"
+                                                                placeholder="Choose a file "
+                                                                id="otherdocument5" 
+                                                                @change="expansionpannelfiles5()"
+                                                                prepend-inner-icon="mdi-cloud-upload"
+                                                                prepend-icon=""
+                                                            
+                                                            
+                                                                outlined
+                                                            >
+
+                                                            </v-file-input>
+
+                                                            <div v-show="otherdocument5_extension === 'jpg' || otherdocument5_extension === 'jpeg' || otherdocument5_extension === 'png'">
+                                                                <v-card height="200" width="250" outlined @click="handleClick('otherdocument5',otherdocument5_url)">
+                                                                    <img  id="otherdocument5_thumb" :src="otherdocument5_url" class="preview">
+                                                                </v-card>
+                                                            </div>
+
+                                                            <div v-show="otherdocument5_extension === 'largefile' ">
+                                                                <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                                    <p class="fontweight-bold red--text title text-center mt-10 "> file size too large <br> (select another file) </p>
+                                                                </v-card>
+                                                            </div>
+
+                                                            <div v-show="otherdocument5_extension === 'pdf'">                                            
+                                                            <v-tooltip right color="#1565C0">
+                                                            <template v-slot:activator="{ on }">
+                                                                <v-card 
+                                                                    flat
+                                                                    color=""
+                                                                    height="198"
+                                                                    :block="true"
+                                                                    icon 
+                                                                    class="py-12 px-12 insurance_preview"
+                                                                    @click="previewPdf(otherdocument5_url)"
+                                                                    v-on="on">
+                                                                    <span style="color:#757575;" class="mb-0 title">PDF</span> <v-icon x-large>description</v-icon>
+                                                                </v-card>
+                                                            </template>
+                                                            <span>Click to view document</span>
+                                                        </v-tooltip>
+                                                            
+                                                        <!--  -->
+                                                    </div>
+                                                </v-card>
+                                            </v-col> 
+
+                                            </v-row>
+
+                                            </v-expansion-panel-content>
+
+                                        </v-expansion-panel>
+                                        
+                                        </v-expansion-panels>
+                                
+                                    </v-card>
+                                </v-row>
+
                         </v-col>
                     </v-row>
 
