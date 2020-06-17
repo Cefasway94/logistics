@@ -854,7 +854,7 @@
                                 </span>
                             </p>
 
-                            <v-card flat width="200" height="150" outlined class="mx-auto">
+                            <v-card flat width="200" height="180" outlined class="mx-auto">
 
                                 <v-row>
                                     <v-col >
