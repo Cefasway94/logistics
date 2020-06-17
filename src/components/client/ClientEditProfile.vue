@@ -53,6 +53,52 @@
 
         </v-dialog>
 
+        <v-dialog
+                v-model="largefilesize"
+                max-width="400"
+                color="#f5faff"
+                transition="scale-transition"
+                :hide-overlay="true"
+            >
+                <v-card 
+                    height="105" 
+                    color="#f64f51" 
+                    class="pt-2">
+            
+                    <v-alert  
+                        prominent
+                        height="" 
+                        type="error"
+                    >
+                            <p class="font-weight-strong mb-0">File size is too large limit 2MB</p>
+                    </v-alert>
+
+                </v-card>
+            </v-dialog>
+
+            <v-dialog
+                v-model="field_required"
+                max-width="400"
+                color="#f5faff"
+                transition="scale-transition"
+                :hide-overlay="true"
+            >
+                <v-card 
+                    height="105" 
+                    color="#f64f51" 
+                    class="pt-2"
+                >
+
+                    <v-alert  
+                        prominent
+                        height="" 
+                        type="error">
+                        <p class="font-weight-strong mb-0">{{field}}</p>
+                    </v-alert>
+
+                </v-card>
+            </v-dialog>
+
             <v-card row flat width="1300" class="mt-10 mx-auto mb-5"  color="#F5FAFF">
                 <v-flex row class="px-3">
                     <h3 class="headline mt-1 font-weight-regular">Profile info</h3>
@@ -1747,6 +1793,7 @@ export default {
             if(this.otherdocument.length > 0 && (this.otherdocument_title == '' || this.otherdocument_title == null)){
 
                     console.log(17);
+                    this.loading = false;
                     this.field = 'Please fill title on attachment 1 '
                     this.field_required = true
                     return false
@@ -1754,6 +1801,7 @@ export default {
             }else if(this.otherdocument.length == 0 && (!this.otherdocument_title == '' || !this.otherdocument_title == null)){
 
                     console.log(18);
+                    this.loading = false;
                     this.field = 'Please attach file on attachment 1'
                     this.field_required = true
                     return false
@@ -1761,6 +1809,7 @@ export default {
             }else if(this.otherdocument1.length > 0 && (this.otherdocument1_title == '' || this.otherdocument1_title == null)){
 
                     console.log(17);
+                    this.loading = false;
                     this.field = 'Please fill title on attachment 2'
                     this.field_required = true
                     return false
@@ -1768,6 +1817,7 @@ export default {
             }else if(this.otherdocument1.length == 0 && (!this.otherdocument1_title == '' || !this.otherdocument1_title == null)){
 
                     console.log(18);
+                    this.loading = false;
                     this.field = 'Please attach file on attachment 2'
                     this.field_required = true
                     return false
@@ -1775,6 +1825,7 @@ export default {
             }else if(this.otherdocument2.length > 0 && (this.otherdocument2_title == '' || this.otherdocument2_title == null)){
 
                     console.log(17);
+                    this.loading = false;
                     this.field = 'Please fill title on attachment 3'
                     this.field_required = true
                     return false
@@ -1782,6 +1833,7 @@ export default {
             }else if(this.otherdocument2.length == 0 && (!this.otherdocument2_title == '' || !this.otherdocument2_title == null)){
 
                     console.log(18);
+                    this.loading = false;
                     this.field = 'Please attach file on attachment 3'
                     this.field_required = true
                     return false
@@ -1789,6 +1841,7 @@ export default {
             }else if(this.otherdocument3.length > 0 && (this.otherdocument3_title == '' || this.otherdocument3_title == null)){
 
                     console.log(17);
+                    this.loading = false;
                     this.field = 'Please fill title on attachment 4'
                     this.field_required = true
                     return false
@@ -1796,6 +1849,7 @@ export default {
             }else if(this.otherdocument3.length == 0 && (!this.otherdocument3_title == '' || !this.otherdocument3_title == null)){
 
                     console.log(18);
+                    this.loading = false;
                     this.field = 'Please attach file on attachment 4'
                     this.field_required = true
                     return false
@@ -1803,6 +1857,7 @@ export default {
             }else if(this.otherdocument4.length > 0 && (this.otherdocument4_title == '' || this.otherdocument4_title == null)){
 
                     console.log(17);
+                    this.loading = false;
                     this.field = 'Please fill title on attachment 5'
                     this.field_required = true
                     return false
@@ -1810,6 +1865,7 @@ export default {
             }else if(this.otherdocument4.length == 0 && (!this.otherdocument4_title == '' || !this.otherdocument4_title == null)){
 
                     console.log(18);
+                    this.loading = false;
                     this.field = 'Please attach file on attachment 5'
                     this.field_required = true
                     return false
@@ -1817,6 +1873,7 @@ export default {
             }else if(this.otherdocument5.length > 0 && (this.otherdocument5_title == '' || this.otherdocument5_title == null)){
 
                     console.log(17);
+                    this.loading = false;
                     this.field = 'Please fill title on attachment 6'
                     this.field_required = true
                     return false
@@ -1824,6 +1881,7 @@ export default {
             }else if(this.otherdocument5.length == 0 && (!this.otherdocument5_title == '' || !this.otherdocument5_title == null)){
 
                     console.log(18);
+                    this.loading = false;
                     this.field = 'Please attach file on attachment 6'
                     this.field_required = true
                     return false
@@ -2973,7 +3031,11 @@ export default {
 
         save(){
 
-            if(this.tin_extension === 'error' 
+            if(this.validate()){
+
+                console.log("VALIDATE IS TRUE")
+
+                if(this.tin_extension === 'error' 
                 || this.profile_photo_extension === 'error' 
                 || this.id_extension === 'error'
                 || this.copy_of_registration_extension === 'error'
@@ -3045,6 +3107,8 @@ export default {
                     }); 
 
             }
+            }
+                
         }
     },
 
