@@ -161,32 +161,22 @@
 
                                                            
                                                             <v-chip 
-                                                                v-if="tender.tender_status == 'rejected'"
+                                                                v-if="tender.tender_status === 'rejected' || tender.tender_status === 'accepted'"
                                                                 small
                                                                 class="light-green white--text caption font-weight-bold mx-2" 
                                                             >
                                                                 awarded
 
                                                             </v-chip>
-                                                               
 
+                    
                                                             <v-tooltip right content-class="tooltip">
                                                                 <template v-slot:activator="{ on }">
                                                                     <v-chip 
-                                                                        v-show="tender.tender_status !== 'rejected'"
+                                                                        v-if="tender.tender_status === 'rejected'  || tender.tender_status ==='accepted'"
                                                                         small 
                                                                         v-on="on"
                                                                         class="light-green white--text caption font-weight-bold mx-3" 
-                                                                    >
-                                                                        {{ tender.tender_status}}
-
-                                                                    </v-chip>
-
-                                                                    <v-chip 
-                                                                        small 
-                                                                        v-show="tender.tender_status === 'rejected'"
-                                                                        v-on="on"
-                                                                        class="red white--text caption font-weight-bold mx-3" 
                                                                     >
                                                                         {{ tender.tender_status}}
 
@@ -248,10 +238,30 @@
 
                                                         <v-col cols=9>
 
+                                                            
+                                                            <v-chip 
+                                                                v-if="tender.tender_status === 'rejected'"
+                                                                small
+                                                                class="light-green white--text caption font-weight-bold mx-2" 
+                                                            >
+                                                                awarded
+
+                                                            </v-chip>
+
+                                                             <v-chip 
+                                                                v-if="tender.tender_status ==='accepted'"
+                                                                small
+                                                                class="green white--text caption font-weight-bold mx-2" 
+                                                            >
+                                                                awarded
+
+                                                            </v-chip>
+
                                                             <v-tooltip right content-class="tooltip">
                                                                 <template v-slot:activator="{ on }">
                                                                     <v-chip 
                                                                         small 
+                                                                        v-show="tender.tender_status !== 'rejected'  || tender.tender_status !=='accepted'"
                                                                         v-on="on"
                                                                         class="light-green white--text caption font-weight-bold mx-3" 
                                                                     >
@@ -341,10 +351,29 @@
 
                                                         <p class="body-2  pt-1 ">status: </p>
 
+                                                        <v-chip 
+                                                            v-if="tender.tender_status === 'rejected'"
+                                                            small
+                                                            class="light-green white--text caption font-weight-bold mx-2" 
+                                                        >
+                                                            awarded
+
+                                                        </v-chip>
+
+                                                        <v-chip 
+                                                            v-if="tender.tender_status ==='accepted'"
+                                                            small
+                                                            class="green white--text caption font-weight-bold mx-2" 
+                                                        >
+                                                            awarded
+
+                                                        </v-chip>
+
                                                         <v-tooltip right content-class="tooltip">
                                                             <template v-slot:activator="{ on }">
                                                                 <v-chip 
                                                                     small 
+                                                                    v-show="tender.tender_status !== 'rejected'  || tender.tender_status !=='accepted'"
                                                                     v-on="on"
                                                                     class="green white--text caption font-weight-bold mx-3" 
                                                                 >
@@ -409,10 +438,29 @@
 
                                                         <p class="body-2  pt-1 ">status: </p>
 
+                                                        <v-chip 
+                                                            v-if="tender.tender_status === 'rejected'"
+                                                            small
+                                                            class="light-green white--text caption font-weight-bold mx-2" 
+                                                        >
+                                                            awarded
+
+                                                        </v-chip>
+
+                                                        <v-chip 
+                                                            v-if="tender.tender_status ==='accepted'"
+                                                            small
+                                                            class="light-green white--text caption font-weight-bold mx-2" 
+                                                        >
+                                                            awarded
+
+                                                        </v-chip>
+
                                                         <v-tooltip right content-class="tooltip">
                                                             <template v-slot:activator="{ on }">
                                                                 <v-chip 
                                                                     small 
+                                                                    v-show="tender.tender_status !== 'rejected'  || tender.tender_status !=='accepted'"
                                                                     v-on="on"
                                                                     class="green white--text caption font-weight-bold mx-3" 
                                                                 >
