@@ -302,29 +302,10 @@
                        
                         </v-row>
 
-                        <v-row class="px-3">
-                            <v-row wrap v-if="tender_category === 'Transporting'">
-                                <!--<v-col xs12 sm6 md4 lg4 xl4>
-                                    <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
-                                    <v-text-field 
-                                        outlined 
-                                        clearable
-                                        v-model="timeline">
-                                    </v-text-field>-->
-                                    <!--<v-date-picker
-                                        v-model="timeline"
-                                        :allowed-dates="allowedDates"
-                                        class="mt-4"
-                                        min="2016-06-15"
-                                        max="2018-03-20"
-                                     >                              
-                                    </v-date-picker>
-                                    <v-date-picker v-model="timeline"></v-date-picker>
-
-                                </v-col>-->
-
+                        <v-row class="px-3" v-if="tender_category === 'Transporting'">
+                            <v-row wrap >
                                 <v-col>
-                                    <p class="primary--text body-2 text-uppercase mb-0">ORIGIN</p>
+                                    <p class="primary--text body-2 text-uppercase mb-0">COUNTRY OF ORIGIN</p>
                                     <v-text-field 
                                         outlined 
                                         clearable
@@ -339,7 +320,7 @@
                                 </v-col>
 
                                 <v-col>
-                                    <p class="primary--text body-2 text-uppercase mb-0">DESTINATION</p>
+                                    <p class="primary--text body-2 text-uppercase mb-0">COUNTRY OF DESTINATION</p>
                                     <v-text-field 
                                         outlined 
                                         clearable
@@ -354,45 +335,48 @@
 
                                     </v-text-field>
                                 </v-col>
-                                
+                            </v-row>
+                        </v-row>
 
-                                <!--<v-col xs12 sm6 md4 lg4 xl4>
-                                    <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
+                        <v-row class="px-3" v-if="tender_category === 'Transporting'">
+                            <v-row wrap >
+                                <v-col>
+                                    <p class="primary--text body-2 text-uppercase mb-0">REGION OF ORIGIN</p>
                                     <v-text-field 
                                         outlined 
                                         clearable
-                                        v-model="offer_amount">
+                                        :rules="[v => !!v || 'Origin region is required']"
+                                        required
+                                        v-model="origin_region"
+                                    >
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
                                     </v-text-field>
-                                </v-col>-->
+                                </v-col>
+
+                                <v-col>
+                                    <p class="primary--text body-2 text-uppercase mb-0">REGION OF DESTINATION</p>
+                                    <v-text-field 
+                                        outlined 
+                                        clearable
+                                        :rules="[v => !!v || 'Destination region is required']"
+                                        required
+                                        v-model="destination_region"
+                                    >
+
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+
+                                    </v-text-field>
+                                </v-col>
                             </v-row>
                         </v-row>
 
                         <v-row>
-                            <!--<v-col
-                                offset="2"
-                                align-self="center"
-                                cols='3'
-                               
-                            >
-                                <p class="primary--text body-2 text-uppercase mb-0"> DELIVERY TIMELINE </p>
-                            </v-col>
-                            <v-col
-                                col="9"
-                                
-                            >
-                                <v-date-picker 
-                                    v-model="timeline"
-                                    :allowed-dates="allowedDates"
-                                    full-width>
-                                </v-date-picker>
-                            </v-col>-->
-
+                            
                             <v-col xs12 sm6 md4 lg4 xl4>
-                                    <!--<v-text-field 
-                                        outlined 
-                                        clearable
-                                        v-model="currency">
-                                    </v-text-field>-->
                                     <v-select 
                                         class="mx-6" 
                                         style="color:#4169E1;"
@@ -414,17 +398,8 @@
                                     <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
                                     <v-text-field 
                                         outlined 
-                                        clearable
-                                        :rules="[v => !!v || 'Amout is required']"
-                                        required
+                                        type="number"
                                         v-model="offer_amount">
-
-                                        <template #label>
-                                            <span class="red--text"><strong>* </strong></span>
-                                        </template><template #label>
-
-                                    <span class="red--text"><strong>* </strong></span>
-                                </template>
                                     </v-text-field>
                             </v-col>
 
@@ -462,7 +437,22 @@
                         </v-row>
 
                         <v-row>
-                            <v-col xs12>
+                             <v-col cols=4>
+                                <p class="primary--text body-2 text-uppercase mb-0"> BILL OF LADING NUMBER </p>
+                                <v-text-field
+                                    outlined 
+                                    type="number"
+                                    :rules="[v => !!v || 'bill of lading number  is required']"
+                                    v-model="bill_of_lading_number"
+                                >
+
+                                     <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                    </template>
+                                </v-text-field>
+                            </v-col>
+
+                            <v-col cols=8>
                                 <p class="primary--text body-2 text-uppercase mb-0"> DESCRIPTION ON CARGO </p>
                                 <v-textarea
                                     outlined 
@@ -1290,6 +1280,9 @@ export default {
         details:'',
         origin:'',
         destination:'',
+        destination_region:'',
+        bill_of_lading_number:'',
+        origin_region:'',
         timeline:new Date().toISOString().substr(0, 10),
         time: new Date().toISOString().substr(0, 10),
         size:'',
@@ -1467,8 +1460,9 @@ export default {
 
             if(this.tender_category == "Transporting"){
 
-                if(this.details == '' || this.origin == '' || this.destination == '' || this.timeline == ''
-                    || this.currency == '' || this.offer_amount == '' || this.terms =='' || this.tender_category == ''
+                if(this.details == '' || this.origin == '' || this.destination == '' || this.bill_of_lading_number == ''
+                    || this.timeline == '' || this.origin_region == '' || this.destination_region == '' 
+                    || this.currency == ''  || this.terms =='' || this.tender_category == ''
                     || this.bill_of_lading.length == 0 || this.authorization_letter.length == 0)
 
                     return false
@@ -1477,7 +1471,7 @@ export default {
 
             } else if(this.tender_category == "Clearing"){
 
-                if(this.details == '' || this.timeline == '' || this.currency == '' || this.offer_amount == '' || this.terms =='' 
+                if(this.details == '' || this.timeline == '' || this.currency == '' || this.terms =='' || this.bill_of_lading_number == ''
                     || this.tender_category == '' || this.bill_of_lading.length == 0 || this.authorization_letter.length == 0)
 
                     return false
@@ -2263,11 +2257,16 @@ export default {
                 formData.append('otherfiles[5][name]', this.otherdocument5_title)
             }
 
-            formData.append('cargo_size',this.size);
+            if(this.cargo_size !== '')
+                formData.append('cargo_size',this.size);
+
             formData.append('bill_of_lading[0]',this.bill_of_lading[0]);
             formData.append('authorization_letter[0]',this.authorization_letter[0]);
             formData.append('cargo_details',this.details);
-            formData.append('customer_offer_amount',this.offer_amount);
+
+            if(this.offer_amount !== '')
+                formData.append('customer_offer_amount',this.offer_amount);
+
             formData.append('customer_terms_and_conditions',this.terms);
             formData.append('customer_delivery_timeline',this.timeline);
 
@@ -2276,6 +2275,12 @@ export default {
                 formData.append('origin',this.origin);
                 
                 formData.append('destination',this.destination);
+
+                formData.append('origin_region',this.origin_region);
+                
+                formData.append('destination_region',this.destination_region);
+
+                
             }
             
             formData.append('currency',this.currency);
@@ -2283,6 +2288,8 @@ export default {
             formData.append('tender_category',this.tender_category);
             formData.append('customer_verification',this.customer.is_verified);
             formData.append('customer_id',this.customer.id);
+            formData.append('bill_of_lading_number',this.bill_of_lading_number);
+            
 
             if(this.currentFiles.length > 0){
 
