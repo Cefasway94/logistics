@@ -151,7 +151,7 @@
             <v-flex column class="pt-3">
             <v-flex row class="">
                 <v-flex column sm6 mb6 class="px-6">
-                    <p class="bondy-2 primary--text mb-0">Name</p>
+                    <p class="bondy-2 primary--text mb-0">Company Name</p>
                     <p 
                     class=" mt-3" 
                     color="#4169E1">{{name}}

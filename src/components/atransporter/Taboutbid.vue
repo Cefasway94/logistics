@@ -68,6 +68,12 @@
                         </v-flex>
 
                         <v-flex row>
+
+                        <v-flex column class="mt-7 pl-3 pr-4">
+                            <p class="primary--text body-1  mb-2"> BILL OF LADING </p>
+                            <p class="body-1">{{LOAD_TENDER.bill_of_lading_number}}</p>
+                        </v-flex>
+
                         <v-flex column class="mt-7 pl-3 pr-4">
                             <p class="primary--text body-1 mb-2"> TERMS AND CONDITIIONS </p>
                             <p class="body-1">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
@@ -77,6 +83,12 @@
                             <p class="primary--text body-1 mb-2"> AMOUNT </p>
                             <p class="body-1">{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
                         </v-flex>
+
+                         <v-flex column class=" mt-7 pl-3">
+                            <p class="primary--text body-1 mb-2" > DELIVERY TIMELINE </p>
+                            <p class="body-1" >{{LOAD_TENDER.customer_delivery_timeline}}</p>
+                        </v-flex>
+                        
                         </v-flex>
 
                         <v-flex row class="mt-10 mb-4" >
