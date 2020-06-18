@@ -142,16 +142,14 @@
                                             </v-col>
                                         </v-row>
 
-                                        <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in AllClearingTenders" :key="tender.tender_id">
-                                            <v-card column width="350"  elevation="3" class="px-4 py-3">
+                                        <v-flex xs12 sm6 md6 lg4 xl4 class="py-3 px-2" v-for="tender in AllClearingTenders" :key="tender.tender_id">
+                                            <v-card column width="350"  elevation="3" class="px-1 py-1">
                                                 <v-card-text>
 
 
                                                     <h4  class="">{{ tender.cargo_details}}</h4>
 
-                                                   
-
-                                                    <v-row  row class="px-3 pt-1">
+                                                    <v-row  row class="">
 
                                                         <v-col cols=3>
                                                             <p>Status: </p>
@@ -162,7 +160,7 @@
                                                            
                                                             <v-chip 
                                                                 v-if="tender.tender_status === 'rejected' || tender.tender_status === 'accepted'"
-                                                                small
+                                                                :small="true"
                                                                 class="light-green white--text caption font-weight-bold mx-2" 
                                                             >
                                                                 awarded
@@ -171,12 +169,14 @@
 
                     
                                                             <v-tooltip right content-class="tooltip">
+
                                                                 <template v-slot:activator="{ on }">
                                                                     <v-chip 
-                                                                        v-if="tender.tender_status === 'rejected'  || tender.tender_status ==='accepted'"
-                                                                        small 
+                                                                        :small="true"
+                                                                        v-if="tender.tender_status !== 'rejected'  || tender.tender_status !=='accepted'" 
                                                                         v-on="on"
                                                                         class="light-green white--text caption font-weight-bold mx-3" 
+                                                                        v-bind:class="{'red':tender.tender_status == 'rejected','teal darken-4':tender.tender_status === 'accepted'}"
                                                                     >
                                                                         {{ tender.tender_status}}
 
@@ -224,34 +224,24 @@
                                             </v-card>
                                         </v-flex> 
 
-                                        <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in AllTransportingTenders" :key="tender.tender_id">
-                                            <v-card column width="350"  elevation="3" class="px-4 py-3">
+                                        <v-flex xs12 sm6 md6 lg4 xl4 class="py-3 px-2" v-for="tender in AllTransportingTenders" :key="tender.tender_id">
+                                            <v-card column width="350"  elevation="3" class="px-1 py-1">
 
                                                 <v-card-text>
 
                                                     <h4  class="">{{ tender.cargo_details}}</h4>
 
-                                                    <v-row  row class="px-3 pt-1">
+                                                    <v-row  row class="pt-1">
                                                         <v-col cols=3>
                                                             <p>Status: </p>
                                                         </v-col>
 
                                                         <v-col cols=9>
 
-                                                            
                                                             <v-chip 
-                                                                v-if="tender.tender_status === 'rejected'"
-                                                                small
+                                                                v-if="tender.tender_status === 'rejected' || tender.tender_status === 'accepted'"
+                                                                 :small="true"
                                                                 class="light-green white--text caption font-weight-bold mx-2" 
-                                                            >
-                                                                awarded
-
-                                                            </v-chip>
-
-                                                             <v-chip 
-                                                                v-if="tender.tender_status ==='accepted'"
-                                                                small
-                                                                class="green white--text caption font-weight-bold mx-2" 
                                                             >
                                                                 awarded
 
@@ -260,10 +250,11 @@
                                                             <v-tooltip right content-class="tooltip">
                                                                 <template v-slot:activator="{ on }">
                                                                     <v-chip 
-                                                                        small 
+                                                                        :small="true" 
                                                                         v-show="tender.tender_status !== 'rejected'  || tender.tender_status !=='accepted'"
                                                                         v-on="on"
                                                                         class="light-green white--text caption font-weight-bold mx-3" 
+                                                                        v-bind:class="{'red':tender.tender_status == 'rejected','teal darken-4':tender.tender_status === 'accepted'}"
                                                                     >
                                                                         {{ tender.tender_status}}
 
@@ -321,8 +312,8 @@
 
                                      <template v-if='tab.title === "Biding"'>
 
-                                        <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in ClearingBidedTenders" :key="tender.tender_id">
-                                            <v-card column width="350"  elevation="3" class="px-4 py-3">
+                                        <v-flex xs12 sm6 md6 lg4 xl4 class="py-3 px-2" v-for="tender in ClearingBidedTenders" :key="tender.tender_id">
+                                            <v-card column width="350"  elevation="3" class="px-1 py-1">
 
                                                 <v-card-text>
 
@@ -332,7 +323,7 @@
                                                         <v-tooltip right content-class="tooltip">
                                                             <template v-slot:activator="{ on }">
                                                                 <v-chip 
-                                                                    small 
+                                                                    :small="true" 
                                                                     v-on="on"
                                                                     class="orange white--text caption font-weight-bold mx-3" 
                                                                 >
@@ -347,35 +338,34 @@
                                                         <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
                                                     </v-row>
 
-                                                    <v-row class="px-3 mt-4">
+                                                    <v-row class="mt-4">
 
-                                                        <p class="body-2  pt-1 ">status: </p>
+                                                        <v-col cols=3>
 
-                                                        <v-chip 
-                                                            v-if="tender.tender_status === 'rejected'"
-                                                            small
+                                                            <p class="body-2  pt-1 ">status: </p>
+                                                        </v-col>
+                                                        
+                                                        <v-col cols=9>
+
+                                                            <v-chip 
+                                                            v-if="tender.tender_status === 'rejected' || tender.tender_status === 'accepted'"
+                                                            :small="true"
                                                             class="light-green white--text caption font-weight-bold mx-2" 
                                                         >
                                                             awarded
 
                                                         </v-chip>
 
-                                                        <v-chip 
-                                                            v-if="tender.tender_status ==='accepted'"
-                                                            small
-                                                            class="green white--text caption font-weight-bold mx-2" 
-                                                        >
-                                                            awarded
-
-                                                        </v-chip>
+                                                       
 
                                                         <v-tooltip right content-class="tooltip">
                                                             <template v-slot:activator="{ on }">
                                                                 <v-chip 
-                                                                    small 
+                                                                    :small="true" 
                                                                     v-show="tender.tender_status !== 'rejected'  || tender.tender_status !=='accepted'"
                                                                     v-on="on"
                                                                     class="green white--text caption font-weight-bold mx-3" 
+                                                                    v-bind:class="{'red':tender.tender_status == 'rejected','teal darken-4':tender.tender_status === 'accepted'}"
                                                                 >
                                                                     {{ tender.tender_status}}
 
@@ -385,6 +375,9 @@
                                                             <span v-if="tender.tender_status === 'awarded'">Tender has already been awarded to an agent</span>
                                                             <span v-if="tender.tender_status === 'OnProgress'">The agent has started to work on this tender</span>
                                                         </v-tooltip>
+
+                                                        </v-col>
+                                                        
 
                                                     </v-row>
                     
@@ -408,8 +401,8 @@
                                             </v-card>
                                         </v-flex>  
 
-                                        <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in TransportingBidedTenders" :key="tender.tender_id">
-                                            <v-card column width="350"  elevation="3" class="px-4 py-3">
+                                        <v-flex xs12 sm6 md6 lg4 xl4 class="py-3 px-2" v-for="tender in TransportingBidedTenders" :key="tender.tender_id">
+                                            <v-card column width="350"  elevation="3" class="px-1 py-1">
 
                                                 <v-card-text>
 
@@ -419,7 +412,7 @@
                                                         <v-tooltip right content-class="tooltip">
                                                             <template v-slot:activator="{ on }">
                                                                 <v-chip 
-                                                                    small 
+                                                                    :small="true"  
                                                                     v-on="on"
                                                                     class="orange white--text caption font-weight-bold mx-3" 
                                                                 >
@@ -434,35 +427,32 @@
                                                         <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
                                                     </v-row>
 
-                                                    <v-row class="px-3 mt-4">
+                                                    <v-row class="mt-4">
 
-                                                        <p class="body-2  pt-1 ">status: </p>
+                                                        <v-col cols=3>
+                                                             <p class="body-2  pt-1 ">status: </p>
+                                                        </v-col>
 
-                                                        <v-chip 
-                                                            v-if="tender.tender_status === 'rejected'"
-                                                            small
+                                                        <v-col cols=9>
+                                                            <v-chip 
+                                                            v-if="tender.tender_status === 'rejected' || tender.tender_status === 'accepted'"
+                                                            :small="true" 
                                                             class="light-green white--text caption font-weight-bold mx-2" 
                                                         >
                                                             awarded
 
                                                         </v-chip>
 
-                                                        <v-chip 
-                                                            v-if="tender.tender_status ==='accepted'"
-                                                            small
-                                                            class="light-green white--text caption font-weight-bold mx-2" 
-                                                        >
-                                                            awarded
-
-                                                        </v-chip>
+                                                       
 
                                                         <v-tooltip right content-class="tooltip">
                                                             <template v-slot:activator="{ on }">
                                                                 <v-chip 
-                                                                    small 
+                                                                    :small="true"  
                                                                     v-show="tender.tender_status !== 'rejected'  || tender.tender_status !=='accepted'"
                                                                     v-on="on"
                                                                     class="green white--text caption font-weight-bold mx-3" 
+                                                                    v-bind:class="{'red':tender.tender_status == 'rejected','teal darken-4':tender.tender_status === 'accepted'}"
                                                                 >
                                                                     {{ tender.tender_status}}
 
@@ -472,6 +462,9 @@
                                                             <span v-if="tender.tender_status === 'awarded'">Tender has already been awarded to an agent</span>
                                                             <span v-if="tender.tender_status === 'OnProgress'">The agent has started to work on this tender</span>
                                                         </v-tooltip>
+                                                        </v-col>
+
+                                                        
 
                                                     </v-row>
                     
@@ -508,18 +501,25 @@
 
                                     <template v-if='tab.title === "Progress"'>
 
-                                        <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in ClearingTendersOnProgress" :key="tender.tender_id">
-                                            <v-card column width="350"  max-height="200" elevation="3" class="px-4 py-3">
+                                        <v-flex xs12 sm6 md6 lg4 xl4 class="py-3 px-2" v-for="tender in ClearingTendersOnProgress" :key="tender.tender_id">
+                                            <v-card column width="350" elevation="3" class="px-1 py-1">
                                                 <v-card-text>
 
-                                                    <v-row  row class="px-3 pt-1">
-                                                        <h4  class="">{{ tender.cargo_details}}</h4>
+                                                    <h4 class="">{{ tender.cargo_details}}</h4>
+
+
+                                                    <v-row  row class="">
                                                         
-                                                        <v-tooltip right content-class="tooltip">
+                                                        <v-col cols=4>
+                                                            <p>Status: </p>
+                                                        </v-col>
+                                                        <v-col cols=8>
+
+                                                            <v-tooltip right content-class="tooltip">
                                                             <template v-slot:activator="{ on }">
 
                                                                 <v-chip 
-                                                                    small 
+                                                                    :small="true"  
                                                                     v-on="on"
                                                                     class="green white--text caption font-weight-bold mx-3"  
                                                                 >
@@ -530,9 +530,12 @@
                                                             </template>
                                                             <span v-if="tender.tender_progress === 'onProgress'">The agent has started to work on this tender</span>
                                                         </v-tooltip>
-                                                        <v-spacer></v-spacer>
 
-                                                        <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
+                                                        </v-col>
+                                                        
+                                                        <!-- <v-spacer></v-spacer>
+
+                                                        <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon> -->
                                                     </v-row>
                     
                                                     <v-row>
@@ -564,30 +567,42 @@
                                             </v-card>
                                         </v-flex> 
 
-                                        <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in TransportingOnProgressTenders" :key="tender.tender_id">
-                                            <v-card column width="350"  max-height="200" elevation="3" class="px-4 py-3">
+                                        <v-flex xs12 sm4 md4 lg4 xl4 class="py-3 px-2" v-for="tender in TransportingOnProgressTenders" :key="tender.tender_id">
+                                            <v-card column width="350" elevation="3" class="px-1 py-1">
 
                                                 <v-card-text>
 
-                                                    <v-row  row class="px-3 pt-1">
-                                                        <h4  class="">{{ tender.cargo_details}}</h4>
-                                                    
-                                                        <v-tooltip right content-class="tooltip">
+                                                   
+                                                    <h4 class="">{{ tender.cargo_details}}</h4>
+
+                                                    <v-row  row class="">
+                                                        
+                                                        <v-col cols=4>
+                                                            <p>Status: </p>
+                                                        </v-col>
+                                                        <v-col cols=8>
+
+                                                            <v-tooltip right content-class="tooltip">
                                                             <template v-slot:activator="{ on }">
+
                                                                 <v-chip 
-                                                                    small 
+                                                                    :small="true"  
                                                                     v-on="on"
-                                                                    class="green white--text caption font-weight-bold mx-3"
+                                                                    class="green white--text caption font-weight-bold mx-3"  
                                                                 >
                                                                     {{ tender.tender_progress}}
 
                                                                 </v-chip>
+
                                                             </template>
                                                             <span v-if="tender.tender_progress === 'onProgress'">The agent has started to work on this tender</span>
                                                         </v-tooltip>
-                                                        <v-spacer></v-spacer>
 
-                                                        <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon>
+                                                        </v-col>
+                                                        
+                                                        <!-- <v-spacer></v-spacer>
+
+                                                        <v-icon color="#E9E9F0" class=" mb-1">clear</v-icon> -->
                                                     </v-row>
                     
 
