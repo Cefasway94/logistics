@@ -78,7 +78,7 @@ export default {
  #large_thumbnail{
    width:auto;
    height:auto;
-   max-width:500px;
+   /* max-width:500px; */
    max-height:500px;
  }
 

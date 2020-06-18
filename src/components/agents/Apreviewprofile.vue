@@ -277,7 +277,7 @@
 
             <v-row class="pt-3">
                <v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Certificate</p>
+                    <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Copy of Registration Certificate</p>
                      <v-card 
                      flat 
                      width="200" 

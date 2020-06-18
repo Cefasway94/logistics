@@ -142,7 +142,7 @@
                                             </v-col>
                                         </v-row>
 
-                                        <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in AllClearingTenders" :key="tender.tender_id">
+                                        <v-flex xs12 sm4 md4 lg4 xl4 class="py-3 px-2" v-for="tender in AllClearingTenders" :key="tender.tender_id">
                                             <v-card column width="350"  elevation="3" class="px-4 py-3">
                                                 <v-card-text>
 
@@ -224,7 +224,7 @@
                                             </v-card>
                                         </v-flex> 
 
-                                        <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in AllTransportingTenders" :key="tender.tender_id">
+                                        <v-flex xs12 sm4 md4 lg4 xl4 class="py-3 px-2" v-for="tender in AllTransportingTenders" :key="tender.tender_id">
                                             <v-card column width="350"  elevation="3" class="px-4 py-3">
 
                                                 <v-card-text>
