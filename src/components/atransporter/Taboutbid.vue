@@ -81,7 +81,7 @@
 
                         <v-flex row class="mt-10 mb-4" >
 
-                            <v-flex column class="pl-3">
+                            <!-- <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card 
                                 flat 
@@ -154,9 +154,9 @@
 
                                     </v-flex>
                                 </v-card>
-                            </v-flex>
+                            </v-flex> -->
 
-                            <v-flex column class="px-3" >
+                            <!-- <v-flex column class="px-3" >
                                     <p class="primary--text body-1 mb-2"> CARGO PHOTO </p>
                                         <v-card 
                                             flat 
@@ -191,7 +191,7 @@
                                               </v-btn>
                                             </v-flex>
                                         </v-card>
-                             </v-flex>
+                             </v-flex> -->
 
                             <!-- <v-flex column >
                             <p class="primary--text body-1 mb-2"> OTHER </p>
@@ -206,7 +206,7 @@
 
                         </v-flex>
 
-                        <v-flex row class="mt-3 mb-3 ml-2" >
+                        <!-- <v-flex row class="mt-3 mb-3 ml-2" >
                             <v-row class="mt-5" v-if="otherFiles.length > 0">
 
                                 <v-col cols=12><p class="primary--text body-1 mb-1"> OTHER DOCUMENTS</p></v-col>
@@ -245,7 +245,7 @@
                                     </v-card>
                                 </v-col>
                             </v-row>
-                        </v-flex>
+                        </v-flex> -->
 
 
                         </v-flex>
