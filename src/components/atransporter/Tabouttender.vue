@@ -123,20 +123,27 @@
                         </v-flex>
 
                         <v-flex row>
+
+                        <v-flex column class="mt-7 pl-3 pr-4">
+                            <p class="primary--text body-1  mb-2"> BILL OF LADING </p>
+                            <p class="body-1">{{LOAD_TENDER.bill_of_lading_number}}</p>
+                        </v-flex>
+
                         <v-flex column class="mt-7 pl-3 pr-4">
                             <p class="primary--text body-1  mb-2"> TERMS AND CONDITIIONS </p>
                             <p class="body-1">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
 
-                         <v-flex column class=" mt-7 pl-3">
+                        <v-flex column class=" mt-7 pl-3">
                             <p class="primary--text body-1 mb-2" > AMOUNT </p>
-                            <p class="body-1" >{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
-                            </v-flex>
+                            <p class="body-1" >{{LOAD_TENDER.customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
+                        </v-flex>
 
-                            <v-flex column class=" mt-7 pl-3">
+                        <v-flex column class=" mt-7 pl-3">
                             <p class="primary--text body-1 mb-2" > DELIVERY TIMELINE </p>
                             <p class="body-1" >{{LOAD_TENDER.customer_delivery_timeline}}</p>
-                            </v-flex>
+                        </v-flex>
+                    
                         </v-flex>
 
                         <v-flex row class="mt-10 mb-4" >
@@ -269,7 +276,7 @@
 
                         </v-flex>
 
-                        <v-flex row class="mt-3 mb-3 ml-2" >
+                        <!-- <v-flex row class="mt-3 mb-3 ml-2" >
                             <v-row class="mt-5" v-if="otherFiles.length > 0">
 
                                 <v-col cols=12><p class="primary--text body-1 mb-1"> OTHER DOCUMENTS</p></v-col>
@@ -308,7 +315,7 @@
                                     </v-card>
                                 </v-col>
                             </v-row>
-                        </v-flex>
+                        </v-flex> -->
 
                         </v-flex>
                     </v-card>
@@ -453,8 +460,7 @@
                              v-model="bid_amount"
                              :suffix="currency"
                              label="Bid amount"
-                             type="number"
-                             :rules="[rules.required]">
+                             :rules="[rules.required, rules.number]">
                             </v-text-field>
                         </v-flex>
 
@@ -764,6 +770,13 @@ export default {
                         this.field_required = true
                     // this.requiredemail = true  
                     // this.invalidemail = false
+                        return false
+
+                }else if (this.rules.number(this.bid_amount) == 'Number only required') {
+
+                        console.log(2);
+                        this.field = 'Ammoount should be number only'
+                        this.field_required = true
                         return false
 
                 }else if (this.rules.required(this.bid_terms_and_conditions) == 'Required') {

@@ -142,13 +142,8 @@
                                             </v-col>
                                         </v-row>
 
-<<<<<<< HEAD
-                                        <v-flex xs12 sm4 md4 lg4 xl4 class="py-3 px-2" v-for="tender in AllClearingTenders" :key="tender.tender_id">
-                                            <v-card column width="350"  elevation="3" class="px-4 py-3">
-=======
                                         <v-flex xs12 sm6 md6 lg4 xl4 class="py-3 px-2" v-for="tender in AllClearingTenders" :key="tender.tender_id">
                                             <v-card column width="350"  elevation="3" class="px-1 py-1">
->>>>>>> cbc7e652b335816661ef900697cf175950fe80c2
                                                 <v-card-text>
 
 
@@ -229,13 +224,8 @@
                                             </v-card>
                                         </v-flex> 
 
-<<<<<<< HEAD
-                                        <v-flex xs12 sm4 md4 lg4 xl4 class="py-3 px-2" v-for="tender in AllTransportingTenders" :key="tender.tender_id">
-                                            <v-card column width="350"  elevation="3" class="px-4 py-3">
-=======
                                         <v-flex xs12 sm6 md6 lg4 xl4 class="py-3 px-2" v-for="tender in AllTransportingTenders" :key="tender.tender_id">
                                             <v-card column width="350"  elevation="3" class="px-1 py-1">
->>>>>>> cbc7e652b335816661ef900697cf175950fe80c2
 
                                                 <v-card-text>
 
@@ -511,13 +501,8 @@
 
                                     <template v-if='tab.title === "Progress"'>
 
-<<<<<<< HEAD
-                                        <v-flex xs12 sm4 md4 lg4 xl4 class="py-3 px-2" v-for="tender in ClearingTendersOnProgress" :key="tender.tender_id">
-                                            <v-card column width="350"  max-height="250" elevation="3" class="px-4 py-3">
-=======
                                         <v-flex xs12 sm6 md6 lg4 xl4 class="py-3 px-2" v-for="tender in ClearingTendersOnProgress" :key="tender.tender_id">
                                             <v-card column width="350" elevation="3" class="px-1 py-1">
->>>>>>> cbc7e652b335816661ef900697cf175950fe80c2
                                                 <v-card-text>
 
                                                     <h4 class="">{{ tender.cargo_details}}</h4>

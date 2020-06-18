@@ -409,8 +409,7 @@
                              v-model="bid_amount"
                              :suffix="currency"
                              label="Bid amount"
-                             type="number"
-                             :rules="[rules.required]">
+                             :rules="[rules.required, rules.number]">
                             </v-text-field>
                         </v-flex>
 
@@ -700,6 +699,13 @@ export default {
                     // this.invalidemail = false
                         return false
 
+                }else if (this.rules.number(this.bid_amount) == 'Number only required') {
+
+                        console.log(2);
+                        this.field = 'Ammoount should be number only'
+                        this.field_required = true
+                        return false
+
                 }else if (this.rules.required(this.bid_terms_and_conditions) == 'Required') {
 
                         console.log(2);
@@ -758,7 +764,7 @@ export default {
             .then(()=>{
                 
                 console.log(this.LOAD_POST_BID);
-                
+
                 if(this.LOAD_POST_BID.genralErrorCode == 8004 ) {
 
                     this.loading = false

@@ -253,7 +253,7 @@
 
                      <v-flex row class="pl-9 " >
                       <v-flex xs3 sm3 md3 lg3  >
-                      <p class="grey--text mb-0"  > Name :  </p>
+                      <p class="grey--text mb-0"  >Company Name :  </p>
                       </v-flex>
                       <v-flex xs9 sm9 md9 >
                       <p class=" text--text" >
@@ -368,17 +368,6 @@
                       </v-flex>
                       </v-flex>
 
-                     <v-flex row class="pl-9 " >
-                      <v-flex xs3 sm3 md3 lg3  >
-                      <p class="grey--text mb-0"  > Name :  </p>
-                      </v-flex>
-                      <v-flex xs9 sm9 md9 >
-                      <p class=" text--text" >
-                       {{name}}
-                      </p>
-                      </v-flex>
-                      </v-flex>
-
                       <v-flex row class="pl-9 " >
                       <v-flex xs5 sm5 md5 lg5  >
                       <p class="grey--text mb-0"  > Phone number :  </p>
@@ -478,8 +467,11 @@
                 
                 <v-alert
                 :value="timeout"
-                color="error"
+                 elevation="10"
+                type="error"
+                prominent
                 icon="error_outline"
+                 transition="slide-x-transition"
                 >
                 Connection is taking too long, Please check your internet connetction or try again.
                 </v-alert>
@@ -487,8 +479,11 @@
                
                 <v-alert
                 :value="invalid"
-                color="error"
+                elevation="10"
+                type="error"
+                prominent
                 icon="error_outline"
+                 transition="slide-x-transition"
                 >
                 {{abouterror}}
                 </v-alert> 
@@ -758,6 +753,7 @@
                        :rules="[rules.required, rules.number, rules.min]" 
                         > 
                         </v-text-field>
+                       
                     </v-card>
                     </template>
                     </v-hover>                    
@@ -830,6 +826,7 @@
                     <v-card color="transparent" 
                     height="40" 
                     :elevation="hover ? 6 : 0">
+
                         <v-text-field 
                         dense
                         solo 
@@ -845,6 +842,7 @@
                         :type="show ? 'text' : 'password'"
                         > 
                         </v-text-field>
+
                     </v-card>
                     </template>
                     </v-hover>
@@ -886,9 +884,25 @@
                     >
                     password don't match.
                     </v-alert>
+                    
                     </v-flex>
 
+                     <!-- password errors -->
+                      <v-alert
+                        elevation="10"
+                        :value="invalidpassword"
+                        type="error"
+                        transition="slide-x-transition"
+                        prominent=""
+                        icon="error_outline"
+                        >
+                        {{abouterror}}
+                      </v-alert>
+                    
+
                     </v-flex>
+
+
 
                     <!-- <v-flex class="py-2 ">
                     <v-btn color="#4169E1" height="45" block>
@@ -966,6 +980,7 @@ export default {
           // invalid email field
           invalidemail:false,
           requiredemail: false,
+          invalidpassword : false,
 
          //match: false,                // used to chcek if passwords match, 
          invalid: false,             // togle fields
@@ -1036,64 +1051,10 @@ methods:{
     },
 
     confirm(){
-
             
-
       this.clear_alert()
 
-      if(this.rules.required(this.email) == 'Required'){
-        
-        console.log(11);
-        this.validate()
-       // this.requiredemail = true  
-       // this.invalidemail = false
-        return false
-
-      }else if (this.rules.email(this.email) == 'invalid email') {
-        
-        this.validate()
-        console.log(12);
-        this.requiredemail = false
-        this.invalidemail = true
-        return false
-
-      }else if (this.rules.mixed(this.secret) == 'password too short' ) {
-        
-        console.log(13);
-        this.validate()
-        return this.rules.mixed(this.secret) 
-
-      }else if (this.rules.mixed(this.secret) == 'atleast one number required' ) {
-
-        console.log(14);
-        this.validate()
-        return this.rules.mixed(this.secret)
-
-      }else if (this.rules.mixed(this.secret) == 'atleast one letter required' ) {
-
-        console.log(15);
-        this.validate()
-        return this.rules.mixed(this.secret) 
-
-      }else if (this.rules.min(this.name) == 'Min 8 characters' ) {
-
-        console.log(16);
-        this.validate()
-        return this.rules.min(this.name)
-
-      }else if (this.rules.min(this.phone_number) == 'Min 8 characters' ) {
-
-        console.log(17);
-        this.validate()
-        return this.rules.min(this.phone_number)
-
-      }else if (this.rules.number(this.phone_number) == 'Number only required' ) {
-
-        console.log(18);
-        this.validate()
-        return this.rules.number(this.phone_number)
-
-      }
+      
 
       console.log(this.rules.mixed(this.secret));
       
@@ -1104,20 +1065,215 @@ methods:{
 
         
         if (this.category == 1) {
-          
-          this.dialog1 = true
-          console.log('agent');
-          
-          
+
+                if(this.rules.required(this.email) == 'Required'){
+                  
+                  console.log(11);
+                  this.validate()
+                // this.requiredemail = true  
+                // this.invalidemail = false
+                  return false
+
+                }else if (this.rules.email(this.email) == 'invalid email') {
+                  
+                  this.validate()
+                  console.log(12);
+                  this.requiredemail = false
+                  this.invalidemail = true
+                  return false
+
+                }else if (this.rules.mixed(this.secret) == 'password too short' ) {
+                  
+                  console.log(13);
+                  this.abouterror = 'Password too short'
+                  this.invalidpassword = true
+                  this.validate()
+                  return this.rules.mixed(this.secret) 
+
+                }else if (this.rules.mixed(this.secret) == 'atleast one number required' ) {
+
+                  console.log(14);
+                  this.abouterror = 'Password should contain atleast 1 number'
+                  this.invalidpassword = true
+                  this.validate()
+                  return this.rules.mixed(this.secret)
+
+                }else if (this.rules.mixed(this.secret) == 'atleast one letter required' ) {
+
+                  console.log(15);
+                  this.abouterror = 'Password should contain atleast 1 letter'
+                  this.invalidpassword = true
+                  this.validate()
+                  return this.rules.mixed(this.secret) 
+
+                }else if (this.rules.min(this.name) == 'Min 8 characters' ) {
+
+                  console.log(16);
+                  this.validate()
+                  this.abouterror = 'Company name should not be less than 8 character'
+                  this.invalid = true
+                  return this.rules.min(this.name)
+
+                }else if (this.rules.number(this.phone_number) == 'Number only required' ) {
+
+                  console.log(18);
+                  this.abouterror = 'phone number field requires number only'
+                  this.invalid = true
+                  this.validate()
+                  return this.rules.number(this.phone_number)
+
+                }else if (this.rules.min(this.phone_number) == 'Min 8 characters' ) {
+
+                  console.log(17);
+                  this.abouterror = 'phone number should not be less than 8 character'
+                  this.invalid = true
+                  this.validate()
+                  return this.rules.min(this.phone_number)
+
+                }else{
+
+                   this.dialog1 = true
+                   console.log('agent');
+
+                }
+                    
         } else if(this.category == 2) {
 
-          this.dialog2 = true
-          console.log('transporter');
+               if(this.rules.required(this.email) == 'Required'){
+                  
+                  console.log(11);
+                  this.validate()
+                // this.requiredemail = true  
+                // this.invalidemail = false
+                  return false
+
+                }else if (this.rules.email(this.email) == 'invalid email') {
+                  
+                  this.validate()
+                  console.log(12);
+                  this.requiredemail = false
+                  this.invalidemail = true
+                  return false
+
+                }else if (this.rules.mixed(this.secret) == 'password too short' ) {
+                  
+                  console.log(13);
+                  this.abouterror = 'Password too short'
+                  this.invalidpassword = true
+                  this.validate()
+                  return this.rules.mixed(this.secret) 
+
+                }else if (this.rules.mixed(this.secret) == 'atleast one number required' ) {
+
+                  console.log(14);
+                  this.abouterror = 'Password should contain atleast 1 number'
+                  this.invalidpassword = true
+                  this.validate()
+                  return this.rules.mixed(this.secret)
+
+                }else if (this.rules.mixed(this.secret) == 'atleast one letter required' ) {
+
+                  console.log(15);
+                  this.abouterror = 'Password should contain atleast 1 letter'
+                  this.invalidpassword = true
+                  this.validate()
+                  return this.rules.mixed(this.secret) 
+
+                }else if (this.rules.min(this.name) == 'Min 8 characters' ) {
+
+                  console.log(16);
+                  this.validate()
+                  this.abouterror = 'Company name should not be less than 8 character'
+                  this.invalid = true
+                  return this.rules.min(this.name)
+
+                }else if (this.rules.number(this.phone_number) == 'Number only required' ) {
+
+                  console.log(18);
+                  this.abouterror = 'phone number field requires number only'
+                  this.invalid = true
+                  this.validate()
+                  return this.rules.number(this.phone_number)
+
+                }else if (this.rules.min(this.phone_number) == 'Min 8 characters' ) {
+
+                  console.log(17);
+                  this.abouterror = 'phone number should not be less than 8 character'
+                  this.invalid = true
+                  this.validate()
+                  return this.rules.min(this.phone_number)
+
+                }else{
+
+                   this.dialog2 = true
+                   console.log('transporter');
+
+                }
           
         } else if (this.category ==3 ){
 
-          this.dialog3 = true
-          console.log('client');
+                if(this.rules.required(this.email) == 'Required'){
+                  
+                  console.log(11);
+                  this.validate()
+                // this.requiredemail = true  
+                // this.invalidemail = false
+                  return false
+
+                }else if (this.rules.email(this.email) == 'invalid email') {
+                  
+                  this.validate()
+                  console.log(12);
+                  this.requiredemail = false
+                  this.invalidemail = true
+                  return false
+
+                }else if (this.rules.mixed(this.secret) == 'password too short' ) {
+                  
+                  console.log(13);
+                  this.abouterror = 'Password too short'
+                  this.invalidpassword = true
+                  this.validate()
+                  return this.rules.mixed(this.secret) 
+
+                }else if (this.rules.mixed(this.secret) == 'atleast one number required' ) {
+
+                  console.log(14);
+                  this.abouterror = 'Password should contain atleast 1 number'
+                  this.invalidpassword = true
+                  this.validate()
+                  return this.rules.mixed(this.secret)
+
+                }else if (this.rules.mixed(this.secret) == 'atleast one letter required' ) {
+
+                  console.log(15);
+                  this.abouterror = 'Password should contain atleast 1 letter'
+                  this.invalidpassword = true
+                  this.validate()
+                  return this.rules.mixed(this.secret) 
+
+                }else if (this.rules.number(this.client_phone_number) == 'Number only required' ) {
+
+                  console.log(18);
+                  this.abouterror = 'phone number field requires number only'
+                  this.invalid = true
+                  this.validate()
+                  return this.rules.number(this.client_phone_number)
+
+                }else if (this.rules.min(this.client_phone_number) == 'Min 8 characters' ) {
+
+                  console.log(17);
+                  this.abouterror = 'phone number should not be less than 8 character'
+                  this.invalid = true
+                  this.validate()
+                  return this.rules.min(this.client_phone_number)
+
+                }else{
+
+                  this.dialog3 = true
+                  console.log('client');
+
+                }
           
         }
       }
@@ -1261,37 +1417,37 @@ methods:{
       
       }else if(this.secret=='' || this.secret === null ){
 
-        console.log('how1');
+        console.log('how2');
          this.emptyfilds= true;
          return false
 
-      }else if(this.name == '' || this.name === null ){
+      }else if((this.name == '' || this.name === null) & (this.category == 1 || this.category == 2) ){
 
-        console.log('how1');
+        console.log('how3');
          this.emptyfilds= true;
          return false
 
       }else if( (this.phone_number == '' || this.phone_number === null) & (this.category == 1 || this.category == 2) ){
          
-         console.log('how1');
+         console.log('how4');
          this.emptyfilds= true;
          return false
 
       }else if( (this.client_phone_number == '' || this.client_phone_number === null) & (this.category == 3) ){
          
-         console.log('how1');
+         console.log('how5');
          this.Client_phone_emptyfilds = true;
          return false
 
       }else if(this.confirm_secret == '' || this.confirm_secret === null ){
 
-        console.log('how1');
+        console.log('how6');
          this.emptyfilds= true;
          return false
 
       }else if(this.country == '' || this.country === null ){
 
-        console.log('how1');
+        console.log('how7');
          //this.emptyfilds= true;
          return false
       }
@@ -1303,12 +1459,10 @@ methods:{
 
       } else {       
 
-        console.log('how');       
-        console.log(this.client_phone_nunmber);
-        
-           return this.secret === this.confirm_secret
-
-
+        console.log('howw');       
+        console.log(this.client_phone_number);
+                   
+           return this.secret === this.confirm_secret         
 
       }
     },
@@ -1323,6 +1477,7 @@ methods:{
       this.invalidemail = false
       this.Client_phone_emptyfilds = false,
       this.selectcategory = false
+      this.invalidpassword = false
 
     }, 
    
