@@ -105,7 +105,7 @@
                                      <v-flex column xs6 md6 class="pl-3">
 
                                          <p class="primary--text body-1 mb-2"> DESTINATION REGION/STATE</p>
-                                         <p class="body-1">{{ tender.destination }}</p>
+                                         <p class="body-1">{{ tender.destination_region }}</p>
 
                                     </v-flex>
 

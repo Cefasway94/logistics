@@ -2093,10 +2093,10 @@ export default {
             if(this.tender.cargo_size !== '')
                 formData.append('cargo_size',this.tender.cargo_size);
 
-            if(this.this.tender.description !== '')
+            if(this.tender.description !== '')
                 formData.append('description',this.tender.description);
 
-            if(this.this.tender.customer_offer_amount !== '')
+            if(this.tender.customer_offer_amount !== '')
                 formData.append('customer_offer_amount',this.tender.customer_offer_amount);
 
             formData.append('bill_of_lading_number',this.tender.bill_of_lading_number);
@@ -2275,7 +2275,11 @@ export default {
 
                 if(this.$route.params.tender_type === "Transporting") {
 
+                     console.log("before data creation");
+
                     let formData = this.createData("Transporting")
+
+                    console.log("after data creation");
 
                     axios.post(`http://207.180.215.239:9000/api/v1/tenders/${this.tender.id}`,formData,
                             {
