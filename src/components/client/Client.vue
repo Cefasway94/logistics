@@ -508,8 +508,8 @@
 
                                     <template v-if='tab.title === "Progress"'>
 
-                                        <v-flex xs12 sm4 md4 lg4 xl3 class="py-3 px-2" v-for="tender in ClearingTendersOnProgress" :key="tender.tender_id">
-                                            <v-card column width="350"  max-height="200" elevation="3" class="px-4 py-3">
+                                        <v-flex xs12 sm4 md4 lg4 xl4 class="py-3 px-2" v-for="tender in ClearingTendersOnProgress" :key="tender.tender_id">
+                                            <v-card column width="350"  max-height="250" elevation="3" class="px-4 py-3">
                                                 <v-card-text>
 
                                                     <v-row  row class="px-3 pt-1">
@@ -550,7 +550,7 @@
                                                             small elevation="flat" 
                                                             color="#4169E1" 
                                                             class="white--text" 
-                                                            :to="'/client/tenderprogress/'+tender.id+'/'+tender.tender_type"
+                                                            :to="'/client/payment/'+tender.id+'/'+tender.tender_type"
                                                         >
                                                             PAY
                                                         </v-btn>
