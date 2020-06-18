@@ -24,7 +24,7 @@ export default new Vuetify({
         //chip colors 
             awarded:'#4CB944',
             not_awarded:'#FF8C00',
-            accepted:'#4169E1',
+            accepted:'#4CB944',
             darkblue:'#3F51B5',
             onProgress:'#4169E1',
         //used somewhere 

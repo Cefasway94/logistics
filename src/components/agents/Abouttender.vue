@@ -139,7 +139,7 @@
                             </v-flex>
                         </v-flex>
 
-                        <v-flex row class="mt-10 mb-4" >
+                        <!-- <v-flex row class="mt-10 mb-4" >
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card flat width="200" height="150" outlined>
@@ -147,7 +147,7 @@
                                 v-show="(bill_of_lading_extension === 'jpg') || (bill_of_lading_extension === 'jpeg') || (bill_of_lading_extension === 'png')" 
                                 @click="largePreview(bill_of_lading_url)"
                             >
-                                <!-- <img :src="bill_of_lading_url" width=200 height=150/> -->
+                                
                                 <v-img 
                                         :src="bill_of_lading_url"  
                                         class="mb-0 pb-0 oxoImg" 
@@ -178,7 +178,7 @@
                                     v-show="(letter_extension === 'jpg') || (letter_extension === 'jpeg') || (letter_extension === 'png')" 
                                     @click="largePreview(letter_url)"
                                 >
-                                    <!-- <img :src="letter_url" width=200 height=150/> -->
+                                    
                                     <v-img 
                                         :src="letter_url"  
                                         class="mb-0 pb-0 oxoImg" 
@@ -208,7 +208,7 @@
                                     v-show="(photo_extension === 'jpg') || (photo_extension === 'jpeg') || (photo_extension === 'png')" 
                                     @click="largePreview(photo_url)"
                                 >
-                                    <!-- <img :src="photo_url" width=200 height=150/> -->
+                                    
                                     <v-img 
                                         :src="photo_url"  
                                         class="mb-0 pb-0 oxoImg" 
@@ -230,48 +230,48 @@
                                 </div>
                         </v-card>
                             </v-flex>
-                        </v-flex>
+                        </v-flex> -->
                         </v-flex>
 
                         <!-- display other files -->
-                        <v-row class="mt-5" v-if="otherFiles.length > 0">
+                    <!-- <v-row class="mt-5" v-if="otherFiles.length > 0">
 
-                <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+                        <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
 
-                <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
+                        <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
 
-                    <v-card flat width="200" height="150" outlined>
-                        <v-row>
-                            <v-col >
-                                <div 
-                                    v-show="(getFileExtension(file['url']) === 'jpg') || (getFileExtension(file['url']) === 'jpeg') || (getFileExtension(file['url']) === 'png')" 
-                                    @click="largePreview(file['url'])"
-                                >
-                        
-                                    <v-img 
-                                        :src="file['url']"  
-                                        class="mb-0 pb-0 oxoImg" 
-                                        height="147" 
-                                        width="200" >
-                                    </v-img>
-                                </div>
-                            
-                                <div v-show="getFileExtension(file['url']) === 'pdf'">
-
-                                    <v-btn 
-                                        :block="true"
-                                        icon class="mt-7" 
-                                        @click="previewPdf(file['url'])"
+                            <v-card flat width="200" height="150" outlined>
+                                <v-row>
+                                    <v-col >
+                                        <div 
+                                            v-show="(getFileExtension(file['url']) === 'jpg') || (getFileExtension(file['url']) === 'jpeg') || (getFileExtension(file['url']) === 'png')" 
+                                            @click="largePreview(file['url'])"
                                         >
-                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                    </v-btn>
+                                
+                                            <v-img 
+                                                :src="file['url']"  
+                                                class="mb-0 pb-0 oxoImg" 
+                                                height="147" 
+                                                width="200" >
+                                            </v-img>
+                                        </div>
+                                    
+                                        <div v-show="getFileExtension(file['url']) === 'pdf'">
 
-                                </div>
-                            </v-col>
-                        </v-row>
-                    </v-card>
-                </v-col>
-            </v-row>
+                                            <v-btn 
+                                                :block="true"
+                                                icon class="mt-7" 
+                                                @click="previewPdf(file['url'])"
+                                                >
+                                                PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                            </v-btn>
+
+                                        </div>
+                                    </v-col>
+                                </v-row>
+                            </v-card>
+                        </v-col>
+                    </v-row> -->
 
                     </v-card>
                     
@@ -650,6 +650,7 @@ export default {
           'GET_AGENT'
 
       ]),
+
     previewPdf(url){
 
             this.url = url;
@@ -757,6 +758,7 @@ export default {
             .then(()=>{
                 
                 console.log(this.LOAD_POST_BID);
+                
                 if(this.LOAD_POST_BID.genralErrorCode == 8004 ) {
 
                     this.loading = false

@@ -78,9 +78,71 @@
                 </v-flex>
                 </v-alert>
                 </v-card>
-                </v-card>
-                
-            
+                </v-card>       
+
+
+ <!-- dialogs --> 
+                <v-dialog   background-color="primary" v-model="acceptDialog" max-width="500" >
+                                    <v-card color="#2296f3">
+                                        <v-card-title class="white--text">Are you sure you want to accept this tender?</v-card-title>
+                                        <v-card-actions row>
+
+                                             <v-spacer></v-spacer>
+ 
+                                            <v-btn 
+                                                color="error" 
+                                                small 
+                                                elevation="" 
+                                                @click="acceptDialog = false" 
+                                                class="mr-5 font-weight-bold" >
+                                                NO
+                                            </v-btn>                                          
+
+                                            <v-btn 
+                                                color="green"
+                                                @click="acceptbid()" 
+                                                class="white--text font-weight-bold mr-5"
+                                                small 
+                                                elevation="" 
+                                             >
+                                             YES
+                                             </v-btn>
+                                             
+                                        </v-card-actions>
+                                    </v-card>
+                        </v-dialog>
+
+                        <v-dialog   background-color="primary" v-model="rejectDialog" max-width="500" >
+                                    <v-card color="error">
+                                        <v-card-title class="white--text">Are you sure you want to Reject this tender?</v-card-title>
+                                        <v-card-actions row>
+
+                                             <v-spacer></v-spacer>
+ 
+                                            <v-btn 
+                                                color="white" 
+                                                small 
+                                                outlined
+                                                elevation="" 
+                                                @click="rejectDialog = false" 
+                                                class="mr-5 font-weight-bold" >
+                                                NO
+                                            </v-btn>
+
+                                            <v-btn 
+                                                color
+                                                outlined
+                                                @click="rejectbid()" 
+                                                class="white--text font-weight-bold mr-5"
+                                                small 
+                                                elevation="" 
+                                             >
+                                             YES
+                                             </v-btn>
+                                             
+                                        </v-card-actions>
+                                    </v-card>
+                        </v-dialog>    
             
 
 <!-- ----------------------------------------------------------------------------------------------
@@ -118,7 +180,7 @@
                 class="mt-12"
                 color="#4169E1">
                 </v-progress-circular>
-                </v-card>
+      </v-card>
 
 <!-- ----------------- Biding card------------- -->
 
@@ -157,7 +219,7 @@
             style="background-color:#F5FAFF;" >
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
-             v-for="(tender, i) in LOAD_DASHBOARDS.objects" :key="i"  >
+                    v-for="(tender, i) in LOAD_DASHBOARDS.objects" :key="i"  >
 
                 <v-hover 
                 class=""
@@ -207,56 +269,40 @@
 
                     <v-row row class="mb-1 ">
 
-                        <v-flex xsm12 sm12 md6 lg6 class="px-3">
+                        <v-flex xsm12 sm12 md6 lg4 class="px-3">
                         <!-- <h4  class=" title ">{{tender.bid_amount}} {{tender.currency}}</h4> -->
                         </v-flex>
+                        
 
-                    <v-flex row xsm12 sm12 md12 lg6 class="px-3 pt-1">
+                    <v-flex row xsm12 sm12 md12 lg8 class="px-1 pt-2" >
 
-                        <v-flex xsm6 sm6 md6 class="px-1">
+                        <v-flex xsm4 sm4 md4 class="px-1 pb-1">
                             <center>
                             <v-btn v-if="showaccept == LOAD_DASHBOARDS.objects[i].bid_status" 
                             small 
                             elevation="flat" 
-                            color="green"
+                            color="error"
                             class="white--text" 
-                            @click="acceptDialog = true">
+                            @click.prevent="rejectbtn(tender.id)">
+                            reject
+                            </v-btn>
+                            </center>
+                        </v-flex>
+
+                        <v-flex xsm4 sm4 md4 class="px-1 pb-1">
+                            <center>
+                            <v-btn v-if="showaccept == LOAD_DASHBOARDS.objects[i].bid_status" 
+                            small 
+                            elevation="flat" 
+                            color="success"
+                            class="white--text" 
+                            @click.prevent="acceptbtn(tender.id)">
                             accept
                             </v-btn>
                             </center>
                         </v-flex>
 
-                         <v-dialog   background-color="primary" v-model="acceptDialog" max-width="500" >
-                                    <v-card color="#2296f3">
-                                        <v-card-title class="white--text">Are you sure you want to accept this tender?</v-card-title>
-                                        <v-card-actions row>
- 
-                                            <v-btn 
-                                                color="error" 
-                                                small 
-                                                elevation="" 
-                                                @click="acceptDialog = false" 
-                                                class="ml-3 font-weight-bold" >
-                                                NO
-                                            </v-btn>
-
-                                            <v-spacer></v-spacer>
-
-                                            <v-btn 
-                                                color="green"
-                                                @click="acceptbid(tender.id)" 
-                                                class="white--text font-weight-bold mr-5"
-                                                small 
-                                                elevation="" 
-                                             >
-                                             YES
-                                             </v-btn>
-                                             
-                                        </v-card-actions>
-                                    </v-card>
-                        </v-dialog>
-
-                        <v-flex xsm6 sm6 md6 class="px-1">
+                        <v-flex xsm4 sm4 md4 class="px-1">
                             <v-btn
                             :to="{name:'AgentAboutbid', params: {id:tender.id}}"
                             small 
@@ -265,7 +311,6 @@
                             view bid
                             </v-btn>
                         </v-flex>
-
 
                     </v-flex>
                         
@@ -406,6 +451,9 @@ export default {
           tab: this.$route.params.id,
           componemtkey: 0,
           acceptDialog: false,
+          rejectDialog: false,
+          tender_id:'',
+
 
           //no tender found
             notender:false,
@@ -494,7 +542,12 @@ export default {
   
   methods:{
       ...mapActions([
-          'GET_DASHBOARD','GET_DASHBOARDDETAILs', 'GET_AGENT','GET_ONPROGRESS','ACCEPT_BID'
+          'GET_DASHBOARD',
+          'GET_DASHBOARDDETAILs', 
+          'GET_AGENT',
+          'GET_ONPROGRESS',
+          'ACCEPT_BID',
+          'REJECT_BID'
           //'GET_BIDTENDERS'
       ]),
 
@@ -607,20 +660,47 @@ export default {
                  });
       },
 
+// accept button from specific tender =============>>
+      acceptbtn(tender_id){
+          this.acceptDialog = true
+          this.tender_id = tender_id
+      },
+
+// reject button from specific tender =============>>
+      rejectbtn(tender_id){
+          this.rejectDialog = true
+          this.tender_id = tender_id
+      },
+
 // accept bid ============================>>>
     acceptbid(bid_id){ 
 
         this.acceptDialog = false;
-        // eslint-disable-next-line no-console
+        bid_id = this.tender_id
         console.log(bid_id);
         
         this.ACCEPT_BID(bid_id).then(()=>{
 
-            // eslint-disable-next-line no-console
             console.log(this.LOAD_ACCEPT_BID)
             this.get_dashboard()
             
         })
+    },
+
+    rejectbid(bid_id){
+
+          this.rejectDialog = false;
+          bid_id = this.tender_id
+        console.log(bid_id);
+
+          this.REJECT_BID(bid_id).then(()=>{
+
+              console.log(this.LOAD_REJECT_BID);
+              this.get_dashboard()
+
+          })
+          
+
     },
 
 
@@ -643,7 +723,11 @@ export default {
   },
   computed: {
       ...mapGetters([
-          'LOAD_DASHBOARDS', 'LOAD_AGENT', 'LOAD_DASHBOARD'
+          'LOAD_DASHBOARDS',
+           'LOAD_AGENT', 
+           'LOAD_DASHBOARD',
+           'LOAD_REJECT_BID',
+           'LOAD_REJECT_BID'
           //'LOAD_DIBTENDERS'
       ])
   }

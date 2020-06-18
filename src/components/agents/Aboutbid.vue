@@ -51,12 +51,20 @@
                 <v-flex sm12 md12 lg12 xlg12 >
                     <v-card width="" class="pt-6 pb-3 pl-8" >
                         <v-flex column>
+                      
                         <v-flex row >
+                            
+                            <v-flex column >
+
+                                <p class="primary--text body-1 mb-2"> TENDER ID </p>
+                                <p class="body-1">{{LOAD_TENDER.tender_id}}</p>
+                            </v-flex>
 
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
                             <p class="body-1">{{LOAD_TENDER.cargo_size}}</p>
                             </v-flex>
+                            
 
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> DELIVERY DATE </p>
@@ -77,7 +85,7 @@
                             <p class="body-1">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
 
-                        <v-flex row class="mt-10 mb-4" >
+                        <!-- <v-flex row class="mt-10 mb-4" >
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card flat width="200" height="150" outlined>
@@ -85,8 +93,7 @@
                                 v-show="(bill_of_lading_extension === 'jpg') || (bill_of_lading_extension === 'jpeg') || (bill_of_lading_extension === 'png')" 
                                 @click="largePreview(bill_of_lading_url)"
                             >
-                                <!-- <img :src="bill_of_lading_url" width=200 height=150/> -->
-
+                                
                                 <v-img 
                                     :src="bill_of_lading_url"  
                                     class="mb-0 pb-0 oxoImg" 
@@ -104,11 +111,7 @@
                                     >
                                     PREVIEW<v-icon x-large>mdi-file</v-icon>
                                 </v-btn>
-                                <!--<embed 
-                                    type="application/pdf"
-                                    :src="bill_of_lading_url"
-                                    width="200"
-                                    height="150">-->
+                                
 
                             </div>
                         </v-card>
@@ -121,7 +124,7 @@
                                     v-show="(letter_extension === 'jpg') || (letter_extension === 'jpeg') || (letter_extension === 'png')" 
                                     @click="largePreview(letter_url)"
                                 >
-                                    <!-- <img :src="letter_url" width=200 height=150/> -->
+                                   
                                     <v-img 
                                         :src="letter_url"  
                                         class="mb-0 pb-0 oxoImg" 
@@ -151,7 +154,7 @@
                                     v-show="(photo_extension === 'jpg') || (photo_extension === 'jpeg') || (photo_extension === 'png')" 
                                     @click="largePreview(photo_url)"
                             >
-                                    <!-- <img :src="photo_url" width=200 height=150/> -->
+                                   
                                     <v-img 
                                         :src="photo_url"  
                                         class="mb-0 pb-0 oxoImg" 
@@ -173,11 +176,11 @@
                                 </div>
                         </v-card>
                             </v-flex>
-                        </v-flex>
+                        </v-flex> -->
                         </v-flex>
 
-                        <!-- display other files -->
-                        <v-row class="mt-5" v-if="otherFiles.length > 0">
+<!-- display other files -->
+            <!-- <v-row class="mt-5" v-if="otherFiles.length > 0">
 
                 <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
 
@@ -214,11 +217,11 @@
                         </v-row>
                     </v-card>
                 </v-col>
-            </v-row> 
+            </v-row>  -->
 
-                    </v-card>
+            </v-card>
 
-                </v-flex>
+            </v-flex>
 
                 <!-- <v-flex sm12 md3 lg3 xlg3 class="px-3 ">
 

@@ -14,6 +14,7 @@ export default {
         profile:[],
         payment_terms:[],
         accepted_bid:[],
+        reject_bid:[],
         progress_stages:[],
         progress_feedback:[],
         payment_progress:[],
@@ -66,6 +67,14 @@ getters:{
             const accept_bid = state.accepted_bid
             console.log(accept_bid);
             return accept_bid  
+        },
+
+// Load reject bid  ====================================>>>
+        LOAD_REJECT_BID: state => {
+            const reject_bid = state.reject_bid
+            console.log(reject_bid);
+            return reject_bid
+            
         },
 
 // called agent ========================================>>>>>>
@@ -181,6 +190,11 @@ mutations: {
 // agent accept bid mutation ===========================>>>>>>>
         SET_ACCEPT_BID : (state,payload)=>{
             state.accepted_bid = payload;
+        },
+
+// agent reject bid mutation ===========================>>>>>>>
+        SET_REJECT_BID : (state, payload) => {
+            state.reject_bid = payload
         },
 
 // called agent mutation ================================>>>>>
@@ -402,6 +416,19 @@ actions: {
                 commit('SET_ACCEPT_BID',error) 
             })
         },
+
+        REJECT_BID : async ({commit},payload)=>{
+            const url = 'http://207.180.215.239:8000/api/v1/bids/decline/'+payload;
+            await axios.put(url).then((data)=>{
+                console.log('reject bid');
+                console.log(data);
+                commit('SET_REJECT_BID',data)                
+            }).catch((error)=>{
+                console.log(error);
+                commit('SET_REJECT_BID',error.response.data) 
+            })
+        },
+
 // get agent details =================================================>>>>>
         GET_AGENT: async ({commit},payload) => {
             const url= 'http://207.180.215.239:8000/api/v1/agents/show/'+payload;

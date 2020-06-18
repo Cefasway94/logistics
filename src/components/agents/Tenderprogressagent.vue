@@ -28,7 +28,7 @@
                 <v-flex>
                 <v-row class="pl-2 mb-1">
                 <h1 class=" font-weight-regular headline ">{{LOAD_TENDER.cargo_details}}</h1>
-                <v-chip color="green" small class="white--text ml-7 mt-1">Inprogress</v-chip>
+                <v-chip color="onProgress" small class="white--text ml-7 mt-1">onProgress</v-chip>
                 </v-row>
                 <p class="grey--text">{{LOAD_TENDER.description}}</p>
                 </v-flex>
@@ -65,6 +65,8 @@
                             <p class="primary--text body-1 mb-0"> TERMS AND CONDITIONS </p>
                             <p class="body-1 ">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
+
+                        
 
                         <v-flex row class="mt-7 mb-4" >
                             <v-flex column class="pl-3">
