@@ -141,7 +141,7 @@
 
                         <v-flex row class="mt-10 mb-4" >
 
-                    <v-flex column class="px-3">
+                    <!-- <v-flex column class="px-3">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card 
                                 flat 
@@ -175,13 +175,13 @@
 
                                     </v-flex>
                                 </v-card>
-                            </v-flex>
+                            </v-flex> -->
 
                             <!-- authorization_letter_extension:'',
            authorization_letter:'',
            authorization_letter_extension_url:'' -->
 
-                            <v-flex column class="px-3" >
+                            <!-- <v-flex column class="px-3" >
                             <p class="primary--text body-1 mb-2"> AUTHORITY LETTER </p>
                             <v-card 
                                 flat 
@@ -217,9 +217,9 @@
 
                                     </v-flex>
                                 </v-card>
-                            </v-flex>
+                            </v-flex> -->
 
-                             <v-flex column class="px-3" >
+                             <!-- <v-flex column class="px-3" >
                                     <p class="primary--text body-1 mb-2"> CARGO PHOTO </p>
                                         <v-card 
                                             flat 
@@ -254,7 +254,7 @@
                                               </v-btn>
                                             </v-flex>
                                         </v-card>
-                             </v-flex>
+                             </v-flex> -->
 
                             <!-- <v-flex column >
                             <p class="primary--text body-1 mb-2"> OTHER </p>

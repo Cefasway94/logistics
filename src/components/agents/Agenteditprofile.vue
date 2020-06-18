@@ -546,7 +546,7 @@
             <v-row class="pt-4" >
                 
                 <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase center-text mb-1"> Certificate  <span class="red--text ml-2 mb-0" ><strong>*</strong></span></p>
+                            <p class="primary--text body-2 text-uppercase center-text mb-1"> Copy of Registration Certificate  <span class="red--text ml-2 mb-0" ><strong>*</strong></span></p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 

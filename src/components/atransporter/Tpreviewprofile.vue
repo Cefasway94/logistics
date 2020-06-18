@@ -157,7 +157,7 @@
             <v-flex column class="pt-3">
             <v-flex row class="">
                 <v-flex column sm6 mb6 class="px-6">
-                    <p class="bondy-2 primary--text mb-0">Name</p>
+                    <p class="bondy-2 primary--text mb-0">Company Name</p>
                     <p 
                     class=" mt-3" 
                     color="#4169E1">{{name}}
@@ -285,7 +285,7 @@
 
             <v-row class="pt-3">
                 <v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Certificate</p>
+                    <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Copy of Registration Certificate</p>
                      <v-card 
                      flat 
                      width="200" 
@@ -336,7 +336,7 @@
                 </v-col>
 
                 <v-col>
-                    <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Insurance</p>
+                    <p class="bondy-2 mb-0 ml-3 mb-2 primary--text">Insurance Transporter</p>
 
                             <v-card 
                                 flat 

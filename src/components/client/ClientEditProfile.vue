@@ -53,6 +53,52 @@
 
         </v-dialog>
 
+        <v-dialog
+                v-model="largefilesize"
+                max-width="400"
+                color="#f5faff"
+                transition="scale-transition"
+                :hide-overlay="true"
+            >
+                <v-card 
+                    height="105" 
+                    color="#f64f51" 
+                    class="pt-2">
+            
+                    <v-alert  
+                        prominent
+                        height="" 
+                        type="error"
+                    >
+                            <p class="font-weight-strong mb-0">File size is too large limit 2MB</p>
+                    </v-alert>
+
+                </v-card>
+            </v-dialog>
+
+            <v-dialog
+                v-model="field_required"
+                max-width="400"
+                color="#f5faff"
+                transition="scale-transition"
+                :hide-overlay="true"
+            >
+                <v-card 
+                    height="105" 
+                    color="#f64f51" 
+                    class="pt-2"
+                >
+
+                    <v-alert  
+                        prominent
+                        height="" 
+                        type="error">
+                        <p class="font-weight-strong mb-0">{{field}}</p>
+                    </v-alert>
+
+                </v-card>
+            </v-dialog>
+
             <v-card row flat width="1300" class="mt-10 mx-auto mb-5"  color="#F5FAFF">
                 <v-flex row class="px-3">
                     <h3 class="headline mt-1 font-weight-regular">Profile info</h3>
@@ -1747,6 +1793,7 @@ export default {
             if(this.otherdocument.length > 0 && (this.otherdocument_title == '' || this.otherdocument_title == null)){
 
                     console.log(17);
+                    this.loading = false;
                     this.field = 'Please fill title on attachment 1 '
                     this.field_required = true
                     return false
@@ -1754,6 +1801,7 @@ export default {
             }else if(this.otherdocument.length == 0 && (!this.otherdocument_title == '' || !this.otherdocument_title == null)){
 
                     console.log(18);
+                    this.loading = false;
                     this.field = 'Please attach file on attachment 1'
                     this.field_required = true
                     return false
@@ -1761,6 +1809,7 @@ export default {
             }else if(this.otherdocument1.length > 0 && (this.otherdocument1_title == '' || this.otherdocument1_title == null)){
 
                     console.log(17);
+                    this.loading = false;
                     this.field = 'Please fill title on attachment 2'
                     this.field_required = true
                     return false
@@ -1768,6 +1817,7 @@ export default {
             }else if(this.otherdocument1.length == 0 && (!this.otherdocument1_title == '' || !this.otherdocument1_title == null)){
 
                     console.log(18);
+                    this.loading = false;
                     this.field = 'Please attach file on attachment 2'
                     this.field_required = true
                     return false
@@ -1775,6 +1825,7 @@ export default {
             }else if(this.otherdocument2.length > 0 && (this.otherdocument2_title == '' || this.otherdocument2_title == null)){
 
                     console.log(17);
+                    this.loading = false;
                     this.field = 'Please fill title on attachment 3'
                     this.field_required = true
                     return false
@@ -1782,6 +1833,7 @@ export default {
             }else if(this.otherdocument2.length == 0 && (!this.otherdocument2_title == '' || !this.otherdocument2_title == null)){
 
                     console.log(18);
+                    this.loading = false;
                     this.field = 'Please attach file on attachment 3'
                     this.field_required = true
                     return false
@@ -1789,6 +1841,7 @@ export default {
             }else if(this.otherdocument3.length > 0 && (this.otherdocument3_title == '' || this.otherdocument3_title == null)){
 
                     console.log(17);
+                    this.loading = false;
                     this.field = 'Please fill title on attachment 4'
                     this.field_required = true
                     return false
@@ -1796,6 +1849,7 @@ export default {
             }else if(this.otherdocument3.length == 0 && (!this.otherdocument3_title == '' || !this.otherdocument3_title == null)){
 
                     console.log(18);
+                    this.loading = false;
                     this.field = 'Please attach file on attachment 4'
                     this.field_required = true
                     return false
@@ -1803,6 +1857,7 @@ export default {
             }else if(this.otherdocument4.length > 0 && (this.otherdocument4_title == '' || this.otherdocument4_title == null)){
 
                     console.log(17);
+                    this.loading = false;
                     this.field = 'Please fill title on attachment 5'
                     this.field_required = true
                     return false
@@ -1810,6 +1865,7 @@ export default {
             }else if(this.otherdocument4.length == 0 && (!this.otherdocument4_title == '' || !this.otherdocument4_title == null)){
 
                     console.log(18);
+                    this.loading = false;
                     this.field = 'Please attach file on attachment 5'
                     this.field_required = true
                     return false
@@ -1817,6 +1873,7 @@ export default {
             }else if(this.otherdocument5.length > 0 && (this.otherdocument5_title == '' || this.otherdocument5_title == null)){
 
                     console.log(17);
+                    this.loading = false;
                     this.field = 'Please fill title on attachment 6'
                     this.field_required = true
                     return false
@@ -1824,6 +1881,7 @@ export default {
             }else if(this.otherdocument5.length == 0 && (!this.otherdocument5_title == '' || !this.otherdocument5_title == null)){
 
                     console.log(18);
+                    this.loading = false;
                     this.field = 'Please attach file on attachment 6'
                     this.field_required = true
                     return false
@@ -2973,7 +3031,11 @@ export default {
 
         save(){
 
-            if(this.tin_extension === 'error' 
+            if(this.validate()){
+
+                console.log("VALIDATE IS TRUE")
+
+                if(this.tin_extension === 'error' 
                 || this.profile_photo_extension === 'error' 
                 || this.id_extension === 'error'
                 || this.copy_of_registration_extension === 'error'
@@ -3045,6 +3107,8 @@ export default {
                     }); 
 
             }
+            }
+                
         }
     },
 
@@ -3059,20 +3123,20 @@ export default {
 
                             vm.first_name = response.data.objects.first_name;
                             vm.last_name = response.data.objects.last_name;
-                            vm.country = response.data.objects.country;
+                            vm.country = response.data.objects.country === null?'':response.data.objects.country;
                             vm.mobile_number = response.data.objects.mobile_number;
-                            vm.office_mobile = response.data.objects.office_mobile;
+                            vm.office_mobile = response.data.objects.office_mobile == null?'':response.data.objects.office_mobile;
                             vm.address = response.data.objects.address;
                             vm.bank_acount_name = response.data.objects.bank_acount_name;
                             vm.bank_account_number = response.data.objects.bank_account_number;
-                            vm.second_bank_account_name = response.data.objects.second_bank_account_name;
-                            vm.second_bank_account_number = response.data.objects.second_bank_account_number;
+                            vm.second_bank_account_name = response.data.objects.second_bank_account_name === null?'':response.data.objects.second_bank_account_name;
+                            vm.second_bank_account_number = response.data.objects.second_bank_account_number === null?'':response.data.objects.second_bank_account_number;
                             vm.bank_swift_code = response.data.objects.bank_swift_code;
                             vm.bank_address = response.data.objects.bank_address;
                             vm.customer_type = response.data.objects.customer_type;
                             vm.contact_person_names = response.data.objects.contact_person_names;
                             vm.Contact_person_phone_number  = response.data.objects.Contact_person_phone_number;
-                            vm.Contact_person_designation = response.data.objects.Contact_person_designation;
+                            vm.Contact_person_designation = response.data.objects.Contact_person_designation === null?'':response.data.objects.Contact_person_designation;
                             vm.company_sector = response.data.objects.company_sector;
                             vm.company_name = response.data.objects.company_name;
                             vm.city = response.data.objects.city;

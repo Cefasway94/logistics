@@ -355,7 +355,7 @@
 
             <v-flex row class="">
                 <v-flex column sm6 mb6 class="px-6">
-                    <p class="bondy-2 mb-0">Name</p>
+                    <p class="bondy-2 mb-0">Company Name</p>
                     <v-text-field
                     v-model="name" 
                     outlined 
@@ -569,7 +569,7 @@
             <v-row class="pt-3">
                 
                 <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> Certificate  <span class="red--text"><strong>* </strong></span></p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> Copy of Registration Certificate  <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
@@ -633,7 +633,7 @@
 
               
                 <v-col cols=12 sm=4 class="">
-                            <p class="primary--text body-2 text-uppercase mb-0"> Insurance  <span class="red--text"><strong>* </strong></span></p>
+                            <p class="primary--text body-2 text-uppercase mb-0"> Insurance Transporter  <span class="red--text"><strong>* </strong></span></p>
                             <v-card flat width="250" height="270" outlined >
 
                                 <v-file-input 
