@@ -149,39 +149,79 @@
                                 </v-col>
                         </v-row>
 
-                        <v-row class="px-3">
-                            <v-col cols="12" md="6" v-if="tender.tender_type == 'Transporting'">
-                            <p class="primary--text body-2 text-uppercase mb-0">ORIGIN</p>
-                            <v-text-field 
-                            outlined 
-                            clearable
-                            v-model="tender.origin"
-                            :rules="[v => !!v || 'Origin is required']"
-                            required>
+                        <v-row class="px-3" v-if="tender.tender_type == 'Transporting'">
+                            <v-col cols="12" md="6">
+                                <p class="primary--text body-2 text-uppercase mb-0">ORIGIN COUNTRY</p>
+                                <v-text-field 
+                                    outlined 
+                                    clearable
+                                    v-model="tender.origin"
+                                    :rules="[v => !!v || 'Origin is required']"
+                                    required
+                                >
 
-                                <template #label>
-                                    <span class="red--text"><strong>* </strong></span>
-                                </template>
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
 
-                            </v-text-field>
-                        </v-col>
+                                </v-text-field>
+                             </v-col>
 
-                        <v-col cols="12" md="6" v-if="tender.tender_type == 'Transporting'">
-                            <p class="primary--text body-2 text-uppercase mb-0">DESTINATION</p>
-                            <v-text-field 
-                            outlined 
-                            clearable
-                            v-model="tender.destination"
-                            :rules="[v => !!v || 'Destination is required']"
-                            required
-                            >
-                                <template #label>
-                                    <span class="red--text"><strong>* </strong></span>
-                                </template>
 
-                            </v-text-field>
-                        </v-col>
+                            <v-col cols="12" md="6">
+                                <p class="primary--text body-2 text-uppercase mb-0">DESTINATION COUNTRY</p>
+                                <v-text-field 
+                                outlined 
+                                clearable
+                                v-model="tender.destination"
+                                :rules="[v => !!v || 'Destination is required']"
+                                required
+                                >
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+
+                                </v-text-field>
+                            </v-col>
                         </v-row>
+
+                        <v-row class="px-3" v-if="tender.tender_type == 'Transporting'">
+                            <v-col cols="12" md="6">
+                                <p class="primary--text body-2 text-uppercase mb-0">ORIGIN REGION/STATE</p>
+                                <v-text-field 
+                                    outlined 
+                                    clearable
+                                    v-model="tender.origin_region"
+                                    :rules="[v => !!v || 'Origin region/state is required']"
+                                    required
+                                >
+
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+
+                                </v-text-field>
+                             </v-col>
+
+
+                            <v-col cols="12" md="6">
+                                <p class="primary--text body-2 text-uppercase mb-0">DESTINATION REGION/STATE</p>
+                                <v-text-field 
+                                outlined 
+                                clearable
+                                v-model="tender.destination_region"
+                                :rules="[v => !!v || 'Destination region/state is required']"
+                                required
+                                >
+                                    <template #label>
+                                        <span class="red--text"><strong>* </strong></span>
+                                    </template>
+
+                                </v-text-field>
+                            </v-col>
+                        </v-row>
+
+
                         <v-row class="px-3">
                             
                             <v-row wrap>
@@ -205,16 +245,10 @@
                                     <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
                                     <v-text-field 
                                         outlined 
-                                        clearable
                                         v-model="tender.customer_offer_amount"
+                                        type="number"
                                         @change="isValid()"
-                                        :rules="[v => !!v || 'Amount is required']"
-                                        required>
-
-                                        <template #label>
-                                            <span class="red--text"><strong>* </strong></span>
-                                        </template>
-
+                                        >
                                     </v-text-field>
                                 </v-col>
 
@@ -250,7 +284,23 @@
                         </v-row>
 
                         <v-row>
-                            <v-col cols=12>
+                            <v-col cols=4>
+
+                                <p class="primary--text body-2 text-uppercase mb-0"> BILL OF LADING NUMBER </p>
+                                <v-text-field
+                                    outlined 
+                                    type="number"
+                                    :rules="[v => !!v || 'bill of lading number  is required']"
+                                    v-model="tender.bill_of_lading_number"
+                                >
+
+                                     <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                    </template>
+                                </v-text-field>
+                            </v-col>
+
+                            <v-col cols=8>
                                 <p class="primary--text body-2 text-uppercase mb-0"> DESCRIPTION ON CARGO </p>
                                 <v-textarea
                                     outlined 
@@ -1395,7 +1445,7 @@ export default {
             if(this.$route.params.tender_type == "Transporting"){
 
                 if(this.tender.cargo_details == '' || this.tender.origin == '' || this.tender.destination == '' || this.tender.customer_delivery_timeline == ''
-                    || this.tender.currency == '' || this.tender.customer_offer_amount == '' || this.tender.customer_terms_and_conditions =='')
+                    || this.tender.currency == ''  || this.tender.customer_terms_and_conditions =='')
 
                     return false
                 else 
@@ -1403,8 +1453,8 @@ export default {
 
             } else if(this.$route.params.tender_type == "Clearing"){
 
-                if(this.tender.cargo_details == '' || this.tender.customer_delivery_timeline == '' || this.tender.currency == '' || 
-                    this.tender.customer_offer_amount == '' || this.tender.customer_terms_and_conditions =='')
+                if(this.tender.cargo_details == '' || this.tender.customer_delivery_timeline == '' 
+                    || this.tender.currency == '' || this.tender.customer_terms_and_conditions =='')
 
                     return false
 
@@ -2032,13 +2082,25 @@ export default {
             {
                 formData.append('origin',this.tender.origin);
                 formData.append('destination',this.tender.destination);
+                formData.append('origin_region',this.tender.origin_region);
+                formData.append('destination_region',this.tender.destination_region);
             }
+
 
             formData.append('cargo_details',this.tender.cargo_details);
             formData.append('currency',this.tender.currency);
-            formData.append('cargo_size',this.tender.cargo_size);
-            formData.append('description',this.tender.description);
-            formData.append('customer_offer_amount',this.tender.customer_offer_amount);
+
+            if(this.tender.cargo_size !== '')
+                formData.append('cargo_size',this.tender.cargo_size);
+
+            if(this.this.tender.description !== '')
+                formData.append('description',this.tender.description);
+
+            if(this.this.tender.customer_offer_amount !== '')
+                formData.append('customer_offer_amount',this.tender.customer_offer_amount);
+
+            formData.append('bill_of_lading_number',this.tender.bill_of_lading_number);
+
             formData.append('customer_terms_and_conditions',this.tender.customer_terms_and_conditions);
             formData.append('customer_delivery_timeline',this.tender.customer_delivery_timeline);
             formData.append('customer_id',this.customer.id);
@@ -2398,6 +2460,15 @@ export default {
 
                             vm.tender = response.data.objects;
 
+                            if(vm.tender.cargo_size === null)
+                                vm.tender.cargo_size = '';
+
+                            if(vm.tender.customer_offer_amount === null)
+                                vm.tender.customer_offer_amount = '';
+
+                            if(vm.tender.description === null)
+                                vm.tender.description = '';
+
                             if(vm.tender.cargo_photo !== null)
                             {
                                 vm.photo_extension = vm.getFileExtension(vm.tender.cargo_photo[0]);
@@ -2457,6 +2528,15 @@ export default {
                             vm.alert = false;
 
                             vm.tender = response.data.objects;
+
+                            if(vm.tender.cargo_size === null)
+                                vm.tender.cargo_size = '';
+
+                            if(vm.tender.customer_offer_amount === null)
+                                vm.tender.customer_offer_amount = '';
+
+                            if(vm.tender.description === null)
+                                vm.tender.description = '';
 
                             if(vm.tender.cargo_photo !== null)
                             {

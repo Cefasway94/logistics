@@ -449,6 +449,15 @@ export default {
                                 {
                                     vm.tender = response.data.objects;
 
+                                    if(vm.tender.cargo_size === null)
+                                        vm.tender.cargo_size = '';
+
+                                    if(vm.tender.customer_offer_amount === null)
+                                        vm.tender.customer_offer_amount = '';
+
+                                    if(vm.tender.description === null)
+                                        vm.tender.description = '';
+
                                     if(vm.tender.cargo_photo !== null)
                                     {
                                         vm.photo_extension = vm.getFileExtension(vm.tender.cargo_photo[0]);
@@ -509,6 +518,15 @@ export default {
                                 if(response.data.genralErrorCode === 8000)
                                 {
                                     vm.tender = response.data.objects;
+
+                                    if(vm.tender.cargo_size === null)
+                                        vm.tender.cargo_size = '';
+
+                                    if(vm.tender.customer_offer_amount === null)
+                                        vm.tender.customer_offer_amount = '';
+
+                                    if(vm.tender.description === null)
+                                        vm.tender.description = '';
 
                                     if(vm.tender.cargo_photo !== null)
                                     {
