@@ -404,7 +404,7 @@ actions: {
             });
         },
 
-// accept warded tender ================================================>>>>        
+// accept awarded tender ================================================>>>>        
         ACCEPT_BID : async ({commit},payload)=>{
             const url = 'http://207.180.215.239:8000/api/v1/bids/confirm/'+payload;
             await axios.put(url).then((data)=>{
@@ -417,6 +417,7 @@ actions: {
             })
         },
 
+// reject awarded tender ================================================>>>>        
         REJECT_BID : async ({commit},payload)=>{
             const url = 'http://207.180.215.239:8000/api/v1/bids/decline/'+payload;
             await axios.put(url).then((data)=>{
@@ -651,9 +652,11 @@ actions: {
 
 //Agent get progress details  ----------------------------------------     
 GET_PAYMENT_PROGRESS: async ({commit},payload) => {
-    const url= 'http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/'+payload;
+
+    const url= 'http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/'+payload;
     await axios.get(url).then((res)=>{
-        // eslint-disable-next-line no-console
+    
+            // eslint-disable-next-line no-console
             console.log(res);
            commit('SET_PAYMENT_PROGRESS', res.data);
             //console.log(data.message);
@@ -852,6 +855,20 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
                 commit('SET_ACCEPT_BID',error) 
             })
         },
+      
+// reject awarded tender --------------------------------------------->>>>        
+        T_REJECT_BID : async ({commit},payload)=>{
+            const url = 'http://207.180.215.239:9000/api/v1/bids/decline/'+payload;
+            await axios.put(url).then((data)=>{
+                console.log('reject bid');
+                console.log(data);
+                commit('SET_REJECT_BID',data)                
+            }).catch((error)=>{
+                console.log(error);
+                commit('SET_REJECT_BID',error.response.data) 
+            })
+        },
+
 // get agent details -----------------------------------------------------------------
         T_GET_AGENT: async ({commit},payload) => {
             const url= 'http://207.180.215.239:9000/api/v1/transporters/show/'+payload;
@@ -1070,7 +1087,7 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
 
 //Transporter get progress details  ---------------------------------------------------------------------------         
                 T_GET_PAYMENT_PROGRESS: async ({commit},payload) => {
-                    const url= 'http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/'+payload;
+                    const url= 'http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/'+payload;
                     await axios.get(url).then((res)=>{
                         // eslint-disable-next-line no-console
                             console.log(res);

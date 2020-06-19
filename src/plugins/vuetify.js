@@ -27,6 +27,7 @@ export default new Vuetify({
             accepted:'#4CB944',
             darkblue:'#3F51B5',
             onProgress:'#4169E1',
+            rejected:'FF8C00',
         //used somewhere 
             paleblack:'#37474F',
             try:'#7486e8',

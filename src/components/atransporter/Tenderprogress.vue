@@ -23,12 +23,12 @@
                 </div>
             </v-overlay>
 
-            <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
+            <v-card flat width="1200" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                 <v-flex>
                 <v-row class="pl-2 mb-1">
                 <h1 class=" font-weight-regular headline ">{{LOAD_TENDER.cargo_details}}</h1>
-                <v-chip color="green" small class="white--text ml-7 mt-1">Inprogress</v-chip>
+                <v-chip color="primary" small class="white--text ml-7 mt-1">onProgress</v-chip>
                 </v-row>
                 <p class="grey--text">{{LOAD_TENDER.description}}</p>
                 </v-flex>
@@ -37,9 +37,9 @@
                 </v-flex>
             </v-card>
 
-            <v-card flat width="900" class="mx-auto mb-10 px-5" color="#F5FAFF">
+            <v-card flat width="1200" class="mx-auto mb-10 px-5" color="#F5FAFF">
                 <v-flex row>
-                <v-flex sm12 md12 lg12 xlg12 >
+                <v-flex sm12 md8 lg8 xlg8 >
                     <v-card width="" class="pt-6 pb-3 pl-8">
                         <v-flex column>
                         <v-flex row >
@@ -84,7 +84,7 @@
 
                         <v-flex row class="mt-7 mb-4" >
 
-                            <v-flex column class="px-3">
+                            <v-flex column class="px-3" v-if="documents == true">
                                     <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                                     <v-card 
                                         flat 
@@ -121,7 +121,7 @@
                                         </v-flex>                                            
 
                             
-                                    <v-flex column class="px-3">
+                                    <v-flex column class="px-3" v-if="documents == true">
                                                 <p class="primary--text body-1 mb-2"> AUTHORITY LETTER </p>
                                         <v-card 
                                             flat 
@@ -209,7 +209,7 @@
 
                         </v-flex>
 
-                         <v-flex row class="mt-3 mb-3 ml-2" >
+                         <v-flex row class="mt-3 mb-3 ml-2" v-if="documents == true" >
                             <v-row class="mt-5" v-if="otherFiles.length > 0">
 
                                 <v-col cols=12><p class="primary--text body-1 mb-1"> OTHER DOCUMENTS</p></v-col>
@@ -254,46 +254,46 @@
                     </v-card>
                 </v-flex>
 
-                <!-- <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2">
-                    <v-card color="#4169E1" width="" class="py-4 px-5">
-                        <v-flex row >
-                            <v-flex column class="px-3">
-                            <p class="white--text body-1 font-weight-bold"> ABC FURNITURE </p>
-                            <v-flex column>
-                            <v-flex row class="px-3 ">
-                            <v-icon class="mb-3 white--text" >mail_outline</v-icon>
-                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
-                            </v-flex>
-                            <v-flex class="pl-8">
-                            <p class="white--text ">Lorem@gamil.com</p>
-                            </v-flex>
+                <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2 ml-2" v-if="documents == true">
+                        <v-card color="#4169E1" width="" class="py-4 px-5">
+                            <v-flex row >
+                                <v-flex column class="px-3">
+                                <p class="white--text body-1 font-weight-bold"> ABC FURNITURE </p>
+                                <v-flex column>
+                                <v-flex row class="px-3 ">
+                                <v-icon class="mb-3 white--text" >mail_outline</v-icon>
+                                <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
+                                </v-flex>
+                                <v-flex class="pl-8">
+                                <p class="white--text ">Lorem@gamil.com</p>
+                                </v-flex>
+                                </v-flex>
+
+                                <v-flex column>
+                                <v-flex row class="px-3 ">
+                                <v-icon class="mb-3 white--text"  >room</v-icon>
+                                <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
+                                </v-flex>
+                                <v-flex class="pl-8">
+                                <p class="white--text ">Street location, st</p>
+                                </v-flex>
+                                </v-flex>
+
+                                <v-flex column>
+                                <v-flex row class="px-3 ">
+                                <v-icon class="mb-3 white--text" >local_phone</v-icon>
+                                <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
+                                </v-flex>
+                                <v-flex class="pl-8">
+                                <p class="white--text ">Lorem@gamil.com</p>
+                                </v-flex>
+                                </v-flex>
+                                </v-flex>
+
                             </v-flex>
 
-                            <v-flex column>
-                            <v-flex row class="px-3 ">
-                            <v-icon class="mb-3 white--text"  >room</v-icon>
-                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
-                            </v-flex>
-                            <v-flex class="pl-8">
-                            <p class="white--text ">Street location, st</p>
-                            </v-flex>
-                            </v-flex>
-
-                            <v-flex column>
-                            <v-flex row class="px-3 ">
-                            <v-icon class="mb-3 white--text" >local_phone</v-icon>
-                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
-                            </v-flex>
-                            <v-flex class="pl-8">
-                            <p class="white--text ">Lorem@gamil.com</p>
-                            </v-flex>
-                            </v-flex>
-                            </v-flex>
-
-                        </v-flex>
-
-                    </v-card>
-                </v-flex> -->
+                        </v-card>
+                </v-flex>
 
                 </v-flex>
             </v-card>
@@ -317,23 +317,24 @@
                 <v-tab-item style="background-color:#F5FAFF;">
                     <v-divider></v-divider>
 
-                 <!-------- Alert before main progress -->
+             <!-------- Alert before main progress -->
                 <v-card row width="500" class=" mx-auto mt-5 mb-5" color="#F5FAFF">
                 <v-alert
                 :value="wait"
-                text
-                outlined
-                color="orange"
+                elevation="7"
+                prominent
+                type="warning"
                 border="left"
                 row
                 >
                 <v-flex row class="pl-4">
                 <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
-                <v-icon large color="orange" class="">notification_important</v-icon>    
+                <!-- <v-icon large color="orange" class="">notification_important</v-icon>     -->
                 </v-flex>
                 <v-flex xms11 sm11 md11 lg11>
-                <p class="text--text title mb-0">
-                Waiting on payment for tender to start
+                <p class="white--text body-1 mb-3">
+                Waiting on payment for tender to start 
+                <v-chip v-show="wait == true"  class="green mt-1 white--text">Waiting for payment Verification</v-chip>
                 </p>
                 </v-flex>
                 </v-flex>
@@ -943,6 +944,7 @@ export default {
             loading:false,
             show:true,
             wait:false, 
+             documents:false,
             chip1 : 'not received',
             comment:'',
             extension:false,
@@ -1036,26 +1038,33 @@ export default {
                     console.log(vm.LOAD_PAYMENT_PROGRESS);
                     vm.wait = true
                     vm.show = false
-                   vm.value = 0
+                    vm.value = 0
                     //console.log(data.message);
 
                 }else{
 
                   
-                    if (vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited > 100) {
+                    if (vm.LOAD_PAYMENT_PROGRESS.objects.verify == null){
 
-                        vm.value = 100
+                        vm.wait = true
+                        vm.show = false
                         
+
                     }else{
-                          vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
 
-                    }
+                        vm.documents = true
+                        
+                        if(vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited >= 100)
+                        vm.value = 100;
+                        else
+                            vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                        vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at                
+                        //vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                        vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount
 
-                    vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount
-                    vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at
-                    
-                    if ( vm.LOAD_PAYMENT_PROGRESS.objects.is_full_amount_paid == false){
-                            vm.chip1 = 'partial payment'
+                        if ( vm.LOAD_PAYMENT_PROGRESS.objects.is_full_amount_paid == false){
+                                vm.chip1 = 'partial payment'
+                        }
                     }
                     
                 }
@@ -1073,28 +1082,38 @@ export default {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     for (let index = 0; index < vm.LOAD_PROGRESS_STAGES.objects.length; index++) {
+                                
+                        //          console.log(vm.feedstate);
 
-                        
+                        // if (vm.feedstate == 'InProgress') {
+                        //                  vm.state =1
+                                     
+                        //          } else {
+
+                        //               vm.state = 0
+                                     
+                        //          }
+
+                        console.log(vm.LOAD_PROGRESS_STAGES.objects.length);
+                        console.log(vm.LOAD_PROGRESS_STAGES);
   // stage One --------------------------------
-                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
+                 if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ) {
 
-                     vm.date0 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date         
                     console.log('Stage 1 In progress');
                     vm.stage1 = 'B'
-                    //vm.stage2 = 'A'
-                    //vm.stage3 = 'A'
-                    //vm.stage4 = 'A'
+                    // this.stage2 = 'A'
+                    // this.stage3 = 'A'
+                    // this.stage4 = 'A'
 
                 } else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ) {
                     
-                    vm.date0 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date 
-                    console.log('Stage 1.1 completed');
+                    console.log('Stage 1 complpeted');
                     vm.stage1 = 'C'
-                    //vm.stage2 = 'A'
-                    //vm.stage3 = 'A'
-                    //vm.stage4 = 'A'
+                    // this.stage2 = 'A'
+                    // this.stage3 = 'A'
+                    // this.stage4 = 'A'
 
                 }
 
@@ -1103,69 +1122,63 @@ export default {
                 if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
-                     vm.date1 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 2 In progress');
-                    //vm.stage1 = 'C'
-                    vm.stage2 = 'B'
-                    //vm.stage3 = 'A'
-                    //vm.stage4 = 'A'
+                    //this.stage1 = 'C'
+                    this.stage2 = 'B'
+                    //this.stage3 = 'A'
+                    //this.stage4 = 'A'
 
                     }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
-                     
-                      vm.date1 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
-                     console.log('Stage 2.2 completed');
-                     //vm.stage1 = 'C'
+                    
+                     console.log('Stage 2 completed');
+                     //this.stage1 = 'C'
                      vm.stage2 = 'C'
-                     //vm.stage3 = 'A'
-                     //vm.stage4 = 'A'
+                     //this.stage3 = 'A'
+                     //this.stage4 = 'A'
 
                     }
 
-    // stage Three -----------------------------------
+// stage Three -----------------------------------
 
                 if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
-                    vm.date2 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
-                    console.log('Stage 3 In progress');
-                    //vm.stage1 = 'C'
-                    //vm.stage2 = 'C'
+                    console.log('Stage 1 In progress');
+                    //this.stage1 = 'C'
+                    //this.stage2 = 'C'
                     vm.stage3 = 'B'
-                    //vm.stage4 = 'A'
+                    //this.stage4 = 'A'
 
                     }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
-                     
-                     vm.date2 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
-                     console.log('Stage 3.3 completed');
-                     //vm.stage1 = 'C'
-                     //vm.stage2 = 'C'
+                    
+                     console.log('Stage 1 completed');
+                     //this.stage1 = 'C'
+                     //this.stage2 = 'C'
                      vm.stage3 = 'C'
-                     //vm.stage4 = 'A'
+                     vm.stage4 = 'A'
 
                     }
 
-    // Stage Four -------------------------------------
+// Stage Four -------------------------------------
 
                 if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
-                     vm.date3 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
-                    console.log('Stage 4 In progress');
-                    //vm.stage1 = 'C'
-                    //vm.stage2 = 'C'
-                    //vm.stage3 = 'C'
+                    console.log('Stage 1 In progress');
+                    //this.stage1 = 'C'
+                    //this.stage2 = 'C'
+                    //this.stage3 = 'C'
                     vm.stage4 = 'B'
 
                     }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
-                     
-                      vm.date3 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
-                     console.log('Stage 4.4 completed');
-                     //vm.stage1 = 'C'
-                     //vm.stage2 = 'C'
-                     //vm.stage3 = 'C'
+                    
+                     console.log('Stage 1 completed');
+                     //this.stage1 = 'C'
+                     //this.stage2 = 'C'
+                     //this.stage3 = 'C'
                      vm.stage4 = 'C'
 
 
