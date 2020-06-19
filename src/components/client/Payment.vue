@@ -529,6 +529,19 @@ export default {
 
         ...mapActions(['fetchCurrencies']),
 
+
+     handleClick(id,src){
+
+            if(document.getElementById(id).files[0]){
+
+                this.showLargeThumbnail(id);
+
+            }else {
+                
+                this.largePreview(src);
+            }
+        },
+
     previewPdf(url){
 
             this.url = url;
@@ -629,6 +642,13 @@ export default {
                         }
 
                         reader.readAsDataURL(document.getElementById("slip").files[0]);
+
+                    }else if(this.slip_extension === 'pdf')
+                    {
+                
+                        this.slip_url = URL.createObjectURL(document.getElementById("bill").files[0]);
+
+                        this.previewPdf(this.slip_url);
                     }
 
                 }
@@ -667,6 +687,7 @@ export default {
             reader.readAsDataURL(document.getElementById(id).files[0]);
         },
 
+       
         isValid(){
 
            if(this.amount == '' || this.account_number == '' || this.depositors_name == '' 

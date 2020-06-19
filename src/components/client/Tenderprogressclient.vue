@@ -715,7 +715,7 @@ export default {
         message:'',
         type:'',
 
-        is_verified:0,
+        is_verified:'',
 
         cargo_loading:{
             
@@ -1137,10 +1137,25 @@ export default {
 
                                 if(response.data.genralErrorCode === 8000){
                                   
-                                    if(response.data.objects[response.data.objects.length - 1].verify == true)    
-                                        vm.is_verified = true;
-                                    else
-                                        vm.is_verified = false;           
+                                    let verified;
+                                        
+                                    for(let i=0; i< response.data.objects.length; i++)
+                                    {
+                                        if(response.data.objects[i].verify === true)
+                                        {
+                                            verified  = true;
+                                        }
+                                        else if(response.data.objects[i].verify === false){
+
+                                            verified = false;
+
+                                            return;
+                                        }
+                                    }
+
+                                    vm.is_verified = verified;
+
+
                                 }
                                 else if(response.data.genralErrorCode === 8001){
 
@@ -1258,10 +1273,23 @@ export default {
                                 if(response.data.genralErrorCode === 8000)
                                 {
 
-                                    if(response.data.objects[response.data.objects.length - 1].verify == true)    
-                                        vm.is_verified = true;
-                                    else
-                                        vm.is_verified = false;            
+                                   let verified;
+                                        
+                                    for(let i=0; i< response.data.objects.length; i++)
+                                    {
+                                        if(response.data.objects[i].verify === true)
+                                        {
+                                            verified  = true;
+                                        }
+                                        else if(response.data.objects[i].verify === false){
+
+                                            verified = false;
+
+                                            return;
+                                        }
+                                    }
+
+                                    vm.is_verified = verified;           
                                 }
                                 else if(response.data.genralErrorCode === 8001){
 
