@@ -646,7 +646,7 @@ export default {
                     }else if(this.slip_extension === 'pdf')
                     {
                 
-                        this.slip_url = URL.createObjectURL(document.getElementById("bill").files[0]);
+                        this.slip_url = URL.createObjectURL(document.getElementById("slip").files[0]);
 
                         this.previewPdf(this.slip_url);
                     }
