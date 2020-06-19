@@ -23,7 +23,7 @@
                 </div>
             </v-overlay>
 
-            <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
+            <v-card flat width="1200" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                 <v-flex>
                 <v-row class="pl-2 mb-1">
@@ -37,9 +37,9 @@
                 </v-flex>
             </v-card>
 
-            <v-card flat width="900" class="mx-auto mb-10 px-5" color="#F5FAFF">
-                <v-flex row>
-                <v-flex sm12 md12 lg12 xlg12 >
+            <v-card flat width="1200"  class="mx-auto mb-10 px-5" color="#F5FAFF">
+                <v-flex row >
+                <v-flex sm12 md8 lg8 xlg8 >
                     <v-card width="" class="pt-6 pb-3 pl-8">
                         <v-flex column>
                         <v-flex row >
@@ -61,15 +61,25 @@
 
                         </v-flex>
 
+                        <v-flex row >
+
+                        <v-flex column class="mt-5 pr-4">
+                            <p class="primary--text body-1  mb-2"> BILL OF LADING </p>
+                            <p class="body-1">{{LOAD_TENDER.bill_of_lading_number}}</p>
+                        </v-flex>
+
                         <v-flex column class="mt-5 pr-4">
                             <p class="primary--text body-1 mb-0"> TERMS AND CONDITIONS </p>
                             <p class="body-1 ">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
 
+                        </v-flex>
+
                         
 
                         <v-flex row class="mt-7 mb-4" >
-                            <v-flex column class="pl-3">
+
+                            <v-flex column class="pl-3" v-if="documents == true">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
                             <div 
@@ -99,7 +109,7 @@
                         </v-card>
                             </v-flex>
 
-                            <v-flex column >
+                            <v-flex column  v-if="documents == true">
                             <p class="primary--text body-1 mb-2"> LETTER </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
                             <div 
@@ -161,8 +171,9 @@
                         </v-flex>
                         </v-flex>
 
-                        <!-- display other files -->
-                        <v-row class="mt-5" v-if="otherFiles.length > 0">
+                <!-- display other files -->
+                <v-flex v-if="documents == true">
+                <v-row class="mt-5" v-if="otherFiles.length > 0">
 
                 <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
 
@@ -200,10 +211,11 @@
                     </v-card>
                 </v-col>
             </v-row>
-                    </v-card>
-                </v-flex>
+            </v-flex>
+           </v-card>
+          </v-flex>
 
-                <!-- <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2">
+                <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2 ml-2" v-if="documents == true">
                     <v-card color="#4169E1" width="" class="py-4 px-5">
                         <v-flex row >
                             <v-flex column class="px-3">
@@ -214,7 +226,7 @@
                             <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
                             </v-flex>
                             <v-flex class="pl-8">
-                            <p class="white--text ">Lorem@gamil.com</p>
+                            <p class="white--text ">Lorebagiazadengudsfm@gamil.com</p>
                             </v-flex>
                             </v-flex>
 
@@ -242,7 +254,7 @@
                         </v-flex>
 
                     </v-card>
-                </v-flex> -->
+                </v-flex>
                 
                 </v-flex>
             </v-card>
@@ -270,19 +282,20 @@
                 <v-card row width="500" class=" mx-auto mt-5 mb-5" color="#F5FAFF">
                 <v-alert
                 :value="wait"
-                text
-                outlined
-                color="orange"
+                elevation="7"
+                prominent
+                type="warning"
                 border="left"
                 row
                 >
                 <v-flex row class="pl-4">
                 <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
-                <v-icon large color="orange" class="">notification_important</v-icon>    
+                <!-- <v-icon large color="orange" class="">notification_important</v-icon>     -->
                 </v-flex>
                 <v-flex xms11 sm11 md11 lg11>
-                <p class="text--text title mb-0">
-                Waiting on payment for tender to start <v-chip v-show="wait == true" class="green white--text">Waiting for payment Verification</v-chip>
+                <p class="white--text body-1 mb-3">
+                Waiting on payment for tender to start 
+                <v-chip v-show="wait == true"  class="green mt-1 white--text">Waiting for payment Verification</v-chip>
                 </p>
                 </v-flex>
                 </v-flex>
@@ -893,6 +906,7 @@ export default {
             loading:false,
             show:true,
             wait:false, 
+            documents:false,
             chip1:'not received',
             comment:'',
             extension:false,
@@ -986,9 +1000,15 @@ export default {
                     console.log(vm.LOAD_PAYMENT_PROGRESS.objects.verify);
 
                     if (vm.LOAD_PAYMENT_PROGRESS.objects.verify == null){
+
                         vm.wait = true
                         vm.show = false
+                        
+
                     }else{
+
+                        vm.documents = true
+                        
                         if(vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited >= 100)
                         vm.value = 100;
                         else

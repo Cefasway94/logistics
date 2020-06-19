@@ -108,21 +108,31 @@
                     <v-card width="" class="pt-6 pb-3 pl-8" >
                         <v-flex column>
                         <v-flex row >
+
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> TENDER ID </p>
                             <p class="body-1">{{LOAD_TENDER.tender_id}}</p>
                             </v-flex>
+                            
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> TENDER TYPE </p>
                             <p class="body-1">{{LOAD_TENDER.tender_type}}</p>
                             </v-flex>
+                            
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
                             <p class="body-1">{{LOAD_TENDER.cargo_size}}</p>
+                            
                             </v-flex>
                         </v-flex>
 
                         <v-flex row>
+
+                        <v-flex column class="mt-5 pr-4">
+                            <p class="primary--text body-1  mb-2"> BILL OF LADING </p>
+                            <p class="body-1">{{LOAD_TENDER.bill_of_lading_number}}</p>
+                        </v-flex>
+                        
                         <v-flex column class="mt-7 pl-3 pr-4">
                             <p class="primary--text body-1 mb-2"> TERMS AND CONDITIIONS </p>
                             <p class="body-1">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
