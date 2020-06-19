@@ -55,23 +55,23 @@
 
             <v-card flat width="1300" class=" mx-auto mb-10 px-5" color="#F5FAFF">
                 <v-flex row >
-                    <v-flex sm12 md9 lg9 xlg9 >
+                    <v-flex sm12>
                         <v-card width="" class="pt-6 pb-3 pl-8" >
                             <v-flex column>
                                 <v-flex row >
-                                    <v-flex column class="pl-3">
+                                    <v-flex column xs6 sm6 md4 class="pl-3">
 
                                         <p class="primary--text body-1 mb-2"> TENDER TYPE </p>
                                         <p class="body-1">{{ tender.tender_type}}</p>
 
                                     </v-flex>
 
-                                    <v-flex column >
+                                    <v-flex column xs6 sm6 md4 class="pl-3">
                                         <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
-                                        <p class="body-1">40 feet</p>
+                                        <p class="body-1">{{ tender.cargo_size}}</p>
                                     </v-flex>
 
-                                    <v-flex column class="pl-3">
+                                    <v-flex column xs6 sm6 md4  class="pl-3">
 
                                          <p class="primary--text body-1 mb-2"> AMOUNT </p>
                                          <p class="body-1">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{tender.currency}} </p>
@@ -81,25 +81,52 @@
 
                                 <v-flex row class="mt-7 pr-4" v-show="tender.tender_type == 'Transporting'">
 
-                                     <v-flex column class="pl-3" >
+                                     <v-flex column xs6  md6 class="pl-3" >
 
-                                        <p class="primary--text body-1 mb-2"> ORIGIN </p>
+                                        <p class="primary--text body-1 mb-2"> ORIGIN COUNTRY</p>
                                         <p class="body-1">{{ tender.origin}}</p>
 
                                     </v-flex>
 
-                                     <v-flex column class="pl-3">
+                                     <v-flex column xs6 md6 class="pl-3">
 
-                                         <p class="primary--text body-1 mb-2"> DESTINATION </p>
+                                         <p class="primary--text body-1 mb-2"> DESTINATION COUNTRY</p>
                                          <p class="body-1">{{ tender.destination }}</p>
+
+                                    </v-flex>
+
+                                    <v-flex column xs6  md6 class="pl-3" >
+
+                                        <p class="primary--text body-1 mb-2"> ORIGIN REGION/STATE</p>
+                                        <p class="body-1">{{ tender.origin_region}}</p>
+
+                                    </v-flex>
+
+                                     <v-flex column xs6 md6 class="pl-3">
+
+                                         <p class="primary--text body-1 mb-2"> DESTINATION REGION/STATE</p>
+                                         <p class="body-1">{{ tender.destination_region }}</p>
 
                                     </v-flex>
 
                                 </v-flex>
 
-                                <v-flex column class="mt-7 pr-4">
-                                    <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
-                                    <p class="body-1">{{ tender.customer_terms_and_conditions}}</p>
+                                
+                                <v-flex row class="mt-7 pr-4">
+
+                                     <v-flex column xs6 class="pl-3" >
+
+                                        <p class="primary--text body-1 mb-0"> BILL OF LADING NUMBER </p>
+                                        <p class="body-1">{{ tender.bill_of_lading_number}}</p>
+                                    </v-flex>
+
+                                     <v-flex column xs6 class="pl-3">
+
+                                        <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
+                                        <p class="body-1">{{ tender.customer_terms_and_conditions}}</p>
+
+                                    </v-flex>
+
                                 </v-flex>
 
                                 <v-flex row class="mt-10 mb-4" >
@@ -422,6 +449,15 @@ export default {
                                 {
                                     vm.tender = response.data.objects;
 
+                                    if(vm.tender.cargo_size === null)
+                                        vm.tender.cargo_size = '';
+
+                                    if(vm.tender.customer_offer_amount === null)
+                                        vm.tender.customer_offer_amount = '';
+
+                                    if(vm.tender.description === null)
+                                        vm.tender.description = '';
+
                                     if(vm.tender.cargo_photo !== null)
                                     {
                                         vm.photo_extension = vm.getFileExtension(vm.tender.cargo_photo[0]);
@@ -482,6 +518,15 @@ export default {
                                 if(response.data.genralErrorCode === 8000)
                                 {
                                     vm.tender = response.data.objects;
+
+                                    if(vm.tender.cargo_size === null)
+                                        vm.tender.cargo_size = '';
+
+                                    if(vm.tender.customer_offer_amount === null)
+                                        vm.tender.customer_offer_amount = '';
+
+                                    if(vm.tender.description === null)
+                                        vm.tender.description = '';
 
                                     if(vm.tender.cargo_photo !== null)
                                     {
