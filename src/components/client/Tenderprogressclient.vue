@@ -715,7 +715,7 @@ export default {
         message:'',
         type:'',
 
-        is_verified:0,
+        is_verified:'',
 
         cargo_loading:{
             
@@ -1131,16 +1131,31 @@ export default {
                                 document.getElementById('app').scrollIntoView();
                             });
 
-                axios.get(`http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/${vm.$route.params.id}`)
+                axios.get(`http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/${vm.$route.params.id}/Transporting`)
                         .then((response) => 
                             {
 
                                 if(response.data.genralErrorCode === 8000){
                                   
-                                    if(response.data.objects[response.data.objects.length - 1].verify == true)    
-                                        vm.is_verified = true;
-                                    else
-                                        vm.is_verified = false;           
+                                    let verified;
+                                        
+                                    for(let i=0; i< response.data.objects.length; i++)
+                                    {
+                                        if(response.data.objects[i].verify === true)
+                                        {
+                                            verified  = true;
+                                        }
+                                        else if(response.data.objects[i].verify === false){
+
+                                            verified = false;
+
+                                            return;
+                                        }
+                                    }
+
+                                    vm.is_verified = verified;
+
+
                                 }
                                 else if(response.data.genralErrorCode === 8001){
 
@@ -1153,7 +1168,7 @@ export default {
                             });
 
                             
-                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
+                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}/Transporting`)
                         .then((response) => 
                             {
 
@@ -1251,17 +1266,30 @@ export default {
                             });
 
 
-                 axios.get(`http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/${vm.$route.params.id}`)
+                 axios.get(`http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/${vm.$route.params.id}/Clearing`)
                         .then((response) => 
                             {
 
                                 if(response.data.genralErrorCode === 8000)
                                 {
 
-                                    if(response.data.objects[response.data.objects.length - 1].verify == true)    
-                                        vm.is_verified = true;
-                                    else
-                                        vm.is_verified = false;            
+                                   let verified;
+                                        
+                                    for(let i=0; i< response.data.objects.length; i++)
+                                    {
+                                        if(response.data.objects[i].verify === true)
+                                        {
+                                            verified  = true;
+                                        }
+                                        else if(response.data.objects[i].verify === false){
+
+                                            verified = false;
+
+                                            return;
+                                        }
+                                    }
+
+                                    vm.is_verified = verified;           
                                 }
                                 else if(response.data.genralErrorCode === 8001){
 
@@ -1276,7 +1304,7 @@ export default {
                             });
 
                             
-                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
+                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}/Clearing`)
                         .then((response) => 
                             {
 

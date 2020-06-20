@@ -77,7 +77,7 @@
 
             </v-dialog>
 
-             <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
+             <!-- <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                     <v-flex>
                         <v-row class="pl-2 mb-1">
@@ -88,246 +88,351 @@
                     <v-spacer></v-spacer>
                     <h2 style="color:#4169E1;">{{ tender.currency}} {{ Number(tender.customer_offer_amount).toLocaleString()}}</h2>
                 </v-flex>
-            </v-card>
+            </v-card> -->
 
-            <v-card row flat width="900" class="mt-10 mx-auto" color="#F5FAFF">
-                <v-flex row class="">
-                <v-icon class="mb-4 ml-3 mr-3" style="color:#4169E1;">person_outline</v-icon>
-                <p class="title" style="color:#4169E1;" >Bank details</p>
-                </v-flex>
-            </v-card>
+            <v-row>
+                <v-col cols=12>
 
-            <v-card width="900" class="mx-auto px-3 pt-3">
-                <v-flex row class="mt-5">
-                    <!--<v-flex column sm6 md6 class="pl-6 pr4">
-                    <p class=" body-1 mb-0 text-capitalize"> Acc name </p>
-                    <v-text-field clearable outlined></v-text-field>
-                    </v-flex>-->
+                    <v-card flat width="900" class="mt-12 mx-auto mb-1" color="#F5FAFF">
+                        <v-flex row class="px-3 ">
+                            <v-flex>
+                                <v-row class="pl-2 mb-1">
+                                    <p class="font-weight-bold">{{ tender.cargo_details }}  - {{ payment_term.installment_desc }}</p>
+                                </v-row>
+                            </v-flex>
 
-                    <v-flex row xs12 class="px-4">
-                        <v-flex column xs12 class="px-2">
-                            <p class=" body-1 mb-0 text-capitalize"> Acc number </p>
-                            <v-text-field 
-                                clearable outlined 
-                                v-model="account_number"
-                                :rules="[v => !!v || 'Account name is required']"
-                                required>
-
-                                <template #label>
-                                    <span class="red--text"><strong>* </strong></span>
-                                </template>
-
-                            </v-text-field>
+                            <v-spacer></v-spacer>
+                            <h2 style="color:#4169E1;">{{ tender.currency}} {{ Number(tender.customer_offer_amount).toLocaleString()}}</h2>
                         </v-flex>
-                    <!--<v-flex column sm6 md6 class="pl-2">
-                    <p class=" body-1 mb-0 text-capitalize"> Swift code </p>
-                    <v-text-field clearable outlined></v-text-field>
-                    </v-flex>-->
-                    </v-flex>
 
-                    <!--<v-flex column class="px-6">
-                    <p class=" body-1 mb-0 text-capitalize"> Select bank </p>
-                    <v-select
-                    outlined
-                    class=""
-                    style="color:#4169E1;"
-                    :items="banks"
-                    color="#4169E1"
-                    clearable
-                    ></v-select>
-                    </v-flex>-->
-                </v-flex>
-            </v-card>
 
-           
+                        <v-flex row class="px-3 pt-3">
+                            <v-flex class="pt-5">
+                                <v-row class="pl-2 pt-3 mb-1">
+                                    <div style="color:#4169E1;">
 
-            <v-card row flat width="900" class="mt-10 mx-auto" color="#F5FAFF">
-                <v-flex row class="">
-                <v-icon class="mb-3 ml-2 mr-3" style="color:#4169E1;">payment</v-icon>
-                <p class="title " style="color:#4169E1;" >Payment</p>
-                </v-flex>
-            </v-card>
+                                        <h3 ><v-icon color="primary" size="20">credit_card</v-icon> Select payment method</h3>
+                                    </div>
+                                </v-row>
+                            </v-flex>
+                        </v-flex>
 
-            <v-card width="900" height="500" class="mx-auto px-4 pt-3">
-                <v-flex column class="">
-
-                <v-flex row class="pl-4 pr-2">
-                    <!--
-                    <v-flex column sm4 md4 class="pl-4 pr-2">
-                    <p class=" body-1 mb-0 text-capitalize"> Payment option </p>
-                    <v-select
-                    outlined
-                    class=""
-                    style="color:#4169E1;"
-                    :items="payment_options"
-                    color="#4169E1"
-                    clearable
-                    ></v-select>
-                    </v-flex> -->
-
-                    <v-flex column xs12 sm6 class="px-2">
-                        <p class=" body-1 mb-0 text-capitalize"> Currency </p>
-                        <!--<v-text-field clearable outlined></v-text-field>-->
-
-                         <v-select
-                            outlined
-                            class=""
-                            v-model="currency"
-                            style="color:#4169E1;"
-                            :items="currencies"
-                            color="#4169E1"
-                            clearable
-                            :rules="[v => !!v || 'Currency is required']"
-                            required
-                         >     
-                            <template #label>
-                                <span class="red--text"><strong>* </strong></span>
-                            </template>
-
-                         </v-select>
-                    </v-flex>
-
-                    <v-flex column xs12 sm6 class=" pl-2">
-                         <p class=" body-1 mb-0 text-capitalize"> Amount</p>
-                        <v-text-field 
-                            clearable outlined 
-                            v-model="amount"
-                            :rules="[v => !!v || 'Amount is required']"
-                            required>
-                            
-                            <template #label>
-                                <span class="red--text"><strong>* </strong></span>
-                            </template>
-
-                            </v-text-field>
+                    </v-card>
                     
-                    </v-flex> 
-            
-                </v-flex>
+                
 
-                <v-flex row class="pl-4 pr-2">
-                    <!--
-                    <v-flex column sm4 md4 class="pl-4 pr-2">
-                    <p class=" body-1 mb-0 text-capitalize"> Payment option </p>
-                    <v-select
-                    outlined
-                    class=""
-                    style="color:#4169E1;"
-                    :items="payment_options"
-                    color="#4169E1"
-                    clearable
-                    ></v-select>
-                    </v-flex> -->
-
-                    <v-flex column xs12 sm6 class="px-2">
-                        <p class=" body-1 mb-0 text-capitalize"> Depositor's name </p>
-                        <v-text-field 
-                            clearable outlined 
-                            v-model="depositors_name"
-                            :rules="[v => !!v || 'Name is required']"
-                            required
-                        >
-                            <template #label>
-                                <span class="red--text"><strong>* </strong></span>
-                            </template>
-                        </v-text-field>
-                    </v-flex>
-
-                    <v-flex column xs12 sm6 class="pl-10">
+                    <v-card flat width="900" class="mt-0 mx-auto" >
                         
-                        <p class=" body-1 mb-0 text-capitalize"> Receipt </p>
-                         <v-card flat width="358" height="270"  outlined >
-                             <center>
-                             <p class="mb-0 body-1 red--text">
-                                Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
-                             </p>
-                             </center>
-                            <v-file-input 
-                                label="upload a slip" 
-                                id="slip" 
-                                :clearable="false"
-                                @change="slipUpdated()"
-                                prepend-icon ="mdi-cloud-upload"
-                                :rules="[v => !!v || 'Receipt is required']"
-                                required
-                            >
-                                <template #label>
-                                    <span class="red--text"><strong>* </strong></span>
-                                </template>
-                            </v-file-input>
-
-                            <!-- <div v-show="slip_extension === 'jpg' || slip_extension === 'jpeg' ||  slip_extension === 'png' ">
-                                <v-card height="200" width="358" outlined @click="showLargeThumbnail('slip')">
-                                    <img  id="slip_thumb" class="preview">
-                                </v-card>
-                            </div> -->
-                            <div v-show="slip_extension === 'jpg' || slip_extension === 'jpeg' || slip_extension === 'png'">
-                                    <v-card height="200" width="250" outlined @click="handleClick('slip',slip_url)">
-                                        <img  id="slip_thumb" :src="slip_url" class="preview">
-                                    </v-card>
-                            </div>
-
-                             <div v-show="slip_extension === 'pdf'">
-
-                                <v-btn 
-                                    :block="true"
-                                    icon class="mt-7" 
-                                    @click="previewPdf(slip_url)"
+                        <v-item-group mandatory>
+                            <v-container>
+                            <v-row>
+                                <!-- <v-col
+                                    v-for="payment in payment_methods"
+                                    :key="payment.name"
+                                    cols="12"
+                                    md="3"
+                                >
+                                <v-item v-slot:default="{ active, toggle }">
+                                    <v-card
+                                        height="100"
+                                        @click="toggle"
                                     >
-                                    PREVIEW<v-icon x-small>mdi-file</v-icon>
-                                </v-btn>
-                            </div>
+                                        <v-img
+                                            v-if="payment.image_path !== ''"
+                                            :src="path"
+                                        >
+                                        </v-img>
+                                            
+                                        {{ payment.image_path}}
+                                    </v-card>
+                                </v-item>
+                                </v-col> -->
+                                <v-col
+                                    cols="12"
+                                    md="3"
+                                >
+                                    <v-item>
+                                        <v-card
+                                            height="100"
+                                            class="align-center"
+                                            @click="showCRDB"
+                                        >
+                                            <v-row>
+                                                <v-col offset="2">
+                                                    <v-img
+                                                        src="../../assets/crdb.png"
+                                                        width="100px"
+                                                        height="40px"
+                                                    >
+                                                    </v-img>
+                                                </v-col>
+                                            </v-row>
 
-                            <div v-show="slip_extension === 'error' ">
-                                <v-card height="200" width="250" outline class="pt-10 largefile" >
-                                    <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
-                                </v-card>
-                            </div>
+                                            <v-row>
+                                                <v-col offset=4>
+                                                    <p>CRDB</p>
+                                                </v-col>
+                                            </v-row>
+                                            
+                                        </v-card>
+                                    </v-item>
+                                </v-col>
+
+                                <v-col
+                                    cols="12"
+                                    md="3"
+                                >
+                                <v-item>
+                                    <v-card
+                                        height="100"
+                                        @click="showPesapal"
+                                    >
+                                        <v-row>
+                                            <v-col offset="2">
+                                                <v-img
+                                                    src="../../assets/pesapal.jpg"
+                                                    width="100px"
+                                                    height="40px"
+                                                >
+                                                </v-img>
+                                            </v-col>
+                                        </v-row>
+
+                                        <v-row>
+                                            <v-col offset=4>
+                                                <p>Pesapal</p>
+                                            </v-col>
+                                        </v-row>
+                                    </v-card>
+                                </v-item>
+                                </v-col>
+
+                                <v-col
+                                    cols="12"
+                                    md="3"
+                                >
+                                    <v-item>
+                                        <v-card
+                                            height="100"
+                                            @click="showDeposit"
+                                        >
+                                            <v-row>
+                                                <v-col offset=4 class="mt-3">
+                                                    <v-icon color="primary">
+                                                        input
+                                                    </v-icon>
+                                                </v-col>
+                                            </v-row>
+
+                                            <v-row>
+                                                <v-col offset="4">
+                                                    <p>Deposit</p>
+                                                </v-col>
+                                            </v-row>
+                                        </v-card>
+                                    </v-item>
+                                </v-col>
+
+
+                                <v-col
+                                    cols="12"
+                                    md="3"
+                                >
+                                    <v-item>
+                                        <v-card
+                                            height="100"
+                                            @click="showOthers"
+                                        >
+                                        
+                                            <v-row>
+                                                <v-col>
+                                                    
+                                                </v-col>
+                                            </v-row>
+
+                                            <v-row>
+                                                <v-col offset=4 class="mt-3">
+                                                    <p>Other</p>
+                                                </v-col>
+                                            </v-row>
+                                        </v-card>
+                                    </v-item>
+                                </v-col>
+
+                            </v-row>
+                            </v-container>
+                        </v-item-group>
+
+
+                        <v-card v-show="crdb" flat class="mt-12 mx-auto mb-1">
+                            
+                            <v-row class="">
+                                <v-col cols=10 class="mx-auto">
+
+                                    <p class=" body-1 mb-0 text-capitalize"> Acc number </p>
+                                    <v-text-field 
+                                        clearable outlined 
+                                        v-model="account_number"
+                                        :rules="[v => !!v || 'Account name is required']"
+                                        required>
+
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
+
+                                    </v-text-field>
+
+                                </v-col>
+
+                            </v-row>
+
+                            <v-row >
+                                <v-col cols=10 md=5 class="mx-auto px-2">
+                                    <p class=" body-1 mb-0 text-capitalize"> Currency </p>
+                                
+                                    <v-select
+                                        outlined
+                                        class=""
+                                        v-model="currency"
+                                        style="color:#4169E1;"
+                                        :items="currencies"
+                                        color="#4169E1"
+                                        clearable
+                                        :rules="[v => !!v || 'Currency is required']"
+                                        required
+                                    >     
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
+
+                                    </v-select>
+
+                                </v-col>
+
+                                <v-col cols=10 md=5 class="mx-auto px-2">
+
+                                    <p class=" body-1 mb-0 text-capitalize"> Amount</p>
+                                    <v-text-field 
+                                        clearable outlined 
+                                        v-model="amount"
+                                        :rules="[v => !!v || 'Amount is required']"
+                                        required>
+                                        
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
+
+                                        </v-text-field>
+                                    
+                                </v-col>
+                            </v-row>
+
+                            <v-row >
+                                <v-col cols=10 md=5 class="mx-auto px-2">
+
+                                    <p class=" body-1 mb-0 text-capitalize"> Depositor's name </p>
+                                    <v-text-field 
+                                        clearable outlined 
+                                        v-model="depositors_name"
+                                        :rules="[v => !!v || 'Name is required']"
+                                        required
+                                    >
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
+                                    </v-text-field>
+
+                                </v-col>
+
+                                <v-col cols=10 md=5 class="mx-auto px-2">
+
+                                    <p class=" body-1 mb-0 text-capitalize"> Receipt </p>
+                                    <v-card flat width="358" height="270"  outlined >
+                                        <center>
+                                        <p class="mb-0 body-1 red--text">
+                                            Supported file types : <span class="font-weight-bold">.PDF .JPG .PNG .JPEG</span>
+                                        </p>
+                                        </center>
+                                        <v-file-input 
+                                            label="upload a slip" 
+                                            id="slip" 
+                                            :clearable="false"
+                                            @change="slipUpdated()"
+                                            prepend-icon ="mdi-cloud-upload"
+                                            :rules="[v => !!v || 'Receipt is required']"
+                                            required
+                                        >
+                                            <template #label>
+                                                <span class="red--text"><strong>* </strong></span>
+                                            </template>
+                                        </v-file-input>
+
+                                    
+                                        <div v-show="slip_extension === 'jpg' || slip_extension === 'jpeg' || slip_extension === 'png'">
+                                                <v-card height="200" width="250" outlined @click="handleClick('slip',slip_url)">
+                                                    <img  id="slip_thumb" :src="slip_url" class="preview">
+                                                </v-card>
+                                        </div>
+
+                                        <div v-show="slip_extension === 'pdf'">
+
+                                            <v-btn 
+                                                :block="true"
+                                                icon class="mt-7" 
+                                                @click="previewPdf(slip_url)"
+                                                >
+                                                PREVIEW<v-icon x-small>mdi-file</v-icon>
+                                            </v-btn>
+                                        </div>
+
+                                        <div v-show="slip_extension === 'error' ">
+                                            <v-card height="200" width="250" outline class="pt-10 largefile" >
+                                                <p class="fontweight-bold red--text title text-center mt-10 "> file size too large </p>
+                                            </v-card>
+                                        </div>
+
+                                    </v-card>
+                                    
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
+                                <v-col cols="6" v-show="loading">
+                                    <v-progress-linear
+                                        color="deep-purple accent-4"
+                                        indeterminate
+                                        rounded
+                                        height="6"
+                                    >
+                                    </v-progress-linear>
+                                </v-col>
+
+                            </v-row>
+
+                            <v-row>
+                                <v-col cols=12>
+                                    <v-spacer></v-spacer>
+                                    <v-btn style="float:right" small color="primary white--text" class="" @click="confirmPayment($event)" :disabled="!isValid()"> Confirm payment</v-btn>
+                                </v-col>
+                            </v-row>
 
                         </v-card>
-                    
-                    </v-flex> 
-            
-                </v-flex>
 
-                </v-flex>
-            </v-card>
+                        <v-card v-show="deposit" class="mt-12 mx-auto mb-1">
+                            show deposit
+                        </v-card>
 
-            <v-card flat width="900" class="mx-auto mt-8 " color="#F5FAFF">
-                <v-row
-                    class="fill-height"
-                    align-content="center"
-                    justify="center"
-                    v-if="loading"
-                >
-                    <v-col
-                        class="subtitle-1 text-center"
-                        cols="12"
-                    >
-                       <span class="font-weight-bold blue--text text--darken-2">Payment processing</span>
-                    </v-col>
+                        <v-card v-show="others" class="mt-12 mx-auto mb-1">
+                            show others
+                        </v-card>
 
-                    <v-col cols="6">
-                        <v-progress-linear
-                            color="deep-purple accent-4"
-                            indeterminate
-                            rounded
-                            height="6"
-                        >
-                        </v-progress-linear>
-                    </v-col>
-                </v-row>
+                        <v-card v-show="pesapal" class="mt-12 mx-auto mb-1">
+                            show pesapal
+                        </v-card>
 
-                <v-flex row align-self-center justify-center class="mt-3">
-                    <!--<v-btn elevation="flat" color="#F5FAFF"> 
-                        <v-icon color="#4169E1">keyboard_arrow_left</v-icon>
-                        <p class=" body-1 mb-0 text-upercase pt-1" style="color:#4169E1;"> go back </p>
-                    </v-btn>-->
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary white--text" class="" @click="confirmPayment($event)" :disabled="!isValid()"> Confirm payment</v-btn>
-                </v-flex>
-            </v-card>
-
+                    </v-card>
+                </v-col>
+            </v-row>
     </v-container>
 </template>
 
@@ -351,6 +456,8 @@ export default {
             message:'',
             type:'',
 
+            path: '../../assets/crdb.png',
+
             display_file_size_error:false,
 
             currency_object:[],
@@ -363,6 +470,7 @@ export default {
             currency_id:'',
 
             no_of_installment:'',
+            payment_term:[],
             response_message:'',
 
             slip_url:'',
@@ -372,12 +480,39 @@ export default {
             overlay:false,
             slip_extension:'',
 
+            crdb: false,
+            pesapal: false,
+            others: false,
+            deposit: false,
+
             url:'',
             pdf:false,
             pdfOverlay:false,
 
             low_amount_message:'',
             low_amount:false,
+
+            payment_methods:[
+
+                {
+                    name:'CRDB',
+                    image_path:'../../assets/crdb.png'
+
+                },
+                {
+                    name:'Pesapal',
+                    image_path:'../../assets/pesapal.jpg'
+                },
+                {
+                    name: 'Other',
+                    image_path:''
+                },
+                {
+                    name: 'Deposit',
+                    image_path:''
+                },
+            ]
+            ,
 
         }
     },
@@ -394,12 +529,56 @@ export default {
 
         ...mapActions(['fetchCurrencies']),
 
+
+     handleClick(id,src){
+
+            if(document.getElementById(id).files[0]){
+
+                this.showLargeThumbnail(id);
+
+            }else {
+                
+                this.largePreview(src);
+            }
+        },
+
     previewPdf(url){
 
             this.url = url;
             this.pdfOverlay = true;
             this.pdf = true;
             
+        },
+
+        showCRDB(){
+            this.crdb = true;
+            this.pesapal = false;
+            this.others = false;
+            this.deposit = false;
+        },
+
+        showPesapal(){
+
+            this.crdb = false;
+            this.pesapal = true;
+            this.others = false;
+            this.deposit = false;
+        },
+
+        showOthers(){
+
+            this.crdb = false;
+            this.pesapal = false;
+            this.others = true;
+            this.deposit = false;
+        },
+
+        showDeposit(){
+
+            this.crdb = false;
+            this.pesapal = false;
+            this.others = false;
+            this.deposit = true;
         },
 
         setAlert(message,type){
@@ -463,6 +642,13 @@ export default {
                         }
 
                         reader.readAsDataURL(document.getElementById("slip").files[0]);
+
+                    }else if(this.slip_extension === 'pdf')
+                    {
+                
+                        this.slip_url = URL.createObjectURL(document.getElementById("slip").files[0]);
+
+                        this.previewPdf(this.slip_url);
                     }
 
                 }
@@ -501,6 +687,7 @@ export default {
             reader.readAsDataURL(document.getElementById(id).files[0]);
         },
 
+       
         isValid(){
 
            if(this.amount == '' || this.account_number == '' || this.depositors_name == '' 
@@ -552,7 +739,7 @@ export default {
 
                
 
-                if(this.no_of_installment === "1"){
+                if(this.payment_term.no_of_installment === "1"){
 
                     if(this.amount >= this.tender.customer_offer_amount){
 
@@ -782,7 +969,8 @@ export default {
 
                                             vm.alert = false;
 
-                                            vm.no_of_installment = response.data.objects.no_of_installment;
+                                            vm.payment_term = response.data.objects;
+
                                         }
                                         else if(response.data.genralErrorCode === 8004){
 
@@ -933,7 +1121,7 @@ export default {
 
                                             vm.alert = false;
 
-                                            vm.no_of_installment = response.data.objects.no_of_installment;
+                                             vm.payment_term = response.data.objects;
                                         }
                                         else if(response.data.genralErrorCode === 8004){
 
