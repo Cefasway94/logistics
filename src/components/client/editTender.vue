@@ -2459,41 +2459,6 @@ export default {
         //access to component's instance using `vm` .
         //this is done because this navigation guard is called before the component is created.           
         //vm.setCustomerDetails();
-
-        let countries = "http://164.68.113.159:2000/api/v1/countries/index";
-
-        axios.get(countries).then((response) => 
-            {
-                               
-                if(response.data.genralErrorCode === 8000){
-
-                    for(let i=0; i< response.data.objects.length; i++)
-                    {
-                        vm.countries.push(response.data.objects[i].name);
-
-                    }
-                    
-                } else if(response.data.genralErrorCode === 8004){
-
-                    vm.alert = false;
-
-                    setTimeout(()=>{
-
-                        vm.setAlert(response.data.message,"error");
-
-                    },1000)
-                }
-
-            }).catch(()=>{
-
-                setTimeout(()=>{
-
-                    vm.setAlert("There is an internal error","error");
-
-                },1000)
-            });
-
-
         let url1 = "http://207.180.215.239:8181/api/v1/customers/fetch?email="+localStorage.client;
 
         axios.get(url1).then((response) => 
@@ -2536,6 +2501,9 @@ export default {
                             vm.alert = false;
 
                             vm.tender = response.data.objects;
+
+                            vm.fetchOriginRegions(vm.tender.origin);
+                            vm.fetchDestinationRegions(vm.tender.destination);
 
                             if(vm.tender.cargo_size === null)
                                 vm.tender.cargo_size = '';
