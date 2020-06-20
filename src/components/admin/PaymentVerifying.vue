@@ -540,7 +540,7 @@ export default {
 
       this.Denydialog = false;
 
-      const dening_url = "http://207.180.215.239:8002/api/oxopayment/deny/"+this.item.id+"/"+this.item.order_ID;
+      const dening_url = "http://207.180.215.239:8002/api/oxopayment/deny/"+this.item.id+"/"+this.item.order_ID+"/"+this.item.tendertype;
 
       axios.post(dening_url).then((response) => 
       {
@@ -589,7 +589,7 @@ export default {
 
       this.Verydialog = false;
 
-      const verifing_url = "http://207.180.215.239:8002/api/oxopayment/verify/"+this.item.id+"/"+this.item.order_ID;
+      const verifing_url = "http://207.180.215.239:8002/api/oxopayment/verify/"+this.item.id+"/"+this.item.order_ID+"/"+this.item.tendertype;
 
       axios.post(verifing_url).then((response) => 
       {
