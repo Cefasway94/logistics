@@ -306,34 +306,36 @@
                             <v-row wrap >
                                 <v-col>
                                     <p class="primary--text body-2 text-uppercase mb-0">COUNTRY OF ORIGIN</p>
-                                    <v-text-field 
-                                        outlined 
-                                        clearable
+                                    <v-select
+                                        outlined
+                                        v-model="origin"
+                                        :items="available_countries"
+                                        @change="fetchOriginRegions(origin)"
                                         :rules="[v => !!v || 'Origin is required']"
                                         required
-                                        v-model="origin"
-                                    >
+                                    >     
                                         <template #label>
                                             <span class="red--text"><strong>* </strong></span>
                                         </template>
-                                    </v-text-field>
+
+                                    </v-select>
                                 </v-col>
 
                                 <v-col>
                                     <p class="primary--text body-2 text-uppercase mb-0">COUNTRY OF DESTINATION</p>
-                                    <v-text-field 
-                                        outlined 
-                                        clearable
-                                        :rules="[v => !!v || 'Destination is required']"
-                                        required
+                                    <v-select
+                                        outlined
                                         v-model="destination"
-                                    >
+                                        :items="available_countries"
+                                        @change="fetchDestinationRegions(destination)"
+                                        :rules="[v => !!v || 'Destination country is required']"
+                                        required
+                                    >     
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
 
-                                    <template #label>
-                                        <span class="red--text"><strong>* </strong></span>
-                                    </template>
-
-                                    </v-text-field>
+                                </v-select>
                                 </v-col>
                             </v-row>
                         </v-row>
@@ -342,34 +344,35 @@
                             <v-row wrap >
                                 <v-col>
                                     <p class="primary--text body-2 text-uppercase mb-0">REGION OF ORIGIN</p>
-                                    <v-text-field 
-                                        outlined 
-                                        clearable
+
+                                    <v-select
+                                        outlined
+                                        v-model="origin_region"
+                                        :items="origin_regions"
                                         :rules="[v => !!v || 'Origin region is required']"
                                         required
-                                        v-model="origin_region"
-                                    >
+                                    >     
                                         <template #label>
                                             <span class="red--text"><strong>* </strong></span>
                                         </template>
-                                    </v-text-field>
+
+                                    </v-select>
                                 </v-col>
 
                                 <v-col>
                                     <p class="primary--text body-2 text-uppercase mb-0">REGION OF DESTINATION</p>
-                                    <v-text-field 
-                                        outlined 
-                                        clearable
-                                        :rules="[v => !!v || 'Destination region is required']"
-                                        required
+                                    <v-select
+                                        outlined
                                         v-model="destination_region"
-                                    >
+                                        :items="destination_regions"
+                                        :rules="[v => !!v || 'Destinaton region is required']"
+                                        required
+                                    >     
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
 
-                                    <template #label>
-                                        <span class="red--text"><strong>* </strong></span>
-                                    </template>
-
-                                    </v-text-field>
+                                </v-select>
                                 </v-col>
                             </v-row>
                         </v-row>
@@ -384,8 +387,6 @@
                                         :items="currencies" 
                                         color="#4169E1" 
                                         :rules="[v => !!v || 'Currency is required']"
-                                        required
-                                        clearable 
                                     >
                                         <template #label>
                                             <span class="red--text"><strong>* </strong></span> Currency
@@ -1270,19 +1271,29 @@ import {mapActions,mapGetters} from 'vuex'
 import Alert from '@/components/Alert.vue'
 import PDFDocument from '@/components/PDFDocument'
 import axios from 'axios'
+import {projectMixin} from '@/mixins/mixings.js'
 
 export default {
     name: "createtender",
 
     components: {Alert, PDFDocument},
 
+    mixins: [projectMixin],
+
     data: ()=>({
         details:'',
+        
         origin:'',
         destination:'',
-        destination_region:'',
-        bill_of_lading_number:'',
         origin_region:'',
+        destination_region:'',
+
+        countries:[],
+        origin_regions:[],
+        destination_regions:[],
+
+        bill_of_lading_number:'',
+       
         timeline:new Date().toISOString().substr(0, 10),
         time: new Date().toISOString().substr(0, 10),
         size:'',
@@ -1401,6 +1412,18 @@ export default {
             this.pdfOverlay = true;
             this.pdf = true;
             
+        },
+
+        fetchOriginRegions(origin_country){
+
+          this.origin_regions = this.getRegions(origin_country);
+
+        },
+
+         fetchDestinationRegions(origin_country){
+
+          this.destination_regions = this.getRegions(origin_country);
+                         
         },
 
         setAlert(message,type){
@@ -2466,6 +2489,8 @@ export default {
     beforeRouteEnter (to, from, next) { 
         next(vm => { 
 
+            console.log("TEST MIXINIG IS ......................"+vm.testMixing);
+
             let url = "http://207.180.215.239:8000/api/v1/agent-industries";
 
             axios.get(url).then((response) => 
@@ -2498,6 +2523,40 @@ export default {
 
                                 },1000)
                             });
+
+
+            let countries_url = "http://164.68.113.159:2000/api/v1/countries/index";
+
+            axios.get(countries_url).then((response) => 
+                {
+                                
+                    if(response.data.genralErrorCode === 8000){
+
+                        for(let i=0; i< response.data.objects.length; i++)
+                        {
+                            vm.countries.push(response.data.objects[i].name);
+
+                        }
+
+                    } else if(response.data.genralErrorCode === 8004){
+
+                        vm.alert = false;
+
+                        setTimeout(()=>{
+
+                            vm.setAlert(response.data.message,"error");
+
+                        },1000)
+                    }
+
+                }).catch(()=>{
+
+                    setTimeout(()=>{
+
+                        vm.setAlert("There is an internal error","error");
+
+                    },1000)
+                });
                           
 
             let url1 = "http://207.180.215.239:8181/api/v1/customers/fetch?email="+localStorage.client;

@@ -152,25 +152,26 @@
                         <v-row class="px-3" v-if="tender.tender_type == 'Transporting'">
                             <v-col cols="12" md="6">
                                 <p class="primary--text body-2 text-uppercase mb-0">ORIGIN COUNTRY</p>
-                                <v-text-field 
-                                    outlined 
-                                    clearable
-                                    v-model="tender.origin"
-                                    :rules="[v => !!v || 'Origin is required']"
-                                    required
-                                >
 
-                                    <template #label>
-                                        <span class="red--text"><strong>* </strong></span>
-                                    </template>
+                                <v-select
+                                        outlined
+                                        v-model="tender.origin"
+                                        :items="available_countries"
+                                        @change="fetchOriginRegions(tender.origin)"
+                                        :rules="[v => !!v || 'Origin is required']"
+                                        required
+                                    >     
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
 
-                                </v-text-field>
+                                </v-select>
                              </v-col>
 
 
                             <v-col cols="12" md="6">
                                 <p class="primary--text body-2 text-uppercase mb-0">DESTINATION COUNTRY</p>
-                                <v-text-field 
+                                <!-- <v-text-field 
                                 outlined 
                                 clearable
                                 v-model="tender.destination"
@@ -181,43 +182,61 @@
                                         <span class="red--text"><strong>* </strong></span>
                                     </template>
 
-                                </v-text-field>
+                                </v-text-field> -->
+                                <v-select
+                                        outlined
+                                        v-model="tender.destination"
+                                        :items="available_countries"
+                                        @change="fetchDestinationRegions(tender.destination)"
+                                        :rules="[v => !!v || 'Destination country is required']"
+                                        required
+                                    >     
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
+
+                                </v-select>
                             </v-col>
                         </v-row>
 
                         <v-row class="px-3" v-if="tender.tender_type == 'Transporting'">
                             <v-col cols="12" md="6">
                                 <p class="primary--text body-2 text-uppercase mb-0">ORIGIN REGION/STATE</p>
-                                <v-text-field 
-                                    outlined 
-                                    clearable
-                                    v-model="tender.origin_region"
-                                    :rules="[v => !!v || 'Origin region/state is required']"
-                                    required
-                                >
+                                 <v-select
+                                        outlined
+                                        v-model="tender.origin_region"
+                                        style="color:#4169E1;"
+                                        :items="origin_regions"
+                                        color="#4169E1"
+                                        clearable
+                                        :rules="[v => !!v || 'Origin region is required']"
+                                        required
+                                    >     
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
 
-                                    <template #label>
-                                        <span class="red--text"><strong>* </strong></span>
-                                    </template>
-
-                                </v-text-field>
+                                </v-select>
                              </v-col>
 
 
                             <v-col cols="12" md="6">
                                 <p class="primary--text body-2 text-uppercase mb-0">DESTINATION REGION/STATE</p>
-                                <v-text-field 
-                                outlined 
-                                clearable
-                                v-model="tender.destination_region"
-                                :rules="[v => !!v || 'Destination region/state is required']"
-                                required
-                                >
-                                    <template #label>
-                                        <span class="red--text"><strong>* </strong></span>
-                                    </template>
+                                <v-select
+                                        outlined
+                                        v-model="tender.destination_region"
+                                        style="color:#4169E1;"
+                                        :items="destination_regions"
+                                        color="#4169E1"
+                                        clearable
+                                        :rules="[v => !!v || 'Destinaton region is required']"
+                                        required
+                                    >     
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
 
-                                </v-text-field>
+                                </v-select>
                             </v-col>
                         </v-row>
 
@@ -1218,6 +1237,7 @@
 
 <script>
 import {mapGetters,mapActions} from 'vuex'
+import {projectMixin} from '@/mixins/mixings.js'
 import Alert from '@/components/Alert.vue'
 import axios from 'axios'
 import PDFDocument from '@/components/PDFDocument'
@@ -1225,6 +1245,8 @@ import DOCDocument from '@/components/DOCDocument'
 
 export default {
     name: "createtender",
+
+    mixins: [projectMixin],
 
     data: ()=>({
 
@@ -1274,6 +1296,11 @@ export default {
         docValue:'',
         docOverlay: false,
         doc:false,
+
+        origin_regions:[],
+        destination_regions:[],
+        countries:[],
+        
 
         otherdocument:[],
         otherdocument1:[],
@@ -1338,6 +1365,18 @@ export default {
 
 
             document.getElementById("otheFiles").click();
+        },
+
+        fetchOriginRegions(origin_country){
+
+          this.origin_regions = this.getRegions(origin_country);
+
+        },
+
+         fetchDestinationRegions(origin_country){
+
+          this.destination_regions = this.getRegions(origin_country);
+                         
         },
 
         removeFile( key ){
@@ -2421,6 +2460,40 @@ export default {
         //this is done because this navigation guard is called before the component is created.           
         //vm.setCustomerDetails();
 
+        let countries = "http://164.68.113.159:2000/api/v1/countries/index";
+
+        axios.get(countries).then((response) => 
+            {
+                               
+                if(response.data.genralErrorCode === 8000){
+
+                    for(let i=0; i< response.data.objects.length; i++)
+                    {
+                        vm.countries.push(response.data.objects[i].name);
+
+                    }
+                    
+                } else if(response.data.genralErrorCode === 8004){
+
+                    vm.alert = false;
+
+                    setTimeout(()=>{
+
+                        vm.setAlert(response.data.message,"error");
+
+                    },1000)
+                }
+
+            }).catch(()=>{
+
+                setTimeout(()=>{
+
+                    vm.setAlert("There is an internal error","error");
+
+                },1000)
+            });
+
+
         let url1 = "http://207.180.215.239:8181/api/v1/customers/fetch?email="+localStorage.client;
 
         axios.get(url1).then((response) => 
@@ -2450,7 +2523,7 @@ export default {
                 },1000)
             });
 
-        
+
 
         if(vm.$route.params.tender_type == "Transporting"){
 
