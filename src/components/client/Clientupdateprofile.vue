@@ -3450,8 +3450,8 @@ export default {
                                     vm.first_name = response.data.objects.first_name;
                                     vm.last_name = response.data.objects.last_name;
                                     vm.country = response.data.objects.country === null?'':response.data.objects.country;
-                                    vm.mobile_number = response.data.objects.office_mobile == null?'':response.data.objects.office_mobile;
-                                    vm.office_mobile = response.data.objects.office_mobile;
+                                    vm.office_mobile = response.data.objects.office_mobile == null?'':response.data.objects.office_mobile;
+                                    vm.mobile_number = response.data.objects.mobile_number;
                                     vm.address = response.data.objects.address;
                                     vm.bank_acount_name = response.data.objects.bank_acount_name;
                                     vm.bank_account_number = response.data.objects.bank_account_number;
