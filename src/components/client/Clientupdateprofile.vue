@@ -1667,6 +1667,8 @@ export default {
     data: ()=>({
         client_types:[],
 
+        customer_types:[],
+
         client_type:'',
 
         client_details: false,
