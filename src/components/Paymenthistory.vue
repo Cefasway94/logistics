@@ -197,7 +197,7 @@
                 v-show="history"
                 color="transparent"
                 flat=""
-                class="mb-4 mx-auto mt-12 pa-1"
+                class="mb-4 mx-auto mt-1 pa-1"
                 max-width="1050" >
 <!-- Header  -->
         <v-card
@@ -248,7 +248,8 @@
         <v-card
                 class="mb-4 px-3"
                 :elevation="hover ? 15 : 3"
-                @click="tender_payment_history(detail.transaction_ID)">
+                >
+                <!-- @click="tender_payment_history(detail.transaction_ID)" -->
                 
           <v-layout row wrap  class=" pl-2 ">
                <v-layout sm11 md11   >       
@@ -309,7 +310,7 @@
                 v-show="nopayments"
                 color="transparent"
                 flat=""
-                class="mb-4 mx-auto mt-12 pa-1"
+                class="mb-4 mx-auto mt-1 pa-1"
                 max-width="1050" >
 <!-- Header  -->
         <v-card

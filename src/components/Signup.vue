@@ -132,10 +132,10 @@
                       </v-flex>
 
                      <v-flex row class="pl-9 " >
-                      <v-flex xs3 sm3 md3 lg3  >
+                      <v-flex xs5 sm5 md5 lg5  >
                       <p class="grey--text mb-0"  > Company Name :  </p>
                       </v-flex>
-                      <v-flex xs9 sm9 md9 >
+                      <v-flex xs6 sm6 md6 >
                       <p class=" text--text" >
                        {{name}}
                       </p>
@@ -252,10 +252,10 @@
                       </v-flex>
 
                      <v-flex row class="pl-9 " >
-                      <v-flex xs3 sm3 md3 lg3  >
+                      <v-flex xs5 sm5 md5 lg5  >
                       <p class="grey--text mb-0"  >Company Name :  </p>
                       </v-flex>
-                      <v-flex xs9 sm9 md9 >
+                      <v-flex xs6 sm6 md6 >
                       <p class=" text--text" >
                        {{name}}
                       </p>
@@ -708,7 +708,8 @@
                       <p class="font-weight-regular subtitle-2 grey--text mb-0" >SELECT COUNTRY</p>
                     <v-hover>
                     <template v-slot="{ hover }">
-                    <v-card
+
+                     <v-card
                     outlined
                     color="#f5faff" 
                     height="40" 
@@ -716,15 +717,29 @@
                     class="card mt-1"
                     style="border-color:#babdc2;">
                     
-                      <country-select 
+                     <!-- <country-select 
                       v-model="country" 
                       :country="country" 
                       topCountry="Tanzania, United Republic of" 
                       height="40"
                       :countryName="true"
                       :removePlaceholder="true"
-                      class="selectcountry"/>
-                    </v-card>
+                      class="selectcountry"/> -->
+
+                      <v-select
+                        outlined
+                        dense=""
+                        v-model="country"
+                        :elevation="hover ? 6 : 2"
+                        :items="available_countries"
+                        @change="fetchRegions(country)"
+                        :rules="[v => !!v || 'Country is required']"
+                        required
+                    >     
+                </v-select>
+
+                    </v-card> 
+
                     </template>
                     </v-hover>
                     </v-flex>
@@ -954,11 +969,15 @@
 </template>
 
 <script>
+
+import {projectMixin} from '@/mixins/mixings.js'
 import {mapGetters} from 'vuex';
 import {mapActions} from 'vuex';
 /* eslint-disable no-console */
 
 export default {
+
+  mixins: [projectMixin],
   
   data (){
       return{
@@ -1046,9 +1065,18 @@ methods:{
     ]),
 
     cs(){
+
       console.log(this.country);
       
     },
+
+    fetchRegions(country){
+
+            this.regions = this.getRegions(country)
+
+            this.clear_alert()
+
+        },
 
     confirm(){
             
@@ -1448,7 +1476,7 @@ methods:{
       }else if(this.country == '' || this.country === null ){
 
         console.log('how7');
-         //this.emptyfilds= true;
+         this.emptyfilds= true;
          return false
       }
 

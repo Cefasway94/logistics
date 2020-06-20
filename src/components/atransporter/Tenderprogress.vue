@@ -185,7 +185,7 @@
                 <v-flex v-if="documents == true">
                 <v-row class="mt-5" v-if="otherFiles.length > 0">
 
-                <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
+                <v-col cols=12><p class="primary--text body-1 mb-0"> OTHER DOCUMENTS</p></v-col>
 
                 <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
 
@@ -225,38 +225,48 @@
            </v-card>
           </v-flex>
 
-                <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2 ml-2" v-if="documents == true">
+               <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2 ml-2" v-if="documents == true">
                     <v-card color="#4169E1" width="" class="py-4 px-5">
                         <v-flex row >
                             <v-flex column class="px-3">
-                            <p class="white--text body-1 font-weight-bold"> ABC FURNITURE 3</p>
+                            <p v-if="LOAD_CUSTOMER.objects.first_name !== null || LOAD_CUSTOMER.objects.first_name !== ''" class="white--text body-1 font-weight-bold">
+                                 {{LOAD_CUSTOMER.objects.first_name}} {{LOAD_CUSTOMER.objects.last_name}}
+                            </p>
+                            <p v-else class="white--text body-1 font-weight-bold">
+                                 {{LOAD_CUSTOMER.objects.company_name}} 
+                            </p>
                             <v-flex column>
                             <v-flex row class="px-3 ">
                             <v-icon class="mb-3 white--text" >mail_outline</v-icon>
-                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
+                            <p class="white--text body-2 pt-1 pl-2 mb-0 font-weight-bold">EMAIL</p>
                             </v-flex>
                             <v-flex class="pl-8">
-                            <p class="white--text ">Lorebagiazadengudsfm@gamil.com</p>
+                            <p class="white--text ">{{LOAD_CUSTOMER.objects.email}}</p>
                             </v-flex>
                             </v-flex>
 
                             <v-flex column>
                             <v-flex row class="px-3 ">
                             <v-icon class="mb-3 white--text"  >room</v-icon>
-                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
+                            <p class="white--text body-2 pt-1 pl-2 mb-0 font-weight-bold">LOCATION</p>
                             </v-flex>
                             <v-flex class="pl-8">
-                            <p class="white--text ">Street location, st</p>
+                            <p class="white--text ">{{LOAD_CUSTOMER.objects.country}}, {{LOAD_CUSTOMER.objects.city}}</p>
                             </v-flex>
                             </v-flex>
 
                             <v-flex column>
                             <v-flex row class="px-3 ">
                             <v-icon class="mb-3 white--text" >local_phone</v-icon>
-                            <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
+                            <p class="white--text body-2 pt-1 pl-2 mb-0 font-weight-bold">Phone number</p>
                             </v-flex>
                             <v-flex class="pl-8">
-                            <p class="white--text ">Lorem@gamil.com</p>
+                            <p v-if="LOAD_CUSTOMER.objects.mobile_number !== '' || LOAD_CUSTOMER.objects.mobile_number !== null " class="white--text mb-1">
+                                {{LOAD_CUSTOMER.objects.mobile_number}}
+                            </p>
+                            <p v-if="LOAD_CUSTOMER.objects.office_mobile !== '' || LOAD_CUSTOMER.objects.office_mobile !== null " class="white--text ">
+                                {{LOAD_CUSTOMER.objects.office_mobile}}
+                            </p>
                             </v-flex>
                             </v-flex>
                             </v-flex>
@@ -996,12 +1006,21 @@ export default {
                 } else {
                         vm.customer_offer_amount;
                 }
+          
+        // get customer datails
+        vm.GET_CUSTOMER_BYID(vm.LOAD_TENDER.customer_id).then(()=>{
+
+            console.log(vm.LOAD_CUSTOMER.objects);              
+
+        })
 
           vm.T_GET_AGENT(localStorage.client).then(()=>{
 
               console.log(vm.LOAD_AGENT)
 
-            vm.T_GET_PAYMENT_PROGRESS(to.params.id).then(()=>{
+            let tendertype = 'Transporting'
+
+            vm.T_GET_PAYMENT_PROGRESS( {payload: to.params.id, tendertype: tendertype}).then(()=>{
                 
                 console.log(vm.LOAD_PAYMENT_PROGRESS.objects)
 
@@ -1295,7 +1314,8 @@ export default {
       'LOAD_PROGRESS_STAGES',
       'LOAD_PROGRESS_FEEDBACK',
       'LOAD_PAYMENT_PROGRESS',
-      'LOAD_TIMELINE_STAGES'
+      'LOAD_TIMELINE_STAGES',
+      'LOAD_CUSTOMER'
       ])
   },
 components:{PDFDocument},
@@ -1307,7 +1327,8 @@ methods :{
       'T_GET_PROGRESS_STAGES',
       'T_UPGRADE_PROGRESS',
       'T_GET_PAYMENT_PROGRESS',
-      'T_GET_TIMELINE_STAGES'
+      'T_GET_TIMELINE_STAGES',
+      'GET_CUSTOMER_BYID'
     ]),
 
     previewPdf(url){

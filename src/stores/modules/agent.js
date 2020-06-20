@@ -11,6 +11,7 @@ export default {
         post_bid:[],
         logins:[],
         agent:[],
+        customer_details:[],
         profile:[],
         payment_terms:[],
         accepted_bid:[],
@@ -81,6 +82,12 @@ getters:{
         LOAD_AGENT: state=>{
             const agent = state.agent;
             return agent
+        },
+
+// call customer by id ================================>>>>
+        LOAD_CUSTOMER: state =>{
+            const customer_details = state.customer_details;
+            return customer_details
         },
 
 // called agent payment terms =====================>>>>>>>>
@@ -202,6 +209,11 @@ mutations: {
             state.agent = payload;
             console.log('here agent');
             
+        },
+
+// call get customer by id ===============================>>>
+        SET_CUSTOMER: (state, payload) =>{
+            state.customer_details = payload;
         },
 
 // called on  post payment terms =========================>>>
@@ -605,7 +617,7 @@ actions: {
 },
 
 //Agent get progress details  ---------------------------------------------------------------------------         
-    UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_id,expected_date,completed_date }) => {
+    UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status, tender_id, progress_id, expected_date, completed_date }) => {
         return new Promise((resolve, reject) => {
             const config = {
                 headers: {
@@ -652,9 +664,11 @@ actions: {
 },
 
 //Agent get progress details  ----------------------------------------     
-GET_PAYMENT_PROGRESS: async ({commit},payload) => {
+GET_PAYMENT_PROGRESS: async ({commit},payload) => {    
 
-    const url= 'http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/'+payload;
+    //console.log(payload);
+
+    const url= 'http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/'+payload.payload+'/'+payload.tendertype;
     await axios.get(url).then((res)=>{
     
             // eslint-disable-next-line no-console
@@ -670,7 +684,18 @@ GET_PAYMENT_PROGRESS: async ({commit},payload) => {
                     
 },
 
-//Transporter get Payment history  ---------------------------------------------------------------------------         
+/**
+ * http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/{oId}
+12:55
+http://207.180.215.239:8002/api/customerpayment/customerpayment_by_customerID/{cId}
+12:56
+http://207.180.215.239:8002/api/customerpayment/customerpayment_by_agentID/{aId}
+12:56
+http://207.180.215.239:8002/api/customerpayment/customerpayment_by_transporterID/{tId}
+http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/
+*/
+
+//Transporter get Payment history  --------http://207.180.215.239:8002/api/customerpayment/customerpayment_by_agentID/-------------------------------------         
 GET_PAYMENT_HISTORY: async ({commit},payload) => {
     const url= 'http://207.180.215.239:8002/api/customerpayment/customerpayment_by_agentID/'+payload;
     await axios.get(url).then((res)=>{
@@ -1039,7 +1064,7 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
 
 
 // Transporter update progress ------------------------------------------------------->>
-                T_UPGRADE_PROGRESS: ({ commit }, { agent_id, progress_status, tender_id,progress_id, expected_date }) => {
+                T_UPGRADE_PROGRESS: ({ commit }, { agent_id, progress_status, tender_id,progress_id, expected_date, completed_date }) => {
                     return new Promise((resolve, reject) => {
                         const config = {
                             headers: {
@@ -1053,7 +1078,8 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
                             progress_status,
                             tender_id,
                             progress_id,
-                            expected_date
+                            expected_date,
+                            completed_date
                         },
                         config
                         )
@@ -1088,7 +1114,7 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
 
 //Transporter get progress details  ---------------------------------------------------------------------------         
                 T_GET_PAYMENT_PROGRESS: async ({commit},payload) => {
-                    const url= 'http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/'+payload;
+                    const url= 'http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/'+payload.payload+'/'+payload.tendertype;
                     await axios.get(url).then((res)=>{
                         // eslint-disable-next-line no-console
                             console.log(res);
@@ -1103,7 +1129,7 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
                                     
 },
 
-//Transporter get Payment history  ---------------------------------------------------------------------------         
+//Transporter get Payment history  -----------------------------http://207.180.215.239:8002/api/customerpayment/customerpayment_by_transporterID/-----------------------         
         T_GET_PAYMENT_HISTORY: async ({commit},payload) => {
             const url= 'http://207.180.215.239:8002/api/customerpayment/customerpayment_by_transporterID/'+payload;
             await axios.get(url).then((res)=>{
@@ -1120,7 +1146,7 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
                             
         },
 
-// get customer details =================================================>>>>>
+// get customer details by email =================================================>>>>>
         GET_CUSTOMER: async ({commit},payload) => {
             const url= 'http://207.180.215.239:8181/api/v1/customers/fetch/?email='+payload
             await axios.get(url).then((res)=>{
@@ -1131,6 +1157,21 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
                 //eslint-disable-next-line no-console
                 console.log(error);
                 commit('SET_AGENT', error.response.status);
+            }); 
+                            
+        },
+
+// get customer details by email =================================================>>>>>
+        GET_CUSTOMER_BYID: async ({commit},payload) => {
+            const url= 'http://207.180.215.239:8181/api/v1/customers/'+payload
+            await axios.get(url).then((res)=>{
+                // eslint-disable-next-line no-console
+                console.log(res.data);
+                commit('SET_CUSTOMER', res.data);
+            }).catch((error)=>{
+                //eslint-disable-next-line no-console
+                console.log(error);
+                commit('SET_CUSTOMER', error.response.status);
             }); 
                             
         },
