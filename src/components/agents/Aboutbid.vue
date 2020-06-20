@@ -28,7 +28,8 @@
                 <v-flex class="px-3" >
                 <v-row class="pl-2 mb-1">
                 <h1 class=" font-weight-regular headline ">{{LOAD_TENDER.cargo_details}}</h1>
-                <v-chip color="mainorange" small class="white--text ml-7 mt-1">{{LOAD_DASHBOARD.objects.bid_status}}</v-chip>
+                <v-chip v-if="LOAD_DASHBOARD.objects.bid_status == 'Not-awarded' " color="mainorange" small class="white--text ml-7 mt-1">{{LOAD_DASHBOARD.objects.bid_status}}</v-chip>
+                <v-chip v-else :color="LOAD_DASHBOARD.objects.bid_status" small class="white--text ml-7 mt-1">{{LOAD_DASHBOARD.objects.bid_status}}</v-chip>
                 </v-row>
                 <p class="grey--text mb-0">{{LOAD_TENDER.description}}</p>
                 </v-flex>
@@ -76,14 +77,21 @@
                             <p class="body-1">{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
                             </v-flex>
 
-                            
+                        </v-flex>
 
+                        <v-flex row >
+
+                        <v-flex column class="mt-5 pr-4">
+                            <p class="primary--text body-1  mb-2"> BILL OF LADING </p>
+                            <p class="body-1">{{LOAD_TENDER.bill_of_lading_number}}</p>
                         </v-flex>
 
                         <v-flex column class="mt-7 pr-4">
                             <p class="primary--text body-1 mb-0"> TERMS AND CONDITIONS </p>
                             <p class="body-1">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
+
+                         </v-flex>
 
                         <!-- <v-flex row class="mt-10 mb-4" >
                             <v-flex column class="pl-3">

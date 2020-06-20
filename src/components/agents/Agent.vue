@@ -267,6 +267,12 @@
                     
                     </v-card>
 
+                    <v-row row class="mb-1 "> 
+                            <v-flex xsm12 sm12 md12 lg12 class="px-3 ">
+                                <p  class=" title mb-0 ">{{tender.bid_amount}} {{tender.currency}}</p>
+                            </v-flex>
+                    </v-row>
+
                     <v-row row class="mb-1 ">
 
                         <v-flex xsm12 sm12 md6 lg4 class="px-3">
@@ -274,7 +280,7 @@
                         </v-flex>
                         
 
-                    <v-flex row xsm12 sm12 md12 lg8 class="px-1 pt-2" >
+                    <v-flex row xsm12 sm12 md12 lg8 class="px-1 pt-1" >
 
                         <v-flex xsm4 sm4 md4 class="px-1 pb-1">
                             <center>

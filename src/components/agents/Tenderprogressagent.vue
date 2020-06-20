@@ -23,7 +23,7 @@
                 </div>
             </v-overlay>
 
-            <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
+            <v-card flat width="1200" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                 <v-flex>
                 <v-row class="pl-2 mb-1">
@@ -37,14 +37,14 @@
                 </v-flex>
             </v-card>
 
-            <v-card flat width="900" class="mx-auto mb-10 px-5" color="#F5FAFF">
-                <v-flex row>
-                <v-flex sm12 md12 lg12 xlg12 >
+            <v-card flat width="1200"  class="mx-auto mb-10 px-5" color="#F5FAFF">
+                <v-flex row >
+                <v-flex sm12 md8 lg8 xlg8 >
                     <v-card width="" class="pt-6 pb-3 pl-8">
                         <v-flex column>
                         <v-flex row >
 
-                             <v-flex column >
+                            <v-flex column >
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
                             <p class="body-1">{{LOAD_TENDER.cargo_size}}</p>
                             </v-flex>
@@ -61,15 +61,25 @@
 
                         </v-flex>
 
+                        <v-flex row >
+
+                        <v-flex column class="mt-5 pr-4">
+                            <p class="primary--text body-1  mb-2"> BILL OF LADING </p>
+                            <p class="body-1">{{LOAD_TENDER.bill_of_lading_number}}</p>
+                        </v-flex>
+
                         <v-flex column class="mt-5 pr-4">
                             <p class="primary--text body-1 mb-0"> TERMS AND CONDITIONS </p>
                             <p class="body-1 ">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
 
+                        </v-flex>
+
                         
 
                         <v-flex row class="mt-7 mb-4" >
-                            <v-flex column class="pl-3">
+
+                            <v-flex column class="pl-3" v-if="documents == true">
                             <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
                             <div 
@@ -99,7 +109,7 @@
                         </v-card>
                             </v-flex>
 
-                            <v-flex column >
+                            <v-flex column  v-if="documents == true">
                             <p class="primary--text body-1 mb-2"> LETTER </p>
                             <v-card color="lblue" flat width="150" height="130" outlined>
                             <div 
@@ -161,8 +171,9 @@
                         </v-flex>
                         </v-flex>
 
-                        <!-- display other files -->
-                        <v-row class="mt-5" v-if="otherFiles.length > 0">
+                <!-- display other files -->
+                <v-flex v-if="documents == true">
+                <v-row class="mt-5" v-if="otherFiles.length > 0">
 
                 <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
 
@@ -200,10 +211,11 @@
                     </v-card>
                 </v-col>
             </v-row>
-                    </v-card>
-                </v-flex>
+            </v-flex>
+           </v-card>
+          </v-flex>
 
-                <!-- <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2">
+                <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2 ml-2" v-if="documents == true">
                     <v-card color="#4169E1" width="" class="py-4 px-5">
                         <v-flex row >
                             <v-flex column class="px-3">
@@ -214,7 +226,7 @@
                             <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
                             </v-flex>
                             <v-flex class="pl-8">
-                            <p class="white--text ">Lorem@gamil.com</p>
+                            <p class="white--text ">Lorebagiazadengudsfm@gamil.com</p>
                             </v-flex>
                             </v-flex>
 
@@ -242,7 +254,7 @@
                         </v-flex>
 
                     </v-card>
-                </v-flex> -->
+                </v-flex>
                 
                 </v-flex>
             </v-card>
@@ -270,19 +282,20 @@
                 <v-card row width="500" class=" mx-auto mt-5 mb-5" color="#F5FAFF">
                 <v-alert
                 :value="wait"
-                text
-                outlined
-                color="orange"
+                elevation="7"
+                prominent
+                type="warning"
                 border="left"
                 row
                 >
                 <v-flex row class="pl-4">
                 <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
-                <v-icon large color="orange" class="">notification_important</v-icon>    
+                <!-- <v-icon large color="orange" class="">notification_important</v-icon>     -->
                 </v-flex>
                 <v-flex xms11 sm11 md11 lg11>
-                <p class="text--text title mb-0">
-                Waiting on payment for tender to start <v-chip v-show="wait == true" class="green white--text">Waiting for payment Verification</v-chip>
+                <p class="white--text body-1 mb-3">
+                Waiting on payment for tender to start 
+                <v-chip v-show="wait == true"  class="green mt-1 white--text">Waiting for payment Verification</v-chip>
                 </p>
                 </v-flex>
                 </v-flex>
@@ -449,34 +462,36 @@
                                 <!-- state card-->
                                 <template v-if="stage1 === 'A'">
                                    <v-card  flat disabled >
-                                   <v-icon :disabled="true" size="50">archive</v-icon><br>
+                                   <v-icon :disabled="true" size="50">directions_boat</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Port processing</p>
-                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[0] && LOAD_PROGRESS_STAGES.objects[0].expected_date}}</p>
+                                   <p class="mt-1">Date : {{expected_date1}}</p>
                                    </v-card>
                                 </template>
+
                                 <!-- state card -->
                                 <template v-else-if="stage1 === 'B'">
                                    <v-card flat >
-                                   <v-icon color="primary" :disabled="false" size="50">archive</v-icon><br>
+                                   <v-icon color="primary" :disabled="false" size="50">directions_boat</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Port processing</p>
-                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[0] && LOAD_PROGRESS_STAGES.objects[0].expected_date}}</p>
+                                   <p class="mt-1">Date : {{expected_date1}}</p>
                                    </v-card>
                                 </template>
+
                                 <!-- state card -->
                                 <template v-else-if="stage1 === 'C'">
                                    <v-card flat disabled  >
-                                   <v-icon color="primary" :disabled="true" size="50">archive</v-icon><br>
+                                   <v-icon color="primary" :disabled="true" size="50">directions_boat</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Port processed</p>
-                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[0] && LOAD_PROGRESS_STAGES.objects[0].expected_date}}</p>
+                                   <p class="mt-1">Date : {{expected_date1}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -489,37 +504,40 @@
                                </li>
 
                                 <li style="" class="steps">
+
                             <!-- state card-->
                                 <template v-if="stage2 === 'A'">
                                    <v-card  flat disabled >
-                                   <v-icon :disabled="true" size="50">local_shipping</v-icon><br>
+                                   <v-icon :disabled="true" size="50">account_balance</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. TRA</p>
-                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[1] && LOAD_PROGRESS_STAGES.objects[1].expected_date}}</p>
+                                   <p class="mt-1">Date : {{expected_date2}}</p>
                                    </v-card>
                                 </template>
+
                                 <!-- state card -->
                                 <template v-else-if="stage2 === 'B'">
                                    <v-card flat >
-                                   <v-icon color="primary" :disabled="false" size="50">local_shipping</v-icon><br>
+                                   <v-icon color="primary" :disabled="false" size="50">account_balance</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. TRA</p>
-                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[1] && LOAD_PROGRESS_STAGES.objects[1].expected_date}}</p>
+                                   <p class="mt-1">Date : {{expected_date2}}</p>
                                    </v-card>
                                 </template>
+
                                 <!-- state card -->
                                 <template v-else-if="stage2 === 'C'">
                                    <v-card flat disabled  >
-                                   <v-icon color="primary" :disabled="true" size="50">local_shipping</v-icon><br>
+                                   <v-icon color="primary" :disabled="true" size="50">account_balance</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. TRA complited</p>
-                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[1] && LOAD_PROGRESS_STAGES.objects[1].expected_date}}</p>
+                                   <p class="mt-1">Date : {{expected_date2}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -535,34 +553,34 @@
                             <!-- state card-->
                                 <template v-if="stage3 === 'A'">
                                    <v-card  flat disabled >
-                                   <v-icon :disabled="true" size="50">unarchive</v-icon><br>
+                                   <v-icon :disabled="true" size="50">assignment</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Other processes</p>
-                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[2] && LOAD_PROGRESS_STAGES.objects[2].expected_date}}</p>
+                                   <p class="mt-1">Date : {{expected_date3}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
                                 <template v-else-if="stage3 === 'B'">
                                    <v-card flat >
-                                   <v-icon color="primary" :disabled="false" size="50">unarchive</v-icon><br>
+                                   <v-icon color="primary" :disabled="false" size="50">assignment</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Other processes</p>
-                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[2] && LOAD_PROGRESS_STAGES.objects[2].expected_date}}</p>
+                                   <p class="mt-1">Date : {{expected_date3}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
                                 <template v-else-if="stage3 === 'C'">
                                    <v-card flat disabled  >
-                                   <v-icon color="primary" :disabled="true" size="50">unarchive</v-icon><br>
+                                   <v-icon color="primary" :disabled="true" size="50">assignment</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Other processes</p>
-                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[2] && LOAD_PROGRESS_STAGES.objects[2].expected_date}}</p>
+                                   <p class="mt-1">Date : {{expected_date3}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -583,7 +601,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">4. Completion</p>
-                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[3] && LOAD_PROGRESS_STAGES.objects[3].expected_date}}</p>
+                                   <p class="mt-1">Date : {{expected_date4}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -594,7 +612,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">4. Completion</p>
-                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[3] && LOAD_PROGRESS_STAGES.objects[3].expected_date}}</p>
+                                   <p class="mt-1">Date : {{expected_date4}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -605,7 +623,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">4. Cargo cleared</p>
-                                   <p class="mt-1">Date : {{LOAD_PROGRESS_STAGES.objects[3] && LOAD_PROGRESS_STAGES.objects[3].expected_date}}</p>
+                                   <p class="mt-1">Date : {{expected_date4}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -857,6 +875,12 @@ export default {
             overlay:false,
             large_preview_url:'',
 
+            //----date
+            expected_date1:'',
+            expected_date2:'',
+            expected_date3:'',
+            expected_date4:'',
+
             //---- stage 1 ---
             stage1:'A',
             //---- stage 2 ---
@@ -893,6 +917,7 @@ export default {
             loading:false,
             show:true,
             wait:false, 
+            documents:false,
             chip1:'not received',
             comment:'',
             extension:false,
@@ -978,7 +1003,7 @@ export default {
                     console.log(vm.LOAD_PAYMENT_PROGRESS);
                     vm.wait = true
                     vm.show = false
-                   vm.value = 0
+                    vm.value = 0
                     //console.log(data.message);
 
                 }else{
@@ -986,9 +1011,15 @@ export default {
                     console.log(vm.LOAD_PAYMENT_PROGRESS.objects.verify);
 
                     if (vm.LOAD_PAYMENT_PROGRESS.objects.verify == null){
+
                         vm.wait = true
                         vm.show = false
+                        
+
                     }else{
+
+                        vm.documents = true
+                        
                         if(vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited >= 100)
                         vm.value = 100;
                         else
@@ -1019,27 +1050,27 @@ export default {
                     
               vm.GET_PROGRESS_STAGES(to.params.id).then(()=>{
 
-                  console.log(vm.LOAD_PROGRESS_STAGES)
+                  console.log(vm.LOAD_PROGRESS_STAGES.objects[1].clearing_progress_id)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     for (let index = 0; index < vm.LOAD_PROGRESS_STAGES.objects.length; index++) {
                                 
 
   // stage One --------------------------------
-                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
+                if (vm.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ) {
 
-                     vm.date0 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date         
+                     vm.expected_date1 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date         
                     console.log('Stage 1 In progress');
                     vm.stage1 = 'B'
                     //vm.stage2 = 'A'
                     //vm.stage3 = 'A'
                     //vm.stage4 = 'A'
 
-                } else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id &&
-                             vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ) {
+                } else if( vm.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ) {
                     
-                    vm.date0 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date 
+                    vm.expected_date1 = vm.LOAD_PROGRESS_STAGES.objects[index].completed_date 
                     console.log('Stage 1.1 completed');
                     vm.stage1 = 'C'
                     //vm.stage2 = 'A'
@@ -1050,20 +1081,20 @@ export default {
 
     // stage Two ----------------------------------
 
-                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id && 
+                if (vm.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
-                     vm.date1 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                     vm.expected_date2 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 2 In progress');
                     //vm.stage1 = 'C'
                     vm.stage2 = 'B'
                     //vm.stage3 = 'A'
                     //vm.stage4 = 'A'
 
-                    }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id &&
-                             vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ){
                      
-                      vm.date1 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                      vm.expected_date2 = vm.LOAD_PROGRESS_STAGES.objects[index].completed_date
                      console.log('Stage 2.2 completed');
                      //vm.stage1 = 'C'
                      vm.stage2 = 'C'
@@ -1074,20 +1105,20 @@ export default {
 
     // stage Three -----------------------------------
 
-                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id && 
+                if (vm.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
-                    vm.date2 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                    vm.expected_date3 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 3 In progress');
                     //vm.stage1 = 'C'
                     //vm.stage2 = 'C'
                     vm.stage3 = 'B'
                     //vm.stage4 = 'A'
 
-                    }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id &&
-                             vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ){
                      
-                     vm.date2 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                     vm.expected_date3 = vm.LOAD_PROGRESS_STAGES.objects[index].completed_date
                      console.log('Stage 3.3 completed');
                      //vm.stage1 = 'C'
                      //vm.stage2 = 'C'
@@ -1098,20 +1129,20 @@ export default {
 
     // Stage Four -------------------------------------
 
-                if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id && 
+                if (vm.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
-                     vm.date3 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                     vm.expected_date4 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 4 In progress');
                     //vm.stage1 = 'C'
                     //vm.stage2 = 'C'
                     //vm.stage3 = 'C'
                     vm.stage4 = 'B'
 
-                    }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id &&
-                             vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id &&
+                             vm.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ){
                      
-                      vm.date3 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                      vm.expected_date4 = vm.LOAD_PROGRESS_STAGES.objects[index].completed_date
                      console.log('Stage 4.4 completed');
                      //vm.stage1 = 'C'
                      //vm.stage2 = 'C'
@@ -1120,14 +1151,14 @@ export default {
 
 
                     }
-                                if ((this.stage1 == 'c' && this.stage2 == 'c') && (this.stage3 == 'c' && this.stage4=='c') ) {
-                                    this.complete_tender = false
+                                if ((vm.stage1 == 'c' && vm.stage2 == 'c') && (vm.stage3 == 'c' && vm.stage4=='c') ) {
+                                    vm.complete_tender = false
                                 } else {
-                                    this.complete_tender = true
+                                    vm.complete_tender = true
                                 }
 
                                 if ((vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === vm.state) &&
-                                (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.progress_id)  ) {
+                                (vm.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === vm.progress_id)  ) {
                                     
                                     console.log('sulition');
                                     
@@ -1341,12 +1372,13 @@ methods :{
             
 
            this.$store.dispatch('UPGRADE_PROGRESS',{
-
-                  agent_id : this.LOAD_AGENT.objects.agent_id,
-                  progress_status : this.feedstate,
-                  tender_id : this.LOAD_TENDER.id,
-                  progress_id : this.progress_id,
-                  expected_date : this.date, 
+                                   
+                    agent_id : this.LOAD_AGENT.objects.agent_id,
+                    progress_status : this.feedstate,
+                    tender_id : this.LOAD_TENDER.id,
+                    progress_id : this.progress_id,
+                    expected_date : this.date, 
+                    completed_date : this.date, 
 
                 }).then(()=>{
 
@@ -1375,28 +1407,30 @@ methods :{
                                  }
                                 
 
-                        if ((this.LOAD_PROGRESS_STAGES.objects[index].InProgress === this.state) &&
-                                (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.progress_id)  ) {
+                        // if ((this.LOAD_PROGRESS_STAGES.objects[index].InProgress === this.state) &&
+                        //         (this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.progress_id)  ) {
                                     
-                                    console.log('sulition');
+                        //             console.log('sulition');
                                     
-                                    console.log(this.LOAD_PROGRESS_STAGES.objects);
-                                }
+                        //             console.log(this.LOAD_PROGRESS_STAGES.objects);
+                        //         }
 
 // stage One --------------------------------
 
-                if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id && 
+                if (this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id && 
                          this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ) {
-
+                    
+                     this.expected_date1 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 1 In progress');
                     this.stage1 = 'B'
                     // this.stage2 = 'A'
                     // this.stage3 = 'A'
                     // this.stage4 = 'A'
 
-                } else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
-                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ) {
+                } else  if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ) {
                     
+                     this.expected_date1 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 1 completed');
                     this.stage1 = 'C'
                     // this.stage2 = 'A'
@@ -1407,18 +1441,20 @@ methods :{
 
 // stage Two ----------------------------------
 
-                if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id && 
+                if (this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id && 
                          this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
+                    this.expected_date2 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 1 In progress');
                     //this.stage1 = 'C'
                     this.stage2 = 'B'
                     //this.stage3 = 'A'
                     //this.stage4 = 'A'
 
-                    }else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id &&
-                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ){
                     
+                    this.expected_date2 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                      console.log('Stage 1 completed');
                      //this.stage1 = 'C'
                      this.stage2 = 'C'
@@ -1429,18 +1465,20 @@ methods :{
 
 // stage Three -----------------------------------
 
-                if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id && 
+                if (this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id && 
                          this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
+                    this.expected_date3 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 1 In progress');
                     //this.stage1 = 'C'
                     //this.stage2 = 'C'
                     this.stage3 = 'B'
                     //this.stage4 = 'A'
 
-                    }else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id &&
-                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ){
                     
+                    this.expected_date3 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                      console.log('Stage 1 completed');
                      //this.stage1 = 'C'
                      //this.stage2 = 'C'
@@ -1451,18 +1489,20 @@ methods :{
 
 // Stage Four -------------------------------------
 
-                if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id && 
+                if (this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id && 
                          this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
+                    this.expected_date4 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 1 In progress');
                     //this.stage1 = 'C'
                     //this.stage2 = 'C'
                     //this.stage3 = 'C'
                     this.stage4 = 'B'
 
-                    }else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id &&
-                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                    }else if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ){
                     
+                    this.expected_date4 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                      console.log('Stage 1 completed');
                      //this.stage1 = 'C'
                      //this.stage2 = 'C'

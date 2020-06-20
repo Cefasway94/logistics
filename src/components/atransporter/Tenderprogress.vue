@@ -1,271 +1,242 @@
 <template>
     <v-container id="scrolling-techniques" class=" mt-12 px-5">
-        <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
+            <PDFDocument v-bind="{url,pdfOverlay}" @clicked="closePdfViewer" v-if="pdf"/>
             <v-overlay :value="overlay">
                 <div class="large-preview">
-                    
-                    <v-row justify= "center">
-                        <v-col cols=12>
-                            <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
-                        </v-col>
+                        
+                        <v-row justify= "center">
+                            <v-col cols=12>
+                                <img  id="large_thumbnail" width="500px" :src="large_preview_url" height="500px">
+                            </v-col>
 
-                        <v-col class="mt-0" offset="4">
-                            <v-btn
-                                
-                                color="primary"
-                                @click="overlay = false"
-                            >
-                                <v-icon large class="font-weight-bold">mdi-close</v-icon>
-                            </v-btn>
-                        </v-col>
-                    </v-row>
-                    
+                            <v-col class="mt-0" offset="4">
+                                <v-btn
+                                    large
+                                    color="primary white--text"
+                                    @click="overlay = false"
+                                >
+                                    <v-icon large class="font-weight-bold">mdi-close</v-icon>
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+                        
                 </div>
             </v-overlay>
 
-            <v-card flat width="900" class="mt-12 mx-auto mb-5" color="#F5FAFF">
+            <v-card flat width="1200" class="mt-12 mx-auto mb-5" color="#F5FAFF">
                 <v-flex row class="px-3 ">
                 <v-flex>
                 <v-row class="pl-2 mb-1">
                 <h1 class=" font-weight-regular headline ">{{LOAD_TENDER.cargo_details}}</h1>
-                <v-chip color="green" small class="white--text ml-7 mt-1">Inprogress</v-chip>
+                <v-chip color="onProgress" small class="white--text ml-7 mt-1">onProgress</v-chip>
                 </v-row>
                 <p class="grey--text">{{LOAD_TENDER.description}}</p>
                 </v-flex>
                 <v-spacer></v-spacer>
-                <!-- <h2 class="primary--text" style="colo:#4169E1;">- - -  {{LOAD_TENDER.currency}}</h2> -->
+                <!-- <h2 style="colo:#4169E1;">--- {{LOAD_TENDER.currency}}</h2> -->
                 </v-flex>
             </v-card>
 
-            <v-card flat width="900" class="mx-auto mb-10 px-5" color="#F5FAFF">
-                <v-flex row>
-                <v-flex sm12 md12 lg12 xlg12 >
+            <v-card flat width="1200"  class="mx-auto mb-10 px-5" color="#F5FAFF">
+                <v-flex row >
+                <v-flex sm12 md8 lg8 xlg8 >
                     <v-card width="" class="pt-6 pb-3 pl-8">
                         <v-flex column>
                         <v-flex row >
-                            <v-flex column class="pl-3">
-                            <p class="primary--text body-1 mb-2"> DESTINATION </p>
-                            <p class="body-1">{{LOAD_TENDER.destination}}</p>
-                            </v-flex>
+
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> ORIGIN </p>
                             <p class="body-1">{{LOAD_TENDER.origin}}</p>
                             </v-flex>
+
+                            <v-flex column class="pl-3">
+                            <p class="primary--text body-1 mb-2"> DESTINATION </p>
+                            <p class="body-1">{{LOAD_TENDER.destination}}</p>
+                            </v-flex>
+
                             <v-flex column >
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
                             <p class="body-1">{{LOAD_TENDER.cargo_size}}</p>
                             </v-flex>
+
+                            <v-flex column >
+                            <p class="primary--text body-1 mb-2"> AMOUNT </p>
+                            <p class="body-1">{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
+                            </v-flex>
+
                         </v-flex>
 
-                        <v-flex row>
-                        
-                        <v-flex column class="mt-7 pl-3 pr-4">
+                        <v-flex row >
+
+                        <v-flex column class="mt-5 pr-4">
                             <p class="primary--text body-1  mb-2"> BILL OF LADING </p>
                             <p class="body-1">{{LOAD_TENDER.bill_of_lading_number}}</p>
                         </v-flex>
 
-                        <v-flex column class="pl-3 mt-5 pr-4">
-                            <p class="primary--text body-1 mb-0"> TERMS AND CONDITIIONS </p>
+                        <v-flex column class="mt-5 pr-4">
+                            <p class="primary--text body-1 mb-0"> TERMS AND CONDITIONS </p>
                             <p class="body-1 ">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
 
-                        <v-flex column class="mt-5 ">
-                            <p class="primary--text body-1 mb-2"> AMOUNT </p>
-                            <p class="body-1">{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
-                        </v-flex>
-
-
-                        <v-flex column class=" mt-5 pl-3">
-                            <p class="primary--text body-1 mb-2" > DELIVERY TIMELINE </p>
-                            <p class="body-1" >{{LOAD_TENDER.customer_delivery_timeline}}</p>
+                        <v-flex column class="mt-5 pl-3">
+                            <p class="primary--text body-1 mb-2"> DELIVERY DATE </p>
+                            <p class="body-1">{{LOAD_TENDER.customer_delivery_timeline}}</p>
                         </v-flex>
 
                         </v-flex>
+
+                        
 
                         <v-flex row class="mt-7 mb-4" >
 
-                            <v-flex column class="px-3">
-                                    <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
-                                    <v-card 
-                                        flat 
-                                        width="200" 
-                                        height="150" 
-                                        outlined 
-                                        class="">
-                                            <v-flex 
-                                            class="" 
-                                            style="background-color:#F5FAFF;" 
-                                            v-show="(bill_extension === 'jpg') || (bill_extension === 'jpg') || (bill_extension === 'png')" 
-                                            @click="largePreview(bill)">
-                                                <v-img 
-                                                :src="bill"  
-                                                class="mb-0 pb-0 oxoImg" 
-                                                height="147" 
-                                                width="200" 
-                                                >
-                                                
-                                                </v-img>
-                                            </v-flex>
-                                            <v-flex v-show="bill_extension === 'pdf'">
-
-                                                <v-btn 
-                                                    :block="true"
-                                                    icon class="mt-7" 
-                                                    @click="previewPdf(bill)"
-                                                    >
-                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                                </v-btn>
-
-                                                </v-flex>
-                                            </v-card>
-                                        </v-flex>                                            
-
-                            
-                                    <v-flex column class="px-3">
-                                                <p class="primary--text body-1 mb-2"> AUTHORITY LETTER </p>
-                                        <v-card 
-                                            flat 
-                                            width="200" 
-                                            height="150" 
-                                            outlined 
-                                            class="">
-                                                <v-flex 
-                                                class="" 
-                                                style="background-color:#F5FAFF;" 
-                                                v-show="(authorization_letter_extension === 'jpg') 
-                                                || (authorization_letter_extension === 'jpg') 
-                                                || (authorization_letter_extension === 'png')" 
-                                                @click="largePreview(authorization_letter)">
-                                                    <v-img 
-                                                    :src="authorization_letter"  
-                                                    class="mb-0 pb-0 oxoImg" 
-                                                    height="147" 
-                                                    width="200" 
-                                                    >
-                                                    
-                                                    </v-img>
-                                                </v-flex>
-                                                <v-flex v-show="authorization_letter_extension === 'pdf'">
-
-                                                <v-btn 
-                                                    :block="true"
-                                                    icon class="mt-7" 
-                                                    @click="previewPdf(authorization_letter)"
-                                                    >
-                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                              </v-btn>
-                                            </v-flex>
-                                        </v-card>
-                                    </v-flex> 
-
-                                    <v-flex column class="px-3">
-                                                <p class="primary--text body-1 mb-2"> CARGO PHOTO </p>
-                                        <v-card 
-                                            flat 
-                                            width="200" 
-                                            height="150" 
-                                            outlined 
-                                            class="">
-                                                <v-flex 
-                                                class="" 
-                                                style="background-color:#F5FAFF;" 
-                                                v-show="(cargo_photo_extension === 'jpg') 
-                                                || (cargo_photo_extension === 'jpeg') 
-                                                || (cargo_photo_extension === 'png')" 
-                                                @click="largePreview(cargo_photo)">
-                                                    <v-img 
-                                                    :src="cargo_photo"  
-                                                    class="mb-0 pb-0 oxoImg" 
-                                                    height="147" 
-                                                    width="200" 
-                                                    >
-                                                    
-                                                    </v-img>
-                                                </v-flex>
-                                                <v-flex v-show="cargo_photo_extension === 'pdf'">
-
-                                                <v-btn 
-                                                    :block="true"
-                                                    icon class="mt-7" 
-                                                    @click="previewPdf(cargo_photo)"
-                                                    >
-                                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                              </v-btn>
-                                            </v-flex>
-                                        </v-card>
-                                        </v-flex>
-
-                                
-                                    <!-- <v-flex column >
-                                    <p class="primary--text body-1 mb-2"> OTEHER </p>
-                                    <v-card color="lblue" flat width="150" height="130" outlined>
-                                    <v-img class="ma-auto" :src="cargo_photo">
-                                        <v-icon color="primary" x-large class="mx-12 mt-10">
-                                            cloud_upload
-                                        </v-icon>
+                            <v-flex column class="pl-3" v-if="documents == true">
+                            <p class="primary--text body-1 mb-2"> BILL OF LADING </p>
+                            <v-card color="lblue" flat width="150" height="130" outlined>
+                            <div 
+                                v-show="(bill_of_lading_extension === 'jpg') || (bill_of_lading_extension === 'jpeg') || (bill_of_lading_extension === 'png')" 
+                                @click="largePreview(bill_of_lading_url)"
+                            >
+                                <!-- <img :src="bill_of_lading_url" width=200 height=150/> -->
+                                <v-img 
+                                        :src="bill_of_lading_url"  
+                                        class="mb-0 pb-0 oxoImg" 
+                                        height="147" 
+                                        width="200" >
                                     </v-img>
-                                     </v-card>
-                                    </v-flex> -->
+                            </div>
+                
+                            <div v-show="bill_of_lading_extension === 'pdf'">
 
+                                <v-btn 
+                                    :block="true"
+                                    icon class="mt-7" 
+                                    @click="previewPdf(bill_of_lading_url)"
+                                    >
+                                    PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                </v-btn>
+
+                            </div>
+                        </v-card>
+                            </v-flex>
+
+                            <v-flex column  v-if="documents == true">
+                            <p class="primary--text body-1 mb-2"> LETTER </p>
+                            <v-card color="lblue" flat width="150" height="130" outlined>
+                            <div 
+                                    v-show="(letter_extension === 'jpg') || (letter_extension === 'jpeg') || (letter_extension === 'png')" 
+                                    @click="largePreview(letter_url)"
+                                >
+                                    <!-- <img :src="letter_url" width=200 height=150/> -->
+                                    <v-img 
+                                        :src="letter_url"  
+                                        class="mb-0 pb-0 oxoImg" 
+                                        height="147" 
+                                        width="200" >
+                                    </v-img>
+                                </div>
+                    
+                                <div v-show="letter_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(letter_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+                        </v-card>
+                            </v-flex>
+
+                            <v-flex column >
+                            <p class="primary--text body-1 mb-2"> CARGO PHOTO </p>
+                            <v-card color="lblue" flat width="200" height="150" outlined>
+                            <div 
+                                    v-show="(photo_extension === 'jpg') || (photo_extension === 'jpeg') || (photo_extension === 'png')" 
+                                    @click="largePreview(photo_url)"
+                            >
+                                    <!-- <img :src="photo_url" width=200 height=150/> -->
+                                    <v-img 
+                                        :src="photo_url"  
+                                        class="mb-0 pb-0 oxoImg" 
+                                        height="147" 
+                                        width="200" >
+                                    </v-img>
+                                </div>
+                        
+                                <div v-show="photo_extension === 'pdf'">
+
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(photo_url)"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
+
+                                </div>
+                        </v-card>
+                            </v-flex>
+                        </v-flex>
                         </v-flex>
 
-                         <v-flex row class="mt-3 mb-3 ml-2" >
-                            <v-row class="mt-5" v-if="otherFiles.length > 0">
+                <!-- display other files -->
+                <v-flex v-if="documents == true">
+                <v-row class="mt-5" v-if="otherFiles.length > 0">
 
-                                <v-col cols=12><p class="primary--text body-1 mb-1"> OTHER DOCUMENTS</p></v-col>
+                <v-col cols=12><p class="primary--text body-1 mb-2"> OTHER DOCUMENTS</p></v-col>
 
-                                <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
+                <v-col cols=12 md=4 v-for="(file,key) in otherFiles" :key="key">
 
-                                    <v-card flat width="200" height="150" outlined>
-                                        <v-row>
-                                            <v-col >
-                                                <div 
-                                                    v-show="(getFileExtension(file['url']) === 'jpg') || (getFileExtension(file['url']) === 'jpeg') || (getFileExtension(file['url']) === 'png')" 
-                                                    @click="largePreview(file['url'])"
-                                                >
-                                        
-                                                    <v-img 
-                                                        :src="file['url']"  
-                                                        class="mb-0 pb-0 oxoImg" 
-                                                        height="147" 
-                                                        width="200" >
-                                                    </v-img>
-                                                </div>
-                                            
-                                                <div v-show="getFileExtension(file['url']) === 'pdf'">
+                    <v-card flat width="200" height="150" outlined>
+                        <v-row>
+                            <v-col >
+                                <div 
+                                    v-show="(getFileExtension(file['url']) === 'jpg') || (getFileExtension(file['url']) === 'jpeg') || (getFileExtension(file['url']) === 'png')" 
+                                    @click="largePreview(file['url'])"
+                                >
+                        
+                                    <v-img 
+                                        :src="file['url']"  
+                                        class="mb-0 pb-0 oxoImg" 
+                                        height="147" 
+                                        width="200" >
+                                    </v-img>
+                                </div>
+                            
+                                <div v-show="getFileExtension(file['url']) === 'pdf'">
 
-                                                    <v-btn 
-                                                        :block="true"
-                                                        icon class="mt-7" 
-                                                        @click="previewPdf(file['url'])"
-                                                        >
-                                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
-                                                    </v-btn>
+                                    <v-btn 
+                                        :block="true"
+                                        icon class="mt-7" 
+                                        @click="previewPdf(file['url'])"
+                                        >
+                                        PREVIEW<v-icon x-large>mdi-file</v-icon>
+                                    </v-btn>
 
-                                                </div>
-                                            </v-col>
-                                        </v-row>
-                                    </v-card>
-                                </v-col>
-                            </v-row>
-                        </v-flex>
-
-                      </v-flex>
+                                </div>
+                            </v-col>
+                        </v-row>
                     </v-card>
-                </v-flex>
+                </v-col>
+            </v-row>
+            </v-flex>
+           </v-card>
+          </v-flex>
 
-                <!-- <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2">
+                <v-flex sm12 md3 lg3 xlg3 class="px-3 pt-2 ml-2" v-if="documents == true">
                     <v-card color="#4169E1" width="" class="py-4 px-5">
                         <v-flex row >
                             <v-flex column class="px-3">
-                            <p class="white--text body-1 font-weight-bold"> ABC FURNITURE </p>
+                            <p class="white--text body-1 font-weight-bold"> ABC FURNITURE 3</p>
                             <v-flex column>
                             <v-flex row class="px-3 ">
                             <v-icon class="mb-3 white--text" >mail_outline</v-icon>
                             <p class="white--text body-2 pt-1 pl-2 mb-0">EMAIL</p>
                             </v-flex>
                             <v-flex class="pl-8">
-                            <p class="white--text ">Lorem@gamil.com</p>
+                            <p class="white--text ">Lorebagiazadengudsfm@gamil.com</p>
                             </v-flex>
                             </v-flex>
 
@@ -293,8 +264,8 @@
                         </v-flex>
 
                     </v-card>
-                </v-flex> -->
-
+                </v-flex>
+                
                 </v-flex>
             </v-card>
 
@@ -321,19 +292,20 @@
                 <v-card row width="500" class=" mx-auto mt-5 mb-5" color="#F5FAFF">
                 <v-alert
                 :value="wait"
-                text
-                outlined
-                color="orange"
+                elevation="7"
+                prominent
+                type="warning"
                 border="left"
                 row
                 >
                 <v-flex row class="pl-4">
                 <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
-                <v-icon large color="orange" class="">notification_important</v-icon>    
+                <!-- <v-icon large color="orange" class="">notification_important</v-icon>     -->
                 </v-flex>
                 <v-flex xms11 sm11 md11 lg11>
-                <p class="text--text title mb-0">
-                Waiting on payment for tender to start
+                <p class="white--text body-1 mb-3">
+                Waiting on payment for tender to start 
+                <v-chip v-show="wait == true"  class="green mt-1 white--text">Waiting for payment Verification</v-chip>
                 </p>
                 </v-flex>
                 </v-flex>
@@ -356,6 +328,7 @@
                 </v-card>
 
                 <v-card row width="1300" class=" mx-auto" color="#F5FAFF">
+
                 <v-alert
                 :value="extension"
                 text
@@ -374,7 +347,7 @@
                 Payment confirmation
                 </p>
                 <p class="text--text subtitle-1 mb-0">
-                confirm Payment
+                confirme Payment
                 </p>
                 </v-flex>
                 </v-flex>
@@ -387,6 +360,7 @@
                 </v-flex>
                 </v-flex>
                 </v-alert>
+
                 </v-card>
 
 <!-- INSTALMENT CARDS SECTION-------------------------------------------------------------------- -->
@@ -439,20 +413,17 @@
                md6 
                lg6 
                class="text--text body-1 ml-2 font-weight-bold mb-0"> 
-               {{Number(amount).toLocaleString()}}
-               {{LOAD_TENDER.currency}}
+               {{amount}}  {{LOAD_TENDER.currency}}
                </p>
                 </v-flex>
 
                  <v-flex row class="px-1 pt-2" >
                 <P xsm4 sm4 md4 lg4 
                 class="text--text body-1  mb-0">Date received :</P>
-                <p 
-                color="primary"  
-                xsm8 sm8 md8 lg8 
-                class="text--text body-1 pl-1 font-weight-bold mb-0">
-                 {{created_at}} 
-                 </p>
+                <p color="primary"  xsm8 sm8 md8 lg8 
+                class="text--text body-1 pl-1 font-weight-bold mb-0"> 
+                {{created_at}} 
+                </p>
 
                 </v-flex>
                
@@ -467,6 +438,7 @@
                 </v-flex>
                 </v-flex>
                 </v-card>
+<!--  -->
 
                 <v-card row flat width="1300" class="mt-7 mx-auto" color="#F5FAFF">
                 <v-flex row class="">
@@ -505,9 +477,10 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Cargo loading</p>
-                                   <p class="mt-1">Date : {{date0}}</p>
+                                   <p class="mt-1">Date : {{expected_date1}}</p>
                                    </v-card>
                                 </template>
+
                                 <!-- state card -->
                                 <template v-else-if="stage1 === 'B'">
                                    <v-card flat >
@@ -516,9 +489,10 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">1. Cargo loading</p>
-                                   <p class="mt-1">Date : {{date0}}</p>
+                                   <p class="mt-1">Date : {{expected_date1}}</p>
                                    </v-card>
                                 </template>
+
                                 <!-- state card -->
                                 <template v-else-if="stage1 === 'C'">
                                    <v-card flat disabled  >
@@ -526,12 +500,12 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">1. Cargo loaded</p>
-                                   <p class="mt-1">Date : {{date0}}</p>
+                                   <p class="mb-0">1. Cargo loading</p>
+                                   <p class="mt-1">Date : {{expected_date1}}</p>
                                    </v-card>
                                 </template>
                                </li>
-                    <!--------  ----------------->
+                    <!--------   ----------------->
 
                                <li class="divider" >
                                 <v-divider v-if="stage2 === 'A'" color="" width="100" size="20"></v-divider>
@@ -540,6 +514,7 @@
                                </li>
 
                                 <li style="" class="steps">
+
                             <!-- state card-->
                                 <template v-if="stage2 === 'A'">
                                    <v-card  flat disabled >
@@ -547,10 +522,10 @@
                                    <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">2. Cargo in transit</p>
-                                   <p class="mt-1">Date : {{date1}}</p>
+                                   <p class="mb-0">2. Cargo in transit                              <p class="mt-1">Date : {{expected_date2}}</p>
                                    </v-card>
                                 </template>
+
                                 <!-- state card -->
                                 <template v-else-if="stage2 === 'B'">
                                    <v-card flat >
@@ -558,10 +533,10 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">2. Cargo in transit</p>
-                                   <p class="mt-1">Date : {{date1}}</p>
+                                   <p class="mb-0">2. Cargo in transit                              <p class="mt-1">Date : {{expected_date2}}</p>
                                    </v-card>
                                 </template>
+
                                 <!-- state card -->
                                 <template v-else-if="stage2 === 'C'">
                                    <v-card flat disabled  >
@@ -570,7 +545,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">2. Cargo in transit</p>
-                                   <p class="mt-1">Date : {{date1}}</p>
+                                   <p class="mt-1">Date : {{expected_date2}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -591,7 +566,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Cargo offloading</p>
-                                   <p class="mt-1">Date : {{date2}}</p>
+                                   <p class="mt-1">Date : {{expected_date3}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -602,7 +577,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">3. Cargo offloading</p>
-                                   <p class="mt-1">Date : {{date2}}</p>
+                                   <p class="mt-1">Date : {{expected_date3}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -612,8 +587,8 @@
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
-                                   <p class="mb-0">3. Cargo offloaded</p>
-                                   <p class="mt-1">Date : {{date2}}</p>
+                                   <p class="mb-0">3. Cargo offloading</p>
+                                   <p class="mt-1">Date : {{expected_date3}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -634,7 +609,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">4. Delivery service</p>
-                                   <p class="mt-1 ">Date : {{date3}}</p>
+                                   <p class="mt-1">Date : {{expected_date4}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -645,7 +620,7 @@
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
                                    <p class="mb-0">4. Cargo on delivery</p>
-                                   <p class="mt-1 ">Date : {{date3}}</p>
+                                   <p class="mt-1">Date : {{expected_date4}}</p>
                                    </v-card>
                                 </template>
                                 <!-- state card -->
@@ -656,7 +631,7 @@
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
                                    <p class="mb-0">4. Cargo delivered</p>
-                                   <p class="mt-1 ">Date : {{date3}}</p>
+                                   <p class="mt-1">Date : {{expected_date4}}</p>
                                    </v-card>
                                 </template>
                                </li>
@@ -759,7 +734,7 @@
                                     small 
                                     elevation="flat" 
                                     class=" primary "
-                                    @click.capture="submiteProgress()" > 
+                                    @click="submiteProgress()" > 
                                     Submit progress
                                     </v-btn>
                                 </v-flex>
@@ -870,7 +845,7 @@
             color="#F5FAFF">
                 <v-flex row class="">
                        <v-spacer></v-spacer>
-                       <v-btn :disabled="complete_tender" large class="primary" rauter >complete tender</v-btn>
+                       <v-btn disabled large class="primary" rauter >complete tender</v-btn>
                 </v-flex>
             </v-card>
 
@@ -889,18 +864,32 @@ export default {
     data(){
         return{
 
-            // tender details fied
+            //tender details field
             customer_offer_amount:'',
-            
+
             //files ------------
-            bill:'',
+            bill_of_lading:'',
             authorization_letter:'',
             cargo_photo:'',
 
+             //preview 
+            photo_extension:'',
+            photo_url:'',
+            bill_of_lading_extension:'',
+            bill_of_lading_url:'',
+            letter_extension:'',
+            letter_url:'',
+
+            overlay:false,
+            large_preview_url:'',
+
+            //----date
+            expected_date1:'',
+            expected_date2:'',
+            expected_date3:'',
+            expected_date4:'',
+
             //---- stage 1 ---
-                        // state1:false,
-                        // state2:false,
-                        // state3:false,
             stage1:'A',
             //---- stage 2 ---
             stage2:'A',
@@ -909,12 +898,7 @@ export default {
             //--- stage 4 ---
             stage4: 'A',
 
-            //Date stages -----
-            date0:'',
-            date1:'',
-            date2:'',
-            date3:'',
-
+            
             //----- steper---
             icon:'',
             step:'',
@@ -922,7 +906,7 @@ export default {
 
             //------- STAGE COMMENTING------
             //---- Stages and states ---
-            stageitems:['1. Cargo loading', '2. Cargo in transit', '3. Cargo offloading', '4. Cargo delivered'],
+            stageitems:['1. Port processing', '2. TRA', '3. Other processes', '4. Completion'],
             stateitems:['InProgress', 'completed'],
             feedstage:'',
             feedstate:'',
@@ -931,8 +915,6 @@ export default {
             date: new Date().toISOString().substr(0, 10),
             delivery_time:new Date().toISOString().substr(0, 10),
             notless:new Date().toISOString().substr(0, 10),
-
-            //validation rules
 
             //------ PAYMENT PROGRESS ------------
             payment_percentage:'',
@@ -943,20 +925,12 @@ export default {
             loading:false,
             show:true,
             wait:false, 
-            chip1 : 'not received',
+            documents:false,
+            chip1:'not received',
             comment:'',
             extension:false,
             placeholder: 1,
             value:'',
-
-            // Thumbnails  -------
-            bill_extension:'',
-            authorization_letter_extension:'',
-            cargo_photo_extension:'',
-            
-            large_preview_url:'',
-
-            overlay:false,
 
             state:'',
 
@@ -969,66 +943,67 @@ export default {
 
             //call other files
             otherFiles:[],
-
         }
     },
 
      beforeRouteEnter (to, from, next){
+         
     next(vm =>{  vm.T_GET_TENDERSDETAILs(to.params.id).then(()=>{
+        
+            vm.bill_of_lading = vm.LOAD_TENDER.bill_of_lading[0]
+           vm.authorization_letter = vm.LOAD_TENDER.authorization_letter[0]
+           vm.authorization_letter = vm.LOAD_TENDER.cargo_photo
+           
 
-                vm.bill = vm.LOAD_TENDER.bill_of_lading[0]
-                vm.authorization_letter = vm.LOAD_TENDER.authorization_letter[0]
-                
-                vm.cargo_photo = vm.LOAD_TENDER.cargo_photo[0]
-                
-                // eslint-disable-next-line no-console
-                    console.log('the onprogress outpost');
-                    // eslint-disable-next-line no-console
-                    console.log(to.params.id);
-                    // eslint-disable-next-line no-console
-                    console.log(vm.LOAD_TENDER);
+          // eslint-disable-next-line no-console
+              console.log('the onprogress outpost');
+              // eslint-disable-next-line no-console
+              console.log(to.params.id);
+              // eslint-disable-next-line no-console
+              console.log(vm.LOAD_TENDER);
+              
+               if(vm.LOAD_TENDER.cargo_photo !== null)
+                {
+                    vm.photo_extension = vm.getFileExtension(vm.LOAD_TENDER.cargo_photo[0]);
 
-                    if(vm.LOAD_TENDER.bill_of_lading !== null){
-                            
-                            vm.bill = vm.LOAD_TENDER.bill_of_lading[0]
+                    vm.photo_url = vm.LOAD_TENDER.cargo_photo[0];
+                }
 
-                            vm.bill_extension = vm.getFileExtension(vm.bill);
-                        }
+                if(vm.LOAD_TENDER.bill_of_lading !== null)
+                {
+                    vm.bill_of_lading_extension = vm.getFileExtension(vm.LOAD_TENDER.bill_of_lading[0]);
 
-                        if(vm.LOAD_TENDER.authorization_letter !== null){
-                            
-                            vm.authorization_letter = vm.LOAD_TENDER.authorization_letter[0]
+                    vm.bill_of_lading_url = vm.LOAD_TENDER.bill_of_lading[0];
+                }
 
-                            vm.authorization_letter_extension = vm.getFileExtension(vm.authorization_letter);
-                        }
+                if(vm.LOAD_TENDER.authorization_letter !== null)
+                {
+                    vm.letter_extension = vm.getFileExtension(vm.LOAD_TENDER.authorization_letter[0]);
 
-                        if(vm.LOAD_TENDER.cargo_photo !== null){
-                            
-                            vm.cargo_photo = vm.LOAD_TENDER.cargo_photo[0]
+                    vm.letter_url = vm.LOAD_TENDER.authorization_letter[0];
+                }
 
-                            vm.cargo_photo_extension = vm.getFileExtension(vm.cargo_photo);
-                        }
+                //other files
+                if(vm.LOAD_TENDER.files !== null)
+                    {
+                        vm.otherFiles = vm.LOAD_TENDER.files;
+                    }
 
-                        //other files
-                        if(vm.LOAD_AGENT.objects.files !== null){
+                if (!vm.LOAD_TENDER.customer_offer_amount == '') {
 
-                            vm.otherFiles = vm.LOAD_AGENT.objects.files;
-                        }
-
-                        if (!vm.LOAD_TENDER.customer_offer_amount == '') {
-
-                                vm.customer_offer_amount = vm.LOAD_TENDER.customer_offer_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                                                    
-                            } else {
-                                    vm.customer_offer_amount;
-                            }
+                    vm.customer_offer_amount = vm.LOAD_TENDER.customer_offer_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                        
+                } else {
+                        vm.customer_offer_amount;
+                }
 
           vm.T_GET_AGENT(localStorage.client).then(()=>{
 
-                console.log(vm.LOAD_AGENT)
+              console.log(vm.LOAD_AGENT)
 
             vm.T_GET_PAYMENT_PROGRESS(to.params.id).then(()=>{
-                console.log(vm.LOAD_PAYMENT_PROGRESS)
+                
+                console.log(vm.LOAD_PAYMENT_PROGRESS.objects)
 
                 if (vm.LOAD_PAYMENT_PROGRESS.objects.length === 0 && 
                         vm.LOAD_PAYMENT_PROGRESS.genralErrorCode == 8001 ) {
@@ -1036,50 +1011,64 @@ export default {
                     console.log(vm.LOAD_PAYMENT_PROGRESS);
                     vm.wait = true
                     vm.show = false
-                   vm.value = 0
+                    vm.value = 0
                     //console.log(data.message);
 
                 }else{
 
-                  
-                    if (vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited > 100) {
+                    console.log(vm.LOAD_PAYMENT_PROGRESS.objects.verify);
 
-                        vm.value = 100
+                    if (vm.LOAD_PAYMENT_PROGRESS.objects.verify == null){
+
+                        vm.wait = true
+                        vm.show = false
                         
+
                     }else{
-                          vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
 
+                        vm.documents = true
+                        
+                        if(vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited >= 100)
+                        vm.value = 100;
+                        else
+                            vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+
+                        vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at                
+                        //vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                        
+                        vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+                        if ( vm.LOAD_PAYMENT_PROGRESS.objects.is_full_amount_paid == false){
+                                vm.chip1 = 'partial payment'
+                        }
                     }
-
-                    vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount
-                    vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at
                     
-                    if ( vm.LOAD_PAYMENT_PROGRESS.objects.is_full_amount_paid == false){
-                            vm.chip1 = 'partial payment'
-                    }
                     
                 }
             })
 
               vm.T_GET_TIMELINE_STAGES().then(()=>{
-                    console.log(vm.LOAD_TIMELINE_STAGES);
-                  
 
+                    console.log(vm.LOAD_TIMELINE_STAGES);
+
+                    console.log(to.params.id);
+
+                    console.log(vm.LOAD_TIMELINE_STAGES.objects[0].id);
+
+                    
               vm.T_GET_PROGRESS_STAGES(to.params.id).then(()=>{
 
-                 
-
-                  console.log(vm.LOAD_PROGRESS_STAGES);
+                  console.log(vm.LOAD_PROGRESS_STAGES.objects[1].progress_id)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
     for (let index = 0; index < vm.LOAD_PROGRESS_STAGES.objects.length; index++) {
+                                
 
-                        
   // stage One --------------------------------
                 if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ) {
 
-                     vm.date0 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date         
+                     vm.expected_date1 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date         
                     console.log('Stage 1 In progress');
                     vm.stage1 = 'B'
                     //vm.stage2 = 'A'
@@ -1089,7 +1078,7 @@ export default {
                 } else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ) {
                     
-                    vm.date0 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date 
+                    vm.expected_date1 = vm.LOAD_PROGRESS_STAGES.objects[index].completed_date 
                     console.log('Stage 1.1 completed');
                     vm.stage1 = 'C'
                     //vm.stage2 = 'A'
@@ -1103,7 +1092,7 @@ export default {
                 if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
-                     vm.date1 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                     vm.expected_date2 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 2 In progress');
                     //vm.stage1 = 'C'
                     vm.stage2 = 'B'
@@ -1113,7 +1102,7 @@ export default {
                     }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
                      
-                      vm.date1 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                      vm.expected_date2 = vm.LOAD_PROGRESS_STAGES.objects[index].completed_date
                      console.log('Stage 2.2 completed');
                      //vm.stage1 = 'C'
                      vm.stage2 = 'C'
@@ -1127,7 +1116,7 @@ export default {
                 if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
-                    vm.date2 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                    vm.expected_date3 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 3 In progress');
                     //vm.stage1 = 'C'
                     //vm.stage2 = 'C'
@@ -1137,7 +1126,7 @@ export default {
                     }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
                      
-                     vm.date2 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                     vm.expected_date3 = vm.LOAD_PROGRESS_STAGES.objects[index].completed_date
                      console.log('Stage 3.3 completed');
                      //vm.stage1 = 'C'
                      //vm.stage2 = 'C'
@@ -1151,7 +1140,7 @@ export default {
                 if (vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
-                     vm.date3 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                     vm.expected_date4 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 4 In progress');
                     //vm.stage1 = 'C'
                     //vm.stage2 = 'C'
@@ -1161,7 +1150,7 @@ export default {
                     }else if( vm.LOAD_PROGRESS_STAGES.objects[index].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
                      
-                      vm.date3 = vm.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                      vm.expected_date4 = vm.LOAD_PROGRESS_STAGES.objects[index].completed_date
                      console.log('Stage 4.4 completed');
                      //vm.stage1 = 'C'
                      //vm.stage2 = 'C'
@@ -1170,10 +1159,10 @@ export default {
 
 
                     }
-                                if ((this.stage1 == 'c' && this.stage2 == 'c') && (this.stage3 == 'c' && this.stage4=='c') ) {
-                                    this.complete_tender = false
+                                if ((vm.stage1 == 'c' && vm.stage2 == 'c') && (vm.stage3 == 'c' && vm.stage4=='c') ) {
+                                    vm.complete_tender = false
                                 } else {
-                                    this.complete_tender = true
+                                    vm.complete_tender = true
                                 }
 
                                 if ((vm.LOAD_PROGRESS_STAGES.objects[index].InProgress === vm.state) &&
@@ -1192,92 +1181,95 @@ export default {
                             }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/*
     // stage One --------------------------------
-     /*           if (vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
+                if (vm.LOAD_PROGRESS_STAGES.objects[0].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[0].InProgress === 1 ) {
 
                     console.log('Stage 1 In progress');
                     vm.stage1 = 'B'
-                    //vm.stage2 = 'A'
-                    //vm.stage3 = 'A'
-                    //vm.stage4 = 'A'
+                    vm.stage2 = 'A'
+                    vm.stage3 = 'A'
+                    vm.stage4 = 'A'
 
-                } else if( vm.LOAD_PROGRESS_STAGES.objects[0].progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id &&
+                } else if( vm.LOAD_PROGRESS_STAGES.objects[0].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[0].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[0].delivered === 1 ) {
                     
-                    console.log('Stage 1.1 completed');
+                    console.log('Stage 1 completed');
                     vm.stage1 = 'C'
-                    //vm.stage2 = 'A'
-                    //vm.stage3 = 'A'
-                    //vm.stage4 = 'A'
+                    vm.stage2 = 'A'
+                    vm.stage3 = 'A'
+                    vm.stage4 = 'A'
 
                 }
 
     // stage Two ----------------------------------
 
-                if (vm.LOAD_PROGRESS_STAGES.objects[1].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id && 
+                if (vm.LOAD_PROGRESS_STAGES.objects[1].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[1].InProgress === 1 ){
                     
-                    console.log('Stage 2 In progress');
-                    //vm.stage1 = 'C'
+                    console.log('Stage 1 In progress');
+                    vm.stage1 = 'C'
                     vm.stage2 = 'B'
-                    //vm.stage3 = 'A'
-                    //vm.stage4 = 'A'
+                    vm.stage3 = 'A'
+                    vm.stage4 = 'A'
 
-                    }else if( vm.LOAD_PROGRESS_STAGES.objects[1].progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id &&
+
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[1].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[1].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[1].delivered === 1 ){
                     
-                     console.log('Stage 2.2 completed');
-                     //vm.stage1 = 'C'
+                     console.log('Stage 1 completed');
+                     vm.stage1 = 'C'
                      vm.stage2 = 'C'
-                     //vm.stage3 = 'A'
-                     //vm.stage4 = 'A'
+                     vm.stage3 = 'A'
+                     vm.stage4 = 'A'
 
                     }
 
     // stage Three -----------------------------------
 
-                if (vm.LOAD_PROGRESS_STAGES.objects[2].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id && 
+                if (vm.LOAD_PROGRESS_STAGES.objects[2].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[2].InProgress === 1 ){
                     
-                    console.log('Stage 3 In progress');
-                    //vm.stage1 = 'C'
-                    //vm.stage2 = 'C'
+                    console.log('Stage 1 In progress');
+                    vm.stage1 = 'C'
+                    vm.stage2 = 'C'
                     vm.stage3 = 'B'
-                    //vm.stage4 = 'A'
+                    vm.stage4 = 'A'
 
-                    }else if( vm.LOAD_PROGRESS_STAGES.objects[2].progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id &&
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[2].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[2].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[2].delivered === 1 ){
                     
-                     console.log('Stage 3.3 completed');
-                     //vm.stage1 = 'C'
-                     //vm.stage2 = 'C'
+                     console.log('Stage 1 completed');
+                     vm.stage1 = 'C'
+                     vm.stage2 = 'C'
                      vm.stage3 = 'C'
-                     //vm.stage4 = 'A'
+                     vm.stage4 = 'A'
 
                     }
 
     // Stage Four -------------------------------------
 
-                if (vm.LOAD_PROGRESS_STAGES.objects[3].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id && 
+                if (vm.LOAD_PROGRESS_STAGES.objects[3].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id && 
                          vm.LOAD_PROGRESS_STAGES.objects[3].InProgress === 1 ){
                     
-                    console.log('Stage 4 In progress');
-                    //vm.stage1 = 'C'
-                    //vm.stage2 = 'C'
-                    //vm.stage3 = 'C'
+                    console.log('Stage 1 In progress');
+                    vm.stage1 = 'C'
+                    vm.stage2 = 'C'
+                    vm.stage3 = 'C'
                     vm.stage4 = 'B'
 
-                    }else if( vm.LOAD_PROGRESS_STAGES.objects[3].progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id &&
+                    }else if( vm.LOAD_PROGRESS_STAGES.objects[3].clearing_progress_id === vm.LOAD_TIMELINE_STAGES.objects[3].id &&
                              vm.LOAD_PROGRESS_STAGES.objects[3].delivered === 1 ){
                     
-                     console.log('Stage 4.4 completed');
-                     //vm.stage1 = 'C'
-                     //vm.stage2 = 'C'
-                     //vm.stage3 = 'C'
+                     console.log('Stage 1 completed');
+                     vm.stage1 = 'C'
+                     vm.stage2 = 'C'
+                     vm.stage3 = 'C'
                      vm.stage4 = 'C'
 
-                    }*/
+                    }
+*/
 
 
 
@@ -1306,8 +1298,8 @@ export default {
       'LOAD_TIMELINE_STAGES'
       ])
   },
-
-   components:{PDFDocument},
+components:{PDFDocument},
+   
 methods :{
     ...mapActions([
       "T_GET_AGENT",
@@ -1331,21 +1323,24 @@ methods :{
             this.pdfOverlay = false;
         },
 
+    //preview
+       getFileExtension(url){
+
+        let position = url.lastIndexOf('.');
+
+        let extracted_string = url.slice(position + 1, url.length + 1);
+
+        return extracted_string;
+
+        },
+
+       
+
         largePreview(src){
 
             this.large_preview_url = src;
 
             this.overlay = !this.overlay;
-
-        },
-
-        getFileExtension(url){
-
-            let position = url.lastIndexOf('.');
-
-            let extracted_string = url.slice(position + 1, url.length + 1);
-
-            return extracted_string;
 
         },
 
@@ -1359,32 +1354,21 @@ methods :{
 
         },
 
-
-    submiteProgress(){
+        submiteProgress(){
 
             this.loading = true
 
-            console.log(this.feedstage);
-            console.log(this.LOAD_TIMELINE_STAGES.objects[0].id);
-            
-            
-
-        if (this.feedstage === '1. Cargo loading') {
+        if (this.feedstage === '1. Port processing') {
             this.progress_id = this.LOAD_TIMELINE_STAGES.objects[0].id
-        } 
-        if (this.feedstage === '2. Cargo in transit') {
+        } else if (this.feedstage === '2. TRA') {
             this.progress_id = this.LOAD_TIMELINE_STAGES.objects[1].id
-        }
-         if (this.feedstage === '3. Cargo offloading') {
+        } else if (this.feedstage === '3. Other processes') {
             this.progress_id = this.LOAD_TIMELINE_STAGES.objects[2].id
-        } 
-         if (this.feedstage == '4. Cargo delivered') {
+        } else if (this.feedstage == '4. Completion') {
             this.progress_id = this.LOAD_TIMELINE_STAGES.objects[3].id
         }
 
         console.log(this.$route.params.id);
-        console.log(this.feedstate);
-        
             
         //        const        agent_id = this.LOAD_AGENT.objects.agent_id
         //          const progress_status = this.feedstate
@@ -1392,16 +1376,20 @@ methods :{
         //     const     progress_id = this.progress_id
         //        const   expected_date = this.date
             
+            console.log(this.LOAD_AGENT.objects.agent_id);
+            
 
-           this.T_UPGRADE_PROGRESS({
+           this.$store.dispatch('T_UPGRADE_PROGRESS',{
+                                   
+                    agent_id : this.LOAD_AGENT.objects.agent_id,
+                    progress_status : this.feedstate,
+                    tender_id : this.LOAD_TENDER.id,
+                    progress_id : this.progress_id,
+                    expected_date : this.date, 
+                    completed_date : this.date, 
 
-                  agent_id : this.LOAD_AGENT.objects.agent_id,
-                  progress_status : this.feedstate,
-                  tender_id : this.LOAD_TENDER.id,
-                  progress_id : this.progress_id,
-                  expected_date : this.date, 
-                  
                 }).then(()=>{
+
                     console.log(this.progress_id);
                     
                     console.log(this.LOAD_PROGRESS_FEEDBACK);
@@ -1411,10 +1399,9 @@ methods :{
                             
                             this.loading = false
 
-                                console.log(this.LOAD_PROGRESS_STAGES.objects);
-                                console.log(this.LOAD_PROGRESS_STAGES.objects.length);
-                                
-                        for (let index = 0; index < this.LOAD_PROGRESS_STAGES.objects.length; index++) {
+                            console.log(this.LOAD_PROGRESS_STAGES.objects)
+////////////////////////////////////////////////////////////////////////////////////////////
+        for (let index = 0; index < this.LOAD_PROGRESS_STAGES.objects.length; index++) {
                                 
                                  console.log(this.feedstate);
 
@@ -1428,28 +1415,30 @@ methods :{
                                  }
                                 
 
-                        if ((this.LOAD_PROGRESS_STAGES.objects[index].InProgress === this.state) &&
-                                (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.progress_id)  ) {
+                        // if ((this.LOAD_PROGRESS_STAGES.objects[index].InProgress === this.state) &&
+                        //         (this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.progress_id)  ) {
                                     
-                                    console.log('sulition');
+                        //             console.log('sulition');
                                     
-                                    console.log(this.LOAD_PROGRESS_STAGES.objects);
-                                }
+                        //             console.log(this.LOAD_PROGRESS_STAGES.objects);
+                        //         }
 
 // stage One --------------------------------
 
                 if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id && 
                          this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ) {
-
+                    
+                     this.expected_date1 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 1 In progress');
                     this.stage1 = 'B'
                     // this.stage2 = 'A'
                     // this.stage3 = 'A'
                     // this.stage4 = 'A'
 
-                } else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
+                } else  if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
                              this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ) {
                     
+                     this.expected_date1 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 1 completed');
                     this.stage1 = 'C'
                     // this.stage2 = 'A'
@@ -1463,6 +1452,7 @@ methods :{
                 if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id && 
                          this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
+                    this.expected_date2 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 1 In progress');
                     //this.stage1 = 'C'
                     this.stage2 = 'B'
@@ -1472,6 +1462,7 @@ methods :{
                     }else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id &&
                              this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
                     
+                    this.expected_date2 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                      console.log('Stage 1 completed');
                      //this.stage1 = 'C'
                      this.stage2 = 'C'
@@ -1485,6 +1476,7 @@ methods :{
                 if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id && 
                          this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
+                    this.expected_date3 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 1 In progress');
                     //this.stage1 = 'C'
                     //this.stage2 = 'C'
@@ -1494,6 +1486,7 @@ methods :{
                     }else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id &&
                              this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
                     
+                    this.expected_date3 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                      console.log('Stage 1 completed');
                      //this.stage1 = 'C'
                      //this.stage2 = 'C'
@@ -1507,6 +1500,7 @@ methods :{
                 if (this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id && 
                          this.LOAD_PROGRESS_STAGES.objects[index].InProgress === 1 ){
                     
+                    this.expected_date4 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 1 In progress');
                     //this.stage1 = 'C'
                     //this.stage2 = 'C'
@@ -1516,6 +1510,7 @@ methods :{
                     }else if( this.LOAD_PROGRESS_STAGES.objects[index].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id &&
                              this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
                     
+                    this.expected_date4 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                      console.log('Stage 1 completed');
                      //this.stage1 = 'C'
                      //this.stage2 = 'C'
@@ -1534,11 +1529,10 @@ methods :{
                                 
                                 
                             }
-
-                            
+///////////////////////////////////////////////////////////////////////////////////////////
 
 /*
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 // stage One --------------------------------
 
                 if (this.LOAD_PROGRESS_STAGES.objects[0].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id && 
@@ -1546,18 +1540,18 @@ methods :{
 
                     console.log('Stage 1 In progress');
                     this.stage1 = 'B'
-                    // this.stage2 = 'A'
-                    // this.stage3 = 'A'
-                    // this.stage4 = 'A'
+                    this.stage2 = 'A'
+                    this.stage3 = 'A'
+                    this.stage4 = 'A'
 
                 } else if( this.LOAD_PROGRESS_STAGES.objects[0].progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
                              this.LOAD_PROGRESS_STAGES.objects[0].delivered === 1 ) {
                     
                     console.log('Stage 1 completed');
                     this.stage1 = 'C'
-                    // this.stage2 = 'A'
-                    // this.stage3 = 'A'
-                    // this.stage4 = 'A'
+                    this.stage2 = 'A'
+                    this.stage3 = 'A'
+                    this.stage4 = 'A'
 
                 }
 
@@ -1567,19 +1561,19 @@ methods :{
                          this.LOAD_PROGRESS_STAGES.objects[1].InProgress === 1 ){
                     
                     console.log('Stage 1 In progress');
-                    //this.stage1 = 'C'
+                    this.stage1 = 'C'
                     this.stage2 = 'B'
-                    //this.stage3 = 'A'
-                    //this.stage4 = 'A'
+                    this.stage3 = 'A'
+                    this.stage4 = 'A'
 
                     }else if( this.LOAD_PROGRESS_STAGES.objects[1].progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id &&
                              this.LOAD_PROGRESS_STAGES.objects[1].delivered === 1 ){
                     
                      console.log('Stage 1 completed');
-                     //this.stage1 = 'C'
+                     this.stage1 = 'C'
                      this.stage2 = 'C'
-                     //this.stage3 = 'A'
-                     //this.stage4 = 'A'
+                     this.stage3 = 'A'
+                     this.stage4 = 'A'
 
                     }
 
@@ -1589,17 +1583,17 @@ methods :{
                          this.LOAD_PROGRESS_STAGES.objects[2].InProgress === 1 ){
                     
                     console.log('Stage 1 In progress');
-                    //this.stage1 = 'C'
-                    //this.stage2 = 'C'
+                    this.stage1 = 'C'
+                    this.stage2 = 'C'
                     this.stage3 = 'B'
-                    //this.stage4 = 'A'
+                    this.stage4 = 'A'
 
                     }else if( this.LOAD_PROGRESS_STAGES.objects[2].progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id &&
                              this.LOAD_PROGRESS_STAGES.objects[2].delivered === 1 ){
                     
                      console.log('Stage 1 completed');
-                     //this.stage1 = 'C'
-                     //this.stage2 = 'C'
+                     this.stage1 = 'C'
+                     this.stage2 = 'C'
                      this.stage3 = 'C'
                      this.stage4 = 'A'
 
@@ -1611,22 +1605,22 @@ methods :{
                          this.LOAD_PROGRESS_STAGES.objects[3].InProgress === 1 ){
                     
                     console.log('Stage 1 In progress');
-                    //this.stage1 = 'C'
-                    //this.stage2 = 'C'
-                    //this.stage3 = 'C'
+                    this.stage1 = 'C'
+                    this.stage2 = 'C'
+                    this.stage3 = 'C'
                     this.stage4 = 'B'
 
                     }else if( this.LOAD_PROGRESS_STAGES.objects[3].progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id &&
                              this.LOAD_PROGRESS_STAGES.objects[3].delivered === 1 ){
                     
                      console.log('Stage 1 completed');
-                     //this.stage1 = 'C'
-                     //this.stage2 = 'C'
-                     //this.stage3 = 'C'
+                     this.stage1 = 'C'
+                     this.stage2 = 'C'
+                     this.stage3 = 'C'
                      this.stage4 = 'C'
 
                     }
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 */
 
 
@@ -1662,12 +1656,29 @@ ul li{
 .divider{
     margin-bottom: 70px;
 }
-#line{
+
+/*:is#line{
     
 }
 ul li .x-large{
     
     
-}
+}*/
+
+.large-preview{
+
+    /*width: 500px;
+    height: 500px;*/
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    
+ }
+
+ img:hover{
+     cursor: pointer;
+ }
 </style>
 
