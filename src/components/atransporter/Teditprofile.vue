@@ -478,7 +478,8 @@
             <v-flex row class="px">
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Country</p>
-                    <v-card
+
+                    <!-- <v-card
                     outlined
                     color="" 
                     height="55" 
@@ -493,13 +494,28 @@
                       :countryName="true"
                       :removePlaceholder="true"
                       class="selectcountry"/>
-                    </v-card>
+                    </v-card> -->
+
+                    <v-select
+                        outlined
+                        v-model="country"
+                        :items="available_countries"
+                        @change="fetchRegions(country)"
+                        :rules="[v => !!v || 'Country is required']"
+                        required>     
+                        <template #label>
+                            <span class="red--text"><strong>* </strong></span>
+                        </template>
+
+                     </v-select>
+
                 </v-flex>
 
                 <v-flex row sm6 mb6 justify-center>
                 <v-flex>
                     <p class="bondy-2 mb-0">City</p>
-                    <v-text-field 
+
+                    <!-- <v-text-field 
                     v-model="pcity"
                     outlined 
                     color="#4169E1" 
@@ -508,12 +524,26 @@
                             <template #label>
                                 <span class="deep-orange--text"><strong>* </strong></span>
                             </template>
-                    </v-text-field>
+                    </v-text-field> -->
+
+                    <v-select
+                        outlined
+                        v-model="pcity"
+                        :items="regions"
+                        :rules="[v => !!v || 'staste/region is required']"
+                        required
+                    >     
+                        <template #label>
+                            <span class="red--text"><strong>* </strong></span>
+                        </template>
+
+                </v-select>
+
                 </v-flex>
                 </v-flex>
             </v-flex>
 
-            <v-flex row class="px">
+            <!-- <v-flex row class="px">
                 <v-flex column sm6 mb6 class="px-6">
                     <p class="bondy-2 mb-0">Region</p>
                     <v-text-field 
@@ -529,7 +559,8 @@
                      </v-text-field>
                 </v-flex>
                 
-            </v-flex>
+            </v-flex> -->
+
             </v-flex>
         </v-card>
     
@@ -1547,6 +1578,7 @@
 
 <script>
 
+import {projectMixin} from '@/mixins/mixings.js'
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
 import PDFDocument from '@/components/PDFDocument'
@@ -1554,6 +1586,9 @@ import PDFDocument from '@/components/PDFDocument'
 /* eslint-disable no-console */
 
 export default {
+
+   mixins: [projectMixin],
+
    data() {
        return{
            //place holders
@@ -1565,6 +1600,7 @@ export default {
            box:'',
            country:'',
            pregion:'',
+           regions:[],
            terms_of_payment:[],
            bname:'',
            aname:'',
@@ -1802,6 +1838,8 @@ export default {
                     this.aname = this.LOAD_AGENT.objects.account_name
                     this.acnumber = this.LOAD_AGENT.objects.account_number
 
+                    this.fetchRegions(this.country)
+
            }else{
 
                 this.mail = localStorage.client
@@ -1838,6 +1876,11 @@ export default {
         "T_POST_PAYMENT_TERMS",
         "T_GET_AGENT_PAYMENT_TERMS"
     ]),
+
+     fetchRegions(country){
+
+            this.regions = this.getRegions(country);
+        },
 
      addFiles(){
 
@@ -1971,14 +2014,14 @@ export default {
                         this.field_required = true
                         return false
 
-                }else if(this.rules.required(this.pregion) == 'Required'){
+                }/*else if(this.rules.required(this.pregion) == 'Required'){
 
                         console.log(8);
                         this.field = 'Region field is required'
                         this.field_required = true
                         return false
 
-                }else if((this.terms_of_payment) == '' || (this.terms_of_payment) == 'null'){
+                }*/else if((this.terms_of_payment) == '' || (this.terms_of_payment) == 'null'){
 
                         console.log(9);
                         this.terms_required = "Required"

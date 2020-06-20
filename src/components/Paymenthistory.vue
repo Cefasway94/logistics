@@ -197,7 +197,7 @@
                 v-show="history"
                 color="transparent"
                 flat=""
-                class="mb-4 mx-auto mt-12 pa-1"
+                class="mb-4 mx-auto mt-1 pa-1"
                 max-width="1050" >
 <!-- Header  -->
         <v-card
@@ -310,7 +310,7 @@
                 v-show="nopayments"
                 color="transparent"
                 flat=""
-                class="mb-4 mx-auto mt-12 pa-1"
+                class="mb-4 mx-auto mt-1 pa-1"
                 max-width="1050" >
 <!-- Header  -->
         <v-card

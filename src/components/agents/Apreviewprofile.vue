@@ -777,7 +777,7 @@ export default {
                 this.phone = this.LOAD_AGENT.objects.phone
                 this.mail = this.LOAD_AGENT.objects.email
                 this.box = this.LOAD_AGENT.objects.p_o_box
-                this.countrys = this.LOAD_AGENT.objects.country
+                this.country = this.LOAD_AGENT.objects.country
                 this.pcity = this.LOAD_AGENT.objects.city
                 this.pregion = this.LOAD_AGENT.objects.city
                 this.bname = this.LOAD_AGENT.objects.bank_name
