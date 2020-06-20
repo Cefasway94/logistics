@@ -275,7 +275,7 @@
 
                 </v-col>
 
-                <v-col cols=12 md=4>
+                <v-col cols=12 md=4 v-show="customer_type === 'Company'">
 
                     <p class="primary--text body-1 mb-2"> BANK STATEMENT</p>
                     <v-card flat width="200" height="150" outlined>
