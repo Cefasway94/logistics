@@ -248,7 +248,8 @@
         <v-card
                 class="mb-4 px-3"
                 :elevation="hover ? 15 : 3"
-                @click="tender_payment_history(detail.transaction_ID)">
+                >
+                <!-- @click="tender_payment_history(detail.transaction_ID)" -->
                 
           <v-layout row wrap  class=" pl-2 ">
                <v-layout sm11 md11   >       
