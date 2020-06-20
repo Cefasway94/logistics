@@ -462,7 +462,7 @@
                                 <!-- state card-->
                                 <template v-if="stage1 === 'A'">
                                    <v-card  flat disabled >
-                                   <v-icon :disabled="true" size="50">archive</v-icon><br>
+                                   <v-icon :disabled="true" size="50">directions_boat</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
@@ -474,7 +474,7 @@
                                 <!-- state card -->
                                 <template v-else-if="stage1 === 'B'">
                                    <v-card flat >
-                                   <v-icon color="primary" :disabled="false" size="50">archive</v-icon><br>
+                                   <v-icon color="primary" :disabled="false" size="50">directions_boat</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
@@ -486,7 +486,7 @@
                                 <!-- state card -->
                                 <template v-else-if="stage1 === 'C'">
                                    <v-card flat disabled  >
-                                   <v-icon color="primary" :disabled="true" size="50">archive</v-icon><br>
+                                   <v-icon color="primary" :disabled="true" size="50">directions_boat</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
@@ -508,7 +508,7 @@
                             <!-- state card-->
                                 <template v-if="stage2 === 'A'">
                                    <v-card  flat disabled >
-                                   <v-icon :disabled="true" size="50">local_shipping</v-icon><br>
+                                   <v-icon :disabled="true" size="50">account_balance</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
@@ -520,7 +520,7 @@
                                 <!-- state card -->
                                 <template v-else-if="stage2 === 'B'">
                                    <v-card flat >
-                                   <v-icon color="primary" :disabled="false" size="50">local_shipping</v-icon><br>
+                                   <v-icon color="primary" :disabled="false" size="50">account_balance</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
@@ -532,7 +532,7 @@
                                 <!-- state card -->
                                 <template v-else-if="stage2 === 'C'">
                                    <v-card flat disabled  >
-                                   <v-icon color="primary" :disabled="true" size="50">local_shipping</v-icon><br>
+                                   <v-icon color="primary" :disabled="true" size="50">account_balance</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
@@ -553,7 +553,7 @@
                             <!-- state card-->
                                 <template v-if="stage3 === 'A'">
                                    <v-card  flat disabled >
-                                   <v-icon :disabled="true" size="50">unarchive</v-icon><br>
+                                   <v-icon :disabled="true" size="50">assignment</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="true"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
@@ -564,7 +564,7 @@
                                 <!-- state card -->
                                 <template v-else-if="stage3 === 'B'">
                                    <v-card flat >
-                                   <v-icon color="primary" :disabled="false" size="50">unarchive</v-icon><br>
+                                   <v-icon color="primary" :disabled="false" size="50">assignment</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">cached</v-icon>
                                     </v-btn>
@@ -575,7 +575,7 @@
                                 <!-- state card -->
                                 <template v-else-if="stage3 === 'C'">
                                    <v-card flat disabled  >
-                                   <v-icon color="primary" :disabled="true" size="50">unarchive</v-icon><br>
+                                   <v-icon color="primary" :disabled="true" size="50">assignment</v-icon><br>
                                    <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                     <v-icon class="x-large ">done</v-icon>
                                     </v-btn>
