@@ -1131,7 +1131,7 @@ export default {
                                 document.getElementById('app').scrollIntoView();
                             });
 
-                axios.get(`http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/${vm.$route.params.id}`)
+                axios.get(`http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/${vm.$route.params.id}/Transporting`)
                         .then((response) => 
                             {
 
@@ -1168,7 +1168,7 @@ export default {
                             });
 
                             
-                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
+                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}/Transporting`)
                         .then((response) => 
                             {
 
@@ -1266,7 +1266,7 @@ export default {
                             });
 
 
-                 axios.get(`http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/${vm.$route.params.id}`)
+                 axios.get(`http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/${vm.$route.params.id}/Clearing`)
                         .then((response) => 
                             {
 
@@ -1304,7 +1304,7 @@ export default {
                             });
 
                             
-                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}`)
+                 axios.get(`http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/${vm.$route.params.id}/Clearing`)
                         .then((response) => 
                             {
 
