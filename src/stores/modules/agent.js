@@ -605,7 +605,7 @@ actions: {
 },
 
 //Agent get progress details  ---------------------------------------------------------------------------         
-    UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_id,expected_date }) => {
+    UPGRADE_PROGRESS: ({ commit }, { agent_id,progress_status,tender_id,progress_id,expected_date,completed_date }) => {
         return new Promise((resolve, reject) => {
             const config = {
                 headers: {
@@ -619,7 +619,8 @@ actions: {
                 progress_status,
                 tender_id,
                 progress_id,
-                expected_date
+                expected_date,
+                completed_date
             },
             config
             )

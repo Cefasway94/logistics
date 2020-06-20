@@ -44,7 +44,7 @@
                         <v-flex column>
                         <v-flex row >
 
-                             <v-flex column >
+                            <v-flex column >
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
                             <p class="body-1">{{LOAD_TENDER.cargo_size}}</p>
                             </v-flex>
@@ -1427,8 +1427,8 @@ methods :{
                     // this.stage3 = 'A'
                     // this.stage4 = 'A'
 
-                } else if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
-                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ) {
+                } else  if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
+                             this.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ) {
                     
                      this.expected_date1 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                     console.log('Stage 1 completed');
@@ -1452,7 +1452,7 @@ methods :{
                     //this.stage4 = 'A'
 
                     }else if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id &&
-                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                             this.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ){
                     
                     this.expected_date2 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                      console.log('Stage 1 completed');
@@ -1476,7 +1476,7 @@ methods :{
                     //this.stage4 = 'A'
 
                     }else if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id &&
-                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                             this.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ){
                     
                     this.expected_date3 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                      console.log('Stage 1 completed');
@@ -1500,7 +1500,7 @@ methods :{
                     this.stage4 = 'B'
 
                     }else if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id &&
-                             this.LOAD_PROGRESS_STAGES.objects[index].delivered === 1 ){
+                             this.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ){
                     
                     this.expected_date4 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
                      console.log('Stage 1 completed');
