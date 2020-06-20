@@ -439,43 +439,38 @@
                 
                             <v-flex column xs12 sm4 class="px-2">
                                 <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> country </p>
-                                <!--<v-text-field 
-                                    clearable 
-                                    outlined 
-                                    v-model="country"
-                                    :rules="[v => !!v || 'country is required']"
-                                    required
-                                    >
 
-                                    <template #label>
-                                        <span class="red--text"><strong>* </strong></span>
-                                    </template>
+                                <v-select
+                                        outlined
+                                        v-model="country"
+                                        :items="available_countries"
+                                        @change="fetchRegions(country)"
+                                        :rules="[v => !!v || 'Country is required']"
+                                        required
+                                    >     
+                                        <template #label>
+                                            <span class="red--text"><strong>* </strong></span>
+                                        </template>
 
-                                </v-text-field>-->
-                                <v-card :outlined="true" height="57">
-
-                                    <template>
-                                        <country-select v-model="country" :countryName="true" :country="country" topCountry="US" className="pl-3 select-control"/>
-                                        <!--<region-select v-model="region" :country="country" :region="region" />-->
-                                    </template>
-
-                                </v-card>
+                                </v-select>
                             
                             </v-flex>
 
                             <v-flex column xs12 sm4 class="px-2">
                                 <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> state/region/city </p>
-                                <v-text-field 
-                                    clearable 
-                                    outlined 
-                                    v-model="city"
-                                    :rules="[v => !!v || 'city is required']"
-                                    required>
 
+                                 <v-select
+                                        outlined
+                                        v-model="city"
+                                        :items="regions"
+                                        :rules="[v => !!v || 'staste/region is required']"
+                                        required
+                                    >     
                                         <template #label>
                                             <span class="red--text"><strong>* </strong></span>
                                         </template>
-                                </v-text-field>
+
+                                </v-select>
                             </v-flex>
 
                             <v-flex column xs12 sm4 class="px-2">
@@ -1663,8 +1658,11 @@
 <script>
 import axios from 'axios'
 import PDFDocument from '@/components/PDFDocument'
+import {projectMixin} from '@/mixins/mixings.js'
 import Alert from '@/components/Alert.vue'
 export default {
+
+    mixins: [projectMixin],
 
     data: ()=>({
         client_types:[],
@@ -1680,6 +1678,8 @@ export default {
         percentage: 0,
 
         have_customer_id: false,
+
+        regions:[],
 
         first_name:'',
         last_name:'',
@@ -1812,6 +1812,11 @@ export default {
         addFiles(){
 
             document.getElementById("otheFiles").click();
+        },
+
+        fetchRegions(country){
+
+            this.regions = this.getRegions(country);
         },
 
         removeFile( key ){
@@ -3455,6 +3460,9 @@ export default {
                                     vm.bank_swift_code = response.data.objects.bank_swift_code;
                                     vm.bank_address = response.data.objects.bank_address;
                                     vm.customer_type = response.data.objects.customer_type;
+
+                                    if(vm.country !== null )
+                                        vm.fetchRegions(vm.country);
 
                                     for(let i=0; i< vm.customer_types.length; i++)
                                     {
