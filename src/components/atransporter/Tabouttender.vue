@@ -116,10 +116,14 @@
                             <p class="primary--text body-1 mb-2"> ORIGIN </p>
                             <p class="body-1">{{LOAD_TENDER.origin}}</p>
                             </v-flex>
-                            <v-flex column >
+                            <v-flex column v-if="LOAD_TENDER.cargo_size !== '' && LOAD_TENDER.cargo_size !== null" >
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
-                            <p class="body-1">{{LOAD_TENDER.cargo_size}}</p>
+                            <p  class="body-1">{{LOAD_TENDER.cargo_size}}</p>
                             </v-flex>
+                             <v-flex column class="  pl-3">
+                            <p class="primary--text body-1 mb-2" > AMOUNT </p>
+                            <p class="body-1" >{{LOAD_TENDER.customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
+                        </v-flex>
                         </v-flex>
 
                         <v-flex row>
@@ -134,11 +138,7 @@
                             <p class="body-1">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
 
-                        <v-flex column class=" mt-7 pl-3">
-                            <p class="primary--text body-1 mb-2" > AMOUNT </p>
-                            <p class="body-1" >{{LOAD_TENDER.customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
-                        </v-flex>
-
+                       
                         <v-flex column class=" mt-7 pl-3">
                             <p class="primary--text body-1 mb-2" > DELIVERY TIMELINE </p>
                             <p class="body-1" >{{LOAD_TENDER.customer_delivery_timeline}}</p>
@@ -647,43 +647,43 @@ export default {
     
       this.T_GET_TENDERSDETAILs(tab).then(()=>{
 
-                if(!this.LOAD_TENDER.bill_of_lading[0] == ''){
+                // if(!this.LOAD_TENDER.bill_of_lading[0] == ''){
 
-                  this.bill = this.LOAD_TENDER.bill_of_lading[0]
-                  this.bill_extension = this.getFileExtension(this.bill);
-                  console.log(this.bill)
+                //   this.bill = this.LOAD_TENDER.bill_of_lading[0]
+                //   this.bill_extension = this.getFileExtension(this.bill);
+                //   console.log(this.bill)
 
-                }
+                // }
 
-                if(!this.LOAD_TENDER.authorization_letter[0] == ''){
+                // if(!this.LOAD_TENDER.authorization_letter[0] == ''){
 
-                  this.authorization_letter = this.LOAD_TENDER.authorization_letter[0]
-                  this.authorization_letter_extension = this.getFileExtension(this.authorization_letter);
-                  console.log(this.authorization_letter)
+                //   this.authorization_letter = this.LOAD_TENDER.authorization_letter[0]
+                //   this.authorization_letter_extension = this.getFileExtension(this.authorization_letter);
+                //   console.log(this.authorization_letter)
 
-                }
+                // }
 
-                if(!this.LOAD_TENDER.cargo_photo[0] == ''){
+                // if(!this.LOAD_TENDER.cargo_photo[0] == ''){
 
-                  this.cargo_photo = this.LOAD_TENDER.cargo_photo[0]
-                  this.cargo_photo_extension = this.getFileExtension(this.cargo_photo);
-                  console.log(this.cargo_photo)
+                //   this.cargo_photo = this.LOAD_TENDER.cargo_photo[0]
+                //   this.cargo_photo_extension = this.getFileExtension(this.cargo_photo);
+                //   console.log(this.cargo_photo)
 
-                }
+                // }
 
                  //other files
-                if(this.LOAD_AGENT.objects.files !== null){
+                // if(this.LOAD_AGENT.objects.files !== null){
 
-                     this.otherFiles = this.LOAD_AGENT.objects.files;
-                 }
+                //      this.otherFiles = this.LOAD_AGENT.objects.files;
+                //  }
 
-                if (!this.LOAD_TENDER.customer_offer_amount == '') {
+                // if (!this.LOAD_TENDER.customer_offer_amount == '') {
 
-                     this.customer_offer_amount =this.LOAD_TENDER.customer_offer_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                //      this.customer_offer_amount =this.LOAD_TENDER.customer_offer_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                         
-                } else {
-                         this.customer_offer_amount;
-                    }
+                // } else {
+                //          this.customer_offer_amount;
+                //     }
 
         //   console.log('tender details bellowww');
         //   console.log(this.LOAD_TENDER.bill_of_lading[0])
