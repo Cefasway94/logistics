@@ -30,6 +30,77 @@
             </v-overlay>
 
             <v-dialog
+                v-model="largefilesize"
+                max-width="400"
+                color="#f5faff"
+                transition="scale-transition"
+                :hide-overlay="true"
+            >
+                <v-card 
+                    height="105" 
+                    color="#f64f51" 
+                    class="pt-2">
+            
+                    <v-alert  
+                        prominent
+                        height="" 
+                        type="error"
+                    >
+                            <p class="font-weight-strong mb-0">File size is too large limit 2MB</p>
+                    </v-alert>
+
+                </v-card>
+            </v-dialog>
+
+            <v-dialog
+                v-model="field_required"
+                max-width="400"
+                color="#f5faff"
+                transition="scale-transition"
+                :hide-overlay="true"
+            >
+                <v-card 
+                    height="105" 
+                    color="#f64f51" 
+                    class="pt-2"
+                >
+
+                    <v-alert  
+                        prominent
+                        height="" 
+                        type="error">
+                        <p class="font-weight-strong mb-0">{{field}}</p>
+                    </v-alert>
+
+                </v-card>
+            </v-dialog>
+
+            <v-dialog
+            v-model="display_file_size_error"
+            max-width="400"
+            color="#F5FAFF"
+            transition="scale-transition"
+            :hide-overlay="true"
+        >
+            <v-card
+                height="105"
+                color="#F64F51"
+                class="pt-2"
+            >
+                
+                <v-alert
+                    prominent
+                    height=""
+                    type="error"
+                >
+                      <p class="font-weight-strong mb-0">File size is too large limit 2MB</p>
+                </v-alert>
+                
+            </v-card>
+
+        </v-dialog>
+
+            <v-dialog
                 v-model="low_amount"
                 max-width="400"
                 color="#f5faff"
@@ -314,10 +385,11 @@
                                     <p class=" body-1 mb-0 text-capitalize"> Amount</p>
                                     <v-text-field 
                                         clearable outlined 
+                                        type="number"
                                         v-model="amount"
                                         :rules="[v => !!v || 'Amount is required']"
                                         required>
-                                        
+
                                         <template #label>
                                             <span class="red--text"><strong>* </strong></span>
                                         </template>
@@ -459,6 +531,11 @@ export default {
             path: '../../assets/crdb.png',
 
             display_file_size_error:false,
+            field_required:false,
+
+            field:'',
+            largefilesize: false,
+
 
             currency_object:[],
 
@@ -511,8 +588,26 @@ export default {
                     name: 'Deposit',
                     image_path:''
                 },
-            ]
-            ,
+            ] ,
+
+             rules: {
+                required: value => !!value || "Required",
+                separator: value => {
+                    const pattern = /[1-9]?\.[0-9]*/;
+                    return pattern(value)
+                },
+                number: value => {
+                    const pattern = /^\d+$/;
+                    return pattern.test(value) || "Number only required"
+                },
+
+                min: v => v.length >= 8 || 'Min 8 characters',
+
+                email: value => {
+                    const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    return pattern.test(value) || "invalid email";
+                }
+           },
 
         }
     },
@@ -540,6 +635,28 @@ export default {
                 
                 this.largePreview(src);
             }
+        },
+
+    validate(){
+
+            if(this.rules.number(this.amount) == 'Number only required'){
+
+                this.field = 'Amount should be number only'
+                this.field_required = true
+                return false
+            }
+            else if(this.otherdocument.length > 0 && (this.otherdocument_title == '' || this.otherdocument_title == null)){
+
+                console.log(17);
+                this.field = 'Please fill title on attachment 1 '
+                this.field_required = true
+                return false
+
+            }else{
+
+                return true
+            }
+               
         },
 
     previewPdf(url){
@@ -608,6 +725,9 @@ export default {
 
                 this.slip_extension = 'error';
 
+                this.largefilesize = true
+
+
             }
             else{
 
@@ -620,6 +740,8 @@ export default {
                     this.depositors_slip.push(document.getElementById("slip").files[0]);
 
                     this.slip_extension = this.getFileExtension(document.getElementById("slip").files[0].name);
+
+
 
                     if(this.slip_extension === 'jpg' || this.slip_extension === 'jpeg' || this.slip_extension === 'png')
                     {
