@@ -400,7 +400,8 @@
                                     <v-text-field 
                                         outlined 
                                         type="number"
-                                        v-model="offer_amount">
+                                        v-model="offer_amount"
+                                        :rules="[rules.number]">
                                     </v-text-field>
                             </v-col>
 
@@ -1386,6 +1387,25 @@ export default {
 
         currentFiles:[],
 
+        rules: {
+            required: value => !!value || "Required",
+            separator: value => {
+                const pattern = /[1-9]?\.[0-9]*/;
+                return pattern(value)
+            },
+            number: value => {
+            const pattern = /^\d+$/;
+            return pattern.test(value) || "Number only required"
+            },
+
+            min: v => v.length >= 8 || 'Min 8 characters',
+
+            email: value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return pattern.test(value) || "invalid email";
+            }
+           },
+
     }),
 
     computed:{
@@ -1585,7 +1605,13 @@ export default {
 
         validate(){
 
-            if(this.otherdocument.length > 0 && (this.otherdocument_title == '' || this.otherdocument_title == null)){
+            if(this.rules.number(this.offer_amount) == 'Number only required'){
+
+                this.field = 'Amount should be number only'
+                this.field_required = true
+                return false
+            }
+            else if(this.otherdocument.length > 0 && (this.otherdocument_title == '' || this.otherdocument_title == null)){
 
                     console.log(17);
                     this.field = 'Please fill title on attachment 1 '
