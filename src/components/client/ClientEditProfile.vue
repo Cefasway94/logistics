@@ -396,7 +396,7 @@
                                         clearable 
                                         outlined 
                                         v-model="bank_account_number"
-                                        :rules="[v => !!v || 'account number is required']"
+                                        :rules="[v => !!v || 'account number is required',rules.number]"
                                         required
                                     >
                                         <template #label>
@@ -418,7 +418,7 @@
 
                                 <v-flex column xs12 sm6 class="px-2">
                                     <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Second bank account number</p>
-                                    <v-text-field clearable outlined v-model="second_bank_account_number"></v-text-field>
+                                    <v-text-field clearable outlined v-model="second_bank_account_number" :rules="[rules.number]"></v-text-field>
                                 </v-flex>
                             </v-flex>
 
@@ -1650,6 +1650,25 @@ export default {
         field:'',
         largefilesize: false,
 
+        rules: {
+            required: value => !!value || "Required",
+            separator: value => {
+                const pattern = /[1-9]?\.[0-9]*/;
+                return pattern(value)
+            },
+            number: value => {
+            const pattern = /^\d+$/;
+            return pattern.test(value) || "Number only required"
+            },
+
+            min: v => v.length >= 8 || 'Min 8 characters',
+
+            email: value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return pattern.test(value) || "invalid email";
+            }
+           },
+
      }),
 
     components:{Alert,PDFDocument},
@@ -1793,7 +1812,19 @@ export default {
 
         validate(){
 
-            if(this.otherdocument.length > 0 && (this.otherdocument_title == '' || this.otherdocument_title == null)){
+            if(this.rules.number(this.bank_account_number) == 'Number only required'){
+
+                this.field = 'Account should be number only'
+                this.field_required = true
+                return false
+            }
+            else if(this.rules.number(this.second_bank_account_number) == 'Number only required'){
+
+                this.field = 'Account should be number only'
+                this.field_required = true
+                return false
+            }
+            else if(this.otherdocument.length > 0 && (this.otherdocument_title == '' || this.otherdocument_title == null)){
 
                     console.log(17);
                     this.loading = false;
