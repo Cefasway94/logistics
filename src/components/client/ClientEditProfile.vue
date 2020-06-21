@@ -396,6 +396,7 @@
                                         clearable 
                                         outlined 
                                         v-model="bank_account_number"
+                                        type="number"
                                         :rules="[v => !!v || 'account number is required',rules.number]"
                                         required
                                     >
@@ -418,7 +419,7 @@
 
                                 <v-flex column xs12 sm6 class="px-2">
                                     <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Second bank account number</p>
-                                    <v-text-field clearable outlined v-model="second_bank_account_number" :rules="[rules.number]"></v-text-field>
+                                    <v-text-field clearable outlined type="number" v-model="second_bank_account_number" :rules="[rules.number]"></v-text-field>
                                 </v-flex>
                             </v-flex>
 
