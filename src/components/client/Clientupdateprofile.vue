@@ -531,7 +531,7 @@
                                         clearable 
                                         outlined 
                                         v-model="bank_account_number"
-                                        :rules="[v => !!v || 'account number is required']"
+                                        :rules="[v => !!v || 'account number is required',rules.number]"
                                         required
                                     >
                                         <template #label>
@@ -553,7 +553,7 @@
 
                                 <v-flex column xs12 sm6 class="px-2">
                                     <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Second bank account number</p>
-                                    <v-text-field clearable outlined v-model="second_bank_account_number"></v-text-field>
+                                    <v-text-field clearable outlined v-model="second_bank_account_number" :rules="[rules.number]"></v-text-field>
                                 </v-flex>
                             </v-flex>
 
@@ -1847,6 +1847,18 @@ export default {
 
          validate(){
 
+             if(this.rules.number(this.bank_account_number) == 'Number only required'){
+
+                this.field = 'Account should be number only'
+                this.field_required = true
+                return false
+            }
+            else if(this.rules.number(this.second_bank_account_number) == 'Number only required'){
+
+                this.field = 'Account should be number only'
+                this.field_required = true
+                return false
+            }
             if(this.otherdocument.length > 0 && (this.otherdocument_title == '' || this.otherdocument_title == null)){
 
                     this.loading = false;
