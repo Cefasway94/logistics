@@ -61,7 +61,7 @@
                                 <p class="body-1">{{LOAD_TENDER.tender_id}}</p>
                             </v-flex>
 
-                            <v-flex column >
+                            <v-flex column v-if="LOAD_TENDER.cargo_size !=='' && LOAD_TENDER.cargo_size !== null">
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
                             <p class="body-1">{{LOAD_TENDER.cargo_size}}</p>
                             </v-flex>

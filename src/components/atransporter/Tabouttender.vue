@@ -107,7 +107,28 @@
                 <v-flex sm12 md12 lg12 xlg12 >
                     <v-card width="" class="pt-6 pb-3 pl-8" >
                         <v-flex column>
-                        <v-flex row >
+
+                         <v-flex row class="mt-2">
+
+                        <v-flex column class="pl-3 pr-4">
+                            <p class="primary--text body-1  mb-2"> BILL OF LADING </p>
+                            <p class="body-1">{{LOAD_TENDER.bill_of_lading_number}}</p>
+                        </v-flex>
+
+                        <v-flex column class="pl-3 pr-4">
+                            <p class="primary--text body-1  mb-2"> TERMS AND CONDITIIONS </p>
+                            <p class="body-1">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
+                        </v-flex>
+
+                       
+                        <v-flex column class=" pl-3">
+                            <p class="primary--text body-1 mb-2" > DELIVERY TIMELINE </p>
+                            <p class="body-1" >{{LOAD_TENDER.customer_delivery_timeline}}</p>
+                        </v-flex>
+                    
+                        </v-flex>
+                        
+                        <v-flex row class="mt-5">
                             <v-flex column class="pl-3">
                             <p class="primary--text body-1 mb-2"> DESTINATION </p>
                             <p class="body-1">{{LOAD_TENDER.destination}}</p>
@@ -120,31 +141,13 @@
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
                             <p  class="body-1">{{LOAD_TENDER.cargo_size}}</p>
                             </v-flex>
-                             <v-flex column class="  pl-3">
+                        <v-flex column class="  pl-3" v-if="customer_offer_amount !== ''">
                             <p class="primary--text body-1 mb-2" > AMOUNT </p>
-                            <p class="body-1" >{{LOAD_TENDER.customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
+                            <p class="body-1" >{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
                         </v-flex>
-                        </v-flex>
-
-                        <v-flex row>
-
-                        <v-flex column class="mt-7 pl-3 pr-4">
-                            <p class="primary--text body-1  mb-2"> BILL OF LADING </p>
-                            <p class="body-1">{{LOAD_TENDER.bill_of_lading_number}}</p>
-                        </v-flex>
-
-                        <v-flex column class="mt-7 pl-3 pr-4">
-                            <p class="primary--text body-1  mb-2"> TERMS AND CONDITIIONS </p>
-                            <p class="body-1">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
 
                        
-                        <v-flex column class=" mt-7 pl-3">
-                            <p class="primary--text body-1 mb-2" > DELIVERY TIMELINE </p>
-                            <p class="body-1" >{{LOAD_TENDER.customer_delivery_timeline}}</p>
-                        </v-flex>
-                    
-                        </v-flex>
 
                         <v-flex row class="mt-10 mb-4" >
 
@@ -677,13 +680,13 @@ export default {
                 //      this.otherFiles = this.LOAD_AGENT.objects.files;
                 //  }
 
-                // if (!this.LOAD_TENDER.customer_offer_amount == '') {
+                if (!this.LOAD_TENDER.customer_offer_amount == '') {
 
-                //      this.customer_offer_amount =this.LOAD_TENDER.customer_offer_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                     this.customer_offer_amount =this.LOAD_TENDER.customer_offer_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                                         
-                // } else {
-                //          this.customer_offer_amount;
-                //     }
+                } else {
+                         this.customer_offer_amount;
+                    }
 
         //   console.log('tender details bellowww');
         //   console.log(this.LOAD_TENDER.bill_of_lading[0])
