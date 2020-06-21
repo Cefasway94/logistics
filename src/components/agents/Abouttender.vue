@@ -119,10 +119,14 @@
                             <p class="body-1">{{LOAD_TENDER.tender_type}}</p>
                             </v-flex>
                             
-                            <v-flex column >
+                            <v-flex column v-if="LOAD_TENDER.cargo_size !== '' && LOAD_TENDER.cargo_size !== null" >
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
-                            <p class="body-1">{{LOAD_TENDER.cargo_size}}</p>
-                            
+                            <p  class="body-1">{{LOAD_TENDER.cargo_size}}</p>
+                            </v-flex>
+
+                            <v-flex column class=" pl-3">
+                            <p class="primary--text body-1 mb-2"> AMOUNT </p>
+                            <p class="body-1">{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
                             </v-flex>
                         </v-flex>
 
@@ -138,10 +142,7 @@
                             <p class="body-1">{{LOAD_TENDER.customer_terms_and_conditions}}</p>
                         </v-flex>
 
-                         <v-flex column class=" mt-7 pl-3">
-                            <p class="primary--text body-1 mb-2"> AMOUNT </p>
-                            <p class="body-1">{{customer_offer_amount}} {{LOAD_TENDER.currency}}</p>
-                            </v-flex>
+                         
 
                             <v-flex column class=" mt-7 pl-3">
                             <p class="primary--text body-1 mb-2"> DELIVERY TIMELINE </p>
@@ -594,32 +595,32 @@ export default {
           console.log('tender details bellowwwwwwww');
           console.log(this.LOAD_TENDER.currency)
 
-           if(this.LOAD_TENDER.cargo_photo !== null)
-           {
-                this.photo_extension = this.getFileExtension(this.LOAD_TENDER.cargo_photo[0]);
+        //    if(this.LOAD_TENDER.cargo_photo !== null)
+        //    {
+        //         this.photo_extension = this.getFileExtension(this.LOAD_TENDER.cargo_photo[0]);
 
-                this.photo_url = this.LOAD_TENDER.cargo_photo[0];
-           }
+        //         this.photo_url = this.LOAD_TENDER.cargo_photo[0];
+        //    }
 
-            if(this.LOAD_TENDER.bill_of_lading !== null)
-           {
-               this.bill_of_lading_extension = this.getFileExtension(this.LOAD_TENDER.bill_of_lading[0]);
+        //     if(this.LOAD_TENDER.bill_of_lading !== null)
+        //    {
+        //        this.bill_of_lading_extension = this.getFileExtension(this.LOAD_TENDER.bill_of_lading[0]);
 
-               this.bill_of_lading_url = this.LOAD_TENDER.bill_of_lading[0];
-           }
+        //        this.bill_of_lading_url = this.LOAD_TENDER.bill_of_lading[0];
+        //    }
 
-           //other files
-            if(this.LOAD_TENDER.files !== null)
-                {
-                    this.otherFiles = this.LOAD_TENDER.files;
-                }
+        //    //other files
+        //     if(this.LOAD_TENDER.files !== null)
+        //         {
+        //             this.otherFiles = this.LOAD_TENDER.files;
+        //         }
 
-            if(this.LOAD_TENDER.authorization_letter !== null)
-           {
-               this.letter_extension = this.getFileExtension(this.LOAD_TENDER.authorization_letter[0]);
+        //     if(this.LOAD_TENDER.authorization_letter !== null)
+        //    {
+        //        this.letter_extension = this.getFileExtension(this.LOAD_TENDER.authorization_letter[0]);
 
-               this.letter_url = this.LOAD_TENDER.authorization_letter[0];
-           }
+        //        this.letter_url = this.LOAD_TENDER.authorization_letter[0];
+        //    }
 
            if (!this.LOAD_TENDER.customer_offer_amount == '') {
 

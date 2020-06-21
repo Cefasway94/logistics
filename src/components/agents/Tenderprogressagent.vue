@@ -737,7 +737,7 @@
                                     elevation="flat" 
                                     class=" primary "
                                     @click="submiteProgress()" > 
-                                    Submite progress
+                                    Submit progress
                                     </v-btn>
                                 </v-flex>
                         </v-card>
