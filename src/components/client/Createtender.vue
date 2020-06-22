@@ -399,7 +399,6 @@
                                     <p class="primary--text body-2 text-uppercase mb-0"> OFFER AMOUNT </p>
                                     <v-text-field 
                                         outlined 
-                                        type="number"
                                         v-model="offer_amount"
                                         :rules="[rules.number]">
                                     </v-text-field>
@@ -443,8 +442,7 @@
                                 <p class="primary--text body-2 text-uppercase mb-0"> BILL OF LADING NUMBER </p>
                                 <v-text-field
                                     outlined 
-                                    type="number"
-                                    :rules="[v => !!v || 'bill of lading number  is required']"
+                                    :rules="[v => !!v || 'bill of lading number  is required',rules.number]"
                                     v-model="bill_of_lading_number"
                                 >
 
@@ -1398,11 +1396,16 @@ export default {
             return pattern.test(value) || "Number only required"
             },
 
+            letters: value => {
+                const pattern = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+                return pattern.test(value) || "Letters only required"
+            },
+
             min: v => v.length >= 8 || 'Min 8 characters',
 
             email: value => {
-            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            return pattern.test(value) || "invalid email";
+                const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return pattern.test(value) || "invalid email";
             }
            },
 
@@ -1608,6 +1611,12 @@ export default {
             if(this.rules.number(this.offer_amount) == 'Number only required'){
 
                 this.field = 'Amount should be number only'
+                this.field_required = true
+                return false
+            }
+            else if(this.rules.number(this.bill_of_lading_number) == 'Number only required'){
+
+                this.field = 'Bill of lading should be number only'
                 this.field_required = true
                 return false
             }
@@ -2416,6 +2425,15 @@ export default {
                                         this.$router.push('/client');
 
                                     }
+                                    else{
+
+                                        this.$store.dispatch('setSnackbar',{
+                                            text: response.data.message,
+                                            color: 'success'
+                                        });
+
+                                        this.$router.push('/client');
+                                    }
 
                                     //eslint-disable-next-line no-console
                                     //console.log(response.data);
@@ -2482,6 +2500,16 @@ export default {
                                         });
 
                                         this.$router.push('/client');
+                                    }
+                                    else {
+
+                                        this.$store.dispatch('setSnackbar',{
+                                            text: response.data.message,
+                                            color: 'success'
+                                        });
+
+                                        this.$router.push('/client');
+
                                     }
 
                                     //eslint-disable-next-line no-console
@@ -2551,7 +2579,7 @@ export default {
                             });
 
 
-            let countries_url = "http://164.68.113.159:2000/api/v1/countries/index";
+            /*let countries_url = "http://164.68.113.159:2000/api/v1/countries/index";
 
             axios.get(countries_url).then((response) => 
                 {
@@ -2582,7 +2610,7 @@ export default {
                         vm.setAlert("There is an internal error","error");
 
                     },1000)
-                });
+                });*/
                           
 
             let url1 = "http://207.180.215.239:8181/api/v1/customers/fetch?email="+localStorage.client;

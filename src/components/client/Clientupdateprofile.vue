@@ -515,7 +515,7 @@
                                         clearable 
                                         outlined 
                                         v-model="bank_acount_name"
-                                        :rules="[v => !!v || 'account name is required']"
+                                        :rules="[v => !!v || 'account name is required',rules.letters]"
                                         required>
 
                                             <template #label>
@@ -531,7 +531,6 @@
                                         clearable 
                                         outlined 
                                         v-model="bank_account_number"
-                                        type="number"
                                         :rules="[v => !!v || 'account number is required',rules.number]"
                                         required
                                     >
@@ -549,12 +548,12 @@
                             <v-flex row>
                                 <v-flex column xs12 sm6 class="px-2">
                                     <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Second bank account name </p>
-                                    <v-text-field  clearable outlined v-model="second_bank_account_name"></v-text-field>
+                                    <v-text-field  clearable outlined v-model="second_bank_account_name" :rules="[rules.letters]"></v-text-field>
                                 </v-flex>
 
                                 <v-flex column xs12 sm6 class="px-2">
                                     <p style="color:#4169E1;" class=" body-2 text-uppercase mb-0"> Second bank account number</p>
-                                    <v-text-field clearable outlined v-model="second_bank_account_number" type="number" :rules="[rules.number]"></v-text-field>
+                                    <v-text-field clearable outlined v-model="second_bank_account_number" :rules="[rules.number]"></v-text-field>
                                 </v-flex>
                             </v-flex>
 
@@ -1818,6 +1817,11 @@ export default {
             return pattern.test(value) || "Number only required"
             },
 
+            letters: value => {
+                const pattern = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+                return pattern.test(value) || "Letters only required"
+            },
+
             min: v => v.length >= 8 || 'Min 8 characters',
 
             email: value => {
@@ -1868,7 +1872,7 @@ export default {
 
          validate(){
 
-             if(this.rules.number(this.bank_account_number) == 'Number only required'){
+            if(this.rules.number(this.bank_account_number) == 'Number only required'){
 
                 this.field = 'Account should be number only'
                 this.field_required = true
@@ -1880,7 +1884,19 @@ export default {
                 this.field_required = true
                 return false
             }
-            if(this.otherdocument.length > 0 && (this.otherdocument_title == '' || this.otherdocument_title == null)){
+            else if(this.rules.letters(this.bank_acount_name) == 'Number only required'){
+
+                this.field = 'Bank account name  should contain letters only'
+                this.field_required = true
+                return false
+            }
+            else if(this.rules.letters(this.second_bank_account_name) == 'Number only required'){
+
+                this.field = 'Bank account name  should contain letters only'
+                this.field_required = true
+                return false
+            }
+            else if(this.otherdocument.length > 0 && (this.otherdocument_title == '' || this.otherdocument_title == null)){
 
                     this.loading = false;
 

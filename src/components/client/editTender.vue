@@ -2487,9 +2487,7 @@ export default {
 
                 },1000)
             });
-
-
-
+            
         if(vm.$route.params.tender_type == "Transporting"){
 
                         

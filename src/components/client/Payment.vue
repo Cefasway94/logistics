@@ -344,7 +344,7 @@
                                     <v-text-field 
                                         clearable outlined 
                                         v-model="account_number"
-                                        :rules="[v => !!v || 'Account name is required']"
+                                        :rules="[v => !!v || 'Account name is required',rules.number]"
                                         required>
 
                                         <template #label>
@@ -385,9 +385,8 @@
                                     <p class=" body-1 mb-0 text-capitalize"> Amount</p>
                                     <v-text-field 
                                         clearable outlined 
-                                        type="number"
                                         v-model="amount"
-                                        :rules="[v => !!v || 'Amount is required']"
+                                        :rules="[v => !!v || 'Amount is required',rules.number]"
                                         required>
 
                                         <template #label>
@@ -601,6 +600,11 @@ export default {
                     return pattern.test(value) || "Number only required"
                 },
 
+                letters: value => {
+                    const pattern = /^([a-zA-Z]+\s)*[a-zA-Z]+$/;
+                    return pattern.test(value) || "Letters only required"
+                },
+
                 min: v => v.length >= 8 || 'Min 8 characters',
 
                 email: value => {
@@ -645,18 +649,16 @@ export default {
                 this.field_required = true
                 return false
             }
-            else if(this.otherdocument.length > 0 && (this.otherdocument_title == '' || this.otherdocument_title == null)){
+            else if(this.rules.number(this.account_number) == 'Number only required'){
 
-                console.log(17);
-                this.field = 'Please fill title on attachment 1 '
+                this.field = 'Account number should be number only'
                 this.field_required = true
                 return false
-
-            }else{
+            }
+           else{
 
                 return true
-            }
-               
+            }     
         },
 
     previewPdf(url){
@@ -844,12 +846,17 @@ export default {
 
         confirmPayment(event){
 
-            if(this.slip_extension === 'error'){
 
-                this.display_file_size_error = true;
-            }
-            else
+            if(this.validate())
             {
+                if(this.slip_extension === 'error'){
+
+                    this.display_file_size_error = true;
+                }
+
+             else {
+
+            
                 if(event)
                     event.preventDefault();
 
@@ -1048,6 +1055,8 @@ export default {
 
                 }
             }
+
+            }   
         }
     },
 
