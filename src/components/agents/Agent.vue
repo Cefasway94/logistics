@@ -269,7 +269,7 @@
 
                     <v-row row class="mb-1 "> 
                             <v-flex xsm12 sm12 md12 lg12 class="px-3 ">
-                                <p  class=" title mb-0 ">{{tender.bid_amount}} {{tender.currency}}</p>
+                                <p  class=" title mb-0 ">{{(tender.bid_amount).toLocaleString('en') }} {{tender.currency}}</p>
                             </v-flex>
                     </v-row>
 
@@ -375,43 +375,71 @@
                 :to="{name:'AgentTenderprogress', params: {id:tender.id}}"
                 :elevation="hover ? 15 : 3">
                    
-                    <v-row  row class="px-2 pt-2 mb-1 justify-space-between mb-2 mt-1">
-                        <v-flex wrap xs6 sm6 md6 lg6 >
+                    
+                    <v-row 
+                    v-if="tender.payment_status !== null 
+                        && tender.payment_status !== '' "  
+                        row 
+                        class="pl-2 pt-2 justify-space-between mb-2 mt-1">
+
+                        <v-flex wrap xs12 sm6 md6 lg6 >
                         <h4  class="body-1 font-weight-bold mb-0  ">{{tender.cargo_details}}</h4>
                         </v-flex>
                         
-                        <v-flex row xs6 sm6 md6 lg6 class="pl-2 mb-1" >
-                            <v-flex row xs12 sm5 md5 lg5 class="">
+                        <v-flex row xs12 sm6 md6 lg6 class=" pr-4 mb-1" >
+
+                            <v-spacer></v-spacer>
+                            
                                 <v-chip 
                                 v-if="tender.payment_status !== null && tender.payment_status !== '' "
                                 small
                                 color="green" 
-                                class="mainorange white--text  font-weight-regular">
+                                class="mainorange white--text  font-weight-regular mr-3">
                                 paid
                                </v-chip>
 
-                               <v-chip 
-                                v-else
-                                small
-                                color="orange" 
-                                class="mainorange white--text  font-weight-regular ">
-                                not paid
-                               </v-chip>
-                            </v-flex>
-
-                            <v-flex  xs12 sm7 md7 class="pl-3">
+                                                          
                                 <v-chip 
                                 small
                                 :color="tender.tender_progress" 
-                                class="white--text   font-weight-regular ml-2">
+                                class="white--text   font-weight-regular ml-1">
                                 {{tender.tender_progress}}
                             </v-chip>
 
-                            </v-flex>
+                           
                         <!-- <v-icon color="#E9E9F0" class="" @click="true">clear</v-icon> -->
                         
                         </v-flex>
                     </v-row>
+
+                    <v-row 
+                    v-else 
+                    row
+                     class="pl-2 pt-2 justify-space-between mb-2 mt-1">
+
+                        <v-flex wrap xs12 sm4 md4 lg4 >
+                        <h4  class="body-1 font-weight-bold mb-0  ">{{tender.cargo_details}}</h4>
+                        </v-flex>
+                        
+                        <v-flex row xs12 sm8 md8 lg8 class="mb-1" >                            
+                               <v-chip 
+                                small
+                                color="orange" 
+                                class="mainorange white--text  font-weight-regular ">
+                                awaiting payment
+                               </v-chip>
+                            
+                                <v-chip 
+                                small
+                                :color="tender.tender_progress" 
+                                class="white--text   font-weight-regular ml-1">
+                                {{tender.tender_progress}}
+                            </v-chip>
+                        <!-- <v-icon color="#E9E9F0" class="" @click="true">clear</v-icon> -->
+                        
+                        </v-flex>
+                    </v-row>
+
 
                     <v-row class="pl-3 mb-2 mt-1">
                         <v-flex xs4 sm4 md4 lg4>

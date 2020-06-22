@@ -44,7 +44,7 @@
                         <v-flex column>
                         <v-flex row >
 
-                            <v-flex column >
+                            <v-flex column v-if="LOAD_TENDER.cargo_size !== null && LOAD_TENDER.cargo_size !== ''" >
                             <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
                             <p class="body-1">{{LOAD_TENDER.cargo_size}}</p>
                             </v-flex>
@@ -251,12 +251,19 @@
                             <p class="white--text body-2 pt-1 pl-2 mb-0 font-weight-bold">Phone number</p>
                             </v-flex>
                             <v-flex class="pl-8">
-                            <p v-if="LOAD_CUSTOMER.objects.mobile_number !== '' || LOAD_CUSTOMER.objects.mobile_number !== null " class="white--text mb-1">
-                                {{LOAD_CUSTOMER.objects.mobile_number}}
-                            </p>
-                            <p v-if="LOAD_CUSTOMER.objects.office_mobile !== '' || LOAD_CUSTOMER.objects.office_mobile !== null " class="white--text ">
-                                {{LOAD_CUSTOMER.objects.office_mobile}}
-                            </p>
+                            <v-flex v-if="LOAD_CUSTOMER.objects.mobile_number !== '' 
+                                    && LOAD_CUSTOMER.objects.mobile_number !== null ">
+                                <p  class="white--text mb-1">
+                                    {{LOAD_CUSTOMER.objects.mobile_number}}
+                                </p>
+                            </v-flex>
+                            <v-flex v-if="LOAD_CUSTOMER.objects.office_mobile !== '' 
+                                          && LOAD_CUSTOMER.objects.office_mobile !== null 
+                                          && LOAD_CUSTOMER.objects.office_mobile !== 'null'">
+                                <p class="white--text ">
+                                    {{LOAD_CUSTOMER.objects.office_mobile}}
+                                </p>
+                            </v-flex>
                             </v-flex>
                             </v-flex>
                             </v-flex>
@@ -1452,7 +1459,7 @@ methods :{
                 } else  if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[0].id &&
                              this.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ) {
                     
-                     this.expected_date1 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                    this.expected_date1 = this.LOAD_PROGRESS_STAGES.objects[index].completed_date 
                     console.log('Stage 1 completed');
                     this.stage1 = 'C'
                     // this.stage2 = 'A'
@@ -1476,7 +1483,7 @@ methods :{
                     }else if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[1].id &&
                              this.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ){
                     
-                    this.expected_date2 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                    this.expected_date2 = this.LOAD_PROGRESS_STAGES.objects[index].completed_date 
                      console.log('Stage 1 completed');
                      //this.stage1 = 'C'
                      this.stage2 = 'C'
@@ -1500,12 +1507,12 @@ methods :{
                     }else if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[2].id &&
                              this.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ){
                     
-                    this.expected_date3 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                    this.expected_date3 = this.LOAD_PROGRESS_STAGES.objects[index].completed_date 
                      console.log('Stage 1 completed');
                      //this.stage1 = 'C'
                      //this.stage2 = 'C'
                      this.stage3 = 'C'
-                     this.stage4 = 'A'
+                     //this.stage4 = 'A'
 
                     }
 
@@ -1524,7 +1531,7 @@ methods :{
                     }else if( this.LOAD_PROGRESS_STAGES.objects[index].clearing_progress_id === this.LOAD_TIMELINE_STAGES.objects[3].id &&
                              this.LOAD_PROGRESS_STAGES.objects[index].completed === 1 ){
                     
-                    this.expected_date4 = this.LOAD_PROGRESS_STAGES.objects[index].expected_date
+                    this.expected_date4 = this.LOAD_PROGRESS_STAGES.objects[index].completed_date 
                      console.log('Stage 1 completed');
                      //this.stage1 = 'C'
                      //this.stage2 = 'C'

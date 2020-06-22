@@ -92,6 +92,8 @@
     fluid 
     class="pt-5" 
     style="background-color:#F5FAFF;" >
+
+        
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
              v-for="tender in LOAD_TENDERS.objects" :key="tender.id"  >
@@ -116,7 +118,7 @@
                 :elevation="hover ? 15 : 3">
                    
                     <v-row  row class="pl-3 pt-2 mb-1 justify-space-between">
-                        <v-flex wrap xs9 sm9>
+                        <v-flex wrap xs9 sm9 >
                         <h4  class="subtitle-1 font-weight-bold">{{tender.cargo_details}}</h4>
                         </v-flex>
                         
@@ -127,7 +129,7 @@
                     </v-row>
                     
                     
-                    <v-row class="pl-3 mt-1 mb-2">
+                    <v-row class="pl-3 mt-1 mb-2" v-if="tender.cargo_size !== null && tender.cargo_size !== '' ">
                         <v-flex xs4 sm4 md4 lg4>
                         <p class=" body-2 mb-0">Cargo size : </p>
                         </v-flex>
@@ -147,7 +149,7 @@
                     </v-row>
 
                     <v-row row class="px-3 mb-1">
-                        <h4  class=" title "> {{ Number(tender.customer_offer_amount).toLocaleString()}} {{tender.currency}}</h4>
+                        <h4  class=" title "> {{ (tender.customer_offer_amount).toLocaleString('en')}} {{tender.currency}}</h4>
                         <v-spacer></v-spacer>
                         <v-btn 
                         small
@@ -164,7 +166,7 @@
                 </v-card>
                 </template>
                 </v-hover>
-            </v-flex>               
+            </v-flex>              
         </v-container>
 
         <v-container 
@@ -198,6 +200,9 @@ export default {
   
   data () {
       return{
+          // iterater
+        
+        //--------------------------
           verify:false,
           profile:false,
           verification:false,
