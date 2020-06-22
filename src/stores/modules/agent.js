@@ -19,6 +19,7 @@ export default {
         progress_stages:[],
         progress_feedback:[],
         payment_progress:[],
+        oxopayment_progress:[],
         post_payment_terms:'',
         timeline_stages:[],
         payment_history:[],
@@ -139,6 +140,15 @@ getters:{
             
         },
 
+        //  load oxo payment progress =============================>>>
+        LOAD_OXOPAYMENT_PROGRESS: state=>{
+            const oxopayment_progress = state.oxopayment_progress
+            console.log('payment progress data');
+            console.log(oxopayment_progress);
+            return oxopayment_progress
+            
+        },
+
 //  load payment History =============================>>>
         LOAD_PAYMENT_HISTORY: state=>{
             const payment_history  = state.payment_history
@@ -250,6 +260,12 @@ mutations: {
 // get payment progress ==============================>>>
         SET_PAYMENT_PROGRESS: (state, payload)=>{
             state.payment_progress = payload
+
+        },
+
+        // oxo opayment datails =================>>>>>>>>
+        SET_OXOPAYMENT_PROGRESS: (state, payload)=>{
+            state.oxopayment_progress = payload
 
         },
 
@@ -683,17 +699,37 @@ GET_PAYMENT_PROGRESS: async ({commit},payload) => {
     }); 
                     
 },
+                                // agent get oxopayment
+                        GET_OXOPAYMENT_PROGRESS: async ({commit},payload) => {    
 
-/**
- * http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/{oId}
-12:55
-http://207.180.215.239:8002/api/customerpayment/customerpayment_by_customerID/{cId}
-12:56
-http://207.180.215.239:8002/api/customerpayment/customerpayment_by_agentID/{aId}
-12:56
-http://207.180.215.239:8002/api/customerpayment/customerpayment_by_transporterID/{tId}
-http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/
-*/
+                            //console.log(payload);
+
+                            const url= 'http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/'+payload.payload+'/'+payload.tendertype;
+                            await axios.get(url).then((res)=>{
+                            
+                                    // eslint-disable-next-line no-console
+                                    console.log(res);
+                                commit('SET_OXOPAYMENT_PROGRESS', res.data);
+                                    //console.log(data.message);
+                            }).catch((error)=>{
+                                //eslint-disable-next-line no-console
+                                console.log(error);
+                                const res=null;
+                                commit('SET_OXOPAYMENT_PROGRESS', res);
+                            }); 
+                                            
+                        },
+
+                        /**
+                        * http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/{oId}
+                        12:55
+                        http://207.180.215.239:8002/api/customerpayment/customerpayment_by_customerID/{cId}
+                        12:56
+                        http://207.180.215.239:8002/api/customerpayment/customerpayment_by_agentID/{aId}
+                        12:56
+                        http://207.180.215.239:8002/api/customerpayment/customerpayment_by_transporterID/{tId}
+                        http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/
+                        */
 
 //Transporter get Payment history  --------http://207.180.215.239:8002/api/customerpayment/customerpayment_by_agentID/-------------------------------------         
 GET_PAYMENT_HISTORY: async ({commit},payload) => {
@@ -1128,6 +1164,40 @@ GET_PAYMENT_HISTORY: async ({commit},payload) => {
                     }); 
                                     
 },
+
+                    // agent get oxopayment
+                    T_GET_OXOPAYMENT_PROGRESS: async ({commit},payload) => {    
+
+                        //console.log(payload);
+
+                        const url= 'http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/'+payload.payload+'/'+payload.tendertype;
+                        await axios.get(url).then((res)=>{
+                        
+                                // eslint-disable-next-line no-console
+                                console.log(res);
+                            commit('SET_OXOPAYMENT_PROGRESS', res.data);
+                                //console.log(data.message);
+                        }).catch((error)=>{
+                            //eslint-disable-next-line no-console
+                            console.log(error);
+                            const res=null;
+                            commit('SET_OXOPAYMENT_PROGRESS', res);
+                        }); 
+                                        
+                    },
+
+                    /**
+                    * http://207.180.215.239:8002/api/customerpayment/customerpayment_by_orderID/{oId}
+                    12:55
+                    http://207.180.215.239:8002/api/customerpayment/customerpayment_by_customerID/{cId}
+                    12:56
+                    http://207.180.215.239:8002/api/customerpayment/customerpayment_by_agentID/{aId}
+                    12:56
+                    http://207.180.215.239:8002/api/customerpayment/customerpayment_by_transporterID/{tId}
+                    http://207.180.215.239:8002/api/oxopayment/oxopayment_by_orderID/
+                    */
+
+                    
 
 //Transporter get Payment history  -----------------------------http://207.180.215.239:8002/api/customerpayment/customerpayment_by_transporterID/-----------------------         
         T_GET_PAYMENT_HISTORY: async ({commit},payload) => {

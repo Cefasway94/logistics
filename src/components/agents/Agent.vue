@@ -417,11 +417,12 @@
                     row
                      class="pl-2 pt-2 justify-space-between mb-2 mt-1">
 
-                        <v-flex wrap xs12 sm4 md4 lg4 >
-                        <h4  class="body-1 font-weight-bold mb-0  ">{{tender.cargo_details}}</h4>
+                        <v-flex wrap xs12 sm12 md12 lg12 >
+                        <h4  class="body-1 font-weight-bold mb-1  ">{{tender.cargo_details}}</h4>
                         </v-flex>
                         
-                        <v-flex row xs12 sm8 md8 lg8 class="mb-1" >                            
+                        <v-flex row xs12 sm12 md12 lg12 class="mb-2" >   
+                            <v-spacer></v-spacer>                         
                                <v-chip 
                                 small
                                 color="orange" 

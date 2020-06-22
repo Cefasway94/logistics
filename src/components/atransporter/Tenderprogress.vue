@@ -149,7 +149,7 @@
                         </v-card>
                             </v-flex>
 
-                            <v-flex column >
+                            <v-flex column v-if="documents == true && photo_url !== ''" >
                             <p class="primary--text body-1 mb-2"> CARGO PHOTO </p>
                             <v-card color="lblue" flat width="200" height="150" outlined>
                             <div 
@@ -303,26 +303,47 @@
 
                  <!-------- Alert before main progress -->
                 <v-card row width="500" class=" mx-auto mt-5 mb-5" color="#F5FAFF">
-                <v-alert
-                :value="wait"
-                elevation="7"
-                prominent
-                type="warning"
-                border="left"
-                row
-                >
-                <v-flex row class="pl-4">
-                <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
-                <!-- <v-icon large color="orange" class="">notification_important</v-icon>     -->
-                </v-flex>
-                <v-flex xms11 sm11 md11 lg11>
-                <p class="white--text body-1 mb-3">
-                Waiting on payment for tender to start 
-                <v-chip v-show="wait == true"  class="green mt-1 white--text">Waiting for payment Verification</v-chip>
-                </p>
-                </v-flex>
-                </v-flex>
-                </v-alert>
+                    <v-alert
+                    :value="wait"
+                    elevation="7"
+                    prominent
+                    type="warning"
+                    border="left"
+                    row
+                    >
+                    <v-flex row class="pl-4">
+                    <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                    <!-- <v-icon large color="orange" class="">notification_important</v-icon>     -->
+                    </v-flex>
+                    <v-flex xms11 sm11 md11 lg11>
+                    <p class="white--text body-1 mb-3">
+                    Waiting on payment for tender to start 
+                    </p>
+                    </v-flex>
+                    </v-flex>
+                    </v-alert>
+                </v-card>
+
+                <v-card row width="500" class=" mx-auto mt-5 mb-5" color="#F5FAFF">
+                    <v-alert
+                    :value="waitverification"
+                    elevation="7"
+                    prominent
+                    type="info"
+                    border="left"
+                    row
+                    >
+                    <v-flex row class="pl-4">
+                    <v-flex xms1 sm1 md1 lg1 class="text-center" style="background-color:;">
+                    <!-- <v-icon large color="orange" class="">notification_important</v-icon>     -->
+                    </v-flex>
+                    <v-flex xms11 sm11 md11 lg11>
+                    <p class="white--text body-1 mb-3">
+                    Waiting for payment verification
+                    </p>
+                    </v-flex>
+                    </v-flex>
+                    </v-alert>
                 </v-card>
         <!-------------  --> 
 
@@ -938,6 +959,7 @@ export default {
             loading:false,
             show:true,
             wait:false, 
+            waitverification:false,
             documents:false,
             chip1:'not received',
             comment:'',
@@ -1040,31 +1062,38 @@ export default {
 
                     console.log(vm.LOAD_PAYMENT_PROGRESS.objects.verify);
 
-                    if (vm.LOAD_PAYMENT_PROGRESS.objects.verify == null){
-
-                        vm.wait = true
-                        vm.show = false
+                    vm.T_GET_OXOPAYMENT_PROGRESS({payload: to.params.id, tendertype: tendertype}).then(()=>{
                         
+                        console.log(vm.LOAD_OXOPAYMENT_PROGRESS);
 
-                    }else{
+                                if (vm.LOAD_OXOPAYMENT_PROGRESS.objects[0].verify == false  
+                                    && vm.LOAD_OXOPAYMENT_PROGRESS.genralErrorCode == 8000 ){
 
-                        vm.documents = true
+                                vm.waitverification = true
+                                vm.show = false
+                                
+
+                                }else if (vm.LOAD_OXOPAYMENT_PROGRESS.objects[0].verify == true
+                                         && vm.LOAD_OXOPAYMENT_PROGRESS.genralErrorCode == 8000 ){
+
+                                    vm.documents = true
+                                    
+                                    if(vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited >= 100)
+                                    vm.value = 100;
+                                    else
+                                        vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+
+                                    vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at                
+                                    //vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
+                                    
+                                    vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+                                    if ( vm.LOAD_PAYMENT_PROGRESS.objects.is_full_amount_paid == false){
+                                            vm.chip1 = 'partial payment'
+                                    }
+                                }
                         
-                        if(vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited >= 100)
-                        vm.value = 100;
-                        else
-                            vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
-
-                        vm.created_at = vm.LOAD_PAYMENT_PROGRESS.objects.created_at                
-                        //vm.value = vm.LOAD_PAYMENT_PROGRESS.objects.percentage_deposited
-                        
-                        vm.amount = vm.LOAD_PAYMENT_PROGRESS.objects.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-                        if ( vm.LOAD_PAYMENT_PROGRESS.objects.is_full_amount_paid == false){
-                                vm.chip1 = 'partial payment'
-                        }
-                    }
-                    
+                        })                   
                     
                 }
             })
@@ -1318,7 +1347,8 @@ export default {
       'LOAD_PROGRESS_FEEDBACK',
       'LOAD_PAYMENT_PROGRESS',
       'LOAD_TIMELINE_STAGES',
-      'LOAD_CUSTOMER'
+      'LOAD_CUSTOMER',
+      'LOAD_OXOPAYMENT_PROGRESS'
       ])
   },
 components:{PDFDocument},
@@ -1331,7 +1361,8 @@ methods :{
       'T_UPGRADE_PROGRESS',
       'T_GET_PAYMENT_PROGRESS',
       'T_GET_TIMELINE_STAGES',
-      'GET_CUSTOMER_BYID'
+      'GET_CUSTOMER_BYID',
+      'T_GET_OXOPAYMENT_PROGRESS'
     ]),
 
     previewPdf(url){

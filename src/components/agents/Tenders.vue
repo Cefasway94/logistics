@@ -92,8 +92,6 @@
     fluid 
     class="pt-5" 
     style="background-color:#F5FAFF;" >
-
-        
             
              <v-flex xs12 sm6 md4 lg4 xl4 class="py-3 px-1 justify-center" 
              v-for="tender in LOAD_TENDERS.objects" :key="tender.id"  >
@@ -166,7 +164,7 @@
                 </v-card>
                 </template>
                 </v-hover>
-            </v-flex>              
+            </v-flex>               
         </v-container>
 
         <v-container 
@@ -200,9 +198,6 @@ export default {
   
   data () {
       return{
-          // iterater
-        
-        //--------------------------
           verify:false,
           profile:false,
           verification:false,
