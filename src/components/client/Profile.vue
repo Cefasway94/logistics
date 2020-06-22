@@ -153,6 +153,16 @@
                     <p class="primary--text body-1 mb-2">BANK ADDRESS(CITY/REGION)</p>
                     <p class="body-1">{{ customer.bank_address}}</p>
                 </v-col>
+
+                 <v-col cols=6 md=3 v-show="customer.second_bank_account_name !== ''">
+                    <p class="primary--text body-1 mb-2">SECOND BANK ACCOUNT NAME</p>
+                    <p class="body-1">{{ customer.second_bank_account_name}}</p>
+                </v-col>
+
+                 <v-col cols=6 md=3 v-show="customer.second_bank_account_number !== ''">
+                    <p class="primary--text body-1 mb-2">SECOND BANK ACCOUNT NUMBER</p>
+                    <p class="body-1">{{ customer.second_bank_account_number}}</p>
+                </v-col>
             </v-row>
         </v-card>
 

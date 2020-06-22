@@ -1608,7 +1608,7 @@ export default {
 
         validate(){
 
-            if(this.rules.number(this.offer_amount) == 'Number only required'){
+            if((this.offer_amount !== '' && this.offer_amount !== null) && this.rules.number(this.offer_amount) == 'Number only required'){
 
                 this.field = 'Amount should be number only'
                 this.field_required = true

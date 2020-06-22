@@ -1821,25 +1821,25 @@ export default {
 
             if(this.rules.number(this.bank_account_number) == 'Number only required'){
 
-                this.field = 'Account should be number only'
+                this.field = 'Account number should be numbers only'
                 this.field_required = true
                 return false
             }
-            else if(this.rules.number(this.second_bank_account_number) == 'Number only required'){
+            else if((this.second_bank_account_number !== '' && this.second_bank_account_number !== null) && this.rules.number(this.second_bank_account_number) == 'Number only required'){
 
-                this.field = 'Account should be number only'
+                this.field = 'Second bank account number should be number only'
                 this.field_required = true
                 return false
             }
-            else if(this.rules.letters(this.bank_acount_name) == 'Number only required'){
-
-                this.field = 'Bank account name  should contain letters only'
-                this.field_required = true
-                return false
-            }
-            else if(this.rules.letters(this.second_bank_account_name) == 'Number only required'){
+            else if(this.rules.letters(this.bank_acount_name) == 'Letters only required'){
 
                 this.field = 'Bank account name  should contain letters only'
+                this.field_required = true
+                return false
+            }
+            else if((this.second_bank_account_name !== '' && this.second_bank_account_name !== null) && this.rules.letters(this.second_bank_account_name) == 'Letters only required'){
+
+                this.field = 'Second bank account name  should contain letters only'
                 this.field_required = true
                 return false
             }
@@ -3178,7 +3178,7 @@ export default {
                             vm.last_name = response.data.objects.last_name;
                             vm.country = response.data.objects.country === null?'':response.data.objects.country;
                             vm.mobile_number = response.data.objects.mobile_number;
-                            vm.office_mobile = response.data.objects.office_mobile == null?'':response.data.objects.office_mobile;
+                            vm.office_mobile = response.data.objects.office_mobile === null?'':response.data.objects.office_mobile;
                             vm.address = response.data.objects.address;
                             vm.bank_acount_name = response.data.objects.bank_acount_name;
                             vm.bank_account_number = response.data.objects.bank_account_number;

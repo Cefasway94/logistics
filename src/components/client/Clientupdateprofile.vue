@@ -1874,25 +1874,25 @@ export default {
 
             if(this.rules.number(this.bank_account_number) == 'Number only required'){
 
-                this.field = 'Account should be number only'
+                this.field = 'Account number should be numbers only'
                 this.field_required = true
                 return false
             }
-            else if(this.rules.number(this.second_bank_account_number) == 'Number only required'){
+            else if((this.second_bank_account_number !== '' && this.second_bank_account_number !== null) && this.rules.number(this.second_bank_account_number) == 'Number only required'){
 
-                this.field = 'Account should be number only'
+                this.field = 'Second bank account number should be number only'
                 this.field_required = true
                 return false
             }
-            else if(this.rules.letters(this.bank_acount_name) == 'Number only required'){
-
-                this.field = 'Bank account name  should contain letters only'
-                this.field_required = true
-                return false
-            }
-            else if(this.rules.letters(this.second_bank_account_name) == 'Number only required'){
+            else if(this.rules.letters(this.bank_acount_name) == 'Letters only required'){
 
                 this.field = 'Bank account name  should contain letters only'
+                this.field_required = true
+                return false
+            }
+            else if((this.second_bank_account_name !== '' && this.second_bank_account_name !== null) && this.rules.letters(this.second_bank_account_name) == 'Letters only required'){
+
+                this.field = 'Second bank account name  should contain letters only'
                 this.field_required = true
                 return false
             }
