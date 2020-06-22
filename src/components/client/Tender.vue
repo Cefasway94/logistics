@@ -66,12 +66,12 @@
 
                                     </v-flex>
 
-                                    <v-flex column xs6 sm6 md4 class="pl-3">
+                                    <v-flex column xs6 sm6 md4 class="pl-3" v-show="tender.cargo_size !== '' && tender.cargo_size !== null">
                                         <p class="primary--text body-1 mb-2"> CARGO SIZE </p>
                                         <p class="body-1">{{ tender.cargo_size}}</p>
                                     </v-flex>
 
-                                    <v-flex column xs6 sm6 md4  class="pl-3">
+                                    <v-flex column xs6 sm6 md4  class="pl-3" v-show="tender.customer_offer_amount !== '' && tender.customer_offer_amount !== null">
 
                                          <p class="primary--text body-1 mb-2"> AMOUNT </p>
                                          <p class="body-1">{{ Number(tender.customer_offer_amount).toLocaleString()}} {{tender.currency}} </p>

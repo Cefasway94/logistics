@@ -316,7 +316,7 @@
                                                                     completed: port_processing.completed
                                                                 }"
                                                             >
-                                                                <v-icon color="primary" size="50">archive</v-icon><br>
+                                                                <v-icon color="primary" size="50">directions_boat</v-icon><br>
                                                                 <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                                                     <v-icon class="x-large " v-show="port_processing.InProgress">cached</v-icon>
                                                                     <v-icon class="x-large " v-show="port_processing.completed">done</v-icon>
@@ -350,7 +350,7 @@
                                                                     completed: tcra_processing.completed
                                                                 }"
                                                             >
-                                                                <v-icon color="primary" size="50">local_shipping</v-icon><br>
+                                                                <v-icon color="primary" size="50">account_balance</v-icon><br>
                                                                 <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                                                     <v-icon class="x-large " v-show="tcra_processing.InProgress">cached</v-icon>
                                                                     <v-icon class="x-large " v-show="tcra_processing.completed">done</v-icon>
@@ -384,7 +384,7 @@
                                                                 completed: other_processes.completed
                                                             }"
                                                         >
-                                                            <v-icon color="primary" size="50">unarchive</v-icon><br>
+                                                            <v-icon color="primary" size="50">assignment</v-icon><br>
                                                             <v-btn class="my-2" color="primary" :disabled="false"  elevation="flat" fab x-small>
                                                                 <v-icon class="x-large " v-show="other_processes.InProgress">cached</v-icon>
                                                                 <v-icon class="x-large " v-show="other_processes.completed">done</v-icon>
