@@ -34,13 +34,25 @@ export default {
     created(){
       
       // (localStorage.length == 4 && !localStorage.client == "" ) && ( !localStorage.category == '' && !localStorage.secret == '')
-      if (localStorage.length >= 3 ) {    
-          this.login = false
+    if (localStorage.length >= 3 && localStorage.category == 1) {    
+      
+      this.login = false
+          this.$router.push('/agent/tenders/open')
           console.log('app');
-          
           console.log(this.$store.state.tender.logins);
           
+    }else if (localStorage.length >= 3 && localStorage.category == 2){
+      
+      this.login = false
+      this.$router.push('/transporter/tenders/open')
+
+    }else if (localStorage.length >= 3 && localStorage.category == 3){
+      
+      this.login = false
+      this.$router.push('/client')
+
     }else{
+
       this.login = true;
             console.log('ddntlog in');
             
