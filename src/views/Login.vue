@@ -20,8 +20,36 @@
 // import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
+
+
+    created(){
+      
+                 if (localStorage.length >= 3){
+                       
+                       if (this.$route.fullPath == '/' && localStorage.category === "1") {
+                             
+                         this.$router.push('/agent/tenders/open')
+    
+                       }else if(this.$route.fullPath == '/' && localStorage.category === "2"){
+
+                          this.$router.push('/transporter/tenders/open')
+
+                       }else if(this.$route.fullPath == '/' && localStorage.category === "3"){
+
+                          this.$router.push('/client')
+
+                       }
+
+
+                      this.login = false
+                       
+                    }
+
+
+    },
  
 }
+
 </script>
 
 

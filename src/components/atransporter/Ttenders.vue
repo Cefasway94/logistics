@@ -223,7 +223,8 @@ export default {
   created (tab){
              this.loading = true
 
-             console.log(tab);
+             console.log(this.$route);
+             
             //const tend = this.$route.params.tid;
       
       tab = localStorage.client

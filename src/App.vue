@@ -34,30 +34,59 @@ export default {
     created(){
       
       // (localStorage.length == 4 && !localStorage.client == "" ) && ( !localStorage.category == '' && !localStorage.secret == '')
-    if (localStorage.length >= 3 && localStorage.category === "1") {    
+    // if (localStorage.length >= 3 && localStorage.category === "1") {    
       
-      this.login = false
-          this.$router.push('/agent/tenders/open')
-          console.log('app');
-          console.log(this.$store.state.tender.logins);
+    //   this.login = false
+    //       this.$router.push('/agent/tenders/open')
+    //       console.log('app');
+    //       console.log(this.$store.state.tender.logins);
           
-    }else if (localStorage.length >= 3 && localStorage.category === "2"){
+    // }else if (localStorage.length >= 3 && localStorage.category === "2"){
       
-      this.login = false
-      this.$router.push('/transporter/tenders/open')
+    //   this.login = false
+    //   this.$router.push('/transporter/tenders/open')
 
-    }else if (localStorage.length >= 3 && localStorage.category === "3"){
+    // }else if (localStorage.length >= 3 && localStorage.category === "3"){
       
-      this.login = false
-      this.$router.push('/client')
+    //   this.login = false
+    //   this.$router.push('/client')
 
-    }else{
+    // }else{
 
-      this.login = true;
-            console.log('ddntlog in');
+    //   this.login = true;
+    //         console.log('ddntlog in');
             
       
-     }
+    //  }
+                    if (localStorage.length >= 3){
+                       
+                       if ((this.$route.fullPath == '/' || this.$route.fullPath == '/signup') && localStorage.category === "1") {
+                             
+                         this.$router.push('/agent/tenders/open')
+    
+                       }else if((this.$route.fullPath == '/' || this.$route.fullPath == '/signup')  && localStorage.category === "2"){
+
+                          
+                          this.$router.push('/transporter/tenders/open')
+
+                       }else if((this.$route.fullPath == '/' || this.$route.fullPath == '/signup') && localStorage.category === "3"){
+
+                          this.$router.push('/client')
+
+                       }
+
+
+                      this.login = false
+                       
+
+                    }else{
+
+                      this.login = true
+                      this.$router.push('/')
+
+                    }
+
+
     },
     
     computed: {
