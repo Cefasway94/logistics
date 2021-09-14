@@ -828,11 +828,11 @@ export default {
                 this.overlay = !this.overlay;
 
             },
-            previewPdf(url){
+        previewPdf(url){
 
-            this.url = url;
-            this.pdfOverlay = true;
-            this.pdf = true;
+        this.url = url;
+        this.pdfOverlay = true;
+        this.pdf = true;
             
         },
 
@@ -841,15 +841,15 @@ export default {
             this.pdfOverlay = false;
         },
 
-            getFileExtension(url){
+        getFileExtension(url){
 
-                let position = url.lastIndexOf('.');
+            let position = url.lastIndexOf('.');
 
-                let extracted_string = url.slice(position + 1, url.length + 1);
+            let extracted_string = url.slice(position + 1, url.length + 1);
 
-                return extracted_string;
+            return extracted_string;
 
-            },
+        },
    },
 
 
